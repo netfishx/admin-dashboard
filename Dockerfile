@@ -1,37 +1,30 @@
-FROM node:20-alpine AS base
-RUN apk add --no-cache libc6-compat
+FROM imbios/bun-node:1-20-alpine AS base
 
 WORKDIR /app
-RUN corepack enable && corepack prepare pnpm --activate
 
 FROM base AS deps
 
-COPY package.json pnpm-lock.yaml ./
 RUN --mount=type=bind,source=package.json,target=package.json \
-    --mount=type=bind,source=pnpm-lock.yaml,target=pnpm-lock.yaml \
-    # --mount=type=bind,source=.npmrc,target=.npmrc \
-    --mount=type=cache,target=/root/.local/share/pnpm/store \
-    pnpm fetch
-
-COPY . .
-RUN --mount=type=cache,target=/root/.local/share/pnpm/store \
-    pnpm install
+    --mount=type=bind,source=bun.lockb,target=bun.lockb \
+    --mount=type=cache,target=/root/.bun \
+    bun install --frozen-lockfile
 
 FROM base AS builder
-WORKDIR /app
+
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
-# COPY .env.production.sample .env.production
-RUN pnpm run build
+RUN bun run build
 
 FROM base AS runner
-WORKDIR /app
 
 ENV NODE_ENV=production
 
-RUN addgroup -g 1001 -S nodejs
-RUN adduser -S nextjs -u 1001
+RUN addgroup --system --gid 1002 nodejs
+RUN adduser --system --uid 1002 nextjs
+
+RUN mkdir .next
+RUN chown nextjs:nodejs .next
 
 COPY --from=builder /app/public ./public
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
