@@ -12,12 +12,8 @@ export function middleware(request: NextRequest) {
   });
   const user = request.cookies.get("user")?.value;
 
-  // if (!(user || request.nextUrl.pathname === "/login")) {
+  // if (!user && request.nextUrl.pathname !== "/login") {
   //   return Response.redirect(new URL("/login", request.url));
-  // }
-
-  // if (user && request.nextUrl.pathname === "/") {
-  //   return Response.redirect(new URL("/dashboard/cars", request.url));
   // }
 
   return handleI18nRouting(request);
