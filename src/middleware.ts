@@ -6,9 +6,9 @@ export const localePrefix = "never" satisfies LocalePrefix;
 
 export function middleware(request: NextRequest) {
   const handleI18nRouting = createMiddleware({
-    defaultLocale: "ja",
+    defaultLocale: "zh",
     localePrefix: "never",
-    locales: ["zh", "ja"],
+    locales: ["zh"],
   });
   const user = request.cookies.get("user")?.value;
 
@@ -19,8 +19,6 @@ export function middleware(request: NextRequest) {
   // if (user && request.nextUrl.pathname === "/") {
   //   return Response.redirect(new URL("/dashboard/cars", request.url));
   // }
-
-  request.cookies.set("CURRENT_PATH", request.nextUrl.pathname);
 
   return handleI18nRouting(request);
 }
