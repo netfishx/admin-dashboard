@@ -23,18 +23,18 @@
     "@radix-ui/react-toast": "^1.2.1",
     "@tanstack/react-table": "^8.20.5",
     "@total-typescript/ts-reset": "^0.6.1",
-    "babel-plugin-react-compiler": "0.0.0-experimental-7449567-20240905",
+    "babel-plugin-react-compiler": "0.0.0-experimental-fe484b5-20240911",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "date-fns": "^3.6.0",
     "jotai": "2.9.3",
     "lucide-react": "^0.439.0",
-    "next": "15.0.0-canary.146",
+    "next": "^15.0.0-canary.151",
     "next-intl": "^3.19.1",
     "next-themes": "^0.3.0",
-    "react": "19.0.0-rc-a03254bc-20240905",
+    "react": "^19.0.0-rc-d6cb4e77-20240911",
     "react-day-picker": "8.10.1",
-    "react-dom": "19.0.0-rc-a03254bc-20240905",
+    "react-dom": "^19.0.0-rc-d6cb4e77-20240911",
     "react-hook-form": "^7.53.0",
     "recharts": "^2.12.7",
     "sonner": "^1.5.0",
@@ -50,15 +50,15 @@
     "@types/react": "npm:types-react@19.0.0-rc.1",
     "@types/react-dom": "npm:types-react-dom@19.0.0-rc.1",
     "postcss": "^8",
-    "tailwindcss": "^3.4.10",
+    "tailwindcss": "^3.4.11",
     "typescript": "^5"
   },
   "overrides": {
     "@types/react": "npm:types-react@19.0.0-rc.1",
     "@types/react-dom": "npm:types-react-dom@19.0.0-rc.1",
-    "next": "15.0.0-canary.146",
-    "react": "19.0.0-rc-a03254bc-20240905",
-    "react-dom": "19.0.0-rc-a03254bc-20240905"
+    "next": "15.0.0-canary.151",
+    "react": "19.0.0-rc-d6cb4e77-20240911",
+    "react-dom": "19.0.0-rc-d6cb4e77-20240911"
   },
   "trustedDependencies": [
     "@biomejs/biome"
