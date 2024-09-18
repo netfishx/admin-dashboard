@@ -1,6 +1,6 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
+import { revalidateTag } from "next/cache";
 import z from "zod";
 import { createServerAction } from "zsa";
 
@@ -20,5 +20,5 @@ export const incrementNumberAction = createServerAction()
 
 // biome-ignore lint/suspicious/useAwait: <explanation>
 export async function refresh() {
-  revalidatePath("/");
+  revalidateTag("time");
 }

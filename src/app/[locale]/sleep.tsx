@@ -16,7 +16,7 @@ export async function Sleep() {
     return (
         <div>
             {(data as { time: string })?.time || "timeout"}
-            <ErrorToast error={error} />
+            <ErrorToast error={error} key={Date.now()} />
         </div>
     );
 }

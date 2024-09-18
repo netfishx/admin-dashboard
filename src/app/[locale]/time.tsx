@@ -5,7 +5,7 @@ export async function Time() {
 
     try {
         const res = await request(`${process.env.BASE_URL}/time`, {
-            next: { revalidate: 10 },
+            next: { revalidate: 10, tags: ["time"] },
         });
         data = (await res.json()) as { time: string };
     } catch (e) {
