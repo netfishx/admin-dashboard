@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 import "@/assets/globals.css";
-import { Toaster } from "@/components/ui/toaster";
+import { Toaster } from "@/components/ui/sonner"
 import { Provider } from "jotai";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
@@ -21,7 +21,7 @@ export default async function RootLayout({
   return (
     <html lang={locale}>
       <body>
-        <Toaster />
+        <Toaster position="top-center" richColors expand visibleToasts={1} toastOptions={{ duration: 1000 }} />
         <NextIntlClientProvider messages={messages}>
           <Provider>{children}</Provider>
         </NextIntlClientProvider>
