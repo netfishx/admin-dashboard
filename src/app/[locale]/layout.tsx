@@ -7,7 +7,7 @@ import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
 import type { ReactNode } from "react";
 export const metadata: Metadata = {
-  title: "PFGO",
+  title: "管理后台",
 };
 
 export default async function RootLayout({
