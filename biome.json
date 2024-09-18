@@ -34,7 +34,7 @@
         "useFilenamingConvention": "off"
       },
       "complexity": {
-        "noForEach": "warn"
+        "noForEach": "off"
       }
     }
   },

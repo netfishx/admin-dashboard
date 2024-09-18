@@ -10,7 +10,7 @@ export function middleware(request: NextRequest) {
     localePrefix: "never",
     locales: ["zh"],
   });
-  const user = request.cookies.get("user")?.value;
+  const _user = request.cookies.get("user")?.value;
 
   // if (!user && request.nextUrl.pathname !== "/login") {
   //   return Response.redirect(new URL("/login", request.url));
