@@ -1,11 +1,12 @@
 import { request } from "@/api";
 import { ErrorToast } from "@/app/[locale]/errorToast";
+import { headers } from "next/headers";
 
 export async function Sleep() {
     let data: { time: string } | null = null;
     let error = false;
     try {
-        const res = await request(`${process.env.BASE_URL}/`, {
+        const res = await request(`${process.env.BASE_URL}/`, headers(), {
             next: { revalidate: 10 },
         });
         data = (await res.json()) as { time: string };
