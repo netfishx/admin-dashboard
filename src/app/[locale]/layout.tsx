@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-import "@/app/globals.css";
+import "@/assets/globals.css";
 import { Toaster } from "@/components/ui/toaster";
 import { Provider } from "jotai";
 import { NextIntlClientProvider } from "next-intl";

@@ -1,4 +1,5 @@
 import { FormExample } from "@/app/[locale]/form";
+import { RefreshButton } from "@/app/[locale]/refreshButton";
 import { Sleep } from "@/app/[locale]/sleep";
 import { Time } from "@/app/[locale]/time";
 import { Button } from "@/components/ui/button";
@@ -16,6 +17,9 @@ export default function Home() {
   const ip = array?.[array.length - 1] ?? FALLBACK_IP_ADDRESS;
   return (
     <div className="flex flex-col gap-4">
+      <div className="flex justify-end">
+        <RefreshButton />
+      </div>
       {ip}
       <Suspense fallback={<div>Loading...</div>}>
         <Time />
