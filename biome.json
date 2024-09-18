@@ -1,39 +1,45 @@
 {
-    "$schema": "https://biomejs.dev/schemas/1.9.1/schema.json",
-    "files": {
-      "ignore": ["src/components/ui"]
-    },
-    "organizeImports": {
-      "enabled": true
-    },
-    "linter": {
-      "enabled": true,
-      "rules": {
-        "all": true,
-        "suspicious": {
-          "noExplicitAny": "info",
-          "noReactSpecificProps": "off"
-        },
-        "a11y": {
-          "useKeyWithClickEvents": "info"
-        },
-        "correctness": {
-          "useExhaustiveDependencies": "warn",
-          "noNodejsModules": "off"
-        },
-        "style": {
-          "noDefaultExport": "off",
-          "noImplicitBoolean": "off",
-          "useNamingConvention": "off",
-          "useFilenamingConvention": "off"
-        },
-        "complexity": {
-          "noForEach": "warn"
+  "$schema": "https://biomejs.dev/schemas/1.9.1/schema.json",
+  "files": {
+    "ignore": ["src/components/ui"]
+  },
+  "organizeImports": {
+    "enabled": true
+  },
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "all": true,
+      "suspicious": {
+        "noExplicitAny": "info",
+        "noReactSpecificProps": "off",
+        "noConsole": {
+          "level": "warn",
+          "options": {
+            "allow": ["info", "error", "warn"]
+          }
         }
+      },
+      "a11y": {
+        "useKeyWithClickEvents": "info"
+      },
+      "correctness": {
+        "useExhaustiveDependencies": "warn",
+        "noNodejsModules": "off"
+      },
+      "style": {
+        "noDefaultExport": "off",
+        "noImplicitBoolean": "off",
+        "useNamingConvention": "off",
+        "useFilenamingConvention": "off"
+      },
+      "complexity": {
+        "noForEach": "warn"
       }
-    },
-    "formatter": {
-      "enabled": true,
-      "indentStyle": "space"
     }
+  },
+  "formatter": {
+    "enabled": true,
+    "indentStyle": "space"
   }
+}

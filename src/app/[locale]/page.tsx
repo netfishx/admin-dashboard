@@ -1,7 +1,10 @@
+import { FormExample } from "@/app/[locale]/form";
+import { Time } from "@/app/[locale]/time";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Input as Password } from "@/components/ui/password";
 import { headers } from "next/headers";
-import { FormExample } from "./form";
+import { Suspense } from "react";
 
 export default function Home() {
   const FALLBACK_IP_ADDRESS = '0.0.0.0'
@@ -11,12 +14,16 @@ export default function Home() {
   return (
     <div className="flex flex-col gap-4">
       {ip}
+      <Suspense fallback={<div>Loading...</div>}>
+        <Time />
+      </Suspense>
       <div className="flex p-4 gap-4">
         <Input />
         <Button>Hello</Button>
       </div>
       <div>
         <FormExample />
+        <Password type="password" />
       </div>
     </div>
   );
