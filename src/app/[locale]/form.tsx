@@ -3,6 +3,7 @@
 import { incrementNumberAction } from "@/actions";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { ReloadIcon } from "@radix-ui/react-icons";
 import { useServerAction } from "zsa-react";
 
 export function FormExample() {
@@ -15,6 +16,9 @@ export function FormExample() {
         <Input type="number" name="number" required />
       </label>
       <Button type="submit" disabled={isPending}>
+        {isPending ? (
+          <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
+        ) : null}
         Submit
       </Button>
 
