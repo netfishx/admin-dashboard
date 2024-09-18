@@ -5,6 +5,20 @@ import createNextIntlPlugin from "next-intl/plugin";
 const withNextIntl = createNextIntlPlugin();
 
 const nextConfig: NextConfig = {
+  // biome-ignore lint/suspicious/useAwait: <explanation>
+  async headers() {
+    return [
+      {
+        source: "/:path*{/}?",
+        headers: [
+          {
+            key: "X-Accel-Buffering",
+            value: "no",
+          },
+        ],
+      },
+    ];
+  },
   devIndicators: {
     buildActivityPosition: "bottom-right",
   },
@@ -16,18 +30,7 @@ const nextConfig: NextConfig = {
       bodySizeLimit: "5mb",
     },
   },
-  images: {
-    remotePatterns: [
-      {
-        hostname: "car7788.com",
-        pathname: "/api/**",
-        port: "",
-        protocol: "https",
-      },
-    ],
-  },
   output: "standalone",
 };
 
 export default withNextIntl(nextConfig);
-

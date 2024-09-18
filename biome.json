@@ -1,5 +1,5 @@
 {
-    "$schema": "https://biomejs.dev/schemas/1.8.3/schema.json",
+    "$schema": "https://biomejs.dev/schemas/1.9.1/schema.json",
     "files": {
       "ignore": ["src/components/ui"]
     },
@@ -11,7 +11,8 @@
       "rules": {
         "all": true,
         "suspicious": {
-          "noExplicitAny": "info"
+          "noExplicitAny": "info",
+          "noReactSpecificProps": "off"
         },
         "a11y": {
           "useKeyWithClickEvents": "info"
