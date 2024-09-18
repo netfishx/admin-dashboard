@@ -1,7 +1,7 @@
 build:
   stage: build
   only:
-    - master
+    - test
   script:
     - BUILD_ID="$(date +%Y%m%d%H%M%S)"
     - docker build -t admin-006:$BUILD_ID .
