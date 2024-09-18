@@ -1,5 +1,13 @@
+import { request } from "@/utils/api"
+
 export async function Time() {
-    const res = await fetch(`${process.env.BASE_URL}/time`, { next: { revalidate: 10 } })
-    const data = await res.json()
-    return <div>{(data as { time: string }).time}</div>
+    let data: { time: string } | null = null
+
+    try {
+        const res = await request(`${process.env.BASE_URL}/time`, { next: { revalidate: 10 } })
+        data = (await res.json()) as { time: string }
+    } catch (e) {
+        console.error(e)
+    }
+    return <div>{(data as { time: string })?.time || "timeout"}</div>
 }

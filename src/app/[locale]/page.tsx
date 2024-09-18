@@ -1,4 +1,5 @@
 import { FormExample } from "@/app/[locale]/form";
+import { Sleep } from "@/app/[locale]/sleep";
 import { Time } from "@/app/[locale]/time";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -16,6 +17,9 @@ export default function Home() {
       {ip}
       <Suspense fallback={<div>Loading...</div>}>
         <Time />
+      </Suspense>
+      <Suspense fallback={<div>Loading...</div>}>
+        <Sleep />
       </Suspense>
       <div className="flex p-4 gap-4">
         <Input />

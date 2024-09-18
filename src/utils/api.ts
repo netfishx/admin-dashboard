@@ -1,9 +1,51 @@
-export function request(url: string, options: RequestInit, token?: string) {
-  return fetch(`${process.env.BASE_URL}${url}`, {
-    headers: {
+// export function request(url: string, options: RequestInit, token?: string) {
+//   return fetch(`${process.env.BASE_URL}${url}`, {
+//     headers: {
+//       "Content-Type": "application/json",
+//       Authorization: `Bearer ${token}`,
+//     },
+//     ...options,
+//   });
+// }
+
+const BASE_URL = process.env.BASE_URL;
+const TIMEOUT = 5000;
+
+function validateStatus(status: number): boolean {
+  return status >= 200 && status <= 500;
+}
+
+export async function request(
+  url: string,
+  config?: RequestInit,
+  token?: string,
+): Promise<Response> {
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), TIMEOUT);
+
+  try {
+    const fullUrl = new URL(url, BASE_URL);
+    const headers = new Headers({
+      ...config?.headers,
       "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-    ...options,
-  });
+    });
+
+    if (token) {
+      headers.set("Authorization", `Bearer ${token}`);
+    }
+
+    const response = await fetch(fullUrl.toString(), {
+      ...config,
+      headers,
+      signal: controller.signal,
+    });
+
+    if (!validateStatus(response.status)) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    return response;
+  } finally {
+    clearTimeout(timeoutId);
+  }
 }
