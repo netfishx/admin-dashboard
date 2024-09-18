@@ -16,7 +16,7 @@ export default function Home() {
   const array = headers().get("x-forwarded-for")?.split(",")[0]?.split(":");
   const ip = array?.[array.length - 1] ?? FALLBACK_IP_ADDRESS;
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-4 p-4">
       <div className="flex justify-end">
         <RefreshButton />
       </div>
@@ -27,11 +27,11 @@ export default function Home() {
       <Suspense fallback={<div>Loading...</div>}>
         <Sleep />
       </Suspense>
-      <div className="flex p-4 gap-4">
+      <div className="flex gap-4">
         <Input />
         <Button>Hello</Button>
       </div>
-      <div>
+      <div className="flex flex-col gap-4">
         <FormExample />
         <Password type="password" />
       </div>
