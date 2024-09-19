@@ -1,0 +1,72 @@
+diff --git a/package.json b/package.json
+index 4e8389a8a72d2da2cb941e732b8536bbc1022663..047ccd40dbfd10befd8302aa3487b86067ff626c 100644
+--- a/package.json
++++ b/package.json
+@@ -2,34 +2,21 @@
+   "name": "jotai",
+   "description": "👻 Primitive and flexible state management for React",
+   "private": false,
+-  "type": "commonjs",
+   "version": "2.9.3",
+   "main": "./index.js",
+   "types": "./index.d.ts",
+   "typesVersions": {
+     ">=4.8": {
+-      "esm/*": [
+-        "esm/*"
+-      ],
+-      "*": [
+-        "*"
+-      ]
++      "esm/*": ["esm/*"],
++      "*": ["*"]
+     },
+     ">=3.8": {
+-      "esm/*": [
+-        "ts3.8/*"
+-      ],
+-      "*": [
+-        "ts3.8/*"
+-      ]
++      "esm/*": ["ts3.8/*"],
++      "*": ["ts3.8/*"]
+     },
+     "*": {
+-      "esm/*": [
+-        "ts_version_3.8_and_above_is_required.d.ts"
+-      ],
+-      "*": [
+-        "ts_version_3.8_and_above_is_required.d.ts"
+-      ]
++      "esm/*": ["ts_version_3.8_and_above_is_required.d.ts"],
++      "*": ["ts_version_3.8_and_above_is_required.d.ts"]
+     }
+   },
+   "exports": {
+@@ -55,9 +42,7 @@
+       }
+     }
+   },
+-  "files": [
+-    "**"
+-  ],
++  "files": ["**"],
+   "sideEffects": false,
+   "engines": {
+     "node": ">=12.20.0"
+@@ -66,14 +51,7 @@
+     "type": "git",
+     "url": "git+https://github.com/pmndrs/jotai.git"
+   },
+-  "keywords": [
+-    "react",
+-    "state",
+-    "manager",
+-    "management",
+-    "recoil",
+-    "store"
+-  ],
++  "keywords": ["react", "state", "manager", "management", "recoil", "store"],
+   "author": "Daishi Kato",
+   "contributors": [],
+   "license": "MIT",
