@@ -26,7 +26,7 @@
     "@radix-ui/react-tooltip": "^1.1.2",
     "@tanstack/react-table": "^8.20.5",
     "@total-typescript/ts-reset": "^0.6.1",
-    "babel-plugin-react-compiler": "^0.0.0-experimental-ca8e0be-20240916",
+    "babel-plugin-react-compiler": "^0.0.0-experimental-24ec0eb-20240918",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "date-fns": "^4.1.0",
@@ -36,9 +36,10 @@
     "next-intl": "^3.19.3",
     "next-safe-action": "^7.9.3",
     "next-themes": "^0.3.0",
-    "react": "^19.0.0-rc-a99d8e8d-20240916",
+    "nuqs": "^1.19.1",
+    "react": "^19.0.0-rc-5dcb0097-20240918",
     "react-day-picker": "8.10.1",
-    "react-dom": "^19.0.0-rc-a99d8e8d-20240916",
+    "react-dom": "^19.0.0-rc-5dcb0097-20240918",
     "react-hook-form": "^7.53.0",
     "recharts": "^2.12.7",
     "sonner": "^1.5.0",
@@ -59,9 +60,9 @@
   "overrides": {
     "@types/react": "npm:types-react@19.0.0-rc.1",
     "@types/react-dom": "npm:types-react-dom@19.0.0-rc.1",
-    "next": "^15.0.0-canary.158",
-    "react": "^19.0.0-rc-a99d8e8d-20240916",
-    "react-dom": "^19.0.0-rc-a99d8e8d-20240916"
+    "next": "^15.0.0-canary.159",
+    "react": "^19.0.0-rc-5dcb0097-20240918",
+    "react-dom": "^19.0.0-rc-5dcb0097-20240918"
   },
   "trustedDependencies": ["@biomejs/biome", "sharp"]
 }
