@@ -1,5 +1,5 @@
 diff --git a/package.json b/package.json
-index 4e8389a8a72d2da2cb941e732b8536bbc1022663..047ccd40dbfd10befd8302aa3487b86067ff626c 100644
+index 13a9f56fd610db1e418fbc861bbcf852251bc106..cc4858537e5ff3637c974fdb4e295d9dfd03a581 100644
 --- a/package.json
 +++ b/package.json
 @@ -2,34 +2,21 @@
@@ -7,7 +7,7 @@ index 4e8389a8a72d2da2cb941e732b8536bbc1022663..047ccd40dbfd10befd8302aa3487b860
    "description": "👻 Primitive and flexible state management for React",
    "private": false,
 -  "type": "commonjs",
-   "version": "2.9.3",
+   "version": "2.10.0",
    "main": "./index.js",
    "types": "./index.d.ts",
    "typesVersions": {
