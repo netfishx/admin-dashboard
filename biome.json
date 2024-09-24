@@ -18,7 +18,8 @@
           "options": {
             "allow": ["info", "error", "warn"]
           }
-        }
+        },
+        "useAwait": "off"
       },
       "a11y": {
         "useKeyWithClickEvents": "info"

@@ -51,7 +51,6 @@ export const incrementNumberAction = actionClient
     };
   });
 
-// biome-ignore lint/suspicious/useAwait: <explanation>
 export async function refresh() {
   revalidateTag("time");
 }

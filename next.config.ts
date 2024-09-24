@@ -1,11 +1,9 @@
-/** @type {import('next').NextConfig} */
 import type { NextConfig } from "next";
 import createNextIntlPlugin from "next-intl/plugin";
 
 const withNextIntl = createNextIntlPlugin();
 
 const nextConfig: NextConfig = {
-  // biome-ignore lint/suspicious/useAwait: <explanation>
   async headers() {
     return [
       {
