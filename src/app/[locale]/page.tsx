@@ -11,11 +11,12 @@ import { Suspense } from "react";
 
 export default function Home() {
   const FALLBACK_IP_ADDRESS = "0.0.0.0";
-  headers().forEach((value, key) => {
-    console.info("header", key, value);
-  });
+  // headers().forEach((value, key) => {
+  //   console.info("header", key, value);
+  // });
   const array = headers().get("x-forwarded-for")?.split(",")[0]?.split(":");
   const ip = array?.[array.length - 1] ?? FALLBACK_IP_ADDRESS;
+  console.info("home");
   return (
     <div className="flex flex-col gap-4 p-4">
       <div className="flex gap-4">

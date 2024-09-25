@@ -1,4 +1,4 @@
-FROM imbios/bun-node:1-20-alpine AS base
+FROM imbios/bun-node:1-22-alpine AS base
 
 WORKDIR /app
 
