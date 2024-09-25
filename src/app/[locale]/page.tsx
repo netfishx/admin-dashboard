@@ -2,11 +2,13 @@ import { FormExample } from "@/app/[locale]/form";
 import { RefreshButton } from "@/app/[locale]/refreshButton";
 import { Sleep } from "@/app/[locale]/sleep";
 import { Time } from "@/app/[locale]/time";
+import demo from "@/assets/images/demo.jpg";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Input as Password } from "@/components/ui/password";
 import { Link } from "next-view-transitions";
 import { headers } from "next/headers";
+import Image from "next/image";
 import { Suspense } from "react";
 
 export default function Home() {
@@ -32,6 +34,14 @@ export default function Home() {
       </div>
       <div className="flex justify-end">
         <RefreshButton />
+      </div>
+      <div>
+        <Image
+          src={demo}
+          alt="demo"
+          width={300}
+          className="rounded-md object-cover"
+        />
       </div>
       {ip}
       <Suspense fallback={<div>Loading...</div>}>
