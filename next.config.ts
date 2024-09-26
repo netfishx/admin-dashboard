@@ -1,7 +1,4 @@
 import type { NextConfig } from "next";
-import createNextIntlPlugin from "next-intl/plugin";
-
-const withNextIntl = createNextIntlPlugin();
 
 const nextConfig: NextConfig = {
   async headers() {
@@ -37,4 +34,4 @@ const nextConfig: NextConfig = {
   output: "standalone",
 };
 
-export default withNextIntl(nextConfig);
+export default nextConfig;

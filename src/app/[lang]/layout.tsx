@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 
 import "@/assets/globals.css";
 import { Toaster } from "@/components/ui/sonner";
+import { type Lang, getDictionary } from "@/get-dictionary";
+import { DictProvider } from "@/utils/dict-provider";
 import { Provider } from "jotai";
-import { NextIntlClientProvider } from "next-intl";
-import { getMessages } from "next-intl/server";
 import { ViewTransitions } from "next-view-transitions";
 import type { ReactNode } from "react";
 
@@ -14,15 +14,17 @@ export const metadata: Metadata = {
 
 export default async function RootLayout({
   children,
-  params: { locale },
+  params,
 }: Readonly<{
   children: ReactNode;
-  params: { locale: string };
+  params: Promise<{ lang: Lang }>;
 }>) {
-  const messages = await getMessages();
+  const { lang } = await params;
+  const dictionary = await getDictionary(lang);
+
   return (
     <ViewTransitions>
-      <html lang={locale}>
+      <html lang={lang}>
         <body>
           <Toaster
             position="top-center"
@@ -31,9 +33,9 @@ export default async function RootLayout({
             visibleToasts={1}
             toastOptions={{ duration: 1000 }}
           />
-          <NextIntlClientProvider messages={messages}>
+          <DictProvider dictionary={dictionary}>
             <Provider>{children}</Provider>
-          </NextIntlClientProvider>
+          </DictProvider>
         </body>
       </html>
     </ViewTransitions>

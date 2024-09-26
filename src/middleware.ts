@@ -1,24 +1,39 @@
-import createMiddleware from "next-intl/middleware";
-import type { LocalePrefix } from "next-intl/routing";
-import type { NextRequest } from "next/server";
+import { match } from "@formatjs/intl-localematcher";
+import Negotiator from "negotiator";
+import { type NextRequest, NextResponse } from "next/server";
 
-export const localePrefix = "never" satisfies LocalePrefix;
+const langs = ["zh", "ja"];
+
+function getlang(request: NextRequest) {
+  const negotiatorHeaders: Record<string, string> = {};
+  request.headers.forEach((value, key) => {
+    negotiatorHeaders[key] = value;
+  });
+  const languages = new Negotiator({ headers: negotiatorHeaders }).languages();
+
+  return match(languages, langs, "zh");
+}
 
 export function middleware(request: NextRequest) {
-  const handleI18nRouting = createMiddleware({
-    defaultLocale: "zh",
-    localePrefix: "never",
-    locales: ["zh"],
-  });
-  const _user = request.cookies.get("user")?.value;
+  const { pathname } = request.nextUrl;
+  const pathnameHaslang = langs.some(
+    (lang) => pathname.startsWith(`/${lang}/`) || pathname === `/${lang}`,
+  );
 
-  // if (!user && request.nextUrl.pathname !== "/login") {
-  //   return Response.redirect(new URL("/login", request.url));
-  // }
+  if (pathnameHaslang) {
+    return;
+  }
 
-  return handleI18nRouting(request);
+  const lang = getlang(request);
+  request.nextUrl.pathname = `/${lang}${pathname}`;
+  return NextResponse.redirect(request.nextUrl);
 }
 
 export const config = {
-  matcher: ["/((?!api|_next|_vercel|.*\\..*).*)"],
+  matcher: [
+    // Skip all internal paths (_next)
+    "/((?!_next).*)",
+    // Optional: only run on root (/) URL
+    // '/'
+  ],
 };
