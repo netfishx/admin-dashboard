@@ -12,18 +12,23 @@ import { headers } from "next/headers";
 import Image from "next/image";
 import { Suspense } from "react";
 
-export default async function Home({ params }: { params: { lang: Lang } }) {
+export default async function Home({
+  params,
+}: Readonly<{
+  params: Promise<{ lang: Lang }>;
+}>) {
   const FALLBACK_IP_ADDRESS = "0.0.0.0";
   // headers().forEach((value, key) => {
   //   console.info("header", key, value);
   // });
+  const { lang } = await params;
   const array = (await headers())
     .get("x-forwarded-for")
     ?.split(",")[0]
     ?.split(":");
   const ip = array?.[array.length - 1] ?? FALLBACK_IP_ADDRESS;
   console.info("home");
-  const dict = await getDictionary(params.lang);
+  const dict = await getDictionary(lang);
   return (
     <div className="flex flex-col gap-4 p-4">
       <div>国际化测试：{dict.common["500"]}</div>
