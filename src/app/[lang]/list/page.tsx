@@ -1,4 +1,4 @@
-import HierarchicalTable from "@/app/[locale]/list/a";
+import HierarchicalTable from "@/app/[lang]/list/a";
 
 export default function List() {
   const data = [

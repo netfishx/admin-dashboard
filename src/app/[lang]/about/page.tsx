@@ -1,4 +1,4 @@
-import { A } from "@/app/[locale]/about/a";
+import { A } from "@/app/[lang]/about/a";
 
 export default function About() {
   return (

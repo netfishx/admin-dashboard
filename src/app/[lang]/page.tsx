@@ -1,26 +1,37 @@
-import { FormExample } from "@/app/[locale]/form";
-import { RefreshButton } from "@/app/[locale]/refreshButton";
-import { Sleep } from "@/app/[locale]/sleep";
-import { Time } from "@/app/[locale]/time";
+import { FormExample } from "@/app/[lang]/form";
+import { RefreshButton } from "@/app/[lang]/refreshButton";
+import { Sleep } from "@/app/[lang]/sleep";
+import { Time } from "@/app/[lang]/time";
 import demo from "@/assets/images/demo.jpg";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Input as Password } from "@/components/ui/password";
+import { type Lang, getDictionary } from "@/get-dictionary";
 import { Link } from "next-view-transitions";
 import { headers } from "next/headers";
 import Image from "next/image";
 import { Suspense } from "react";
 
-export default function Home() {
+export default async function Home({
+  params,
+}: Readonly<{
+  params: Promise<{ lang: Lang }>;
+}>) {
   const FALLBACK_IP_ADDRESS = "0.0.0.0";
   // headers().forEach((value, key) => {
   //   console.info("header", key, value);
   // });
-  const array = headers().get("x-forwarded-for")?.split(",")[0]?.split(":");
+  const { lang } = await params;
+  const array = (await headers())
+    .get("x-forwarded-for")
+    ?.split(",")[0]
+    ?.split(":");
   const ip = array?.[array.length - 1] ?? FALLBACK_IP_ADDRESS;
   console.info("home");
+  const dict = await getDictionary(lang);
   return (
     <div className="flex flex-col gap-4 p-4">
+      <div>国际化测试：{dict.common["500"]}</div>
       <div className="flex gap-4">
         <Button asChild variant="link">
           <Link href="/about">About</Link>
