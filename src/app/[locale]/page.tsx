@@ -6,6 +6,7 @@ import demo from "@/assets/images/demo.jpg";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Input as Password } from "@/components/ui/password";
+import { Skeleton } from "@/components/ui/skeleton";
 import { Link } from "next-view-transitions";
 import { headers } from "next/headers";
 import Image from "next/image";
@@ -53,10 +54,10 @@ export default async function Home() {
         />
       </div>
       {ip}
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense fallback={<Skeleton className="h-4 w-[200px]" />}>
         <Time />
       </Suspense>
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense fallback={<Skeleton className="h-4 w-[200px]" />}>
         <Sleep />
       </Suspense>
       <div className="flex gap-4">

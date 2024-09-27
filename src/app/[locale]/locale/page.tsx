@@ -7,7 +7,7 @@ import { use } from "react";
 
 export default function LocalePage() {
   return (
-    <div>
+    <div className="flex flex-col gap-4 p-4">
       国际化测试
       <div>
         <Button asChild>
