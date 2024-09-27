@@ -2,9 +2,8 @@ import type { Metadata } from "next";
 
 import "@/assets/globals.css";
 import { Toaster } from "@/components/ui/sonner";
-import { type Lang, getDictionary } from "@/get-dictionary";
-import { DictProvider } from "@/utils/dict-provider";
-import { Provider } from "jotai";
+import { Provider as I18nProvider } from "@/locales/provider";
+import { Provider as JotaiProvider } from "jotai";
 import { ViewTransitions } from "next-view-transitions";
 import type { ReactNode } from "react";
 
@@ -17,14 +16,13 @@ export default async function RootLayout({
   params,
 }: Readonly<{
   children: ReactNode;
-  params: Promise<{ lang: Lang }>;
+  params: Promise<{ locale: string }>;
 }>) {
-  const { lang } = await params;
-  const dictionary = await getDictionary(lang);
+  const { locale } = await params;
 
   return (
     <ViewTransitions>
-      <html lang={lang}>
+      <html lang={locale}>
         <body>
           <Toaster
             position="top-center"
@@ -33,9 +31,9 @@ export default async function RootLayout({
             visibleToasts={1}
             toastOptions={{ duration: 1000 }}
           />
-          <DictProvider dictionary={dictionary}>
-            <Provider>{children}</Provider>
-          </DictProvider>
+          <JotaiProvider>
+            <I18nProvider locale={locale}>{children}</I18nProvider>
+          </JotaiProvider>
         </body>
       </html>
     </ViewTransitions>

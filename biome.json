@@ -26,7 +26,8 @@
       },
       "correctness": {
         "useExhaustiveDependencies": "warn",
-        "noNodejsModules": "off"
+        "noNodejsModules": "off",
+        "useImportExtensions": "off"
       },
       "style": {
         "noDefaultExport": "off",
@@ -41,6 +42,7 @@
   },
   "formatter": {
     "enabled": true,
-    "indentStyle": "space"
+    "indentStyle": "space",
+    "ignore": ["src/locales/*.ts"]
   }
 }

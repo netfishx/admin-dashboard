@@ -1,4 +1,4 @@
-import { SearchForm } from "@/app/[lang]/search/form";
+import { SearchForm } from "@/app/[locale]/search/form";
 import { Button } from "@/components/ui/button";
 import { Link } from "next-view-transitions";
 

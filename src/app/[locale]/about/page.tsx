@@ -1,4 +1,4 @@
-import { A } from "@/app/[lang]/about/a";
+import { A } from "@/app/[locale]/about/a";
 import { Button } from "@/components/ui/button";
 import { Link } from "next-view-transitions";
 
