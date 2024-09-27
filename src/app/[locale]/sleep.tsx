@@ -1,5 +1,5 @@
 import { request } from "@/api";
-import { ErrorToast } from "@/app/[lang]/errorToast";
+import { ErrorToast } from "@/app/[locale]/errorToast";
 import { headers } from "next/headers";
 
 export async function Sleep() {

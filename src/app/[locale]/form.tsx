@@ -3,6 +3,7 @@
 import { incrementNumberAction } from "@/actions";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { useI18n } from "@/locales/client";
 import { ReloadIcon } from "@radix-ui/react-icons";
 import { useStateAction } from "next-safe-action/stateful-hooks";
 import { type ChangeEvent, type FormEvent, useState } from "react";
@@ -28,8 +29,11 @@ export function FormExample() {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
+  const t = useI18n();
+
   return (
     <form onSubmit={handleSubmit}>
+      <div>client i18n: {t("hello")}</div>
       <p className="text-blue-500">{JSON.stringify(result)}</p>
       <label htmlFor="name" className="flex flex-col gap-2">
         姓名:
