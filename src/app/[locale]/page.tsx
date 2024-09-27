@@ -6,7 +6,6 @@ import demo from "@/assets/images/demo.jpg";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Input as Password } from "@/components/ui/password";
-import { getI18n } from "@/locales/server";
 import { Link } from "next-view-transitions";
 import { headers } from "next/headers";
 import Image from "next/image";
@@ -24,11 +23,13 @@ export default async function Home() {
     ?.split(":");
   const ip = array?.[array.length - 1] ?? FALLBACK_IP_ADDRESS;
 
-  const t = await getI18n();
-
   return (
     <div className="flex flex-col gap-4 p-4">
-      <div>国际化测试：{t("hello")}</div>
+      <div>
+        <Button asChild variant="outline">
+          <Link href="/locale">国际化测试</Link>
+        </Button>
+      </div>
       <div className="flex gap-4">
         <Button asChild variant="link">
           <Link href="/about">About</Link>
