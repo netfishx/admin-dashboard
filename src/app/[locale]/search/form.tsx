@@ -4,13 +4,14 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useRouter } from "next/navigation";
-import { parseAsInteger, useQueryState } from "nuqs";
+import { parseAsInteger, parseAsString, useQueryStates } from "nuqs";
 
 export function SearchForm() {
-  const [name, setName] = useQueryState("name", {
-    defaultValue: "",
+  const [data, setData] = useQueryStates({
+    name: parseAsString.withDefault(""),
+    age: parseAsInteger,
   });
-  const [age, setAge] = useQueryState("age", parseAsInteger);
+  const { name, age } = data;
   const router = useRouter();
   return (
     <div className="flex gap-2">
@@ -19,7 +20,7 @@ export function SearchForm() {
         type="text"
         name="name"
         value={name}
-        onChange={(e) => setName(e.target.value ?? "")}
+        onChange={(e) => setData({ ...data, name: e.target.value })}
       />
       <Label>Age</Label>
       <Input
@@ -27,7 +28,10 @@ export function SearchForm() {
         name="age"
         value={age ?? undefined}
         onChange={(e) =>
-          setAge(e.target.value ? Number.parseInt(e.target.value) : null)
+          setData({
+            ...data,
+            age: e.target.value ? Number.parseInt(e.target.value) : null,
+          })
         }
       />
       <Button onClick={router.refresh}>Search</Button>
