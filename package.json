@@ -40,9 +40,9 @@
     "next-themes": "^0.3.0",
     "next-view-transitions": "^0.3.2",
     "nuqs": "^1.19.3",
-    "react": "^19.0.0-rc-67fee58b-20240926",
+    "react": "^19.0.0-rc-2d16326d-20240930",
     "react-day-picker": "8.10.1",
-    "react-dom": "^19.0.0-rc-67fee58b-20240926",
+    "react-dom": "^19.0.0-rc-2d16326d-20240930",
     "react-hook-form": "^7.53.0",
     "recharts": "^2.12.7",
     "server-only": "^0.0.1",
@@ -67,8 +67,8 @@
     "@types/react-dom": "npm:types-react-dom@19.0.0-rc.1",
     "date-fns": "4.1.0",
     "next": "15.0.0-canary.173",
-    "react": "19.0.0-rc-67fee58b-20240926",
-    "react-dom": "19.0.0-rc-67fee58b-20240926"
+    "react": "19.0.0-rc-2d16326d-20240930",
+    "react-dom": "19.0.0-rc-2d16326d-20240930"
   },
   "trustedDependencies": ["@biomejs/biome", "sharp"],
   "patchedDependencies": {
