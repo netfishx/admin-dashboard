@@ -1,7 +1,7 @@
 import { ClientI18n } from "@/app/[locale]/locale/client-i18n";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { getI18n } from "@/locales/server";
+import { getI18n, getScopedI18n } from "@/locales/server";
 import { Link } from "next-view-transitions";
 import { use } from "react";
 
@@ -26,6 +26,7 @@ export default function LocalePage() {
 
 function ServerI18n() {
   const t = use(getI18n());
+  const t2 = use(getScopedI18n("hello"));
   return (
     <Card>
       <CardHeader>
@@ -33,6 +34,8 @@ function ServerI18n() {
       </CardHeader>
       <CardContent>
         <p>{t("hello")}</p>
+        <p>{t("welcome", { name: "006" })}</p>
+        <p>{t2("world")}</p>
       </CardContent>
     </Card>
   );
