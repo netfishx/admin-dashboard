@@ -5,7 +5,7 @@ import { Time } from "@/app/[locale]/time";
 import demo from "@/assets/images/demo.jpg";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Input as Password } from "@/components/ui/password";
+import { Password } from "@/components/ui/password";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Link } from "next-view-transitions";
 import { headers } from "next/headers";
@@ -40,6 +40,9 @@ export default async function Home() {
         </Button>
         <Button asChild variant="link">
           <Link href="/search">Search</Link>
+        </Button>
+        <Button asChild variant="link">
+          <Link href="/tree">Tree Select</Link>
         </Button>
       </div>
       <div className="flex justify-end">

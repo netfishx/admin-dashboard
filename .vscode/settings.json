@@ -15,7 +15,5 @@
   "[typescriptreact]": {
     "editor.defaultFormatter": "biomejs.biome"
   },
-  "i18n-ally.localesPaths": ["src/messages"],
-  "i18n-ally.sourceLanguage": "zh",
   "typescript.tsdk": "node_modules/typescript/lib"
 }
