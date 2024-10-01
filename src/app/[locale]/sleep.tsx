@@ -7,9 +7,7 @@ export async function Sleep() {
   let error = false;
   try {
     const header = await headers();
-    const res = await request("/", header, {
-      next: { revalidate: 10 },
-    });
+    const res = await request("/", header);
     data = (await res.json()) as { time: string };
   } catch (e) {
     console.error(e);
