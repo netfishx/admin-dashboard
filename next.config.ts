@@ -18,8 +18,10 @@ const nextConfig: NextConfig = {
     buildActivityPosition: "bottom-right",
   },
   experimental: {
+    after: true,
     ppr: true,
     reactCompiler: true,
+    dynamicIO: true,
     serverActions: {
       bodySizeLimit: "5mb",
     },
