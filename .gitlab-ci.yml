@@ -1,0 +1,10 @@
+build:
+  stage: build
+  only:
+    - test
+  script:
+    - BUILD_ID="$(date +%Y%m%d%H%M%S)"
+    - docker build -t admin-006:$BUILD_ID .
+    - docker stop admin-006 || true
+    - docker rm admin-006 || true
+    - docker run -d -p 3333:3000 --name admin-006 --network demo admin-006:$BUILD_ID
