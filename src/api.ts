@@ -31,10 +31,10 @@ export async function request(
     const array = nextHeaders.get("x-forwarded-for")?.split(",")[0]?.split(":");
     const ip = array?.[array.length - 1] ?? FALLBACK_IP_ADDRESS;
     const headers = new Headers({
-      ...Object.fromEntries(nextHeaders.entries()),
       ...config?.headers,
       "X-Forwarded-For": ip,
       "Content-Type": "application/json",
+      "Accept-Language": nextHeaders.get("Accept-Language") ?? "zh-CN",
     });
 
     if (token) {
