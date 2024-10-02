@@ -51,6 +51,7 @@ interface DataTableProps<T> {
   };
   expandable?: ExpandableConfig<T>;
   indentSize?: number; // 缩进大小
+  dataType?: 'flat' | 'tree'; // 新增，指定数据类型
 }
 
 // 定义树形数据类型
@@ -331,6 +332,7 @@ export function DataTable<T>({
   pagination,
   expandable,
   indentSize = 20,
+  dataType = 'flat', // 默认值为 'flat'
 }: DataTableProps<T>) {
   const [sortState, setSortState] = useState<SortState>({
     columnKey: '',
@@ -351,12 +353,18 @@ export function DataTable<T>({
     return dataSource;
   }, [dataSource, sortState, columns]);
 
-  // 转换为树形数据
+  // 根据 dataType 来处理数据
   const treeData = useMemo(() => {
-    return toTreeData(sortedData as TreeData<T>[], 'invoice', 'parentInvoice');
-  }, [sortedData]);
+    if (dataType === 'flat') {
+      // 使用 toTreeData 函数将扁平数据转换为树形数据
+      return toTreeData(sortedData as TreeData<T>[], 'invoice', 'parentInvoice');
+    } else {
+      // 数据已经是树形结构，直接使用
+      return sortedData as TreeData<T>[];
+    }
+  }, [sortedData, dataType]);
 
-  // 分页处理
+  // 分页处理（保持不变）
   const [currentPage, setCurrentPage] = useState(pagination?.current || 1);
   const [pageSize, setPageSize] = useState(pagination?.pageSize || 10);
 

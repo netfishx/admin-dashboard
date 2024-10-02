@@ -3,10 +3,9 @@
 import React, { useState } from 'react'
 import { DataTable } from "@/app/[locale]/pagination/dataTable";
 import { DataPagination } from "@/app/[locale]/pagination/dataPagination";
-import { invoices } from './sampleData';
+import { flatInvoices, treeInvoices } from './sampleData';
 
-  // 列配置
-  const columns = [
+const columns = [
     {
       title: 'Invoice',
       dataIndex: 'invoice',
@@ -114,6 +113,7 @@ import { invoices } from './sampleData';
   
   
   
+  
   // 可展开配置
   const expandable = {
     expandedRowRender: (record) => <div>这里是 {record.invoice} 的详细信息</div>,
@@ -135,16 +135,33 @@ export default  function pagination() {
         <div>
             <DataTable
                 columns={columns}
-                dataSource={invoices} // 使用示例数据
+                dataSource={treeInvoices} // 使用树形数据
                 rowKey="invoice"
+                dataType="tree" // 指定数据类型为 'tree'
                 pagination={{
                     current: currentPage,
                     pageSize: pageSize,
-                    total: invoices.length,
+                    total: treeInvoices.length,
                     onChange: handlePageChange,
                 }}
                 expandable={expandable}
+                indentSize={12} // 可根据需要调整缩进大小
             />
+            <DataTable
+                columns={columns}
+                dataSource={flatInvoices} // 使用扁平化数据
+                rowKey="invoice"
+                dataType="flat" // 指定数据类型为 'flat'
+                pagination={{
+                    current: currentPage,
+                    pageSize: pageSize,
+                    total: flatInvoices.length,
+                    onChange: handlePageChange,
+                }}
+                expandable={expandable}
+                indentSize={8} // 可根据需要调整缩进大小
+            />
+
             {/* <DataPagination
                 pageNum={pageNum}  // 可以传递，也可以不传，默认值为 1
                 onPageChange={handlePageChange}
