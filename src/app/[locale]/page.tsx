@@ -54,6 +54,7 @@ export default async function Home() {
           alt="demo"
           width={300}
           className="rounded-md object-cover"
+          priority={true}
         />
       </div>
       {ip}
@@ -69,7 +70,9 @@ export default async function Home() {
       </div>
       <div className="flex flex-col gap-4">
         <FormExample />
-        <Password type="password" />
+        <form>
+          <Password type="password" />
+        </form>
       </div>
     </div>
   );
