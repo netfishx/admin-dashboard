@@ -57,10 +57,14 @@ const config: Config = {
   			sm: 'calc(var(--radius) - 4px)'
   		},
 		spacing: {
-		'100px': '100px',
-		'120px': '120px',
-		'150px': '150px',
-		'200px': '200px',
+			'100px': '100px',
+			'120px': '120px',
+			'150px': '150px',
+			'200px': '200px',
+		},
+		zIndex: {
+			'10': '10',
+			'20': '20',
 		},
   	}
   },
