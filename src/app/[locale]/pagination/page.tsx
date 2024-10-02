@@ -1,10 +1,10 @@
 'use client';
 
 import React, { useState } from 'react'
-import { DataTable } from "@/app/[locale]/hzytest/dataTable";
-import { DataPagination } from "@/app/[locale]/hzytest/dataPagination";
+import { DataTable } from "@/app/[locale]/pagination/dataTable";
+import { DataPagination } from "@/app/[locale]/pagination/dataPagination";
 
-export default function hzytest() {
+export default function pagination() {
     const [pageNum, setPageNum] = useState(1);  // 当前页码
 
     // 处理页码变化
