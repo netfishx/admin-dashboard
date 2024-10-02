@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 
 import "@/assets/globals.css";
+import { ErrorToast } from "@/components/error-toast";
 import { Toaster } from "@/components/ui/sonner";
 import { Provider as I18nProvider } from "@/locales/provider";
 import { Provider as JotaiProvider } from "jotai";
@@ -33,6 +34,7 @@ export default async function RootLayout({
           />
           <JotaiProvider>
             <I18nProvider locale={locale}>{children}</I18nProvider>
+            <ErrorToast />
           </JotaiProvider>
         </body>
       </html>

@@ -1,5 +1,5 @@
 import { request } from "@/api";
-import { ErrorToast } from "@/app/[locale]/errorToast";
+import { SetError } from "@/components/set-error";
 import { headers } from "next/headers";
 
 export async function Sleep() {
@@ -20,7 +20,7 @@ export async function Sleep() {
   return (
     <div>
       {(data as { time: string })?.time || "timeout"}|{error && "error"}
-      <ErrorToast error={error} time={time} />
+      <SetError error={{ error, time, message: "test error toast" }} />
     </div>
   );
 }
