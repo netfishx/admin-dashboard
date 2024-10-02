@@ -59,6 +59,7 @@ interface TreeData<T> extends T {
   children?: TreeData<T>[];
 }
 
+// DataTableHeader 组件：渲染表格头部
 function DataTableHeader<T>({
   columns,
   onSort,
@@ -72,6 +73,7 @@ function DataTableHeader<T>({
 }) {
   const headerRows: React.ReactNode[][] = [];
 
+  // 生成表头行
   const generateHeaderRows = (columns: Column<T>[], level: number = 0) => {
     headerRows[level] = headerRows[level] || [];
 
@@ -142,7 +144,6 @@ function DataTableHeader<T>({
   );
 }
 
-
 // 辅助函数，用于计算列的 colSpan
 function getColSpan<T>(columns: Column<T>[]): number {
   return columns.reduce((sum, column) => {
@@ -152,6 +153,7 @@ function getColSpan<T>(columns: Column<T>[]): number {
     return sum + 1;
   }, 0);
 }
+
 // 辅助函数，用于获取表头的最大深度
 function getMaxDepth<T>(columns: Column<T>[], depth: number = 0): number {
   return columns.reduce((max, column) => {
@@ -449,4 +451,3 @@ export function DataTable<T>({
     </div>
   );
 }
-
