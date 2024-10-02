@@ -1,87 +1,96 @@
 import {
-    Table,
-    TableBody,
-    TableCaption,
-    TableCell,
-    TableFooter,
-    TableHead,
-    TableHeader,
-    TableRow,
-  } from "@/components/ui/table"
-  
-  const invoices = [
-    {
-      invoice: "INV001",
-      paymentStatus: "Paid",
-      totalAmount: "$250.00",
-      paymentMethod: "Credit Card",
-    },
-    {
-      invoice: "INV002",
-      paymentStatus: "Pending",
-      totalAmount: "$150.00",
-      paymentMethod: "PayPal",
-    },
-    {
-      invoice: "INV003",
-      paymentStatus: "Unpaid",
-      totalAmount: "$350.00",
-      paymentMethod: "Bank Transfer",
-    },
-    {
-      invoice: "INV004",
-      paymentStatus: "Paid",
-      totalAmount: "$450.00",
-      paymentMethod: "Credit Card",
-    },
-    {
-      invoice: "INV005",
-      paymentStatus: "Paid",
-      totalAmount: "$550.00",
-      paymentMethod: "PayPal",
-    },
-    {
-      invoice: "INV006",
-      paymentStatus: "Pending",
-      totalAmount: "$200.00",
-      paymentMethod: "Bank Transfer",
-    },
-    {
-      invoice: "INV007",
-      paymentStatus: "Unpaid",
-      totalAmount: "$300.00",
-      paymentMethod: "Credit Card",
-    },
-  ]
-  
-  export function DataTable() {
-    return (
-      <Table>
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableFooter,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table"
+
+// 更新并扩展数据，以增加表格宽度
+const invoices = [
+  {
+    invoice: "INV001",
+    date: "2023-10-01",
+    customer: "客户A",
+    paymentStatus: "Paid",
+    totalAmount: "$250.00",
+    paymentMethod: "Credit Card",
+    dueDate: "2023-11-01",
+    tax: "$25.00",
+    discount: "$10.00",
+    notes: "无",
+    extra1: "额外信息1",
+    extra2: "额外信息2",
+    extra3: "额外信息3",
+  },
+  // ... 其他数据项
+]
+
+export function DataTable() {
+  return (
+    <div className="overflow-x-auto">
+      <Table className="min-w-[1000px] border-collapse">
+        <TableCaption>您的近期发票列表。</TableCaption>
         <TableHeader>
           <TableRow>
-            <TableHead className="w-[100px]">Invoice</TableHead>
-            <TableHead>Status</TableHead>
-            <TableHead>Method</TableHead>
-            <TableHead className="text-right">Amount</TableHead>
+            <TableHead className="sticky left-0 z-10 bg-white w-[120px] border-b">
+              Invoice
+            </TableHead>
+            <TableHead className="border-b w-[150px]">Date</TableHead>
+            <TableHead className="border-b w-[150px]">Customer</TableHead>
+            <TableHead className="border-b w-[150px]">Status</TableHead>
+            <TableHead className="border-b w-[150px]">Method</TableHead>
+            <TableHead className="border-b w-[150px]">Due Date</TableHead>
+            <TableHead className="border-b w-[100px]">Tax</TableHead>
+            <TableHead className="border-b w-[100px]">Discount</TableHead>
+            <TableHead className="border-b w-[150px]">Extra1</TableHead>
+            <TableHead className="border-b w-[150px]">Extra2</TableHead>
+            <TableHead className="border-b w-[150px]">Extra3</TableHead>
+            <TableHead className="sticky right-0 z-10 bg-white w-[150px] border-b text-right">
+              Amount
+            </TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
           {invoices.map((invoice) => (
             <TableRow key={invoice.invoice}>
-              <TableCell className="font-medium">{invoice.invoice}</TableCell>
-              <TableCell>{invoice.paymentStatus}</TableCell>
-              <TableCell>{invoice.paymentMethod}</TableCell>
-              <TableCell className="text-right">{invoice.totalAmount}</TableCell>
+              <TableCell className="sticky left-0 z-10 bg-white font-medium w-[120px] border-b">
+                {invoice.invoice}
+              </TableCell>
+              <TableCell className="border-b w-[150px]">{invoice.date}</TableCell>
+              <TableCell className="border-b w-[150px]">{invoice.customer}</TableCell>
+              <TableCell className="border-b w-[150px]">{invoice.paymentStatus}</TableCell>
+              <TableCell className="border-b w-[150px]">{invoice.paymentMethod}</TableCell>
+              <TableCell className="border-b w-[150px]">{invoice.dueDate}</TableCell>
+              <TableCell className="border-b w-[100px]">{invoice.tax}</TableCell>
+              <TableCell className="border-b w-[100px]">{invoice.discount}</TableCell>
+              <TableCell className="border-b w-[150px]">{invoice.extra1}</TableCell>
+              <TableCell className="border-b w-[150px]">{invoice.extra2}</TableCell>
+              <TableCell className="border-b w-[150px]">{invoice.extra3}</TableCell>
+              <TableCell className="sticky right-0 z-10 bg-white w-[150px] border-b text-right">
+                {invoice.totalAmount}
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>
         <TableFooter>
           <TableRow>
-            <TableCell colSpan={3}>Total</TableCell>
-            <TableCell className="text-right">$2,500.00</TableCell>
+            <TableCell
+              className="sticky left-0 z-10 bg-white font-medium w-[120px] border-b"
+              colSpan={1}
+            >
+              Total
+            </TableCell>
+            <TableCell className="border-b" colSpan={10}></TableCell>
+            <TableCell className="sticky right-0 z-10 bg-white w-[150px] border-b text-right">
+              $2,500.00
+            </TableCell>
           </TableRow>
         </TableFooter>
       </Table>
-    )
-  }
-  
+    </div>
+  )
+}

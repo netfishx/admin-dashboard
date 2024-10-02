@@ -19,20 +19,24 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select"
-  
+
 import { useState } from "react";
+import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
 
 interface DatePaginationProps {
     pageNum?: number;      // 当前页码 (可选)
     pageSize?: number;     // 每页条数 (可选)
     total?: number;        // 总条目数 (可选)
+    pageSizeOptions?: Array<string>,
     onPageChange: (page: number, pageSize: number) => void;  // 页码变化的回调函数
 }
 
 export function DataPagination({
     pageNum = 1,           // 默认当前页码为 1
     pageSize = 10,         // 默认每页显示 10 条数据
-    total = 100,           // 默认总条目数为 100
+    total = 100,  
+    pageSizeOptions = ['5', '10', '15', '20', '50'],         // 默认总条目数为 100
     onPageChange,
 }: DatePaginationProps) {
     const totalPages = Math.ceil(total / pageSize); // 计算总页数
@@ -68,6 +72,9 @@ export function DataPagination({
         }
     };
 
+    const searchParams = useSearchParams()
+    const paramsObject = Object.fromEntries(searchParams.entries());
+
     return (
         <div className="pagination-container">
             <Pagination>
@@ -76,20 +83,30 @@ export function DataPagination({
                     <PaginationItem>
                         <PaginationPrevious
                             onClick={!isFirstPage ? () => handlePageChange(pageNum - 1) : undefined}
-                            className={isFirstPage ? "disabled" : ""}
+                            className={isFirstPage ? "arr disabled" : "arr"}
                         />
                     </PaginationItem>
 
                     {/* 页码渲染 */}
                     {numbers.map((item) => (
                         <PaginationItem key={item}>
-                            <PaginationLink
-                                onClick={() => handlePageChange(item)}
-                                isActive={item === pageNum}
-                                className={item === pageNum ? "active-page" : ""}
-                            >
-                                {item}
-                            </PaginationLink>
+                            {/* <PaginationLink> */}
+                                <Link
+                                    href={{
+                                        // pathname: '/',
+                                        query: { 
+                                            ...paramsObject,
+                                            pageNum: item,
+                                            pageSize: currentPageSize
+                                        },
+                                    }}
+                                    onClick={() => handlePageChange(item)}
+                                    // isActive={item === pageNum}
+                                    className={item === pageNum ? "page active-page" : "page"}
+                                >
+                                    {item}
+                                </Link>
+                            {/* </PaginationLink> */}
                         </PaginationItem>
                     ))}
 
@@ -111,7 +128,7 @@ export function DataPagination({
                     <PaginationItem>
                         <PaginationNext
                             onClick={!isLastPage ? () => handlePageChange(pageNum + 1) : undefined}
-                            className={isLastPage ? "disabled" : ""}
+                            className={isLastPage ? "arr disabled" : "arr"}
                         />
                     </PaginationItem>
                 </PaginationContent>
@@ -119,7 +136,6 @@ export function DataPagination({
             <div className="pagination-controls">
                 {/* 跳转到指定页 */}
                 <div className="pagination-jump">
-                    <span>跳转到页码: </span>
                     <Input
                         type="number"
                         value={inputPage}
@@ -139,7 +155,6 @@ export function DataPagination({
 
                 {/* 选择 pageSize */}
                 <div className="pagination-select">
-                    <span>每页显示条数: </span>
                     <Select
                         value={currentPageSize.toString()}
                         onValueChange={(value) => handlePageSizeChange(Number(value))}
@@ -149,10 +164,11 @@ export function DataPagination({
                         </SelectTrigger>
                         <SelectContent>
                             <SelectGroup>
-                                <SelectItem value="5">5</SelectItem>
-                                <SelectItem value="10">10</SelectItem>
-                                <SelectItem value="20">20</SelectItem>
-                                <SelectItem value="50">50</SelectItem>
+                                {pageSizeOptions?.map(item => {
+                                    return (
+                                        <SelectItem value={item}>{item} 条/页</SelectItem>
+                                    )
+                                })}
                             </SelectGroup>
                         </SelectContent>
                     </Select>

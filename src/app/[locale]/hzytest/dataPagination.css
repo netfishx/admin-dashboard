@@ -37,8 +37,22 @@
     color: white;
 }
 
-.pagination-select-trigger {
-    width: 150px;
+.pagination-select-trigger {}
+
+.page {
+    display: inline-block;
+    text-align: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 4px;
+    padding: 4px 8px;
+    border: 1px solid #ccc;
+    cursor: pointer;
+
+    &:hover {
+        background-color: #0070f3;
+        color: white;
+    }
 }
 
 .active-page {
@@ -51,4 +65,8 @@
 .disabled {
     pointer-events: none;
     color: #ccc;
+}
+
+.arr {
+    cursor: pointer;
 }
