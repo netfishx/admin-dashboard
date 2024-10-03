@@ -24,7 +24,7 @@ export default async function RootLayout({
 
   return (
     <ViewTransitions>
-      <html lang={locale}>
+      <html lang={locale} suppressHydrationWarning>
         <body>
           <ThemeProvider
             attribute="class"
