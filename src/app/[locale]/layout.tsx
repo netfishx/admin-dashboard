@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import "@/assets/globals.css";
 import { ErrorToast } from "@/components/error-toast";
 import { Toaster } from "@/components/ui/sonner";
+import { ThemeProvider } from "@/components/ui/theme-provider";
 import { Provider as I18nProvider } from "@/locales/provider";
 import { Provider as JotaiProvider } from "jotai";
 import { ViewTransitions } from "next-view-transitions";
@@ -25,17 +26,24 @@ export default async function RootLayout({
     <ViewTransitions>
       <html lang={locale}>
         <body>
-          <Toaster
-            position="top-center"
-            richColors
-            expand
-            visibleToasts={1}
-            toastOptions={{ duration: 1000 }}
-          />
-          <JotaiProvider>
-            <I18nProvider locale={locale}>{children}</I18nProvider>
-            <ErrorToast />
-          </JotaiProvider>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="light"
+            enableSystem={false}
+            disableTransitionOnChange
+          >
+            <Toaster
+              position="top-center"
+              richColors
+              expand
+              visibleToasts={1}
+              toastOptions={{ duration: 1000 }}
+            />
+            <JotaiProvider>
+              <I18nProvider locale={locale}>{children}</I18nProvider>
+              <ErrorToast />
+            </JotaiProvider>
+          </ThemeProvider>
         </body>
       </html>
     </ViewTransitions>
