@@ -34,6 +34,7 @@ export async function request(
       ...config?.headers,
       "X-Forwarded-For": ip,
       "Content-Type": "application/json",
+      "Accept-Language": nextHeaders.get("Accept-Language") ?? "zh-CN",
     });
 
     if (token) {

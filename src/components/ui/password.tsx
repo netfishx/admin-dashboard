@@ -47,6 +47,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
           className={inputClasses}
           onKeyDown={handleKeyPress}
           ref={ref}
+          autoComplete="password"
           {...props}
         />
         {type === "password" && (
