@@ -1,6 +1,6 @@
 // flatData.ts
 
-export interface Invoice {
+  export interface Invoice {
     invoice: string;
     parentInvoice?: string; // 父级发票编号
     date: string;
@@ -100,7 +100,6 @@ export interface Invoice {
     // 您可以根据需要添加更多数据项
   ];
 
-
   export const treeInvoices: Invoice[] = [
     {
       invoice: 'INV001',
@@ -185,3 +184,38 @@ export interface Invoice {
     },
     // 您可以根据需要添加更多数据项
   ];  
+
+  export const plainInvoices: Invoice[] = [
+    {
+      invoice: 'INV001',
+      date: '2023-10-01',
+      customer: '客户A',
+      paymentStatus: 'Paid',
+      paymentMethod: 'Credit Card',
+      dueDate: '2023-11-01',
+      tax: '$25.00',
+      discount: '$10.00',
+      totalAmount: '$250.00',
+      notes: '无',
+      extra1: '备注信息1',
+      extra2: '备注信息2',
+      extra3: '备注信息3',
+    },
+    {
+      invoice: 'INV002',
+      date: '2023-10-05',
+      customer: '客户B',
+      paymentStatus: 'Unpaid',
+      paymentMethod: 'Bank Transfer',
+      dueDate: '2023-11-05',
+      tax: '$15.00',
+      discount: '$5.00',
+      totalAmount: '$150.00',
+      notes: '紧急',
+      extra1: '备注信息4',
+      extra2: '备注信息5',
+      extra3: '备注信息6',
+    },
+    // ... 更多数据
+  ];
+  

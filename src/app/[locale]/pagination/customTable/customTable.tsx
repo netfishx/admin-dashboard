@@ -323,8 +323,14 @@ function toTreeData<T>(
     }
   });
 
+  // 如果无法构建树形结构，直接返回原始数据
+  if (tree.length === 0) {
+    return data;
+  }
+
   return tree;
 }
+
 
 // CustomTable 组件
 export function CustomTable<T>({

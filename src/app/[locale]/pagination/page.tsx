@@ -3,7 +3,7 @@
 import React, { useState } from 'react'
 import { CustomTable } from "@/app/[locale]/pagination/customTable/customTable";
 import { DataPagination } from "@/app/[locale]/pagination/dataPagination/dataPagination";
-import { flatInvoices, treeInvoices } from './sampleData';
+import { flatInvoices, treeInvoices, plainInvoices } from './sampleData';
 
 const columns = [
     {
@@ -160,6 +160,23 @@ const columns = [
                 expandable={expandable}
                 indentSize={8} // 可根据需要调整缩进大小
             />
+
+            <CustomTable
+              columns={columns as any}
+              dataSource={plainInvoices} // 使用扁平化数据
+              rowKey="invoice"
+              // dataType="flat" // 指定数据类型为 'flat'
+              pagination={{
+                  current: currentPage,
+                  pageSize: pageSize,
+                  total: flatInvoices.length,
+                  onChange: handlePageChange,
+              }}
+              expandable={expandable}
+              indentSize={8} // 可根据需要调整缩进大小
+            />
+
+
         </div>
     );
   }
