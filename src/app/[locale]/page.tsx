@@ -27,7 +27,7 @@ export default async function Home() {
   return (
     <div className="flex flex-col gap-4 p-4">
       <div>
-        <Button asChild variant="outline">
+        <Button asChild variant="secondary">
           <Link href="/locale">国际化测试</Link>
         </Button>
       </div>
