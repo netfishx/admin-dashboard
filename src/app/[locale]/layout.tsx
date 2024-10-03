@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 
 import "@/assets/globals.css";
 import { ErrorToast } from "@/components/error-toast";
+import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
-import { ThemeProvider } from "@/components/ui/theme-provider";
 import { Provider as I18nProvider } from "@/locales/provider";
 import { Provider as JotaiProvider } from "jotai";
 import { ViewTransitions } from "next-view-transitions";
@@ -28,8 +28,7 @@ export default async function RootLayout({
         <body>
           <ThemeProvider
             attribute="class"
-            defaultTheme="light"
-            enableSystem={false}
+            defaultTheme="system"
             disableTransitionOnChange
           >
             <Toaster
