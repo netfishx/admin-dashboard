@@ -412,7 +412,7 @@ export function CustomTable<T>({
         style={{ tableLayout: 'fixed' }}
       >
         <DataTableHeader
-          columns={columns}
+          columns={columns as any}
           onSort={handleSort}
           sortState={sortState}
           hasExpandColumn={!!expandable}
@@ -421,7 +421,7 @@ export function CustomTable<T>({
           {paginatedData.map((record, index) => {
             const key =
               typeof rowKey === 'function'
-                ? rowKey(record)
+                ? rowKey(record as T)
                 : (record[rowKey] as unknown as string);
             return (
               <DataTableRow
