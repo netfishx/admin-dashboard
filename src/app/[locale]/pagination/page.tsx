@@ -1,8 +1,8 @@
 'use client';
 
 import React, { useState } from 'react'
-import { DataTable } from "@/app/[locale]/pagination/dataTable";
-import { DataPagination } from "@/app/[locale]/pagination/dataPagination";
+import { CustomTable } from "@/app/[locale]/pagination/customTable/customTable";
+import { DataPagination } from "@/app/[locale]/pagination/dataPagination/dataPagination";
 import { flatInvoices, treeInvoices } from './sampleData';
 
 const columns = [
@@ -12,7 +12,7 @@ const columns = [
       key: 'invoice',
       fixed: 'left',
       width: '120px',
-      sorter: (a, b) => a.invoice.localeCompare(b.invoice),
+      sorter: (a: any, b: any) => a.invoice.localeCompare(b.invoice),
     },
     {
       title: 'Date',
@@ -31,7 +31,7 @@ const columns = [
       dataIndex: 'paymentStatus',
       key: 'paymentStatus',
       width: '150px',
-      sorter: (a, b) => a.paymentStatus.localeCompare(b.paymentStatus),
+      sorter: (a: any, b: any) => a.paymentStatus.localeCompare(b.paymentStatus),
     },
     {
       title: 'Payment Info',
@@ -73,7 +73,7 @@ const columns = [
           key: 'totalAmount',
           fixed: 'right',
           width: '150px',
-          sorter: (a, b) =>
+          sorter: (a: any, b: any) =>
             parseFloat(a.totalAmount.replace(/[\$,]/g, '')) -
             parseFloat(b.totalAmount.replace(/[\$,]/g, '')),
         },
@@ -111,19 +111,18 @@ const columns = [
     },
   ];
   
-  
-  
-  
   // 可展开配置
   const expandable = {
-    expandedRowRender: (record) => <div>这里是 {record.invoice} 的详细信息</div>,
+    expandedRowRender: (record: any) => {
+      console.log(record, 'record');
+      return <div>这里是 {record.invoice} 的详细信息</div>
+    },
     rowExpandable: () => true,
   };
 
 
-export default  function pagination() {
+  export default  function pagination() {
     const [currentPage, setCurrentPage] = useState(1);
-    const [pageNum, setPageNum] = useState(1);  // 当前页码
     const pageSize = 5;
   
     const handlePageChange = (page: number, size: number) => {
@@ -133,8 +132,8 @@ export default  function pagination() {
   
     return (
         <div>
-            <DataTable
-                columns={columns}
+            <CustomTable
+                columns={columns as any}
                 dataSource={treeInvoices} // 使用树形数据
                 rowKey="invoice"
                 dataType="tree" // 指定数据类型为 'tree'
@@ -147,8 +146,8 @@ export default  function pagination() {
                 expandable={expandable}
                 indentSize={12} // 可根据需要调整缩进大小
             />
-            <DataTable
-                columns={columns}
+            <CustomTable
+                columns={columns as any}
                 dataSource={flatInvoices} // 使用扁平化数据
                 rowKey="invoice"
                 dataType="flat" // 指定数据类型为 'flat'
@@ -161,11 +160,6 @@ export default  function pagination() {
                 expandable={expandable}
                 indentSize={8} // 可根据需要调整缩进大小
             />
-
-            {/* <DataPagination
-                pageNum={pageNum}  // 可以传递，也可以不传，默认值为 1
-                onPageChange={handlePageChange}
-            /> */}
         </div>
     );
   }

@@ -1,4 +1,4 @@
-// DataTable.tsx
+// CustomTable.tsx
 "use client";
 
 import React, { useState, useMemo } from 'react';
@@ -10,7 +10,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-import { DataPagination } from './dataPagination'; // 如果您有分页组件
+import { DataPagination } from '../dataPagination/dataPagination';
 
 // 定义 Column 接口和相关类型
 interface Column<T> {
@@ -326,8 +326,8 @@ function toTreeData<T>(
   return tree;
 }
 
-// DataTable 组件
-export function DataTable<T>({
+// CustomTable 组件
+export function CustomTable<T>({
   columns,
   dataSource,
   rowKey,
