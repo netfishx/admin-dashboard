@@ -28,7 +28,7 @@
     "@radix-ui/react-tooltip": "^1.1.3",
     "@tanstack/react-table": "^8.20.5",
     "@total-typescript/ts-reset": "^0.6.1",
-    "babel-plugin-react-compiler": "^0.0.0-experimental-b4db8c3-20241001",
+    "babel-plugin-react-compiler": "^0.0.0-experimental-734b737-20241003",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "date-fns": "^4.1.0",
