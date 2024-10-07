@@ -3,7 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbo",
+    "dev": "next dev --turbo --experimental-https",
+    "dev:local": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "biome check --fix --unsafe ./src"
@@ -34,20 +35,20 @@
     "jose": "^5.9.3",
     "jotai": "2.10.0",
     "lucide-react": "^0.447.0",
-    "next": "^15.0.0-canary.177",
+    "next": "^15.0.0-canary.179",
     "next-international": "^1.2.4",
     "next-safe-action": "^7.9.3",
     "next-themes": "^0.3.0",
     "next-view-transitions": "^0.3.2",
     "nuqs": "^1.19.3",
-    "react": "^19.0.0-rc-459fd418-20241001",
+    "react": "^19.0.0-rc-1460d67c-20241003",
     "react-day-picker": "8.10.1",
-    "react-dom": "^19.0.0-rc-459fd418-20241001",
+    "react-dom": "^19.0.0-rc-1460d67c-20241003",
     "react-hook-form": "^7.53.0",
     "recharts": "^2.12.7",
     "server-only": "^0.0.1",
     "sonner": "^1.5.0",
-    "tailwind-merge": "^2.5.2",
+    "tailwind-merge": "^2.5.3",
     "tailwindcss-animate": "^1.0.7",
     "zod": "^3.23.8",
     "zod-form-data": "^2.0.2"
@@ -66,9 +67,9 @@
     "@types/react": "npm:types-react@19.0.0-rc.1",
     "@types/react-dom": "npm:types-react-dom@19.0.0-rc.1",
     "date-fns": "4.1.0",
-    "next": "15.0.0-canary.177",
-    "react": "19.0.0-rc-459fd418-20241001",
-    "react-dom": "19.0.0-rc-459fd418-20241001"
+    "next": "15.0.0-canary.179",
+    "react": "19.0.0-rc-1460d67c-20241003",
+    "react-dom": "19.0.0-rc-1460d67c-20241003"
   },
   "trustedDependencies": ["@biomejs/biome", "sharp"],
   "patchedDependencies": {

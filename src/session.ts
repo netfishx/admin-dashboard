@@ -2,7 +2,7 @@ import { SignJWT, jwtVerify } from "jose";
 import { cookies } from "next/headers";
 
 const key = new TextEncoder().encode(process.env.AUTH_SECRET);
-const expiresTime = 24 * 60 * 60 * 1000;
+const expiresTime = 24 * 60 * 60;
 
 type User = {
   id: number;
@@ -17,15 +17,20 @@ export async function signToken(payload: SessionData) {
   return await new SignJWT(payload)
     .setProtectedHeader({ alg: "HS256" })
     .setIssuedAt()
-    .setExpirationTime("1 day")
+    .setExpirationTime(`${expiresTime} seconds`)
     .sign(key);
 }
 
 export async function verifyToken(input: string) {
-  const { payload } = await jwtVerify(input, key, {
-    algorithms: ["HS256"],
-  });
-  return payload as SessionData;
+  try {
+    const { payload } = await jwtVerify(input, key, {
+      algorithms: ["HS256"],
+    });
+    return payload as SessionData;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
 }
 
 export async function getSession() {
@@ -37,7 +42,7 @@ export async function getSession() {
 }
 
 export async function setSession(user: User) {
-  const expires = new Date(Date.now() + expiresTime);
+  const expires = new Date(Date.now() + expiresTime * 1000);
   const session: SessionData = {
     user: { id: user.id },
     expires: expires.toISOString(),
