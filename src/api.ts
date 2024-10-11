@@ -18,18 +18,20 @@ export async function request(
 
   try {
     const fullUrl = new URL(url, BASE_URL);
-    const array = nextHeaders
-      ?.get("x-forwarded-for")
-      ?.split(",")[0]
-      ?.split(":");
-    const ip = array?.[array.length - 1] ?? FALLBACK_IP_ADDRESS;
+
     const headers = new Headers({
       ...config?.headers,
-      "X-Forwarded-For": ip,
       "Content-Type": "application/json",
       "Accept-Language": nextHeaders?.get("Accept-Language") ?? "zh-CN",
     });
-
+    if (nextHeaders) {
+      const array = nextHeaders
+        ?.get("x-forwarded-for")
+        ?.split(",")[0]
+        ?.split(":");
+      const ip = array?.[array.length - 1] ?? FALLBACK_IP_ADDRESS;
+      headers.set("X-Forwarded-For", ip);
+    }
     if (token) {
       headers.set("Authorization", `Bearer ${token}`);
     }

@@ -6,7 +6,7 @@ export async function Time() {
 
   try {
     const header = await headers();
-    const res = await request(`${process.env.BASE_URL}/time`, header, {
+    const res = await request("/time", header, {
       next: { revalidate: 10, tags: ["time"] },
     });
     data = (await res.json()) as { time: string };
