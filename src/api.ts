@@ -1,14 +1,4 @@
-// export function request(url: string, options: RequestInit, token?: string) {
-//   return fetch(`${process.env.BASE_URL}${url}`, {
-//     headers: {
-//       "Content-Type": "application/json",
-//       Authorization: `Bearer ${token}`,
-//     },
-//     ...options,
-//   });
-// }
-
-const BASE_URL = process.env.BASE_URL;
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 const TIMEOUT = 5000;
 
 function validateStatus(status: number): boolean {
@@ -19,7 +9,7 @@ const FALLBACK_IP_ADDRESS = "0.0.0.0";
 
 export async function request(
   url: string,
-  nextHeaders: Headers,
+  nextHeaders?: Headers,
   config?: RequestInit,
   token?: string,
 ): Promise<Response> {
@@ -28,13 +18,16 @@ export async function request(
 
   try {
     const fullUrl = new URL(url, BASE_URL);
-    const array = nextHeaders.get("x-forwarded-for")?.split(",")[0]?.split(":");
+    const array = nextHeaders
+      ?.get("x-forwarded-for")
+      ?.split(",")[0]
+      ?.split(":");
     const ip = array?.[array.length - 1] ?? FALLBACK_IP_ADDRESS;
     const headers = new Headers({
       ...config?.headers,
       "X-Forwarded-For": ip,
       "Content-Type": "application/json",
-      "Accept-Language": nextHeaders.get("Accept-Language") ?? "zh-CN",
+      "Accept-Language": nextHeaders?.get("Accept-Language") ?? "zh-CN",
     });
 
     if (token) {
