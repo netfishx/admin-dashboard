@@ -47,6 +47,9 @@ export default async function Home() {
         <Button asChild variant="link">
           <Link href="/pie">饼图测试</Link>
         </Button>
+        <Button asChild variant="link">
+          <Link href="/polling">轮询测试</Link>
+        </Button>
       </div>
       <div className="flex justify-end">
         <RefreshButton />

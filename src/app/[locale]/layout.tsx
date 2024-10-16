@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 
 import "@/assets/globals.css";
+import { QueryProviders } from "@/app/[locale]/query-provider";
 import { ErrorToast } from "@/components/error-toast";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
@@ -39,10 +40,12 @@ export default async function RootLayout({
               visibleToasts={1}
               toastOptions={{ duration: 1000 }}
             />
-            <JotaiProvider>
-              <I18nProvider locale={locale}>{children}</I18nProvider>
-              <ErrorToast />
-            </JotaiProvider>
+            <QueryProviders>
+              <JotaiProvider>
+                <I18nProvider locale={locale}>{children}</I18nProvider>
+                <ErrorToast />
+              </JotaiProvider>
+            </QueryProviders>
           </ThemeProvider>
         </body>
       </html>
