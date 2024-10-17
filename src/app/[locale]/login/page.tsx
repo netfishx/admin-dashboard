@@ -1,3 +1,4 @@
+import { loginAction } from "@/actions";
 import bg from "@/assets/images/bg.png";
 import logo from "@/assets/images/logo.svg";
 import { Button } from "@/components/ui/button";
@@ -8,7 +9,7 @@ import Image from "next/image";
 
 export default function LoginPage() {
   return (
-    <Form action="/login">
+    <Form action={loginAction}>
       <div className="w-full h-screen overflow-hidden bg-neutral-50 flex flex-col gap-4 items-center justify-center">
         <Image src={bg} alt="Bg" className="object-cover -z-10" fill />
         <div className="w-[400px] flex items-center justify-center gap-2">
@@ -21,13 +22,13 @@ export default function LoginPage() {
               账号
               <span className="text-red-500">*</span>
             </Label>
-            <Input placeholder="请输入您的账号" />
+            <Input placeholder="请输入您的账号" name="username" />
           </div>
           <div className="flex flex-col gap-2">
             <Label className="text-sm font-medium flex gap-1">
               密码<span className="text-red-500">*</span>
             </Label>
-            <Input placeholder="请输入您的密码" />
+            <Input placeholder="请输入您的密码" name="password" />
           </div>
           <Button>登录</Button>
         </div>

@@ -2,8 +2,10 @@
 
 import { actionClient } from "@/lib/safe-action";
 import { revalidateTag } from "next/cache";
+import { redirect } from "next/navigation";
 import { z } from "zod";
 import { zfd } from "zod-form-data";
+import { setSession } from "./session";
 
 const lowercaseRegex = /[a-z]/;
 const uppercaseRegex = /[A-Z]/;
@@ -50,6 +52,19 @@ export const incrementNumberAction = actionClient
       prevResult: prevResult,
     };
   });
+
+export async function loginAction(formData: FormData) {
+  const username = formData.get("username");
+  const password = formData.get("password");
+  if (username === "admin" && password === "123456") {
+    await setSession({
+      id: 123,
+    });
+    return redirect("/");
+  }
+
+  return { result: false };
+}
 
 export async function refresh() {
   revalidateTag("time");
