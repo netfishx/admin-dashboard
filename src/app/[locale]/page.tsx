@@ -48,6 +48,9 @@ export default async function Home() {
           <Link href="/pie">饼图测试</Link>
         </Button>
         <Button asChild variant="link">
+          <Link href="/line">Line Chart</Link>
+        </Button>
+        <Button asChild variant="link">
           <Link href="/polling">轮询测试</Link>
         </Button>
       </div>
