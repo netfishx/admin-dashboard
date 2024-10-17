@@ -1,5 +1,6 @@
 import { createI18nMiddleware } from "next-international/middleware";
 import type { NextRequest } from "next/server";
+// import { getSession } from "./session";
 
 const I18nMiddleware = createI18nMiddleware({
   locales: ["zh", "en"],
@@ -7,7 +8,11 @@ const I18nMiddleware = createI18nMiddleware({
   urlMappingStrategy: "rewriteDefault",
 });
 
-export function middleware(request: NextRequest) {
+export async function middleware(request: NextRequest) {
+  // const user = await getSession();
+  // if (!(user || request.nextUrl.pathname === "/login")) {
+  //   return Response.redirect(new URL("/login", request.url));
+  // }
   return I18nMiddleware(request);
 }
 
