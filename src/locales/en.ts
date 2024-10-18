@@ -3,5 +3,9 @@ export default {
   "hello.world": "Hello world!",
   "welcome": "Welcome back",
   "announcement": "announcement",
-  "more": "more"
+  "more": "more",
+  "gameTotalProfit": "gameTotalProfit",
+  "totalDeposit": "totalDeposit",
+  "totalWithdrawal": "totalWithdrawal",
+  "newMembers": "newMembers",
 } as const;
