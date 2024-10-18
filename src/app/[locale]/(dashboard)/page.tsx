@@ -1,8 +1,8 @@
-import Salutations from './salutations';
-import DataOverview from './data-overview';
-import QuickAccess from './quick-access';
 import { getI18n } from "@/locales/server";
 import Announcement from "./announcement";
+import DataOverview from "./data-overview";
+import QuickAccess from "./quick-access";
+import Salutations from "./salutations";
 
 export default async function DashboardPage() {
   const t = await getI18n();
@@ -16,7 +16,7 @@ export default async function DashboardPage() {
     },
   };
   return (
-    <div className="flex-1 flex w-full">
+    <>
       {/* <div>{t("hello")}</div> */}
       <Salutations user={userInfo} />
       <div>
@@ -24,7 +24,6 @@ export default async function DashboardPage() {
         <DataOverview />
         <QuickAccess />
       </div>
-      
-    </div>
+    </>
   );
 }
