@@ -1,12 +1,11 @@
-"use client";
-
-import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import Link from "next/link";
 
 export default function NotFound() {
-  const router = useRouter();
-  useEffect(() => {
-    router.replace("/");
-  });
-  return null;
+  return (
+    <div>
+      <h2>Not Found</h2>
+      <p>Could not find requested resource</p>
+      <Link href="/">Return Home</Link>
+    </div>
+  );
 }
