@@ -3,6 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { ChevronDown } from "lucide-react";
+import { usePathname, useRouter } from "next/navigation";
 import type { ReactNode } from "react";
 
 export function MenuItem({
@@ -11,7 +12,6 @@ export function MenuItem({
   href,
   isOpen,
   hasChildren,
-  isActive,
   ...props
 }: {
   icon?: ReactNode;
@@ -19,8 +19,10 @@ export function MenuItem({
   href?: string;
   isOpen?: boolean;
   hasChildren?: boolean;
-  isActive?: boolean;
 }) {
+  const pathname = usePathname();
+  const isActive = pathname === href;
+  const router = useRouter();
   return (
     <Button
       variant="ghost"
@@ -29,6 +31,7 @@ export function MenuItem({
         isActive && "bg-accent text-primary !opacity-100",
       ])}
       disabled={isActive}
+      onClick={() => href && router.push(href)}
       {...props}
     >
       {icon}

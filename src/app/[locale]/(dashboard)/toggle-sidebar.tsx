@@ -10,8 +10,8 @@ export function ToggleSidebar() {
   return (
     <div
       className={cn([
-        "flex h-12 p-4 items-center",
-        isOpened ? "justify-end" : "",
+        "flex h-12 py-4 items-center",
+        isOpened ? "justify-end px-4" : "px-3",
       ])}
     >
       <Button
