@@ -1,8 +1,11 @@
 import Welcome from './Welcome';
 import DataOverview from './DataOverview';
 import QuickAccess from './QuickAccess';
+import { getI18n } from "@/locales/server";
+import Announcement from "./announcement";
 
-export default function DashboardPage() {
+export default async function DashboardPage() {
+  const t = await getI18n();
   const userInfo = {
     name: '张三', 
     data: {
@@ -13,6 +16,8 @@ export default function DashboardPage() {
     } 
   }
   return <div>
+    <div>{t("hello")}</div>
+    <Announcement />
     <Welcome user={userInfo} />
     <DataOverview />
     <QuickAccess />
