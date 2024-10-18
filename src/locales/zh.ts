@@ -14,5 +14,6 @@ export default {
   "frozenAmount": "冻结金额",
   "unsettledAmount": "未结算金额",
   "totalCreditAmount": "总授信金额",
-  "lentAmount": "已借出金额"
+  "lentAmount": "已借出金额",
+  "quickaccess": '快捷入口',
 } as const;

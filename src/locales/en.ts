@@ -14,5 +14,6 @@ export default {
   "frozenAmount": "frozenAmount",
   "unsettledAmount": "unsettledAmount",
   "totalCreditAmount": "totalCreditAmount",
-  "lentAmount": "lentAmount"
+  "lentAmount": "lentAmount",
+  "quickaccess": 'quickaccess',
 } as const;

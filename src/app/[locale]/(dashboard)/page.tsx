@@ -18,8 +18,8 @@ export default async function DashboardPage() {
   return <div>
     <div>{t("hello")}</div>
     <Announcement />
+    <QuickAccess />
     <Welcome user={userInfo} />
     <DataOverview />
-    <QuickAccess />
   </div>;
 }
