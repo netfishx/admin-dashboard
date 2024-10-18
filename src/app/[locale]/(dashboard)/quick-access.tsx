@@ -3,33 +3,32 @@ import {
   Card,
 } from "@/components/ui/card"
 import { getI18n } from "@/locales/server";
-import { Users, Scale, Gamepad2, FileChartColumnIncreasing } from 'lucide-react';
+import { Users, Scale, Gamepad2, FileText } from 'lucide-react';
 
 export default async function QuickAccess() {
   const t = await getI18n();
   return (
     <div className="w-[280px] p-5 rounded border bg-white mb-2 ">
-      {/* <div className='text-base'>{t("quickaccess")}</div> */}
-      <div className="text-base mb-4">快捷入口</div>
+      <div className="text-base mb-4">{t("quickAccess")}</div>
       <div className="grid grid-cols-3 gap-4">
         {/* 第一行 */}
         <div className="flex flex-col items-center justify-center cursor-pointer hover:bg-gray-200 rounded-sm">
           <div className="w-[36px] h-[36px] bg-gray-100 flex items-center justify-center rounded">
             <Users className="h-4 w-4" />
           </div>
-          <p className="text-xs mt-2">会员管理</p>
+          <p className="text-xs mt-2">{t("memberManagement")}</p>
         </div>
         <div className="flex flex-col items-center justify-center cursor-pointer hover:bg-gray-200 rounded-sm">
           <div className="w-[36px] h-[36px] bg-gray-100 flex items-center justify-center rounded">
             <Users className="h-4 w-4" />
           </div>
-          <p className="text-xs mt-2">代理管理</p>
+          <p className="text-xs mt-2">{t("agentManagement")}</p>
         </div>
         <div className="flex flex-col items-center justify-center cursor-pointer hover:bg-gray-200 rounded-sm">
           <div className="w-[36px] h-[36px] bg-gray-100 flex items-center justify-center rounded">
             <Scale className="h-4 w-4" />
           </div>
-          <p className="text-xs mt-2">申请取款</p>
+          <p className="text-xs mt-2">{t("withdrawalApplication")}</p>
         </div>
 
         {/* 第二行 */}
@@ -37,39 +36,39 @@ export default async function QuickAccess() {
           <div className="w-[36px] h-[36px] bg-gray-100 flex items-center justify-center rounded">
             <Scale className="h-4 w-4" />
           </div>
-          <p className="text-xs mt-2 whitespace-nowrap">帮下级还款</p>
+          <p className="text-xs mt-2 whitespace-nowrap">{t("helpSubordinateRepay")}</p>
         </div>
         <div className="flex flex-col items-center justify-center cursor-pointer hover:bg-gray-200 rounded-sm">
           <div className="w-[36px] h-[36px] bg-gray-100 flex items-center justify-center rounded">
-            <Gamepad2 className="h-4 w-4" />
+            <FileText className="h-4 w-4" />
           </div>
-          <p className="text-xs mt-2">注单列表</p>
+          <p className="text-xs mt-2">{t("betList")}</p>
         </div>
         <div className="flex flex-col items-center justify-center cursor-pointer hover:bg-gray-200 rounded-sm">
           <div className="w-[36px] h-[36px] bg-gray-100 flex items-center justify-center rounded">
-            <FileChartColumnIncreasing className="h-4 w-4" /> 
+            <FileText className="h-4 w-4" /> 
           </div>
-          <p className="text-xs mt-2">代理报表</p>
+          <p className="text-xs mt-2">{t("agentReport")}</p>
         </div>
 
         {/* 第三行 */}
         <div className="flex flex-col items-center justify-center cursor-pointer hover:bg-gray-200 rounded-sm">
           <div className="w-[36px] h-[36px] bg-gray-100 flex items-center justify-center rounded">
-            <FileChartColumnIncreasing className="h-4 w-4" /> 
+            <FileText className="h-4 w-4" /> 
           </div>
-          <p className="text-xs mt-2">会员报表</p>
+          <p className="text-xs mt-2">{t("memberReport")}</p>
         </div>
         <div className="flex flex-col items-center justify-center cursor-pointer hover:bg-gray-200 rounded-sm">
           <div className="w-[36px] h-[36px] bg-gray-100 flex items-center justify-center rounded">
-            <FileChartColumnIncreasing className="h-4 w-4" /> 
+            <FileText className="h-4 w-4" /> 
           </div>
-          <p className="text-xs mt-2">注单列表</p>
+          <p className="text-xs mt-2">{t("betList")}</p>
         </div>
         <div className="flex flex-col items-center justify-center cursor-pointer hover:bg-gray-200 rounded-sm">
           <div className="w-[36px] h-[36px] bg-gray-100 flex items-center justify-center rounded">
-            <FileChartColumnIncreasing className="h-4 w-4" /> 
+            <FileText className="h-4 w-4" /> 
           </div>
-          <p className="text-xs mt-2">账变记录</p>
+          <p className="text-xs mt-2">{t("accountChangeRecord")}</p>
         </div>
       </div>
     </div>

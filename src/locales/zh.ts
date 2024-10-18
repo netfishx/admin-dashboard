@@ -15,5 +15,13 @@ export default {
   "unsettledAmount": "未结算金额",
   "totalCreditAmount": "总授信金额",
   "lentAmount": "已借出金额",
-  "quickaccess": '快捷入口',
+  "quickAccess": "快捷入口",
+  "memberManagement": "会员管理",
+  "agentManagement": "代理管理",
+  "withdrawalApplication": "申请取款",
+  "helpSubordinateRepay": "帮下级还款",
+  "betList": "注单列表",
+  "agentReport": "代理报表",
+  "memberReport": "会员报表",
+  "accountChangeRecord": "账变记录"
 } as const;

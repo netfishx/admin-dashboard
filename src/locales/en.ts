@@ -16,4 +16,12 @@ export default {
   "totalCreditAmount": "totalCreditAmount",
   "lentAmount": "lentAmount",
   "quickaccess": 'quickaccess',
+  "memberManagement": "memberManagement",
+  "agentManagement": "agentManagement",
+  "withdrawalApplication": "withdrawalApplication",
+  "helpSubordinateRepay": "helpSubordinateRepay",
+  "betList": "betList",
+  "agentReport": "agentReport",
+  "memberReport": "memberReport",
+  "accountChangeRecord": "accountChangeRecord"
 } as const;
