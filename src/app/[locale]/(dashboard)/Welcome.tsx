@@ -19,7 +19,7 @@ export default async function Welcome(props: any) {
       <div  className='pb-5 text-xl border-b'>
         👏欢迎回来，{user.name}
       </div>
-      <div className='w-full py-5 border-b flex items-center justify-between'>
+      <div className='w-full py-5 border-b flex items-center justify-around'>
         <Item name={t("gameTotalProfit")} value={user.data.value1} icon={welcome01} />
         <Item name={t("totalDeposit")} value={user.data.value2} icon={welcome02} />
         <Item name={t("totalWithdrawal")} value={user.data.value3} icon={welcome03} />
