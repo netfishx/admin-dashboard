@@ -11,10 +11,8 @@ import welcome02 from "@/assets/images/welcome/welcome02.svg";
 import welcome03 from "@/assets/images/welcome/welcome03.svg";
 import welcome04 from "@/assets/images/welcome/welcome04.svg";
 
-
 export default async function Welcome(props: any) {
   const { user } = props;
-  const icons = [welcome01, welcome02, welcome03, welcome04];
   const t = await getI18n();
   return (
     <div className='w-[calc(100%-280px)]'>

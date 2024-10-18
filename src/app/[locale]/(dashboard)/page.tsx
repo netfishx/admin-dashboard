@@ -1,6 +1,6 @@
-import Welcome from './Welcome';
-import DataOverview from './DataOverview';
-import QuickAccess from './QuickAccess';
+import Welcome from './welcome';
+import DataOverview from './data-overview';
+import QuickAccess from './quick-access';
 import { getI18n } from "@/locales/server";
 import Announcement from "./announcement";
 

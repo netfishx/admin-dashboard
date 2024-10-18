@@ -8,4 +8,11 @@ export default {
   "totalDeposit": "totalDeposit",
   "totalWithdrawal": "totalWithdrawal",
   "newMembers": "newMembers",
+  "dataOverview": "dataOverview",
+  "totalAmount": "totalAmount",
+  "availableAmount": "availableAmount",
+  "frozenAmount": "frozenAmount",
+  "unsettledAmount": "unsettledAmount",
+  "totalCreditAmount": "totalCreditAmount",
+  "lentAmount": "lentAmount"
 } as const;
