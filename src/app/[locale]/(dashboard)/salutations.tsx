@@ -10,7 +10,7 @@ export default async function Welcome(props: any) {
   const { user } = props;
   const t = await getI18n();
   return (
-    <div className="flex-1 h-[548px] p-5 rounded border bg-card mb-2">
+    <div className="flex-1 p-5 rounded border bg-card">
       <div className="pb-5 text-xl border-b">👏欢迎回来，{user.name}</div>
       <div className="w-full py-5 border-b flex items-center justify-around">
         <Item
@@ -43,7 +43,7 @@ export default async function Welcome(props: any) {
 const Item = (props: any) => {
   const { name, value, icon, unShowBorder } = props;
   return (
-    <div className={`h-[60px] flex items-center ${unShowBorder ? '' : 'border-r'} mr-5 pr-12`} >
+    <div className={`w-1/4 h-[60px] flex items-center ${unShowBorder ? '' : 'border-r'} mr-5`} >
       <Image src={icon} alt="Icon" className="size-14" />
       <div className='pl-3'>
         <div className='text-xs pb-2'>
