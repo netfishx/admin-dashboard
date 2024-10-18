@@ -76,7 +76,10 @@
     "react-dom": "19.0.0-rc-77b637d6-20241016",
     "react-is": "19.0.0-rc-77b637d6-20241016"
   },
-  "trustedDependencies": ["@biomejs/biome", "sharp"],
+  "trustedDependencies": [
+    "@biomejs/biome",
+    "sharp"
+  ],
   "patchedDependencies": {
     "jotai@2.10.1": "patches/jotai@2.10.1.patch"
   }

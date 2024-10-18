@@ -1,0 +1,72 @@
+.pagination-container {
+    display: flex;
+    justify-content: space-between;
+    /* 让分页按钮、跳转和pageSize选择器平分一行 */
+    align-items: center;
+    /* 垂直方向居中对齐 */
+    padding: 10px 0;
+    /* 上下增加一些间距 */
+}
+
+.pagination-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+}
+
+.pagination-controls {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.pagination-jump,
+.pagination-select {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.pagination-input {
+    width: 60px;
+    text-align: center;
+}
+
+.pagination-button {
+    background-color: #0070f3;
+    color: white;
+}
+
+.pagination-select-trigger {}
+
+.page {
+    display: inline-block;
+    text-align: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 4px;
+    padding: 4px 8px;
+    border: 1px solid #ccc;
+    cursor: pointer;
+
+    &:hover {
+        background-color: #0070f3;
+        color: white;
+    }
+}
+
+.active-page {
+    background-color: #0070f3;
+    color: white;
+    border-radius: 4px;
+    padding: 4px 8px;
+}
+
+.disabled {
+    pointer-events: none;
+    color: #ccc;
+}
+
+.arr {
+    cursor: pointer;
+}
