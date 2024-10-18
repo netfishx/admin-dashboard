@@ -1,0 +1,41 @@
+"use client";
+
+import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
+import { ChevronDown } from "lucide-react";
+import type { ReactNode } from "react";
+
+export function MenuItem({
+  icon,
+  label,
+  href,
+  isOpen,
+  hasChildren,
+  isActive,
+  ...props
+}: {
+  icon?: ReactNode;
+  label: string;
+  href?: string;
+  isOpen?: boolean;
+  hasChildren?: boolean;
+  isActive?: boolean;
+}) {
+  return (
+    <Button
+      variant="ghost"
+      className={cn([
+        "w-full justify-start font-normal group",
+        isActive && "bg-accent text-primary !opacity-100",
+      ])}
+      disabled={isActive}
+      {...props}
+    >
+      {icon}
+      <span className="flex-grow text-left">{label}</span>
+      {hasChildren && (
+        <ChevronDown className="h-4 w-4 transition-transform group-data-[state='open']:rotate-180" />
+      )}
+    </Button>
+  );
+}
