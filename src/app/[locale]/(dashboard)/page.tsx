@@ -1,11 +1,9 @@
-import { getI18n } from "@/locales/server";
 import Announcement from "./announcement";
 import DataOverview from "./data-overview";
 import QuickAccess from "./quick-access";
 import Salutations from "./salutations";
 
 export default function DashboardPage() {
-  const t = getI18n();
   const userInfo = {
     name: "张三",
     data: {
@@ -17,9 +15,8 @@ export default function DashboardPage() {
   };
   return (
     <>
-      {/* <div>{t("hello")}</div> */}
       <Salutations user={userInfo} />
-      <div className='flex flex-col gap-2'>
+      <div className="flex flex-col gap-2">
         <DataOverview />
         <QuickAccess />
         <Announcement />
