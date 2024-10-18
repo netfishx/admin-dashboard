@@ -1,4 +1,4 @@
-import Welcome from './welcome';
+import Salutations from './salutations';
 import DataOverview from './data-overview';
 import QuickAccess from './quick-access';
 import { getI18n } from "@/locales/server";
@@ -18,7 +18,7 @@ export default async function DashboardPage() {
   return (
     <div className="flex-1 flex w-full">
       {/* <div>{t("hello")}</div> */}
-      <Welcome user={userInfo} />
+      <Salutations user={userInfo} />
       <div>
         <Announcement />
         <DataOverview />
