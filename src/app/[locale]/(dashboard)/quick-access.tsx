@@ -8,7 +8,7 @@ import { Users, Scale, Gamepad2, FileText } from 'lucide-react';
 export default async function QuickAccess() {
   const t = await getI18n();
   return (
-    <div className="w-[280px] p-5 rounded border bg-card mb-2 ">
+    <div className="w-[280px] p-5 rounded border bg-card">
       <div className="text-base mb-4">{t("quickAccess")}</div>
       <div className="grid grid-cols-3 gap-4">
         {/* 第一行 */}
