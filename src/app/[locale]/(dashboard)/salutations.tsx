@@ -41,7 +41,7 @@ const Item = (props: any) => {
         <div className='text-xs pb-2'>
           {name}
         </div>
-        <div className='text-xl font-bold underline'>
+        <div className='text-xl font-bold'>
           {value}
         </div>
       </div>
