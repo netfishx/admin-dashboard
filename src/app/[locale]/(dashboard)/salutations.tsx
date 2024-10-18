@@ -43,13 +43,15 @@ export default async function Welcome(props: any) {
 const Item = (props: any) => {
   const { name, value, icon, unShowBorder } = props;
   return (
-    <div
-      className={`w-[208px] h-[60px] flex items-center ${unShowBorder ? "" : "border-r"} mr-5`}
-    >
+    <div className={`h-[60px] flex items-center ${unShowBorder ? '' : 'border-r'} mr-5 pr-12`} >
       <Image src={icon} alt="Icon" className="size-14" />
-      <div className="pl-3">
-        <div className="text-xs pb-2">{name}</div>
-        <div className="text-xl font-bold">{value}</div>
+      <div className='pl-3'>
+        <div className='text-xs pb-2'>
+          {name}
+        </div>
+        <div className='text-xl font-bold'>
+          {value}
+        </div>
       </div>
     </div>
   );
