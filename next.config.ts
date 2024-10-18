@@ -29,6 +29,11 @@ const nextConfig: NextConfig = {
     },
     optimizePackageImports: ["@radix-ui/react-icons"],
   },
+  images: {
+    dangerouslyAllowSVG: true,
+    contentDispositionType: "attachment",
+    contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
+  },
   output: "standalone",
 };
 
