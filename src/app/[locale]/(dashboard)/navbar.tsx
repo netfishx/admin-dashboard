@@ -7,7 +7,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { ChevronDown, HomeIcon, MoonStar, QrCode } from "lucide-react";
+import { ChevronDown, HomeIcon, MoonStar, QrCode, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
 import { useState } from "react";
 export function Navbar() {
@@ -27,7 +27,7 @@ export function Navbar() {
             setTheme(mode === "dark" ? "light" : "dark");
           }}
         >
-          <MoonStar className="size-4" />
+          {mode === "dark" ? <MoonStar className="size-4" /> : <Sun className="size-4" />}
         </div>
         <div className="cursor-pointer rounded-full border-solid border-2 p-1">
           <QrCode className="size-4" />
