@@ -7,7 +7,7 @@ import { getI18n } from "@/locales/server";
 export default async function DataOverview() {
   const t = await getI18n();
   return (
-    <div className="w-[280px] h-[208px] p-5 rounded border bg-white mb-2">
+    <div className="w-[280px] h-[208px] p-5 rounded border bg-card mb-2">
       <div className='text-base mb-4'>{t("dataOverview")}</div>
       <div className="grid grid-cols-3 gap-y-4 text-center ">
         {/* First row */}

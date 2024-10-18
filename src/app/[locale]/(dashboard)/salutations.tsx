@@ -15,7 +15,7 @@ export default async function Welcome(props: any) {
   const { user } = props;
   const t = await getI18n();
   return (
-    <div className='flex-1 w-full h-[548px] p-5 rounded border bg-white mr-2 mb-2'>
+    <div className='flex-1 w-full h-[548px] p-5 rounded border bg-card mr-2 mb-2'>
       <div  className='pb-5 text-xl border-b'>
         👏欢迎回来，{user.name}
       </div>
