@@ -12,8 +12,8 @@ export default function LoginPage() {
     <Form action={loginAction}>
       <div className="w-full h-screen overflow-hidden bg-accent flex flex-col gap-4 items-center justify-center">
         <Image src={bg} alt="background image" className="object-cover" fill />
-        <div className="w-[400px] flex items-center justify-center gap-2">
-          <Image src={logo} alt="Icon" className="size-6" />
+        <div className="w-[400px] flex items-center justify-center gap-4">
+          <Image src={logo} alt="Icon" className="size-8" />
           <span className="text-xl font-medium">代理后台</span>
         </div>
         <div className="w-[400px] bg-background p-10 border rounded-lg flex flex-col gap-10 z-10">
