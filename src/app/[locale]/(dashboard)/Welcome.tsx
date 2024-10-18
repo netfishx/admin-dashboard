@@ -15,21 +15,18 @@ export default async function Welcome(props: any) {
   const { user } = props;
   const t = await getI18n();
   return (
-    <div className='flex-1'>
-    {/* <div className='w-[calc(100%-280px)]'> */}
-      <div className="w-full h-[548px] p-5 rounded border bg-white">
-        <div  className='pb-5 text-xl border-b'>
-          👏欢迎回来，{user.name}
-        </div>
-        <div className='w-full py-5 border-b flex items-center justify-between'>
-          <Item name={t("gameTotalProfit")} value={user.data.value1} icon={welcome01} />
-          <Item name={t("totalDeposit")} value={user.data.value2} icon={welcome02} />
-          <Item name={t("totalWithdrawal")} value={user.data.value3} icon={welcome03} />
-          <Item name={t("newMembers")} value={user.data.value4} icon={welcome04} unShowBorder />
-        </div>
-        <div className='pt-5'>
-          this is charts
-        </div>
+    <div className='flex-1 w-full h-[548px] p-5 rounded border bg-white mr-2 mb-2'>
+      <div  className='pb-5 text-xl border-b'>
+        👏欢迎回来，{user.name}
+      </div>
+      <div className='w-full py-5 border-b flex items-center justify-around'>
+        <Item name={t("gameTotalProfit")} value={user.data.value1} icon={welcome01} />
+        <Item name={t("totalDeposit")} value={user.data.value2} icon={welcome02} />
+        <Item name={t("totalWithdrawal")} value={user.data.value3} icon={welcome03} />
+        <Item name={t("newMembers")} value={user.data.value4} icon={welcome04} unShowBorder />
+      </div>
+      <div className='pt-5'>
+        this is charts
       </div>
     </div>
   )
