@@ -15,8 +15,9 @@ export default async function Welcome(props: any) {
   const { user } = props;
   const t = await getI18n();
   return (
-    <div className='w-[calc(100%-280px)]'>
-      <Card className="w-full h-[548px] p-5">
+    <div className='flex-1'>
+    {/* <div className='w-[calc(100%-280px)]'> */}
+      <div className="w-full h-[548px] p-5 rounded border bg-white">
         <div  className='pb-5 text-xl border-b'>
           👏欢迎回来，{user.name}
         </div>
@@ -29,7 +30,7 @@ export default async function Welcome(props: any) {
         <div className='pt-5'>
           this is charts
         </div>
-      </Card>
+      </div>
     </div>
   )
 }

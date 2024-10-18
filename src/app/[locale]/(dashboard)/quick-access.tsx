@@ -8,7 +8,7 @@ import { Users, Scale, Gamepad2, FileChartColumnIncreasing } from 'lucide-react'
 export default async function QuickAccess() {
   const t = await getI18n();
   return (
-    <Card className="w-[280px] p-5">
+    <div className="w-[280px] p-5 rounded border bg-white ">
       {/* <div className='text-base'>{t("quickaccess")}</div> */}
       <div className="p-4">
       <h2 className="text-lg font-semibold mb-4">快捷入口</h2>
@@ -74,6 +74,6 @@ export default async function QuickAccess() {
         </div>
       </div>
     </div>
-    </Card>
+    </div>
   )
 }
