@@ -42,7 +42,8 @@ export default function Announcement() {
         <div className="flex justify-between mb-4">
           <div>{t("announcement")}</div>
           <button
-            className="text-blue-500 text-sm"
+            type="button"
+            className="text-primary text-sm"
             onClick={() => {
               setShowMore(true);
             }}
@@ -54,6 +55,7 @@ export default function Announcement() {
           {data.map((item) => {
             return (
               <div
+                key={item.content}
                 className="text-ellipsis whitespace-nowrap overflow-hidden"
               >
                 <span
@@ -82,6 +84,7 @@ export default function Announcement() {
             {data.map((item) => {
               return (
                 <div
+                  key={item.content}
                   className="text-ellipsis whitespace-nowrap overflow-hidden"
                 >
                   <span
