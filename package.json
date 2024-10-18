@@ -58,7 +58,7 @@
     "zod-form-data": "^2.0.2"
   },
   "devDependencies": {
-    "@biomejs/biome": "1.9.3",
+    "@biomejs/biome": "1.9.4",
     "@types/negotiator": "^0.6.3",
     "@types/node": "^22.7.6",
     "@types/react": "npm:types-react@19.0.0-rc.1",
