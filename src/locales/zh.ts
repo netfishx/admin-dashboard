@@ -8,7 +8,7 @@ export default {
   "totalDeposit": "总存款金额",
   "totalWithdrawal": "游戏总盈亏",
   "newMembers": "游戏总盈亏",
-  "dataOverview": "数据概览",
+  "dataOverview": "数据总览",
   "totalAmount": "总金额",
   "availableAmount": "可用金额",
   "frozenAmount": "冻结金额",

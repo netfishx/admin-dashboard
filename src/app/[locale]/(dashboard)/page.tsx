@@ -16,12 +16,15 @@ export default async function DashboardPage() {
     },
   };
   return (
-    <div className="flex-1">
-      <div>{t("hello")}</div>
-      <Announcement />
+    <div className="flex-1 flex w-full">
+      {/* <div>{t("hello")}</div> */}
       <Welcome user={userInfo} />
-      <DataOverview />
-      <QuickAccess />
+      <div>
+        <Announcement />
+        <DataOverview />
+        <QuickAccess />
+      </div>
+      
     </div>
   );
 }
