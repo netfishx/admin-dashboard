@@ -12,9 +12,9 @@ import { useTheme } from "next-themes";
 import { useState } from "react";
 export function Navbar() {
   const [name, _setName] = useState("Serati Ma");
-  const { resolvedTheme: mode, setTheme } = useTheme()
+  const { resolvedTheme: mode, setTheme } = useTheme();
   return (
-    <div className="w-full h-10 flex flex-row justify-between">
+    <div className="w-full h-10 flex flex-row justify-between border">
       <div className="flex flex-row gap-2 items-center text-sm">
         <HomeIcon className="size-4" />
         <span>/</span>
@@ -27,7 +27,11 @@ export function Navbar() {
             setTheme(mode === "dark" ? "light" : "dark");
           }}
         >
-          {mode === "dark" ? <MoonStar className="size-4" /> : <Sun className="size-4" />}
+          {mode === "dark" ? (
+            <MoonStar className="size-4" />
+          ) : (
+            <Sun className="size-4" />
+          )}
         </div>
         <div className="cursor-pointer rounded-full border-solid border-2 p-1">
           <QrCode className="size-4" />
