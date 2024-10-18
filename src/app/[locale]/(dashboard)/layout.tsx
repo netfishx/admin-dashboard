@@ -1,9 +1,17 @@
 import type { ReactNode } from "react";
+import { Navbar } from "./navbar";
+import { SideBar } from "./sidebar";
 
 export default function DashboardLayout({ children }: { children: ReactNode }) {
   return (
-    <div className="w-full h-screen overflow-hidden bg-red-50 flex flex-col gap-4 items-center justify-center">
-      {children}
+    <div className="w-full h-screen overflow-hidden flex">
+      <SideBar />
+      <main className="flex-1 flex flex-col">
+        <Navbar />
+        <div className="flex-1 flex flex-col gap-2 p-2 bg-neutral-50">
+          {children}
+        </div>
+      </main>
     </div>
   );
 }
