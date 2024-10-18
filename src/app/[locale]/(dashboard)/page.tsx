@@ -1,7 +1,7 @@
+import Welcome from './welcome';
+import DataOverview from './data-overview';
+import QuickAccess from './quick-access';
 import { getI18n } from "@/locales/server";
-import DataOverview from "./DataOverview";
-import QuickAccess from "./QuickAccess";
-import Welcome from "./Welcome";
 import Announcement from "./announcement";
 
 export default async function DashboardPage() {

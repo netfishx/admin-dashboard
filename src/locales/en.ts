@@ -3,5 +3,17 @@ export default {
   "hello.world": "Hello world!",
   "welcome": "Welcome back",
   "announcement": "announcement",
-  "more": "more"
+  "more": "more",
+  "gameTotalProfit": "gameTotalProfit",
+  "totalDeposit": "totalDeposit",
+  "totalWithdrawal": "totalWithdrawal",
+  "newMembers": "newMembers",
+  "dataOverview": "dataOverview",
+  "totalAmount": "totalAmount",
+  "availableAmount": "availableAmount",
+  "frozenAmount": "frozenAmount",
+  "unsettledAmount": "unsettledAmount",
+  "totalCreditAmount": "totalCreditAmount",
+  "lentAmount": "lentAmount",
+  "quickaccess": 'quickaccess',
 } as const;
