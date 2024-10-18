@@ -1,7 +1,7 @@
+import Salutations from './salutations';
+import DataOverview from './data-overview';
+import QuickAccess from './quick-access';
 import { getI18n } from "@/locales/server";
-import DataOverview from "./DataOverview";
-import QuickAccess from "./QuickAccess";
-import Welcome from "./Welcome";
 import Announcement from "./announcement";
 
 export default async function DashboardPage() {
@@ -16,12 +16,15 @@ export default async function DashboardPage() {
     },
   };
   return (
-    <div className="flex-1">
-      <div>{t("hello")}</div>
-      <Announcement />
-      <Welcome user={userInfo} />
-      <DataOverview />
-      <QuickAccess />
+    <div className="flex-1 flex w-full">
+      {/* <div>{t("hello")}</div> */}
+      <Salutations user={userInfo} />
+      <div>
+        <Announcement />
+        <DataOverview />
+        <QuickAccess />
+      </div>
+      
     </div>
   );
 }
