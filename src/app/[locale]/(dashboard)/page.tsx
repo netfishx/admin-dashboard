@@ -4,8 +4,8 @@ import DataOverview from "./data-overview";
 import QuickAccess from "./quick-access";
 import Salutations from "./salutations";
 
-export default async function DashboardPage() {
-  const t = await getI18n();
+export default function DashboardPage() {
+  const t = getI18n();
   const userInfo = {
     name: "张三",
     data: {
@@ -19,10 +19,10 @@ export default async function DashboardPage() {
     <>
       {/* <div>{t("hello")}</div> */}
       <Salutations user={userInfo} />
-      <div>
-        <Announcement />
+      <div className='flex flex-col gap-2'>
         <DataOverview />
         <QuickAccess />
+        <Announcement />
       </div>
     </>
   );

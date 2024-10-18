@@ -49,7 +49,7 @@ const Item = (props: any) => {
       <Image src={icon} alt="Icon" className="size-14" />
       <div className="pl-3">
         <div className="text-xs pb-2">{name}</div>
-        <div className="text-xl font-bold underline">{value}</div>
+        <div className="text-xl font-bold">{value}</div>
       </div>
     </div>
   );
