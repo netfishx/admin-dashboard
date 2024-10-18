@@ -28,7 +28,7 @@ export default function Announcement() {
 
   return (
     <>
-      <div className="w-[280px] bg-white p-2">
+      <div className="w-[280px] bg-background p-2">
         <div className="flex justify-between mb-4">
           <div>{t("announcement")}</div>
           <button
