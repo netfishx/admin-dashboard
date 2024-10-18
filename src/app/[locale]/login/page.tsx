@@ -10,13 +10,13 @@ import Image from "next/image";
 export default function LoginPage() {
   return (
     <Form action={loginAction}>
-      <div className="w-full h-screen overflow-hidden bg-neutral-50 flex flex-col gap-4 items-center justify-center">
-        <Image src={bg} alt="Bg" className="object-cover -z-10" fill />
+      <div className="w-full h-screen overflow-hidden bg-accent flex flex-col gap-4 items-center justify-center">
+        <Image src={bg} alt="background image" className="object-cover" fill />
         <div className="w-[400px] flex items-center justify-center gap-2">
           <Image src={logo} alt="Icon" className="size-6" />
           <span className="text-xl font-medium">代理后台</span>
         </div>
-        <div className="w-[400px] bg-white p-10 border rounded-lg flex flex-col gap-10">
+        <div className="w-[400px] bg-background p-10 border rounded-lg flex flex-col gap-10 z-10">
           <div className="flex flex-col gap-2">
             <Label className="text-sm font-medium flex gap-1">
               账号
