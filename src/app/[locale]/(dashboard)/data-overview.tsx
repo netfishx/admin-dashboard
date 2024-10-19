@@ -5,7 +5,7 @@ export default async function DataOverview() {
   noStore();
   const t = await getI18n();
   return (
-    <div className="p-4 rounded border bg-card">
+    <div className="p-4 rounded bg-card">
       <div className="text-base mb-4">{t("dataOverview")}</div>
       <div className="grid grid-cols-3 gap-y-4 text-center ">
         {/* First row */}

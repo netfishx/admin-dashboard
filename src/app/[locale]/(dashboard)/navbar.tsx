@@ -14,7 +14,7 @@ export function Navbar() {
   const [name, _setName] = useState("Serati Ma");
   const { resolvedTheme: mode, setTheme } = useTheme();
   return (
-    <div className="w-full h-10 flex flex-row justify-between border px-2">
+    <div className="w-full h-10 flex flex-row justify-between border-b px-2">
       <div className="flex flex-row gap-2 items-center text-sm">
         <HomeIcon className="size-4" />
         <span>/</span>

@@ -12,9 +12,9 @@ export default async function Welcome(props: any) {
   const { user } = props;
   const t = await getI18n();
   return (
-    <div className="flex-1 p-5 rounded border bg-card">
-      <div className="pb-5 text-xl border-b">👏欢迎回来，{user.name}</div>
-      <div className="w-full py-5 border-b flex items-center justify-around">
+    <div className="flex-1 p-4 rounded bg-card">
+      <div className="pb-4 text-xl border-b">👏欢迎回来，{user.name}</div>
+      <div className="w-full py-4 border-b flex items-center justify-around">
         <Item
           name={t("gameTotalProfit")}
           value={user.data.value1}
@@ -37,7 +37,7 @@ export default async function Welcome(props: any) {
           unShowBorder
         />
       </div>
-      <div className="pt-5">this is charts</div>
+      <div className="pt-4">this is charts</div>
     </div>
   );
 }
@@ -46,7 +46,7 @@ const Item = (props: any) => {
   const { name, value, icon, unShowBorder } = props;
   return (
     <div
-      className={`w-1/4 h-[60px] flex items-center ${unShowBorder ? "" : "border-r"} mr-5`}
+      className={`w-1/4 h-[60px] flex items-center ${unShowBorder ? "" : "border-r"} mr-4`}
     >
       <Image src={icon} alt="Icon" className="size-14" />
       <div className="pl-3">

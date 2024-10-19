@@ -40,7 +40,7 @@ export default function Announcement() {
 
   return (
     <>
-      <div className="bg-background p-4 rounded border flex-1">
+      <div className="bg-background p-4 rounded flex-1">
         <div className="flex justify-between mb-4">
           <div>{t("announcement")}</div>
           <button

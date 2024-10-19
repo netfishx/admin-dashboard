@@ -13,7 +13,7 @@ export function SideBar() {
   return (
     <div
       className={cn([
-        "flex flex-col shrink-0 h-full transition-all",
+        "flex flex-col shrink-0 h-full transition-all border-r",
         isOpened ? "w-56" : "w-12",
       ])}
     >
