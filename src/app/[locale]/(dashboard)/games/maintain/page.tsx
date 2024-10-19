@@ -79,8 +79,8 @@ export default function Page() {
                     className={cn([
                       "p-1 rounded-sm w-24 inline-block",
                       item.status
-                        ? "text-destructive bg-destructive/10"
-                        : "text-primary bg-primary/10",
+                        ? "text-destructive bg-destructive/20"
+                        : "text-primary bg-primary/20",
                     ])}
                   >
                     {item.status ? "维护中" : "正常开启"}
@@ -94,8 +94,8 @@ export default function Page() {
                     className={cn([
                       "hover:no-underline",
                       item.status
-                        ? "hover:text-primary/90"
-                        : "text-destructive hover:text-destructive/90",
+                        ? "hover:text-primary/80"
+                        : "text-destructive hover:text-destructive/80",
                     ])}
                   >
                     {item.status ? "结束维护" : "开启维护"}

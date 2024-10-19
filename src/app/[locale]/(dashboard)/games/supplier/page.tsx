@@ -118,7 +118,7 @@ export default function Page() {
                 <TableCell className="w-24 text-center">
                   <Button
                     variant="link"
-                    className="hover:no-underline hover:text-primary/90"
+                    className="hover:no-underline hover:text-primary/80"
                   >
                     编辑
                   </Button>
