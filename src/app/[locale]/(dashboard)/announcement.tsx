@@ -8,9 +8,11 @@ import {
 } from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";
 import { useI18n } from "@/locales/client";
+import { unstable_noStore as noStore } from "next/cache";
 import { useState } from "react";
 
 export default function Announcement() {
+  noStore();
   const t = useI18n();
   const [showMore, setShowMore] = useState(false);
   const data = [

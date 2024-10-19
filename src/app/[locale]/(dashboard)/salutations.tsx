@@ -5,8 +5,10 @@ import welcome01 from "@/assets/images/welcome/welcome01.svg";
 import welcome02 from "@/assets/images/welcome/welcome02.svg";
 import welcome03 from "@/assets/images/welcome/welcome03.svg";
 import welcome04 from "@/assets/images/welcome/welcome04.svg";
+import { unstable_noStore as noStore } from "next/cache";
 
 export default async function Welcome(props: any) {
+  noStore();
   const { user } = props;
   const t = await getI18n();
   return (
@@ -43,15 +45,13 @@ export default async function Welcome(props: any) {
 const Item = (props: any) => {
   const { name, value, icon, unShowBorder } = props;
   return (
-    <div className={`w-1/4 h-[60px] flex items-center ${unShowBorder ? '' : 'border-r'} mr-5`} >
+    <div
+      className={`w-1/4 h-[60px] flex items-center ${unShowBorder ? "" : "border-r"} mr-5`}
+    >
       <Image src={icon} alt="Icon" className="size-14" />
-      <div className='pl-3'>
-        <div className='text-xs pb-2'>
-          {name}
-        </div>
-        <div className='text-xl font-bold'>
-          {value}
-        </div>
+      <div className="pl-3">
+        <div className="text-xs pb-2">{name}</div>
+        <div className="text-xl font-bold">{value}</div>
       </div>
     </div>
   );

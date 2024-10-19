@@ -1,11 +1,9 @@
-import React from 'react'
-import {
-  Card,
-} from "@/components/ui/card"
 import { getI18n } from "@/locales/server";
-import { Users, Scale, Gamepad2, FileText } from 'lucide-react';
+import { FileText, Scale, Users } from "lucide-react";
+import { unstable_noStore as noStore } from "next/cache";
 
 export default async function QuickAccess() {
+  noStore();
   const t = await getI18n();
   return (
     <div className="w-[280px] p-5 rounded border bg-card">
@@ -36,7 +34,9 @@ export default async function QuickAccess() {
           <div className="w-[36px] h-[36px] bg-accent flex items-center justify-center rounded">
             <Scale className="h-4 w-4" />
           </div>
-          <p className="text-xs mt-2 whitespace-nowrap">{t("helpSubordinateRepay")}</p>
+          <p className="text-xs mt-2 whitespace-nowrap">
+            {t("helpSubordinateRepay")}
+          </p>
         </div>
         <div className="flex flex-col items-center justify-center cursor-pointer rounded-sm">
           <div className="w-[36px] h-[36px] bg-accent flex items-center justify-center rounded">
@@ -46,7 +46,7 @@ export default async function QuickAccess() {
         </div>
         <div className="flex flex-col items-center justify-center cursor-pointer rounded-sm">
           <div className="w-[36px] h-[36px] bg-accent flex items-center justify-center rounded">
-            <FileText className="h-4 w-4" /> 
+            <FileText className="h-4 w-4" />
           </div>
           <p className="text-xs mt-2">{t("agentReport")}</p>
         </div>
@@ -54,23 +54,23 @@ export default async function QuickAccess() {
         {/* 第三行 */}
         <div className="flex flex-col items-center justify-center cursor-pointer rounded-sm">
           <div className="w-[36px] h-[36px] bg-accent flex items-center justify-center rounded">
-            <FileText className="h-4 w-4" /> 
+            <FileText className="h-4 w-4" />
           </div>
           <p className="text-xs mt-2">{t("memberReport")}</p>
         </div>
         <div className="flex flex-col items-center justify-center cursor-pointer rounded-sm">
           <div className="w-[36px] h-[36px] bg-accent flex items-center justify-center rounded">
-            <FileText className="h-4 w-4" /> 
+            <FileText className="h-4 w-4" />
           </div>
           <p className="text-xs mt-2">{t("betList")}</p>
         </div>
         <div className="flex flex-col items-center justify-center cursor-pointer rounded-sm">
           <div className="w-[36px] h-[36px] bg-accent flex items-center justify-center rounded">
-            <FileText className="h-4 w-4" /> 
+            <FileText className="h-4 w-4" />
           </div>
           <p className="text-xs mt-2">{t("accountChangeRecord")}</p>
         </div>
       </div>
     </div>
-  )
+  );
 }
