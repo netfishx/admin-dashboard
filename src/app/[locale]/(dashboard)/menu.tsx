@@ -29,7 +29,7 @@ export function Menu() {
   const pathname = usePathname();
   return (
     <ScrollArea className="h-[calc(100dvh-8.5rem)]">
-      <div className="flex flex-col gap-1">
+      <div className="flex flex-col gap-1 px-2">
         {isOpened ? (
           <OpenedMenu pathname={pathname} />
         ) : (
@@ -52,7 +52,7 @@ function OpenedMenu({ pathname }: { pathname: string }) {
             hasChildren
           />
         </CollapsibleTrigger>
-        <CollapsibleContent className="flex flex-col gap-1 pl-6">
+        <CollapsibleContent className="flex flex-col gap-1 px-6">
           <MenuItem label="拦货设置" href="/games/flyorder" />
           <MenuItem label="赔率限制" href="/games/odds" />
           <MenuItem label="下级默认占成" href="/games/ratio" />
@@ -100,7 +100,7 @@ function OpenedMenu({ pathname }: { pathname: string }) {
 }
 
 function ClosedMenu({ pathname }: { pathname: string }) {
-  const baseClass = "flex flex-col items-center justify-center w-12 h-9";
+  const baseClass = "flex flex-col items-center justify-center h-9";
   return (
     <>
       <div className={cn([baseClass, pathname === "/" && "text-primary"])}>

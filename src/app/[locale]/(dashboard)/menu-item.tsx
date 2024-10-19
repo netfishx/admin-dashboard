@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { ChevronDown } from "lucide-react";
+import { ChevronRight } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
 import type { ReactNode } from "react";
 
@@ -37,7 +37,7 @@ export function MenuItem({
       {icon}
       <span className="flex-grow text-left">{label}</span>
       {hasChildren && (
-        <ChevronDown className="h-4 w-4 transition-transform group-data-[state='open']:rotate-180" />
+        <ChevronRight className="h-4 w-4 transition-transform group-data-[state='open']:rotate-90" />
       )}
     </Button>
   );
