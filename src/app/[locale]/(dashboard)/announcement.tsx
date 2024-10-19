@@ -40,7 +40,7 @@ export default function Announcement() {
 
   return (
     <>
-      <div className="w-[280px] bg-background p-2 rounded border flex-1">
+      <div className="bg-background p-4 rounded border flex-1">
         <div className="flex justify-between mb-4">
           <div>{t("announcement")}</div>
           <button
@@ -58,7 +58,7 @@ export default function Announcement() {
             return (
               <div
                 key={item.content}
-                className="text-ellipsis whitespace-nowrap overflow-hidden"
+                className="text-ellipsis text-muted-foreground whitespace-nowrap overflow-hidden"
               >
                 <span
                   className={cn(

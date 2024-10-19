@@ -16,7 +16,7 @@ export default function DashboardPage() {
   return (
     <>
       <Salutations user={userInfo} />
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-2 w-[280px]">
         <DataOverview />
         <QuickAccess />
         <Announcement />

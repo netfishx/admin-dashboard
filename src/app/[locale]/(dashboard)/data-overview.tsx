@@ -5,34 +5,46 @@ export default async function DataOverview() {
   noStore();
   const t = await getI18n();
   return (
-    <div className="w-[280px] h-[208px] p-5 rounded border bg-card">
+    <div className="p-4 rounded border bg-card">
       <div className="text-base mb-4">{t("dataOverview")}</div>
       <div className="grid grid-cols-3 gap-y-4 text-center ">
         {/* First row */}
-        <div className="mb-6">
-          <p className="text-xs text-gray-500 mb-1">{t("totalAmount")}</p>
+        <div className="flex flex-col items-center justify-center p-2">
+          <p className="text-xs text-muted-foreground mb-1">
+            {t("totalAmount")}
+          </p>
           <p className="text-xs font-semibold">2651356</p>
         </div>
-        <div>
-          <p className="text-xs text-gray-500 mb-1">{t("availableAmount")}</p>
+        <div className="flex flex-col items-center justify-center p-2">
+          <p className="text-xs text-muted-foreground mb-1">
+            {t("availableAmount")}
+          </p>
           <p className="text-xs font-semibold">115785</p>
         </div>
-        <div>
-          <p className="text-xs text-gray-500 mb-1">{t("frozenAmount")}</p>
+        <div className="flex flex-col items-center justify-center p-2">
+          <p className="text-xs text-muted-foreground mb-1">
+            {t("frozenAmount")}
+          </p>
           <p className="text-xs font-semibold">100200</p>
         </div>
 
         {/* Second row */}
-        <div>
-          <p className="text-xs text-gray-500 mb-1">{t("unsettledAmount")}</p>
+        <div className="flex flex-col items-center justify-center p-2">
+          <p className="text-xs text-muted-foreground mb-1">
+            {t("unsettledAmount")}
+          </p>
           <p className="text-xs font-semibold">122321</p>
         </div>
-        <div>
-          <p className="text-xs text-gray-500 mb-1">{t("totalCreditAmount")}</p>
+        <div className="flex flex-col items-center justify-center p-2">
+          <p className="text-xs text-muted-foreground mb-1">
+            {t("totalCreditAmount")}
+          </p>
           <p className="text-xs font-semibold">115785</p>
         </div>
-        <div>
-          <p className="text-xs text-gray-500 mb-1">{t("lentAmount")}</p>
+        <div className="flex flex-col items-center justify-center p-2">
+          <p className="text-xs text-muted-foreground mb-1">
+            {t("lentAmount")}
+          </p>
           <p className="text-xs font-semibold">100200</p>
         </div>
       </div>
