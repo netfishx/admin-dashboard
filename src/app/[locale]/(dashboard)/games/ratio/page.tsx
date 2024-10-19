@@ -1,3 +1,4 @@
+import { EditNumber } from "@/components/edit-number";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -58,21 +59,7 @@ export default function Page() {
           </div>
           <div className="flex gap-2 items-center">
             <Label className="shrink-0">修改值</Label>
-            <div className="flex">
-              <Button
-                variant="ghost"
-                className="rounded-none bg-accent text-accent-foreground hover:bg-accent/50"
-              >
-                -
-              </Button>
-              <Input className="rounded-none w-12" defaultValue={1} />
-              <Button
-                variant="ghost"
-                className="rounded-none bg-accent text-accent-foreground hover:bg-accent/50"
-              >
-                +
-              </Button>
-            </div>
+            <EditNumber />
           </div>
         </div>
         <div className="flex gap-2">
