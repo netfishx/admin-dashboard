@@ -10,7 +10,6 @@
   },
   "dependencies": {
     "@date-fns/tz": "^1.1.2",
-    "@gitbeaker/rest": "^40.5.1",
     "@hookform/resolvers": "^3.9.0",
     "@next-safe-action/adapter-react-hook-form": "^1.0.13",
     "@radix-ui/react-accordion": "^1.2.1",
@@ -52,7 +51,7 @@
     "react": "^19.0.0-rc-b8ae38f8-20241018",
     "react-day-picker": "8.10.1",
     "react-dom": "^19.0.0-rc-b8ae38f8-20241018",
-    "react-hook-form": "^7.53.0",
+    "react-hook-form": "^7.53.1",
     "react-is": "^19.0.0-rc-b8ae38f8-20241018",
     "recharts": "^2.13.0",
     "server-only": "^0.0.1",
@@ -65,7 +64,7 @@
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
     "@types/negotiator": "^0.6.3",
-    "@types/node": "^22.7.6",
+    "@types/node": "^22.7.7",
     "@types/react": "npm:types-react@19.0.0-rc.1",
     "@types/react-dom": "npm:types-react-dom@19.0.0-rc.1",
     "postcss": "^8",
