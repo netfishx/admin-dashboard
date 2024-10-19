@@ -54,7 +54,7 @@ function OpenedMenu({ pathname }: { pathname: string }) {
         </CollapsibleTrigger>
         <CollapsibleContent className="flex flex-col gap-1 pl-6">
           <MenuItem label="拦货设置" href="/games/temp" />
-          <MenuItem label="赔率限制" href="/games" />
+          <MenuItem label="赔率限制" href="/games/odds" />
           <MenuItem label="下级默认占成" href="/games" />
           <MenuItem label="退水设置" href="/games" />
           <MenuItem label="供应商设置" href="/games" />
