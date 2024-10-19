@@ -32,7 +32,7 @@ const data = [
   },
 ];
 
-export default function Temp() {
+export default function Page() {
   return (
     <div className="flex flex-col gap-2 w-full">
       <div className="flex justify-between items-center bg-background py-2 px-4">
@@ -45,7 +45,7 @@ export default function Temp() {
         <Table className="border">
           <TableHeader>
             <TableRow className="bg-muted">
-              <TableHead>游戏开关</TableHead>
+              <TableHead>游戏名称</TableHead>
               <TableHead className="w-32 text-center">拦货开关</TableHead>
             </TableRow>
           </TableHeader>

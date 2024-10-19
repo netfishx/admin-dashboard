@@ -26,35 +26,28 @@ const data = [
     period: 1,
   },
   {
-    type: "闲",
+    type: "庄",
     odds: "11.100",
     min: 1,
     max: 1,
     period: 1,
   },
   {
-    type: "闲",
+    type: "和",
     odds: "11.100",
     min: 1,
     max: 1,
     period: 1,
   },
   {
-    type: "闲",
+    type: "庄对",
     odds: "11.100",
     min: 1,
     max: 1,
     period: 1,
   },
   {
-    type: "闲",
-    odds: "11.100",
-    min: 1,
-    max: 1,
-    period: 1,
-  },
-  {
-    type: "闲",
+    type: "闲对",
     odds: "11.100",
     min: 1,
     max: 1,
@@ -68,9 +61,9 @@ export default function Page() {
       <div className="flex justify-between items-center bg-background py-2 px-4">
         <div className="flex gap-2">
           <div className="flex gap-2 items-center">
-            <Label>游戏类别</Label>
+            <Label className="shrink-0">游戏类别</Label>
             <Select defaultValue="1" disabled>
-              <SelectTrigger className="w-28">
+              <SelectTrigger className="w-36">
                 <SelectValue placeholder="请选择" />
               </SelectTrigger>
               <SelectContent>
@@ -79,9 +72,9 @@ export default function Page() {
             </Select>
           </div>
           <div className="flex gap-2 items-center">
-            <Label>游戏名称</Label>
+            <Label className="shrink-0">游戏名称</Label>
             <Select defaultValue="1">
-              <SelectTrigger className="w-28">
+              <SelectTrigger className="w-36">
                 <SelectValue placeholder="请选择" />
               </SelectTrigger>
               <SelectContent>
@@ -92,6 +85,38 @@ export default function Page() {
                 <SelectItem value="5">百家乐05</SelectItem>
               </SelectContent>
             </Select>
+          </div>
+          <div className="flex gap-2 items-center">
+            <Label className="shrink-0">批量修改</Label>
+            <Select defaultValue="1">
+              <SelectTrigger className="w-40">
+                <SelectValue placeholder="请选择" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="1">赔率</SelectItem>
+                <SelectItem value="2">个人单注最低限额</SelectItem>
+                <SelectItem value="3">个人单注最高限额</SelectItem>
+                <SelectItem value="4">个人单期最高限额</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+          <div className="flex gap-2 items-center">
+            <Label className="shrink-0">修改值</Label>
+            <div className="flex">
+              <Button
+                variant="ghost"
+                className="rounded-none bg-accent text-accent-foreground hover:bg-accent/50"
+              >
+                -
+              </Button>
+              <Input className="rounded-none w-12" defaultValue={1} />
+              <Button
+                variant="ghost"
+                className="rounded-none bg-accent text-accent-foreground hover:bg-accent/50"
+              >
+                +
+              </Button>
+            </div>
           </div>
         </div>
         <div className="flex gap-2">
@@ -104,14 +129,14 @@ export default function Page() {
         <Table className="border">
           <TableHeader>
             <TableRow className="bg-muted">
-              <TableHead>玩法</TableHead>
-              <TableHead>赔率</TableHead>
-              <TableHead>个人单注最低限额</TableHead>
-              <TableHead>
+              <TableHead className="min-w-16">玩法</TableHead>
+              <TableHead className="min-w-24">赔率</TableHead>
+              <TableHead className="min-w-40">个人单注最低限额</TableHead>
+              <TableHead className="min-w-72">
                 个人单注最高限额
                 <span className="text-destructive">(*不要超过最高限额)</span>
               </TableHead>
-              <TableHead>
+              <TableHead className="min-w-72">
                 个人单期最高限额
                 <span className="text-destructive">(*不要超过最高限额)</span>
               </TableHead>
@@ -122,7 +147,7 @@ export default function Page() {
               <TableRow key={item.type}>
                 <TableCell>{item.type}</TableCell>
                 <TableCell>
-                  <Input defaultValue={item.odds} className="w-16" />
+                  <Input defaultValue={item.odds} />
                 </TableCell>
                 <TableCell>
                   <Input defaultValue={item.min} />
