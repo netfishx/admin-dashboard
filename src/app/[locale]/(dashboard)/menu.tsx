@@ -95,6 +95,66 @@ function OpenedMenu({ pathname }: { pathname: string }) {
           <MenuItem label="借还记录" href="/3" />
         </CollapsibleContent>
       </Collapsible>
+      <Collapsible>
+        <CollapsibleTrigger asChild>
+          <MenuItem
+            label="申请管理"
+            icon={<ClipboardCheck className="size-4" />}
+            hasChildren
+          />
+        </CollapsibleTrigger>
+        <CollapsibleContent className="flex flex-col gap-1 pl-6">
+          <MenuItem label="系统设置" href="/4" />
+        </CollapsibleContent>
+      </Collapsible>
+      <Collapsible>
+        <CollapsibleTrigger asChild>
+          <MenuItem
+            label="资金管理"
+            icon={<Scale className="size-4" />}
+            hasChildren
+          />
+        </CollapsibleTrigger>
+        <CollapsibleContent className="flex flex-col gap-1 pl-6">
+          <MenuItem label="系统设置" href="/4" />
+        </CollapsibleContent>
+      </Collapsible>
+      <Collapsible>
+        <CollapsibleTrigger asChild>
+          <MenuItem
+            label="个人中心"
+            icon={<UserSquare className="size-4" />}
+            hasChildren
+          />
+        </CollapsibleTrigger>
+        <CollapsibleContent className="flex flex-col gap-1 pl-6">
+          <MenuItem label="系统设置" href="/4" />
+        </CollapsibleContent>
+      </Collapsible>
+      <Collapsible>
+        <CollapsibleTrigger asChild>
+          <MenuItem
+            label="系统管理"
+            icon={<Tv2 className="size-4" />}
+            hasChildren
+          />
+        </CollapsibleTrigger>
+        <CollapsibleContent className="flex flex-col gap-1 pl-6">
+          <MenuItem label="系统设置" href="/4" />
+        </CollapsibleContent>
+      </Collapsible>
+      <Collapsible>
+        <CollapsibleTrigger asChild>
+          <MenuItem
+            label="平台维护"
+            icon={<Cog className="size-4" />}
+            hasChildren
+          />
+        </CollapsibleTrigger>
+        <CollapsibleContent className="flex flex-col gap-1 pl-6">
+          <MenuItem label="系统设置" href="/4" />
+        </CollapsibleContent>
+      </Collapsible>
     </>
   );
 }
