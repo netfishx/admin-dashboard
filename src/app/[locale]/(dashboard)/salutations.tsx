@@ -12,8 +12,8 @@ export default function Welcome(props: any) {
   const t = useTranslations();
   return (
     <div className="flex-1 p-4 rounded bg-card">
-      <div className="pb-4 text-xl border-b">👏欢迎回来，{user.name}</div>
-      <div className="py-4 border-b flex items-center justify-around">
+      {/* <div className="pb-4 text-xl border-b">👏欢迎回来，{user.name}</div> */}
+      <div className="pb-4 h-[130px] border-b flex items-center justify-around">
         <Item
           name={t("gameTotalProfit")}
           value={user.data.value1}
