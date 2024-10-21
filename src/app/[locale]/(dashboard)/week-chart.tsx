@@ -76,7 +76,7 @@ export default function WeekChart() {
           </Tabs>
         </div>
       </div>
-      <ChartContainer config={chartConfig} className="h-[calc(100dvh-590px)] aspect-[32/9] mx-auto">
+      <ChartContainer config={chartConfig} className="h-[calc(100dvh-590px)] aspect-[32/9] mx-auto min-h-60">
         <LineChart
           data={data}
           margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
