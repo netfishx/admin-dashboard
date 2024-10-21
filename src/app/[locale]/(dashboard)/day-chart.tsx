@@ -12,38 +12,36 @@ import { Label, Legend, Pie, PieChart } from "recharts";
 
 export const description = "A stacked area chart";
 
-const chartData = [
-  { browser: "掼蛋", visitors: 275, fill: "var(--color-chrome)" },
-  { browser: "视讯类", visitors: 200, fill: "var(--color-safari)" },
-  { browser: "弹珠类", visitors: 287, fill: "var(--color-firefox)" },
-];
-
 const chartConfig = {
   visitors: {
     label: "Visitors",
   },
-  chrome: {
+  gd: {
     label: "Chrome",
-    color: "#249EFF",
+    color: "hsl(var(--chart-pie1))",
   },
-  safari: {
+  sx: {
     label: "Safari",
-    color: "#313CA9",
+    color: "hsl(var(--chart-pie2))",
   },
-  firefox: {
+  dz: {
     label: "Firefox",
-    color: "#21CCFF",
+    color: "hsl(var(--chart-pie3))",
   },
 } satisfies ChartConfig;
 
-export default function DayChart() {
-  const t = useTranslations();
+export default function DayChart(props: any) {
+  const t = useTranslations("chart");
+  const { title } = props;
+  const chartData = [
+    { browser: `${t("guandan")}`, visitors: 275, fill: "var(--color-gd)" },
+    { browser: `${t("video")}`, visitors: 200, fill: "var(--color-sx)" },
+    { browser: `${t("danzhu")}`, visitors: 287, fill: "var(--color-dz)" },
+  ];
   return (
     <div className="flex flex-col w-1/2 p-5 rounded bg-card">
       <div className="flex items-center justify-between">
-        <div className="items-center pb-0 flex justify-between">
-          <div>{t("todayCashflow")}</div>
-        </div>
+        {title}
       </div>
       <div className="flex-1 pb-0">
         <ChartContainer
