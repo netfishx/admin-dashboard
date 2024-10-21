@@ -18,15 +18,15 @@ const chartConfig = {
   },
   gd: {
     label: "Chrome",
-    color: "hsl(var(--chart-pie1))",
+    color: "hsl(var(--chart-sky))",
   },
   sx: {
     label: "Safari",
-    color: "hsl(var(--chart-pie2))",
+    color: "hsl(var(--chart-blue))",
   },
   dz: {
     label: "Firefox",
-    color: "hsl(var(--chart-pie3))",
+    color: "hsl(var(--chart-cyan))",
   },
 } satisfies ChartConfig;
 
