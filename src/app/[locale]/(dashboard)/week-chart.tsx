@@ -1,15 +1,15 @@
 "use client";
 import { type ChartConfig, ChartContainer } from "@/components/ui/chart";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useTranslations } from "next-intl";
 import {
-  LineChart,
-  Line, 
   CartesianGrid,
+  Line,
+  LineChart,
   Tooltip,
   XAxis,
   YAxis,
 } from "recharts";
-import { useTranslations } from "next-intl";
 
 const data = [
   {
@@ -74,18 +74,32 @@ export default function WeekChart() {
           </Tabs>
         </div>
       </div>
-      <ChartContainer config={chartConfig} className="h-[calc(100dvh-590px)] w-full">
+      <ChartContainer
+        config={chartConfig}
+        className="h-[calc(100dvh-590px)] w-full"
+      >
         <LineChart
           data={data}
           margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
         >
-          <XAxis dataKey="name" axisLine={false} />
-          <YAxis axisLine={false} />
+          <XAxis
+            dataKey="name"
+            axisLine={false}
+            tickLine={false}
+            tickMargin={8}
+          />
+          <YAxis axisLine={false} tickLine={false} tickMargin={8} />
           <Tooltip />
-          <CartesianGrid strokeDasharray="3 3" />
-          <Line type="monotone" dataKey="data" stroke="#117EFF" strokeWidth={3} activeDot={{ r: 8 }} />
-          </LineChart>
-          </ChartContainer>
+          <CartesianGrid strokeDasharray="3" />
+          <Line
+            type="natural"
+            dataKey="data"
+            stroke="#117EFF"
+            strokeWidth={3}
+            dot={false}
+          />
+        </LineChart>
+      </ChartContainer>
     </div>
   );
 }
