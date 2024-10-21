@@ -23,5 +23,15 @@ export default {
   "betList": "betList",
   "agentReport": "agentReport",
   "memberReport": "memberReport",
-  "accountChangeRecord": "accountChangeRecord"
+  "accountChangeRecord": "accountChangeRecord",
+  "dataTrending": "Data Trending",
+  "lastSevenDays": "Last seven days",
+  "cashflow": "Cash Flow",
+  "headcount": "Headcount",
+  "totalDeposits": "Total Deposits",
+  "thisperiod": "This Period",
+  "lastperiod": "Last Period",
+  "todayCashflow": "Today's cash flow",
+  "todayActiveUsers": "Today's Active Users",
+  "bettingAmount": "Betting Amount"
 } as const;

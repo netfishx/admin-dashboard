@@ -23,5 +23,15 @@ export default {
   "betList": "注单列表",
   "agentReport": "代理报表",
   "memberReport": "会员报表",
-  "accountChangeRecord": "账变记录"
+  "accountChangeRecord": "账变记录",
+  "dataTrending": "数据趋势",
+  "lastSevenDays": "近7日",
+  "cashflow": "流水",
+  "headcount": "人数",
+  "totalDeposits": "总存款额",
+  "thisperiod": "本期",
+  "lastperiod": "上期",
+  "todayCashflow": "今日流水",
+  "todayActiveUsers": "今日活跃人数",
+  "bettingAmount": "投注额"
 } as const;
