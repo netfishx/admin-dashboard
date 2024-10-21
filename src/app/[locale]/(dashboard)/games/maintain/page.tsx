@@ -11,7 +11,6 @@ import {
 } from "@/components/ui/table";
 import { cn } from "@/lib/utils";
 import { useTranslations } from "next-intl";
-import { unstable_noStore as noStore } from "next/cache";
 const data = [
   {
     game: "百家乐01",
@@ -46,7 +45,6 @@ const data = [
 ];
 
 export default function Page() {
-  noStore();
   const t = useTranslations("games.maintain");
   return (
     <div className="flex flex-col gap-2 w-full">

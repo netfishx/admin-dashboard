@@ -5,11 +5,9 @@ import welcome02 from "@/assets/images/welcome/welcome02.svg";
 import welcome03 from "@/assets/images/welcome/welcome03.svg";
 import welcome04 from "@/assets/images/welcome/welcome04.svg";
 import { useTranslations } from "next-intl";
-import { unstable_noStore as noStore } from "next/cache";
 import WeekChart from "./week-chart";
 
 export default function Welcome(props: any) {
-  noStore();
   const { user } = props;
   const t = useTranslations();
   return (

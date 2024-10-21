@@ -1,10 +1,8 @@
 import { FileText, Scale, Users } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { Link } from "next-view-transitions";
-import { unstable_noStore as noStore } from "next/cache";
 
 export default function QuickAccess() {
-  noStore();
   const t = useTranslations();
   return (
     <div className="p-4 rounded bg-card">

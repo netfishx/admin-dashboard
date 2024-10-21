@@ -8,11 +8,9 @@ import {
 } from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";
 import { useTranslations } from "next-intl";
-import { unstable_noStore as noStore } from "next/cache";
 import { useState } from "react";
 
 export default function Announcement() {
-  noStore();
   const t = useTranslations();
   const [showMore, setShowMore] = useState(false);
   const data = [

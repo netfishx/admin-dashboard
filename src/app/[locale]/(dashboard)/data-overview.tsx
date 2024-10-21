@@ -1,8 +1,6 @@
 import { useTranslations } from "next-intl";
-import { unstable_noStore as noStore } from "next/cache";
 
 export default function DataOverview() {
-  noStore();
   const t = useTranslations();
   return (
     <div className="p-4 rounded bg-card">
