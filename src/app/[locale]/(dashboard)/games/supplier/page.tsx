@@ -95,41 +95,45 @@ export default function Page() {
         </div>
       </div>
       <div className="p-2 bg-background flex-1">
-        <Table className="border">
-          <TableHeader>
-            <TableRow className="bg-muted">
-              <TableHead>{t("name")}</TableHead>
-              <TableHead>{t("video")}</TableHead>
-              <TableHead>{t("replay")}</TableHead>
-              <TableHead>{t("supplierId")}</TableHead>
-              <TableHead>{t("supplierName")}</TableHead>
-              <TableHead>{t("quota")}</TableHead>
-              <TableHead>{t("percent")}</TableHead>
-              <TableHead className="w-24 text-center">{t("action")}</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {data.map((item) => (
-              <TableRow key={item.game}>
-                <TableCell>{item.game}</TableCell>
-                <TableCell>{item.video}</TableCell>
-                <TableCell>{item.replay}</TableCell>
-                <TableCell>{item.supplierId}</TableCell>
-                <TableCell>{item.supplierName}</TableCell>
-                <TableCell>{item.quota}</TableCell>
-                <TableCell>{item.percent}</TableCell>
-                <TableCell className="w-24 text-center">
-                  <Button
-                    variant="link"
-                    className="hover:no-underline hover:text-primary/80"
-                  >
-                    {t("edit")}
-                  </Button>
-                </TableCell>
+        <div className="border rounded-sm">
+          <Table>
+            <TableHeader>
+              <TableRow className="bg-muted">
+                <TableHead>{t("name")}</TableHead>
+                <TableHead>{t("video")}</TableHead>
+                <TableHead>{t("replay")}</TableHead>
+                <TableHead>{t("supplierId")}</TableHead>
+                <TableHead>{t("supplierName")}</TableHead>
+                <TableHead>{t("quota")}</TableHead>
+                <TableHead>{t("percent")}</TableHead>
+                <TableHead className="w-24 text-center">
+                  {t("action")}
+                </TableHead>
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
+            </TableHeader>
+            <TableBody>
+              {data.map((item) => (
+                <TableRow key={item.game}>
+                  <TableCell>{item.game}</TableCell>
+                  <TableCell>{item.video}</TableCell>
+                  <TableCell>{item.replay}</TableCell>
+                  <TableCell>{item.supplierId}</TableCell>
+                  <TableCell>{item.supplierName}</TableCell>
+                  <TableCell>{item.quota}</TableCell>
+                  <TableCell>{item.percent}</TableCell>
+                  <TableCell className="w-24 text-center">
+                    <Button
+                      variant="link"
+                      className="hover:no-underline hover:text-primary/80"
+                    >
+                      {t("edit")}
+                    </Button>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </div>
       </div>
     </div>
   );

@@ -45,24 +45,28 @@ export default function Page() {
         </span>
       </div>
       <div className="p-2 bg-background flex-1">
-        <Table className="border">
-          <TableHeader>
-            <TableRow className="bg-muted">
-              <TableHead>{t("name")}</TableHead>
-              <TableHead className="w-32 text-center">{t("switch")}</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {data.map((item) => (
-              <TableRow key={item.game}>
-                <TableCell>{item.game}</TableCell>
-                <TableCell className="w-32 text-center">
-                  <Switch defaultChecked={item.isOpen} />
-                </TableCell>
+        <div className="border rounded-sm">
+          <Table>
+            <TableHeader>
+              <TableRow className="bg-muted">
+                <TableHead>{t("name")}</TableHead>
+                <TableHead className="w-32 text-center">
+                  {t("switch")}
+                </TableHead>
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
+            </TableHeader>
+            <TableBody>
+              {data.map((item) => (
+                <TableRow key={item.game}>
+                  <TableCell>{item.game}</TableCell>
+                  <TableCell className="w-32 text-center">
+                    <Switch defaultChecked={item.isOpen} />
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </div>
       </div>
     </div>
   );

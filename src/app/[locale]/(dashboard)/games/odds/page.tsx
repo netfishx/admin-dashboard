@@ -117,42 +117,44 @@ export default function Page() {
         </div>
       </div>
       <div className="p-2 bg-background flex-1">
-        <Table className="border">
-          <TableHeader>
-            <TableRow className="bg-muted">
-              <TableHead className="min-w-16">{t("smallType")}</TableHead>
-              <TableHead className="min-w-24">{t("odds")}</TableHead>
-              <TableHead className="min-w-40">{t("min")}</TableHead>
-              <TableHead className="min-w-72">
-                {t("max")}
-                <span className="text-destructive">{t("tip")}</span>
-              </TableHead>
-              <TableHead className="min-w-72">
-                {t("total")}
-                <span className="text-destructive">{t("tip")}</span>
-              </TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {data.map((item) => (
-              <TableRow key={item.type}>
-                <TableCell>{item.type}</TableCell>
-                <TableCell>
-                  <Input defaultValue={item.odds} />
-                </TableCell>
-                <TableCell>
-                  <Input defaultValue={item.min} />
-                </TableCell>
-                <TableCell>
-                  <Input defaultValue={item.max} />
-                </TableCell>
-                <TableCell>
-                  <Input defaultValue={item.period} />
-                </TableCell>
+        <div className="border rounded-sm">
+          <Table>
+            <TableHeader>
+              <TableRow className="bg-muted">
+                <TableHead className="min-w-16">{t("smallType")}</TableHead>
+                <TableHead className="min-w-24">{t("odds")}</TableHead>
+                <TableHead className="min-w-40">{t("min")}</TableHead>
+                <TableHead className="min-w-72">
+                  {t("max")}
+                  <span className="text-destructive">{t("tip")}</span>
+                </TableHead>
+                <TableHead className="min-w-72">
+                  {t("total")}
+                  <span className="text-destructive">{t("tip")}</span>
+                </TableHead>
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
+            </TableHeader>
+            <TableBody>
+              {data.map((item) => (
+                <TableRow key={item.type}>
+                  <TableCell>{item.type}</TableCell>
+                  <TableCell>
+                    <Input defaultValue={item.odds} />
+                  </TableCell>
+                  <TableCell>
+                    <Input defaultValue={item.min} />
+                  </TableCell>
+                  <TableCell>
+                    <Input defaultValue={item.max} />
+                  </TableCell>
+                  <TableCell>
+                    <Input defaultValue={item.period} />
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </div>
       </div>
     </div>
   );

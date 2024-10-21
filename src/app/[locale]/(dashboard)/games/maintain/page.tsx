@@ -57,57 +57,61 @@ export default function Page() {
         </div>
       </div>
       <div className="p-2 bg-background flex-1">
-        <Table className="border">
-          <TableHeader>
-            <TableRow className="bg-muted">
-              <TableHead>
-                <Checkbox />
-              </TableHead>
-              <TableHead>{t("name")}</TableHead>
-              <TableHead className="text-center">{t("status")}</TableHead>
-              <TableHead>{t("lastId")}</TableHead>
-              <TableHead>{t("lastTime")}</TableHead>
-              <TableHead className="w-24 text-center">{t("action")}</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {data.map((item) => (
-              <TableRow key={item.game}>
-                <TableCell>
+        <div className="border rounded-sm">
+          <Table>
+            <TableHeader>
+              <TableRow className="bg-muted">
+                <TableHead>
                   <Checkbox />
-                </TableCell>
-                <TableCell>{item.game}</TableCell>
-                <TableCell className="text-center">
-                  <span
-                    className={cn([
-                      "p-1 rounded-sm w-24 inline-block",
-                      item.status
-                        ? "text-destructive bg-destructive/20"
-                        : "text-primary bg-primary/20",
-                    ])}
-                  >
-                    {item.status ? t("maintaining") : t("normal")}
-                  </span>
-                </TableCell>
-                <TableCell>{item.id}</TableCell>
-                <TableCell>{item.time}</TableCell>
-                <TableCell className="w-24 text-center">
-                  <Button
-                    variant="link"
-                    className={cn([
-                      "hover:no-underline",
-                      item.status
-                        ? "hover:text-primary/80"
-                        : "text-destructive hover:text-destructive/80",
-                    ])}
-                  >
-                    {item.status ? t("close") : t("open")}
-                  </Button>
-                </TableCell>
+                </TableHead>
+                <TableHead>{t("name")}</TableHead>
+                <TableHead className="text-center">{t("status")}</TableHead>
+                <TableHead>{t("lastId")}</TableHead>
+                <TableHead>{t("lastTime")}</TableHead>
+                <TableHead className="w-24 text-center">
+                  {t("action")}
+                </TableHead>
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
+            </TableHeader>
+            <TableBody>
+              {data.map((item) => (
+                <TableRow key={item.game}>
+                  <TableCell>
+                    <Checkbox />
+                  </TableCell>
+                  <TableCell>{item.game}</TableCell>
+                  <TableCell className="text-center">
+                    <span
+                      className={cn([
+                        "p-1 rounded-sm w-24 inline-block",
+                        item.status
+                          ? "text-destructive bg-destructive/20"
+                          : "text-primary bg-primary/20",
+                      ])}
+                    >
+                      {item.status ? t("maintaining") : t("normal")}
+                    </span>
+                  </TableCell>
+                  <TableCell>{item.id}</TableCell>
+                  <TableCell>{item.time}</TableCell>
+                  <TableCell className="w-24 text-center">
+                    <Button
+                      variant="link"
+                      className={cn([
+                        "hover:no-underline",
+                        item.status
+                          ? "hover:text-primary/80"
+                          : "text-destructive hover:text-destructive/80",
+                      ])}
+                    >
+                      {item.status ? t("close") : t("open")}
+                    </Button>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </div>
       </div>
     </div>
   );
