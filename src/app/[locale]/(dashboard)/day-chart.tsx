@@ -39,7 +39,7 @@ const chartConfig = {
 export default function DayChart() {
   const t = useTranslations();
   return (
-    <div className="flex flex-col w-1/2 p-5 rounded border bg-card">
+    <div className="flex flex-col w-1/2 p-5 rounded bg-card">
       <div className="flex items-center justify-between">
         <div className="items-center pb-0 flex justify-between">
           <div>{t("todayCashflow")}</div>
