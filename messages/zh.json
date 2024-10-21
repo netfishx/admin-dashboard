@@ -24,6 +24,78 @@
       "maintain": "维护设置"
     }
   },
+  "games": {
+    "flyorder": {
+      "title": "拦货设置",
+      "save": "保存",
+      "name": "游戏名称",
+      "switch": "拦货开关"
+    },
+    "odds": {
+      "type": "游戏类别",
+      "name": "游戏名称",
+      "placeholder": "请选择",
+      "batch": "批量修改",
+      "column": "修改值",
+      "save": "保存",
+      "sync": "同步到同类游戏",
+      "reset": "恢复默认",
+      "odds": "赔率",
+      "min": "个人单注最低限额",
+      "max": "个人单注最高限额",
+      "total": "个人单期最高限额",
+      "tip": "（*不要超过最高限额）",
+      "smallType": "玩法"
+    },
+    "ratio": {
+      "type": "游戏类别",
+      "name": "游戏名称",
+      "column": "修改值",
+      "placeholder": "请选择",
+      "reset": "恢复默认",
+      "save": "保存",
+      "ratio": "占成比例",
+      "tip": "（*不要超过最高比例）"
+    },
+    "rebate": {
+      "type": "游戏类别",
+      "name": "游戏名称",
+      "column": "修改值",
+      "placeholder": "请选择",
+      "reset": "恢复默认",
+      "save": "保存",
+      "rebate": "退水比例",
+      "tip": "（*不要超过最高比例）"
+    },
+    "supplier": {
+      "type": "游戏类别",
+      "name": "游戏名称",
+      "placeholder": "请选择",
+      "search": "查询",
+      "add": "新增",
+      "video": "视频地址",
+      "replay": "回放地址",
+      "supplierId": "供应商ID",
+      "supplierName": "供应商名称",
+      "quota": "分成定额",
+      "percent": "分成百分比",
+      "action": "操作",
+      "edit": "编辑"
+    },
+    "maintain": {
+      "name": "游戏名称",
+      "status": "状态",
+      "normal": "正常开启",
+      "maintaining": "维护中",
+      "lastId": "最后操作ID",
+      "lastTime": "最后操作时间",
+      "open": "开启维护",
+      "close": "结束维护",
+      "batchOpen": "批量开启维护",
+      "batchClose": "批量结束维护",
+      "action": "操作"
+    }
+  },
   "welcome": "欢迎回来",
   "announcement": "公告",
   "more": "查看更多",

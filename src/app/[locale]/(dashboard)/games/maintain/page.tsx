@@ -10,6 +10,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { cn } from "@/lib/utils";
+import { useTranslations } from "next-intl";
 import { unstable_noStore as noStore } from "next/cache";
 const data = [
   {
@@ -46,12 +47,13 @@ const data = [
 
 export default function Page() {
   noStore();
+  const t = useTranslations("games.maintain");
   return (
     <div className="flex flex-col gap-2 w-full">
       <div className="flex items-center bg-background py-2 px-4">
         <div className="flex gap-2">
-          <Button variant="destructive">批量开启维护</Button>
-          <Button>批量结束维护</Button>
+          <Button variant="destructive">{t("batchOpen")}</Button>
+          <Button>{t("batchClose")}</Button>
         </div>
       </div>
       <div className="p-2 bg-background flex-1">
@@ -61,11 +63,11 @@ export default function Page() {
               <TableHead>
                 <Checkbox />
               </TableHead>
-              <TableHead>游戏名称</TableHead>
-              <TableHead className="text-center">状态</TableHead>
-              <TableHead>最后操作ID</TableHead>
-              <TableHead>最后操作时间</TableHead>
-              <TableHead className="w-24 text-center">操作</TableHead>
+              <TableHead>{t("name")}</TableHead>
+              <TableHead className="text-center">{t("status")}</TableHead>
+              <TableHead>{t("lastId")}</TableHead>
+              <TableHead>{t("lastTime")}</TableHead>
+              <TableHead className="w-24 text-center">{t("action")}</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -84,7 +86,7 @@ export default function Page() {
                         : "text-primary bg-primary/20",
                     ])}
                   >
-                    {item.status ? "维护中" : "正常开启"}
+                    {item.status ? t("maintaining") : t("normal")}
                   </span>
                 </TableCell>
                 <TableCell>{item.id}</TableCell>
@@ -99,7 +101,7 @@ export default function Page() {
                         : "text-destructive hover:text-destructive/80",
                     ])}
                   >
-                    {item.status ? "结束维护" : "开启维护"}
+                    {item.status ? t("close") : t("open")}
                   </Button>
                 </TableCell>
               </TableRow>

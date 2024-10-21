@@ -16,6 +16,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { useTranslations } from "next-intl";
 import { unstable_noStore as noStore } from "next/cache";
 const data = [
   {
@@ -67,15 +68,16 @@ const data = [
 
 export default function Page() {
   noStore();
+  const t = useTranslations("games.supplier");
   return (
     <div className="flex flex-col gap-2 w-full">
       <div className="flex justify-between items-center bg-background py-2 px-4">
         <div className="flex gap-2 items-center">
           <div className="flex gap-2 items-center">
-            <Label className="shrink-0">游戏类别</Label>
+            <Label className="shrink-0">{t("type")}</Label>
             <Select defaultValue="1" disabled>
               <SelectTrigger className="w-28">
-                <SelectValue placeholder="请选择" />
+                <SelectValue placeholder={t("placeholder")} />
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="1">百家乐</SelectItem>
@@ -83,27 +85,27 @@ export default function Page() {
             </Select>
           </div>
           <div className="flex gap-2 items-center">
-            <Label className="shrink-0">供应商ID</Label>
-            <Input placeholder="请输入供应商ID" />
+            <Label className="shrink-0">{t("supplierId")}</Label>
+            <Input placeholder={t("placeholder")} />
           </div>
-          <Button>查询</Button>
+          <Button>{t("search")}</Button>
         </div>
         <div className="flex gap-2 items-center">
-          <Button>新增</Button>
+          <Button>{t("add")}</Button>
         </div>
       </div>
       <div className="p-2 bg-background flex-1">
         <Table className="border">
           <TableHeader>
             <TableRow className="bg-muted">
-              <TableHead>游戏名称</TableHead>
-              <TableHead>视频地址</TableHead>
-              <TableHead>回放地址</TableHead>
-              <TableHead>供应商ID</TableHead>
-              <TableHead>供应商名称</TableHead>
-              <TableHead>分成定额</TableHead>
-              <TableHead>分成百分比</TableHead>
-              <TableHead className="w-24 text-center">操作</TableHead>
+              <TableHead>{t("name")}</TableHead>
+              <TableHead>{t("video")}</TableHead>
+              <TableHead>{t("replay")}</TableHead>
+              <TableHead>{t("supplierId")}</TableHead>
+              <TableHead>{t("supplierName")}</TableHead>
+              <TableHead>{t("quota")}</TableHead>
+              <TableHead>{t("percent")}</TableHead>
+              <TableHead className="w-24 text-center">{t("action")}</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -121,7 +123,7 @@ export default function Page() {
                     variant="link"
                     className="hover:no-underline hover:text-primary/80"
                   >
-                    编辑
+                    {t("edit")}
                   </Button>
                 </TableCell>
               </TableRow>

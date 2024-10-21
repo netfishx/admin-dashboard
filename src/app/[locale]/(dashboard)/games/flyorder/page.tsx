@@ -8,6 +8,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { useTranslations } from "next-intl";
 import { unstable_noStore as noStore } from "next/cache";
 const data = [
   {
@@ -34,20 +35,21 @@ const data = [
 
 export default function Page() {
   noStore();
+  const t = useTranslations("games.flyorder");
   return (
     <div className="flex flex-col gap-2 w-full">
       <div className="flex justify-between items-center bg-background py-2 px-4">
-        <span className="text-sm font-medium">拦货设置</span>
+        <span className="text-sm font-medium">{t("title")}</span>
         <span>
-          <Button>保存</Button>
+          <Button>{t("save")}</Button>
         </span>
       </div>
       <div className="p-2 bg-background flex-1">
         <Table className="border">
           <TableHeader>
             <TableRow className="bg-muted">
-              <TableHead>游戏名称</TableHead>
-              <TableHead className="w-32 text-center">拦货开关</TableHead>
+              <TableHead>{t("name")}</TableHead>
+              <TableHead className="w-32 text-center">{t("switch")}</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
