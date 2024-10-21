@@ -60,8 +60,8 @@ export default function Announcement() {
               >
                 <span
                   className={cn(
-                    "mr-2 px-2 py-1 w-12 rounded-sm",
-                    `${item.type === "1" ? "text-primary bg-primary/10" : "text-chart-2 bg-chart-2/10"}`,
+                    "mr-2 px-2 py-1 inline-block rounded-sm",
+                    `${item.type === "1" ? "text-primary bg-primary/10" : "text-destructive bg-destructive/10"}`,
                   )}
                 >
                   {item.type === "1" ? "平台" : "代理"}
@@ -89,8 +89,8 @@ export default function Announcement() {
                 >
                   <span
                     className={cn(
-                      `${item.type === "1" ? "text-primary bg-primary/10" : "text-chart-2 bg-chart-2/10"}`,
-                      "mr-2 p-1 w-12 rounded-md",
+                      `${item.type === "1" ? "text-primary bg-primary/10" : "text-destructive bg-destructive/10"}`,
+                      "mr-2 p-1 inline-block rounded-md",
                     )}
                   >
                     {item.type === "1" ? "平台" : "代理"}
