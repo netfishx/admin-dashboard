@@ -13,7 +13,7 @@ export default function Welcome(props: any) {
   return (
     <div className="flex-1 p-4 rounded bg-card">
       <div className="pb-4 text-xl border-b">👏欢迎回来，{user.name}</div>
-      <div className="w-full py-4 border-b flex items-center justify-around">
+      <div className="py-4 border-b flex items-center justify-around">
         <Item
           name={t("gameTotalProfit")}
           value={user.data.value1}
