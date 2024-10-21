@@ -8,6 +8,7 @@ import {
 } from "@/components/ui/collapsible";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { cn } from "@/lib/utils";
+import { useScopedI18n } from "@/locales/client";
 import { sidebarAtom } from "@/store";
 import { useAtomValue } from "jotai";
 import {
@@ -41,24 +42,25 @@ export function Menu() {
 }
 
 function OpenedMenu({ pathname }: { pathname: string }) {
+  const t = useScopedI18n("menu");
   return (
     <>
-      <MenuItem label="首页" href="/" icon={<Home className="size-4" />} />
+      <MenuItem label={t("home")} href="/" icon={<Home className="size-4" />} />
       <Collapsible defaultOpen={pathname.startsWith("/games")}>
         <CollapsibleTrigger asChild>
           <MenuItem
-            label="游戏管理"
+            label={t("games")}
             icon={<Gamepad2 className="size-4" />}
             hasChildren
           />
         </CollapsibleTrigger>
         <CollapsibleContent className="flex flex-col gap-1 px-6">
-          <MenuItem label="拦货设置" href="/games/flyorder" />
-          <MenuItem label="赔率限制" href="/games/odds" />
-          <MenuItem label="下级默认占成" href="/games/ratio" />
-          <MenuItem label="退水设置" href="/games/rebate" />
-          <MenuItem label="供应商设置" href="/games/supplier" />
-          <MenuItem label="维护设置" href="/games/maintain" />
+          <MenuItem label={t("games.flyorder")} href="/games/flyorder" />
+          <MenuItem label={t("games.odds")} href="/games/odds" />
+          <MenuItem label={t("games.ratio")} href="/games/ratio" />
+          <MenuItem label={t("games.rebate")} href="/games/rebate" />
+          <MenuItem label={t("games.supplier")} href="/games/supplier" />
+          <MenuItem label={t("games.maintain")} href="/games/maintain" />
         </CollapsibleContent>
       </Collapsible>
       <Collapsible>

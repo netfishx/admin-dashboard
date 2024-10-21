@@ -2,6 +2,7 @@
 
 import logo from "@/assets/images/logo.svg";
 import { cn } from "@/lib/utils";
+import { useI18n } from "@/locales/client";
 import { sidebarAtom } from "@/store";
 import { useAtomValue } from "jotai";
 import Image from "next/image";
@@ -9,6 +10,7 @@ import { Menu } from "./menu";
 import { ToggleSidebar } from "./toggle-sidebar";
 
 export function SideBar() {
+  const t = useI18n();
   const isOpened = useAtomValue(sidebarAtom);
   return (
     <div
@@ -30,7 +32,7 @@ export function SideBar() {
             className={cn([isOpened ? "size-8" : "size-6"])}
           />
           <h1 className={cn(["text-xl font-medium", isOpened ? "" : "hidden"])}>
-            代理后台
+            {t("title")}
           </h1>
         </div>
         <Menu />
