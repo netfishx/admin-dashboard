@@ -42,17 +42,9 @@ const data = [
 ];
 
 const chartConfig = {
-  line1: {
+  value: {
     label: 'Value',
-    color: 'hsl(var(--chart-line1))',
-  },
-  line2: {
-    label: 'Value',
-    color: 'hsl(var(--chart-line2))',
-  },
-  line3: {
-    label: 'Value',
-    color: 'hsl(var(--chart-line3))',
+    color: 'hsl(var(--chart-primary))',
   },
 } satisfies ChartConfig;
 
@@ -89,15 +81,13 @@ export default function WeekChart() {
           data={data}
           margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
         >
-          <defs>
-            <linearGradient id="colorGradient" x1="0" y1="0" x2="1" y2="0">
-              <stop offset="0%" stopColor="var(--color-line1)" />
-              <stop offset="50%" stopColor="var(--color-line2)" />
-              <stop offset="100%" stopColor="var(--color-line3)" />
-            </linearGradient>
-          </defs>
-          <XAxis dataKey="name" axisLine={false} />
-          <YAxis axisLine={false} />
+          <XAxis
+            dataKey="name"
+            axisLine={false}
+            tickLine={false}
+            tickMargin={8}
+          />
+          <YAxis axisLine={false} tickLine={false} tickMargin={8} />
           <ChartTooltip
             cursor={false}
             content={<ChartTooltipContent indicator="dot" />}
@@ -105,7 +95,7 @@ export default function WeekChart() {
             labelFormatter={formatTooltipLabel}
            />
           <CartesianGrid strokeDasharray="3 3" />
-          <Line type="monotone" dataKey="data" stroke="url(#colorGradient)" strokeWidth={4} activeDot={{ r: 8 }} dot={false} />
+          <Line type="monotone" dataKey="data" stroke="var(--color-value)" strokeWidth={4} activeDot={{ r: 8 }} dot={false} />
           </LineChart>
           </ChartContainer>
     </div>
