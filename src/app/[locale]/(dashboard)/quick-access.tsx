@@ -1,11 +1,11 @@
-import { getI18n } from "@/locales/server";
 import { FileText, Scale, Users } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { Link } from "next-view-transitions";
 import { unstable_noStore as noStore } from "next/cache";
 
-export default async function QuickAccess() {
+export default function QuickAccess() {
   noStore();
-  const t = await getI18n();
+  const t = useTranslations();
   return (
     <div className="p-4 rounded bg-card">
       <div className="text-base mb-4">{t("quickAccess")}</div>

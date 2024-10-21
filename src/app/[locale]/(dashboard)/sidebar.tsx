@@ -2,15 +2,15 @@
 
 import logo from "@/assets/images/logo.svg";
 import { cn } from "@/lib/utils";
-import { useI18n } from "@/locales/client";
 import { sidebarAtom } from "@/store";
 import { useAtomValue } from "jotai";
+import { useTranslations } from "next-intl";
 import Image from "next/image";
 import { Menu } from "./menu";
 import { ToggleSidebar } from "./toggle-sidebar";
 
 export function SideBar() {
-  const t = useI18n();
+  const t = useTranslations();
   const isOpened = useAtomValue(sidebarAtom);
   return (
     <div

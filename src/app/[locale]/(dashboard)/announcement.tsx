@@ -7,13 +7,13 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";
-import { useI18n } from "@/locales/client";
+import { useTranslations } from "next-intl";
 import { unstable_noStore as noStore } from "next/cache";
 import { useState } from "react";
 
 export default function Announcement() {
   noStore();
-  const t = useI18n();
+  const t = useTranslations();
   const [showMore, setShowMore] = useState(false);
   const data = [
     {

@@ -1,15 +1,8 @@
 "use client";
 import { type ChartConfig, ChartContainer } from "@/components/ui/chart";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { useI18n } from "@/locales/client";
-import {
-  Area,
-  AreaChart,
-  CartesianGrid,
-  Tooltip,
-  XAxis,
-  YAxis,
-} from "recharts";
+import { useTranslations } from "next-intl";
+import { Area, AreaChart, CartesianGrid, XAxis, YAxis } from "recharts";
 
 const data = [
   {
@@ -54,7 +47,7 @@ const chartConfig = {
 } satisfies ChartConfig;
 
 export default function WeekChart() {
-  const t = useI18n();
+  const t = useTranslations();
   // 自定义 Tooltip 的组件
   function CustomTooltip({
     active,

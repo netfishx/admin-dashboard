@@ -1,9 +1,9 @@
-import { getI18n } from "@/locales/server";
+import { useTranslations } from "next-intl";
 import { unstable_noStore as noStore } from "next/cache";
 
-export default async function DataOverview() {
+export default function DataOverview() {
   noStore();
-  const t = await getI18n();
+  const t = useTranslations();
   return (
     <div className="p-4 rounded bg-card">
       <div className="text-base mb-4">{t("dataOverview")}</div>

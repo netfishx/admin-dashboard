@@ -17,6 +17,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { unstable_noStore as noStore } from "next/cache";
 
 const data = [
   {
@@ -42,6 +43,7 @@ const data = [
 ];
 
 export default function Page() {
+  noStore();
   return (
     <div className="flex flex-col gap-2 w-full">
       <div className="flex justify-between items-center bg-background py-2 px-4">

@@ -6,7 +6,8 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
-import { useI18n } from "@/locales/client";
+import { useTranslations } from "next-intl";
+
 import { Label, Legend, Pie, PieChart } from "recharts";
 
 export const description = "A stacked area chart";
@@ -36,7 +37,7 @@ const chartConfig = {
 } satisfies ChartConfig;
 
 export default function DayChart() {
-  const t = useI18n();
+  const t = useTranslations();
   return (
     <div className="flex flex-col w-1/2 p-5 rounded border bg-card  mb-2">
       <div className="flex items-center justify-between">

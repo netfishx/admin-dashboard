@@ -10,7 +10,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { cn } from "@/lib/utils";
-
+import { unstable_noStore as noStore } from "next/cache";
 const data = [
   {
     game: "百家乐01",
@@ -45,6 +45,7 @@ const data = [
 ];
 
 export default function Page() {
+  noStore();
   return (
     <div className="flex flex-col gap-2 w-full">
       <div className="flex items-center bg-background py-2 px-4">

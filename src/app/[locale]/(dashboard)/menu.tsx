@@ -8,7 +8,6 @@ import {
 } from "@/components/ui/collapsible";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { cn } from "@/lib/utils";
-import { useScopedI18n } from "@/locales/client";
 import { sidebarAtom } from "@/store";
 import { useAtomValue } from "jotai";
 import {
@@ -22,6 +21,7 @@ import {
   UserSquare,
   Users,
 } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { usePathname } from "next/navigation";
 import { MenuItem } from "./menu-item";
 
@@ -42,14 +42,14 @@ export function Menu() {
 }
 
 function OpenedMenu({ pathname }: { pathname: string }) {
-  const t = useScopedI18n("menu");
+  const t = useTranslations("menu");
   return (
     <>
       <MenuItem label={t("home")} href="/" icon={<Home className="size-4" />} />
       <Collapsible defaultOpen={pathname.startsWith("/games")}>
         <CollapsibleTrigger asChild>
           <MenuItem
-            label={t("games")}
+            label={t("games.title")}
             icon={<Gamepad2 className="size-4" />}
             hasChildren
           />

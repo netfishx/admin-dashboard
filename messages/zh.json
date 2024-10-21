@@ -1,19 +1,29 @@
-export default {
+{
   "title": "代理后台",
-  "login.button": "登录",
-  "login.title": "代理后台",
-  "login.username": "账号",
-  "login.username.placeholder": "请输入您的账号",
-  "login.password": "密码",
-  "login.password.placeholder": "请输入您的密码",
-  "menu.home": "首页",
-  "menu.games": "游戏管理",
-  "menu.games.flyorder": "拦货设置",
-  "menu.games.odds": "赔率限制",
-  "menu.games.ratio": "下级默认占成",
-  "menu.games.rebate": "退水设置",
-  "menu.games.supplier": "供应商设置",
-  "menu.games.maintain": "维护设置",
+  "login": {
+    "button": "登录",
+    "title": "代理后台",
+    "username": {
+      "label": "账号",
+      "placeholder": "请输入您的账号"
+    },
+    "password": {
+      "label": "密码",
+      "placeholder": "请输入您的密码"
+    }
+  },
+  "menu": {
+    "home": "首页",
+    "games": {
+      "title": "游戏管理",
+      "flyorder": "拦货设置",
+      "odds": "赔率限制",
+      "ratio": "下级默认占成",
+      "rebate": "退水设置",
+      "supplier": "供应商设置",
+      "maintain": "维护设置"
+    }
+  },
   "welcome": "欢迎回来",
   "announcement": "公告",
   "more": "查看更多",
@@ -47,4 +57,4 @@ export default {
   "todayCashflow": "今日流水",
   "todayActiveUsers": "今日活跃人数",
   "bettingAmount": "投注额"
-} as const;
+}
