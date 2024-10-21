@@ -3,8 +3,10 @@ import DataOverview from "./data-overview";
 import DayChart from "./day-chart";
 import QuickAccess from "./quick-access";
 import Salutations from "./salutations";
+import { useTranslations } from "next-intl";
 
 export default function DashboardPage() {
+  const t = useTranslations();
   const userInfo = {
     name: "张三",
     data: {
@@ -19,8 +21,8 @@ export default function DashboardPage() {
       <div className="w-full flex flex-col h-full gap-2">
         <Salutations user={userInfo} />
         <div className="flex gap-2">
-          <DayChart />
-          <DayChart />
+          <DayChart title={(t("chart.todayCashflow"))} />
+          <DayChart title={(t("chart.todayActiveUsers"))}/>
         </div>
       </div>
       <div className="flex flex-col gap-2 w-[280px]">

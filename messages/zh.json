@@ -96,6 +96,21 @@
       "action": "操作"
     }
   },
+  "chart": {
+    "dataTrending": "数据趋势",
+    "lastSevenDays": "近7日",
+    "cashflow": "流水",
+    "headcount": "人数",
+    "totalDeposits": "总存款额",
+    "thisperiod": "本期",
+    "lastperiod": "上期",
+    "todayCashflow": "今日流水",
+    "todayActiveUsers": "今日活跃人数",
+    "bettingAmount": "投注额",
+    "guandan": "掼蛋",
+    "video": "视讯类",
+    "danzhu": "弹珠类"
+  },
   "welcome": "欢迎回来",
   "announcement": "公告",
   "more": "查看更多",
@@ -118,15 +133,5 @@
   "betList": "注单列表",
   "agentReport": "代理报表",
   "memberReport": "会员报表",
-  "accountChangeRecord": "账变记录",
-  "dataTrending": "数据趋势",
-  "lastSevenDays": "近7日",
-  "cashflow": "流水",
-  "headcount": "人数",
-  "totalDeposits": "总存款额",
-  "thisperiod": "本期",
-  "lastperiod": "上期",
-  "todayCashflow": "今日流水",
-  "todayActiveUsers": "今日活跃人数",
-  "bettingAmount": "投注额"
+  "accountChangeRecord": "账变记录"
 }
