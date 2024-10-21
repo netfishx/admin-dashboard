@@ -17,7 +17,7 @@ export default function DashboardPage() {
   return (
     <>
       <div className="w-full flex flex-col h-full gap-2">
-        <Salutations user={userInfo} className="flex-1" />
+        <Salutations user={userInfo} />
         <div className="flex gap-2">
           <DayChart />
           <DayChart />
