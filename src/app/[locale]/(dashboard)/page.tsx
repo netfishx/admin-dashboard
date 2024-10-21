@@ -1,5 +1,6 @@
 import Announcement from "./announcement";
 import DataOverview from "./data-overview";
+import DayChart from "./day-chart";
 import QuickAccess from "./quick-access";
 import Salutations from "./salutations";
 
@@ -15,7 +16,13 @@ export default function DashboardPage() {
   };
   return (
     <>
-      <Salutations user={userInfo} />
+      <div className="w-full flex flex-col h-full gap-2">
+        <Salutations user={userInfo} className="flex-1" />
+        <div className="flex gap-2">
+          <DayChart />
+          <DayChart />
+        </div>
+      </div>
       <div className="flex flex-col gap-2 w-[280px]">
         <DataOverview />
         <QuickAccess />

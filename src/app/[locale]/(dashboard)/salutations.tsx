@@ -7,6 +7,7 @@ import welcome03 from "@/assets/images/welcome/welcome03.svg";
 import welcome04 from "@/assets/images/welcome/welcome04.svg";
 import { unstable_noStore as noStore } from "next/cache";
 
+import WeekChart from "./week-chart";
 export default async function Welcome(props: any) {
   noStore();
   const { user } = props;
@@ -37,7 +38,9 @@ export default async function Welcome(props: any) {
           unShowBorder
         />
       </div>
-      <div className="pt-4">this is charts</div>
+      <div className="pt-5">
+        <WeekChart />
+      </div>
     </div>
   );
 }
