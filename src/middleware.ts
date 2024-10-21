@@ -3,7 +3,7 @@ import type { NextRequest } from "next/server";
 import { getSession } from "./session";
 
 const I18nMiddleware = createI18nMiddleware({
-  locales: ["zh", "en"],
+  locales: ["zh"],
   defaultLocale: "zh",
   urlMappingStrategy: "rewriteDefault",
 });
