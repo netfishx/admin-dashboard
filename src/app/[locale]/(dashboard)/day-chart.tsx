@@ -46,7 +46,7 @@ export default function DayChart(props: any) {
       <div className="flex-1 pb-0">
         <ChartContainer
           config={chartConfig}
-          className="mx-auto aspect-square h-[230px] w-full"
+          className="mx-auto aspect-video h-[230px]"
         >
           <PieChart margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
             <ChartTooltip
