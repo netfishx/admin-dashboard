@@ -1,18 +1,21 @@
-import type { Metadata } from "next";
-
 import "@/assets/globals.css";
 import { QueryProviders } from "@/app/[locale]/query-provider";
 import { ErrorToast } from "@/components/error-toast";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
 import { Provider as I18nProvider } from "@/locales/provider";
+import { getI18n } from "@/locales/server";
 import { Provider as JotaiProvider } from "jotai";
 import { ViewTransitions } from "next-view-transitions";
 import type { ReactNode } from "react";
 
-export const metadata: Metadata = {
-  title: "管理后台",
-};
+export async function generateMetadata() {
+  const t = await getI18n();
+
+  return {
+    title: t("title"),
+  };
+}
 
 export default async function RootLayout({
   children,

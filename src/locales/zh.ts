@@ -1,5 +1,11 @@
 export default {
+  "title": "代理后台",
+  "login.button": "登录",
   "login.title": "代理后台",
+  "login.username": "账号",
+  "login.username.placeholder": "请输入您的账号",
+  "login.password": "密码",
+  "login.password.placeholder": "请输入您的密码",
   "welcome": "欢迎回来",
   "announcement": "公告",
   "more": "查看更多",
