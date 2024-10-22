@@ -77,7 +77,7 @@ export default function WeekChart() {
       <div className="flex-1 flex items-center justify-center">
         <ChartContainer
           config={chartConfig}
-          className="w-[40dvw] lg:w-[50dvw] xl:w-[55dvw] 2xl:w-[60dvw] mx-auto h-60 tall:h-[400px]"
+          className="w-[40dvw] lg:w-[50dvw] xl:w-[55dvw] 2xl:w-[60dvw] mx-auto h-60 [@media(min-height:800px)]:h-[400px]"
         >
           <LineChart
             data={data}
