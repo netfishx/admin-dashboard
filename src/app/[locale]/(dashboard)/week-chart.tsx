@@ -57,7 +57,7 @@ export default function WeekChart() {
   }
 
   return (
-    <div className="w-full">
+    <div className="flex-1 flex flex-col pt-2">
       <div className="flex items-center justify-between">
         <div className="pb-2">
           {t("dataTrending")}
@@ -74,38 +74,40 @@ export default function WeekChart() {
           </Tabs>
         </div>
       </div>
-      <ChartContainer
-        config={chartConfig}
-        className="w-[40dvw] lg:w-[50dvw] xl:w-[55dvw] 2xl:w-[60dvw] mx-auto min-h-60 h-80"
-      >
-        <LineChart
-          data={data}
-          margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
+      <div className="flex-1 flex items-center justify-center">
+        <ChartContainer
+          config={chartConfig}
+          className="w-[40dvw] lg:w-[50dvw] xl:w-[55dvw] 2xl:w-[60dvw] mx-auto h-60 tall:h-[400px]"
         >
-          <XAxis
-            dataKey="name"
-            axisLine={false}
-            tickLine={false}
-            tickMargin={8}
-          />
-          <YAxis axisLine={false} tickLine={false} tickMargin={8} />
-          <ChartTooltip
-            cursor={false}
-            content={<ChartTooltipContent indicator="dot" />}
-            formatter={formatTooltipValue}
-            labelFormatter={formatTooltipLabel}
-          />
-          <CartesianGrid strokeDasharray="3 3" />
-          <Line
-            type="monotone"
-            dataKey="data"
-            stroke="var(--color-value)"
-            strokeWidth={4}
-            activeDot={{ r: 8 }}
-            dot={false}
-          />
-        </LineChart>
-      </ChartContainer>
+          <LineChart
+            data={data}
+            margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
+          >
+            <XAxis
+              dataKey="name"
+              axisLine={false}
+              tickLine={false}
+              tickMargin={8}
+            />
+            <YAxis axisLine={false} tickLine={false} tickMargin={8} />
+            <ChartTooltip
+              cursor={false}
+              content={<ChartTooltipContent indicator="dot" />}
+              formatter={formatTooltipValue}
+              labelFormatter={formatTooltipLabel}
+            />
+            <CartesianGrid strokeDasharray="3 3" />
+            <Line
+              type="monotone"
+              dataKey="data"
+              stroke="var(--color-value)"
+              strokeWidth={4}
+              activeDot={{ r: 8 }}
+              dot={false}
+            />
+          </LineChart>
+        </ChartContainer>
+      </div>
     </div>
   );
 }

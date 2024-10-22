@@ -11,8 +11,8 @@ export function Salutations(props: any) {
   const { user } = props;
   const t = useTranslations();
   return (
-    <div className="flex-1 flex flex-col p-4 gap-4 rounded bg-card">
-      <div className="pb-4 h-[130px] border-b flex items-center justify-around">
+    <div className="flex-1 flex flex-col p-4 rounded bg-card">
+      <div className="border-b pb-2 flex items-center justify-around">
         <Item
           name={t("gameTotalProfit")}
           value={user.data.value1}
@@ -44,7 +44,7 @@ const Item = (props: any) => {
   const { name, value, icon, unShowBorder } = props;
   return (
     <div
-      className={`w-1/4 h-[60px] flex items-center ${unShowBorder ? "" : "border-r"} mr-4`}
+      className={`w-1/4 flex items-center ${unShowBorder ? "" : "border-r"} mr-4`}
     >
       <Image src={icon} alt="Icon" className="size-14" />
       <div className="pl-3">

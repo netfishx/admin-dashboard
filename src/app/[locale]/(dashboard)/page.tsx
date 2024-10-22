@@ -18,7 +18,7 @@ export default function DashboardPage() {
   };
   return (
     <>
-      <div className="flex-1 flex flex-col h-full gap-2">
+      <div className="flex-1 flex flex-col gap-2">
         <Salutations user={userInfo} />
         <div className="grid grid-cols-2 gap-2">
           <DayChart title={t("chart.todayCashflow")} />
