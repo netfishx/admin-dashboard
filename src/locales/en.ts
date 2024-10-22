@@ -25,7 +25,7 @@ export default {
   "memberReport": "memberReport",
   "accountChangeRecord": "accountChangeRecord",
   "dataTrending": "Data Trending",
-  "lastSevenDays": "Last seven days",
+  "lastSevenDays": "(Last seven days)",
   "cashflow": "Cash Flow",
   "headcount": "Headcount",
   "totalDeposits": "Total Deposits",
