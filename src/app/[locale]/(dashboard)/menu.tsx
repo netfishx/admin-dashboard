@@ -95,18 +95,21 @@ function OpenedMenu({ pathname }: { pathname: string }) {
           <MenuItem label="充值记录" href="/3" />
           <MenuItem label="提现记录" href="/3" />
           <MenuItem label="借还记录" href="/3" />
+          <MenuItem label="打赏记录" href="/3" />
+          <MenuItem label="报表下载" href="/3" />
         </CollapsibleContent>
       </Collapsible>
       <Collapsible>
         <CollapsibleTrigger asChild>
           <MenuItem
-            label="申请管理"
+            label="提现管理"
             icon={<ClipboardCheck className="size-4" />}
             hasChildren
           />
         </CollapsibleTrigger>
         <CollapsibleContent className="flex flex-col gap-1 pl-6">
-          <MenuItem label="系统设置" href="/4" />
+          <MenuItem label="提款申请" href="/4" />
+          <MenuItem label="稽核管理" href="/4" />
         </CollapsibleContent>
       </Collapsible>
       <Collapsible>
@@ -118,7 +121,9 @@ function OpenedMenu({ pathname }: { pathname: string }) {
           />
         </CollapsibleTrigger>
         <CollapsibleContent className="flex flex-col gap-1 pl-6">
-          <MenuItem label="系统设置" href="/4" />
+          <MenuItem label="矿工费管理" href="/4" />
+          <MenuItem label="归集地址管理" href="/4" />
+          <MenuItem label="提现手续费管理" href="/4" />
         </CollapsibleContent>
       </Collapsible>
       <Collapsible>
@@ -130,7 +135,9 @@ function OpenedMenu({ pathname }: { pathname: string }) {
           />
         </CollapsibleTrigger>
         <CollapsibleContent className="flex flex-col gap-1 pl-6">
-          <MenuItem label="系统设置" href="/4" />
+          <MenuItem label="基本信息" href="/4" />
+          <MenuItem label="登录日志" href="/4" />
+          <MenuItem label="安全中心" href="/4" />
         </CollapsibleContent>
       </Collapsible>
       <Collapsible>
@@ -142,7 +149,11 @@ function OpenedMenu({ pathname }: { pathname: string }) {
           />
         </CollapsibleTrigger>
         <CollapsibleContent className="flex flex-col gap-1 pl-6">
-          <MenuItem label="系统设置" href="/4" />
+          <MenuItem label="角色管理" href="/4" />
+          <MenuItem label="子账号管理" href="/4" />
+          <MenuItem label="全平台管理" href="/4" />
+          <MenuItem label="资源管理" href="/4" />
+          <MenuItem label="公告管理" href="/4" />
         </CollapsibleContent>
       </Collapsible>
       <Collapsible>
@@ -154,7 +165,8 @@ function OpenedMenu({ pathname }: { pathname: string }) {
           />
         </CollapsibleTrigger>
         <CollapsibleContent className="flex flex-col gap-1 pl-6">
-          <MenuItem label="系统设置" href="/4" />
+          <MenuItem label="字典管理" href="/4" />
+          <MenuItem label="平台资源配置" href="/4" />
         </CollapsibleContent>
       </Collapsible>
     </>
