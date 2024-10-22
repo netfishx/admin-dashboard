@@ -62,7 +62,7 @@ export default function WeekChart() {
         <div className="pb-2">
           {t("dataTrending")}
           <span className="text-sm text-muted-foreground">
-            （{t("lastSevenDays")}）
+            {t("lastSevenDays")}
           </span>
         </div>
         <div>
