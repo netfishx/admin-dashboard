@@ -98,7 +98,7 @@
   },
   "chart": {
     "dataTrending": "数据趋势",
-    "lastSevenDays": "近7日",
+    "lastSevenDays": "（近7日）",
     "cashflow": "流水",
     "headcount": "人数",
     "totalDeposits": "总存款额",
