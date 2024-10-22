@@ -1,6 +1,6 @@
 import { useTranslations } from "next-intl";
 
-export default function DataOverview() {
+export function DataOverview() {
   const t = useTranslations();
   return (
     <div className="p-4 rounded bg-card">

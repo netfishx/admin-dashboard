@@ -47,7 +47,7 @@ const chartConfig = {
   },
 } satisfies ChartConfig;
 
-export default function WeekChart() {
+export function WeekChart() {
   const t = useTranslations("chart");
   function formatTooltipLabel(label: string) {
     return `${label} ${t("totalDeposits")}`;

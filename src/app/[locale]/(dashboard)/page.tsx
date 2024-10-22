@@ -1,8 +1,9 @@
 import { useTranslations } from "next-intl";
-import Announcement from "./announcement";
-import DataOverview from "./data-overview";
-import DayChart from "./day-chart";
-import QuickAccess from "./quick-access";
+
+import { Announcement } from "./announcement";
+import { DataOverview } from "./data-overview";
+import { DayChart } from "./day-chart";
+import { QuickAccess } from "./quick-access";
 import { Salutations } from "./salutations";
 
 export default function DashboardPage() {

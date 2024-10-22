@@ -30,9 +30,8 @@ const chartConfig = {
   },
 } satisfies ChartConfig;
 
-export default function DayChart(props: any) {
+export function DayChart({ title }: any) {
   const t = useTranslations("chart");
-  const { title } = props;
   const chartData = [
     { browser: `${t("guandan")}`, visitors: 275, fill: "var(--color-gd)" },
     { browser: `${t("video")}`, visitors: 200, fill: "var(--color-sx)" },

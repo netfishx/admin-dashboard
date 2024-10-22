@@ -5,10 +5,9 @@ import welcome02 from "@/assets/images/welcome/welcome02.svg";
 import welcome03 from "@/assets/images/welcome/welcome03.svg";
 import welcome04 from "@/assets/images/welcome/welcome04.svg";
 import { useTranslations } from "next-intl";
-import WeekChart from "./week-chart";
+import { WeekChart } from "./week-chart";
 
-export function Salutations(props: any) {
-  const { user } = props;
+export function Salutations({ user }: any) {
   const t = useTranslations();
   return (
     <div className="flex-1 flex flex-col p-4 rounded bg-card">
@@ -40,8 +39,7 @@ export function Salutations(props: any) {
   );
 }
 
-const Item = (props: any) => {
-  const { name, value, icon, unShowBorder } = props;
+const Item = ({ name, value, icon, unShowBorder }: any) => {
   return (
     <div
       className={`w-1/4 flex items-center ${unShowBorder ? "" : "border-r"} mr-4`}

@@ -2,7 +2,7 @@ import { FileText, Scale, Users } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { Link } from "next-view-transitions";
 
-export default function QuickAccess() {
+export function QuickAccess() {
   const t = useTranslations();
   return (
     <div className="p-4 rounded bg-card">

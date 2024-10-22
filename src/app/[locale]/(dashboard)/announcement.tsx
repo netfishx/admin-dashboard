@@ -10,7 +10,7 @@ import { cn } from "@/lib/utils";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 
-export default function Announcement() {
+export function Announcement() {
   const t = useTranslations();
   const [showMore, setShowMore] = useState(false);
   const data = [
