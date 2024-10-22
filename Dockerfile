@@ -2,6 +2,8 @@ FROM imbios/bun-node:1-22-alpine AS base
 
 WORKDIR /app
 
+ENV NEXT_TELEMETRY_DISABLED=1
+
 FROM base AS deps
 
 RUN --mount=type=bind,source=package.json,target=package.json \
@@ -38,7 +40,6 @@ EXPOSE 3000
 
 ENV PORT=3000
 # ENV NEXT_PUBLIC_BASE_URL=http://16.163.41.52:4000
-ENV NEXT_TELEMETRY_DISABLED=1
 # ENV HOSTNAME=localhost
 
 CMD ["node", "server.js"]
