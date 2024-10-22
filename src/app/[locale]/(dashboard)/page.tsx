@@ -25,7 +25,7 @@ export default function DashboardPage() {
           <DayChart title={t("chart.todayActiveUsers")} />
         </div>
       </div>
-      <div className="flex flex-col gap-2 w-[280px]">
+      <div className="flex flex-col gap-2 w-[280px] min-[2400px]:w-[560px]">
         <DataOverview />
         <QuickAccess />
         <Announcement />
