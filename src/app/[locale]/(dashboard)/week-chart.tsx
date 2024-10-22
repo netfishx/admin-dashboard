@@ -1,14 +1,13 @@
 "use client";
-import { type ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
-  LineChart,
-  Line, 
-  CartesianGrid,
-  XAxis,
-  YAxis,
-} from "recharts";
+  type ChartConfig,
+  ChartContainer,
+  ChartTooltip,
+  ChartTooltipContent,
+} from "@/components/ui/chart";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useTranslations } from "next-intl";
+import { CartesianGrid, Line, LineChart, XAxis, YAxis } from "recharts";
 
 const data = [
   {
@@ -43,19 +42,18 @@ const data = [
 
 const chartConfig = {
   value: {
-    label: 'Value',
-    color: 'hsl(var(--chart-primary))',
+    label: "Value",
+    color: "hsl(var(--chart-primary))",
   },
 } satisfies ChartConfig;
-
 
 export default function WeekChart() {
   const t = useTranslations("chart");
   function formatTooltipLabel(label: string) {
-    return `${label} ${t("totalDeposits")}`
+    return `${label} ${t("totalDeposits")}`;
   }
   function formatTooltipValue(value: any) {
-    return [`${value}`]
+    return [`${value}`];
   }
 
   return (
@@ -76,7 +74,10 @@ export default function WeekChart() {
           </Tabs>
         </div>
       </div>
-      <ChartContainer config={chartConfig} className="h-[calc(100dvh-590px)] aspect-[32/9] mx-auto min-h-60">
+      <ChartContainer
+        config={chartConfig}
+        className="w-[40dvw] lg:w-[50dvw] xl:w-[55dvw] 2xl:w-[60dvw] mx-auto min-h-60 h-80"
+      >
         <LineChart
           data={data}
           margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
@@ -93,11 +94,18 @@ export default function WeekChart() {
             content={<ChartTooltipContent indicator="dot" />}
             formatter={formatTooltipValue}
             labelFormatter={formatTooltipLabel}
-           />
+          />
           <CartesianGrid strokeDasharray="3 3" />
-          <Line type="monotone" dataKey="data" stroke="var(--color-value)" strokeWidth={4} activeDot={{ r: 8 }} dot={false} />
-          </LineChart>
-          </ChartContainer>
+          <Line
+            type="monotone"
+            dataKey="data"
+            stroke="var(--color-value)"
+            strokeWidth={4}
+            activeDot={{ r: 8 }}
+            dot={false}
+          />
+        </LineChart>
+      </ChartContainer>
     </div>
   );
 }

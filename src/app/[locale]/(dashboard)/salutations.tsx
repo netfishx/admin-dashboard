@@ -7,12 +7,11 @@ import welcome04 from "@/assets/images/welcome/welcome04.svg";
 import { useTranslations } from "next-intl";
 import WeekChart from "./week-chart";
 
-export default function Welcome(props: any) {
+export function Salutations(props: any) {
   const { user } = props;
   const t = useTranslations();
   return (
-    <div className="flex-1 p-4 rounded bg-card">
-      {/* <div className="pb-4 text-xl border-b">👏欢迎回来，{user.name}</div> */}
+    <div className="flex-1 flex flex-col p-4 gap-4 rounded bg-card">
       <div className="pb-4 h-[130px] border-b flex items-center justify-around">
         <Item
           name={t("gameTotalProfit")}
@@ -36,9 +35,7 @@ export default function Welcome(props: any) {
           unShowBorder
         />
       </div>
-      <div className="pt-5">
-        <WeekChart />
-      </div>
+      <WeekChart />
     </div>
   );
 }

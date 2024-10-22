@@ -1,9 +1,9 @@
+import { useTranslations } from "next-intl";
 import Announcement from "./announcement";
 import DataOverview from "./data-overview";
 import DayChart from "./day-chart";
 import QuickAccess from "./quick-access";
-import Salutations from "./salutations";
-import { useTranslations } from "next-intl";
+import { Salutations } from "./salutations";
 
 export default function DashboardPage() {
   const t = useTranslations();
@@ -18,11 +18,11 @@ export default function DashboardPage() {
   };
   return (
     <>
-      <div className="w-full flex flex-col h-full gap-2">
+      <div className="flex-1 flex flex-col h-full gap-2">
         <Salutations user={userInfo} />
-        <div className="flex gap-2">
-          <DayChart title={(t("chart.todayCashflow"))} />
-          <DayChart title={(t("chart.todayActiveUsers"))}/>
+        <div className="grid grid-cols-2 gap-2">
+          <DayChart title={t("chart.todayCashflow")} />
+          <DayChart title={t("chart.todayActiveUsers")} />
         </div>
       </div>
       <div className="flex flex-col gap-2 w-[280px]">
