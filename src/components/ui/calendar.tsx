@@ -2,6 +2,7 @@
 
 import { ChevronDown, ChevronLeft, ChevronRight, ChevronUp } from "lucide-react"
 import { DayPicker, type DayPickerProps } from "react-day-picker"
+import { zhCN } from "react-day-picker/locale"
 
 import { cn } from "@/lib/utils"
 import { Button, buttonVariants } from "@/components/ui/button"
@@ -16,6 +17,7 @@ function Calendar({
 }: CalendarProps) {
   return (
     <DayPicker
+      locale={zhCN}
       showOutsideDays={showOutsideDays}
       className={cn("p-3", className)}
       classNames={{
