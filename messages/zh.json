@@ -22,6 +22,56 @@
       "rebate": "退水设置",
       "supplier": "供应商设置",
       "maintain": "维护设置"
+    },
+    "users": {
+      "title": "用户管理",
+      "member": "会员管理",
+      "agent": "代理管理",
+      "supplier": "供应商管理"
+    },
+    "reports": {
+      "title": "报表管理",
+      "order": "注单报表",
+      "period": "按期汇总报表",
+      "agent": "代理报表",
+      "member": "会员报表",
+      "supplier": "供应商报表",
+      "change": "账变记录",
+      "recharge": "充值记录",
+      "withdraw": "提现记录",
+      "borrow": "借还记录",
+      "reward": "打赏记录",
+      "download": "报表下载"
+    },
+    "withdraw": {
+      "title": "提现管理",
+      "apply": "提款申请",
+      "audit": "稽核管理"
+    },
+    "fund": {
+      "title": "资金管理",
+      "minerfee": "矿工费管理",
+      "collection": "归集地址管理",
+      "withdrawfee": "提现手续费管理"
+    },
+    "personal": {
+      "title": "个人中心",
+      "info": "基本信息",
+      "loginlog": "登录日志",
+      "security": "安全中心"
+    },
+    "system": {
+      "title": "系统管理",
+      "role": "角色管理",
+      "subaccount": "子账号管理",
+      "platform": "全平台管理",
+      "resource": "资源管理",
+      "announcement": "公告管理"
+    },
+    "maintain": {
+      "title": "平台维护",
+      "dictionary": "字典管理",
+      "resource": "平台资源配置"
     }
   },
   "games": {

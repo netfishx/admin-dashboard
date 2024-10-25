@@ -66,107 +66,107 @@ function OpenedMenu({ pathname }: { pathname: string }) {
       <Collapsible>
         <CollapsibleTrigger asChild>
           <MenuItem
-            label="用户管理"
+            label={t("users.title")}
             icon={<Users className="size-4" />}
             hasChildren
           />
         </CollapsibleTrigger>
         <CollapsibleContent className="flex flex-col gap-1 pl-6">
-          <MenuItem label="会员管理" href="/2" />
-          <MenuItem label="代理管理" href="/2" />
-          <MenuItem label="供应商管理" href="/2" />
+          <MenuItem label={t("users.member")} href="/2" />
+          <MenuItem label={t("users.agent")} href="/2" />
+          <MenuItem label={t("users.supplier")} href="/2" />
         </CollapsibleContent>
       </Collapsible>
       <Collapsible>
         <CollapsibleTrigger asChild>
           <MenuItem
-            label="报表管理"
+            label={t("reports.title")}
             icon={<FileText className="size-4" />}
             hasChildren
           />
         </CollapsibleTrigger>
         <CollapsibleContent className="flex flex-col gap-1 pl-6">
-          <MenuItem label="注单列表" href="/reports/orderlist" />
-          <MenuItem label="按期汇总报表" href="/3" />
-          <MenuItem label="代理报表" href="/3" />
-          <MenuItem label="会员报表" href="/3" />
-          <MenuItem label="供应商报表" href="/3" />
-          <MenuItem label="账变记录" href="/3" />
-          <MenuItem label="充值记录" href="/3" />
-          <MenuItem label="提现记录" href="/3" />
-          <MenuItem label="借还记录" href="/3" />
-          <MenuItem label="打赏记录" href="/3" />
-          <MenuItem label="报表下载" href="/3" />
+          <MenuItem label={t("reports.order")} href="/3" />
+          <MenuItem label={t("reports.period")} href="/3" />
+          <MenuItem label={t("reports.agent")} href="/3" />
+          <MenuItem label={t("reports.member")} href="/3" />
+          <MenuItem label={t("reports.supplier")} href="/3" />
+          <MenuItem label={t("reports.change")} href="/3" />
+          <MenuItem label={t("reports.recharge")} href="/3" />
+          <MenuItem label={t("reports.withdraw")} href="/3" />
+          <MenuItem label={t("reports.borrow")} href="/3" />
+          <MenuItem label={t("reports.reward")} href="/3" />
+          <MenuItem label={t("reports.download")} href="/3" />
         </CollapsibleContent>
       </Collapsible>
       <Collapsible>
         <CollapsibleTrigger asChild>
           <MenuItem
-            label="提现管理"
+            label={t("withdraw.title")}
             icon={<ClipboardCheck className="size-4" />}
             hasChildren
           />
         </CollapsibleTrigger>
         <CollapsibleContent className="flex flex-col gap-1 pl-6">
-          <MenuItem label="提款申请" href="/4" />
-          <MenuItem label="稽核管理" href="/4" />
+          <MenuItem label={t("withdraw.apply")} href="/4" />
+          <MenuItem label={t("withdraw.audit")} href="/4" />
         </CollapsibleContent>
       </Collapsible>
       <Collapsible>
         <CollapsibleTrigger asChild>
           <MenuItem
-            label="资金管理"
+            label={t("fund.title")}
             icon={<Scale className="size-4" />}
             hasChildren
           />
         </CollapsibleTrigger>
         <CollapsibleContent className="flex flex-col gap-1 pl-6">
-          <MenuItem label="矿工费管理" href="/4" />
-          <MenuItem label="归集地址管理" href="/4" />
-          <MenuItem label="提现手续费管理" href="/4" />
+          <MenuItem label={t("fund.minerfee")} href="/4" />
+          <MenuItem label={t("fund.collection")} href="/4" />
+          <MenuItem label={t("fund.withdrawfee")} href="/4" />
         </CollapsibleContent>
       </Collapsible>
       <Collapsible>
         <CollapsibleTrigger asChild>
           <MenuItem
-            label="个人中心"
+            label={t("personal.title")}
             icon={<UserSquare className="size-4" />}
             hasChildren
           />
         </CollapsibleTrigger>
         <CollapsibleContent className="flex flex-col gap-1 pl-6">
-          <MenuItem label="基本信息" href="/4" />
-          <MenuItem label="登录日志" href="/4" />
-          <MenuItem label="安全中心" href="/4" />
+          <MenuItem label={t("personal.info")} href="/4" />
+          <MenuItem label={t("personal.loginlog")} href="/4" />
+          <MenuItem label={t("personal.security")} href="/4" />
         </CollapsibleContent>
       </Collapsible>
       <Collapsible>
         <CollapsibleTrigger asChild>
           <MenuItem
-            label="系统管理"
+            label={t("system.title")}
             icon={<Tv2 className="size-4" />}
             hasChildren
           />
         </CollapsibleTrigger>
         <CollapsibleContent className="flex flex-col gap-1 pl-6">
-          <MenuItem label="角色管理" href="/4" />
-          <MenuItem label="子账号管理" href="/4" />
-          <MenuItem label="全平台管理" href="/4" />
-          <MenuItem label="资源管理" href="/4" />
-          <MenuItem label="公告管理" href="/4" />
+          <MenuItem label={t("system.role")} href="/4" />
+          <MenuItem label={t("system.subaccount")} href="/4" />
+          <MenuItem label={t("system.platform")} href="/4" />
+          <MenuItem label={t("system.resource")} href="/4" />
+          <MenuItem label={t("system.announcement")} href="/4" />
         </CollapsibleContent>
       </Collapsible>
       <Collapsible>
         <CollapsibleTrigger asChild>
           <MenuItem
-            label="平台维护"
+            label={t("maintain.title")}
             icon={<Cog className="size-4" />}
             hasChildren
           />
         </CollapsibleTrigger>
         <CollapsibleContent className="flex flex-col gap-1 pl-6">
-          <MenuItem label="字典管理" href="/4" />
-          <MenuItem label="平台资源配置" href="/4" />
+          <MenuItem label={t("maintain.dictionary")} href="/4" />
+          <MenuItem label={t("maintain.resource")} href="/4" />
         </CollapsibleContent>
       </Collapsible>
     </>
