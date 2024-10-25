@@ -47,3 +47,8 @@ export async function request(
 
   return response;
 }
+
+export async function getAgents() {
+  const res = await request("/api/user");
+  return res.json();
+}
