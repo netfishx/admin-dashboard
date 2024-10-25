@@ -86,7 +86,7 @@ function OpenedMenu({ pathname }: { pathname: string }) {
           />
         </CollapsibleTrigger>
         <CollapsibleContent className="flex flex-col gap-1 pl-6">
-          <MenuItem label="注单列表" href="/3" />
+          <MenuItem label="注单列表" href="/reports/orderlist" />
           <MenuItem label="按期汇总报表" href="/3" />
           <MenuItem label="代理报表" href="/3" />
           <MenuItem label="会员报表" href="/3" />
