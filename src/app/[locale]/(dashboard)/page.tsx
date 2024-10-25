@@ -11,10 +11,10 @@ export default function DashboardPage() {
   const userInfo = {
     name: "张三",
     data: {
-      value1: 1,
-      value2: 2,
-      value3: 3,
-      value4: 4,
+      value1: 111111,
+      value2: 222222,
+      value3: 333333,
+      value4: 444444,
     },
   };
   return (
