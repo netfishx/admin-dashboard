@@ -48,7 +48,7 @@
     "next-view-transitions": "^0.3.2",
     "nuqs": "^2.0.4",
     "react": "^19.0.0-rc-1631855f-20241023",
-    "react-day-picker": "8.10.1",
+    "react-day-picker": "^9.2.0",
     "react-dom": "^19.0.0-rc-1631855f-20241023",
     "react-hook-form": "^7.53.1",
     "react-is": "^19.0.0-rc-1631855f-20241023",
