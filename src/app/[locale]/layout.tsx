@@ -7,6 +7,7 @@ import { Provider as JotaiProvider } from "jotai";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages, getTranslations } from "next-intl/server";
 import { ViewTransitions } from "next-view-transitions";
+import { NuqsAdapter } from "nuqs/adapters/next/app";
 import type { ReactNode } from "react";
 
 export async function generateMetadata() {
@@ -31,28 +32,30 @@ export default async function RootLayout({
     <ViewTransitions>
       <html lang={locale} suppressHydrationWarning>
         <body>
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          >
-            <Toaster
-              position="top-center"
-              richColors
-              expand
-              visibleToasts={1}
-              toastOptions={{ duration: 1000 }}
-            />
-            <QueryProviders>
-              <JotaiProvider>
-                <NextIntlClientProvider messages={messages}>
-                  {children}
-                </NextIntlClientProvider>
-                <ErrorToast />
-              </JotaiProvider>
-            </QueryProviders>
-          </ThemeProvider>
+          <NuqsAdapter>
+            <ThemeProvider
+              attribute="class"
+              defaultTheme="system"
+              enableSystem
+              disableTransitionOnChange
+            >
+              <Toaster
+                position="top-center"
+                richColors
+                expand
+                visibleToasts={1}
+                toastOptions={{ duration: 1000 }}
+              />
+              <QueryProviders>
+                <JotaiProvider>
+                  <NextIntlClientProvider messages={messages}>
+                    {children}
+                  </NextIntlClientProvider>
+                  <ErrorToast />
+                </JotaiProvider>
+              </QueryProviders>
+            </ThemeProvider>
+          </NuqsAdapter>
         </body>
       </html>
     </ViewTransitions>
