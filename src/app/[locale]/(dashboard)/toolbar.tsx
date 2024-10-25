@@ -21,8 +21,9 @@ export function Toolbar() {
         <span>首页</span>
       </div>
       <div className="flex flex-row gap-2 items-center">
-        <div
-          className="cursor-pointer rounded-full border-solid border-2 p-1"
+        <Button
+          variant="ghost"
+          className="size-7 rounded-full border-2 px-1"
           onClick={() => {
             setTheme(mode === "dark" ? "light" : "dark");
           }}
@@ -32,10 +33,10 @@ export function Toolbar() {
           ) : (
             <Sun className="size-4" />
           )}
-        </div>
-        <div className="cursor-pointer rounded-full border-solid border-2 p-1">
+        </Button>
+        <Button variant="ghost" className="size-7 rounded-full border-2 px-1">
           <QrCode className="size-4" />
-        </div>
+        </Button>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="ghost" size="sm">
