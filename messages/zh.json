@@ -194,6 +194,7 @@
       "lastmonth": "上月",
       "choicedate": "选择日期范围",
       "gametype": "游戏种类",
+      "gamename": "游戏名称",
       "bettingtime": "投注时间",
       "settlementstatus": "代理结算状态",
       "placeholderselect": "请选择",
@@ -203,7 +204,23 @@
       "ministerID": "部长ID",
       "memberID": "会员ID",
       "agentID": "代理ID",
-      "roomeownerID": "房主ID"
+      "roomeownerID": "房主ID",
+      "search": "查询",
+      "amountfilter": "下注金额筛选",
+      "leastlevelID": "末级代理ID",
+      "smallType": "玩法",
+      "odds": "玩法赔率",
+      "betcontent": "下注内容",
+      "result": "开奖记录",
+      "betamount": "下注金额",
+      "winamount": "输赢金额",
+      "bettime": "投注时间",
+      "drawtime": "开奖时间",
+      "membersettlementtime": "会员结算时间",
+      "proxysettlementtime": "代理结算时间",
+      "proxystatus": "代理结算状态",
+      "action": "操作",
+      "more": "查看"
     }
   }
 }
