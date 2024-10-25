@@ -133,5 +133,27 @@
   "betList": "注单列表",
   "agentReport": "代理报表",
   "memberReport": "会员报表",
-  "accountChangeRecord": "账变记录"
+  "accountChangeRecord": "账变记录",
+  "report": {
+    "orderlist": {
+      "today": "今天",
+      "yesterday": "昨天",
+      "week": "本周",
+      "lastweek": "上周",
+      "month": "本月",
+      "lastmonth": "上月",
+      "choicedate": "选择日期范围",
+      "gametype": "游戏种类",
+      "bettingtime": "投注时间",
+      "settlementstatus": "代理结算状态",
+      "placeholderselect": "请选择",
+      "placeholderinput": "请输入",
+      "ordernumber": "订单号",
+      "issuenumber": "期号",
+      "ministerID": "部长ID",
+      "memberID": "会员ID",
+      "agentID": "代理ID",
+      "roomeownerID": "房主ID"
+    }
+  }
 }
