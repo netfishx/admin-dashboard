@@ -24,35 +24,37 @@ export default async function RootLayout({
   children: ReactNode;
 }>) {
   return (
-    <ViewTransitions>
-      <html lang="en" suppressHydrationWarning>
-        <body>
-          <Suspense fallback={null}>
-            <NuqsAdapter>
-              <ThemeProvider
-                attribute="class"
-                defaultTheme="system"
-                enableSystem
-                disableTransitionOnChange
-              >
-                <Toaster
-                  position="top-center"
-                  richColors
-                  expand
-                  visibleToasts={1}
-                  toastOptions={{ duration: 1000 }}
-                />
-                <QueryProviders>
-                  <JotaiProvider>
-                    <I18nProvider>{children}</I18nProvider>
-                    <ErrorToast />
-                  </JotaiProvider>
-                </QueryProviders>
-              </ThemeProvider>
-            </NuqsAdapter>
-          </Suspense>
-        </body>
-      </html>
-    </ViewTransitions>
+    <Suspense fallback={null}>
+      <ViewTransitions>
+        <html lang="en" suppressHydrationWarning>
+          <body>
+            <Suspense fallback={null}>
+              <NuqsAdapter>
+                <ThemeProvider
+                  attribute="class"
+                  defaultTheme="system"
+                  enableSystem
+                  disableTransitionOnChange
+                >
+                  <Toaster
+                    position="top-center"
+                    richColors
+                    expand
+                    visibleToasts={1}
+                    toastOptions={{ duration: 1000 }}
+                  />
+                  <QueryProviders>
+                    <JotaiProvider>
+                      <I18nProvider>{children}</I18nProvider>
+                      <ErrorToast />
+                    </JotaiProvider>
+                  </QueryProviders>
+                </ThemeProvider>
+              </NuqsAdapter>
+            </Suspense>
+          </body>
+        </html>
+      </ViewTransitions>
+    </Suspense>
   );
 }
