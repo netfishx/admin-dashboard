@@ -1,0 +1,72 @@
+"use client";
+
+import type { AgentData } from "@/api";
+import { Button } from "@/components/ui/button";
+import { useTranslations } from "next-intl";
+import { useState } from "react";
+import { AddAgentModal } from "./add-agent-modal";
+import { UserInfoModal } from "./user-info-modal";
+
+export default function Action(editData: AgentData) {
+  const t = useTranslations("users.agents");
+  const [userInfoModal, setUserInfoModal] = useState(false);
+  const [addAgentModal, setAddAgentModal] = useState(false);
+  return (
+    <>
+      <Button
+        variant="link"
+        className="hover:no-underline hover:text-primary/80 px-0"
+        onClick={() => {
+          setUserInfoModal(true);
+        }}
+      >
+        {t("userInfo")}
+      </Button>
+      <Button
+        variant="link"
+        className="hover:no-underline hover:text-primary/80 px-0"
+      >
+        {t("transferMoney")}
+      </Button>
+      <Button
+        variant="link"
+        className="hover:no-underline hover:text-primary/80 px-0"
+      >
+        {t("gamesSetting")}
+      </Button>
+      <Button
+        variant="link"
+        className="hover:no-underline hover:text-primary/80 px-0"
+      >
+        {t("limitSetting")}
+      </Button>
+      <Button
+        variant="link"
+        className="hover:no-underline hover:text-primary/80 px-0"
+      >
+        {t("rebateSetting")}
+      </Button>
+      <Button
+        variant="link"
+        className="hover:no-underline hover:text-primary/80 px-0"
+      >
+        {t("loginLog")}
+      </Button>
+      <Button
+        variant="link"
+        className="hover:no-underline hover:text-primary/80 px-0"
+      >
+        {t("changeLog")}
+      </Button>
+      <AddAgentModal
+        open={addAgentModal}
+        onOpenChange={(open) => setAddAgentModal(open)}
+      />
+      <UserInfoModal
+        open={userInfoModal}
+        onOpenChange={(open) => setUserInfoModal(open)}
+        editData={editData}
+      />
+    </>
+  );
+}
