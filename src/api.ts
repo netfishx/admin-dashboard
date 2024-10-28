@@ -50,22 +50,38 @@ export async function request({
     data,
   });
 }
+export interface AgentData {
+  upUserName: string;
+  userLevel: string;
+  userId: string;
+  userName: string;
+  nickName: string;
+  status: number;
+}
 
-// export async function getAgents() {
-//   const res = await request("/api/user");
-//   return res.json();
-// }
-// export async function updateUser(data: AgentData) {
-//   const res = await request("/api/updateUser", undefined, {
-//     method: "PUT",
-//     body: JSON.stringify(data),
-//   });
-//   return res.json();
-// }
-// export async function addUser(data: AgentData) {
-//   const res = await request("/api/addUser", undefined, {
-//     method: "POST",
-//     body: JSON.stringify(data),
-//   });
-//   return res.json();
-// }
+export async function getAgents() {
+  const req = {
+    url: "/api/user",
+    method: "GET",
+  };
+  const { data } = await request(req);
+  return data;
+}
+export async function updateUser(data: AgentData) {
+  const req = {
+    method: "PUT",
+    url: "/api/updateUser",
+    data: JSON.stringify(data),
+  };
+  const res = await request(req);
+  return res;
+}
+export async function addUser(data: AgentData) {
+  const req = {
+    method: "POST",
+    url: "/api/addUser",
+    data: JSON.stringify(data),
+  };
+  const res = await request(req);
+  return res;
+}

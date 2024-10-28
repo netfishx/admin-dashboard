@@ -1,6 +1,6 @@
 "use client";
 
-import { getAgents } from "@/api";
+import { type AgentData, getAgents } from "@/api";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -23,15 +23,6 @@ import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 import { AddAgentModal } from "./add-agent-modal";
 import { UserInfoModal } from "./user-info-modal";
-export interface AgentData {
-  _id: string;
-  upUserName: string;
-  userLevel: string;
-  userId: string;
-  userName: string;
-  nickName: string;
-  status: string;
-}
 
 export default function Page() {
   const t = useTranslations("users.agents");
@@ -50,7 +41,7 @@ export default function Page() {
   }
   async function getAgentsData() {
     const res = await getAgents();
-    setData(res as AgentData[]);
+    setData(res);
   }
   useEffect(() => {
     getAgentsData();
@@ -115,7 +106,7 @@ export default function Page() {
               </TableHeader>
               <TableBody>
                 {data.map((item) => (
-                  <TableRow key={item._id}>
+                  <TableRow key={item.userId}>
                     <TableCell className="min-w-32">
                       {item.upUserName}
                     </TableCell>
