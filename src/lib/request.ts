@@ -1,7 +1,10 @@
 "use server";
 
 import axios from "axios";
-import { unstable_cacheLife as cacheLife } from "next/cache";
+import {
+  unstable_cacheLife as cacheLife,
+  unstable_cacheTag as cacheTag,
+} from "next/cache";
 import { headers } from "next/headers";
 
 const instance = axios.create({
@@ -23,6 +26,7 @@ async function request({
   data,
   token,
   expire,
+  tags,
 }: {
   url: string;
   ip?: string | null;
@@ -33,6 +37,7 @@ async function request({
   data?: any;
   token?: string;
   expire?: number;
+  tags?: string[];
 }) {
   "use cache";
   expire
@@ -42,7 +47,7 @@ async function request({
         expire,
       })
     : cacheLife("seconds");
-
+  tags && cacheTag(...tags);
   const headers = {
     ...header,
     "Content-Type": "application/json",
@@ -68,7 +73,10 @@ async function request({
     return res.data;
   } catch (error) {
     console.error(error);
-    return null;
+    return {
+      code: 500,
+      message: "Internal Server Error",
+    };
   }
 }
 
