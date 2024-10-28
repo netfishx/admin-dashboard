@@ -12,3 +12,9 @@ export const errorAtom = atom<Error>({
 });
 
 export const sidebarAtom = atom<boolean>(true);
+
+export const gamesSupplierDialogAtom = atom<boolean>(false);
+export const gamesSupplierEditAtom = atom<{
+  game: string;
+  supplierId: string;
+}>();
