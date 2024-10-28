@@ -1,13 +1,11 @@
 "use client";
 
-import { updateUser } from "@/api";
+import { addUser } from "@/api";
 import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
 import {
   Dialog,
   DialogContent,
   DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
@@ -15,53 +13,46 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
-import type { AgentData } from "./page";
-export function UserInfoModal({
+
+export function AddAgentModal({
   open,
   onOpenChange,
-  editData,
 }: {
   open: boolean;
   onOpenChange: (open: boolean, refresh: boolean) => void;
-  editData: AgentData | null;
 }) {
   const t = useTranslations("users.agents");
   const [userName, setUserName] = useState("");
   const [nickName, setNickName] = useState("");
-  const [status, setStatus] = useState("");
-  const handleClickUpdateUserInfo = async () => {
-    if (editData) {
-      await updateUser({
-        ...editData,
-        userName: userName || editData.userName || "",
-        nickName: nickName || editData.nickName || "",
-        status: status || editData.status || "",
-      });
-      onOpenChange(false, true);
-    }
+  const [userLevel, setUserLevel] = useState("");
+  const handleClickAddAgent = async () => {
+    await addUser({
+      userName,
+      nickName,
+      userLevel,
+      _id: "",
+      upUserName: "z111",
+      userId: "A111",
+      status: "",
+    });
+    onOpenChange(false, true);
   };
   return (
     <Dialog open={open} onOpenChange={(open) => onOpenChange(open, false)}>
       <DialogContent className="max-w-3xl">
         <DialogHeader>
-          <DialogTitle>{t("userInfo")}</DialogTitle>
+          <DialogTitle>{t("addAgent")}</DialogTitle>
           <DialogDescription />
         </DialogHeader>
         <div className="flex flex-col gap-2 w-full">
-          <div className="flex gap-4 items-center">
-            <Label className="shrink-0 w-1/5 text-right">
-              {t("upUserName")} :
-            </Label>
-            <span>{editData?.upUserName}</span>
-          </div>
           <div className="flex gap-4 items-center">
             <Label className="shrink-0 w-1/5 text-right">
               {t("userName")} :
             </Label>
             <Input
               placeholder={t("placeholder")}
-              defaultValue={editData?.userName}
               className="w-1/4"
+              value={userName}
               onChange={(e) => setUserName(e.target.value)}
             />
           </div>
@@ -71,29 +62,26 @@ export function UserInfoModal({
             </Label>
             <Input
               placeholder={t("placeholder")}
-              defaultValue={editData?.nickName}
               className="w-1/4"
+              value={nickName}
               onChange={(e) => setNickName(e.target.value)}
             />
           </div>
           <div className="flex gap-4 items-center">
             <Label className="shrink-0 w-1/5 text-right">
-              {t("restCount")} :
+              {t("userLevel")} :
             </Label>
-            <span>3</span>
-            <Button>{t("reset")}</Button>
+            <Input
+              placeholder={t("placeholder")}
+              className="w-1/4"
+              value={userLevel}
+              onChange={(e) => setUserLevel(e.target.value)}
+            />
           </div>
-          <div className="flex gap-4 items-center">
-            <Label className="shrink-0 w-1/5 text-right">{t("status")} :</Label>
-            <Checkbox />
+          <div className="flex justify-end">
+            <Button onClick={handleClickAddAgent}>{t("save")}</Button>
           </div>
         </div>
-        <DialogFooter>
-          <Button variant="outline" onClick={() => onOpenChange(false, false)}>
-            {t("close")}
-          </Button>
-          <Button onClick={handleClickUpdateUserInfo}>{t("save")}</Button>
-        </DialogFooter>
       </DialogContent>
     </Dialog>
   );
