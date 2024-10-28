@@ -15,37 +15,6 @@ const instance = axios.create({
 
 const FALLBACK_IP_ADDRESS = "0.0.0.0";
 
-export async function apiRequest({
-  url,
-  header,
-  method,
-  data,
-  token,
-  expire,
-}: {
-  url: string;
-  header?: Record<string, string>;
-  method?: string;
-  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
-  data?: any;
-  token?: string;
-  expire?: number;
-}) {
-  const nextHeaders = await headers();
-  const ip = nextHeaders.get("x-forwarded-for");
-  const locale = nextHeaders.get("accept-language");
-  return await request({
-    url,
-    ip,
-    locale,
-    header,
-    method,
-    data,
-    token,
-    expire,
-  });
-}
-
 async function request({
   url,
   ip,
@@ -102,6 +71,37 @@ async function request({
     console.error(error);
     return null;
   }
+}
+
+export async function apiRequest({
+  url,
+  header,
+  method,
+  data,
+  token,
+  expire,
+}: {
+  url: string;
+  header?: Record<string, string>;
+  method?: string;
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+  data?: any;
+  token?: string;
+  expire?: number;
+}) {
+  const nextHeaders = await headers();
+  const ip = nextHeaders.get("x-forwarded-for");
+  const locale = nextHeaders.get("accept-language");
+  return await request({
+    url,
+    ip,
+    locale,
+    header,
+    method,
+    data,
+    token,
+    expire,
+  });
 }
 
 export async function getAgents() {
