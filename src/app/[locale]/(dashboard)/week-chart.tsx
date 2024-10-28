@@ -18,7 +18,7 @@ const chartConfig = {
 } satisfies ChartConfig;
 
 export function WeekChart({ textConfig }: { textConfig: {
-  data: any[] | undefined; title: string, subtitle: string, tab: Array<string> 
+  data: any[] | undefined; title: string,  tab: string[]
 } }) {
   const t = useTranslations("chart");
   function formatTooltipLabel(label: string) {
@@ -34,7 +34,7 @@ export function WeekChart({ textConfig }: { textConfig: {
         <div className="pb-2">
           {textConfig.title}
           <span className="text-sm text-muted-foreground">
-            {textConfig.subtitle}
+            {t("lastSevenDays")}
           </span>
         </div>
         <div>
