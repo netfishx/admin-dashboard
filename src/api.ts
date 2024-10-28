@@ -1,4 +1,5 @@
 import { withTimeout } from "es-toolkit/promise";
+import type { AgentData } from "./app/[locale]/(dashboard)/users/agent/page";
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 const TIMEOUT = 5000;
@@ -21,6 +22,7 @@ export async function request(
     ...config?.headers,
     "Content-Type": "application/json",
     "Accept-Language": nextHeaders?.get("Accept-Language") ?? "zh-CN",
+    "time-zone": (new Date().getTimezoneOffset() / 60).toString(),
   });
   if (nextHeaders) {
     const array = nextHeaders
@@ -50,5 +52,19 @@ export async function request(
 
 export async function getAgents() {
   const res = await request("/api/user");
+  return res.json();
+}
+export async function updateUser(data: AgentData) {
+  const res = await request("/api/updateUser", undefined, {
+    method: "PUT",
+    body: JSON.stringify(data),
+  });
+  return res.json();
+}
+export async function addUser(data: AgentData) {
+  const res = await request("/api/addUser", undefined, {
+    method: "POST",
+    body: JSON.stringify(data),
+  });
   return res.json();
 }
