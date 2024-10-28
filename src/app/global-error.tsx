@@ -14,7 +14,6 @@ export default function GlobalError({
         <h2 className="text-2xl font-medium">系统维护，请稍后再试！</h2>
         <Button
           type="button"
-          variant="link"
           className="text-base w-fit"
           onClick={() => reset()}
         >
