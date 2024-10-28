@@ -29,11 +29,10 @@ export function AddAgentModal({
     await addUser({
       userName,
       nickName,
-      userLevel,
-      _id: "",
+      userLevel: "代理",
       upUserName: "z111",
-      userId: "A111",
-      status: "",
+      userId: `A${Math.random().toString(36).substring(2, 15)}`,
+      status: 1,
     });
     onOpenChange(false, true);
   };

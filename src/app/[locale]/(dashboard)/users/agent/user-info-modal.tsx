@@ -1,6 +1,7 @@
 "use client";
 
 import { updateUser } from "@/api";
+import type { AgentData } from "@/api";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
@@ -15,7 +16,6 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
-import type { AgentData } from "./page";
 export function UserInfoModal({
   open,
   onOpenChange,
@@ -28,14 +28,14 @@ export function UserInfoModal({
   const t = useTranslations("users.agents");
   const [userName, setUserName] = useState("");
   const [nickName, setNickName] = useState("");
-  const [status, setStatus] = useState("");
+  const [status, setStatus] = useState(1);
   const handleClickUpdateUserInfo = async () => {
     if (editData) {
       await updateUser({
         ...editData,
         userName: userName || editData.userName || "",
         nickName: nickName || editData.nickName || "",
-        status: status || editData.status || "",
+        status: status || editData.status || 1,
       });
       onOpenChange(false, true);
     }
