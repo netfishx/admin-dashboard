@@ -3,6 +3,7 @@ import { useTranslations } from "next-intl";
 import { Announcement } from "./announcement";
 import { DataOverview } from "./data-overview";
 import { DayChart } from "./day-chart";
+import { WeekChart } from "./week-chart";
 import { QuickAccess } from "./quick-access";
 import { Salutations } from "./salutations";
 
@@ -17,6 +18,154 @@ export default function DashboardPage() {
       value4: 444444,
     },
   };
+  const weekChart1Text = {
+    title: t("chart.bjlDataTrending"),
+    subtitle: t("chart.lastEightDays"),
+    tab: [t("chart.cashflow"), t("chart.headcount")],
+    data: [
+      {
+        name: "2024-10-21",
+        data: 4000,
+      },
+      {
+        name: "2024-10-22",
+        data: 32000,
+      },
+      {
+        name: "2024-10-23",
+        data: 20000,
+      },
+      {
+        name: "2024-10-24",
+        data: 42780,
+      },
+      {
+        name: "2024-10-25",
+        data: 1890,
+      },
+      {
+        name: "2024-10-26",
+        data: 52390,
+      },
+      {
+        name: "2024-10-27",
+        data: 3490,
+      },
+      {
+        name: "2024-10-28",
+        data: 38490,
+      },
+    ]
+  }
+  const weekChart2Text = {
+    title: t("chart.gdDataTrending"),
+    subtitle: t("chart.lastEightDays"),
+    tab: [t("chart.cashflow"), t("chart.headcount")],
+    data: [
+      {
+        name: "2024-10-21",
+        data: 4000,
+      },
+      {
+        name: "2024-10-22",
+        data: 32000,
+      },
+      {
+        name: "2024-10-23",
+        data: 20000,
+      },
+      {
+        name: "2024-10-24",
+        data: 42780,
+      },
+      {
+        name: "2024-10-25",
+        data: 1890,
+      },
+      {
+        name: "2024-10-26",
+        data: 52390,
+      },
+      {
+        name: "2024-10-27",
+        data: 3490,
+      },
+      {
+        name: "2024-10-28",
+        data: 8490,
+      },
+    ]
+  }
+  const weekChart3Text = {
+    title: t("chart.memberDataTrending"),
+    subtitle: t("chart.lastSevenDays"),
+    tab: [t("chart.addMember"), t("chart.memberLoginTimes")],
+     data: [
+      {
+        name: "2024-10-21",
+        data: 4000,
+      },
+      {
+        name: "2024-10-22",
+        data: 32000,
+      },
+      {
+        name: "2024-10-23",
+        data: 20000,
+      },
+      {
+        name: "2024-10-24",
+        data: 42780,
+      },
+      {
+        name: "2024-10-25",
+        data: 1890,
+      },
+      {
+        name: "2024-10-26",
+        data: 52390,
+      },
+      {
+        name: "2024-10-27",
+        data: 3490,
+      },
+    ]
+  }
+  const weekChart4Text = {
+    title: t("chart.moneyDataTrending"),
+    subtitle: t("chart.lastSevenDays"),
+    tab: [t("chart.topup"), t("chart.withdraw")],
+    data: [
+      {
+        name: "2024-10-21",
+        data: 4000,
+      },
+      {
+        name: "2024-10-22",
+        data: 32000,
+      },
+      {
+        name: "2024-10-23",
+        data: 20000,
+      },
+      {
+        name: "2024-10-24",
+        data: 42780,
+      },
+      {
+        name: "2024-10-25",
+        data: 1890,
+      },
+      {
+        name: "2024-10-26",
+        data: 52390,
+      },
+      {
+        name: "2024-10-27",
+        data: 3490,
+      },
+    ]
+  }
   return (
     <>
       <div className="flex-1 flex flex-col gap-2">
@@ -24,6 +173,16 @@ export default function DashboardPage() {
         <div className="grid grid-cols-2 gap-2">
           <DayChart title={t("chart.todayCashflow")} />
           <DayChart title={t("chart.todayActiveUsers")} />
+        </div>
+        <div className="grid gap-12 rounded bg-card p-4">
+          <WeekChart textConfig={weekChart1Text} />
+          <WeekChart textConfig={weekChart2Text} />
+        </div>
+        <div className="grid gap-2 rounded bg-card p-4">
+          <WeekChart textConfig={weekChart3Text} />
+        </div>
+        <div className="grid gap-2 rounded bg-card p-4">
+          <WeekChart textConfig={weekChart4Text} />
         </div>
       </div>
       <div className="flex flex-col gap-2 w-[280px] min-[2400px]:w-[560px]">
