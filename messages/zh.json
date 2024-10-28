@@ -79,7 +79,10 @@
       "title": "拦货设置",
       "save": "保存",
       "name": "游戏名称",
-      "switch": "拦货开关"
+      "switch": "拦货开关",
+      "confirm": "确定",
+      "cancel": "取消",
+      "confirmText": "确定要开启拦货吗？"
     },
     "odds": {
       "type": "游戏类别",
