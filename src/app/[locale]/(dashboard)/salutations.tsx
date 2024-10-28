@@ -11,8 +11,8 @@ export function Salutations({ user }: any) {
   const t = useTranslations();
   const format = useFormatter();
   return (
-    <div className="flex-1 flex flex-col p-4 rounded bg-card">
-      <div className="border-b pb-2 flex items-center justify-around">
+    <div className="flex flex-col p-4 rounded bg-card">
+      <div className="pb-2 flex items-center justify-around">
         <Item
           name={t("gameTotalProfit")}
           value={format.number(user.data.value1)}
@@ -35,7 +35,6 @@ export function Salutations({ user }: any) {
           unShowBorder
         />
       </div>
-      <WeekChart />
     </div>
   );
 }

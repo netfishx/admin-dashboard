@@ -9,36 +9,6 @@ import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useTranslations } from "next-intl";
 import { CartesianGrid, Line, LineChart, XAxis, YAxis } from "recharts";
 
-const data = [
-  {
-    name: "2024-10-21",
-    data: 4000,
-  },
-  {
-    name: "2024-10-22",
-    data: 32000,
-  },
-  {
-    name: "2024-10-23",
-    data: 20000,
-  },
-  {
-    name: "2024-10-24",
-    data: 42780,
-  },
-  {
-    name: "2024-10-25",
-    data: 1890,
-  },
-  {
-    name: "2024-10-26",
-    data: 52390,
-  },
-  {
-    name: "2024-10-27",
-    data: 3490,
-  },
-];
 
 const chartConfig = {
   value: {
@@ -47,7 +17,9 @@ const chartConfig = {
   },
 } satisfies ChartConfig;
 
-export function WeekChart() {
+export function WeekChart({ textConfig }: { textConfig: {
+  data: any[] | undefined; title: string, subtitle: string, tab: Array<string> 
+} }) {
   const t = useTranslations("chart");
   function formatTooltipLabel(label: string) {
     return `${label} ${t("totalDeposits")}`;
@@ -60,16 +32,16 @@ export function WeekChart() {
     <div className="flex-1 flex flex-col pt-2">
       <div className="flex items-center justify-between">
         <div className="pb-2">
-          {t("dataTrending")}
+          {textConfig.title}
           <span className="text-sm text-muted-foreground">
-            {t("lastSevenDays")}
+            {textConfig.subtitle}
           </span>
         </div>
         <div>
           <Tabs defaultValue="account" className="px-2">
             <TabsList>
-              <TabsTrigger value="account">{t("cashflow")}</TabsTrigger>
-              <TabsTrigger value="password">{t("headcount")}</TabsTrigger>
+              <TabsTrigger value="account">{textConfig.tab[0]}</TabsTrigger>
+              <TabsTrigger value="password">{textConfig.tab[1]}</TabsTrigger>
             </TabsList>
           </Tabs>
         </div>
@@ -77,10 +49,10 @@ export function WeekChart() {
       <div className="flex-1 flex items-center justify-center">
         <ChartContainer
           config={chartConfig}
-          className="w-[40dvw] lg:w-[50dvw] xl:w-[55dvw] 2xl:w-[60dvw] mx-auto h-60 [@media(min-height:800px)]:h-[400px]"
+          className="w-[40dvw] lg:w-[50dvw] xl:w-[55dvw] 2xl:w-[60dvw] mx-auto h-60"
         >
           <LineChart
-            data={data}
+            data={textConfig.data}
             margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
           >
             <XAxis
