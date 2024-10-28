@@ -3,7 +3,6 @@
 import axios from "axios";
 import { unstable_cacheLife as cacheLife } from "next/cache";
 import { headers } from "next/headers";
-import type { AgentData } from "./app/[locale]/(dashboard)/users/agent/page";
 
 const instance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_BASE_URL,
@@ -102,6 +101,15 @@ export async function apiRequest({
     token,
     expire,
   });
+}
+
+export interface AgentData {
+  upUserName: string;
+  userLevel: string;
+  userId: string;
+  userName: string;
+  nickName: string;
+  status: number;
 }
 
 export async function getAgents() {
