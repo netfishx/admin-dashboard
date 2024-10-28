@@ -19,37 +19,40 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { useTranslations } from "next-intl";
 import DateRangeFilter from "./DateRangeFilter";
 import AmountFilter from "./AmountFilter";
+const tempData = "111111111111111111111"
 const data = [
   {
-    ordernumber: "百家乐01",
-    issuenumber: "222",
-    memberID: "222",
-    roomeownerID: '222',
-    ministerID: '222',
-    leastlevelID: '222',
-    gamename: '222',
-    smallType: '222',
-    odds: '222',
-    betcontent: '222',
-    result: '222',
-    betamount: '222',
-    winamount: '222',
-    bettime: '222',
-    drawtime: '222',
-    membersettlementtime: '222',
-    proxysettlementtime: '222',
-    proxystatus: '222',
+    ordernumber: "123",
+    issuenumber: 123,
+    memberID: 123,
+    roomeownerID: tempData,
+    ministerID: tempData,
+    leastlevelID: tempData,
+    gamename: tempData,
+    smallType: tempData,
+    odds: tempData,
+    betcontent: tempData,
+    result: tempData,
+    betamount: tempData,
+    winamount: tempData,
+    bettime: tempData,
+    drawtime: tempData,
+    membersettlementtime: tempData,
+    proxysettlementtime: tempData,
+    proxystatus: tempData,
   },
-
 ];
 
 interface DateRange {
   from: string;
   to: string;
 }
+
+
 
 export default function Page() {
   const t = useTranslations("report.orderlist");
@@ -59,6 +62,12 @@ export default function Page() {
   const handleFilterChange = (filterType: string, amount: number | null) => {
     console.log(`Filter: ${filterType}, Amount: ${amount}`);
   };
+
+  const CustomTableHeader = (text: string) => {
+    return (
+      <TableHead className="w-24 min-w-24 text-center">{text}</TableHead>
+    )
+  }
   return (
     <div className="flex flex-col gap-2 w-full">
       {/* 筛选条件 */}
@@ -154,103 +163,106 @@ export default function Page() {
       
       {/* 表格 */}
       <div className="p-2 bg-background flex-1">
-        <div className="border rounded-sm">
-          <Table>
-            <TableHeader>
-              <TableRow className="bg-muted">
-                <TableHead className="w-24 text-center">{t("ordernumber")}</TableHead>
-                <TableHead className="w-24 text-center">{t("issuenumber")}</TableHead>
-                <TableHead className="w-24 text-center">{t("memberID")}</TableHead>
-                <TableHead className="w-24 text-center">{t("roomeownerID")}</TableHead>
-                <TableHead className="w-24 text-center">{t("ministerID")}</TableHead>
-                <TableHead className="w-24 text-center">{t("leastlevelID")}</TableHead>
-                <TableHead className="w-24 text-center">{t("gamename")}</TableHead>
-                <TableHead className="w-24 text-center">{t("smallType")}</TableHead>
-                <TableHead className="w-24 text-center">{t("odds")}</TableHead>
-                <TableHead className="w-24 text-center">{t("betcontent")}</TableHead>
-                <TableHead className="w-24 text-center">{t("result")}</TableHead>
-                <TableHead className="w-24 text-center">{t("betamount")}</TableHead>
-                <TableHead className="w-24 text-center">{t("winamount")}</TableHead>
-                <TableHead className="w-24 text-center">{t("bettime")}</TableHead>
-                <TableHead className="w-24 text-center">{t("drawtime")}</TableHead>
-                <TableHead className="w-24 text-center">{t("membersettlementtime")}</TableHead>
-                <TableHead className="w-24 text-center">{t("proxysettlementtime")}</TableHead>
-                <TableHead className="w-24 text-center">{t("proxystatus")}</TableHead>
-                <TableHead className="w-24 text-center sticky right-0">
-                  {t("action")}
-                </TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {data.map((item) => (
-                <TableRow key={item.ordernumber}>
-                  <TableCell className="w-24 text-center">
-                    {item.ordernumber}
-                  </TableCell>
-                  <TableCell className="w-24 text-center">
-                    {item.issuenumber}
-                  </TableCell>
-                  <TableCell className="w-24 text-center">
-                    {item.memberID}
-                  </TableCell>
-                  <TableCell className="w-24 text-center">
-                    {item.roomeownerID}
-                  </TableCell>
-                  <TableCell className="w-24 text-center">
-                    {item.ministerID}
-                  </TableCell>
-                  <TableCell className="w-24 text-center">
-                    {item.leastlevelID}
-                  </TableCell>
-                  <TableCell className="w-24 text-center">
-                    {item.gamename}
-                  </TableCell>
-                  <TableCell className="w-24 text-center">
-                    {item.smallType}
-                  </TableCell>
-                  <TableCell className="w-24 text-center">
-                    {item.odds}
-                  </TableCell>
-                  <TableCell className="w-24 text-center">
-                    {item.betcontent}
-                  </TableCell>
-                  <TableCell className="w-24 text-center">
-                    {item.result}
-                  </TableCell>
-                  <TableCell className="w-24 text-center">
-                    {item.winamount}
-                  </TableCell>
-                  <TableCell className="w-24 text-center">
-                    {item.bettime}
-                  </TableCell>
-                  <TableCell className="w-24 text-center">
-                    {item.drawtime}
-                  </TableCell>
-                  <TableCell className="w-24 text-center">
-                    {item.membersettlementtime}
-                  </TableCell>
-                  <TableCell className="w-24 text-center">
-                    {item.proxysettlementtime}
-                  </TableCell>
-                  <TableCell className="w-24 text-center">
-                    {item.proxysettlementtime}
-                  </TableCell>
-                  <TableCell className="w-24 text-center">
-                    {item.proxystatus}
-                  </TableCell>
-                  <TableCell className="w-24 text-center">
-                    <Button
-                      variant="link"
-                      className="hover:no-underline hover:text-primary/80 sticky right-0"
-                    >
-                      {t("more")}
-                    </Button>
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </div>
+          <div className="border h-full rounded-sm relative">
+            <ScrollArea className="h-full w-[calc(100dvw-16.1rem)]">
+              <Table>
+                <TableHeader>
+                  <TableRow className="bg-muted">
+                    {CustomTableHeader(t("ordernumber"))}
+                    {CustomTableHeader(t("issuenumber"))}
+                    {CustomTableHeader(t("memberID"))}
+                    {CustomTableHeader(t("roomeownerID"))}
+                    {CustomTableHeader(t("ministerID"))}
+                    {CustomTableHeader(t("leastlevelID"))}
+                    {CustomTableHeader(t("gamename"))}
+                    {CustomTableHeader(t("smallType"))}
+                    {CustomTableHeader(t("odds"))}
+                    {CustomTableHeader(t("betcontent"))}
+                    {CustomTableHeader(t("result"))}
+                    {CustomTableHeader(t("betamount"))}
+                    {CustomTableHeader(t("winamount"))}
+                    {CustomTableHeader(t("bettime"))}
+                    {CustomTableHeader(t("drawtime"))}
+                    {CustomTableHeader(t("membersettlementtime"))}
+                    {CustomTableHeader(t("proxysettlementtime"))}
+                    {CustomTableHeader(t("proxystatus"))}
+                    <TableHead className="w-24 text-center sticky right-0">
+                      {t("action")}
+                    </TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {data.map((item) => (
+                    <TableRow key={item.ordernumber}>
+                      <TableCell className="w-24 text-center">
+                        {item.ordernumber}
+                      </TableCell>
+                      <TableCell className="w-24 text-center">
+                        {item.issuenumber}
+                      </TableCell>
+                      <TableCell className="w-24 text-center">
+                        {item.memberID}
+                      </TableCell>
+                      <TableCell className="w-24 text-center">
+                        {item.roomeownerID}
+                      </TableCell>
+                      <TableCell className="w-24 text-center">
+                        {item.ministerID}
+                      </TableCell>
+                      <TableCell className="w-24 text-center">
+                        {item.leastlevelID}
+                      </TableCell>
+                      <TableCell className="w-24 text-center">
+                        {item.gamename}
+                      </TableCell>
+                      <TableCell className="w-24 text-center">
+                        {item.smallType}
+                      </TableCell>
+                      <TableCell className="w-24 text-center">
+                        {item.odds}
+                      </TableCell>
+                      <TableCell className="w-24 text-center">
+                        {item.betcontent}
+                      </TableCell>
+                      <TableCell className="w-24 text-center">
+                        {item.result}
+                      </TableCell>
+                      <TableCell className="w-24 text-center">
+                        {item.winamount}
+                      </TableCell>
+                      <TableCell className="w-24 text-center">
+                        {item.bettime}
+                      </TableCell>
+                      <TableCell className="w-24 text-center">
+                        {item.drawtime}
+                      </TableCell>
+                      <TableCell className="w-24 text-center">
+                        {item.membersettlementtime}
+                      </TableCell>
+                      <TableCell className="w-24 text-center">
+                        {item.proxysettlementtime}
+                      </TableCell>
+                      <TableCell className="w-24 text-center">
+                        {item.proxysettlementtime}
+                      </TableCell>
+                      <TableCell className="w-24 text-center">
+                        {item.proxystatus}
+                      </TableCell>
+                      <TableCell className="w-24 text-center">
+                        <Button
+                          variant="link"
+                          className="hover:no-underline hover:text-primary/80"
+                        >
+                          {t("more")}
+                        </Button>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+              <ScrollBar orientation="horizontal" />
+            </ScrollArea>
+          </div>
       </div>
     </div>
   );
