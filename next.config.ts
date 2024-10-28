@@ -23,6 +23,7 @@ const nextConfig: NextConfig = {
   experimental: {
     ppr: true,
     reactCompiler: true,
+    dynamicIO: true,
     serverActions: {
       bodySizeLimit: "5mb",
     },

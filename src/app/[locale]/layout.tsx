@@ -1,14 +1,14 @@
 import "@/assets/globals.css";
-import { QueryProviders } from "@/app/[locale]/query-provider";
 import { ErrorToast } from "@/components/error-toast";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
 import { Provider as JotaiProvider } from "jotai";
-import { NextIntlClientProvider } from "next-intl";
-import { getMessages, getTranslations } from "next-intl/server";
+import { getTranslations } from "next-intl/server";
 import { ViewTransitions } from "next-view-transitions";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
-import type { ReactNode } from "react";
+import { type ReactNode, Suspense } from "react";
+import { I18nProvider } from "./i18n-provider";
+import { QueryProviders } from "./query-provider";
 
 export async function generateMetadata() {
   const t = await getTranslations();
@@ -20,42 +20,37 @@ export async function generateMetadata() {
 
 export default async function RootLayout({
   children,
-  params,
 }: Readonly<{
   children: ReactNode;
-  params: Promise<{ locale: string }>;
 }>) {
-  const { locale } = await params;
-  const messages = await getMessages();
-
   return (
     <ViewTransitions>
-      <html lang={locale} suppressHydrationWarning>
+      <html lang="en" suppressHydrationWarning>
         <body>
-          <NuqsAdapter>
-            <ThemeProvider
-              attribute="class"
-              defaultTheme="system"
-              enableSystem
-              disableTransitionOnChange
-            >
-              <Toaster
-                position="top-center"
-                richColors
-                expand
-                visibleToasts={1}
-                toastOptions={{ duration: 1000 }}
-              />
-              <QueryProviders>
-                <JotaiProvider>
-                  <NextIntlClientProvider messages={messages}>
-                    {children}
-                  </NextIntlClientProvider>
-                  <ErrorToast />
-                </JotaiProvider>
-              </QueryProviders>
-            </ThemeProvider>
-          </NuqsAdapter>
+          <Suspense fallback={null}>
+            <NuqsAdapter>
+              <ThemeProvider
+                attribute="class"
+                defaultTheme="system"
+                enableSystem
+                disableTransitionOnChange
+              >
+                <Toaster
+                  position="top-center"
+                  richColors
+                  expand
+                  visibleToasts={1}
+                  toastOptions={{ duration: 1000 }}
+                />
+                <QueryProviders>
+                  <JotaiProvider>
+                    <I18nProvider>{children}</I18nProvider>
+                    <ErrorToast />
+                  </JotaiProvider>
+                </QueryProviders>
+              </ThemeProvider>
+            </NuqsAdapter>
+          </Suspense>
         </body>
       </html>
     </ViewTransitions>
