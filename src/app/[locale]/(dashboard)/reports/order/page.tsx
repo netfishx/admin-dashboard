@@ -1,6 +1,6 @@
 'use client'
 
-import DateRange from './DateRangeFilter';
+
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -21,8 +21,10 @@ import {
 } from "@/components/ui/table";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { useTranslations } from "next-intl";
-import DateRangeFilter from "./DateRangeFilter";
-import AmountFilter from "./AmountFilter";
+
+import DateRangeFilter from '@/components/daterange-filter';
+import AmountFilter from "@/components/amount-filter";
+
 const tempData = "111111111111111111111"
 const data = [
   {
