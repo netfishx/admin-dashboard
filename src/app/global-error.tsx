@@ -1,4 +1,5 @@
-"use client"; // Error boundaries must be Client Components
+"use client";
+import { Button } from "@/components/ui/button";
 
 export default function GlobalError({
   error,
@@ -9,11 +10,11 @@ export default function GlobalError({
 }) {
   return (
     <html lang="en">
-      <body>
-        <h2>Something went wrong!</h2>
-        <button type="button" onClick={() => reset()}>
-          Try again
-        </button>
+      <body className="flex flex-col items-center justify-center h-screen">
+        <h2 className="text-2xl font-medium">系统维护，请稍后再试！</h2>
+        <Button type="button" onClick={() => reset()}>
+          重试
+        </Button>
       </body>
     </html>
   );
