@@ -20,7 +20,6 @@ export default function DashboardPage() {
   };
   const weekChart1Text = {
     title: t("chart.bjlDataTrending"),
-    subtitle: t("chart.lastEightDays"),
     tab: [t("chart.cashflow"), t("chart.headcount")],
     data: [
       {
@@ -50,16 +49,11 @@ export default function DashboardPage() {
       {
         name: "2024-10-27",
         data: 3490,
-      },
-      {
-        name: "2024-10-28",
-        data: 38490,
       },
     ]
   }
   const weekChart2Text = {
     title: t("chart.gdDataTrending"),
-    subtitle: t("chart.lastEightDays"),
     tab: [t("chart.cashflow"), t("chart.headcount")],
     data: [
       {
@@ -90,15 +84,10 @@ export default function DashboardPage() {
         name: "2024-10-27",
         data: 3490,
       },
-      {
-        name: "2024-10-28",
-        data: 8490,
-      },
     ]
   }
   const weekChart3Text = {
     title: t("chart.memberDataTrending"),
-    subtitle: t("chart.lastSevenDays"),
     tab: [t("chart.addMember"), t("chart.memberLoginTimes")],
      data: [
       {
@@ -133,7 +122,6 @@ export default function DashboardPage() {
   }
   const weekChart4Text = {
     title: t("chart.moneyDataTrending"),
-    subtitle: t("chart.lastSevenDays"),
     tab: [t("chart.topup"), t("chart.withdraw")],
     data: [
       {
@@ -174,8 +162,10 @@ export default function DashboardPage() {
           <DayChart title={t("chart.todayCashflow")} />
           <DayChart title={t("chart.todayActiveUsers")} />
         </div>
-        <div className="grid gap-12 rounded bg-card p-4">
+        <div className="grid gap-2 rounded bg-card p-4">
           <WeekChart textConfig={weekChart1Text} />
+        </div>
+         <div className="grid gap-2 rounded bg-card p-4">
           <WeekChart textConfig={weekChart2Text} />
         </div>
         <div className="grid gap-2 rounded bg-card p-4">
