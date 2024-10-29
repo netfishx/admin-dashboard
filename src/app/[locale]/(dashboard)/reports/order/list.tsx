@@ -11,7 +11,7 @@ import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import DetailButton from './detail-button';
 import { useTranslations } from "next-intl";
 
-const tempData = "111111111111111111111"
+const tempData = "111111111111111111112221"
 const data = [
   {
     ordernumber: "123",
