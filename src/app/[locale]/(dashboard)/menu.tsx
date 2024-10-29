@@ -280,7 +280,7 @@ function ClosedMenu({ pathname }: { pathname: string }) {
       <div
         className={cn([
           baseClass,
-          pathname.startsWith("/reports") && "text-primary",
+          pathname.startsWith("/withdraw") && "text-primary",
         ])}
       >
         <ClipboardCheck className="size-4" />
@@ -288,7 +288,7 @@ function ClosedMenu({ pathname }: { pathname: string }) {
       <div
         className={cn([
           baseClass,
-          pathname.startsWith("/reports") && "text-primary",
+          pathname.startsWith("/fund") && "text-primary",
         ])}
       >
         <Scale className="size-4" />
@@ -296,7 +296,7 @@ function ClosedMenu({ pathname }: { pathname: string }) {
       <div
         className={cn([
           baseClass,
-          pathname.startsWith("/reports") && "text-primary",
+          pathname.startsWith("/personal") && "text-primary",
         ])}
       >
         <UserSquare className="size-4" />
@@ -304,7 +304,7 @@ function ClosedMenu({ pathname }: { pathname: string }) {
       <div
         className={cn([
           baseClass,
-          pathname.startsWith("/reports") && "text-primary",
+          pathname.startsWith("/system") && "text-primary",
         ])}
       >
         <Tv2 className="size-4" />
@@ -312,7 +312,7 @@ function ClosedMenu({ pathname }: { pathname: string }) {
       <div
         className={cn([
           baseClass,
-          pathname.startsWith("/reports") && "text-primary",
+          pathname.startsWith("/maintain") && "text-primary",
         ])}
       >
         <Cog className="size-4" />
