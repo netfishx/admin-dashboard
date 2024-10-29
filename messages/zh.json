@@ -54,11 +54,19 @@
     },
     "reports": {
       "title": "报表管理",
-      "baccarat": "注单列表-百家乐",
-      "gundan": "注单列表-掼蛋",
+      "order": {
+        "baccarat": "注单列表-真人视讯",
+        "gundan": "注单列表-棋牌"
+      },
       "period": "按期汇总报表",
-      "agent": "代理报表",
-      "member": "会员报表",
+      "agent": {
+        "baccarat": "代理报表-真人视讯",
+        "gundan": "代理报表-棋牌"
+      },
+      "member": {
+        "baccarat": "会员报表-真人视讯",
+        "gundan": "会员报表-棋牌"
+      },
       "supplier": "供应商报表",
       "change": "账变记录",
       "recharge": "充值记录",
@@ -197,8 +205,8 @@
       "disable": "停用",
       "freeze": "冻结",
       "placeholder": "请输入",
-      "close": "关闭",
-      "save": "保存",
+      "close": "取消",
+      "save": "确定",
       "restCount": "剩余尝试次数",
       "statusLabel": {
         "1": "启用",

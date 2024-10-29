@@ -9,7 +9,6 @@ import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useTranslations } from "next-intl";
 import { CartesianGrid, Line, LineChart, XAxis, YAxis } from "recharts";
 
-
 const chartConfig = {
   value: {
     label: "Value",
@@ -17,9 +16,15 @@ const chartConfig = {
   },
 } satisfies ChartConfig;
 
-export function WeekChart({ textConfig }: { textConfig: {
-  data: any[] | undefined; title: string,  tab: string[]
-} }) {
+export function WeekChart({
+  textConfig,
+}: {
+  textConfig: {
+    data: any[] | undefined;
+    title: string;
+    tab: string[];
+  };
+}) {
   const t = useTranslations("chart");
   function formatTooltipLabel(label: string) {
     return `${label} ${t("totalDeposits")}`;

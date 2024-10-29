@@ -1,5 +1,4 @@
-'use client'
-import React from 'react'
+"use client";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -12,8 +11,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-import DateRangeFilter from '@/components/daterange-filter';
 import AmountFilter from "@/components/amount-filter";
+import DateRangeFilter from "@/components/daterange-filter";
 import { useTranslations } from "next-intl";
 import { useQueryState } from "nuqs";
 
@@ -33,15 +32,18 @@ export default function ListFilter() {
   const [bettingtime, setBettingtime] = useQueryState("bettingtime", {
     defaultValue: "",
   });
-  const [startTime, setStartTime] = useQueryState("startTime", {
+  const [_startTime, setStartTime] = useQueryState("startTime", {
     defaultValue: "",
   });
-  const [endTime, setEndTime] = useQueryState("endTime", {
+  const [_endTime, setEndTime] = useQueryState("endTime", {
     defaultValue: "",
   });
-  const [settlementstatus, setSettlementstatus] = useQueryState("settlementstatus", {
-    defaultValue: "",
-  });
+  const [settlementstatus, setSettlementstatus] = useQueryState(
+    "settlementstatus",
+    {
+      defaultValue: "",
+    },
+  );
   const [ordernumber, setOrdernumber] = useQueryState("ordernumber", {
     defaultValue: "",
   });
@@ -60,12 +62,15 @@ export default function ListFilter() {
   const [roomeownerID, setRoomeownerID] = useQueryState("roomeownerID", {
     defaultValue: "",
   });
-  const [filterAmount, setFilterAmount] = useQueryState("filterAmount", {
+  const [_filterAmount, setFilterAmount] = useQueryState("filterAmount", {
     defaultValue: "",
   });
-  const [filterAmountType, setFilterAmountType] = useQueryState("filterAmountType", {
-    defaultValue: "",
-  });
+  const [_filterAmountType, setFilterAmountType] = useQueryState(
+    "filterAmountType",
+    {
+      defaultValue: "",
+    },
+  );
   const [leastlevelID, setLeastlevelID] = useQueryState("leastlevelID", {
     defaultValue: "",
   });
@@ -73,12 +78,11 @@ export default function ListFilter() {
   const handleDateRangeChange = (date: DateRange) => {
     setStartTime(date.from || "");
     setEndTime(date.to || "");
-  }
+  };
 
   const handleFilterChange = (filterType: string, amount: number | any) => {
-    setFilterAmount(amount?.toString() || '')
-    setFilterAmountType(filterType)
-    console.log(`Filter: ${filterType}, Amount: ${amount}`);
+    setFilterAmount(amount?.toString() || "");
+    setFilterAmountType(filterType);
   };
 
   return (
@@ -87,9 +91,9 @@ export default function ListFilter() {
       <div className="flex gap-4 items-center">
         <div className="flex gap-2 items-center">
           <Label className="shrink-0">{t("gametype")}</Label>
-          <Select 
-            value={gametype ?? ""} 
-            onValueChange={(value) => setGametype(value)} 
+          <Select
+            value={gametype ?? ""}
+            onValueChange={(value) => setGametype(value)}
             defaultValue="1"
           >
             <SelectTrigger className="w-28">
@@ -103,9 +107,9 @@ export default function ListFilter() {
         </div>
         <div className="flex gap-2 items-center">
           <Label className="shrink-0">{t("gamename")}</Label>
-          <Select 
-            value={gameName ?? ""} 
-            onValueChange={(value) => setGameName(value)} 
+          <Select
+            value={gameName ?? ""}
+            onValueChange={(value) => setGameName(value)}
             defaultValue="1"
           >
             <SelectTrigger className="w-28">
@@ -119,8 +123,8 @@ export default function ListFilter() {
         </div>
         <div className="flex gap-2 items-center">
           <Select
-            value={bettingtime ?? ""} 
-            onValueChange={(value) => setBettingtime(value)} 
+            value={bettingtime ?? ""}
+            onValueChange={(value) => setBettingtime(value)}
             defaultValue="1"
           >
             <SelectTrigger className="w-28">
@@ -135,8 +139,8 @@ export default function ListFilter() {
         <div className="flex gap-2 items-center">
           <Label className="shrink-0">{t("settlementstatus")}</Label>
           <Select
-            value={settlementstatus ?? ""} 
-            onValueChange={(value) => setSettlementstatus(value)} 
+            value={settlementstatus ?? ""}
+            onValueChange={(value) => setSettlementstatus(value)}
             defaultValue="1"
           >
             <SelectTrigger className="w-28">
@@ -152,7 +156,7 @@ export default function ListFilter() {
           <Input
             value={ordernumber ?? ""}
             onChange={(e) => setOrdernumber(e.target.value)}
-            placeholder={t("placeholderinput")} 
+            placeholder={t("placeholderinput")}
           />
         </div>
       </div>
@@ -163,7 +167,7 @@ export default function ListFilter() {
           <Input
             value={issuenumber ?? ""}
             onChange={(e) => setIssuenumber(e.target.value)}
-            placeholder={t("placeholderinput")} 
+            placeholder={t("placeholderinput")}
           />
         </div>
         <div className="flex gap-2 items-center">
@@ -171,7 +175,7 @@ export default function ListFilter() {
           <Input
             value={ministerID ?? ""}
             onChange={(e) => setMinisterID(e.target.value)}
-            placeholder={t("placeholderinput")} 
+            placeholder={t("placeholderinput")}
           />
         </div>
         <div className="flex gap-2 items-center">
@@ -179,7 +183,7 @@ export default function ListFilter() {
           <Input
             value={memberID ?? ""}
             onChange={(e) => setMemberID(e.target.value)}
-            placeholder={t("placeholderinput")} 
+            placeholder={t("placeholderinput")}
           />
         </div>
         <div className="flex gap-2 items-center">
@@ -187,7 +191,7 @@ export default function ListFilter() {
           <Input
             value={agentID ?? ""}
             onChange={(e) => setAgentID(e.target.value)}
-            placeholder={t("placeholderinput")} 
+            placeholder={t("placeholderinput")}
           />
         </div>
         <div className="flex gap-2 items-center">
@@ -195,7 +199,7 @@ export default function ListFilter() {
           <Input
             value={roomeownerID ?? ""}
             onChange={(e) => setRoomeownerID(e.target.value)}
-            placeholder={t("placeholderinput")} 
+            placeholder={t("placeholderinput")}
           />
         </div>
         <div className="flex gap-2 items-center">
@@ -209,7 +213,7 @@ export default function ListFilter() {
           <Input
             value={leastlevelID ?? ""}
             onChange={(e) => setLeastlevelID(e.target.value)}
-            placeholder={t("placeholderinput")} 
+            placeholder={t("placeholderinput")}
           />
         </div>
         <div className="flex gap-2 items-center">
@@ -217,5 +221,5 @@ export default function ListFilter() {
         </div>
       </div>
     </div>
-  )
-}  
+  );
+}

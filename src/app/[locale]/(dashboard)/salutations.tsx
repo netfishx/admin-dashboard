@@ -5,7 +5,6 @@ import welcome02 from "@/assets/images/welcome/welcome02.svg";
 import welcome03 from "@/assets/images/welcome/welcome03.svg";
 import welcome04 from "@/assets/images/welcome/welcome04.svg";
 import { useFormatter, useTranslations } from "next-intl";
-import { WeekChart } from "./week-chart";
 
 export function Salutations({ user }: any) {
   const t = useTranslations();

@@ -28,7 +28,7 @@ export default function Form() {
   const [gameId, setGameId] = useQueryState("gameId", {
     defaultValue: "",
   });
-  const [openTime, setOpenTime] = useQueryState("openTime", {
+  const [_openTime, _setOpenTime] = useQueryState("openTime", {
     defaultValue: "",
   });
 
