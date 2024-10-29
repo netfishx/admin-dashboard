@@ -8,6 +8,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { cn } from "@/lib/utils";
 import { getTranslations } from "next-intl/server";
 import Action from "./action-buttons";
 import Form from "./form";
@@ -48,9 +49,18 @@ export default async function Page() {
                     <TableCell className="min-w-32">{item.userId}</TableCell>
                     <TableCell className="min-w-32">{item.userName}</TableCell>
                     <TableCell className="min-w-32">{item.nickName}</TableCell>
-                    <TableCell className="min-w-32">{item.status}</TableCell>
+                    <TableCell
+                      className={cn(
+                        "min-w-32",
+                        item.status === 1 && "text-primary",
+                        item.status === 2 && "text-destructive",
+                        item.status === 3 && "text-muted-foreground",
+                      )}
+                    >
+                      {t(`statusLabel.${item.status}`)}
+                    </TableCell>
                     <TableCell className="min-w-[400px] text-center flex gap-2 2xl:gap-6">
-                      <Action {...item} />
+                      <Action data={item} />
                     </TableCell>
                   </TableRow>
                 ))}
