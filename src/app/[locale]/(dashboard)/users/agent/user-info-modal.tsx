@@ -45,7 +45,7 @@ export function UserInfoModal({
   };
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-3xl">
+      <DialogContent className="2xl:max-w-xl lg:max-w-lg">
         <DialogHeader>
           <DialogTitle>{t("userInfo")}</DialogTitle>
           <DialogDescription />
