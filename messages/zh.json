@@ -214,7 +214,23 @@
         "3": "冻结"
       },
       "amount": "转账金额",
-      "moneyPassword": "资金密码"
+      "moneyPassword": "资金密码",
+      "baccarat": "真人视讯",
+      "name": "游戏名称",
+      "switch": "彩种开关",
+      "ratio": "占成比例",
+      "guandan": "棋牌",
+      "min": "个人单注最低限额",
+      "max": "个人单注最高限额",
+      "total": "个人单期最高限额",
+      "rebate": "退水比例",
+      "loginTime": "登录时间",
+      "ip": "IP",
+      "address": "地址",
+      "operateTime": "操作时间",
+      "operater": "操作人",
+      "operateType": "操作类型",
+      "operateDesc": "操作描述"
     }
   },
   "chart": {
