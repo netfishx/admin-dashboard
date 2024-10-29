@@ -1,5 +1,6 @@
 "use client";
 
+import { signOutAction } from "@/actions";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -9,10 +10,13 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { ChevronDown, HomeIcon, MoonStar, QrCode, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
+
 export function Toolbar() {
   const [name, _setName] = useState("Serati Ma");
   const { resolvedTheme: mode, setTheme } = useTheme();
+  const router = useRouter();
   return (
     <div className="w-full h-10 flex flex-row justify-between border-b px-2">
       <div className="flex flex-row gap-2 items-center text-sm">
@@ -45,7 +49,14 @@ export function Toolbar() {
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent>
-            <DropdownMenuItem>退出登录</DropdownMenuItem>
+            <DropdownMenuItem
+              onClick={async () => {
+                await signOutAction();
+                router.replace("/login");
+              }}
+            >
+              退出登录
+            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       </div>

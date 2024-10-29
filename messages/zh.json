@@ -14,6 +14,7 @@
   },
   "menu": {
     "home": "首页",
+    "stop": "停止接单",
     "games": {
       "title": "游戏管理",
       "flyorder": "拦货设置",
@@ -175,7 +176,14 @@
       "placeholder": "请输入",
       "close": "关闭",
       "save": "保存",
-      "restCount": "剩余尝试次数"
+      "restCount": "剩余尝试次数",
+      "statusLabel": {
+        "1": "启用",
+        "2": "停用",
+        "3": "冻结"
+      },
+      "amount": "转账金额",
+      "moneyPassword": "资金密码"
     }
   },
   "chart": {
