@@ -79,7 +79,10 @@
       "title": "拦货设置",
       "save": "保存",
       "name": "游戏名称",
-      "switch": "拦货开关"
+      "switch": "拦货开关",
+      "confirm": "确定",
+      "cancel": "取消",
+      "confirmText": "确定要开启拦货吗？"
     },
     "odds": {
       "type": "游戏类别",
@@ -262,6 +265,36 @@
       "proxystatus": "代理结算状态",
       "action": "操作",
       "more": "查看"
+    },
+    "periodlist": {
+      "today": "今天",
+      "yesterday": "昨天",
+      "week": "本周",
+      "lastweek": "上周",
+      "month": "本月",
+      "lastmonth": "上月",
+      "choicedate": "选择日期范围",
+      "gametype": "游戏种类",
+      "gamename": "游戏名称",
+      "gameId": "期号",
+      "openTime": "开奖日期",
+      "placeholderselect": "请选择",
+      "placeholderinput": "请输入",
+      "issuenumber": "期号",
+      "reset": "重置",
+      "search": "查询",
+      "download": "生成下载任务",
+      "smallType": "玩法",
+      "drawtime": "开奖时间",
+      "betNum": "笔数",
+      "betMoneyAmount": "投注总额",
+      "heMoney": "开和金额",
+      "ddMoney": "对赌金额",
+      "workMoney": "有效投注",
+      "memberBackMoney": "会员退水",
+      "action": "操作",
+      "more": "查看",
+      "pickdate": "请选择日期"
     }
   }
 }

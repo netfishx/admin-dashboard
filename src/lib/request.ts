@@ -36,17 +36,34 @@ async function request({
   // biome-ignore lint/suspicious/noExplicitAny: <explanation>
   data?: any;
   token?: string;
-  expire?: number;
+  expire?: number | "default" | "minutes" | "days" | "max";
   tags?: string[];
 }) {
   "use cache";
-  expire
-    ? cacheLife({
-        stale: expire,
-        revalidate: expire,
-        expire,
-      })
-    : cacheLife("seconds");
+  if (typeof expire === "number") {
+    cacheLife({
+      stale: expire,
+      revalidate: expire,
+      expire,
+    });
+  } else {
+    switch (expire) {
+      case "default":
+        cacheLife("default");
+        break;
+      case "minutes":
+        cacheLife("minutes");
+        break;
+      case "days":
+        cacheLife("days");
+        break;
+      case "max":
+        cacheLife("max");
+        break;
+      default:
+        cacheLife("seconds");
+    }
+  }
   tags && cacheTag(...tags);
   const headers = {
     ...header,

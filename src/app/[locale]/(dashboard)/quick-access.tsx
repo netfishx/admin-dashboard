@@ -1,6 +1,6 @@
 import { FileText, Scale, Users } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { Link } from "next-view-transitions";
+import Link from "next/link";
 
 export function QuickAccess() {
   const t = useTranslations();
