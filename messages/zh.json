@@ -175,7 +175,12 @@
       "placeholder": "请输入",
       "close": "关闭",
       "save": "保存",
-      "restCount": "剩余尝试次数"
+      "restCount": "剩余尝试次数",
+      "statusLabel": {
+        "1": "启用",
+        "2": "停用",
+        "3": "冻结"
+      }
     }
   },
   "chart": {
