@@ -8,24 +8,27 @@ import {
 import { cn } from "@/lib/utils";
 import {
   endOfDay,
+  endOfMonth,
   endOfWeek,
   format,
   startOfDay,
+  startOfMonth,
   startOfWeek,
+  subDays,
   subWeeks,
 } from "date-fns";
 import { Calendar as CalendarIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
-import type React from "react";
-import { useState } from "react";
+import { useQueryStates } from "nuqs";
+import { useEffect, useState } from "react";
 
 interface DateRange {
-  from: Date | undefined;
-  to: Date | null;
+  from: Date;
+  to: Date;
 }
 
 interface DateRangeFilterProps {
-  onChange?: (range: { from: number; to: number } | null) => void;
+  onChange?: (range: { from: number; to: number }) => void;
   quickSetBtn?: string[];
 }
 
@@ -36,23 +39,31 @@ const LASTWEEK = "lastweek";
 const MONTH = "month";
 const LASTMONTH = "lastmonth";
 
-const DateRangeFilter: React.FC<DateRangeFilterProps> = ({
-  onChange,
-  quickSetBtn = [TODAY, YESTERDAY, WEEK, LASTWEEK, MONTH, LASTMONTH],
-}) => {
+function DateRangeFilter(props: DateRangeFilterProps) {
+  const {
+    onChange,
+    quickSetBtn = [TODAY, YESTERDAY, WEEK, LASTWEEK, MONTH, LASTMONTH],
+  } = props;
   const t = useTranslations("report.orderlist");
-  const [dateRange, setDateRange] = useState<DateRange>({
+  const [dateRange, setDateRange] = useState({
     from: new Date(),
     to: new Date(),
   });
-  const [activeButton, setActiveButton] = useState<string | null>("today");
 
-  // Format date range to timestamps
-  const formatDateRange = (
-    range: DateRange,
-  ): { from: number; to: number } | null => {
-    if (!range || !range.from) return null;
+  const today = new Date();
+  const [, setTime] = useQueryStates({
+    startTime: { parse: Number, default: startOfDay(today).getTime() },
+    endTime: { parse: Number, default: endOfDay(today).getTime() },
+  });
 
+  useEffect(() => {
+    setTime({
+      startTime: startOfDay(today).getTime(),
+      endTime: endOfDay(today).getTime(),
+    });
+  }, []);
+
+  const formatDateRange = (range: DateRange): { from: number; to: number } => {
     return {
       from: startOfDay(range.from).getTime(),
       to: range.to
@@ -61,34 +72,32 @@ const DateRangeFilter: React.FC<DateRangeFilterProps> = ({
     };
   };
 
-  // Handle date range change
   const handleDateRangeChange = (range: DateRange) => {
     setDateRange(range);
-    setActiveButton(null);
     const formattedRange = formatDateRange(range);
     onChange?.(formattedRange);
   };
 
-  // Handle quick select button click
   const handleQuickSelect = (type: string) => {
     const today = new Date();
-    let from = new Date();
-    let to = new Date();
+    let from: Date;
+    let to: Date;
 
     switch (type) {
       case TODAY: {
-        from = today;
-        to = today;
+        from = startOfDay(today);
+        to = endOfDay(today);
         break;
       }
       case YESTERDAY: {
-        from = new Date(today.setDate(today.getDate() - 1));
-        to = new Date(from);
+        const yesterday = subDays(today, 1);
+        from = startOfDay(yesterday);
+        to = endOfDay(yesterday);
         break;
       }
       case WEEK: {
         from = startOfWeek(today, { weekStartsOn: 1 });
-        to = new Date();
+        to = endOfDay(today);
         break;
       }
       case LASTWEEK: {
@@ -98,21 +107,26 @@ const DateRangeFilter: React.FC<DateRangeFilterProps> = ({
         break;
       }
       case MONTH: {
-        from = new Date(today.getFullYear(), today.getMonth(), 1);
-        to = new Date();
+        from = startOfMonth(today);
+        to = endOfDay(today);
         break;
       }
       case LASTMONTH: {
-        from = new Date(today.getFullYear(), today.getMonth() - 1, 1);
-        to = new Date(today.getFullYear(), today.getMonth(), 0);
+        const lastMonth = new Date(
+          today.getFullYear(),
+          today.getMonth() - 1,
+          1,
+        );
+        from = startOfMonth(lastMonth);
+        to = endOfMonth(lastMonth);
         break;
       }
       default:
-        break;
+        return;
     }
-    const range: DateRange = { from, to };
+
+    const range = { from, to };
     setDateRange(range);
-    setActiveButton(type);
     const formattedRange = formatDateRange(range);
     onChange?.(formattedRange);
   };
@@ -147,8 +161,8 @@ const DateRangeFilter: React.FC<DateRangeFilterProps> = ({
           <Calendar
             autoFocus
             mode="range"
-            defaultMonth={dateRange?.from ?? undefined}
-            selected={dateRange as any}
+            defaultMonth={dateRange?.from}
+            selected={dateRange}
             onSelect={(range) => handleDateRangeChange(range as DateRange)}
             numberOfMonths={1}
           />
@@ -157,17 +171,13 @@ const DateRangeFilter: React.FC<DateRangeFilterProps> = ({
 
       <div className="flex gap-2">
         {quickSetBtn?.map((type) => (
-          <Button
-            key={type}
-            variant="outline"
-            onClick={() => handleQuickSelect(type)}
-          >
+          <Button key={type} onClick={() => handleQuickSelect(type)}>
             {t(type)}
           </Button>
         ))}
       </div>
     </div>
   );
-};
+}
 
 export default DateRangeFilter;
