@@ -36,12 +36,12 @@ const data = [
 ];
 
 export default function List() {
-    const t = useTranslations("report.orderlist");
-    const CustomTableHeader = (text: string) => {
-      return (
-          <TableHead className="w-24 min-w-24 text-center">{text}</TableHead>
-      )
-    }
+  const t = useTranslations("report.orderlist");
+  const CustomTableHeader = (text: string) => {
+    return (
+        <TableHead className="w-24 min-w-24 text-center">{text}</TableHead>
+    )
+  }
   return (
     <div className="p-2 bg-background flex-1">
       <div className="border h-full rounded-sm relative">
@@ -130,12 +130,6 @@ export default function List() {
                     {item.proxystatus}
                   </TableCell>
                   <TableCell className="w-24 text-center">
-                    {/* <Button
-                      variant="link"
-                      className="hover:no-underline hover:text-primary/80"
-                    >
-                      {t("more")}
-                    </Button> */}
                     <DetailButton />
                   </TableCell>
                 </TableRow>
