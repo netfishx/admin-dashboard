@@ -38,7 +38,7 @@ export function AddAgentModal({
   };
   return (
     <Dialog open={open} onOpenChange={(open) => onOpenChange(open, false)}>
-      <DialogContent className="max-w-3xl">
+      <DialogContent className="2xl:max-w-xl lg:max-w-lg">
         <DialogHeader>
           <DialogTitle>{t("addAgent")}</DialogTitle>
           <DialogDescription />

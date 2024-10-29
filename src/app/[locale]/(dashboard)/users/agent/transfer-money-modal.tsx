@@ -31,7 +31,7 @@ export function TransferMoneyModal({
   };
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-3xl">
+      <DialogContent className="2xl:max-w-xl lg:max-w-lg">
         <DialogHeader>
           <DialogTitle>{t("transferMoney")}</DialogTitle>
           <DialogDescription />
@@ -44,7 +44,7 @@ export function TransferMoneyModal({
           <div className="flex gap-4 items-center">
             <Label className="shrink-0 w-1/5 text-right">{t("amount")}</Label>
             <Input
-              className="w-1/4"
+              className="w-[200px]"
               value={amount}
               onChange={(e) => setAmount(Number(e.target.value))}
             />
