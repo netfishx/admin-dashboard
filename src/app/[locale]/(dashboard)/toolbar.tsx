@@ -37,7 +37,6 @@ export function Toolbar() {
   const pathname = usePathname();
   const firstPath = pathname.split("/")[1];
   const secondPath = pathname.split("/")[2];
-  console.info(firstPath, secondPath);
   return (
     <div className="w-full h-10 flex flex-row justify-between border-b px-2">
       <div className="flex flex-row gap-2 items-center text-sm">
