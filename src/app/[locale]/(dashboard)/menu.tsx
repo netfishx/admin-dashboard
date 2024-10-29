@@ -1,6 +1,5 @@
 "use client";
 
-import {} from "@/components/ui/button";
 import {
   Collapsible,
   CollapsibleContent,
@@ -23,6 +22,7 @@ import {
 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { usePathname } from "next/navigation";
+import { parseAsArrayOf, parseAsString, useQueryState } from "nuqs";
 import { MenuItem } from "./menu-item";
 
 export function Menu() {
@@ -43,10 +43,21 @@ export function Menu() {
 
 function OpenedMenu({ pathname }: { pathname: string }) {
   const t = useTranslations("menu");
+  const [openedMenu, setOpenedMenu] = useQueryState<string[]>(
+    "openedMenu",
+    parseAsArrayOf(parseAsString).withDefault([pathname.split("/")[1]]),
+  );
   return (
     <>
       <MenuItem label={t("home")} href="/" icon={<Home className="size-4" />} />
-      <Collapsible defaultOpen={pathname.startsWith("/games")}>
+      <Collapsible
+        open={openedMenu.includes("games")}
+        onOpenChange={(e) => {
+          e
+            ? setOpenedMenu([...openedMenu, "games"])
+            : setOpenedMenu(openedMenu.filter((v) => v !== "games"));
+        }}
+      >
         <CollapsibleTrigger asChild>
           <MenuItem
             label={t("games.title")}
@@ -63,7 +74,14 @@ function OpenedMenu({ pathname }: { pathname: string }) {
           <MenuItem label={t("games.maintain")} href="/games/maintain" />
         </CollapsibleContent>
       </Collapsible>
-      <Collapsible>
+      <Collapsible
+        open={openedMenu.includes("users")}
+        onOpenChange={(e) => {
+          e
+            ? setOpenedMenu([...openedMenu, "users"])
+            : setOpenedMenu(openedMenu.filter((v) => v !== "users"));
+        }}
+      >
         <CollapsibleTrigger asChild>
           <MenuItem
             label={t("users.title")}
@@ -77,7 +95,14 @@ function OpenedMenu({ pathname }: { pathname: string }) {
           <MenuItem label={t("users.supplier")} href="/users/supplier" />
         </CollapsibleContent>
       </Collapsible>
-      <Collapsible>
+      <Collapsible
+        open={openedMenu.includes("reports")}
+        onOpenChange={(e) => {
+          e
+            ? setOpenedMenu([...openedMenu, "reports"])
+            : setOpenedMenu(openedMenu.filter((v) => v !== "reports"));
+        }}
+      >
         <CollapsibleTrigger asChild>
           <MenuItem
             label={t("reports.title")}
@@ -120,7 +145,14 @@ function OpenedMenu({ pathname }: { pathname: string }) {
           <MenuItem label={t("reports.download")} href="/reports/download" />
         </CollapsibleContent>
       </Collapsible>
-      <Collapsible>
+      <Collapsible
+        open={openedMenu.includes("withdraw")}
+        onOpenChange={(e) => {
+          e
+            ? setOpenedMenu([...openedMenu, "withdraw"])
+            : setOpenedMenu(openedMenu.filter((v) => v !== "withdraw"));
+        }}
+      >
         <CollapsibleTrigger asChild>
           <MenuItem
             label={t("withdraw.title")}
@@ -133,7 +165,14 @@ function OpenedMenu({ pathname }: { pathname: string }) {
           <MenuItem label={t("withdraw.audit")} href="/withdraw/audit" />
         </CollapsibleContent>
       </Collapsible>
-      <Collapsible>
+      <Collapsible
+        open={openedMenu.includes("fund")}
+        onOpenChange={(e) => {
+          e
+            ? setOpenedMenu([...openedMenu, "fund"])
+            : setOpenedMenu(openedMenu.filter((v) => v !== "fund"));
+        }}
+      >
         <CollapsibleTrigger asChild>
           <MenuItem
             label={t("fund.title")}
@@ -147,7 +186,14 @@ function OpenedMenu({ pathname }: { pathname: string }) {
           <MenuItem label={t("fund.withdrawfee")} href="/fund/withdrawfee" />
         </CollapsibleContent>
       </Collapsible>
-      <Collapsible>
+      <Collapsible
+        open={openedMenu.includes("personal")}
+        onOpenChange={(e) => {
+          e
+            ? setOpenedMenu([...openedMenu, "personal"])
+            : setOpenedMenu(openedMenu.filter((v) => v !== "personal"));
+        }}
+      >
         <CollapsibleTrigger asChild>
           <MenuItem
             label={t("personal.title")}
