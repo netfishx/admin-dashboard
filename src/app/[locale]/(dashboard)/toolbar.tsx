@@ -33,24 +33,14 @@ export function Toolbar() {
   const [name, _setName] = useState("Serati Ma");
   const { resolvedTheme: mode, setTheme } = useTheme();
   const router = useRouter();
-  const t = useTranslations("menu");
   const pathname = usePathname();
   const firstPath = pathname.split("/")[1];
-  const secondPath = pathname.split("/")[2];
   return (
     <div className="w-full h-10 flex flex-row justify-between border-b px-2">
       <div className="flex flex-row gap-2 items-center text-sm">
         <TitleIcon title={firstPath} />
         <span>/</span>
-        {pathname.split("/").length > 2 ? (
-          <>
-            <span>{t(`${firstPath}.title`)}</span>
-            <span>/</span>
-            <span>{t(`${firstPath}.${secondPath}`)}</span>
-          </>
-        ) : (
-          <span>{t("home")}</span>
-        )}
+        <TitleText pathname={pathname} />
       </div>
       <div className="flex flex-row gap-2 items-center">
         <Button
@@ -113,4 +103,31 @@ function TitleIcon({ title }: { title: string }) {
     default:
       return <HomeIcon className="size-4" />;
   }
+}
+
+function TitleText({ pathname }: { pathname: string }) {
+  const pathLength = pathname.split("/").length;
+  const firstPath = pathname.split("/")[1];
+  const secondPath = pathname.split("/")[2];
+  const thirdPath = pathname.split("/")[3];
+  const t = useTranslations("menu");
+  if (pathLength === 3) {
+    return (
+      <>
+        <span>{t(`${firstPath}.title`)}</span>
+        <span>/</span>
+        <span>{t(`${firstPath}.${secondPath}`)}</span>
+      </>
+    );
+  }
+  if (pathLength > 3) {
+    return (
+      <>
+        <span>{t(`${firstPath}.title`)}</span>
+        <span>/</span>
+        <span>{t(`${firstPath}.${secondPath}.${thirdPath}`)}</span>
+      </>
+    );
+  }
+  return <span>{t("home")}</span>;
 }
