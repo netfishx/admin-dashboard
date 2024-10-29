@@ -9,7 +9,21 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { usePathname } from "@/i18n/routing";
-import { ChevronDown, HomeIcon, MoonStar, QrCode, Sun } from "lucide-react";
+import {
+  ChevronDown,
+  ClipboardCheck,
+  Cog,
+  FileText,
+  Gamepad2,
+  HomeIcon,
+  MoonStar,
+  QrCode,
+  Scale,
+  Sun,
+  Tv2,
+  UserSquare,
+  Users,
+} from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useTheme } from "next-themes";
 import { useRouter } from "next/navigation";
@@ -21,18 +35,19 @@ export function Toolbar() {
   const router = useRouter();
   const t = useTranslations("menu");
   const pathname = usePathname();
+  const firstPath = pathname.split("/")[1];
+  const secondPath = pathname.split("/")[2];
+  console.info(firstPath, secondPath);
   return (
     <div className="w-full h-10 flex flex-row justify-between border-b px-2">
       <div className="flex flex-row gap-2 items-center text-sm">
-        <HomeIcon className="size-4" />
+        <TitleIcon title={firstPath} />
         <span>/</span>
         {pathname.split("/").length > 2 ? (
           <>
-            <span>{t(`${pathname.split("/")[1]}.title`)}</span>
+            <span>{t(`${firstPath}.title`)}</span>
             <span>/</span>
-            <span>
-              {t(`${pathname.split("/")[1]}.${pathname.split("/")[2]}`)}
-            </span>
+            <span>{t(`${firstPath}.${secondPath}`)}</span>
           </>
         ) : (
           <span>{t("home")}</span>
@@ -76,4 +91,27 @@ export function Toolbar() {
       </div>
     </div>
   );
+}
+
+function TitleIcon({ title }: { title: string }) {
+  switch (title) {
+    case "games":
+      return <Gamepad2 className="size-4" />;
+    case "users":
+      return <Users className="size-4" />;
+    case "reports":
+      return <FileText className="size-4" />;
+    case "withdraw":
+      return <ClipboardCheck className="size-4" />;
+    case "fund":
+      return <Scale className="size-4" />;
+    case "personal":
+      return <UserSquare className="size-4" />;
+    case "system":
+      return <Tv2 className="size-4" />;
+    case "maintain":
+      return <Cog className="size-4" />;
+    default:
+      return <HomeIcon className="size-4" />;
+  }
 }
