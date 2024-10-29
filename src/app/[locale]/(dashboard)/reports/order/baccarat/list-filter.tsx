@@ -1,5 +1,4 @@
-"use client";
-
+'use client'
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -12,7 +11,7 @@ import {
 } from "@/components/ui/select";
 
 import AmountFilter from "@/components/amount-filter";
-import DateRangeFilter from "@/components/daterange-filter";
+import DateRangeFilter from '@/components/daterange-filter';
 import { useTranslations } from "next-intl";
 import { useQueryState } from "nuqs";
 
@@ -23,14 +22,11 @@ interface DateRange {
 
 export default function ListFilter() {
   const t = useTranslations("report.orderlist");
-  const [gametype, setGametype] = useQueryState("gametype", {
-    defaultValue: "1",
-  });
   const [gameName, setGameName] = useQueryState("gameName", {
     defaultValue: "1",
   });
   const [bettingtime, setBettingtime] = useQueryState("bettingtime", {
-    defaultValue: "",
+    defaultValue: "2",
   });
   const [_startTime, setStartTime] = useQueryState("startTime", {
     defaultValue: "",
@@ -56,13 +52,10 @@ export default function ListFilter() {
   const [memberID, setMemberID] = useQueryState("memberID", {
     defaultValue: "",
   });
-  const [agentID, setAgentID] = useQueryState("agentID", {
-    defaultValue: "",
-  });
   const [roomeownerID, setRoomeownerID] = useQueryState("roomeownerID", {
     defaultValue: "",
   });
-  const [_filterAmount, setFilterAmount] = useQueryState("filterAmount", {
+  const [, setFilterAmount] = useQueryState("filterAmount", {
     defaultValue: "",
   });
   const [_filterAmountType, setFilterAmountType] = useQueryState(
@@ -81,8 +74,8 @@ export default function ListFilter() {
   };
 
   const handleFilterChange = (filterType: string, amount: number | any) => {
-    setFilterAmount(amount?.toString() || "");
-    setFilterAmountType(filterType);
+    setFilterAmount(amount?.toString() || '')
+    setFilterAmountType(filterType)
   };
 
   return (
@@ -90,20 +83,33 @@ export default function ListFilter() {
       {/* 第一行 */}
       <div className="flex gap-4 items-center">
         <div className="flex gap-2 items-center">
-          <Label className="shrink-0">{t("gametype")}</Label>
           <Select
-            value={gametype ?? ""}
-            onValueChange={(value) => setGametype(value)}
+            value={bettingtime ?? ""}
+            onValueChange={(value) => setBettingtime(value)}
             defaultValue="1"
           >
             <SelectTrigger className="w-28">
-              <SelectValue placeholder={t("placeholderselect")} />
+              <SelectValue placeholder={t("bettingtime")} />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="1">百家乐01</SelectItem>
-              <SelectItem value="2">百家乐02</SelectItem>
+              <SelectItem value="1">百家乐</SelectItem>
             </SelectContent>
           </Select>
+        </div >
+        <DateRangeFilter onChange={handleDateRangeChange as any} />
+
+
+      </div >
+
+      {/* 第二行 */}
+      < div className="flex gap-4 items-center" >
+        <div className="flex gap-2 items-center">
+          <Label className="shrink-0">{t("ordernumber")}</Label>
+          <Input
+            value={ordernumber ?? ""}
+            onChange={(e) => setOrdernumber(e.target.value)}
+            placeholder={t("placeholderinput")}
+          />
         </div>
         <div className="flex gap-2 items-center">
           <Label className="shrink-0">{t("gamename")}</Label>
@@ -122,20 +128,55 @@ export default function ListFilter() {
           </Select>
         </div>
         <div className="flex gap-2 items-center">
-          <Select
-            value={bettingtime ?? ""}
-            onValueChange={(value) => setBettingtime(value)}
-            defaultValue="1"
-          >
-            <SelectTrigger className="w-28">
-              <SelectValue placeholder={t("bettingtime")} />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="1">百家乐</SelectItem>
-            </SelectContent>
-          </Select>
+          <Label className="shrink-0">{t("issuenumber")}</Label>
+          <Input
+            value={issuenumber ?? ""}
+            onChange={(e) => setIssuenumber(e.target.value)}
+            placeholder={t("placeholderinput")}
+          />
         </div>
-        <DateRangeFilter onChange={handleDateRangeChange as any} />
+
+        <div className="flex gap-2 items-center">
+          <Label className="shrink-0">{t("memberID")}</Label>
+          <Input
+            value={memberID ?? ""}
+            onChange={(e) => setMemberID(e.target.value)}
+            placeholder={t("placeholderinput")}
+          />
+        </div>
+        <div className="flex gap-2 items-center">
+          <Label className="shrink-0">{t("roomeownerID")}</Label>
+          <Input
+            value={roomeownerID ?? ""}
+            onChange={(e) => setRoomeownerID(e.target.value)}
+            placeholder={t("placeholderinput")}
+          />
+        </div>
+
+      </div >
+
+      {/* 第三行 */}
+      < div className="flex gap-4 items-center" >
+        <div className="flex gap-2 items-center">
+          <Label className="shrink-0">{t("ministerID")}</Label>
+          <Input
+            value={ministerID ?? ""}
+            onChange={(e) => setMinisterID(e.target.value)}
+            placeholder={t("placeholderinput")}
+          />
+        </div>
+        <div className="flex gap-2 items-center">
+          <Label className="shrink-0">{t("leastlevelID")}</Label>
+          <Input
+            value={leastlevelID ?? ""}
+            onChange={(e) => setLeastlevelID(e.target.value)}
+            placeholder={t("placeholderinput")}
+          />
+        </div>
+        <div className="flex gap-2 items-center">
+          <Label className="shrink-0">{t("amountfilter")}</Label>
+          <AmountFilter onFilterChange={handleFilterChange} />
+        </div>
         <div className="flex gap-2 items-center">
           <Label className="shrink-0">{t("settlementstatus")}</Label>
           <Select
@@ -151,75 +192,15 @@ export default function ListFilter() {
             </SelectContent>
           </Select>
         </div>
+      </div >
+
+      {/* 第四行 */}
+      < div className="flex gap-4 justify-end items-center" >
         <div className="flex gap-2 items-center">
-          <Label className="shrink-0">{t("ordernumber")}</Label>
-          <Input
-            value={ordernumber ?? ""}
-            onChange={(e) => setOrdernumber(e.target.value)}
-            placeholder={t("placeholderinput")}
-          />
-        </div>
-      </div>
-      {/* 第二行 */}
-      <div className="flex gap-4 items-center">
-        <div className="flex gap-2 items-center">
-          <Label className="shrink-0">{t("issuenumber")}</Label>
-          <Input
-            value={issuenumber ?? ""}
-            onChange={(e) => setIssuenumber(e.target.value)}
-            placeholder={t("placeholderinput")}
-          />
-        </div>
-        <div className="flex gap-2 items-center">
-          <Label className="shrink-0">{t("ministerID")}</Label>
-          <Input
-            value={ministerID ?? ""}
-            onChange={(e) => setMinisterID(e.target.value)}
-            placeholder={t("placeholderinput")}
-          />
-        </div>
-        <div className="flex gap-2 items-center">
-          <Label className="shrink-0">{t("memberID")}</Label>
-          <Input
-            value={memberID ?? ""}
-            onChange={(e) => setMemberID(e.target.value)}
-            placeholder={t("placeholderinput")}
-          />
-        </div>
-        <div className="flex gap-2 items-center">
-          <Label className="shrink-0">{t("agentID")}</Label>
-          <Input
-            value={agentID ?? ""}
-            onChange={(e) => setAgentID(e.target.value)}
-            placeholder={t("placeholderinput")}
-          />
-        </div>
-        <div className="flex gap-2 items-center">
-          <Label className="shrink-0">{t("roomeownerID")}</Label>
-          <Input
-            value={roomeownerID ?? ""}
-            onChange={(e) => setRoomeownerID(e.target.value)}
-            placeholder={t("placeholderinput")}
-          />
-        </div>
-        <div className="flex gap-2 items-center">
-          <Label className="shrink-0">{t("amountfilter")}</Label>
-          <AmountFilter onFilterChange={handleFilterChange} />
-        </div>
-      </div>
-      <div className="flex gap-2 justify-between items-center">
-        <div className="flex gap-2 items-center">
-          <Label className="shrink-0">{t("leastlevelID")}</Label>
-          <Input
-            value={leastlevelID ?? ""}
-            onChange={(e) => setLeastlevelID(e.target.value)}
-            placeholder={t("placeholderinput")}
-          />
-        </div>
-        <div className="flex gap-2 items-center">
+          <Button className="px-4 py-2 border rounded-md bg-white text-gray-700 border-gray-300 hover:bg-gray-100">{t("reset")}</Button>
           <Button>{t("search")}</Button>
         </div>
-      </div>
-    </div>
+      </div >
+    </div >
   );
 }
