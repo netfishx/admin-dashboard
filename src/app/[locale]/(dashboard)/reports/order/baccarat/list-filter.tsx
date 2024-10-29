@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -11,71 +11,35 @@ import {
 } from "@/components/ui/select";
 
 import AmountFilter from "@/components/amount-filter";
-import DateRangeFilter from '@/components/daterange-filter';
+import DateRangeFilter from "@/components/daterange-filter";
 import { useTranslations } from "next-intl";
-import { useQueryState } from "nuqs";
-
-interface DateRange {
-  from: string;
-  to: string;
-}
+import { parseAsInteger, useQueryState } from "nuqs";
 
 export default function ListFilter() {
   const t = useTranslations("report.orderlist");
-  const [gameName, setGameName] = useQueryState("gameName", {
-    defaultValue: "1",
-  });
-  const [bettingtime, setBettingtime] = useQueryState("bettingtime", {
-    defaultValue: "2",
-  });
-  const [_startTime, setStartTime] = useQueryState("startTime", {
-    defaultValue: "",
-  });
-  const [_endTime, setEndTime] = useQueryState("endTime", {
-    defaultValue: "",
-  });
-  const [settlementstatus, setSettlementstatus] = useQueryState(
-    "settlementstatus",
-    {
-      defaultValue: "",
-    },
-  );
-  const [ordernumber, setOrdernumber] = useQueryState("ordernumber", {
-    defaultValue: "",
-  });
-  const [issuenumber, setIssuenumber] = useQueryState("issuenumber", {
-    defaultValue: "",
-  });
-  const [ministerID, setMinisterID] = useQueryState("ministerID", {
-    defaultValue: "",
-  });
-  const [memberID, setMemberID] = useQueryState("memberID", {
-    defaultValue: "",
-  });
-  const [roomeownerID, setRoomeownerID] = useQueryState("roomeownerID", {
-    defaultValue: "",
-  });
-  const [, setFilterAmount] = useQueryState("filterAmount", {
-    defaultValue: "",
-  });
-  const [_filterAmountType, setFilterAmountType] = useQueryState(
-    "filterAmountType",
-    {
-      defaultValue: "",
-    },
-  );
-  const [leastlevelID, setLeastlevelID] = useQueryState("leastlevelID", {
-    defaultValue: "",
-  });
+  const [gameName, setGameName] = useQueryState("gameName");
+  const [bettingtime, setBettingtime] = useQueryState("bettingtime");
+  const [, setStartTime] = useQueryState("startTime", parseAsInteger);
+  const [, setEndTime] = useQueryState("endTime", parseAsInteger);
+  const [settlementstatus, setSettlementstatus] =
+    useQueryState("settlementstatus");
+  const [ordernumber, setOrdernumber] = useQueryState("ordernumber");
+  const [issuenumber, setIssuenumber] = useQueryState("issuenumber");
+  const [ministerID, setMinisterID] = useQueryState("ministerID");
+  const [memberID, setMemberID] = useQueryState("memberID");
+  const [roomeownerID, setRoomeownerID] = useQueryState("roomeownerID");
+  const [, setFilterAmount] = useQueryState("filterAmount");
+  const [, setFilterAmountType] = useQueryState("filterAmountType");
+  const [leastlevelID, setLeastlevelID] = useQueryState("leastlevelID");
 
-  const handleDateRangeChange = (date: DateRange) => {
-    setStartTime(date.from || "");
-    setEndTime(date.to || "");
+  const handleDateRangeChange = (range: { from: number; to: number }) => {
+    setStartTime(range.from);
+    setEndTime(range.to);
   };
 
-  const handleFilterChange = (filterType: string, amount: number | any) => {
-    setFilterAmount(amount?.toString() || '')
-    setFilterAmountType(filterType)
+  const handleFilterChange = (filterType: string, amount: number) => {
+    setFilterAmount(amount?.toString() || "");
+    setFilterAmountType(filterType);
   };
 
   return (
@@ -95,14 +59,12 @@ export default function ListFilter() {
               <SelectItem value="1">百家乐</SelectItem>
             </SelectContent>
           </Select>
-        </div >
-        <DateRangeFilter onChange={handleDateRangeChange as any} />
-
-
-      </div >
+        </div>
+        <DateRangeFilter onChange={handleDateRangeChange} />
+      </div>
 
       {/* 第二行 */}
-      < div className="flex gap-4 items-center" >
+      <div className="flex gap-4 items-center">
         <div className="flex gap-2 items-center">
           <Label className="shrink-0">{t("ordernumber")}</Label>
           <Input
@@ -152,11 +114,10 @@ export default function ListFilter() {
             placeholder={t("placeholderinput")}
           />
         </div>
-
-      </div >
+      </div>
 
       {/* 第三行 */}
-      < div className="flex gap-4 items-center" >
+      <div className="flex gap-4 items-center">
         <div className="flex gap-2 items-center">
           <Label className="shrink-0">{t("ministerID")}</Label>
           <Input
@@ -175,7 +136,14 @@ export default function ListFilter() {
         </div>
         <div className="flex gap-2 items-center">
           <Label className="shrink-0">{t("amountfilter")}</Label>
-          <AmountFilter onFilterChange={handleFilterChange} />
+          <AmountFilter
+            onFilterChange={
+              handleFilterChange as (
+                filterType: string,
+                amount: number | null,
+              ) => void
+            }
+          />
         </div>
         <div className="flex gap-2 items-center">
           <Label className="shrink-0">{t("settlementstatus")}</Label>
@@ -192,15 +160,17 @@ export default function ListFilter() {
             </SelectContent>
           </Select>
         </div>
-      </div >
+      </div>
 
       {/* 第四行 */}
-      < div className="flex gap-4 justify-end items-center" >
+      <div className="flex gap-4 justify-end items-center">
         <div className="flex gap-2 items-center">
-          <Button className="px-4 py-2 border rounded-md bg-white text-gray-700 border-gray-300 hover:bg-gray-100">{t("reset")}</Button>
+          <Button className="px-4 py-2 border rounded-md bg-white text-gray-700 border-gray-300 hover:bg-gray-100">
+            {t("reset")}
+          </Button>
           <Button>{t("search")}</Button>
         </div>
-      </div >
-    </div >
+      </div>
+    </div>
   );
 }
