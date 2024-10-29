@@ -205,8 +205,8 @@
       "disable": "停用",
       "freeze": "冻结",
       "placeholder": "请输入",
-      "close": "关闭",
-      "save": "保存",
+      "close": "取消",
+      "save": "确定",
       "restCount": "剩余尝试次数",
       "statusLabel": {
         "1": "启用",

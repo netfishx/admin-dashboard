@@ -45,49 +45,51 @@ export function UserInfoModal({
   };
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="2xl:max-w-xl lg:max-w-lg">
+      <DialogContent className="2xl:max-w-lg lg:max-w-md">
         <DialogHeader>
           <DialogTitle>{t("userInfo")}</DialogTitle>
           <DialogDescription />
         </DialogHeader>
-        <div className="flex flex-col gap-4 w-full">
+        <div className="flex flex-col gap-4 w-full px-4">
           <div className="flex gap-4 items-center">
-            <Label className="shrink-0 w-1/5 text-right">
-              {t("upUserName")} :
+            <Label className="shrink-0 w-1/4 text-right text-muted-foreground">
+              {t("upUserName")}
             </Label>
             <span>{editData?.upUserName}</span>
           </div>
           <div className="flex gap-4 items-center">
-            <Label className="shrink-0 w-1/5 text-right">
-              {t("userName")} :
+            <Label className="shrink-0 w-1/4 text-right text-muted-foreground">
+              {t("userName")}
             </Label>
             <Input
               placeholder={t("placeholder")}
               defaultValue={editData?.userName}
-              className="w-1/4"
+              className="w-1/2"
               onChange={(e) => setUserName(e.target.value)}
             />
           </div>
           <div className="flex gap-4 items-center">
-            <Label className="shrink-0 w-1/5 text-right">
-              {t("nickName")} :
+            <Label className="shrink-0 w-1/4 text-right text-muted-foreground">
+              {t("nickName")}
             </Label>
             <Input
               placeholder={t("placeholder")}
               defaultValue={editData?.nickName}
-              className="w-1/4"
+              className="w-1/2"
               onChange={(e) => setNickName(e.target.value)}
             />
           </div>
           <div className="flex gap-4 items-center">
-            <Label className="shrink-0 w-1/5 text-right">
-              {t("restCount")} :
+            <Label className="shrink-0 w-1/4 text-right text-muted-foreground">
+              {t("restCount")}
             </Label>
-            <span>3</span>
-            <Button className="py-0">{t("reset")}</Button>
+            <div>{3}</div>
+            <Button size="sm">{t("reset")}</Button>
           </div>
           <div className="flex gap-4 items-center">
-            <Label className="shrink-0 w-1/5 text-right">{t("status")} :</Label>
+            <Label className="shrink-0 w-1/4 text-right text-muted-foreground">
+              {t("status")}
+            </Label>
             <RadioGroup
               defaultValue={editData?.status.toString()}
               className="flex gap-2"

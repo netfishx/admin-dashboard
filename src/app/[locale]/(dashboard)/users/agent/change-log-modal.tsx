@@ -18,12 +18,12 @@ export function ChangeLogModal({
   const t = useTranslations("users.agents");
   return (
     <Dialog open={open} onOpenChange={(open) => onOpenChange(open)}>
-      <DialogContent>
+      <DialogContent className="2xl:max-w-lg lg:max-w-md">
         <DialogHeader>
           <DialogTitle>{t("changeLog")}</DialogTitle>
           <DialogDescription />
         </DialogHeader>
-        <div>change log</div>
+        <div className="flex flex-col gap-2 w-full px-4">change log</div>
         <DialogFooter>
           <Button variant="outline" onClick={() => onOpenChange(false)}>
             {t("close")}
