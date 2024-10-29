@@ -55,3 +55,7 @@ export async function setSession(user: User) {
     sameSite: "lax",
   });
 }
+
+export async function signOut() {
+  (await cookies()).delete("session");
+}
