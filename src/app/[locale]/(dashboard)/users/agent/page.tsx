@@ -55,15 +55,18 @@ export default async function Page({
                     <TableCell className="min-w-32">{item.userId}</TableCell>
                     <TableCell className="min-w-32">{item.userName}</TableCell>
                     <TableCell className="min-w-32">{item.nickName}</TableCell>
-                    <TableCell
-                      className={cn(
-                        "min-w-32",
-                        item.status === 1 && "text-primary",
-                        item.status === 2 && "text-destructive",
-                        item.status === 3 && "text-muted-foreground",
-                      )}
-                    >
-                      {t(`statusLabel.${item.status}`)}
+                    <TableCell className="min-w-32">
+                      <div
+                        className={cn(
+                          "px-2 rounded-sm w-fit",
+                          item.status === 1 && "text-green bg-green/10",
+                          item.status === 2 &&
+                            "text-destructive bg-destructive/10",
+                          item.status === 3 && "text-orange bg-orange/10",
+                        )}
+                      >
+                        {t(`statusLabel.${item.status}`)}
+                      </div>
                     </TableCell>
                     <TableCell className="min-w-[400px] text-center flex gap-2 2xl:gap-6">
                       <Action data={item} />

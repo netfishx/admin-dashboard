@@ -19,12 +19,12 @@ export function LoginLogModal({
   const t = useTranslations("users.agents");
   return (
     <Dialog open={open} onOpenChange={(open) => onOpenChange(open)}>
-      <DialogContent className="2xl:max-w-xl lg:max-w-lg">
+      <DialogContent className="2xl:max-w-lg lg:max-w-md">
         <DialogHeader>
           <DialogTitle>{t("loginLog")}</DialogTitle>
           <DialogDescription />
         </DialogHeader>
-        <div>login log</div>
+        <div className="flex flex-col gap-2 w-full px-4">login log</div>
         <DialogFooter>
           <Button variant="outline" onClick={() => onOpenChange(false)}>
             {t("close")}

@@ -38,41 +38,41 @@ export function AddAgentModal({
   };
   return (
     <Dialog open={open} onOpenChange={(open) => onOpenChange(open, false)}>
-      <DialogContent className="2xl:max-w-xl lg:max-w-lg">
+      <DialogContent className="2xl:max-w-lg lg:max-w-md">
         <DialogHeader>
           <DialogTitle>{t("addAgent")}</DialogTitle>
           <DialogDescription />
         </DialogHeader>
-        <div className="flex flex-col gap-2 w-full">
+        <div className="flex flex-col gap-2 w-full px-4">
           <div className="flex gap-4 items-center">
-            <Label className="shrink-0 w-1/5 text-right">
+            <Label className="shrink-0 w-1/4 text-right text-muted-foreground">
               {t("userName")} :
             </Label>
             <Input
               placeholder={t("placeholder")}
-              className="w-1/4"
+              className="w-1/2"
               value={userName}
               onChange={(e) => setUserName(e.target.value)}
             />
           </div>
           <div className="flex gap-4 items-center">
-            <Label className="shrink-0 w-1/5 text-right">
-              {t("nickName")} :
+            <Label className="shrink-0 w-1/4 text-right text-muted-foreground">
+              {t("nickName")}
             </Label>
             <Input
               placeholder={t("placeholder")}
-              className="w-1/4"
+              className="w-1/2"
               value={nickName}
               onChange={(e) => setNickName(e.target.value)}
             />
           </div>
           <div className="flex gap-4 items-center">
-            <Label className="shrink-0 w-1/5 text-right">
-              {t("userLevel")} :
+            <Label className="shrink-0 w-1/4 text-right text-muted-foreground">
+              {t("userLevel")}
             </Label>
             <Input
               placeholder={t("placeholder")}
-              className="w-1/4"
+              className="w-1/2"
               value={userLevel}
               onChange={(e) => setUserLevel(e.target.value)}
             />
