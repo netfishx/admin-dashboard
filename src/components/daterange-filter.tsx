@@ -20,7 +20,7 @@ import type React from "react";
 import { useState } from "react";
 
 interface DateRange {
-  from: Date | null;
+  from: Date | undefined;
   to: Date | null;
 }
 
@@ -48,12 +48,16 @@ const DateRangeFilter: React.FC<DateRangeFilterProps> = ({
   const [activeButton, setActiveButton] = useState<string | null>("today");
 
   // Format date range to timestamps
-  const formatDateRange = (range: DateRange): { from: number; to: number } | null => {
+  const formatDateRange = (
+    range: DateRange,
+  ): { from: number; to: number } | null => {
     if (!range || !range.from) return null;
 
     return {
       from: startOfDay(range.from).getTime(),
-      to: range.to ? endOfDay(range.to).getTime() : endOfDay(range.from).getTime(),
+      to: range.to
+        ? endOfDay(range.to).getTime()
+        : endOfDay(range.from).getTime(),
     };
   };
 
@@ -155,7 +159,7 @@ const DateRangeFilter: React.FC<DateRangeFilterProps> = ({
         {quickSetBtn?.map((type) => (
           <Button
             key={type}
-            variant={"outline"}
+            variant="outline"
             onClick={() => handleQuickSelect(type)}
           >
             {t(type)}
