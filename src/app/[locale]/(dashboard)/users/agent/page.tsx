@@ -12,9 +12,15 @@ import { cn } from "@/lib/utils";
 import { getTranslations } from "next-intl/server";
 import Action from "./action-buttons";
 import Form from "./form";
-export default async function Page() {
+export default async function Page({
+  searchParams,
+}: {
+  searchParams: Promise<{ [key: string]: string | string[] }>;
+}) {
   const t = await getTranslations("users.agents");
+  const { username } = await searchParams;
   const res = await getAgents();
+  console.info(username);
 
   return (
     <>
