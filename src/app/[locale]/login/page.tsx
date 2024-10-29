@@ -6,10 +6,14 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useTranslations } from "next-intl";
 import Form from "next/form";
+import { headers } from "next/headers";
 import Image from "next/image";
+import { use } from "react";
 
 export default function LoginPage() {
   const t = useTranslations("login");
+  const header = use(headers());
+  console.info(header.get("x-forwarded-for"));
   return (
     <Form action={loginAction}>
       <div className="w-full h-screen overflow-hidden bg-accent flex flex-col gap-4 items-center justify-center">
