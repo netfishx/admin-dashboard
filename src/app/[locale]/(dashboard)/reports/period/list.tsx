@@ -1,3 +1,4 @@
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import {
   Table,
   TableBody,
@@ -7,7 +8,6 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { useTranslations } from "next-intl";
-import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import Actions from "./actions";
 
 export interface AgentData {
@@ -19,7 +19,7 @@ export interface AgentData {
   nickName: string;
   status: string;
 }
-const tempData = "111111111111111111111"
+const tempData = "111111111111111111111";
 const data = [
   {
     gameId: "123",
@@ -37,33 +37,31 @@ const data = [
 export default function List() {
   const t = useTranslations("report.periodlist");
   const CustomTableHeader = (text: string) => {
-    return (
-      <TableHead className="w-24 min-w-24 text-center">{text}</TableHead>
-    )
-  }
+    return <TableHead className="w-24 min-w-24 text-center">{text}</TableHead>;
+  };
   return (
     <>
       <div className="flex flex-col gap-2 w-full">
         {/* <Form /> */}
         <div className="p-2 bg-background flex-1">
-          <div className="h-full rounded-sm relative">
+          <div className="h-full border rounded-sm relative">
             <ScrollArea className="h-full w-[calc(100dvw-16.1rem)]">
-              <Table>
-                <TableHeader>
+              <Table className="">
+                <TableHeader className="sticky">
                   <TableRow className="bg-muted">
-                      {CustomTableHeader(t("gameId"))}
-                      {CustomTableHeader(t("openTime"))}
-                      {CustomTableHeader(t("gametype"))}
-                      {CustomTableHeader(t("gamename"))}
-                      {CustomTableHeader(t("betNum"))}
-                      {CustomTableHeader(t("betMoneyAmount"))}
-                      {CustomTableHeader(t("heMoney"))}
-                      {CustomTableHeader(t("ddMoney"))}
-                      {CustomTableHeader(t("workMoney"))}
-                      {CustomTableHeader(t("memberBackMoney"))}
-                      <TableHead className="w-24 text-center sticky right-0">
+                    {CustomTableHeader(t("gameId"))}
+                    {CustomTableHeader(t("openTime"))}
+                    {CustomTableHeader(t("gametype"))}
+                    {CustomTableHeader(t("gamename"))}
+                    {CustomTableHeader(t("betNum"))}
+                    {CustomTableHeader(t("betMoneyAmount"))}
+                    {CustomTableHeader(t("heMoney"))}
+                    {CustomTableHeader(t("ddMoney"))}
+                    {CustomTableHeader(t("workMoney"))}
+                    {CustomTableHeader(t("memberBackMoney"))}
+                    <TableHead className="w-24 text-center sticky right-0 bg-muted">
                       {t("action")}
-                      </TableHead>
+                    </TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -99,7 +97,7 @@ export default function List() {
                       <TableCell className="w-24 text-center">
                         {item.memberBackMoney}
                       </TableCell>
-                      <TableCell className="w-24 text-center">
+                      <TableCell className="!sticky !right-0 bg-background w-24 text-center">
                         <Actions />
                       </TableCell>
                     </TableRow>

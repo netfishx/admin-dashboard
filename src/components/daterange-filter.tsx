@@ -1,15 +1,23 @@
-import React, { useEffect, useState } from 'react';
-import { Calendar } from "@/components/ui/calendar";
 import { Button } from "@/components/ui/button";
-import { useTranslations } from "next-intl";
+import { Calendar } from "@/components/ui/calendar";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
-import { format, startOfDay, endOfDay, subWeeks, startOfWeek, endOfWeek } from "date-fns";
+import {
+  endOfDay,
+  endOfWeek,
+  format,
+  startOfDay,
+  startOfWeek,
+  subWeeks,
+} from "date-fns";
 import { Calendar as CalendarIcon } from "lucide-react";
+import { useTranslations } from "next-intl";
+import type React from "react";
+import { useEffect, useState } from "react";
 
 interface DateRange {
   from: Date | null;
@@ -18,26 +26,30 @@ interface DateRange {
 
 interface DateRangeFilterProps {
   onChange?: (range: { from: string; to: string } | null) => void;
+  quickSetBtn?: string[];
 }
 
-const TODAY = "today"
-const YESTERDAY = "yesterday"
-const WEEK = "week"
-const LASTWEEK = "lastweek"
-const MONTH = "month"
-const LASTMONTH = "lastmonth"
+const TODAY = "today";
+const YESTERDAY = "yesterday";
+const WEEK = "week";
+const LASTWEEK = "lastweek";
+const MONTH = "month";
+const LASTMONTH = "lastmonth";
 
-const DateRangeFilter: React.FC<DateRangeFilterProps> = ({ onChange }) => {
+const DateRangeFilter: React.FC<DateRangeFilterProps> = ({
+  onChange,
+  quickSetBtn = [TODAY, YESTERDAY, WEEK, LASTWEEK, MONTH, LASTMONTH],
+}) => {
   const t = useTranslations("report.orderlist");
   const [dateRange, setDateRange] = useState<DateRange>({
     from: new Date(),
     to: new Date(),
   });
-  const [activeButton, setActiveButton] = useState<string | null>('today');
+  const [activeButton, setActiveButton] = useState<string | null>("today");
 
   useEffect(() => {
-    handleQuickSelect(TODAY)
-  }, [])
+    handleQuickSelect(TODAY);
+  }, []);
 
   // Format date range to YYYY-MM-DD HH:mm:ss
   const formatDateRange = (range: DateRange) => {
@@ -45,7 +57,9 @@ const DateRangeFilter: React.FC<DateRangeFilterProps> = ({ onChange }) => {
 
     return {
       from: format(startOfDay(range.from), "yyyy-MM-dd HH:mm:ss"),
-      to: range.to ? format(endOfDay(range.to), "yyyy-MM-dd HH:mm:ss") : format(endOfDay(range.from), "yyyy-MM-dd HH:mm:ss"),
+      to: range.to
+        ? format(endOfDay(range.to), "yyyy-MM-dd HH:mm:ss")
+        : format(endOfDay(range.from), "yyyy-MM-dd HH:mm:ss"),
     };
   };
 
@@ -109,14 +123,15 @@ const DateRangeFilter: React.FC<DateRangeFilterProps> = ({ onChange }) => {
             variant="outline"
             className={cn(
               "justify-start text-left font-normal w-[280px]",
-              !dateRange && "text-muted-foreground"
+              !dateRange && "text-muted-foreground",
             )}
           >
             <CalendarIcon className="mr-2 h-4 w-4" />
             {dateRange?.from ? (
               dateRange.to ? (
                 <>
-                  {format(dateRange.from, "yyyy-MM-dd")} ~ {format(dateRange.to, "yyyy-MM-dd")}
+                  {format(dateRange.from, "yyyy-MM-dd")} ~{" "}
+                  {format(dateRange.to, "yyyy-MM-dd")}
                 </>
               ) : (
                 format(dateRange.from, "yyyy-MM-dd")
@@ -139,10 +154,10 @@ const DateRangeFilter: React.FC<DateRangeFilterProps> = ({ onChange }) => {
       </Popover>
 
       <div className="flex gap-2">
-        {[TODAY, YESTERDAY, WEEK, LASTWEEK, MONTH, LASTMONTH].map(type => (
+        {quickSetBtn?.map((type) => (
           <Button
             key={type}
-            variant={activeButton === type ? 'default' : 'outline'}
+            variant={activeButton === type ? "default" : "outline"}
             onClick={() => handleQuickSelect(type)}
           >
             {t(type)}
