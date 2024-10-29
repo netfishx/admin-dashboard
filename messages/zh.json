@@ -54,10 +54,8 @@
     },
     "reports": {
       "title": "报表管理",
-      "order": {
-        "baccarat": "注单列表-百家乐",
-        "gundan": "注单列表-掼蛋"
-      },
+      "baccarat": "注单列表-百家乐",
+      "gundan": "注单列表-掼蛋",
       "period": "按期汇总报表",
       "agent": "代理报表",
       "member": "会员报表",
