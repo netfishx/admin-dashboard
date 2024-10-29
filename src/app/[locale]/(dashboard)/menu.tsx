@@ -86,7 +86,11 @@ function OpenedMenu({ pathname }: { pathname: string }) {
           />
         </CollapsibleTrigger>
         <CollapsibleContent className="flex flex-col gap-1 pl-6">
-          <MenuItem label={t("reports.order")} href="/reports/order" />
+          <MenuItem
+            label={t("reports.order.baccarat")}
+            href="/reports/baccarat"
+          />
+          <MenuItem label={t("reports.order.gundan")} href="/reports/gundan" />
           <MenuItem label={t("reports.period")} href="/reports/period" />
           <MenuItem label={t("reports.agent")} href="/reports/agent" />
           <MenuItem label={t("reports.member")} href="/reports/member" />
