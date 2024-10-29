@@ -7,7 +7,7 @@ import { useState } from "react";
 import { AddAgentModal } from "./add-agent-modal";
 import { UserInfoModal } from "./user-info-modal";
 
-export default function Action(editData: AgentData) {
+export default function Action({ data }: { data: AgentData }) {
   const t = useTranslations("users.agents");
   const [userInfoModal, setUserInfoModal] = useState(false);
   const [addAgentModal, setAddAgentModal] = useState(false);
@@ -64,8 +64,8 @@ export default function Action(editData: AgentData) {
       />
       <UserInfoModal
         open={userInfoModal}
-        onOpenChange={(open) => setUserInfoModal(open)}
-        editData={editData}
+        onOpenChange={setUserInfoModal}
+        editData={data}
       />
     </>
   );
