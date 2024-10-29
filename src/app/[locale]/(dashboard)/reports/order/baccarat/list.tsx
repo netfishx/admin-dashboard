@@ -1,17 +1,16 @@
-import React from 'react'
-import {
-    Table,
-    TableBody,
-    TableCell,
-    TableHead,
-    TableHeader,
-    TableRow,
-} from "@/components/ui/table";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
-import DetailButton from './detail-button';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 import { useTranslations } from "next-intl";
+import DetailButton from "./detail-button";
 
-const tempData = "111111111111111111112221"
+const tempData = "111111111111111111112221";
 const data = [
   {
     ordernumber: "123",
@@ -38,10 +37,8 @@ const data = [
 export default function List() {
   const t = useTranslations("report.orderlist");
   const CustomTableHeader = (text: string) => {
-    return (
-        <TableHead className="w-24 min-w-24 text-center">{text}</TableHead>
-    )
-  }
+    return <TableHead className="w-24 min-w-24 text-center">{text}</TableHead>;
+  };
   return (
     <div className="p-2 bg-background flex-1">
       <div className="border h-full rounded-sm relative">
@@ -140,5 +137,5 @@ export default function List() {
         </ScrollArea>
       </div>
     </div>
-  )
+  );
 }

@@ -1,5 +1,5 @@
-import ListFilter from './list-filter';
-import List from './list';
+import List from "./list";
+import ListFilter from "./list-filter";
 
 export default function Page() {
   return (

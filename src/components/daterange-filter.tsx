@@ -26,6 +26,7 @@ interface DateRange {
 
 interface DateRangeFilterProps {
   onChange?: (range: { from: string; to: string } | null) => void;
+  quickSetBtn?: string[];
 }
 
 const TODAY = "today";
@@ -35,7 +36,10 @@ const LASTWEEK = "lastweek";
 const MONTH = "month";
 const LASTMONTH = "lastmonth";
 
-const DateRangeFilter: React.FC<DateRangeFilterProps> = ({ onChange }) => {
+const DateRangeFilter: React.FC<DateRangeFilterProps> = ({
+  onChange,
+  quickSetBtn = [TODAY, YESTERDAY, WEEK, LASTWEEK, MONTH, LASTMONTH],
+}) => {
   const t = useTranslations("report.orderlist");
   const [dateRange, setDateRange] = useState<DateRange>({
     from: new Date(),
@@ -49,7 +53,9 @@ const DateRangeFilter: React.FC<DateRangeFilterProps> = ({ onChange }) => {
 
   // Format date range to YYYY-MM-DD HH:mm:ss
   const formatDateRange = (range: DateRange) => {
-    if (!range || !range.from) return null;
+    if (!range?.from) {
+      return null;
+    }
 
     return {
       from: format(startOfDay(range.from), "yyyy-MM-dd HH:mm:ss"),
@@ -74,32 +80,37 @@ const DateRangeFilter: React.FC<DateRangeFilterProps> = ({ onChange }) => {
     let to = new Date();
 
     switch (type) {
-      case TODAY:
+      case TODAY: {
         from = today;
         to = today;
         break;
-      case YESTERDAY:
+      }
+      case YESTERDAY: {
         from = new Date(today.setDate(today.getDate() - 1));
         to = new Date(from);
         break;
-      case WEEK:
+      }
+      case WEEK: {
         from = startOfWeek(today, { weekStartsOn: 1 });
         to = new Date();
         break;
+      }
       case LASTWEEK: {
         const lastWeek = subWeeks(today, 1);
         from = startOfWeek(lastWeek, { weekStartsOn: 1 });
         to = endOfWeek(lastWeek, { weekStartsOn: 1 });
         break;
       }
-      case MONTH:
+      case MONTH: {
         from = new Date(today.getFullYear(), today.getMonth(), 1);
         to = new Date();
         break;
-      case LASTMONTH:
+      }
+      case LASTMONTH: {
         from = new Date(today.getFullYear(), today.getMonth() - 1, 1);
         to = new Date(today.getFullYear(), today.getMonth(), 0);
         break;
+      }
       default:
         break;
     }
@@ -150,7 +161,7 @@ const DateRangeFilter: React.FC<DateRangeFilterProps> = ({ onChange }) => {
       </Popover>
 
       <div className="flex gap-2">
-        {[TODAY, YESTERDAY, WEEK, LASTWEEK, MONTH, LASTMONTH].map((type) => (
+        {quickSetBtn?.map((type) => (
           <Button
             key={type}
             variant={activeButton === type ? "default" : "outline"}

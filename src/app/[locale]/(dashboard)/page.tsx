@@ -3,9 +3,9 @@ import { useTranslations } from "next-intl";
 import { Announcement } from "./announcement";
 import { DataOverview } from "./data-overview";
 import { DayChart } from "./day-chart";
-import { WeekChart } from "./week-chart";
 import { QuickAccess } from "./quick-access";
 import { Salutations } from "./salutations";
+import { WeekChart } from "./week-chart";
 
 export default function DashboardPage() {
   const t = useTranslations();
@@ -50,8 +50,8 @@ export default function DashboardPage() {
         name: "2024-10-27",
         data: 3490,
       },
-    ]
-  }
+    ],
+  };
   const weekChart2Text = {
     title: t("chart.gdDataTrending"),
     tab: [t("chart.cashflow"), t("chart.headcount")],
@@ -84,12 +84,12 @@ export default function DashboardPage() {
         name: "2024-10-27",
         data: 3490,
       },
-    ]
-  }
+    ],
+  };
   const weekChart3Text = {
     title: t("chart.memberDataTrending"),
     tab: [t("chart.addMember"), t("chart.memberLoginTimes")],
-     data: [
+    data: [
       {
         name: "2024-10-21",
         data: 4000,
@@ -118,8 +118,8 @@ export default function DashboardPage() {
         name: "2024-10-27",
         data: 3490,
       },
-    ]
-  }
+    ],
+  };
   const weekChart4Text = {
     title: t("chart.moneyDataTrending"),
     tab: [t("chart.topup"), t("chart.withdraw")],
@@ -152,8 +152,8 @@ export default function DashboardPage() {
         name: "2024-10-27",
         data: 3490,
       },
-    ]
-  }
+    ],
+  };
   return (
     <>
       <div className="flex-1 flex flex-col gap-2">
@@ -165,7 +165,7 @@ export default function DashboardPage() {
         <div className="grid gap-2 rounded bg-card p-4">
           <WeekChart textConfig={weekChart1Text} />
         </div>
-         <div className="grid gap-2 rounded bg-card p-4">
+        <div className="grid gap-2 rounded bg-card p-4">
           <WeekChart textConfig={weekChart2Text} />
         </div>
         <div className="grid gap-2 rounded bg-card p-4">
