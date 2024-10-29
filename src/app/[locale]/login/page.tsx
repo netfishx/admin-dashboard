@@ -13,7 +13,8 @@ import { use } from "react";
 export default function LoginPage() {
   const t = useTranslations("login");
   const header = use(headers());
-  console.info(header.get("x-forwarded-for"));
+  console.info("x-forwarded-for", header.get("x-forwarded-for"));
+  console.info("x-real-ip", header.get("x-real-ip"));
   return (
     <Form action={loginAction}>
       <div className="w-full h-screen overflow-hidden bg-accent flex flex-col gap-4 items-center justify-center">
