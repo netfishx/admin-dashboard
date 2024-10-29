@@ -8,7 +8,9 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { usePathname } from "@/i18n/routing";
 import { ChevronDown, HomeIcon, MoonStar, QrCode, Sun } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { useTheme } from "next-themes";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -17,12 +19,24 @@ export function Toolbar() {
   const [name, _setName] = useState("Serati Ma");
   const { resolvedTheme: mode, setTheme } = useTheme();
   const router = useRouter();
+  const t = useTranslations("menu");
+  const pathname = usePathname();
   return (
     <div className="w-full h-10 flex flex-row justify-between border-b px-2">
       <div className="flex flex-row gap-2 items-center text-sm">
         <HomeIcon className="size-4" />
         <span>/</span>
-        <span>首页</span>
+        {pathname.split("/").length > 2 ? (
+          <>
+            <span>{t(`${pathname.split("/")[1]}.title`)}</span>
+            <span>/</span>
+            <span>
+              {t(`${pathname.split("/")[1]}.${pathname.split("/")[2]}`)}
+            </span>
+          </>
+        ) : (
+          <span>{t("home")}</span>
+        )}
       </div>
       <div className="flex flex-row gap-2 items-center">
         <Button
