@@ -280,7 +280,8 @@
       "proxysettlementtime": "代理结算时间",
       "proxystatus": "代理结算状态",
       "action": "操作",
-      "more": "查看"
+      "more": "查看",
+      "reset": "重置"
     },
     "periodlist": {
       "today": "今天",

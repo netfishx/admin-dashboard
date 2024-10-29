@@ -17,7 +17,7 @@ import {
 import { Calendar as CalendarIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import type React from "react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 interface DateRange {
   from: Date | null;
@@ -25,7 +25,7 @@ interface DateRange {
 }
 
 interface DateRangeFilterProps {
-  onChange?: (range: { from: string; to: string } | null) => void;
+  onChange?: (range: { from: number; to: number } | null) => void;
   quickSetBtn?: string[];
 }
 
@@ -47,21 +47,13 @@ const DateRangeFilter: React.FC<DateRangeFilterProps> = ({
   });
   const [activeButton, setActiveButton] = useState<string | null>("today");
 
-  useEffect(() => {
-    handleQuickSelect(TODAY);
-  }, []);
-
-  // Format date range to YYYY-MM-DD HH:mm:ss
-  const formatDateRange = (range: DateRange) => {
-    if (!range?.from) {
-      return null;
-    }
+  // Format date range to timestamps
+  const formatDateRange = (range: DateRange): { from: number; to: number } | null => {
+    if (!range || !range.from) return null;
 
     return {
-      from: format(startOfDay(range.from), "yyyy-MM-dd HH:mm:ss"),
-      to: range.to
-        ? format(endOfDay(range.to), "yyyy-MM-dd HH:mm:ss")
-        : format(endOfDay(range.from), "yyyy-MM-dd HH:mm:ss"),
+      from: startOfDay(range.from).getTime(),
+      to: range.to ? endOfDay(range.to).getTime() : endOfDay(range.from).getTime(),
     };
   };
 
@@ -114,8 +106,7 @@ const DateRangeFilter: React.FC<DateRangeFilterProps> = ({
       default:
         break;
     }
-
-    const range = { from, to };
+    const range: DateRange = { from, to };
     setDateRange(range);
     setActiveButton(type);
     const formattedRange = formatDateRange(range);
@@ -154,7 +145,7 @@ const DateRangeFilter: React.FC<DateRangeFilterProps> = ({
             mode="range"
             defaultMonth={dateRange?.from ?? undefined}
             selected={dateRange as any}
-            onSelect={handleDateRangeChange as any}
+            onSelect={(range) => handleDateRangeChange(range as DateRange)}
             numberOfMonths={1}
           />
         </PopoverContent>
@@ -164,7 +155,7 @@ const DateRangeFilter: React.FC<DateRangeFilterProps> = ({
         {quickSetBtn?.map((type) => (
           <Button
             key={type}
-            variant={activeButton === type ? "default" : "outline"}
+            variant={"outline"}
             onClick={() => handleQuickSelect(type)}
           >
             {t(type)}
