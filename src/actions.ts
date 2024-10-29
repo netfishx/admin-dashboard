@@ -1,11 +1,8 @@
 "use server";
-
-// import { actionClient } from "@/lib/safe-action";
-import { revalidateTag } from "next/cache";
 import { redirect } from "next/navigation";
 // import { z } from "zod";
 // import { zfd } from "zod-form-data";
-import { setSession } from "./session";
+import { setSession, signOut } from "./session";
 
 // const lowercaseRegex = /[a-z]/;
 // const uppercaseRegex = /[A-Z]/;
@@ -66,6 +63,6 @@ export async function loginAction(formData: FormData) {
   return { result: false };
 }
 
-export async function refresh() {
-  revalidateTag("time");
+export async function signOutAction() {
+  await signOut();
 }
