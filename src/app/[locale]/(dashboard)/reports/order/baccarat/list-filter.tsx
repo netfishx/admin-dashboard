@@ -11,16 +11,14 @@ import {
 } from "@/components/ui/select";
 
 import AmountFilter from "@/components/amount-filter";
-import DateRangeFilter from "@/components/daterange-filter";
+import { DateRangeFilter } from "@/components/daterange-filter";
 import { useTranslations } from "next-intl";
-import { parseAsInteger, useQueryState } from "nuqs";
+import { useQueryState } from "nuqs";
 
 export default function ListFilter() {
   const t = useTranslations("report.orderlist");
   const [gameName, setGameName] = useQueryState("gameName");
   const [bettingtime, setBettingtime] = useQueryState("bettingtime");
-  const [, setStartTime] = useQueryState("startTime", parseAsInteger);
-  const [, setEndTime] = useQueryState("endTime", parseAsInteger);
   const [settlementstatus, setSettlementstatus] =
     useQueryState("settlementstatus");
   const [ordernumber, setOrdernumber] = useQueryState("ordernumber");
@@ -31,11 +29,6 @@ export default function ListFilter() {
   const [, setFilterAmount] = useQueryState("filterAmount");
   const [, setFilterAmountType] = useQueryState("filterAmountType");
   const [leastlevelID, setLeastlevelID] = useQueryState("leastlevelID");
-
-  const handleDateRangeChange = (range: { from: number; to: number }) => {
-    setStartTime(range.from);
-    setEndTime(range.to);
-  };
 
   const handleFilterChange = (filterType: string, amount: number) => {
     setFilterAmount(amount?.toString() || "");
@@ -60,7 +53,7 @@ export default function ListFilter() {
             </SelectContent>
           </Select>
         </div>
-        <DateRangeFilter onChange={handleDateRangeChange} />
+        <DateRangeFilter />
       </div>
 
       {/* 第二行 */}

@@ -15,108 +15,91 @@ import {
   startOfMonth,
   startOfWeek,
   subDays,
+  subMonths,
   subWeeks,
 } from "date-fns";
 import { Calendar as CalendarIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { useQueryStates } from "nuqs";
-import { useEffect, useState } from "react";
+import { parseAsInteger, useQueryStates } from "nuqs";
+import { useEffect } from "react";
+import type { DateRange } from "react-day-picker";
 
-interface DateRange {
-  from: Date;
-  to: Date;
-}
+type rangeType =
+  | "today"
+  | "yesterday"
+  | "week"
+  | "lastweek"
+  | "month"
+  | "lastmonth";
 
-interface DateRangeFilterProps {
-  onChange?: (range: { from: number; to: number }) => void;
-  quickSetBtn?: string[];
-}
-
-const TODAY = "today";
-const YESTERDAY = "yesterday";
-const WEEK = "week";
-const LASTWEEK = "lastweek";
-const MONTH = "month";
-const LASTMONTH = "lastmonth";
-
-function DateRangeFilter(props: DateRangeFilterProps) {
-  const {
-    onChange,
-    quickSetBtn = [TODAY, YESTERDAY, WEEK, LASTWEEK, MONTH, LASTMONTH],
-  } = props;
+export function DateRangeFilter({
+  quickSetBtn = [
+    "today",
+    "yesterday",
+    "week",
+    "lastweek",
+    "month",
+    "lastmonth",
+  ],
+}: {
+  quickSetBtn?: rangeType[];
+}) {
   const t = useTranslations("report.orderlist");
-  const [dateRange, setDateRange] = useState({
-    from: new Date(),
-    to: new Date(),
-  });
 
   const today = new Date();
-  const [, setTime] = useQueryStates({
-    startTime: { parse: Number, default: startOfDay(today).getTime() },
-    endTime: { parse: Number, default: endOfDay(today).getTime() },
+  const [dateRange, setDateRange] = useQueryStates({
+    startTime: parseAsInteger
+      .withDefault(startOfDay(today).getTime())
+      .withOptions({
+        clearOnDefault: false,
+      }),
+    endTime: parseAsInteger.withDefault(endOfDay(today).getTime()).withOptions({
+      clearOnDefault: false,
+    }),
   });
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
-    setTime({
+    setDateRange({
       startTime: startOfDay(today).getTime(),
       endTime: endOfDay(today).getTime(),
     });
   }, []);
 
-  const formatDateRange = (range: DateRange): { from: number; to: number } => {
-    return {
-      from: startOfDay(range.from).getTime(),
-      to: range.to
-        ? endOfDay(range.to).getTime()
-        : endOfDay(range.from).getTime(),
-    };
-  };
-
-  const handleDateRangeChange = (range: DateRange) => {
-    setDateRange(range);
-    const formattedRange = formatDateRange(range);
-    onChange?.(formattedRange);
-  };
-
   const handleQuickSelect = (type: string) => {
-    const today = new Date();
     let from: Date;
     let to: Date;
 
     switch (type) {
-      case TODAY: {
+      case "today": {
         from = startOfDay(today);
         to = endOfDay(today);
         break;
       }
-      case YESTERDAY: {
+      case "yesterday": {
         const yesterday = subDays(today, 1);
         from = startOfDay(yesterday);
         to = endOfDay(yesterday);
         break;
       }
-      case WEEK: {
+      case "week": {
         from = startOfWeek(today, { weekStartsOn: 1 });
-        to = endOfDay(today);
+        to = endOfWeek(today, { weekStartsOn: 1 });
         break;
       }
-      case LASTWEEK: {
+      case "lastweek": {
         const lastWeek = subWeeks(today, 1);
         from = startOfWeek(lastWeek, { weekStartsOn: 1 });
         to = endOfWeek(lastWeek, { weekStartsOn: 1 });
         break;
       }
-      case MONTH: {
+      case "month": {
         from = startOfMonth(today);
-        to = endOfDay(today);
+        to = endOfMonth(today);
         break;
       }
-      case LASTMONTH: {
-        const lastMonth = new Date(
-          today.getFullYear(),
-          today.getMonth() - 1,
-          1,
-        );
+      case "lastmonth": {
+        const lastMonth = subMonths(today, 1);
         from = startOfMonth(lastMonth);
         to = endOfMonth(lastMonth);
         break;
@@ -125,11 +108,17 @@ function DateRangeFilter(props: DateRangeFilterProps) {
         return;
     }
 
-    const range = { from, to };
-    setDateRange(range);
-    const formattedRange = formatDateRange(range);
-    onChange?.(formattedRange);
+    setDateRange({ startTime: from.getTime(), endTime: to.getTime() });
   };
+
+  function handleDateRangeChange(range?: DateRange) {
+    if (range) {
+      setDateRange({
+        startTime: range.from?.getTime(),
+        endTime: range.to ? endOfDay(range.to).getTime() : undefined,
+      });
+    }
+  }
 
   return (
     <div className="flex items-center gap-2">
@@ -143,14 +132,14 @@ function DateRangeFilter(props: DateRangeFilterProps) {
             )}
           >
             <CalendarIcon className="mr-2 h-4 w-4" />
-            {dateRange?.from ? (
-              dateRange.to ? (
+            {dateRange?.startTime ? (
+              dateRange.endTime ? (
                 <>
-                  {format(dateRange.from, "yyyy-MM-dd")} ~{" "}
-                  {format(dateRange.to, "yyyy-MM-dd")}
+                  {format(dateRange.startTime, "yyyy-MM-dd")} ~{" "}
+                  {format(dateRange.endTime, "yyyy-MM-dd")}
                 </>
               ) : (
-                format(dateRange.from, "yyyy-MM-dd")
+                format(dateRange.startTime, "yyyy-MM-dd")
               )
             ) : (
               <span>{t("choicedate")}</span>
@@ -161,9 +150,11 @@ function DateRangeFilter(props: DateRangeFilterProps) {
           <Calendar
             autoFocus
             mode="range"
-            defaultMonth={dateRange?.from}
-            selected={dateRange}
-            onSelect={(range) => handleDateRangeChange(range as DateRange)}
+            selected={{
+              from: new Date(dateRange?.startTime),
+              to: new Date(dateRange?.endTime),
+            }}
+            onSelect={(range) => handleDateRangeChange(range)}
             numberOfMonths={1}
           />
         </PopoverContent>
@@ -179,5 +170,3 @@ function DateRangeFilter(props: DateRangeFilterProps) {
     </div>
   );
 }
-
-export default DateRangeFilter;
