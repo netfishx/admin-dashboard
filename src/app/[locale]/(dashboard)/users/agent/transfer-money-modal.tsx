@@ -31,18 +31,22 @@ export function TransferMoneyModal({
   };
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="2xl:max-w-xl lg:max-w-lg">
+      <DialogContent className="2xl:max-w-lg lg:max-w-md">
         <DialogHeader>
           <DialogTitle>{t("transferMoney")}</DialogTitle>
           <DialogDescription />
         </DialogHeader>
-        <div className="flex flex-col gap-4 w-full">
+        <div className="flex flex-col gap-4 w-full px-4">
           <div className="flex gap-4 items-center">
-            <Label className="shrink-0 w-1/5 text-right">{t("userName")}</Label>
+            <Label className="shrink-0 w-1/4 text-right text-muted-foreground">
+              {t("userName")}
+            </Label>
             <span>{editData?.userName}</span>
           </div>
           <div className="flex gap-4 items-center">
-            <Label className="shrink-0 w-1/5 text-right">{t("amount")}</Label>
+            <Label className="shrink-0 w-1/4 text-right text-muted-foreground">
+              {t("amount")}
+            </Label>
             <Input
               className="w-[200px]"
               value={amount}
@@ -50,7 +54,7 @@ export function TransferMoneyModal({
             />
           </div>
           <div className="flex gap-4 items-center">
-            <Label className="shrink-0 w-1/5 text-right">
+            <Label className="shrink-0 w-1/4 text-right text-muted-foreground">
               {t("moneyPassword")}
             </Label>
             <Password

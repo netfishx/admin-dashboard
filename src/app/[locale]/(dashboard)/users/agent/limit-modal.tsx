@@ -19,12 +19,12 @@ export function LimitModal({
   const t = useTranslations("users.agents");
   return (
     <Dialog open={open} onOpenChange={(open) => onOpenChange(open)}>
-      <DialogContent className="2xl:max-w-xl lg:max-w-lg">
+      <DialogContent className="2xl:max-w-lg lg:max-w-md">
         <DialogHeader>
           <DialogTitle>{t("limitSetting")}</DialogTitle>
           <DialogDescription />
         </DialogHeader>
-        <div>limit</div>
+        <div className="flex flex-col gap-2 w-full px-4">limit</div>
         <DialogFooter>
           <Button variant="outline" onClick={() => onOpenChange(false)}>
             {t("close")}
