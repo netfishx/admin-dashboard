@@ -38,8 +38,8 @@ const AmountFilter = () => {
         onValueChange={(value) => handleFilterChange(value)}
         defaultValue={FilterAmountType}
       >
-        <SelectTrigger className="w-16">
-          <SelectValue placeholder="请选择" />
+        <SelectTrigger>
+          <SelectValue placeholder={t("placeholderselect")} />
         </SelectTrigger>
         <SelectContent>
           <SelectItem value=">=">&gt;=</SelectItem>
@@ -52,7 +52,7 @@ const AmountFilter = () => {
         value={filterAmount}
         onChange={handleAmountChange}
         placeholder={t("placeholderinput")}
-        className="w-32 px-2 py-1 border rounded-md border-gray-300 outline-none focus:ring focus:border-blue-500"
+        className="px-2 py-1 border rounded-md border-gray-300 outline-none focus:ring focus:border-blue-500"
       />
     </div>
   );
