@@ -73,6 +73,7 @@
       "withdraw": "提现记录",
       "borrow": "借还记录",
       "reward": "打赏记录",
+      "credit": "授信转账记录",
       "download": "报表下载"
     },
     "withdraw": {

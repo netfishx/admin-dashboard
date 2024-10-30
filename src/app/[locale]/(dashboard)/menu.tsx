@@ -142,6 +142,7 @@ function OpenedMenu({ pathname }: { pathname: string }) {
           <MenuItem label={t("reports.withdraw")} href="/reports/withdraw" />
           <MenuItem label={t("reports.borrow")} href="/reports/borrow" />
           <MenuItem label={t("reports.reward")} href="/reports/reward" />
+          <MenuItem label={t("reports.credit")} href="/reports/credit" />
           <MenuItem label={t("reports.download")} href="/reports/download" />
         </CollapsibleContent>
       </Collapsible>
