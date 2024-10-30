@@ -26,14 +26,7 @@ export default function ListFilter() {
   const [ministerID, setMinisterID] = useQueryState("ministerID");
   const [memberID, setMemberID] = useQueryState("memberID");
   const [roomeownerID, setRoomeownerID] = useQueryState("roomeownerID");
-  const [, setFilterAmount] = useQueryState("filterAmount");
-  const [, setFilterAmountType] = useQueryState("filterAmountType");
   const [leastlevelID, setLeastlevelID] = useQueryState("leastlevelID");
-
-  const handleFilterChange = (filterType: string, amount: number) => {
-    setFilterAmount(amount?.toString() || "");
-    setFilterAmountType(filterType);
-  };
 
   return (
     <div className="flex flex-col gap-2 bg-background py-2 px-4">
@@ -129,14 +122,7 @@ export default function ListFilter() {
         </div>
         <div className="flex gap-2 items-center">
           <Label className="shrink-0">{t("amountfilter")}</Label>
-          <AmountFilter
-            onFilterChange={
-              handleFilterChange as (
-                filterType: string,
-                amount: number | null,
-              ) => void
-            }
-          />
+          <AmountFilter />
         </div>
         <div className="flex gap-2 items-center">
           <Label className="shrink-0">{t("settlementstatus")}</Label>

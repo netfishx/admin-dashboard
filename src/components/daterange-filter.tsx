@@ -107,7 +107,6 @@ export function DateRangeFilter({
       default:
         return;
     }
-
     setDateRange({ startTime: from.getTime(), endTime: to.getTime() });
   };
 

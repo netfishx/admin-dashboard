@@ -8,37 +8,38 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useTranslations } from "next-intl";
-import { useState } from "react";
+import { useQueryState } from "nuqs";
 
-interface AmountFilterProps {
-  onFilterChange?: (filterType: string, amount: number | null) => void;
-}
-
-const AmountFilter: React.FC<AmountFilterProps> = ({ onFilterChange }) => {
-  const [selectedFilter, setSelectedFilter] = useState<string>(">=");
-  const [amount, setAmount] = useState<number | "">("");
+export default function AmountFilter() {
   const t = useTranslations("report.orderlist");
 
+  const [filterAmount, setFilterAmount] = useQueryState("filterAmount", {
+    defaultValue: "",
+  });
+  const [FilterAmountType, setFilterAmountType] = useQueryState(
+    "filterAmountType",
+    {
+      defaultValue: "",
+    },
+  );
+
   const handleFilterChange = (filterType: string) => {
-    setSelectedFilter(filterType);
-    onFilterChange?.(filterType, amount ? Number(amount) : null);
+    setFilterAmountType(filterType);
   };
 
   const handleAmountChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
-    const parsedAmount = value === "" ? "" : Number(value);
-    setAmount(parsedAmount);
-    onFilterChange?.(selectedFilter, parsedAmount === "" ? null : parsedAmount);
+    setFilterAmount(value);
   };
 
   return (
     <div className="flex items-center space-x-2">
       <Select
         onValueChange={(value) => handleFilterChange(value)}
-        defaultValue={selectedFilter}
+        defaultValue={FilterAmountType}
       >
-        <SelectTrigger className="w-16">
-          <SelectValue placeholder={selectedFilter} />
+        <SelectTrigger>
+          <SelectValue placeholder={t("placeholderselect")} />
         </SelectTrigger>
         <SelectContent>
           <SelectItem value=">=">&gt;=</SelectItem>
@@ -48,13 +49,11 @@ const AmountFilter: React.FC<AmountFilterProps> = ({ onFilterChange }) => {
 
       <Input
         type="number"
-        value={amount === "" ? "" : amount}
+        value={filterAmount}
         onChange={handleAmountChange}
         placeholder={t("placeholderinput")}
-        className="w-32 px-2 py-1 border rounded-md border-gray-300 outline-none focus:ring focus:border-blue-500"
+        className="px-2 py-1 border rounded-md border-gray-300 outline-none focus:ring focus:border-blue-500"
       />
     </div>
   );
-};
-
-export default AmountFilter;
+}
