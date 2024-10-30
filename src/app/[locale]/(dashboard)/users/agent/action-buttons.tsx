@@ -4,7 +4,6 @@ import type { AgentData } from "@/api";
 import { Button } from "@/components/ui/button";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
-import { AddAgentModal } from "./add-agent-modal";
 import { ChangeLogModal } from "./change-log-modal";
 import { GameSettingModal } from "./game-setting-modal";
 import { LimitModal } from "./limit-modal";
@@ -16,7 +15,6 @@ import { UserInfoModal } from "./user-info-modal";
 export default function Action({ data }: { data: AgentData }) {
   const t = useTranslations("users.agents");
   const [userInfoModal, setUserInfoModal] = useState(false);
-  const [addAgentModal, setAddAgentModal] = useState(false);
   const [transferMoneyModal, setTransferMoneyModal] = useState(false);
   const [gameSettingModal, setGameSettingModal] = useState(false);
   const [limitModal, setLimitModal] = useState(false);
@@ -88,10 +86,6 @@ export default function Action({ data }: { data: AgentData }) {
       >
         {t("changeLog")}
       </Button>
-      <AddAgentModal
-        open={addAgentModal}
-        onOpenChange={(open) => setAddAgentModal(open)}
-      />
       <UserInfoModal
         open={userInfoModal}
         onOpenChange={setUserInfoModal}

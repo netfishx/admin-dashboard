@@ -23,6 +23,9 @@ export default function Form() {
   const [userId, setUserId] = useQueryState("userId", {
     defaultValue: "",
   });
+  const [upUserName, setUpUserName] = useQueryState("upUserName", {
+    defaultValue: "",
+  });
   const [status, setStatus] = useQueryState("status", {
     defaultValue: "",
   });
@@ -47,7 +50,11 @@ export default function Form() {
         </div>
         <div className="flex gap-2 items-center">
           <Label className="shrink-0">{t("upUserName")}</Label>
-          <Input placeholder={t("placeholder")} />
+          <Input
+            placeholder={t("placeholder")}
+            value={upUserName ?? ""}
+            onChange={(e) => setUpUserName(e.target.value)}
+          />
         </div>
         <div className="flex gap-2 items-center">
           <Label className="shrink-0">{t("status")}</Label>
@@ -59,10 +66,10 @@ export default function Form() {
               <SelectValue placeholder={t("placeholder")} />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="1">{t("all")}</SelectItem>
-              <SelectItem value="2">{t("enable")}</SelectItem>
-              <SelectItem value="3">{t("disable")}</SelectItem>
-              <SelectItem value="4">{t("freeze")}</SelectItem>
+              <SelectItem value="0">{t("all")}</SelectItem>
+              <SelectItem value="1">{t("enable")}</SelectItem>
+              <SelectItem value="2">{t("disable")}</SelectItem>
+              <SelectItem value="3">{t("freeze")}</SelectItem>
             </SelectContent>
           </Select>
         </div>
