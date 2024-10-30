@@ -1,5 +1,5 @@
 import { type AgentData, getAgents } from "@/api";
-import { Button } from "@/components/ui/button";
+import Pages from "@/components/ui/custom-pagination";
 import {
   Table,
   TableBody,
@@ -11,16 +11,17 @@ import {
 import { cn } from "@/lib/utils";
 import { getTranslations } from "next-intl/server";
 import Action from "./action-buttons";
+import { AddAgent } from "./add-agent";
 import Form from "./form";
+
 export default async function Page({
   searchParams,
 }: {
   searchParams: Promise<{ [key: string]: string | string[] }>;
 }) {
   const t = await getTranslations("users.agents");
-  const { username } = await searchParams;
-  const res = await getAgents();
-  console.info(username);
+  const search = await searchParams;
+  const res = await getAgents({ ...search, page: search.page ?? 1 });
 
   return (
     <>
@@ -28,7 +29,7 @@ export default async function Page({
         <Form />
         <div className="p-2 bg-background flex-1 gap-2">
           <div className="pb-2">
-            <Button>{t("addAgent")}</Button>
+            <AddAgent />
           </div>
           <div className="border rounded-sm">
             <Table>
@@ -76,6 +77,11 @@ export default async function Page({
               </TableBody>
             </Table>
           </div>
+          <Pages
+            total={res.total}
+            currentPage={Number(res.page)}
+            pageSize={Number(res.size)}
+          />
         </div>
       </div>
     </>
