@@ -41,7 +41,7 @@ export default function List() {
   };
   return (
     <div className="p-2 bg-background flex-1">
-      <div className="py-2">注单列表-百家乐</div>
+      <div className="py-2">注单列表-真人视讯</div>
       <div className="border rounded-sm relative">
         <ScrollArea className="w-[calc(100dvw-16.1rem)]">
           <Table>
@@ -65,7 +65,7 @@ export default function List() {
                 {CustomTableHeader(t("membersettlementtime"))}
                 {CustomTableHeader(t("proxysettlementtime"))}
                 {CustomTableHeader(t("proxystatus"))}
-                <TableHead className="w-24 text-center sticky right-0">
+                <TableHead className="w-24 text-center sticky right-0 z-10 bg-muted">
                   {t("action")}
                 </TableHead>
               </TableRow>
@@ -127,7 +127,7 @@ export default function List() {
                   <TableCell className="w-24 text-center">
                     {item.proxystatus}
                   </TableCell>
-                  <TableCell className="w-24 text-center">
+                  <TableCell className="w-24 text-center sticky right-0 z-10 bg-background">
                     <DetailButton />
                   </TableCell>
                 </TableRow>
