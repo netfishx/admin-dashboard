@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import { Input } from "@/components/ui/input";
 import {
   Select,
@@ -8,15 +8,15 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useTranslations } from "next-intl";
-import { useState } from 'react';
+import { useState } from "react";
 
 interface AmountFilterProps {
   onFilterChange?: (filterType: string, amount: number | null) => void;
 }
 
 const AmountFilter: React.FC<AmountFilterProps> = ({ onFilterChange }) => {
-  const [selectedFilter, setSelectedFilter] = useState<string>('>=');
-  const [amount, setAmount] = useState<number | ''>('');
+  const [selectedFilter, setSelectedFilter] = useState<string>(">=");
+  const [amount, setAmount] = useState<number | "">("");
   const t = useTranslations("report.orderlist");
 
   const handleFilterChange = (filterType: string) => {

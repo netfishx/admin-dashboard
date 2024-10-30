@@ -37,10 +37,8 @@ const data = [
 export default function List() {
   const t = useTranslations("report.orderlist");
   const CustomTableHeader = (text: string) => {
-    return (
-      <TableHead className="w-24 min-w-24 text-center">{text}</TableHead>
-    )
-  }
+    return <TableHead className="w-24 min-w-24 text-center">{text}</TableHead>;
+  };
   return (
     <div className="p-2 bg-background flex-1">
       <div className="py-2">注单列表-百家乐</div>
