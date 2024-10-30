@@ -77,11 +77,13 @@ export default async function Page({
               </TableBody>
             </Table>
           </div>
-          <Pages
-            total={res.total}
-            currentPage={Number(res.page)}
-            pageSize={Number(res.size)}
-          />
+          <div className="pt-2">
+            <Pages
+              total={res.total}
+              currentPage={Number(res.page)}
+              pageSize={Number(res.size)}
+            />
+          </div>
         </div>
       </div>
     </>

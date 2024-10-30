@@ -332,7 +332,7 @@
     }
   },
   "pagination": {
-    "total": "共{total}页",
+    "total": "共{total}条",
     "jumpTo": "跳转至",
     "pageSize": "每页显示",
     "perPage": "{size}条/页"

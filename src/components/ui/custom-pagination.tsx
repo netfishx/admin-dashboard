@@ -7,51 +7,50 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
-import { usePathname } from "next/navigation";
-import { Input } from "./input";
+import { usePathname, useSearchParams } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
-import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { ChevronLeftIcon, ChevronRightIcon, ChevronFirst, ChevronLast } from "lucide-react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-
+import Link from "next/link";
 export default function Pages({ total, currentPage, pageSize }: { total: number; currentPage: number; pageSize: number }) {
   const pathname = usePathname();
   const totalPage = Math.ceil(total / pageSize);
   const t = useTranslations("pagination");
   const router = useRouter();
-  const handlePageSizeChange = (size: number) => {
-    router.push(`${pathname}?page=${currentPage}&size=${size}`);
+  const query = useSearchParams();
+  const handlePageSizeChange = (size: string) => {
+    router.push(`${pathname}?${new URLSearchParams({...Object.fromEntries(query.entries()), size, page: String(1)}).toString()}`);
   };
   return (
+    <>
     <Pagination className="flex justify-end">
       <PaginationContent>
         <PaginationItem>
-          <span className="text-sm text-muted-foreground">{t("total", { total })}</span>
+          <span className="text-muted-foreground text-sm">{t("total", { total })}</span>
         </PaginationItem>
         <PaginationItem>
-          <span className="text-sm text-muted-foreground">{t("jumpTo")}</span>
+          <Link href={{pathname,query: {...Object.fromEntries(query.entries()),page: 1}}} className={`w-6 h-4 rounded-full flex items-center justify-center px-1 ${currentPage === 1 ? "cursor-not-allowed text-muted-foreground" : ""}`}>
+            <ChevronFirst className="size-4"/>
+          </Link>
         </PaginationItem>
         <PaginationItem>
-          <Input onKeyDown={(e) => {
-            if (e.key === "Enter") {
-              const input = e.target as HTMLInputElement;
-              router.push(`${pathname}?page=${input.value}&size=${pageSize}`);
-            }
-          }} type="number" className="w-10 h-6 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none" min={1} max={totalPage} />
+          {currentPage === 1 ? <div className="w-6 h-4 rounded-full flex items-center justify-center px-1 cursor-not-allowed text-muted-foreground"><ChevronLeftIcon className="size-4"/></div> : <PaginationPrevious className="px-1" href={{pathname,query: {...Object.fromEntries(query.entries()),page: currentPage - 1 }}} />}
         </PaginationItem>
         <PaginationItem>
-          {currentPage === 1 ? <Button variant="ghost" size="icon" disabled className="pr-2.5"><ChevronLeftIcon className="h-4 w-4"/></Button> : <PaginationPrevious href={`${pathname}?page=${currentPage - 1}&size=${pageSize}`} />}
+          <span className="w-6 inline-block text-center text-sm">{currentPage}</span>
         </PaginationItem>
         <PaginationItem>
-          <span className="text-sm">{currentPage}</span>
+          {currentPage === totalPage ? <div className="w-6 h-4 rounded-full flex items-center justify-center px-1 cursor-not-allowed text-muted-foreground"><ChevronRightIcon className="size-4"/></div> : <PaginationNext className="px-1" href={{pathname, query: {...Object.fromEntries(query.entries()), page: currentPage + 1}}}/>}
         </PaginationItem>
         <PaginationItem>
-          {currentPage === totalPage ? <Button variant="ghost" size="icon" disabled className="pl-2.5"><ChevronRightIcon className="h-4 w-4"/></Button> : <PaginationNext href={`${pathname}?page=${currentPage + 1}&size=${pageSize}`}/>}
+          <Link href={{pathname,query: {...Object.fromEntries(query.entries()),page: totalPage}}} className={`w-6 h-4 bg-background rounded-full flex items-center justify-center px-1 ${currentPage === totalPage ? "cursor-not-allowed text-muted-foreground" : ""}`}>
+            <ChevronLast className="size-4"/>
+          </Link>
         </PaginationItem>
         <PaginationItem>
-          <Select value={pageSize.toString()} onValueChange={(value) => handlePageSizeChange(Number(value))}>
-            <SelectTrigger className="w-26 h-7 text-sm text-muted-foreground">
+          <Select value={pageSize.toString()} onValueChange={(value) => handlePageSizeChange(value)}>
+            <SelectTrigger className="w-28 h-7 text-muted-foreground text-sm">
               <SelectValue defaultValue={pageSize ?? 10} placeholder={t("pageSize")} />
             </SelectTrigger>
             <SelectContent>
@@ -64,5 +63,6 @@ export default function Pages({ total, currentPage, pageSize }: { total: number;
         </PaginationItem>
       </PaginationContent>
     </Pagination>
+    </>
   );
 }
