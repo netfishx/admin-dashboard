@@ -89,7 +89,7 @@ function OpenedMenu({ pathname }: { pathname: string }) {
             hasChildren
           />
         </CollapsibleTrigger>
-        <CollapsibleContent className="flex flex-col gap-1 pl-6">
+        <CollapsibleContent className="flex flex-col gap-1 px-6">
           <MenuItem label={t("users.agent")} href="/users/agent" />
           <MenuItem label={t("users.member")} href="/users/member" />
           <MenuItem label={t("users.supplier")} href="/users/supplier" />
@@ -110,7 +110,7 @@ function OpenedMenu({ pathname }: { pathname: string }) {
             hasChildren
           />
         </CollapsibleTrigger>
-        <CollapsibleContent className="flex flex-col gap-1 pl-6">
+        <CollapsibleContent className="flex flex-col gap-1 px-6">
           <MenuItem
             label={t("reports.order.baccarat")}
             href="/reports/order/baccarat"
@@ -161,7 +161,7 @@ function OpenedMenu({ pathname }: { pathname: string }) {
             hasChildren
           />
         </CollapsibleTrigger>
-        <CollapsibleContent className="flex flex-col gap-1 pl-6">
+        <CollapsibleContent className="flex flex-col gap-1 px-6">
           <MenuItem label={t("withdraw.apply")} href="/withdraw/apply" />
           <MenuItem label={t("withdraw.audit")} href="/withdraw/audit" />
         </CollapsibleContent>
@@ -181,7 +181,7 @@ function OpenedMenu({ pathname }: { pathname: string }) {
             hasChildren
           />
         </CollapsibleTrigger>
-        <CollapsibleContent className="flex flex-col gap-1 pl-6">
+        <CollapsibleContent className="flex flex-col gap-1 px-6">
           <MenuItem label={t("fund.minerfee")} href="/fund/minerfee" />
           <MenuItem label={t("fund.collection")} href="/fund/collection" />
           <MenuItem label={t("fund.withdrawfee")} href="/fund/withdrawfee" />
@@ -202,7 +202,7 @@ function OpenedMenu({ pathname }: { pathname: string }) {
             hasChildren
           />
         </CollapsibleTrigger>
-        <CollapsibleContent className="flex flex-col gap-1 pl-6">
+        <CollapsibleContent className="flex flex-col gap-1 px-6">
           <MenuItem label={t("personal.info")} href="/personal/info" />
           <MenuItem label={t("personal.loginlog")} href="/personal/loginlog" />
           <MenuItem label={t("personal.security")} href="/personal/security" />
@@ -216,7 +216,7 @@ function OpenedMenu({ pathname }: { pathname: string }) {
             hasChildren
           />
         </CollapsibleTrigger>
-        <CollapsibleContent className="flex flex-col gap-1 pl-6">
+        <CollapsibleContent className="flex flex-col gap-1 px-6">
           <MenuItem label={t("system.role")} href="/system/role" />
           <MenuItem label={t("system.subaccount")} href="/system/subaccount" />
           <MenuItem label={t("system.platform")} href="/system/platform" />
@@ -235,7 +235,7 @@ function OpenedMenu({ pathname }: { pathname: string }) {
             hasChildren
           />
         </CollapsibleTrigger>
-        <CollapsibleContent className="flex flex-col gap-1 pl-6">
+        <CollapsibleContent className="flex flex-col gap-1 px-6">
           <MenuItem
             label={t("maintain.dictionary")}
             href="/maintain/dictionary"
