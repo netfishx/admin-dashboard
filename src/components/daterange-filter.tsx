@@ -8,119 +8,117 @@ import {
 import { cn } from "@/lib/utils";
 import {
   endOfDay,
+  endOfMonth,
   endOfWeek,
   format,
   startOfDay,
+  startOfMonth,
   startOfWeek,
+  subDays,
+  subMonths,
   subWeeks,
 } from "date-fns";
 import { Calendar as CalendarIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
-import type React from "react";
-import { useEffect, useState } from "react";
+import { parseAsInteger, useQueryStates } from "nuqs";
+import { useEffect } from "react";
+import type { DateRange } from "react-day-picker";
 
-interface DateRange {
-  from: Date | null;
-  to: Date | null;
-}
+type rangeType =
+  | "today"
+  | "yesterday"
+  | "week"
+  | "lastweek"
+  | "month"
+  | "lastmonth";
 
-interface DateRangeFilterProps {
-  onChange?: (range: { from: string; to: string } | null) => void;
-  quickSetBtn?: string[];
-}
-
-const TODAY = "today";
-const YESTERDAY = "yesterday";
-const WEEK = "week";
-const LASTWEEK = "lastweek";
-const MONTH = "month";
-const LASTMONTH = "lastmonth";
-
-const DateRangeFilter: React.FC<DateRangeFilterProps> = ({
-  onChange,
-  quickSetBtn = [TODAY, YESTERDAY, WEEK, LASTWEEK, MONTH, LASTMONTH],
-}) => {
+export function DateRangeFilter({
+  quickSetBtn = [
+    "today",
+    "yesterday",
+    "week",
+    "lastweek",
+    "month",
+    "lastmonth",
+  ],
+}: {
+  quickSetBtn?: rangeType[];
+}) {
   const t = useTranslations("report.orderlist");
-  const [dateRange, setDateRange] = useState<DateRange>({
-    from: new Date(),
-    to: new Date(),
-  });
-  const [activeButton, setActiveButton] = useState<string | null>("today");
 
+  const today = new Date();
+  const [dateRange, setDateRange] = useQueryStates({
+    startTime: parseAsInteger
+      .withDefault(startOfDay(today).getTime())
+      .withOptions({
+        clearOnDefault: false,
+      }),
+    endTime: parseAsInteger.withDefault(endOfDay(today).getTime()).withOptions({
+      clearOnDefault: false,
+    }),
+  });
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
-    handleQuickSelect(TODAY);
+    setDateRange({
+      startTime: startOfDay(today).getTime(),
+      endTime: endOfDay(today).getTime(),
+    });
   }, []);
 
-  // Format date range to YYYY-MM-DD HH:mm:ss
-  const formatDateRange = (range: DateRange) => {
-    if (!range?.from) {
-      return null;
-    }
-
-    return {
-      from: format(startOfDay(range.from), "yyyy-MM-dd HH:mm:ss"),
-      to: range.to
-        ? format(endOfDay(range.to), "yyyy-MM-dd HH:mm:ss")
-        : format(endOfDay(range.from), "yyyy-MM-dd HH:mm:ss"),
-    };
-  };
-
-  // Handle date range change
-  const handleDateRangeChange = (range: DateRange) => {
-    setDateRange(range);
-    setActiveButton(null);
-    const formattedRange = formatDateRange(range);
-    onChange?.(formattedRange);
-  };
-
-  // Handle quick select button click
   const handleQuickSelect = (type: string) => {
-    const today = new Date();
-    let from = new Date();
-    let to = new Date();
+    let from: Date;
+    let to: Date;
 
     switch (type) {
-      case TODAY: {
-        from = today;
-        to = today;
+      case "today": {
+        from = startOfDay(today);
+        to = endOfDay(today);
         break;
       }
-      case YESTERDAY: {
-        from = new Date(today.setDate(today.getDate() - 1));
-        to = new Date(from);
+      case "yesterday": {
+        const yesterday = subDays(today, 1);
+        from = startOfDay(yesterday);
+        to = endOfDay(yesterday);
         break;
       }
-      case WEEK: {
+      case "week": {
         from = startOfWeek(today, { weekStartsOn: 1 });
-        to = new Date();
+        to = endOfWeek(today, { weekStartsOn: 1 });
         break;
       }
-      case LASTWEEK: {
+      case "lastweek": {
         const lastWeek = subWeeks(today, 1);
         from = startOfWeek(lastWeek, { weekStartsOn: 1 });
         to = endOfWeek(lastWeek, { weekStartsOn: 1 });
         break;
       }
-      case MONTH: {
-        from = new Date(today.getFullYear(), today.getMonth(), 1);
-        to = new Date();
+      case "month": {
+        from = startOfMonth(today);
+        to = endOfMonth(today);
         break;
       }
-      case LASTMONTH: {
-        from = new Date(today.getFullYear(), today.getMonth() - 1, 1);
-        to = new Date(today.getFullYear(), today.getMonth(), 0);
+      case "lastmonth": {
+        const lastMonth = subMonths(today, 1);
+        from = startOfMonth(lastMonth);
+        to = endOfMonth(lastMonth);
         break;
       }
       default:
-        break;
+        return;
     }
 
-    const range = { from, to };
-    setDateRange(range);
-    setActiveButton(type);
-    const formattedRange = formatDateRange(range);
-    onChange?.(formattedRange);
+    setDateRange({ startTime: from.getTime(), endTime: to.getTime() });
   };
+
+  function handleDateRangeChange(range?: DateRange) {
+    if (range) {
+      setDateRange({
+        startTime: range.from?.getTime(),
+        endTime: range.to ? endOfDay(range.to).getTime() : undefined,
+      });
+    }
+  }
 
   return (
     <div className="flex items-center gap-2">
@@ -134,14 +132,14 @@ const DateRangeFilter: React.FC<DateRangeFilterProps> = ({
             )}
           >
             <CalendarIcon className="mr-2 h-4 w-4" />
-            {dateRange?.from ? (
-              dateRange.to ? (
+            {dateRange?.startTime ? (
+              dateRange.endTime ? (
                 <>
-                  {format(dateRange.from, "yyyy-MM-dd")} ~{" "}
-                  {format(dateRange.to, "yyyy-MM-dd")}
+                  {format(dateRange.startTime, "yyyy-MM-dd")} ~{" "}
+                  {format(dateRange.endTime, "yyyy-MM-dd")}
                 </>
               ) : (
-                format(dateRange.from, "yyyy-MM-dd")
+                format(dateRange.startTime, "yyyy-MM-dd")
               )
             ) : (
               <span>{t("choicedate")}</span>
@@ -152,9 +150,11 @@ const DateRangeFilter: React.FC<DateRangeFilterProps> = ({
           <Calendar
             autoFocus
             mode="range"
-            defaultMonth={dateRange?.from ?? undefined}
-            selected={dateRange as any}
-            onSelect={handleDateRangeChange as any}
+            selected={{
+              from: new Date(dateRange?.startTime),
+              to: new Date(dateRange?.endTime),
+            }}
+            onSelect={(range) => handleDateRangeChange(range)}
             numberOfMonths={1}
           />
         </PopoverContent>
@@ -162,17 +162,11 @@ const DateRangeFilter: React.FC<DateRangeFilterProps> = ({
 
       <div className="flex gap-2">
         {quickSetBtn?.map((type) => (
-          <Button
-            key={type}
-            variant={activeButton === type ? "default" : "outline"}
-            onClick={() => handleQuickSelect(type)}
-          >
+          <Button key={type} onClick={() => handleQuickSelect(type)}>
             {t(type)}
           </Button>
         ))}
       </div>
     </div>
   );
-};
-
-export default DateRangeFilter;
+}

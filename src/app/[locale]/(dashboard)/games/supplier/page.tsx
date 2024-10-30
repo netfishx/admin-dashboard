@@ -7,6 +7,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { useTranslations } from "next-intl";
+import { Add } from "./add";
 import { EditButton } from "./edit";
 import { SupplierForm } from "./form";
 
@@ -63,8 +64,11 @@ export default function Page() {
   return (
     <div className="flex flex-col gap-2 w-full">
       <SupplierForm />
-      <div className="p-2 bg-background flex-1">
-        <div className="border rounded-sm">
+      <div className="p-2 bg-background flex-1 flex flex-col gap-2">
+        <div className="flex justify-end">
+          <Add />
+        </div>
+        <div className="border rounded-sm flex-1">
           <Table>
             <TableHeader>
               <TableRow className="bg-muted">

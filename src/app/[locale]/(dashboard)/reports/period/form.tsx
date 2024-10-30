@@ -1,6 +1,6 @@
 "use client";
 
-import DateRangeFilter from "@/components/daterange-filter";
+import { DateRangeFilter } from "@/components/daterange-filter";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";

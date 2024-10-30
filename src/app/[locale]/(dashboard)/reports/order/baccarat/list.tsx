@@ -41,8 +41,9 @@ export default function List() {
   };
   return (
     <div className="p-2 bg-background flex-1">
-      <div className="border h-full rounded-sm relative">
-        <ScrollArea className="h-full w-[calc(100dvw-16.1rem)]">
+      <div className="py-2">注单列表-百家乐</div>
+      <div className="border rounded-sm relative">
+        <ScrollArea className="w-[calc(100dvw-16.1rem)]">
           <Table>
             <TableHeader>
               <TableRow className="bg-muted">

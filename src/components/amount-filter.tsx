@@ -1,8 +1,13 @@
 "use client";
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { useTranslations } from "next-intl";
-import type React from "react";
 import { useState } from "react";
 
 interface AmountFilterProps {
@@ -10,11 +15,11 @@ interface AmountFilterProps {
 }
 
 const AmountFilter: React.FC<AmountFilterProps> = ({ onFilterChange }) => {
-  const [selectedFilter, setSelectedFilter] = useState<">=" | "<=">(">=");
+  const [selectedFilter, setSelectedFilter] = useState<string>(">=");
   const [amount, setAmount] = useState<number | "">("");
   const t = useTranslations("report.orderlist");
 
-  const handleFilterClick = (filterType: ">=" | "<=") => {
+  const handleFilterChange = (filterType: string) => {
     setSelectedFilter(filterType);
     onFilterChange?.(filterType, amount ? Number(amount) : null);
   };
@@ -28,32 +33,25 @@ const AmountFilter: React.FC<AmountFilterProps> = ({ onFilterChange }) => {
 
   return (
     <div className="flex items-center space-x-2">
-      <Button
-        className={`px-4 py-2 border rounded-md ${
-          selectedFilter === ">="
-            ? "bg-blue-500 text-white border-blue-500"
-            : "bg-white text-gray-700 border-gray-300 hover:bg-gray-100"
-        }`}
-        onClick={() => handleFilterClick(">=")}
+      <Select
+        onValueChange={(value) => handleFilterChange(value)}
+        defaultValue={selectedFilter}
       >
-        &gt;=
-      </Button>
-      <Button
-        className={`px-4 py-2 border rounded-md ${
-          selectedFilter === "<="
-            ? "bg-blue-500 text-white border-blue-500"
-            : "bg-white text-gray-700 border-gray-300 hover:bg-gray-100"
-        }`}
-        onClick={() => handleFilterClick("<=")}
-      >
-        &lt;=
-      </Button>
+        <SelectTrigger className="w-16">
+          <SelectValue placeholder={selectedFilter} />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectItem value=">=">&gt;=</SelectItem>
+          <SelectItem value="<=">&lt;=</SelectItem>
+        </SelectContent>
+      </Select>
+
       <Input
         type="number"
         value={amount === "" ? "" : amount}
         onChange={handleAmountChange}
         placeholder={t("placeholderinput")}
-        className="px-4 py-2 border rounded-md border-gray-300 outline-none focus:ring focus:border-blue-500"
+        className="w-32 px-2 py-1 border rounded-md border-gray-300 outline-none focus:ring focus:border-blue-500"
       />
     </div>
   );
