@@ -42,17 +42,17 @@ export default function Detaildialog(props: Dialogprops) {
         <Table>
           <TableHeader>
             <TableRow className="bg-muted">
-              <TableHead className="w-24 min-w-24 text-center">靴数</TableHead>
-              <TableHead className="w-24 min-w-24 text-center">
-                牌局结果
-              </TableHead>
+              <TableHead className="w-20 text-center">靴数</TableHead>
+              <TableHead className="w-20 text-center">局数</TableHead>
+              <TableHead className="w-40 text-center">牌局结果</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             <TableRow>
-              <TableCell className="w-24 min-w-24 text-center">8</TableCell>
-              <TableCell className="w-24 min-w-24 text-center">
-                庄:♣3 ♣7; ♦2 ♠6
+              <TableCell className="w-20 text-center">8</TableCell>
+              <TableCell className="w-20 text-center">32</TableCell>
+              <TableCell className="w-40 text-center">
+                庄:♣3 ♣7; 闲:♦2 ♠6
               </TableCell>
             </TableRow>
           </TableBody>
