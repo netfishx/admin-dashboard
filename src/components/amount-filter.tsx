@@ -10,7 +10,7 @@ import {
 import { useTranslations } from "next-intl";
 import { useQueryState } from "nuqs";
 
-const AmountFilter = () => {
+export default function AmountFilter() {
   const t = useTranslations("report.orderlist");
 
   const [filterAmount, setFilterAmount] = useQueryState("filterAmount", {
@@ -56,6 +56,4 @@ const AmountFilter = () => {
       />
     </div>
   );
-};
-
-export default AmountFilter;
+}
