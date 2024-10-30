@@ -330,5 +330,11 @@
       "more": "查看",
       "pickdate": "请选择日期"
     }
+  },
+  "pagination": {
+    "total": "共{total}页",
+    "jumpTo": "跳转至",
+    "pageSize": "每页显示",
+    "perPage": "{size}条/页"
   }
 }
