@@ -328,6 +328,33 @@
       "action": "操作",
       "more": "查看",
       "pickdate": "请选择日期"
+    },
+    "agent": {
+      "title": "占成拦货列表",
+      "gametype": "游戏种类",
+      "placeholderselect": "请选择",
+      "placeholderinput": "请输入",
+      "memberID": "会员ID",
+      "roomeownerID": "房主ID",
+      "search": "查询",
+      "drawtime": "开奖时间",
+      "action": "操作",
+      "more": "查看",
+      "reset": "重置",
+      "uperagentID": "上级代理ID",
+      "agentOrOwnerId": "代理/房主ID",
+      "gameName": "游戏名称",
+      "shareAmount": "占成金额",
+      "blockAmount": "拦货金额",
+      "throwAmount": "抛货金额",
+      "shareProfitLoss": "占成盈亏",
+      "rebateIncome": "退水收入",
+      "rebateExpense": "退水支出",
+      "netRebate": "净退水",
+      "totalProfitLossAmount": "总盈亏金额",
+      "ratioblock": "占成拦货",
+      "memberBetting": "会员下注",
+      "leastlevelID": "末级代理ID"
     }
   }
 }
