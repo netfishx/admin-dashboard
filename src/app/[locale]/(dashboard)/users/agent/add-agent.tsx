@@ -1,6 +1,7 @@
 "use client";
 
 import { addUser } from "@/api";
+import Stepper from "@/components/stepper";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -39,7 +40,12 @@ function AddAgentModal({
   const [userName, setUserName] = useState("");
   const [nickName, setNickName] = useState("");
   const [userLevel, setUserLevel] = useState("");
+  const [step, setStep] = useState(1);
   const handleClickAddAgent = async () => {
+    if (step === 1) {
+      setStep(2);
+      return;
+    }
     await addUser({
       userName,
       nickName,
@@ -58,6 +64,10 @@ function AddAgentModal({
           <DialogTitle>{t("addAgent")}</DialogTitle>
           <DialogDescription />
         </DialogHeader>
+        <Stepper
+          steps={[t("userInfo"), t("gamesSetting")]}
+          currentStep={step}
+        />
         <div className="flex flex-col gap-2 w-full px-4">
           <div className="flex gap-4 items-center">
             <Label className="shrink-0 w-1/4 text-right text-muted-foreground">
@@ -93,10 +103,15 @@ function AddAgentModal({
             />
           </div>
           <DialogFooter>
-            <Button variant="outline" onClick={() => onOpenChange(false)}>
-              {t("close")}
+            <Button
+              variant="outline"
+              onClick={() => (step === 1 ? onOpenChange(false) : setStep(1))}
+            >
+              {step === 1 ? t("close") : t("back")}
             </Button>
-            <Button onClick={handleClickAddAgent}>{t("save")}</Button>
+            <Button onClick={handleClickAddAgent}>
+              {step === 1 ? t("next") : t("save")}
+            </Button>
           </DialogFooter>
         </div>
       </DialogContent>
