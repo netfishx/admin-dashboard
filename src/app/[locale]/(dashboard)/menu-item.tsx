@@ -23,7 +23,7 @@ export function MenuItem({
   hasChildren?: boolean;
 }) {
   const pathname = usePathname();
-  const isActive = pathname === href;
+  const isActive = !!href && pathname === href;
   return (
     <Button
       variant="ghost"
@@ -35,7 +35,7 @@ export function MenuItem({
       {...props}
       asChild={!!href && !isActive}
     >
-      <MenuItemLink href={isActive ? undefined : href}>
+      <MenuItemLink href={href} isActive={isActive}>
         {icon}
         <span className="flex-grow text-left">{label}</span>
         {hasChildren && (
@@ -49,8 +49,9 @@ export function MenuItem({
 function MenuItemLink({
   href,
   children,
-}: { href?: string; children: ReactNode }) {
-  return href ? (
+  isActive,
+}: { href?: string; isActive?: boolean; children: ReactNode }) {
+  return href && !isActive ? (
     <Link
       href={href}
       className={cn([buttonVariants({ variant: "ghost" }), "font-normal"])}

@@ -31,7 +31,7 @@ export function Menu() {
   const pathname = usePathname();
   return (
     <ScrollArea className="h-[calc(100dvh-8.5rem)]">
-      <div className="flex flex-col gap-1 px-2">
+      <div className="flex flex-col gap-1 px-2" suppressHydrationWarning={true}>
         {isOpened ? (
           <OpenedMenu pathname={pathname} />
         ) : (
