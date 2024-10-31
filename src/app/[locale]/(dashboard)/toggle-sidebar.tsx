@@ -6,10 +6,17 @@ import { sidebarAtom } from "@/store";
 import { useAtom } from "jotai";
 import { PanelRightCloseIcon, PanelRightOpenIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { useState } from "react";
+import { toast } from "sonner";
 
 export function ToggleSidebar() {
   const [isOpened, setIsOpened] = useAtom(sidebarAtom);
   const t = useTranslations("menu");
+  const [stop, setStop] = useState(false);
+  async function handleStopChange(checked: boolean) {
+    setStop(checked);
+    toast.success(checked ? "Stop" : "Start");
+  }
   return (
     <div
       className={cn([
@@ -19,7 +26,7 @@ export function ToggleSidebar() {
     >
       {isOpened && (
         <div className="flex items-center gap-2">
-          <Switch />
+          <Switch checked={stop} onCheckedChange={handleStopChange} />
           <span className="text-sm">{t("stop")}</span>
         </div>
       )}

@@ -1,5 +1,6 @@
 import { type AgentData, getAgents } from "@/api";
-import { Button } from "@/components/ui/button";
+import Pages from "@/components/ui/custom-pagination";
+import { Skeleton } from "@/components/ui/skeleton";
 import {
   Table,
   TableBody,
@@ -10,73 +11,95 @@ import {
 } from "@/components/ui/table";
 import { cn } from "@/lib/utils";
 import { getTranslations } from "next-intl/server";
+import { Suspense } from "react";
 import Action from "./action-buttons";
+import { AddAgent } from "./add-agent";
 import Form from "./form";
+
 export default async function Page({
   searchParams,
-}: {
-  searchParams: Promise<{ [key: string]: string | string[] }>;
-}) {
-  const t = await getTranslations("users.agents");
-  const { username } = await searchParams;
-  const res = await getAgents();
-  console.info(username);
+}: { searchParams: Promise<{ [key: string]: string | string[] }> }) {
+  return (
+    <div className="flex flex-col gap-2 w-full">
+      <Form />
+      <div className="p-2 bg-background flex-1 gap-2">
+        <div className="pb-2">
+          <AddAgent />
+        </div>
+        <Suspense
+          fallback={
+            <div className="flex flex-col gap-4 p-4">
+              <Skeleton className="w-full h-6" />
+              <Skeleton className="w-full h-6" />
+              <Skeleton className="w-full h-6" />
+              <Skeleton className="w-2/3 h-6" />
+            </div>
+          }
+        >
+          <AgentTable searchParams={searchParams} />
+        </Suspense>
+      </div>
+    </div>
+  );
+}
 
+async function AgentTable({
+  searchParams,
+}: { searchParams: Promise<{ [key: string]: string | string[] }> }) {
+  const t = await getTranslations("users.agents");
+  const search = await searchParams;
+  const res = await getAgents({ ...search, page: search.page ?? 1 });
   return (
     <>
-      <div className="flex flex-col gap-2 w-full">
-        <Form />
-        <div className="p-2 bg-background flex-1 gap-2">
-          <div className="pb-2">
-            <Button>{t("addAgent")}</Button>
-          </div>
-          <div className="border rounded-sm">
-            <Table>
-              <TableHeader>
-                <TableRow className="bg-muted">
-                  <TableHead className="min-w-32">{t("upUserName")}</TableHead>
-                  <TableHead className="min-w-32">{t("userLevel")}</TableHead>
-                  <TableHead className="min-w-32">{t("userId")}</TableHead>
-                  <TableHead className="min-w-32">{t("userName")}</TableHead>
-                  <TableHead className="min-w-32">{t("nickName")}</TableHead>
-                  <TableHead className="min-w-32">{t("status")}</TableHead>
-                  <TableHead className="min-w-[400px] text-center">
-                    {t("action")}
-                  </TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {res.data.map((item: AgentData) => (
-                  <TableRow key={item.userId}>
-                    <TableCell className="min-w-32">
-                      {item.upUserName}
-                    </TableCell>
-                    <TableCell className="min-w-32">{item.userLevel}</TableCell>
-                    <TableCell className="min-w-32">{item.userId}</TableCell>
-                    <TableCell className="min-w-32">{item.userName}</TableCell>
-                    <TableCell className="min-w-32">{item.nickName}</TableCell>
-                    <TableCell className="min-w-32">
-                      <div
-                        className={cn(
-                          "px-2 rounded-sm w-fit",
-                          item.status === 1 && "text-green bg-green/10",
-                          item.status === 2 &&
-                            "text-destructive bg-destructive/10",
-                          item.status === 3 && "text-orange bg-orange/10",
-                        )}
-                      >
-                        {t(`statusLabel.${item.status}`)}
-                      </div>
-                    </TableCell>
-                    <TableCell className="min-w-[400px] text-center flex gap-2 2xl:gap-6">
-                      <Action data={item} />
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </div>
-        </div>
+      <div className="border rounded-sm">
+        <Table>
+          <TableHeader>
+            <TableRow className="bg-muted">
+              <TableHead className="min-w-32">{t("upUserName")}</TableHead>
+              <TableHead className="min-w-32">{t("userLevel")}</TableHead>
+              <TableHead className="min-w-32">{t("userId")}</TableHead>
+              <TableHead className="min-w-32">{t("userName")}</TableHead>
+              <TableHead className="min-w-32">{t("nickName")}</TableHead>
+              <TableHead className="min-w-32">{t("status")}</TableHead>
+              <TableHead className="min-w-[400px] text-center">
+                {t("action")}
+              </TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {res.data.map((item: AgentData) => (
+              <TableRow key={item.userId}>
+                <TableCell className="min-w-32">{item.upUserName}</TableCell>
+                <TableCell className="min-w-32">{item.userLevel}</TableCell>
+                <TableCell className="min-w-32">{item.userId}</TableCell>
+                <TableCell className="min-w-32">{item.userName}</TableCell>
+                <TableCell className="min-w-32">{item.nickName}</TableCell>
+                <TableCell className="min-w-32">
+                  <div
+                    className={cn(
+                      "px-2 rounded-sm w-fit",
+                      item.status === 1 && "text-green bg-green/10",
+                      item.status === 2 && "text-destructive bg-destructive/10",
+                      item.status === 3 && "text-orange bg-orange/10",
+                    )}
+                  >
+                    {t(`statusLabel.${item.status}`)}
+                  </div>
+                </TableCell>
+                <TableCell className="min-w-[400px] text-center flex gap-2 2xl:gap-6">
+                  <Action data={item} />
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </div>
+      <div className="pt-2">
+        <Pages
+          total={res.total}
+          currentPage={Number(res.page)}
+          pageSize={Number(res.size)}
+        />
       </div>
     </>
   );

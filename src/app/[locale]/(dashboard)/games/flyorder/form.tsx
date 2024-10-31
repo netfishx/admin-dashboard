@@ -54,7 +54,7 @@ export function FlyOrderForm({
                 {data.map((item) => (
                   <TableRow key={item.game}>
                     <TableCell>{item.game}</TableCell>
-                    <TableCell className="w-32 text-center">
+                    <TableCell className="w-32 flex justify-center items-center h-10">
                       <Switch
                         defaultChecked={item.isOpen}
                         onCheckedChange={(checked) => {

@@ -6,22 +6,36 @@ import {
   Dialog,
   DialogContent,
   DialogDescription,
+  DialogFooter,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useTranslations } from "next-intl";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
-export function AddAgentModal({
+export function AddAgent() {
+  const t = useTranslations("users.agents");
+  const [open, setOpen] = useState(false);
+  return (
+    <>
+      <Button onClick={() => setOpen(true)}>{t("addAgent")}</Button>
+      <AddAgentModal open={open} onOpenChange={setOpen} />
+    </>
+  );
+}
+
+function AddAgentModal({
   open,
   onOpenChange,
 }: {
   open: boolean;
-  onOpenChange: (open: boolean, refresh: boolean) => void;
+  onOpenChange: (open: boolean) => void;
 }) {
   const t = useTranslations("users.agents");
+  const router = useRouter();
   const [userName, setUserName] = useState("");
   const [nickName, setNickName] = useState("");
   const [userLevel, setUserLevel] = useState("");
@@ -34,10 +48,11 @@ export function AddAgentModal({
       userId: `A${Math.random().toString(36).substring(2, 15)}`,
       status: 1,
     });
-    onOpenChange(false, true);
+    onOpenChange(false);
+    router.refresh();
   };
   return (
-    <Dialog open={open} onOpenChange={(open) => onOpenChange(open, false)}>
+    <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="2xl:max-w-lg lg:max-w-md">
         <DialogHeader>
           <DialogTitle>{t("addAgent")}</DialogTitle>
@@ -77,9 +92,12 @@ export function AddAgentModal({
               onChange={(e) => setUserLevel(e.target.value)}
             />
           </div>
-          <div className="flex justify-end">
+          <DialogFooter>
+            <Button variant="outline" onClick={() => onOpenChange(false)}>
+              {t("close")}
+            </Button>
             <Button onClick={handleClickAddAgent}>{t("save")}</Button>
-          </div>
+          </DialogFooter>
         </div>
       </DialogContent>
     </Dialog>
