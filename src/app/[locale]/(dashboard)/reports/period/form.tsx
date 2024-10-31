@@ -1,5 +1,4 @@
 "use client";
-
 import { DateRangeFilter } from "@/components/daterange-filter";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -26,9 +25,6 @@ export default function Form() {
     defaultValue: "1",
   });
   const [gameId, setGameId] = useQueryState("gameId", {
-    defaultValue: "",
-  });
-  const [_openTime, _setOpenTime] = useQueryState("openTime", {
     defaultValue: "",
   });
 
