@@ -1,17 +1,16 @@
 "use client";
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { times } from "@/components/daterange-filter";
+import { Tabs, TabsList, TabsTrigger, } from "@/components/ui/tabs";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, } from "next/navigation";
 import { useQueryState } from "nuqs";
 import { useEffect } from "react";
 import { TabsTypes } from "./defiend";
 
 export default function TopTabs() {
   const t = useTranslations("report.agent");
-  const [, SetTabsType] = useQueryState("tabsType", {
-    shallow: false,
-  });
+  const [, SetTabsType] = useQueryState("tabsType");
   const handleTabsTypeChanged = (params: string) => {
     SetTabsType(params);
   };
@@ -33,12 +32,13 @@ export default function TopTabs() {
       >
         <TabsList className="grid w-full grid-cols-2">
           <TabsTrigger value={TabsTypes.RATIO}>
-            <Link href={`${pathname}?tabsType=${TabsTypes.RATIO}`}>
+            <Link href={`${pathname}?tabsType=${TabsTypes.RATIO}&startTime=${times.startTime}&endTime=${times.endTime}`}>
               {t("ratioblock")}
             </Link>
           </TabsTrigger>
+
           <TabsTrigger value={TabsTypes.MEMBER}>
-            <Link href={`${pathname}?tabsType=${TabsTypes.MEMBER}`}>
+            <Link href={`${pathname}?tabsType=${TabsTypes.MEMBER}&startTime=${times.startTime}&endTime=${times.endTime}`}>
               {t("memberBetting")}
             </Link>
           </TabsTrigger>

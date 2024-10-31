@@ -20,10 +20,16 @@ import {
 } from "date-fns";
 import { Calendar as CalendarIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { usePathname, useSearchParams } from "next/navigation";
+import { } from "next/navigation";
 import { parseAsInteger, useQueryStates } from "nuqs";
 import { useEffect } from "react";
 import type { DateRange } from "react-day-picker";
+
+export const today = new Date();
+export const times = {
+  startTime: startOfDay(today).getTime(),
+  endTime: endOfDay(today).getTime(),
+}
 
 type rangeType =
   | "today"
@@ -46,9 +52,7 @@ export function DateRangeFilter({
   quickSetBtn?: rangeType[];
 }) {
   const t = useTranslations("report.orderlist");
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
-  const today = new Date();
+
   const [dateRange, setDateRange] = useQueryStates({
     startTime: parseAsInteger
       .withDefault(startOfDay(today).getTime())
@@ -59,14 +63,13 @@ export function DateRangeFilter({
       clearOnDefault: false,
     }),
   });
-  const tabsType = searchParams.get("tabsType");
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     setDateRange({
       startTime: startOfDay(today).getTime(),
       endTime: endOfDay(today).getTime(),
     });
-  }, [tabsType]);
+  }, []);
 
   const handleQuickSelect = (type: string) => {
     let from: Date;
