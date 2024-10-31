@@ -1,14 +1,11 @@
-import { agentBaccaratReport } from "@/api";
+
 import Form from "./form";
 import List from "./list";
 import TopTabs from "./top-tabs";
 
 export default async function Page({ searchParams }: any) {
-  const params = await searchParams;
-  console.log(params, 'params');
-
-  const data = await agentBaccaratReport(params);
-  console.log(data, 'data');
+  // const params = await searchParams;
+  // const data = await agentBaccaratReport(params);
   return (
     <div className="flex flex-col gap-2 w-full">
       <TopTabs />
