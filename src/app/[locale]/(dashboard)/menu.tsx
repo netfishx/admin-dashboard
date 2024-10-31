@@ -23,6 +23,7 @@ import {
 import { useTranslations } from "next-intl";
 import { usePathname } from "next/navigation";
 import { parseAsArrayOf, parseAsString, useQueryState } from "nuqs";
+import { startTransition } from "react";
 import { MenuItem } from "./menu-item";
 
 export function Menu() {
@@ -47,16 +48,20 @@ function OpenedMenu({ pathname }: { pathname: string }) {
     "openedMenu",
     parseAsArrayOf(parseAsString).withDefault([pathname.split("/")[1]]),
   );
+
+  function handleOpenChange(key: string, e: boolean) {
+    startTransition(async () => {
+      e
+        ? await setOpenedMenu([...openedMenu, key])
+        : await setOpenedMenu(openedMenu.filter((v) => v !== key));
+    });
+  }
   return (
     <>
       <MenuItem label={t("home")} href="/" icon={<Home className="size-4" />} />
       <Collapsible
         open={openedMenu.includes("games")}
-        onOpenChange={(e) => {
-          e
-            ? setOpenedMenu([...openedMenu, "games"])
-            : setOpenedMenu(openedMenu.filter((v) => v !== "games"));
-        }}
+        onOpenChange={(e) => handleOpenChange("games", e)}
       >
         <CollapsibleTrigger asChild>
           <MenuItem
@@ -76,11 +81,7 @@ function OpenedMenu({ pathname }: { pathname: string }) {
       </Collapsible>
       <Collapsible
         open={openedMenu.includes("users")}
-        onOpenChange={(e) => {
-          e
-            ? setOpenedMenu([...openedMenu, "users"])
-            : setOpenedMenu(openedMenu.filter((v) => v !== "users"));
-        }}
+        onOpenChange={(e) => handleOpenChange("users", e)}
       >
         <CollapsibleTrigger asChild>
           <MenuItem
@@ -89,7 +90,7 @@ function OpenedMenu({ pathname }: { pathname: string }) {
             hasChildren
           />
         </CollapsibleTrigger>
-        <CollapsibleContent className="flex flex-col gap-1 pl-6">
+        <CollapsibleContent className="flex flex-col gap-1 px-6">
           <MenuItem label={t("users.agent")} href="/users/agent" />
           <MenuItem label={t("users.member")} href="/users/member" />
           <MenuItem label={t("users.supplier")} href="/users/supplier" />
@@ -97,11 +98,7 @@ function OpenedMenu({ pathname }: { pathname: string }) {
       </Collapsible>
       <Collapsible
         open={openedMenu.includes("reports")}
-        onOpenChange={(e) => {
-          e
-            ? setOpenedMenu([...openedMenu, "reports"])
-            : setOpenedMenu(openedMenu.filter((v) => v !== "reports"));
-        }}
+        onOpenChange={(e) => handleOpenChange("reports", e)}
       >
         <CollapsibleTrigger asChild>
           <MenuItem
@@ -110,7 +107,7 @@ function OpenedMenu({ pathname }: { pathname: string }) {
             hasChildren
           />
         </CollapsibleTrigger>
-        <CollapsibleContent className="flex flex-col gap-1 pl-6">
+        <CollapsibleContent className="flex flex-col gap-1 px-6">
           <MenuItem
             label={t("reports.order.baccarat")}
             href="/reports/order/baccarat"
@@ -142,16 +139,13 @@ function OpenedMenu({ pathname }: { pathname: string }) {
           <MenuItem label={t("reports.withdraw")} href="/reports/withdraw" />
           <MenuItem label={t("reports.borrow")} href="/reports/borrow" />
           <MenuItem label={t("reports.reward")} href="/reports/reward" />
+          <MenuItem label={t("reports.credit")} href="/reports/credit" />
           <MenuItem label={t("reports.download")} href="/reports/download" />
         </CollapsibleContent>
       </Collapsible>
       <Collapsible
         open={openedMenu.includes("withdraw")}
-        onOpenChange={(e) => {
-          e
-            ? setOpenedMenu([...openedMenu, "withdraw"])
-            : setOpenedMenu(openedMenu.filter((v) => v !== "withdraw"));
-        }}
+        onOpenChange={(e) => handleOpenChange("withdraw", e)}
       >
         <CollapsibleTrigger asChild>
           <MenuItem
@@ -160,18 +154,14 @@ function OpenedMenu({ pathname }: { pathname: string }) {
             hasChildren
           />
         </CollapsibleTrigger>
-        <CollapsibleContent className="flex flex-col gap-1 pl-6">
+        <CollapsibleContent className="flex flex-col gap-1 px-6">
           <MenuItem label={t("withdraw.apply")} href="/withdraw/apply" />
           <MenuItem label={t("withdraw.audit")} href="/withdraw/audit" />
         </CollapsibleContent>
       </Collapsible>
       <Collapsible
         open={openedMenu.includes("fund")}
-        onOpenChange={(e) => {
-          e
-            ? setOpenedMenu([...openedMenu, "fund"])
-            : setOpenedMenu(openedMenu.filter((v) => v !== "fund"));
-        }}
+        onOpenChange={(e) => handleOpenChange("fund", e)}
       >
         <CollapsibleTrigger asChild>
           <MenuItem
@@ -180,7 +170,7 @@ function OpenedMenu({ pathname }: { pathname: string }) {
             hasChildren
           />
         </CollapsibleTrigger>
-        <CollapsibleContent className="flex flex-col gap-1 pl-6">
+        <CollapsibleContent className="flex flex-col gap-1 px-6">
           <MenuItem label={t("fund.minerfee")} href="/fund/minerfee" />
           <MenuItem label={t("fund.collection")} href="/fund/collection" />
           <MenuItem label={t("fund.withdrawfee")} href="/fund/withdrawfee" />
@@ -188,11 +178,7 @@ function OpenedMenu({ pathname }: { pathname: string }) {
       </Collapsible>
       <Collapsible
         open={openedMenu.includes("personal")}
-        onOpenChange={(e) => {
-          e
-            ? setOpenedMenu([...openedMenu, "personal"])
-            : setOpenedMenu(openedMenu.filter((v) => v !== "personal"));
-        }}
+        onOpenChange={(e) => handleOpenChange("personal", e)}
       >
         <CollapsibleTrigger asChild>
           <MenuItem
@@ -201,13 +187,16 @@ function OpenedMenu({ pathname }: { pathname: string }) {
             hasChildren
           />
         </CollapsibleTrigger>
-        <CollapsibleContent className="flex flex-col gap-1 pl-6">
+        <CollapsibleContent className="flex flex-col gap-1 px-6">
           <MenuItem label={t("personal.info")} href="/personal/info" />
           <MenuItem label={t("personal.loginlog")} href="/personal/loginlog" />
           <MenuItem label={t("personal.security")} href="/personal/security" />
         </CollapsibleContent>
       </Collapsible>
-      <Collapsible>
+      <Collapsible
+        open={openedMenu.includes("system")}
+        onOpenChange={(e) => handleOpenChange("system", e)}
+      >
         <CollapsibleTrigger asChild>
           <MenuItem
             label={t("system.title")}
@@ -215,7 +204,7 @@ function OpenedMenu({ pathname }: { pathname: string }) {
             hasChildren
           />
         </CollapsibleTrigger>
-        <CollapsibleContent className="flex flex-col gap-1 pl-6">
+        <CollapsibleContent className="flex flex-col gap-1 px-6">
           <MenuItem label={t("system.role")} href="/system/role" />
           <MenuItem label={t("system.subaccount")} href="/system/subaccount" />
           <MenuItem label={t("system.platform")} href="/system/platform" />
@@ -226,7 +215,10 @@ function OpenedMenu({ pathname }: { pathname: string }) {
           />
         </CollapsibleContent>
       </Collapsible>
-      <Collapsible>
+      <Collapsible
+        open={openedMenu.includes("maintain")}
+        onOpenChange={(e) => handleOpenChange("maintain", e)}
+      >
         <CollapsibleTrigger asChild>
           <MenuItem
             label={t("maintain.title")}
@@ -234,7 +226,7 @@ function OpenedMenu({ pathname }: { pathname: string }) {
             hasChildren
           />
         </CollapsibleTrigger>
-        <CollapsibleContent className="flex flex-col gap-1 pl-6">
+        <CollapsibleContent className="flex flex-col gap-1 px-6">
           <MenuItem
             label={t("maintain.dictionary")}
             href="/maintain/dictionary"

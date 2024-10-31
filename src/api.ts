@@ -9,8 +9,8 @@ export interface AgentData {
   status: number;
 }
 
-export async function getAgents() {
-  return await apiRequest({ url: "/api/user" });
+export async function getAgents(data: any) {
+  return await apiRequest({ url: "/api/user", data });
 }
 export async function updateUser(data: AgentData) {
   return await apiRequest({ url: "/api/updateUser", method: "PUT", data });

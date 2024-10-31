@@ -68,7 +68,7 @@ export default function Page() {
         <div className="flex justify-end">
           <Add />
         </div>
-        <div className="border rounded-sm flex-1">
+        <div className="border rounded-sm">
           <Table>
             <TableHeader>
               <TableRow className="bg-muted">

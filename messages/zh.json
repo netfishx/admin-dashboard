@@ -73,6 +73,7 @@
       "withdraw": "提现记录",
       "borrow": "借还记录",
       "reward": "打赏记录",
+      "credit": "授信转账记录",
       "download": "报表下载"
     },
     "withdraw": {
@@ -356,5 +357,11 @@
       "memberBetting": "会员下注",
       "leastlevelID": "末级代理ID"
     }
+  },
+  "pagination": {
+    "total": "共{total}条",
+    "jumpTo": "跳转至",
+    "pageSize": "每页显示",
+    "perPage": "{size}条/页"
   }
 }
