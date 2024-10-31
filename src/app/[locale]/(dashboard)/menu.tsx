@@ -23,6 +23,7 @@ import {
 import { useTranslations } from "next-intl";
 import { usePathname } from "next/navigation";
 import { parseAsArrayOf, parseAsString, useQueryState } from "nuqs";
+import { startTransition } from "react";
 import { MenuItem } from "./menu-item";
 
 export function Menu() {
@@ -47,16 +48,20 @@ function OpenedMenu({ pathname }: { pathname: string }) {
     "openedMenu",
     parseAsArrayOf(parseAsString).withDefault([pathname.split("/")[1]]),
   );
+
+  function handleOpenChange(key: string, e: boolean) {
+    startTransition(async () => {
+      e
+        ? await setOpenedMenu([...openedMenu, key])
+        : await setOpenedMenu(openedMenu.filter((v) => v !== key));
+    });
+  }
   return (
     <>
       <MenuItem label={t("home")} href="/" icon={<Home className="size-4" />} />
       <Collapsible
         open={openedMenu.includes("games")}
-        onOpenChange={(e) => {
-          e
-            ? setOpenedMenu([...openedMenu, "games"])
-            : setOpenedMenu(openedMenu.filter((v) => v !== "games"));
-        }}
+        onOpenChange={(e) => handleOpenChange("games", e)}
       >
         <CollapsibleTrigger asChild>
           <MenuItem
@@ -76,11 +81,7 @@ function OpenedMenu({ pathname }: { pathname: string }) {
       </Collapsible>
       <Collapsible
         open={openedMenu.includes("users")}
-        onOpenChange={(e) => {
-          e
-            ? setOpenedMenu([...openedMenu, "users"])
-            : setOpenedMenu(openedMenu.filter((v) => v !== "users"));
-        }}
+        onOpenChange={(e) => handleOpenChange("users", e)}
       >
         <CollapsibleTrigger asChild>
           <MenuItem
@@ -97,11 +98,7 @@ function OpenedMenu({ pathname }: { pathname: string }) {
       </Collapsible>
       <Collapsible
         open={openedMenu.includes("reports")}
-        onOpenChange={(e) => {
-          e
-            ? setOpenedMenu([...openedMenu, "reports"])
-            : setOpenedMenu(openedMenu.filter((v) => v !== "reports"));
-        }}
+        onOpenChange={(e) => handleOpenChange("reports", e)}
       >
         <CollapsibleTrigger asChild>
           <MenuItem
@@ -148,11 +145,7 @@ function OpenedMenu({ pathname }: { pathname: string }) {
       </Collapsible>
       <Collapsible
         open={openedMenu.includes("withdraw")}
-        onOpenChange={(e) => {
-          e
-            ? setOpenedMenu([...openedMenu, "withdraw"])
-            : setOpenedMenu(openedMenu.filter((v) => v !== "withdraw"));
-        }}
+        onOpenChange={(e) => handleOpenChange("withdraw", e)}
       >
         <CollapsibleTrigger asChild>
           <MenuItem
@@ -168,11 +161,7 @@ function OpenedMenu({ pathname }: { pathname: string }) {
       </Collapsible>
       <Collapsible
         open={openedMenu.includes("fund")}
-        onOpenChange={(e) => {
-          e
-            ? setOpenedMenu([...openedMenu, "fund"])
-            : setOpenedMenu(openedMenu.filter((v) => v !== "fund"));
-        }}
+        onOpenChange={(e) => handleOpenChange("fund", e)}
       >
         <CollapsibleTrigger asChild>
           <MenuItem
@@ -189,11 +178,7 @@ function OpenedMenu({ pathname }: { pathname: string }) {
       </Collapsible>
       <Collapsible
         open={openedMenu.includes("personal")}
-        onOpenChange={(e) => {
-          e
-            ? setOpenedMenu([...openedMenu, "personal"])
-            : setOpenedMenu(openedMenu.filter((v) => v !== "personal"));
-        }}
+        onOpenChange={(e) => handleOpenChange("personal", e)}
       >
         <CollapsibleTrigger asChild>
           <MenuItem
@@ -208,7 +193,10 @@ function OpenedMenu({ pathname }: { pathname: string }) {
           <MenuItem label={t("personal.security")} href="/personal/security" />
         </CollapsibleContent>
       </Collapsible>
-      <Collapsible>
+      <Collapsible
+        open={openedMenu.includes("system")}
+        onOpenChange={(e) => handleOpenChange("system", e)}
+      >
         <CollapsibleTrigger asChild>
           <MenuItem
             label={t("system.title")}
@@ -227,7 +215,10 @@ function OpenedMenu({ pathname }: { pathname: string }) {
           />
         </CollapsibleContent>
       </Collapsible>
-      <Collapsible>
+      <Collapsible
+        open={openedMenu.includes("maintain")}
+        onOpenChange={(e) => handleOpenChange("maintain", e)}
+      >
         <CollapsibleTrigger asChild>
           <MenuItem
             label={t("maintain.title")}
