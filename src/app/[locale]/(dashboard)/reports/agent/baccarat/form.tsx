@@ -63,19 +63,10 @@ export default function form() {
             </SelectContent>
           </Select>
         </div>
-        {tabsType === TabsTypes.RATIO && (
-          <div className="flex gap-2 items-center">
-            <Label className="shrink-0">{t("drawtime")}</Label>
-            <DateRangeFilter />
-          </div>
-        )}
-        {tabsType === TabsTypes.MEMBER && (
-          <div className="flex gap-2 items-center">
-            <Label className="shrink-0">{t("drawtime")}</Label>
-            <DateRangeFilter />
-          </div>
-        )}
-
+        <div className="flex gap-2 items-center">
+          <Label className="shrink-0">{t("drawtime")}</Label>
+          <DateRangeFilter />
+        </div>
       </div>
 
       {/* 第二行 */}
