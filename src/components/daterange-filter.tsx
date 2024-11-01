@@ -20,7 +20,7 @@ import {
 } from "date-fns";
 import { Calendar as CalendarIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { } from "next/navigation";
+import {} from "next/navigation";
 import { parseAsInteger, useQueryStates } from "nuqs";
 import { startTransition, useEffect } from "react";
 import type { DateRange } from "react-day-picker";
@@ -29,7 +29,7 @@ export const today = new Date();
 export const times = {
   startTime: startOfDay(today).getTime(),
   endTime: endOfDay(today).getTime(),
-}
+};
 
 type rangeType =
   | "today"
