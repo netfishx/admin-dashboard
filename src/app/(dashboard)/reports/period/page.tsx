@@ -9,9 +9,9 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { getTranslations } from "next-intl/server";
+import { Suspense } from "react";
 import { Actions } from "./actions";
 import { Form } from "./form";
-
 export interface AgentData {
   _id: string;
   upUserName: string;
@@ -39,12 +39,9 @@ const data = [
 export default async function Page() {
   const t = await getTranslations("report.periodlist");
 
-  const CustomTableHeader = (text: string) => {
-    return <TableHead className="w-24 min-w-24 text-center">{text}</TableHead>;
-  };
   return (
-    <>
-      <div className="flex flex-col gap-2 w-full">
+    <div className="flex flex-col gap-2 w-full">
+      <Suspense fallback={null}>
         <Form />
         {/* table */}
         <div className="flex flex-col gap-2 w-full">
@@ -54,16 +51,28 @@ export default async function Page() {
                 <Table className="">
                   <TableHeader className="sticky">
                     <TableRow className="bg-muted">
-                      {CustomTableHeader(t("gameId"))}
-                      {CustomTableHeader(t("openTime"))}
-                      {CustomTableHeader(t("gametype"))}
-                      {CustomTableHeader(t("gamename"))}
-                      {CustomTableHeader(t("betNum"))}
-                      {CustomTableHeader(t("betMoneyAmount"))}
-                      {CustomTableHeader(t("heMoney"))}
-                      {CustomTableHeader(t("ddMoney"))}
-                      {CustomTableHeader(t("workMoney"))}
-                      {CustomTableHeader(t("memberBackMoney"))}
+                      <TableHead className="min-w-32">{t("gameId")}</TableHead>
+                      <TableHead className="min-w-32">
+                        {t("openTime")}
+                      </TableHead>
+                      <TableHead className="min-w-32">
+                        {t("gametype")}
+                      </TableHead>
+                      <TableHead className="min-w-32">
+                        {t("gamename")}
+                      </TableHead>
+                      <TableHead className="min-w-32">{t("betNum")}</TableHead>
+                      <TableHead className="min-w-32">
+                        {t("betMoneyAmount")}
+                      </TableHead>
+                      <TableHead className="min-w-32">{t("heMoney")}</TableHead>
+                      <TableHead className="min-w-32">{t("ddMoney")}</TableHead>
+                      <TableHead className="min-w-32">
+                        {t("workMoney")}
+                      </TableHead>
+                      <TableHead className="min-w-32">
+                        {t("memberBackMoney")}
+                      </TableHead>
                       <TableHead className="w-24 text-center sticky right-0 bg-muted">
                         {t("action")}
                       </TableHead>
@@ -114,7 +123,7 @@ export default async function Page() {
             </div>
           </div>
         </div>
-      </div>
-    </>
+      </Suspense>
+    </div>
   );
 }

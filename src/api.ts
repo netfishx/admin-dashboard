@@ -10,12 +10,10 @@ export interface AgentData {
 }
 
 export async function getAgents(data: any) {
-  return await apiRequest<{
-    list: AgentData[];
-    total: number;
-    page: number;
-    size: number;
-  }>({ url: "/api/user", data });
+  return await apiRequest<WithPagination & { data: AgentData[] }>({
+    url: "/api/user",
+    data,
+  });
 }
 export async function updateUser(data: AgentData) {
   return await apiRequest({ url: "/api/updateUser", method: "PUT", data });
@@ -23,9 +21,38 @@ export async function updateUser(data: AgentData) {
 export async function addUser(data: AgentData) {
   return await apiRequest({ url: "/api/addUser", method: "POST", data });
 }
+
+export interface WithPagination {
+  total: number;
+  page: number;
+  size: number;
+}
+export interface LoginLog {
+  userId: string;
+  loginTime: string;
+  ip: string;
+  address: string;
+  status: number;
+}
+export async function getLoginLog(data: any) {
+  return await apiRequest<WithPagination & { data: LoginLog[] }>({
+    url: "/api/getLoginLog",
+    data,
+  });
+}
 export async function agentBaccaratReport(data: any) {
   return await apiRequest({ url: "/api/agentBaccaratReport", data });
 }
-export async function getAnnouncement<T>() {
-  return await apiRequest<T>({ url: "/api/getUpAnnouncement" });
+export interface Announcement {
+  id: string;
+  beginTime: string;
+  endTime: string;
+  content: string;
+  createTime: string;
+  type: number;
+}
+export async function getAnnouncement() {
+  return await apiRequest<WithPagination & { data: Announcement[] }>({
+    url: "/api/getUpAnnouncement",
+  });
 }

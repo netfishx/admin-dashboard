@@ -1,4 +1,5 @@
 "use client";
+import type { Announcement } from "@/api";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -10,8 +11,6 @@ import {
 } from "@/components/ui/dialog";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
-import type { Announcement } from "./all/list";
-
 export function Actions({ data }: { data: Announcement }) {
   const t = useTranslations("system.announcement");
   const [contentModalVisible, setContentModal] = useState(false);

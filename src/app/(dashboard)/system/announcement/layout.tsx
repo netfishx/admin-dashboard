@@ -1,5 +1,5 @@
 import { getTranslations } from "next-intl/server";
-import type { ReactNode } from "react";
+import { type ReactNode, Suspense } from "react";
 import TabsItem from "./tabs-item";
 
 export default async function DashboardLayout({
@@ -14,7 +14,7 @@ export default async function DashboardLayout({
   return (
     <div className="w-full overflow-hidden">
       <TabsItem tabsContent={tabsContent} />
-      {children}
+      <Suspense fallback={null}>{children}</Suspense>
     </div>
   );
 }

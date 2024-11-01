@@ -11,19 +11,13 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useTranslations } from "next-intl";
-import { useSearchParams } from "next/navigation";
 import { useQueryState } from "nuqs";
 
-export default function form() {
+export function MemberForm() {
   const t = useTranslations("report.agent");
   const [gametype, setGameType] = useQueryState("gametype");
   const [gameName, setGameName] = useQueryState("gameName");
-  const [memberID, setMemberID] = useQueryState("memberID");
-  const [roomeownerID, setRoomeownerID] = useQueryState("roomeownerID");
-  const [uperagentID, setUperagentID] = useQueryState("uperagentID");
   const [leastlevelID, setLeastlevelID] = useQueryState("leastlevelID");
-  const searchParams = useSearchParams();
-  const tabsType = searchParams.get("tabsType");
 
   return (
     <div className="flex flex-col gap-2 bg-background py-2 px-4">
