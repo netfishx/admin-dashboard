@@ -2,7 +2,7 @@
 import { Button } from "@/components/ui/button";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
-import Detaildialog from "./detail-dialog";
+import Detaildialog from "../detail-dialog";
 
 export default function DetailButton() {
   const t = useTranslations("report.orderlist");

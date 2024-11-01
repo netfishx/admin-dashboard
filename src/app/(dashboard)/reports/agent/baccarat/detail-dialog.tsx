@@ -37,8 +37,6 @@ export default function Detaildialog(props: Dialogprops) {
           </div>
           <ScrollBar orientation="horizontal" />
         </ScrollArea>
-        {/* <div>靴数: 8</div>
-        <div>牌局结果: 庄:♣3 ♣7; ♦2 ♠6</div> */}
         <Table>
           <TableHeader>
             <TableRow className="bg-muted">
