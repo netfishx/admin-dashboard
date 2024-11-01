@@ -3,11 +3,11 @@ import TopTabs from "./top-tabs";
 
 export default function layout({ children }: { children: ReactNode }) {
   return (
-    <div>
-      <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={null}>
+      <div className="flex flex-col gap-2 w-full h-full">
         <TopTabs />
         {children}
-      </Suspense>
-    </div>
-  )
+      </div>
+    </Suspense>
+  );
 }
