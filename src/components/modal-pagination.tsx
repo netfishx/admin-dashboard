@@ -84,7 +84,7 @@ export function ModalPagination({
         </PaginationItem>
         <PaginationItem>
           <Select
-            defaultValue={size.toString()}
+            defaultValue={size?.toString() ?? "10"}
             onValueChange={(value) => setSize(Number(value))}
           >
             <SelectTrigger className="w-28">

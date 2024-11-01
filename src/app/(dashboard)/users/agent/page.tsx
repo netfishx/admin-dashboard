@@ -52,7 +52,13 @@ async function AgentTable({
 }: { searchParams: Promise<{ [key: string]: string | string[] }> }) {
   const t = await getTranslations("users.agents");
   const search = await searchParams;
-  const res = await getAgents({ ...search, page: search.page ?? 1 });
+  const { data, code, message } = await getAgents({
+    ...search,
+    page: search.page ?? 1,
+  });
+  if (code === 200) {
+    console.log(data);
+  }
   return (
     <>
       <div className="border rounded-sm">
@@ -71,7 +77,7 @@ async function AgentTable({
             </TableRow>
           </TableHeader>
           <TableBody>
-            {res.data?.list.map((item: AgentData) => (
+            {data?.data?.map((item: AgentData) => (
               <TableRow key={item.userId}>
                 <TableCell className="min-w-32">{item.upUserName}</TableCell>
                 <TableCell className="min-w-32">{item.userLevel}</TableCell>
@@ -100,9 +106,9 @@ async function AgentTable({
       </div>
       <div className="pt-2">
         <Pages
-          total={res.data?.total ?? 0}
-          currentPage={Number(res.data?.page ?? 1)}
-          pageSize={Number(res.data?.size ?? 10)}
+          total={data?.total ?? 0}
+          currentPage={Number(data?.page ?? 1)}
+          pageSize={Number(data?.size ?? 10)}
         />
       </div>
     </>
