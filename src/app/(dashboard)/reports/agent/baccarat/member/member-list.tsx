@@ -10,11 +10,11 @@ import {
 import { useTranslations } from "next-intl";
 import DetailButton from "./detail-button";
 
-const _tempData = "111111111111111111112221";
+const tempData = "111111111111111111112221";
 const data = [
   {
-    agentOrOwnerId: "",
-    gameName: "",
+    agentOrOwnerId: tempData,
+    gameName: tempData,
     shareAmount: 0,
     blockAmount: 0,
     deductAmount: 0,
