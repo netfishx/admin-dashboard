@@ -1,3 +1,4 @@
+import ListScrollArea from "@/components/list-scroll-area";
 import { ScrollBar } from "@/components/ui/scroll-area";
 import {
   Table,
@@ -8,7 +9,6 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { useTranslations } from "next-intl";
-import ListScrollArea from "../../../../../components/list-scroll-area";
 import DetailButton from "./detail-button";
 
 const tempData = "111111111111111111112221";
