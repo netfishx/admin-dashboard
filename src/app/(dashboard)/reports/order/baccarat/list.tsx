@@ -8,8 +8,8 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { useTranslations } from "next-intl";
+import ListScrollArea from "../../../../../components/list-scroll-area";
 import DetailButton from "./detail-button";
-import ListScrollArea from "./list-scroll-area";
 
 const tempData = "111111111111111111112221";
 const data = [
