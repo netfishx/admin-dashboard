@@ -10,12 +10,10 @@ export interface AgentData {
 }
 
 export async function getAgents(data: any) {
-  return await apiRequest<{
-    list: AgentData[];
-    total: number;
-    page: number;
-    size: number;
-  }>({ url: "/api/user", data });
+  return await apiRequest<WithPagination & { data: AgentData[] }>({
+    url: "/api/user",
+    data,
+  });
 }
 export async function updateUser(data: AgentData) {
   return await apiRequest({ url: "/api/updateUser", method: "PUT", data });
