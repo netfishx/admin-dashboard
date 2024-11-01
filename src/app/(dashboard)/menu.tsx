@@ -119,7 +119,7 @@ function OpenedMenu({ pathname }: { pathname: string }) {
           <MenuItem label={t("reports.period")} href="/reports/period" />
           <MenuItem
             label={t("reports.agent.baccarat")}
-            href="/reports/agent/baccarat"
+            href="/reports/agent/baccarat/ratio"
           />
           <MenuItem
             label={t("reports.agent.gundan")}

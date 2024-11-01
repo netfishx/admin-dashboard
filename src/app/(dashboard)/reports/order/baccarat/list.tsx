@@ -1,4 +1,5 @@
-import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
+import ListScrollArea from "@/components/list-scroll-area";
+import { ScrollBar } from "@/components/ui/scroll-area";
 import {
   Table,
   TableBody,
@@ -43,7 +44,7 @@ export default function List() {
     <div className="p-2 bg-background flex-1">
       <div className="py-2">注单列表-真人视讯</div>
       <div className="border rounded-sm relative">
-        <ScrollArea className="w-[calc(100dvw-16.1rem)]">
+        <ListScrollArea>
           <Table>
             <TableHeader>
               <TableRow className="bg-muted">
@@ -135,7 +136,7 @@ export default function List() {
             </TableBody>
           </Table>
           <ScrollBar orientation="horizontal" />
-        </ScrollArea>
+        </ListScrollArea>
       </div>
     </div>
   );
