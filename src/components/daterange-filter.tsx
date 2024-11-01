@@ -20,9 +20,16 @@ import {
 } from "date-fns";
 import { Calendar as CalendarIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { } from "next/navigation";
 import { parseAsInteger, useQueryStates } from "nuqs";
-import { useEffect } from "react";
+import { startTransition, useEffect } from "react";
 import type { DateRange } from "react-day-picker";
+
+export const today = new Date();
+export const times = {
+  startTime: startOfDay(today).getTime(),
+  endTime: endOfDay(today).getTime(),
+}
 
 type rangeType =
   | "today"
@@ -46,7 +53,6 @@ export function DateRangeFilter({
 }) {
   const t = useTranslations("report.orderlist");
 
-  const today = new Date();
   const [dateRange, setDateRange] = useQueryStates({
     startTime: parseAsInteger
       .withDefault(startOfDay(today).getTime())
@@ -57,12 +63,13 @@ export function DateRangeFilter({
       clearOnDefault: false,
     }),
   });
-
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
-    setDateRange({
-      startTime: startOfDay(today).getTime(),
-      endTime: endOfDay(today).getTime(),
+    startTransition(async () => {
+      await setDateRange({
+        startTime: startOfDay(today).getTime(),
+        endTime: endOfDay(today).getTime(),
+      });
     });
   }, []);
 

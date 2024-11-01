@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import logo from "@/assets/images/logo.svg";
 import { cn } from "@/lib/utils";
