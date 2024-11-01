@@ -43,7 +43,7 @@ export default function List() {
     <div className="p-2 bg-background flex-1">
       <div className="py-2">注单列表-真人视讯</div>
       <div className="border rounded-sm relative">
-        <ScrollArea className="w-[calc(100dvw-16.1rem)]">
+        <ScrollArea className="w-[calc(110dvw-16.1rem)]">
           <Table>
             <TableHeader>
               <TableRow className="bg-muted">
