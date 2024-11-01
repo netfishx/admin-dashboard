@@ -37,12 +37,12 @@ const data = [
 export default function Page() {
   return (
     <div className="flex flex-col gap-2 w-full">
-      <Suspense fallback={null}>
-        <MaintainForm />
-      </Suspense>
+      <MaintainForm />
       <div className="p-2 bg-background flex-1">
         <div className="border rounded-sm">
-          <MaintainTable data={data} />
+          <Suspense fallback={null}>
+            <MaintainTable data={data} />
+          </Suspense>
         </div>
       </div>
     </div>
