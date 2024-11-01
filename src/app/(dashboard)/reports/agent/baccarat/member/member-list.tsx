@@ -26,7 +26,7 @@ const data = [
   },
 ];
 
-export default function List() {
+export function MemberList() {
   const t = useTranslations("report.agent");
 
   return (

@@ -35,7 +35,7 @@ const data = [
   },
 ];
 
-export default function List() {
+export function List() {
   const t = useTranslations("report.orderlist");
   return (
     <div className="p-2 bg-background flex-1">

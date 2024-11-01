@@ -1,6 +1,6 @@
 import { Suspense } from "react";
-import RatioForm from "./ratio-form";
-import RatioList from "./ratio-list";
+import { RatioForm } from "./ratio-form";
+import { RatioList } from "./ratio-list";
 
 export default async function Page({ searchParams }: any) {
   // const params = await searchParams;

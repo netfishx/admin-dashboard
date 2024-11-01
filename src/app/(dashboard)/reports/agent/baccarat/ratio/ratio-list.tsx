@@ -8,7 +8,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { useTranslations } from "next-intl";
-import DetailButton from "./detail-button";
+import { DetailButton } from "./detail-button";
 
 const tempData = "111111111111111111112221";
 const data = [
@@ -26,7 +26,7 @@ const data = [
   },
 ];
 
-export default function List() {
+export function RatioList() {
   const t = useTranslations("report.agent");
 
   return (

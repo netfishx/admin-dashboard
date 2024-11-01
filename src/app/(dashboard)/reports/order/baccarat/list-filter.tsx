@@ -15,7 +15,7 @@ import { DateRangeFilter } from "@/components/daterange-filter";
 import { useTranslations } from "next-intl";
 import { useQueryState } from "nuqs";
 
-export default function ListFilter() {
+export function ListFilter() {
   const t = useTranslations("report.orderlist");
   const [gameName, setGameName] = useQueryState("gameName");
   const [bettingtime, setBettingtime] = useQueryState("bettingtime");
