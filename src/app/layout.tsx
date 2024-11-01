@@ -21,33 +21,31 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <Suspense fallback={null}>
-          <NuqsAdapter>
-            <ThemeProvider
-              attribute="class"
-              defaultTheme="system"
-              enableSystem
-              disableTransitionOnChange
-            >
-              <Toaster
-                position="top-center"
-                richColors
-                expand
-                visibleToasts={1}
-                toastOptions={{ duration: 1000 }}
-              />
-              <JotaiProvider>
-                <I18nProvider>
-                  <Suspense fallback={null}>
-                    <Title />
-                  </Suspense>
-                  {children}
-                </I18nProvider>
-                <ErrorToast />
-              </JotaiProvider>
-            </ThemeProvider>
-          </NuqsAdapter>
-        </Suspense>
+        <NuqsAdapter>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <Toaster
+              position="top-center"
+              richColors
+              expand
+              visibleToasts={1}
+              toastOptions={{ duration: 1000 }}
+            />
+            <JotaiProvider>
+              <I18nProvider>
+                <Suspense fallback={null}>
+                  <Title />
+                </Suspense>
+                {children}
+              </I18nProvider>
+              <ErrorToast />
+            </JotaiProvider>
+          </ThemeProvider>
+        </NuqsAdapter>
       </body>
     </html>
   );

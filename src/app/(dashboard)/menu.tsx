@@ -29,7 +29,7 @@ import {
 import { useTranslations } from "next-intl";
 import { usePathname } from "next/navigation";
 import { parseAsArrayOf, parseAsString, useQueryState } from "nuqs";
-import { startTransition } from "react";
+import { Suspense, startTransition } from "react";
 import { MenuItem, MenuItemLink } from "./menu-item";
 
 export function Menu() {
@@ -39,7 +39,9 @@ export function Menu() {
     <ScrollArea className="h-[calc(100dvh-8.5rem)]">
       <div className="flex flex-col gap-1 px-2" suppressHydrationWarning={true}>
         {isOpened ? (
-          <OpenedMenu pathname={pathname} />
+          <Suspense fallback={null}>
+            <OpenedMenu pathname={pathname} />
+          </Suspense>
         ) : (
           <ClosedMenu pathname={pathname} />
         )}
