@@ -1,4 +1,5 @@
 import { getRequestConfig } from "next-intl/server";
+import messages from "../../messages/zh.json";
 
 async function now() {
   "use cache";
@@ -8,7 +9,7 @@ async function now() {
 export default getRequestConfig(async () => {
   return {
     locale: "zh",
-    messages: (await import("../../messages/zh.json")).default,
+    messages,
     now: await now(),
   };
 });
