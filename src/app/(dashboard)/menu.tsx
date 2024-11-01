@@ -6,6 +6,12 @@ import {
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
 import { sidebarAtom } from "@/store";
 import { useAtomValue } from "jotai";
@@ -236,130 +242,214 @@ function OpenedMenu({ pathname }: { pathname: string }) {
 }
 
 function ClosedMenu({ pathname }: { pathname: string }) {
+  const t = useTranslations("menu");
   const baseClass = "flex flex-col items-center justify-center h-9";
   return (
     <>
-      <div className={cn([baseClass, pathname === "/" && "text-primary"])}>
-        <MenuItemLink
-          href="/"
-          isActive={pathname === "/"}
-          className="px-0 w-full"
-        >
-          <Home className="size-4" />
-        </MenuItemLink>
-      </div>
-      <div
-        className={cn([
-          baseClass,
-          pathname.startsWith("/games") && "text-primary",
-        ])}
-      >
-        <MenuItemLink
-          href="/games/flyorder"
-          isActive={pathname.startsWith("/games")}
-          className="px-0 w-full"
-        >
-          <Gamepad2 className="size-4" />
-        </MenuItemLink>
-      </div>
-      <div
-        className={cn([
-          baseClass,
-          pathname.startsWith("/users") && "text-primary",
-        ])}
-      >
-        <MenuItemLink
-          href="/users/agent"
-          isActive={pathname.startsWith("/users")}
-          className="px-0 w-full"
-        >
-          <Users className="size-4" />
-        </MenuItemLink>
-      </div>
-      <div
-        className={cn([
-          baseClass,
-          pathname.startsWith("/reports") && "text-primary",
-        ])}
-      >
-        <MenuItemLink
-          href="/reports/order/baccarat"
-          isActive={pathname.startsWith("/reports")}
-          className="px-0 w-full"
-        >
-          <FileText className="size-4" />
-        </MenuItemLink>
-      </div>
-      <div
-        className={cn([
-          baseClass,
-          pathname.startsWith("/withdraw") && "text-primary",
-        ])}
-      >
-        <MenuItemLink
-          href="/withdraw/apply"
-          isActive={pathname.startsWith("/withdraw")}
-          className="px-0 w-full"
-        >
-          <ClipboardCheck className="size-4" />
-        </MenuItemLink>
-      </div>
-      <div
-        className={cn([
-          baseClass,
-          pathname.startsWith("/fund") && "text-primary",
-        ])}
-      >
-        <MenuItemLink
-          href="/fund/minerfee"
-          isActive={pathname.startsWith("/fund")}
-          className="px-0 w-full"
-        >
-          <Scale className="size-4" />
-        </MenuItemLink>
-      </div>
-      <div
-        className={cn([
-          baseClass,
-          pathname.startsWith("/personal") && "text-primary",
-        ])}
-      >
-        <MenuItemLink
-          href="/personal/info"
-          isActive={pathname.startsWith("/personal")}
-          className="px-0 w-full"
-        >
-          <UserSquare className="size-4" />
-        </MenuItemLink>
-      </div>
-      <div
-        className={cn([
-          baseClass,
-          pathname.startsWith("/system") && "text-primary",
-        ])}
-      >
-        <MenuItemLink
-          href="/system/role"
-          isActive={pathname.startsWith("/system")}
-          className="px-0 w-full"
-        >
-          <Tv2 className="size-4" />
-        </MenuItemLink>
-      </div>
-      <div
-        className={cn([
-          baseClass,
-          pathname.startsWith("/maintain") && "text-primary",
-        ])}
-      >
-        <MenuItemLink
-          href="/maintain/dictionary"
-          isActive={pathname.startsWith("/maintain")}
-          className="px-0 w-full"
-        >
-          <Cog className="size-4" />
-        </MenuItemLink>
-      </div>
+      <TooltipProvider>
+        <Tooltip>
+          <TooltipTrigger>
+            <div
+              className={cn([baseClass, pathname === "/" && "text-primary"])}
+            >
+              <MenuItemLink
+                href="/"
+                isActive={pathname === "/"}
+                className="px-0 w-full"
+              >
+                <Home className="size-4" />
+              </MenuItemLink>
+            </div>
+          </TooltipTrigger>
+          <TooltipContent side="right">
+            <p>{t("home")}</p>
+          </TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
+      <TooltipProvider>
+        <Tooltip>
+          <TooltipTrigger>
+            <div
+              className={cn([
+                baseClass,
+                pathname.startsWith("/games") && "text-primary",
+              ])}
+            >
+              <MenuItemLink
+                href="/games/flyorder"
+                isActive={pathname.startsWith("/games")}
+                className="px-0 w-full"
+              >
+                <Gamepad2 className="size-4" />
+              </MenuItemLink>
+            </div>
+          </TooltipTrigger>
+          <TooltipContent side="right">
+            <p>{t("games.title")}</p>
+          </TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
+      <TooltipProvider>
+        <Tooltip>
+          <TooltipTrigger>
+            <div
+              className={cn([
+                baseClass,
+                pathname.startsWith("/users") && "text-primary",
+              ])}
+            >
+              <MenuItemLink
+                href="/users/agent"
+                isActive={pathname.startsWith("/users")}
+                className="px-0 w-full"
+              >
+                <Users className="size-4" />
+              </MenuItemLink>
+            </div>
+          </TooltipTrigger>
+          <TooltipContent side="right">
+            <p>{t("users.title")}</p>
+          </TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
+      <TooltipProvider>
+        <Tooltip>
+          <TooltipTrigger>
+            <div
+              className={cn([
+                baseClass,
+                pathname.startsWith("/reports") && "text-primary",
+              ])}
+            >
+              <MenuItemLink
+                href="/reports/order/baccarat"
+                isActive={pathname.startsWith("/reports")}
+                className="px-0 w-full"
+              >
+                <FileText className="size-4" />
+              </MenuItemLink>
+            </div>
+          </TooltipTrigger>
+          <TooltipContent side="right">
+            <p>{t("reports.title")}</p>
+          </TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
+      <TooltipProvider>
+        <Tooltip>
+          <TooltipTrigger>
+            <div
+              className={cn([
+                baseClass,
+                pathname.startsWith("/withdraw") && "text-primary",
+              ])}
+            >
+              <MenuItemLink
+                href="/withdraw/apply"
+                isActive={pathname.startsWith("/withdraw")}
+                className="px-0 w-full"
+              >
+                <ClipboardCheck className="size-4" />
+              </MenuItemLink>
+            </div>
+          </TooltipTrigger>
+          <TooltipContent side="right">
+            <p>{t("withdraw.title")}</p>
+          </TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
+      <TooltipProvider>
+        <Tooltip>
+          <TooltipTrigger>
+            <div
+              className={cn([
+                baseClass,
+                pathname.startsWith("/fund") && "text-primary",
+              ])}
+            >
+              <MenuItemLink
+                href="/fund/minerfee"
+                isActive={pathname.startsWith("/fund")}
+                className="px-0 w-full"
+              >
+                <Scale className="size-4" />
+              </MenuItemLink>
+            </div>
+          </TooltipTrigger>
+          <TooltipContent side="right">
+            <p>{t("fund.title")}</p>
+          </TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
+      <TooltipProvider>
+        <Tooltip>
+          <TooltipTrigger>
+            <div
+              className={cn([
+                baseClass,
+                pathname.startsWith("/personal") && "text-primary",
+              ])}
+            >
+              <MenuItemLink
+                href="/personal/info"
+                isActive={pathname.startsWith("/personal")}
+                className="px-0 w-full"
+              >
+                <UserSquare className="size-4" />
+              </MenuItemLink>
+            </div>
+          </TooltipTrigger>
+          <TooltipContent side="right">
+            <p>{t("personal.title")}</p>
+          </TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
+      <TooltipProvider>
+        <Tooltip>
+          <TooltipTrigger>
+            <div
+              className={cn([
+                baseClass,
+                pathname.startsWith("/system") && "text-primary",
+              ])}
+            >
+              <MenuItemLink
+                href="/system/role"
+                isActive={pathname.startsWith("/system")}
+                className="px-0 w-full"
+              >
+                <Tv2 className="size-4" />
+              </MenuItemLink>
+            </div>
+          </TooltipTrigger>
+          <TooltipContent side="right">
+            <p>{t("system.title")}</p>
+          </TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
+      <TooltipProvider>
+        <Tooltip>
+          <TooltipTrigger>
+            <div
+              className={cn([
+                baseClass,
+                pathname.startsWith("/maintain") && "text-primary",
+              ])}
+            >
+              <MenuItemLink
+                href="/maintain/dictionary"
+                isActive={pathname.startsWith("/maintain")}
+                className="px-0 w-full"
+              >
+                <Cog className="size-4" />
+              </MenuItemLink>
+            </div>
+          </TooltipTrigger>
+          <TooltipContent side="right">
+            <p>{t("maintain.title")}</p>
+          </TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
     </>
   );
 }
