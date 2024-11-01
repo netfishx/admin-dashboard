@@ -8,7 +8,6 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { useTranslations } from "next-intl";
-import Actions from "./actions";
 
 export interface AgentData {
   _id: string;
@@ -42,7 +41,6 @@ export default function List() {
   return (
     <>
       <div className="flex flex-col gap-2 w-full">
-        {/* <Form /> */}
         <div className="p-2 bg-background flex-1">
           <div className="h-full border rounded-sm relative">
             <ScrollArea className="h-full w-[calc(100dvw-16.1rem)]">
@@ -59,9 +57,9 @@ export default function List() {
                     {CustomTableHeader(t("ddMoney"))}
                     {CustomTableHeader(t("workMoney"))}
                     {CustomTableHeader(t("memberBackMoney"))}
-                    <TableHead className="w-24 text-center sticky right-0 bg-muted">
+                    {/* <TableHead className="w-24 text-center sticky right-0 bg-muted">
                       {t("action")}
-                    </TableHead>
+                    </TableHead> */}
                   </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -97,9 +95,9 @@ export default function List() {
                       <TableCell className="w-24 text-center">
                         {item.memberBackMoney}
                       </TableCell>
-                      <TableCell className="!sticky !right-0 bg-background w-24 text-center">
+                      {/* <TableCell className="!sticky !right-0 bg-background w-24 text-center">
                         <Actions />
-                      </TableCell>
+                      </TableCell> */}
                     </TableRow>
                   ))}
                 </TableBody>

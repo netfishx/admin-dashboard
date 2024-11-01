@@ -23,7 +23,8 @@ export function MenuItem({
   hasChildren?: boolean;
 }) {
   const pathname = usePathname();
-  const isActive = !!href && pathname === href;
+  const isActive = !!href && pathname.startsWith(href);
+
   return (
     <Button
       variant="ghost"

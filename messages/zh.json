@@ -365,5 +365,13 @@
     "jumpTo": "跳转至",
     "pageSize": "每页显示",
     "perPage": "{size}条/页"
+  },
+  "system": {
+    "announcement": {
+      "notifyAnnouncement": "通知公告",
+      "myAnnouncement": "我的公告",
+      "allAgentAnnouncement": "所有代理公告",
+      "platformAnnouncement": "平台公告"
+    }
   }
 }

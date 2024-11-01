@@ -208,7 +208,7 @@ function OpenedMenu({ pathname }: { pathname: string }) {
           <MenuItem label={t("system.resource")} href="/system/resource" />
           <MenuItem
             label={t("system.announcement")}
-            href="/system/announcement"
+            href="/system/announcement/all"
           />
         </CollapsibleContent>
       </Collapsible>
