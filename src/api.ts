@@ -23,8 +23,24 @@ export async function updateUser(data: AgentData) {
 export async function addUser(data: AgentData) {
   return await apiRequest({ url: "/api/addUser", method: "POST", data });
 }
+
+export interface WithPagination {
+  total: number;
+  page: number;
+  size: number;
+}
+export interface LoginLog {
+  userId: string;
+  loginTime: string;
+  ip: string;
+  address: string;
+  status: number;
+}
 export async function getLoginLog(data: any) {
-  return await apiRequest({ url: "/api/getLoginLog", data });
+  return await apiRequest<WithPagination & { data: LoginLog[] }>({
+    url: "/api/getLoginLog",
+    data,
+  });
 }
 export async function agentBaccaratReport(data: any) {
   return await apiRequest({ url: "/api/agentBaccaratReport", data });

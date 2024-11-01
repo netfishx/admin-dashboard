@@ -1,5 +1,5 @@
 "use client";
-import { getLoginLog } from "@/api";
+import { type LoginLog, getLoginLog } from "@/api";
 import { ModalPagination } from "@/components/modal-pagination";
 import { Button } from "@/components/ui/button";
 import {
@@ -10,7 +10,6 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import {} from "@/components/ui/pagination";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import {
   Table,
@@ -26,37 +25,24 @@ import { useAtom, useAtomValue } from "jotai";
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 
-interface LoginLog {
-  userId: string;
-  loginTime: string;
-  ip: string;
-  address: string;
-  status: number;
-}
-
 export function LoginLogModal() {
   const t = useTranslations("users.agents");
   const [data, setData] = useState<LoginLog[]>([]);
   const userId = useAtomValue(loginLogUserIdAtom);
   const [open, setOpen] = useAtom(loginLogModalAtom);
-  const [total, setTotal] = useState(0);
-  const [page, setPage] = useState(1);
-  const [size, setSize] = useState(10);
+  const [total, setTotal] = useState<number>(0);
+  const [page, setPage] = useState<number>(1);
+  const [size, setSize] = useState<number>(10);
   useEffect(() => {
     if (userId) {
-      getLoginLog({ userId, page, size }).then(
-        (res: {
-          data: LoginLog[];
-          total: number;
-          page: number;
-          size: number;
-        }) => {
-          setData(res.data);
-          setTotal(res.total);
-          setPage(res.page);
-          setSize(res.size);
-        },
-      );
+      getLoginLog({ userId, page, size }).then(({ data }) => {
+        if (data) {
+          setData(data.data);
+          setTotal(data.total);
+          setPage(data.page);
+          setSize(data.size);
+        }
+      });
     }
   }, [userId, page, size]);
   return (
