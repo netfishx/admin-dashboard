@@ -1,5 +1,5 @@
 import { type AgentData, getAgents } from "@/api";
-import Pages from "@/components/ui/custom-pagination";
+import Pages from "@/components/custom-pagination";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
   Table,
@@ -15,6 +15,7 @@ import { Suspense } from "react";
 import Action from "./action-buttons";
 import { AddAgent } from "./add-agent";
 import Form from "./form";
+import { Modals } from "./modals";
 
 export default async function Page({
   searchParams,
@@ -41,6 +42,7 @@ export default async function Page({
           <AgentTable searchParams={searchParams} />
         </Suspense>
       </div>
+      <Modals />
     </div>
   );
 }
