@@ -2,12 +2,13 @@
 
 import type { AgentData } from "@/api";
 import { Button } from "@/components/ui/button";
+import { loginLogModalAtom, loginLogUserIdAtom } from "@/store";
+import { useSetAtom } from "jotai";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { ChangeLogModal } from "./change-log-modal";
 import { GameSettingModal } from "./game-setting-modal";
 import { LimitModal } from "./limit-modal";
-import { LoginLogModal } from "./login-log-modal";
 import { RebateModal } from "./rebate-modal";
 import { TransferMoneyModal } from "./transfer-money-modal";
 import { UserInfoModal } from "./user-info-modal";
@@ -19,8 +20,11 @@ export default function Action({ data }: { data: AgentData }) {
   const [gameSettingModal, setGameSettingModal] = useState(false);
   const [limitModal, setLimitModal] = useState(false);
   const [rebateModal, setRebateModal] = useState(false);
-  const [loginLogModal, setLoginLogModal] = useState(false);
+  // const [loginLogModal, setLoginLogModal] = useState(false);
   const [changeLogModal, setChangeLogModal] = useState(false);
+
+  const setLoginLogModal = useSetAtom(loginLogModalAtom);
+  const setLoginLogUserId = useSetAtom(loginLogUserIdAtom);
   return (
     <>
       <Button
@@ -73,6 +77,7 @@ export default function Action({ data }: { data: AgentData }) {
         className="hover:no-underline hover:text-primary/80 px-0"
         onClick={() => {
           setLoginLogModal(true);
+          setLoginLogUserId(data.userId);
         }}
       >
         {t("loginLog")}
@@ -102,7 +107,6 @@ export default function Action({ data }: { data: AgentData }) {
       />
       <LimitModal open={limitModal} onOpenChange={setLimitModal} />
       <RebateModal open={rebateModal} onOpenChange={setRebateModal} />
-      <LoginLogModal open={loginLogModal} onOpenChange={setLoginLogModal} />
       <ChangeLogModal open={changeLogModal} onOpenChange={setChangeLogModal} />
     </>
   );

@@ -18,6 +18,9 @@ export async function updateUser(data: AgentData) {
 export async function addUser(data: AgentData) {
   return await apiRequest({ url: "/api/addUser", method: "POST", data });
 }
+export async function getLoginLog(data: any) {
+  return await apiRequest({ url: "/api/getLoginLog", data });
+}
 export async function agentBaccaratReport(data: any) {
   return await apiRequest({ url: "/api/agentBaccaratReport", data });
 }
