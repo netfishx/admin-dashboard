@@ -20,7 +20,7 @@ interface Dialogprops {
   onOpenChange: (open: boolean) => void;
 }
 
-export default function Detaildialog(props: Dialogprops) {
+export function Detaildialog(props: Dialogprops) {
   const { open, onOpenChange } = props;
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
