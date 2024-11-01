@@ -1,4 +1,4 @@
-import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
+import { getAnnouncement } from "@/api";
 import {
   Table,
   TableBody,
@@ -8,97 +8,66 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { getTranslations } from "next-intl/server";
-import Actions from "../actions";
+import { Actions } from "../actions";
 
-export interface AgentData {
-  _id: string;
-  upUserName: string;
-  userLevel: string;
-  userId: string;
-  userName: string;
-  nickName: string;
-  status: string;
+export interface Announcement {
+  gameId: string;
+  openTime: number;
+  gametype: number;
+  gamename: string;
+  content: string;
+  betMoneyAmount: string;
 }
-const tempData = "111111111111111111111";
-const data = [
-  {
-    gameId: "123",
-    openTime: 123,
-    gametype: 123,
-    gamename: tempData,
-    betNum: tempData,
-    betMoneyAmount: tempData,
-    heMoney: tempData,
-    ddMoney: tempData,
-    workMoney: tempData,
-    memberBackMoney: tempData,
-  },
-];
-export default async function List() {
-  const t = await getTranslations("report.periodlist");
-  const CustomTableHeader = (text: string) => {
-    return <TableHead className="w-24 min-w-24 text-center">{text}</TableHead>;
-  };
+
+export async function List() {
+  const t = await getTranslations("system.announcement");
+  const { data } = await getAnnouncement<Announcement[]>();
+  console.info(data);
   return (
     <>
-      <div className="p-2 bg-background flex-1">
-        <ScrollArea className="h-full w-[calc(100dvw-16.1rem)]">
-          <Table className="">
-            <TableHeader className="sticky">
-              <TableRow className="bg-muted">
-                {CustomTableHeader(t("openTime"))}
-                {CustomTableHeader(t("gametype"))}
-                {CustomTableHeader(t("gamename"))}
-                {CustomTableHeader(t("betNum"))}
-                {CustomTableHeader(t("betMoneyAmount"))}
-                {CustomTableHeader(t("heMoney"))}
-                {CustomTableHeader(t("ddMoney"))}
-                {CustomTableHeader(t("workMoney"))}
-                {CustomTableHeader(t("memberBackMoney"))}
-                <TableHead className="w-24 text-center sticky right-0 bg-muted">
-                  {t("action")}
-                </TableHead>
+      <div className="p-2 mt-2 bg-background flex-1">
+        <Table>
+          <TableHeader className="sticky">
+            <TableRow className="bg-muted">
+              <TableHead className="w-24 min-w-24 text-center">
+                {t("beginTime")}
+              </TableHead>
+              <TableHead className="w-24 min-w-24 text-center">
+                {t("endTime")}
+              </TableHead>
+              <TableHead className="w-24 min-w-24 text-center">
+                {t("createTime")}
+              </TableHead>
+              <TableHead className="w-24 min-w-24 text-center">
+                {t("content")}
+              </TableHead>
+              <TableHead className="w-24 min-w-24 text-center">
+                {t("action")}
+              </TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {data?.map((item: any) => (
+              <TableRow key={Math.random()}>
+                <TableCell className="w-24 text-center">
+                  {item.beginTime}
+                </TableCell>
+                <TableCell className="w-24 text-center">
+                  {item.endTime}
+                </TableCell>
+                <TableCell className="w-24 text-center">
+                  {item.createTime}
+                </TableCell>
+                <TableCell className="w-24 text-center">
+                  {item.content}
+                </TableCell>
+                <TableCell className="w-24 text-center">
+                  <Actions data={item} />
+                </TableCell>
               </TableRow>
-            </TableHeader>
-            <TableBody>
-              {data.map((item) => (
-                <TableRow key={item.gameId}>
-                  <TableCell className="w-24 text-center">
-                    {item.openTime}
-                  </TableCell>
-                  <TableCell className="w-24 text-center">
-                    {item.gametype}
-                  </TableCell>
-                  <TableCell className="w-24 text-center">
-                    {item.gamename}
-                  </TableCell>
-                  <TableCell className="w-24 text-center">
-                    {item.betNum}
-                  </TableCell>
-                  <TableCell className="w-24 text-center">
-                    {item.betMoneyAmount}
-                  </TableCell>
-                  <TableCell className="w-24 text-center">
-                    {item.heMoney}
-                  </TableCell>
-                  <TableCell className="w-24 text-center">
-                    {item.ddMoney}
-                  </TableCell>
-                  <TableCell className="w-24 text-center">
-                    {item.workMoney}
-                  </TableCell>
-                  <TableCell className="w-24 text-center">
-                    {item.memberBackMoney}
-                  </TableCell>
-                  <TableCell className="!sticky !right-0 bg-background w-24 text-center">
-                    <Actions />
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-          <ScrollBar orientation="horizontal" />
-        </ScrollArea>
+            ))}
+          </TableBody>
+        </Table>
       </div>
     </>
   );

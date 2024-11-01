@@ -26,3 +26,6 @@ export async function addUser(data: AgentData) {
 export async function agentBaccaratReport(data: any) {
   return await apiRequest({ url: "/api/agentBaccaratReport", data });
 }
+export async function getAnnouncement<T>() {
+  return await apiRequest<T>({ url: "/api/getUpAnnouncement" });
+}

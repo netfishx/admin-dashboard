@@ -1,5 +1,5 @@
 import { getTranslations } from "next-intl/server";
-import { type ReactNode, Suspense } from "react";
+import type { ReactNode } from "react";
 import TabsItem from "./tabs-item";
 
 export default async function DashboardLayout({
@@ -10,16 +10,11 @@ export default async function DashboardLayout({
     { label: t("notifyAnnouncement"), value: "all" },
     { label: t("myAnnouncement"), value: "own" },
   ];
-  // const tabsContent1 = [
-  //   { label: t("allAgentAnnouncement"), value: "0" },
-  //   { label: t("platformAnnouncement"), value: "1" },
-  // ];
+
   return (
     <div className="w-full overflow-hidden">
-      <Suspense fallback={<div>Loading...</div>}>
-        <TabsItem tabsContent={tabsContent} />
-        {children}
-      </Suspense>
+      <TabsItem tabsContent={tabsContent} />
+      {children}
     </div>
   );
 }

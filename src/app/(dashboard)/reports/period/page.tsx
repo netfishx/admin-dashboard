@@ -1,5 +1,5 @@
-// import List from "./list";
-import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
+import ListScrollArea from "@/components/list-scroll-area";
+import { ScrollBar } from "@/components/ui/scroll-area";
 import {
   Table,
   TableBody,
@@ -9,8 +9,8 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { getTranslations } from "next-intl/server";
-import Actions from "./actions";
-import Form from "./form";
+import { Actions } from "./actions";
+import { Form } from "./form";
 
 export interface AgentData {
   _id: string;
@@ -50,7 +50,7 @@ export default async function Page() {
         <div className="flex flex-col gap-2 w-full">
           <div className="p-2 bg-background flex-1">
             <div className="h-full border rounded-sm relative">
-              <ScrollArea className="h-full w-[calc(100dvw-16.1rem)]">
+              <ListScrollArea>
                 <Table className="">
                   <TableHeader className="sticky">
                     <TableRow className="bg-muted">
@@ -110,7 +110,7 @@ export default async function Page() {
                   </TableBody>
                 </Table>
                 <ScrollBar orientation="horizontal" />
-              </ScrollArea>
+              </ListScrollArea>
             </div>
           </div>
         </div>

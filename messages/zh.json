@@ -99,7 +99,11 @@
       "subaccount": "子账号管理",
       "platform": "全平台管理",
       "resource": "资源管理",
-      "announcement": "公告管理"
+      "announcement": {
+        "title": "公告管理",
+        "all": "上级公告",
+        "own": "本级公告"
+      }
     },
     "maintain": {
       "title": "平台维护",
@@ -368,10 +372,20 @@
   },
   "system": {
     "announcement": {
-      "notifyAnnouncement": "通知公告",
-      "myAnnouncement": "我的公告",
-      "allAgentAnnouncement": "所有代理公告",
-      "platformAnnouncement": "平台公告"
+      "notifyAnnouncement": "上级公告",
+      "myAnnouncement": "本级公告",
+      "allAgentAnnouncement": "全平台公告",
+      "more": "查看",
+      "beginTime": "开始时间",
+      "endTime": "结束时间",
+      "createTime": "创建时间",
+      "type": "类型",
+      "agentId": "代理ID",
+      "content": "内容",
+      "action": "操作",
+      "cancel": "取消",
+      "save": "确定",
+      "add": "新增"
     }
   }
 }
