@@ -37,9 +37,6 @@ const data = [
 
 export default function List() {
   const t = useTranslations("report.orderlist");
-  const CustomTableHeader = (text: string) => {
-    return <TableHead className="w-24 min-w-24 text-center">{text}</TableHead>;
-  };
   return (
     <div className="p-2 bg-background flex-1">
       <div className="py-2">注单列表-真人视讯</div>
@@ -48,24 +45,60 @@ export default function List() {
           <Table>
             <TableHeader>
               <TableRow className="bg-muted">
-                {CustomTableHeader(t("ordernumber"))}
-                {CustomTableHeader(t("issuenumber"))}
-                {CustomTableHeader(t("memberID"))}
-                {CustomTableHeader(t("roomeownerID"))}
-                {CustomTableHeader(t("ministerID"))}
-                {CustomTableHeader(t("leastlevelID"))}
-                {CustomTableHeader(t("gamename"))}
-                {CustomTableHeader(t("smallType"))}
-                {CustomTableHeader(t("odds"))}
-                {CustomTableHeader(t("betcontent"))}
-                {CustomTableHeader(t("result"))}
-                {CustomTableHeader(t("betamount"))}
-                {CustomTableHeader(t("winamount"))}
-                {CustomTableHeader(t("bettime"))}
-                {CustomTableHeader(t("drawtime"))}
-                {CustomTableHeader(t("membersettlementtime"))}
-                {CustomTableHeader(t("proxysettlementtime"))}
-                {CustomTableHeader(t("proxystatus"))}
+                <TableHead className="min-w-24 text-center">
+                  {t("ordernumber")}
+                </TableHead>
+                <TableHead className="min-w-24 text-center">
+                  {t("issuenumber")}
+                </TableHead>
+                <TableHead className="min-w-24 text-center">
+                  {t("memberID")}
+                </TableHead>
+                <TableHead className="min-w-24 text-center">
+                  {t("roomeownerID")}
+                </TableHead>
+                <TableHead className="min-w-24 text-center">
+                  {t("ministerID")}
+                </TableHead>
+                <TableHead className="min-w-24 text-center">
+                  {t("leastlevelID")}
+                </TableHead>
+                <TableHead className="min-w-24 text-center">
+                  {t("gamename")}
+                </TableHead>
+                <TableHead className="min-w-24 text-center">
+                  {t("smallType")}
+                </TableHead>
+                <TableHead className="min-w-24 text-center">
+                  {t("odds")}
+                </TableHead>
+                <TableHead className="min-w-24 text-center">
+                  {t("betcontent")}
+                </TableHead>
+                <TableHead className="min-w-24 text-center">
+                  {t("result")}
+                </TableHead>
+                <TableHead className="min-w-24 text-center">
+                  {t("betamount")}
+                </TableHead>
+                <TableHead className="min-w-24 text-center">
+                  {t("winamount")}
+                </TableHead>
+                <TableHead className="min-w-24 text-center">
+                  {t("bettime")}
+                </TableHead>
+                <TableHead className="min-w-24 text-center">
+                  {t("drawtime")}
+                </TableHead>
+                <TableHead className="min-w-24 text-center">
+                  {t("membersettlementtime")}
+                </TableHead>
+                <TableHead className="min-w-24 text-center">
+                  {t("proxysettlementtime")}
+                </TableHead>
+                <TableHead className="min-w-24 text-center">
+                  {t("proxystatus")}
+                </TableHead>
                 <TableHead className="w-24 text-center sticky right-0 z-10 bg-muted">
                   {t("action")}
                 </TableHead>

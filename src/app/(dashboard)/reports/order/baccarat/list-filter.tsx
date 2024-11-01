@@ -50,7 +50,7 @@ export default function ListFilter() {
       </div>
 
       {/* 第二行 */}
-      <div className="flex gap-4 items-center">
+      <div className="flex gap-4 items-center flex-wrap">
         <div className="flex gap-2 items-center">
           <Label className="shrink-0">{t("ordernumber")}</Label>
           <Input
@@ -100,10 +100,6 @@ export default function ListFilter() {
             placeholder={t("placeholderinput")}
           />
         </div>
-      </div>
-
-      {/* 第三行 */}
-      <div className="flex gap-4 items-center">
         <div className="flex gap-2 items-center">
           <Label className="shrink-0">{t("ministerID")}</Label>
           <Input
