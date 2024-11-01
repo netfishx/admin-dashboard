@@ -67,7 +67,7 @@ async function AgentTable({
             </TableRow>
           </TableHeader>
           <TableBody>
-            {res.data.map((item: AgentData) => (
+            {res.data?.list.map((item: AgentData) => (
               <TableRow key={item.userId}>
                 <TableCell className="min-w-32">{item.upUserName}</TableCell>
                 <TableCell className="min-w-32">{item.userLevel}</TableCell>
@@ -96,9 +96,9 @@ async function AgentTable({
       </div>
       <div className="pt-2">
         <Pages
-          total={res.total}
-          currentPage={Number(res.page)}
-          pageSize={Number(res.size)}
+          total={res.data?.total ?? 0}
+          currentPage={Number(res.data?.page ?? 1)}
+          pageSize={Number(res.data?.size ?? 10)}
         />
       </div>
     </>

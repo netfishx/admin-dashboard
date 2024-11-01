@@ -6,6 +6,7 @@ import {
   unstable_cacheTag as cacheTag,
 } from "next/cache";
 import { headers } from "next/headers";
+import type { Res } from "./types";
 
 const instance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_BASE_URL,
@@ -17,12 +18,13 @@ const instance = axios.create({
 
 const FALLBACK_IP_ADDRESS = "0.0.0.0";
 
-async function request({
+async function request<T>({
   url,
   ip,
   locale,
   header,
   method,
+  params,
   data,
   token,
   expire,
@@ -34,11 +36,13 @@ async function request({
   header?: Record<string, string>;
   method?: string;
   // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+  params?: any;
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
   data?: any;
   token?: string;
   expire?: number | "default" | "minutes" | "days" | "max";
   tags?: string[];
-}) {
+}): Promise<Res<T>> {
   "use cache";
   if (typeof expire === "number") {
     cacheLife({
@@ -80,11 +84,12 @@ async function request({
   }
 
   try {
-    const res = await instance({
+    const res = await instance<Res<T>>({
       url,
       method,
       headers,
       data,
+      params,
     });
 
     return res.data;
@@ -97,11 +102,12 @@ async function request({
   }
 }
 
-export async function apiRequest({
+export async function apiRequest<T>({
   url,
   header,
   method,
   data,
+  params,
   token,
   expire,
 }: {
@@ -109,10 +115,12 @@ export async function apiRequest({
   header?: Record<string, string>;
   method?: string;
   // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+  params?: any;
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
   data?: any;
   token?: string;
   expire?: number;
-}) {
+}): Promise<Res<T>> {
   const nextHeaders = await headers();
   const ip = nextHeaders.get("x-forwarded-for");
   const locale = nextHeaders.get("accept-language");
@@ -122,6 +130,7 @@ export async function apiRequest({
     locale,
     header,
     method,
+    params,
     data,
     token,
     expire,

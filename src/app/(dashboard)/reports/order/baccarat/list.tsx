@@ -1,4 +1,4 @@
-import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
+import { ScrollBar } from "@/components/ui/scroll-area";
 import {
   Table,
   TableBody,
@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/table";
 import { useTranslations } from "next-intl";
 import DetailButton from "./detail-button";
+import ListScrollArea from "./list-scroll-area";
 
 const tempData = "111111111111111111112221";
 const data = [
@@ -43,7 +44,7 @@ export default function List() {
     <div className="p-2 bg-background flex-1">
       <div className="py-2">注单列表-真人视讯</div>
       <div className="border rounded-sm relative">
-        <ScrollArea className="w-[calc(110dvw-16.1rem)]">
+        <ListScrollArea>
           <Table>
             <TableHeader>
               <TableRow className="bg-muted">
@@ -135,7 +136,7 @@ export default function List() {
             </TableBody>
           </Table>
           <ScrollBar orientation="horizontal" />
-        </ScrollArea>
+        </ListScrollArea>
       </div>
     </div>
   );

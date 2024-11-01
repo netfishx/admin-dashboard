@@ -24,7 +24,7 @@ import { useTranslations } from "next-intl";
 import { usePathname } from "next/navigation";
 import { parseAsArrayOf, parseAsString, useQueryState } from "nuqs";
 import { startTransition } from "react";
-import { MenuItem } from "./menu-item";
+import { MenuItem, MenuItemLink } from "./menu-item";
 
 export function Menu() {
   const isOpened = useAtomValue(sidebarAtom);
@@ -129,10 +129,6 @@ function OpenedMenu({ pathname }: { pathname: string }) {
             label={t("reports.member.baccarat")}
             href="/reports/member/baccarat"
           />
-          <MenuItem
-            label={t("reports.member.gundan")}
-            href="/reports/member/gundan"
-          />
           <MenuItem label={t("reports.supplier")} href="/reports/supplier" />
           <MenuItem label={t("reports.change")} href="/reports/change" />
           <MenuItem label={t("reports.recharge")} href="/reports/recharge" />
@@ -140,6 +136,7 @@ function OpenedMenu({ pathname }: { pathname: string }) {
           <MenuItem label={t("reports.borrow")} href="/reports/borrow" />
           <MenuItem label={t("reports.reward")} href="/reports/reward" />
           <MenuItem label={t("reports.credit")} href="/reports/credit" />
+          <MenuItem label={t("reports.transfer")} href="/reports/transfer" />
           <MenuItem label={t("reports.download")} href="/reports/download" />
         </CollapsibleContent>
       </Collapsible>
@@ -243,7 +240,13 @@ function ClosedMenu({ pathname }: { pathname: string }) {
   return (
     <>
       <div className={cn([baseClass, pathname === "/" && "text-primary"])}>
-        <Home className="size-4" />
+        <MenuItemLink
+          href="/"
+          isActive={pathname === "/"}
+          className="px-0 w-full"
+        >
+          <Home className="size-4" />
+        </MenuItemLink>
       </div>
       <div
         className={cn([
@@ -251,7 +254,13 @@ function ClosedMenu({ pathname }: { pathname: string }) {
           pathname.startsWith("/games") && "text-primary",
         ])}
       >
-        <Gamepad2 className="size-4" />
+        <MenuItemLink
+          href="/games/flyorder"
+          isActive={pathname.startsWith("/games")}
+          className="px-0 w-full"
+        >
+          <Gamepad2 className="size-4" />
+        </MenuItemLink>
       </div>
       <div
         className={cn([
@@ -259,7 +268,13 @@ function ClosedMenu({ pathname }: { pathname: string }) {
           pathname.startsWith("/users") && "text-primary",
         ])}
       >
-        <Users className="size-4" />
+        <MenuItemLink
+          href="/users/agent"
+          isActive={pathname.startsWith("/users")}
+          className="px-0 w-full"
+        >
+          <Users className="size-4" />
+        </MenuItemLink>
       </div>
       <div
         className={cn([
@@ -267,7 +282,13 @@ function ClosedMenu({ pathname }: { pathname: string }) {
           pathname.startsWith("/reports") && "text-primary",
         ])}
       >
-        <FileText className="size-4" />
+        <MenuItemLink
+          href="/reports/order/baccarat"
+          isActive={pathname.startsWith("/reports")}
+          className="px-0 w-full"
+        >
+          <FileText className="size-4" />
+        </MenuItemLink>
       </div>
       <div
         className={cn([
@@ -275,7 +296,13 @@ function ClosedMenu({ pathname }: { pathname: string }) {
           pathname.startsWith("/withdraw") && "text-primary",
         ])}
       >
-        <ClipboardCheck className="size-4" />
+        <MenuItemLink
+          href="/withdraw/apply"
+          isActive={pathname.startsWith("/withdraw")}
+          className="px-0 w-full"
+        >
+          <ClipboardCheck className="size-4" />
+        </MenuItemLink>
       </div>
       <div
         className={cn([
@@ -283,7 +310,13 @@ function ClosedMenu({ pathname }: { pathname: string }) {
           pathname.startsWith("/fund") && "text-primary",
         ])}
       >
-        <Scale className="size-4" />
+        <MenuItemLink
+          href="/fund/minerfee"
+          isActive={pathname.startsWith("/fund")}
+          className="px-0 w-full"
+        >
+          <Scale className="size-4" />
+        </MenuItemLink>
       </div>
       <div
         className={cn([
@@ -291,7 +324,13 @@ function ClosedMenu({ pathname }: { pathname: string }) {
           pathname.startsWith("/personal") && "text-primary",
         ])}
       >
-        <UserSquare className="size-4" />
+        <MenuItemLink
+          href="/personal/info"
+          isActive={pathname.startsWith("/personal")}
+          className="px-0 w-full"
+        >
+          <UserSquare className="size-4" />
+        </MenuItemLink>
       </div>
       <div
         className={cn([
@@ -299,7 +338,13 @@ function ClosedMenu({ pathname }: { pathname: string }) {
           pathname.startsWith("/system") && "text-primary",
         ])}
       >
-        <Tv2 className="size-4" />
+        <MenuItemLink
+          href="/system/role"
+          isActive={pathname.startsWith("/system")}
+          className="px-0 w-full"
+        >
+          <Tv2 className="size-4" />
+        </MenuItemLink>
       </div>
       <div
         className={cn([
@@ -307,7 +352,13 @@ function ClosedMenu({ pathname }: { pathname: string }) {
           pathname.startsWith("/maintain") && "text-primary",
         ])}
       >
-        <Cog className="size-4" />
+        <MenuItemLink
+          href="/maintain/dictionary"
+          isActive={pathname.startsWith("/maintain")}
+          className="px-0 w-full"
+        >
+          <Cog className="size-4" />
+        </MenuItemLink>
       </div>
     </>
   );
