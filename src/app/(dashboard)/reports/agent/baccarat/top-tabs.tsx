@@ -14,7 +14,7 @@ export default function TopTabs() {
   const getTabStyle = (tabType: TabsTypes) => {
     return cn(
       // 基础样式
-      "flex items-center justify-center cursor-pointer text-l",
+      "flex items-center justify-center cursor-pointer text-l rounded-sm",
       // 条件样式
       currentTab === tabType ? "bg-card text-foreground" : "hover:bg-secondary",
     );
