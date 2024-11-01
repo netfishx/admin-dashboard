@@ -11,6 +11,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import {} from "@/components/ui/pagination";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import {
   Table,
   TableBody,
@@ -25,9 +26,17 @@ import { useAtom, useAtomValue } from "jotai";
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 
+interface LoginLog {
+  userId: string;
+  loginTime: string;
+  ip: string;
+  address: string;
+  status: number;
+}
+
 export function LoginLogModal() {
   const t = useTranslations("users.agents");
-  const [data, setData] = useState([]);
+  const [data, setData] = useState<LoginLog[]>([]);
   const userId = useAtomValue(loginLogUserIdAtom);
   const [open, setOpen] = useAtom(loginLogModalAtom);
   const [total, setTotal] = useState(0);
@@ -36,7 +45,7 @@ export function LoginLogModal() {
   useEffect(() => {
     if (userId) {
       getLoginLog({ userId, page, size }).then((res) => {
-        setData(res.data);
+        setData(res.data as LoginLog[]);
         setTotal(res.total);
         setPage(res.page);
         setSize(res.size);
@@ -51,24 +60,18 @@ export function LoginLogModal() {
           <DialogDescription />
         </DialogHeader>
         <div className="border rounded-sm">
-          <Table>
-            <TableHeader>
-              <TableRow className="bg-muted">
-                <TableHead>{t("loginTime")}</TableHead>
-                <TableHead>{t("ip")}</TableHead>
-                <TableHead>{t("address")}</TableHead>
-                <TableHead>{t("status")}</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {data?.map(
-                (item: {
-                  userId: string;
-                  loginTime: string;
-                  ip: string;
-                  address: string;
-                  status: number;
-                }) => (
+          <ScrollArea className="h-[40vh] overflow-y-auto">
+            <Table>
+              <TableHeader>
+                <TableRow className="bg-muted">
+                  <TableHead>{t("loginTime")}</TableHead>
+                  <TableHead>{t("ip")}</TableHead>
+                  <TableHead>{t("address")}</TableHead>
+                  <TableHead>{t("status")}</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {data?.map((item: LoginLog) => (
                   <TableRow key={item.userId + Math.random()}>
                     <TableCell>{item.loginTime}</TableCell>
                     <TableCell>{item.ip}</TableCell>
@@ -86,10 +89,10 @@ export function LoginLogModal() {
                       </div>
                     </TableCell>
                   </TableRow>
-                ),
-              )}
-            </TableBody>
-          </Table>
+                ))}
+              </TableBody>
+            </Table>
+          </ScrollArea>
         </div>
         <ModalPagination
           total={total}
