@@ -46,15 +46,25 @@ export function MenuItem({
   );
 }
 
-function MenuItemLink({
+export function MenuItemLink({
   href,
   children,
   isActive,
-}: { href?: string; isActive?: boolean; children: ReactNode }) {
+  className,
+}: {
+  href?: string;
+  isActive?: boolean;
+  children: ReactNode;
+  className?: string;
+}) {
   return href && !isActive ? (
     <Link
       href={href}
-      className={cn([buttonVariants({ variant: "ghost" }), "font-normal"])}
+      className={cn([
+        buttonVariants({ variant: "ghost" }),
+        "font-normal",
+        className,
+      ])}
     >
       {children}
     </Link>

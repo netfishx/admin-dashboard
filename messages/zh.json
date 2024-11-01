@@ -64,8 +64,7 @@
         "gundan": "代理报表-棋牌"
       },
       "member": {
-        "baccarat": "会员报表-真人视讯",
-        "gundan": "会员报表-棋牌"
+        "baccarat": "会员报表-真人视讯"
       },
       "supplier": "供应商报表",
       "change": "账变记录",
@@ -74,6 +73,7 @@
       "borrow": "借还记录",
       "reward": "打赏记录",
       "credit": "授信转账记录",
+      "transfer": "转账记录",
       "download": "报表下载"
     },
     "withdraw": {
