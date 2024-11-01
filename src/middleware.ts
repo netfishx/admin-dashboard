@@ -1,16 +1,12 @@
-import { routing } from "@/i18n/routing";
 import { getSession } from "@/session";
-import createMiddleware from "next-intl/middleware";
-import type { NextRequest } from "next/server";
+import { type NextRequest, NextResponse } from "next/server";
 
 export async function middleware(request: NextRequest) {
-  const handleI18nRouting = createMiddleware(routing);
-
   const user = await getSession();
   if (!(user || request.nextUrl.pathname === "/login")) {
     return Response.redirect(new URL("/login", request.url));
   }
-  return handleI18nRouting(request);
+  return NextResponse.next();
 }
 
 export const config = {

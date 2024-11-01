@@ -1,3 +1,4 @@
+"use client";
 import { EditNumber } from "@/components/edit-number";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -19,31 +20,8 @@ import {
 } from "@/components/ui/table";
 import { useTranslations } from "next-intl";
 
-const data = [
-  {
-    game: "百家乐01",
-    value: 1,
-  },
-  {
-    game: "百家乐02",
-    value: 1,
-  },
-  {
-    game: "百家乐03",
-    value: 1,
-  },
-  {
-    game: "百家乐04",
-    value: 1,
-  },
-  {
-    game: "百家乐05",
-    value: 1,
-  },
-];
-
-export default function Page() {
-  const t = useTranslations("games.ratio");
+export function RebateForm({ data }: { data: any[] }) {
+  const t = useTranslations("games.rebate");
   return (
     <div className="flex flex-col gap-2 w-full">
       <div className="flex justify-between items-center bg-background py-2 px-4">
@@ -52,7 +30,7 @@ export default function Page() {
             <Label className="shrink-0">{t("type")}</Label>
             <Select defaultValue="1" disabled>
               <SelectTrigger className="w-28">
-                <SelectValue placeholder={t("placeholder")} />
+                <SelectValue placeholder="请选择" />
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="1">百家乐</SelectItem>
@@ -76,7 +54,7 @@ export default function Page() {
               <TableRow className="bg-muted">
                 <TableHead>{t("name")}</TableHead>
                 <TableHead className="min-w-32 w-1/2">
-                  {t("ratio")}
+                  {t("rebate")}
                   <span className="text-destructive">{t("tip")}</span>
                 </TableHead>
               </TableRow>

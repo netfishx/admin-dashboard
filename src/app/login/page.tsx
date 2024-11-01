@@ -4,12 +4,13 @@ import logo from "@/assets/images/logo.svg";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useTranslations } from "next-intl";
+import { getTranslations } from "next-intl/server";
 import Form from "next/form";
 import Image from "next/image";
+import { Suspense } from "react";
 
-export default function LoginPage() {
-  const t = useTranslations("login");
+async function LoginForm() {
+  const t = await getTranslations("login");
   return (
     <Form action={loginAction}>
       <div className="w-full h-screen overflow-hidden bg-accent flex flex-col gap-4 items-center justify-center">
@@ -37,5 +38,13 @@ export default function LoginPage() {
         </div>
       </div>
     </Form>
+  );
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense fallback={null}>
+      <LoginForm />
+    </Suspense>
   );
 }

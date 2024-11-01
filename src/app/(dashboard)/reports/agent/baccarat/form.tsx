@@ -24,7 +24,7 @@ export default function form() {
   const [uperagentID, setUperagentID] = useQueryState("uperagentID");
   const [leastlevelID, setLeastlevelID] = useQueryState("leastlevelID");
   const searchParams = useSearchParams();
-  const router = useRouter();
+  const _router = useRouter();
   const tabsType = searchParams.get("tabsType");
 
   return (

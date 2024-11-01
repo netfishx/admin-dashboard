@@ -6,7 +6,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { useTranslations } from "next-intl";
+import { getTranslations } from "next-intl/server";
 import { Add } from "./add";
 import { EditButton } from "./edit";
 import { SupplierForm } from "./form";
@@ -59,8 +59,26 @@ const data = [
   },
 ];
 
+async function SupplierTableHeader() {
+  "use cache";
+  const t = await getTranslations("games.supplier");
+  return (
+    <TableHeader>
+      <TableRow className="bg-muted">
+        <TableHead>{t("name")}</TableHead>
+        <TableHead>{t("video")}</TableHead>
+        <TableHead>{t("replay")}</TableHead>
+        <TableHead>{t("supplierId")}</TableHead>
+        <TableHead>{t("supplierName")}</TableHead>
+        <TableHead>{t("quota")}</TableHead>
+        <TableHead>{t("percent")}</TableHead>
+        <TableHead className="w-24 text-center">{t("action")}</TableHead>
+      </TableRow>
+    </TableHeader>
+  );
+}
+
 export default function Page() {
-  const t = useTranslations("games.supplier");
   return (
     <div className="flex flex-col gap-2 w-full">
       <SupplierForm />
@@ -70,20 +88,7 @@ export default function Page() {
         </div>
         <div className="border rounded-sm">
           <Table>
-            <TableHeader>
-              <TableRow className="bg-muted">
-                <TableHead>{t("name")}</TableHead>
-                <TableHead>{t("video")}</TableHead>
-                <TableHead>{t("replay")}</TableHead>
-                <TableHead>{t("supplierId")}</TableHead>
-                <TableHead>{t("supplierName")}</TableHead>
-                <TableHead>{t("quota")}</TableHead>
-                <TableHead>{t("percent")}</TableHead>
-                <TableHead className="w-24 text-center">
-                  {t("action")}
-                </TableHead>
-              </TableRow>
-            </TableHeader>
+            <SupplierTableHeader />
             <TableBody>
               {data.map((item) => (
                 <TableRow key={item.game}>

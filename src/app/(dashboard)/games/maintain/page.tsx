@@ -1,5 +1,5 @@
-import { Button } from "@/components/ui/button";
-import { useTranslations } from "next-intl";
+import { Suspense } from "react";
+import { MaintainForm } from "./form";
 import { MaintainTable } from "./table";
 const data = [
   {
@@ -35,13 +35,11 @@ const data = [
 ];
 
 export default function Page() {
-  const t = useTranslations("games.maintain");
   return (
     <div className="flex flex-col gap-2 w-full">
-      <div className="flex items-center justify-end gap-2 bg-background py-2 px-4">
-        <Button variant="destructive">{t("batchOpen")}</Button>
-        <Button>{t("batchClose")}</Button>
-      </div>
+      <Suspense fallback={null}>
+        <MaintainForm />
+      </Suspense>
       <div className="p-2 bg-background flex-1">
         <div className="border rounded-sm">
           <MaintainTable data={data} />
