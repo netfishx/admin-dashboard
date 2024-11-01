@@ -15,7 +15,7 @@ import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useQueryState } from "nuqs";
 
-export default function Form() {
+export function Form() {
   const t = useTranslations("report.periodlist");
   const router = useRouter();
   const [gameType, setGameType] = useQueryState("gameType", {
