@@ -60,15 +60,18 @@ function AddModal({
   const [content, setContent] = useState("");
   const [status, setStatus] = useState(0);
   const handleClickAdd = async () => {
-    await saveAnnouncement({
+    const addParams = {
       type,
       language,
       content,
       status: "0",
-      beginTime: startTime || "",
+      startTime: startTime || "",
       endTime: endTime || "",
-      createTime: "",
-    });
+      createTime: Date.now().toString(),
+    };
+    console.info("🌸 ~ addParams:", addParams);
+    const res = await saveAnnouncement(addParams);
+    console.info("🌸 ~ res:", res);
     onOpenChange(false);
   };
   return (

@@ -1,4 +1,4 @@
-import { getAnnouncement } from "@/api";
+import Pages from "@/components/custom-pagination";
 import {
   Table,
   TableBody,
@@ -8,60 +8,93 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { getTranslations } from "next-intl/server";
-import { Suspense } from "react";
 import { Actions } from "../actions";
-
-export async function List() {
+export async function List({ data }: { data: any }) {
   const t = await getTranslations("system.announcement");
-  const { data } = await getAnnouncement();
-  console.info(data);
+  const user = {
+    role: "admin",
+  };
+
   return (
     <>
       <div className="p-2 mt-2 bg-background flex-1">
-        <Suspense fallback={null}>
-          <Table>
-            <TableHeader className="sticky">
-              <TableRow className="bg-muted">
+        <Table>
+          <TableHeader className="sticky">
+            <TableRow className="bg-muted">
+              {user.role === "admin" && (
                 <TableHead className="w-24 min-w-24 text-center">
-                  {t("beginTime")}
+                  {t("startTime")}
                 </TableHead>
-                <TableHead className="w-24 min-w-24 text-center">
-                  {t("endTime")}
-                </TableHead>
+              )}
+              <TableHead className="w-24 min-w-24 text-center">
+                {t("endTime")}
+              </TableHead>
+              {user.role === "admin" && (
                 <TableHead className="w-24 min-w-24 text-center">
                   {t("createTime")}
                 </TableHead>
+              )}
+              {user.role === "admin" && (
                 <TableHead className="w-24 min-w-24 text-center">
-                  {t("content")}
+                  {t("type")}
                 </TableHead>
+              )}
+              {user.role === "admin" && (
                 <TableHead className="w-24 min-w-24 text-center">
-                  {t("action")}
+                  {t("agentId")}
                 </TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {data?.data?.map((item) => (
-                <TableRow key={Math.random()}>
+              )}
+              <TableHead className="w-24 min-w-24 text-center">
+                {t("content")}
+              </TableHead>
+              <TableHead className="w-24 min-w-24 text-center">
+                {t("action")}
+              </TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {data?.list?.map((item: any) => (
+              <TableRow key={Math.random()}>
+                {user.role === "admin" && (
                   <TableCell className="w-24 text-center">
-                    {item.beginTime}
+                    {item.startTime}
                   </TableCell>
-                  <TableCell className="w-24 text-center">
-                    {item.endTime}
-                  </TableCell>
+                )}
+                <TableCell className="w-24 text-center">
+                  {item.endTime}
+                </TableCell>
+                {user.role === "admin" && (
                   <TableCell className="w-24 text-center">
                     {item.createTime}
                   </TableCell>
-                  <TableCell className="w-24 text-center">
-                    {item.content}
+                )}
+                {user.role === "admin" && (
+                  <TableCell className="w-24 min-w-24 text-center">
+                    {item.type}
                   </TableCell>
-                  <TableCell className="w-24 text-center">
-                    <Actions data={item} />
+                )}
+                {user.role === "admin" && (
+                  <TableCell className="w-24 min-w-24 text-center">
+                    {item.agentId}
                   </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </Suspense>
+                )}
+                <TableCell className="w-24 text-center">
+                  {item.content}
+                </TableCell>
+                <TableCell className="w-24 text-center">
+                  <Actions data={item} />
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </div>
+      <div className="pt-2">
+        <Pages
+          total={data?.total ?? 0}
+          currentPage={Number(data?.pages ?? 1)}
+          pageSize={Number(data?.size ?? 10)}
+        />
       </div>
     </>
   );
