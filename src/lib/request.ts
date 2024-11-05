@@ -91,7 +91,6 @@ async function request<T>({
       data,
       params,
     });
-
     return res.data;
   } catch (error) {
     console.error(error);

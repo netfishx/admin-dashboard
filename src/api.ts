@@ -1,4 +1,5 @@
 import { apiRequest } from "./lib/request";
+import type { User } from "./lib/types";
 
 export interface AgentData {
   upUserName: string;
@@ -7,6 +8,17 @@ export interface AgentData {
   userName: string;
   nickName: string;
   status: number;
+}
+
+export async function login(data: {
+  username: string;
+  password: string;
+}) {
+  return await apiRequest<User>({
+    url: "/login",
+    method: "POST",
+    data,
+  });
 }
 
 export async function getAgents(data: any) {

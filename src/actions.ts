@@ -1,5 +1,6 @@
 "use server";
 import { redirect } from "next/navigation";
+import { login } from "./api";
 // import { z } from "zod";
 // import { zfd } from "zod-form-data";
 import { setSession, signOut } from "./session";
@@ -53,14 +54,21 @@ import { setSession, signOut } from "./session";
 export async function loginAction(formData: FormData) {
   const username = formData.get("username");
   const password = formData.get("password");
+
+  let message = "请输入用户名和密码";
   if (username && password) {
-    await setSession({
-      id: 123,
+    const res = await login({
+      username: username.toString(),
+      password: password.toString(),
     });
-    return redirect("/");
+    if (res.code === 0 && res.data) {
+      await setSession(res.data);
+      return redirect("/");
+    }
+    message = res.message || "登录失败";
   }
 
-  return { result: false };
+  return { result: false, message };
 }
 
 export async function signOutAction() {

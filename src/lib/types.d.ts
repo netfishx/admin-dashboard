@@ -3,3 +3,9 @@ export type Res<T> = {
   data?: T;
   message?: string;
 };
+
+export type User = {
+  id: number;
+  name: string;
+  token: string;
+};

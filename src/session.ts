@@ -1,16 +1,11 @@
 import { SignJWT, jwtVerify } from "jose";
 import { cookies } from "next/headers";
+import type { User } from "./lib/types";
 
 const key = new TextEncoder().encode(process.env.AUTH_SECRET);
 const expiresTime = 24 * 60 * 60;
 
-type User = {
-  id: number;
-  name: string;
-};
-
-type SessionData = {
-  user: User;
+type SessionData = User & {
   expires: string;
 };
 
@@ -45,7 +40,7 @@ export async function getSession() {
 export async function setSession(user: User) {
   const expires = new Date(Date.now() + expiresTime * 1000);
   const session: SessionData = {
-    user: { id: user.id, name: user.name },
+    ...user,
     expires: expires.toISOString(),
   };
   const encryptedSession = await signToken(session);
