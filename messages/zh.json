@@ -32,6 +32,10 @@
     "password": {
       "label": "密码",
       "placeholder": "请输入您的密码"
+    },
+    "code": {
+      "label": "验证码",
+      "placeholder": "请输入您的验证码"
     }
   },
   "menu": {

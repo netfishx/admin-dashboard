@@ -6,44 +6,98 @@ import logo from "@/assets/images/logo.svg";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Password } from "@/components/ui/password";
 import { useTranslations } from "next-intl";
 import Form from "next/form";
 import Image from "next/image";
+import { type FormEvent, useRef } from "react";
 import { toast } from "sonner";
 
 export function LoginForm() {
   const t = useTranslations("login");
+  const ref = useRef<HTMLFormElement>(null);
+  async function login() {
+    if (!ref.current) {
+      return;
+    }
+    const res = await loginAction(new FormData(ref.current));
+    if (!res.result) {
+      toast.error(res.message);
+    }
+  }
+  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    await login();
+  }
   return (
-    <Form
-      action={loginAction}
-      onSubmit={async (e) => {
-        e.preventDefault();
-        const res = await loginAction(new FormData(e.currentTarget));
-        if (!res.result) {
-          toast.error(res.message);
-        }
-      }}
-    >
-      <div className="w-full h-screen overflow-hidden bg-accent flex flex-col gap-4 items-center justify-center">
+    <Form action={loginAction} onSubmit={handleSubmit} ref={ref}>
+      <div className="relative w-full h-screen overflow-hidden bg-accent flex flex-col gap-4 items-center justify-center">
         <Image src={bg} alt="background image" className="object-cover" fill />
         <div className="w-[400px] flex items-center justify-center gap-4">
           <Image src={logo} alt="Icon" className="size-8" />
           <span className="text-xl font-medium">{t("title")}</span>
         </div>
-        <div className="w-[400px] bg-background p-10 border rounded-lg flex flex-col gap-10 z-10">
+        <div className="w-[400px] bg-background p-10 border rounded-lg flex flex-col gap-6 z-10">
           <div className="flex flex-col gap-2">
             <Label className="text-sm font-medium flex gap-1">
               {t("username.label")}
               <span className="text-red-500">*</span>
             </Label>
-            <Input placeholder={t("username.placeholder")} name="username" />
+            <Input
+              placeholder={t("username.placeholder")}
+              name="username"
+              onKeyUp={async (e) => {
+                if (e.key === "Enter") {
+                  await login();
+                }
+              }}
+            />
           </div>
           <div className="flex flex-col gap-2">
             <Label className="text-sm font-medium flex gap-1">
               {t("password.label")}
               <span className="text-red-500">*</span>
             </Label>
-            <Input placeholder={t("password.placeholder")} name="password" />
+            <Password
+              type="password"
+              placeholder={t("password.placeholder")}
+              name="password"
+              onKeyUp={async (e) => {
+                if (e.key === "Enter") {
+                  await login();
+                }
+              }}
+            />
+          </div>
+          <div className="flex flex-col gap-2">
+            <Label className="text-sm font-medium flex gap-1">
+              {t("code.label")}
+              <span className="text-red-500">*</span>
+            </Label>
+            <div className="flex gap-2">
+              <Input
+                placeholder={t("code.placeholder")}
+                name="code"
+                onKeyUp={async (e) => {
+                  if (e.key === "Enter") {
+                    await login();
+                  }
+                }}
+              />
+              <Image
+                src={
+                  "http://16.163.156.77:9999/code/image?randomStr=XN1Mol0XgLQV9SRa0b5Tv"
+                }
+                className="cursor-pointer hover:opacity-80"
+                width={96}
+                height={36}
+                alt="captcha"
+                priority
+                onClick={() => {
+                  console.info("click");
+                }}
+              />
+            </div>
           </div>
           <Button>{t("button")}</Button>
         </div>

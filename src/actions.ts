@@ -1,6 +1,6 @@
 "use server";
 import { redirect } from "next/navigation";
-import { login } from "./api";
+import { login, logout } from "./api";
 // import { z } from "zod";
 // import { zfd } from "zod-form-data";
 import { setSession, signOut } from "./session";
@@ -54,12 +54,14 @@ import { setSession, signOut } from "./session";
 export async function loginAction(formData: FormData) {
   const username = formData.get("username");
   const password = formData.get("password");
+  const code = formData.get("code");
 
   let message = "请输入用户名和密码";
-  if (username && password) {
+  if (username && password && code) {
     const res = await login({
       username: username.toString(),
       password: password.toString(),
+      code: code.toString(),
     });
     if (res.code === 0 && res.data) {
       await setSession(res.data);
@@ -72,5 +74,5 @@ export async function loginAction(formData: FormData) {
 }
 
 export async function signOutAction() {
-  await signOut();
+  await Promise.all([logout(), signOut()]);
 }

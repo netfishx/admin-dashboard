@@ -13,11 +13,18 @@ export interface AgentData {
 export async function login(data: {
   username: string;
   password: string;
+  code: string;
 }) {
   return await apiRequest<User>({
     url: "/login",
     method: "POST",
     data,
+  });
+}
+export async function logout() {
+  return await apiRequest({
+    url: "/logout",
+    method: "POST",
   });
 }
 

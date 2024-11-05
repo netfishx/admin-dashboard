@@ -37,6 +37,14 @@ const nextConfig: NextConfig = {
     dangerouslyAllowSVG: true,
     contentDispositionType: "attachment",
     contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
+    remotePatterns: [
+      {
+        hostname: "16.163.156.77",
+        pathname: "/code/**",
+        port: "9999",
+        protocol: "http",
+      },
+    ],
   },
   output: "standalone",
 };

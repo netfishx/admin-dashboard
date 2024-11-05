@@ -56,13 +56,13 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
               <EyeOffIcon
                 className="cursor-pointer"
                 onClick={togglePasswordVisibility}
-                size={20}
+                size={16}
               />
             ) : (
               <EyeIcon
                 className="cursor-pointer"
                 onClick={togglePasswordVisibility}
-                size={20}
+                size={16}
               />
             )}
             {capsLockActive && type === "password" && (
