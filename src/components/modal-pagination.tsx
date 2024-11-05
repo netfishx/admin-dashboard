@@ -33,6 +33,11 @@ export function ModalPagination({
   const t = useTranslations("pagination");
 
   const totalPage = Math.ceil(total / size);
+
+  const handleChangeSize = (size: number) => {
+    setSize(size);
+    setPage(1);
+  };
   return (
     <Pagination className="flex justify-end">
       <PaginationContent>
@@ -85,9 +90,9 @@ export function ModalPagination({
         <PaginationItem>
           <Select
             defaultValue={size?.toString() ?? "10"}
-            onValueChange={(value) => setSize(Number(value))}
+            onValueChange={(value) => handleChangeSize(Number(value))}
           >
-            <SelectTrigger className="w-28">
+            <SelectTrigger className="w-28 h-7 text-sm">
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
