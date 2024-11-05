@@ -4,11 +4,11 @@ import { apiRequest } from "@/lib/request";
 import { getSession } from "@/session";
 
 export interface AgentData {
-  upUserName: string;
-  userLevel: string;
+  upUsername: string;
+  deptId: number;
   userId: string;
-  userName: string;
-  nickName: string;
+  username: string;
+  nickname: string;
   status: number;
 }
 
@@ -68,8 +68,8 @@ export async function logout() {
 }
 
 export async function getAgents(data: any) {
-  return await apiRequest<WithPagination & { data: AgentData[] }>({
-    url: "/api/user",
+  return await apiRequest<WithPagination & { list: AgentData[] }>({
+    url: "/user",
     data,
   });
 }

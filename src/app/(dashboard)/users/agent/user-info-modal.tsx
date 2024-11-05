@@ -27,16 +27,16 @@ export function UserInfoModal({
   editData: AgentData | null;
 }) {
   const t = useTranslations("users.agents");
-  const [userName, setUserName] = useState("");
-  const [nickName, setNickName] = useState("");
+  const [username, setUsername] = useState("");
+  const [nickname, setNickname] = useState("");
   const router = useRouter();
   const [status, setStatus] = useState(1);
   const handleClickUpdateUserInfo = async () => {
     if (editData) {
       await updateUser({
         ...editData,
-        userName: userName || editData.userName || "",
-        nickName: nickName || editData.nickName || "",
+        username: username || editData.username || "",
+        nickname: nickname || editData.nickname || "",
         status: status || editData.status || 1,
       });
       onOpenChange(false);
@@ -53,30 +53,30 @@ export function UserInfoModal({
         <div className="flex flex-col gap-4 w-full px-4">
           <div className="flex gap-4 items-center">
             <Label className="shrink-0 w-1/4 text-right text-muted-foreground">
-              {t("upUserName")}
+              {t("upUsername")}
             </Label>
-            <span>{editData?.upUserName}</span>
+            <span>{editData?.upUsername}</span>
           </div>
           <div className="flex gap-4 items-center">
             <Label className="shrink-0 w-1/4 text-right text-muted-foreground">
-              {t("userName")}
+              {t("username")}
             </Label>
             <Input
               placeholder={t("placeholder")}
-              defaultValue={editData?.userName}
+              defaultValue={editData?.username}
               className="w-1/2"
-              onChange={(e) => setUserName(e.target.value)}
+              onChange={(e) => setUsername(e.target.value)}
             />
           </div>
           <div className="flex gap-4 items-center">
             <Label className="shrink-0 w-1/4 text-right text-muted-foreground">
-              {t("nickName")}
+              {t("nickname")}
             </Label>
             <Input
               placeholder={t("placeholder")}
-              defaultValue={editData?.nickName}
+              defaultValue={editData?.nickname}
               className="w-1/2"
-              onChange={(e) => setNickName(e.target.value)}
+              onChange={(e) => setNickname(e.target.value)}
             />
           </div>
           <div className="flex gap-4 items-center">
