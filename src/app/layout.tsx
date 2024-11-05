@@ -40,7 +40,7 @@ export default function RootLayout({
                 <Suspense fallback={null}>
                   <Title />
                 </Suspense>
-                <Suspense fallback={null}>{children}</Suspense>
+                {children}
               </I18nProvider>
               <ErrorToast />
             </JotaiProvider>
