@@ -14,7 +14,7 @@ import { useTranslations } from "next-intl";
 import { useSearchParams } from "next/navigation";
 import { useQueryState } from "nuqs";
 
-export default function form() {
+export function RatioForm() {
   const t = useTranslations("report.agent");
   const [gametype, setGameType] = useQueryState("gametype");
   const [gameName, setGameName] = useQueryState("gameName");

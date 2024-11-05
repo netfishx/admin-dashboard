@@ -1,25 +1,21 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { useTranslations } from "next-intl";
-import { useState } from "react";
-import Detaildialog from "../detail-dialog";
 
-export default function DetailButton() {
+export function DetailButton() {
   const t = useTranslations("report.orderlist");
-  const [open, setOpen] = useState(false);
-  const handleDialogOpenChanged = (isOpen: boolean) => {
-    setOpen(isOpen);
-  };
+  function handleDialogOpenChanged() {
+    // console.log("handleDialogOpenChanged");
+  }
   return (
     <div>
       <Button
         variant="link"
         className="hover:no-underline hover:text-primary/80"
-        onClick={() => handleDialogOpenChanged(true)}
+        onClick={() => handleDialogOpenChanged()}
       >
         {t("more")}
       </Button>
-      <Detaildialog open={open} onOpenChange={handleDialogOpenChanged} />
     </div>
   );
 }

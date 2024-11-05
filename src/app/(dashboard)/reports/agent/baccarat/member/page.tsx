@@ -1,6 +1,6 @@
 import { Suspense } from "react";
-import MemberForm from "./member-form";
-import MemberList from "./member-list";
+import { MemberForm } from "./member-form";
+import { MemberList } from "./member-list";
 
 export default async function Page({ searchParams }: any) {
   // const params = await searchParams;

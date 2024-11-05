@@ -42,8 +42,8 @@ export default function AmountFilter() {
           <SelectValue placeholder={t("placeholderselect")} />
         </SelectTrigger>
         <SelectContent>
-          <SelectItem value=">=">&gt;=</SelectItem>
-          <SelectItem value="<=">&lt;=</SelectItem>
+          <SelectItem value="1">&gt;=</SelectItem>
+          <SelectItem value="2">&lt;=</SelectItem>
         </SelectContent>
       </Select>
 
