@@ -45,17 +45,19 @@ export async function login(data: {
   });
   return {
     ...res,
-    data: {
-      id: res.data?.userDetail.id,
-      mainId: res.data?.userDetail.mainId,
-      username: res.data?.userDetail.username,
-      nickname: res.data?.userDetail.nickname,
-      status: res.data?.userDetail.status,
-      inviteCode: res.data?.userDetail.inviteCode,
-      depositAddress: res.data?.userDetail.depositAddress,
-      token: res.data?.accessToken,
-      permissions: res.data?.permissions,
-    },
+    data: res.data
+      ? {
+          id: res.data.userDetail.id,
+          mainId: res.data.userDetail.mainId,
+          username: res.data.userDetail.username,
+          nickname: res.data.userDetail.nickname,
+          status: res.data.userDetail.status,
+          inviteCode: res.data.userDetail.inviteCode,
+          depositAddress: res.data.userDetail.depositAddress,
+          token: res.data.accessToken,
+          permissions: res.data.permissions,
+        }
+      : null,
   };
 }
 export async function logout() {
