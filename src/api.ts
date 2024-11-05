@@ -61,9 +61,11 @@ export async function login(data: {
   };
 }
 export async function logout() {
+  const user = await getSession();
   return await apiRequest({
-    url: "/logout",
+    url: "/security/logout",
     method: "POST",
+    token: user?.token,
   });
 }
 
