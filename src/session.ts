@@ -6,6 +6,7 @@ const expiresTime = 24 * 60 * 60;
 
 type User = {
   id: number;
+  name: string;
 };
 
 type SessionData = {
