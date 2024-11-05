@@ -45,7 +45,7 @@ export async function getSession() {
 export async function setSession(user: User) {
   const expires = new Date(Date.now() + expiresTime * 1000);
   const session: SessionData = {
-    user: { id: user.id },
+    user: { id: user.id, name: user.name },
     expires: expires.toISOString(),
   };
   const encryptedSession = await signToken(session);
