@@ -37,9 +37,9 @@ function AddAgentModal({
 }) {
   const t = useTranslations("users.agents");
   const router = useRouter();
-  const [userName, setUserName] = useState("");
-  const [nickName, setNickName] = useState("");
-  const [userLevel, setUserLevel] = useState("");
+  const [username, setUsername] = useState("");
+  const [nickname, setNickname] = useState("");
+  const [deptId, setDeptId] = useState<number>();
   const [step, setStep] = useState(1);
   const handleClickAddAgent = async () => {
     if (step === 1) {
@@ -47,10 +47,10 @@ function AddAgentModal({
       return;
     }
     await addUser({
-      userName,
-      nickName,
-      userLevel: "代理",
-      upUserName: "z111",
+      username,
+      nickname,
+      deptId: deptId ?? 0,
+      upUsername: "z111",
       userId: `A${Math.random().toString(36).substring(2, 15)}`,
       status: 1,
     });
@@ -71,35 +71,35 @@ function AddAgentModal({
         <div className="flex flex-col gap-2 w-full px-4">
           <div className="flex gap-4 items-center">
             <Label className="shrink-0 w-1/4 text-right text-muted-foreground">
-              {t("userName")} :
+              {t("username")} :
             </Label>
             <Input
               placeholder={t("placeholder")}
               className="w-1/2"
-              value={userName}
-              onChange={(e) => setUserName(e.target.value)}
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
             />
           </div>
           <div className="flex gap-4 items-center">
             <Label className="shrink-0 w-1/4 text-right text-muted-foreground">
-              {t("nickName")}
+              {t("nickname")}
             </Label>
             <Input
               placeholder={t("placeholder")}
               className="w-1/2"
-              value={nickName}
-              onChange={(e) => setNickName(e.target.value)}
+              value={nickname}
+              onChange={(e) => setNickname(e.target.value)}
             />
           </div>
           <div className="flex gap-4 items-center">
             <Label className="shrink-0 w-1/4 text-right text-muted-foreground">
-              {t("userLevel")}
+              {t("deptId")}
             </Label>
             <Input
               placeholder={t("placeholder")}
               className="w-1/2"
-              value={userLevel}
-              onChange={(e) => setUserLevel(e.target.value)}
+              value={deptId}
+              onChange={(e) => setDeptId(Number(e.target.value))}
             />
           </div>
           <DialogFooter>

@@ -30,7 +30,7 @@ export function ChangeLogModal({
       id: 1,
       operateTime: "2024-01-01 12:00:00",
       operater: "admin",
-      userName: "user1",
+      username: "user1",
       ip: "192.168.1.1",
       address: "中国",
       operateType: "修改",
@@ -51,7 +51,7 @@ export function ChangeLogModal({
               <TableRow className="bg-muted">
                 <TableHead>{t("operateTime")}</TableHead>
                 <TableHead>{t("operater")}</TableHead>
-                <TableHead>{t("userName")}</TableHead>
+                <TableHead>{t("username")}</TableHead>
                 <TableHead>{t("ip")}</TableHead>
                 <TableHead>{t("address")}</TableHead>
                 <TableHead>{t("operateType")}</TableHead>
@@ -64,7 +64,7 @@ export function ChangeLogModal({
                 <TableRow key={item.id}>
                   <TableCell>{item.operateTime}</TableCell>
                   <TableCell>{item.operater}</TableCell>
-                  <TableCell>{item.userName}</TableCell>
+                  <TableCell>{item.username}</TableCell>
                   <TableCell>{item.ip}</TableCell>
                   <TableCell>{item.address}</TableCell>
                   <TableCell>{item.operateType}</TableCell>
