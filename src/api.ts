@@ -23,7 +23,9 @@ export async function login(data: {
     url: "/login",
     method: "POST",
     data,
-    token: "234234234",
+    header: {
+      Authorization: "234234234",
+    },
   });
 }
 export async function logout() {
