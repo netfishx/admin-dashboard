@@ -23,7 +23,7 @@ export default function Form() {
   const [userId, setUserId] = useQueryState("userId", {
     defaultValue: "",
   });
-  const [upUserName, setUpUserName] = useQueryState("upUserName", {
+  const [upUsername, setUpUsername] = useQueryState("upUsername", {
     defaultValue: "",
   });
   const [status, setStatus] = useQueryState("status", {
@@ -33,7 +33,7 @@ export default function Form() {
     <div className="flex justify-between items-center bg-background py-2 px-4">
       <div className="flex gap-2 items-center">
         <div className="flex gap-2 items-center">
-          <Label className="shrink-0">{t("userName")}</Label>
+          <Label className="shrink-0">{t("username")}</Label>
           <Input
             placeholder={t("placeholder")}
             value={username ?? ""}
@@ -49,11 +49,11 @@ export default function Form() {
           />
         </div>
         <div className="flex gap-2 items-center">
-          <Label className="shrink-0">{t("upUserName")}</Label>
+          <Label className="shrink-0">{t("upUsername")}</Label>
           <Input
             placeholder={t("placeholder")}
-            value={upUserName ?? ""}
-            onChange={(e) => setUpUserName(e.target.value)}
+            value={upUsername ?? ""}
+            onChange={(e) => setUpUsername(e.target.value)}
           />
         </div>
         <div className="flex gap-2 items-center">

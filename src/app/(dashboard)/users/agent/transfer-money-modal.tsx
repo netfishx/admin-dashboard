@@ -39,9 +39,9 @@ export function TransferMoneyModal({
         <div className="flex flex-col gap-4 w-full px-4">
           <div className="flex gap-4 items-center">
             <Label className="shrink-0 w-1/4 text-right text-muted-foreground">
-              {t("userName")}
+              {t("username")}
             </Label>
-            <span>{editData?.userName}</span>
+            <span>{editData?.username}</span>
           </div>
           <div className="flex gap-4 items-center">
             <Label className="shrink-0 w-1/4 text-right text-muted-foreground">

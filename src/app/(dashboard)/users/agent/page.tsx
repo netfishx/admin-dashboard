@@ -52,24 +52,21 @@ async function AgentTable({
 }: { searchParams: Promise<{ [key: string]: string | string[] }> }) {
   const t = await getTranslations("users.agents");
   const search = await searchParams;
-  const { data, code, message } = await getAgents({
+  const { data } = await getAgents({
     ...search,
     page: search.page ?? 1,
   });
-  if (code === 200) {
-    console.log(data);
-  }
   return (
     <>
       <div className="border rounded-sm">
         <Table>
           <TableHeader>
             <TableRow className="bg-muted">
-              <TableHead className="min-w-32">{t("upUserName")}</TableHead>
-              <TableHead className="min-w-32">{t("userLevel")}</TableHead>
+              <TableHead className="min-w-32">{t("upUsername")}</TableHead>
+              <TableHead className="min-w-32">{t("deptId")}</TableHead>
               <TableHead className="min-w-32">{t("userId")}</TableHead>
-              <TableHead className="min-w-32">{t("userName")}</TableHead>
-              <TableHead className="min-w-32">{t("nickName")}</TableHead>
+              <TableHead className="min-w-32">{t("username")}</TableHead>
+              <TableHead className="min-w-32">{t("nickname")}</TableHead>
               <TableHead className="min-w-32">{t("status")}</TableHead>
               <TableHead className="min-w-[400px] text-center">
                 {t("action")}
@@ -77,20 +74,20 @@ async function AgentTable({
             </TableRow>
           </TableHeader>
           <TableBody>
-            {data?.data?.map((item: AgentData) => (
+            {data?.list?.map((item: AgentData) => (
               <TableRow key={item.userId}>
-                <TableCell className="min-w-32">{item.upUserName}</TableCell>
-                <TableCell className="min-w-32">{item.userLevel}</TableCell>
+                <TableCell className="min-w-32">{item.upUsername}</TableCell>
+                <TableCell className="min-w-32">{item.deptId}</TableCell>
                 <TableCell className="min-w-32">{item.userId}</TableCell>
-                <TableCell className="min-w-32">{item.userName}</TableCell>
-                <TableCell className="min-w-32">{item.nickName}</TableCell>
+                <TableCell className="min-w-32">{item.username}</TableCell>
+                <TableCell className="min-w-32">{item.nickname}</TableCell>
                 <TableCell className="min-w-32">
                   <div
                     className={cn(
                       "px-2 rounded-sm w-fit",
-                      item.status === 1 && "text-green bg-green/10",
-                      item.status === 2 && "text-destructive bg-destructive/10",
-                      item.status === 3 && "text-orange bg-orange/10",
+                      item.status === 0 && "text-green bg-green/10",
+                      item.status === 1 && "text-destructive bg-destructive/10",
+                      item.status === 2 && "text-orange bg-orange/10",
                     )}
                   >
                     {t(`statusLabel.${item.status}`)}

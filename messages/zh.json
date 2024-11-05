@@ -193,11 +193,11 @@
   "users": {
     "agents": {
       "addAgent": "新增代理",
-      "upUserName": "上级账号",
-      "userLevel": "用户层级",
+      "upUsername": "上级账号",
+      "deptId": "用户层级",
       "userId": "用户ID",
-      "userName": "账号",
-      "nickName": "昵称",
+      "username": "账号",
+      "nickname": "昵称",
       "status": "状态",
       "action": "操作",
       "userInfo": "用户信息",
@@ -218,9 +218,9 @@
       "save": "确定",
       "restCount": "剩余尝试次数",
       "statusLabel": {
-        "1": "启用",
-        "2": "停用",
-        "3": "冻结"
+        "0": "启用",
+        "1": "停用",
+        "2": "冻结"
       },
       "amount": "转账金额",
       "moneyPassword": "资金密码",
