@@ -385,7 +385,20 @@
       "action": "操作",
       "cancel": "取消",
       "save": "确定",
-      "add": "新增"
+      "add": "新增",
+      "addModal": "新增公告",
+      "announcementType": "公告类型：",
+      "announcementContent": "公告内容：",
+      "announcementTime": "公告时间：",
+      "language": "语言：",
+      "placeholder": "请输入",
+      "platformAnnouncement": "平台通用公告",
+      "agentAnnouncement": "代理公告",
+      "memberAnnouncement": "会员公告",
+      "platformRoomAnnouncement": "平台房间公告",
+      "status": "状态",
+      "enable": "启用",
+      "disable": "停用"
     }
   }
 }
