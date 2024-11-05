@@ -55,22 +55,26 @@ export async function loginAction(formData: FormData) {
   const username = formData.get("username");
   const password = formData.get("password");
   const code = formData.get("code");
+  const randomStr = formData.get("randomStr");
 
-  let message = "请输入用户名和密码";
-  if (username && password && code) {
-    const res = await login({
-      username: username.toString(),
-      password: password.toString(),
-      code: code.toString(),
-    });
-    if (res.code === 0 && res.data) {
-      await setSession(res.data);
-      return redirect("/");
-    }
-    message = res.message || "登录失败";
+  if (!(username && password)) {
+    return { message: "请输入用户名和密码" };
+  }
+  if (!(code && randomStr)) {
+    return { message: "请输入验证码" };
   }
 
-  return { result: false, message };
+  const res = await login({
+    username: username.toString(),
+    password: password.toString(),
+    code: code.toString(),
+    randomStr: randomStr.toString(),
+  });
+  if (res.code === 0 && res.data) {
+    await setSession(res.data);
+    return redirect("/");
+  }
+  return { message: res.message || "登录失败" };
 }
 
 export async function signOutAction() {

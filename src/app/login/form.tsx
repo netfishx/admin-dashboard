@@ -7,10 +7,11 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Password } from "@/components/ui/password";
+import { nanoid } from "nanoid";
 import { useTranslations } from "next-intl";
 import Form from "next/form";
 import Image from "next/image";
-import { type FormEvent, useRef } from "react";
+import { type FormEvent, useRef, useState } from "react";
 import { toast } from "sonner";
 
 export function LoginForm() {
@@ -21,14 +22,13 @@ export function LoginForm() {
       return;
     }
     const res = await loginAction(new FormData(ref.current));
-    if (!res.result) {
-      toast.error(res.message);
-    }
+    toast.error(res.message);
   }
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     await login();
   }
+  const [randomStr, setRandomStr] = useState(nanoid());
   return (
     <Form action={loginAction} onSubmit={handleSubmit} ref={ref}>
       <div className="relative w-full h-screen overflow-hidden bg-accent flex flex-col gap-4 items-center justify-center">
@@ -85,18 +85,17 @@ export function LoginForm() {
                 }}
               />
               <Image
-                src={
-                  "http://16.163.156.77:9999/code/image?randomStr=XN1Mol0XgLQV9SRa0b5Tv"
-                }
+                src={`http://16.163.156.77:9999/code/image?randomStr=${randomStr}`}
                 className="cursor-pointer hover:opacity-80"
                 width={96}
                 height={36}
                 alt="captcha"
                 priority
                 onClick={() => {
-                  console.info("click");
+                  setRandomStr(nanoid());
                 }}
               />
+              <input type="hidden" name="randomStr" value={randomStr} />
             </div>
           </div>
           <Button>{t("button")}</Button>

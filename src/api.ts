@@ -14,6 +14,7 @@ export async function login(data: {
   username: string;
   password: string;
   code: string;
+  randomStr: string;
 }) {
   return await apiRequest<User>({
     url: "/login",
