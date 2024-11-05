@@ -85,7 +85,7 @@ export function LoginForm() {
                 }}
               />
               <Image
-                src={`http://16.163.156.77:9999/code/image?randomStr=${randomStr}`}
+                src={`${process.env.NEXT_PUBLIC_BASE_URL}/security/captcha?uuid=${randomStr}`}
                 className="cursor-pointer hover:opacity-80"
                 width={96}
                 height={36}

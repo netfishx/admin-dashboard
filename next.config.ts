@@ -39,9 +39,9 @@ const nextConfig: NextConfig = {
     contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
     remotePatterns: [
       {
-        hostname: "16.163.156.77",
-        pathname: "/code/**",
-        port: "9999",
+        hostname: "16.163.41.52",
+        pathname: "/security/**",
+        port: "4000",
         protocol: "http",
       },
     ],
