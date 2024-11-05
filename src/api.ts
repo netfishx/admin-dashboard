@@ -70,7 +70,7 @@ export async function agentBaccaratReport(data: any) {
   return await apiRequest({ url: "/api/agentBaccaratReport", data });
 }
 export interface Announcement {
-  beginTime: string;
+  startTime: string;
   endTime: string;
   content: string;
   createTime: string;
@@ -78,14 +78,15 @@ export interface Announcement {
   language: string;
   status: string;
 }
-export async function getAnnouncement() {
-  return await apiRequest<WithPagination & { data: Announcement[] }>({
-    url: "/api/getUpAnnouncement",
+export async function getAnnouncement(params: any) {
+  return await apiRequest<WithPagination & { list: Announcement[] }>({
+    url: "/announcements",
+    params,
   });
 }
 export async function saveAnnouncement(data: Announcement) {
   return await apiRequest({
-    url: "/api/saveAnnouncement",
+    url: "/addAnnouncements",
     method: "POST",
     data,
   });
