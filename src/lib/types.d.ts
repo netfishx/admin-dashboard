@@ -5,8 +5,8 @@ export type Res<T> = {
 };
 
 export type User = {
-  id: number;
-  mainId: number;
+  id: string;
+  mainId: string;
   username: string;
   nickname: string;
   status: number;

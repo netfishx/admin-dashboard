@@ -20,8 +20,8 @@ export async function login(data: {
 }) {
   const res = await apiRequest<{
     userDetail: {
-      id: number;
-      mainId: number;
+      id: string;
+      mainId: string;
       username: string;
       nickname: string;
       status: number;
