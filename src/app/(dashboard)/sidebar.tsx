@@ -9,7 +9,7 @@ import Image from "next/image";
 import { Menu } from "./menu";
 import { ToggleSidebar } from "./toggle-sidebar";
 
-export function SideBar() {
+export function SideBar({ status = false }: { status?: boolean }) {
   const t = useTranslations();
   const isOpened = useAtomValue(sidebarAtom);
   return (
@@ -37,7 +37,7 @@ export function SideBar() {
         </div>
         <Menu />
       </div>
-      <ToggleSidebar />
+      <ToggleSidebar status={status} />
     </div>
   );
 }

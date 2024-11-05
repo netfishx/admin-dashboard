@@ -1,12 +1,14 @@
 import { ScrollArea } from "@/components/ui/scroll-area";
-import type { ReactNode } from "react";
-import { SideBar } from "./sidebar";
+import { type ReactNode, Suspense } from "react";
+import { SidebarWrapper } from "./sidebar-wrapper";
 import { Toolbar } from "./toolbar";
 
 export default function DashboardLayout({ children }: { children: ReactNode }) {
   return (
     <div className="w-full h-screen overflow-hidden flex">
-      <SideBar />
+      <Suspense fallback={null}>
+        <SidebarWrapper />
+      </Suspense>
       <main className="flex-1 flex flex-col">
         <Toolbar />
         <div className="flex-1 bg-accent">

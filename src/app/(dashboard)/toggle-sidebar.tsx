@@ -9,11 +9,11 @@ import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { toast } from "sonner";
 
-export function ToggleSidebar() {
+export function ToggleSidebar({ status = false }: { status?: boolean }) {
   const [isOpened, setIsOpened] = useAtom(sidebarAtom);
   const t = useTranslations("menu");
-  const [stop, setStop] = useState(false);
-  async function handleStopChange(checked: boolean) {
+  const [stop, setStop] = useState(status);
+  function handleChange(checked: boolean) {
     setStop(checked);
     toast.success(checked ? "Stop" : "Start");
   }
@@ -24,12 +24,10 @@ export function ToggleSidebar() {
         isOpened ? "justify-between px-4" : "px-3",
       ])}
     >
-      {isOpened && (
-        <div className="flex items-center gap-2">
-          <Switch checked={stop} onCheckedChange={handleStopChange} />
-          <span className="text-sm">{t("stop")}</span>
-        </div>
-      )}
+      <div className={cn("flex items-center gap-2", isOpened ? "" : "hidden")}>
+        <Switch checked={stop} onCheckedChange={handleChange} />
+        <span className="text-sm">{t("stop")}</span>
+      </div>
       <Button
         variant="secondary"
         size="icon"

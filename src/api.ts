@@ -20,6 +20,7 @@ export async function login(data: {
     url: "/login",
     method: "POST",
     data,
+    token: "234234234",
   });
 }
 export async function logout() {
@@ -83,4 +84,8 @@ export async function saveAnnouncement(data: Announcement) {
     method: "POST",
     data,
   });
+}
+
+export async function getReviceOrder() {
+  return await apiRequest<{ status: boolean }>({ url: "/agent/reviceOrder" });
 }
