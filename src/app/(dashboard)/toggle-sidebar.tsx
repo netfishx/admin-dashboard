@@ -17,7 +17,11 @@ export function ToggleSidebar({ status = false }: { status?: boolean }) {
   async function handleChange(checked: boolean) {
     setStop(checked);
     await editReviceOrder({ status: checked });
-    toast.success(checked ? "Stop" : "Start");
+    if (checked) {
+      toast.error(t("stop"));
+    } else {
+      toast.success(t("start"));
+    }
   }
   return (
     <div

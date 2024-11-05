@@ -41,6 +41,7 @@
   "menu": {
     "home": "首页",
     "stop": "停止接单",
+    "start": "开启接单",
     "games": {
       "title": "游戏管理",
       "flyorder": "拦货设置",
