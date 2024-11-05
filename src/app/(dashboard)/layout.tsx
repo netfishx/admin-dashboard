@@ -1,7 +1,6 @@
 import { SidebarWrapper } from "@/app/(dashboard)/sidebar-wrapper";
-import { Toolbar } from "@/app/(dashboard)/toolbar";
+import { ToolbarWrapper } from "@/app/(dashboard)/toolbar-wrapper";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { getSession } from "@/session";
 import { type ReactNode, Suspense } from "react";
 
 export default async function DashboardLayout({
@@ -9,7 +8,6 @@ export default async function DashboardLayout({
 }: {
   children: ReactNode;
 }) {
-  const user = await getSession();
   return (
     <div className="w-full h-screen overflow-hidden flex">
       <Suspense fallback={null}>
@@ -17,10 +15,7 @@ export default async function DashboardLayout({
       </Suspense>
       <main className="flex-1 flex flex-col">
         <Suspense fallback={null}>
-          <Toolbar
-            username={user?.username ?? ""}
-            inviteCode={user?.inviteCode ?? ""}
-          />
+          <ToolbarWrapper />
         </Suspense>
         <div className="flex-1 bg-accent">
           <ScrollArea className="h-[calc(100dvh-2.5rem)]">

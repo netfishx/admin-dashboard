@@ -35,6 +35,7 @@ import { useTheme } from "next-themes";
 import { usePathname, useRouter } from "next/navigation";
 import { QRCodeSVG } from "qrcode.react";
 import { useState } from "react";
+import { useCopyToClipboard } from "react-use";
 
 export function Toolbar({
   username,
@@ -45,6 +46,7 @@ export function Toolbar({
 }) {
   const [name, _setName] = useState(username);
   const { resolvedTheme: mode, setTheme } = useTheme();
+  const [, copyToClipboard] = useCopyToClipboard();
   const router = useRouter();
   const pathname = usePathname();
   const firstPath = pathname.split("/")[1];
@@ -86,9 +88,9 @@ export function Toolbar({
               <span>{inviteCode}</span>
               <Button
                 variant="ghost"
-                className="size-6"
+                className="size-4"
                 onClick={() => {
-                  navigator.clipboard.writeText(inviteCode);
+                  copyToClipboard(inviteCode);
                 }}
               >
                 <Copy className="size-4" />
