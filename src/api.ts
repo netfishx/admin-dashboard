@@ -44,15 +44,23 @@ export async function agentBaccaratReport(data: any) {
   return await apiRequest({ url: "/api/agentBaccaratReport", data });
 }
 export interface Announcement {
-  id: string;
   beginTime: string;
   endTime: string;
   content: string;
   createTime: string;
-  type: number;
+  type: string;
+  language: string;
+  status: string;
 }
 export async function getAnnouncement() {
   return await apiRequest<WithPagination & { data: Announcement[] }>({
     url: "/api/getUpAnnouncement",
+  });
+}
+export async function saveAnnouncement(data: Announcement) {
+  return await apiRequest({
+    url: "/api/saveAnnouncement",
+    method: "POST",
+    data,
   });
 }
