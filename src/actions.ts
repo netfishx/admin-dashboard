@@ -1,9 +1,9 @@
 "use server";
-import { redirect } from "next/navigation";
-import { login, logout } from "./api";
+import { login, logout } from "@/api";
 // import { z } from "zod";
 // import { zfd } from "zod-form-data";
-import { setSession, signOut } from "./session";
+import { setSession, signOut } from "@/session";
+import { redirect } from "next/navigation";
 
 // const lowercaseRegex = /[a-z]/;
 // const uppercaseRegex = /[A-Z]/;

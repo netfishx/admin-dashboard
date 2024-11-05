@@ -1,11 +1,11 @@
 "use server";
+import type { Res } from "@/lib/types";
 import axios from "axios";
 import {
   unstable_cacheLife as cacheLife,
   unstable_cacheTag as cacheTag,
 } from "next/cache";
 import { headers } from "next/headers";
-import type { Res } from "./types";
 
 const instance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_BASE_URL,

@@ -1,13 +1,13 @@
 "use client";
 
+import { Menu } from "@/app/(dashboard)/menu";
+import { ToggleSidebar } from "@/app/(dashboard)/toggle-sidebar";
 import logo from "@/assets/images/logo.svg";
 import { cn } from "@/lib/utils";
 import { sidebarAtom } from "@/store";
 import { useAtomValue } from "jotai";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
-import { Menu } from "./menu";
-import { ToggleSidebar } from "./toggle-sidebar";
 
 export function SideBar({ status = false }: { status?: boolean }) {
   const t = useTranslations();

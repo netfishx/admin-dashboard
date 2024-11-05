@@ -1,11 +1,11 @@
 import { useTranslations } from "next-intl";
 
-import { Announcement } from "./announcement";
-import { DataOverview } from "./data-overview";
-import { DayChart } from "./day-chart";
-import { QuickAccess } from "./quick-access";
-import { Salutations } from "./salutations";
-import { WeekChart } from "./week-chart";
+import { Announcement } from "@/app/(dashboard)/announcement";
+import { DataOverview } from "@/app/(dashboard)/data-overview";
+import { DayChart } from "@/app/(dashboard)/day-chart";
+import { QuickAccess } from "@/app/(dashboard)/quick-access";
+import { Salutations } from "@/app/(dashboard)/salutations";
+import { WeekChart } from "@/app/(dashboard)/week-chart";
 
 export default function DashboardPage() {
   const t = useTranslations();

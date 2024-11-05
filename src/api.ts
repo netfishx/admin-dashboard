@@ -1,8 +1,8 @@
 "use server";
 
-import { apiRequest } from "./lib/request";
-import type { User } from "./lib/types";
-import { getSession } from "./session";
+import { apiRequest } from "@/lib/request";
+import type { User } from "@/lib/types";
+import { getSession } from "@/session";
 
 export interface AgentData {
   upUserName: string;

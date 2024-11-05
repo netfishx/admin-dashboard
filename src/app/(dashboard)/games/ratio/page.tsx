@@ -1,4 +1,4 @@
-import { RatioForm } from "./form";
+import { RatioForm } from "@/app/(dashboard)/games/ratio/form";
 
 const data = [
   {

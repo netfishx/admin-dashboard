@@ -1,11 +1,11 @@
 "use client";
+import { TabsTypes } from "@/app/(dashboard)/reports/agent/baccarat/defiend";
 import { times } from "@/components/daterange-filter";
 import { Tabs, TabsList } from "@/components/ui/tabs";
 import { cn } from "@/lib/utils";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { useState } from "react";
-import { TabsTypes } from "./defiend";
 
 export default function TopTabs() {
   const t = useTranslations("report.agent");

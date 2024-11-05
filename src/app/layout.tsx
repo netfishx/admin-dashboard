@@ -1,4 +1,5 @@
 import "@/assets/globals.css";
+import { I18nProvider } from "@/app/i18n-provider";
 import { ErrorToast } from "@/components/error-toast";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
@@ -6,7 +7,6 @@ import { Provider as JotaiProvider } from "jotai";
 import { getTranslations } from "next-intl/server";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
 import { type ReactNode, Suspense } from "react";
-import { I18nProvider } from "./i18n-provider";
 
 async function Title() {
   const t = await getTranslations();

@@ -1,4 +1,4 @@
-import { RebateForm } from "./form";
+import { RebateForm } from "@/app/(dashboard)/games/rebate/form";
 
 const data = [
   {

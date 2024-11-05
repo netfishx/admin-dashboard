@@ -1,5 +1,5 @@
+import TopTabs from "@/app/(dashboard)/reports/agent/baccarat/top-tabs";
 import { type ReactNode, Suspense } from "react";
-import TopTabs from "./top-tabs";
 
 export default function layout({ children }: { children: ReactNode }) {
   return (

@@ -1,6 +1,6 @@
+import type { User } from "@/lib/types";
 import { SignJWT, jwtVerify } from "jose";
 import { cookies } from "next/headers";
-import type { User } from "./lib/types";
 
 const key = new TextEncoder().encode(process.env.AUTH_SECRET);
 const expiresTime = 24 * 60 * 60;

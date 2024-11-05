@@ -1,7 +1,7 @@
+import { SidebarWrapper } from "@/app/(dashboard)/sidebar-wrapper";
+import { Toolbar } from "@/app/(dashboard)/toolbar";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { type ReactNode, Suspense } from "react";
-import { SidebarWrapper } from "./sidebar-wrapper";
-import { Toolbar } from "./toolbar";
 
 export default function DashboardLayout({ children }: { children: ReactNode }) {
   return (

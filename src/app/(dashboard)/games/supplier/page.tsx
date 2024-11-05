@@ -1,3 +1,6 @@
+import { Add } from "@/app/(dashboard)/games/supplier/add";
+import { EditButton } from "@/app/(dashboard)/games/supplier/edit";
+import { SupplierForm } from "@/app/(dashboard)/games/supplier/form";
 import {
   Table,
   TableBody,
@@ -8,9 +11,6 @@ import {
 } from "@/components/ui/table";
 import { getTranslations } from "next-intl/server";
 import { Suspense } from "react";
-import { Add } from "./add";
-import { EditButton } from "./edit";
-import { SupplierForm } from "./form";
 
 const data = [
   {

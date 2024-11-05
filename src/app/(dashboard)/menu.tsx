@@ -1,5 +1,6 @@
 "use client";
 
+import { MenuItem, MenuItemLink } from "@/app/(dashboard)/menu-item";
 import {
   Collapsible,
   CollapsibleContent,
@@ -30,7 +31,6 @@ import { useTranslations } from "next-intl";
 import { usePathname } from "next/navigation";
 import { parseAsArrayOf, parseAsString, useQueryState } from "nuqs";
 import { Suspense, startTransition } from "react";
-import { MenuItem, MenuItemLink } from "./menu-item";
 
 export function Menu() {
   const isOpened = useAtomValue(sidebarAtom);

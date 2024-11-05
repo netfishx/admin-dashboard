@@ -1,4 +1,4 @@
-import { FlyOrderForm } from "./form";
+import { FlyOrderForm } from "@/app/(dashboard)/games/flyorder/form";
 const data = [
   {
     game: "百家乐01",

@@ -1,4 +1,4 @@
-import { OddsForm } from "./form";
+import { OddsForm } from "@/app/(dashboard)/games/odds/form";
 
 const data = [
   {

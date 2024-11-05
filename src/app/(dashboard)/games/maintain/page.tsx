@@ -1,6 +1,6 @@
+import { MaintainForm } from "@/app/(dashboard)/games/maintain/form";
+import { MaintainTable } from "@/app/(dashboard)/games/maintain/table";
 import { Suspense } from "react";
-import { MaintainForm } from "./form";
-import { MaintainTable } from "./table";
 const data = [
   {
     game: "百家乐01",

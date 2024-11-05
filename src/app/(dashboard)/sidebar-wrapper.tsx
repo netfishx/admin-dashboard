@@ -1,6 +1,6 @@
 import { getReviceOrder } from "@/api";
+import { SideBar } from "@/app/(dashboard)/sidebar";
 import { use } from "react";
-import { SideBar } from "./sidebar";
 
 export function SidebarWrapper() {
   const res = use(getReviceOrder());
