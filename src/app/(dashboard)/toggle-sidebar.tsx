@@ -1,4 +1,5 @@
 "use client";
+import { editReviceOrder } from "@/api";
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 import { cn } from "@/lib/utils";
@@ -13,8 +14,9 @@ export function ToggleSidebar({ status = false }: { status?: boolean }) {
   const [isOpened, setIsOpened] = useAtom(sidebarAtom);
   const t = useTranslations("menu");
   const [stop, setStop] = useState(status);
-  function handleChange(checked: boolean) {
+  async function handleChange(checked: boolean) {
     setStop(checked);
+    await editReviceOrder({ status: checked });
     toast.success(checked ? "Stop" : "Start");
   }
   return (

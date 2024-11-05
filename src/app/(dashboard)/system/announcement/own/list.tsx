@@ -1,4 +1,4 @@
-import { getAnnouncement } from "@/api";
+import Pages from "@/components/custom-pagination";
 import ListScrollArea from "@/components/list-scroll-area";
 import { ScrollBar } from "@/components/ui/scroll-area";
 import {
@@ -10,69 +10,74 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { getTranslations } from "next-intl/server";
-import { Suspense } from "react";
 import { Actions } from "../actions";
 import { AddAnnouncement } from "./add-announcement";
-export async function List() {
+
+export async function List({ data }: { data: any }) {
   const t = await getTranslations("system.announcement");
-  const { data } = await getAnnouncement();
+
   return (
     <>
       <div className="p-2 mt-2 bg-background flex-1 gap-2">
         <AddAnnouncement />
         <ListScrollArea>
-          <Suspense fallback={null}>
-            <Table>
-              <TableHeader className="sticky">
-                <TableRow className="bg-muted">
-                  <TableHead className="w-24 min-w-24 text-center">
-                    {t("beginTime")}
-                  </TableHead>
-                  <TableHead className="w-24 min-w-24 text-center">
-                    {t("endTime")}
-                  </TableHead>
-                  <TableHead className="w-24 min-w-24 text-center">
-                    {t("createTime")}
-                  </TableHead>
-                  <TableHead className="w-24 min-w-24 text-center">
-                    {t("content")}
-                  </TableHead>
-                  <TableHead className="w-24 min-w-24 text-center">
-                    {t("type")}
-                  </TableHead>
-                  <TableHead className="w-24 min-w-24 text-center">
-                    {t("action")}
-                  </TableHead>
+          <Table>
+            <TableHeader className="sticky">
+              <TableRow className="bg-muted">
+                <TableHead className="w-24 min-w-24 text-center">
+                  {t("startTime")}
+                </TableHead>
+                <TableHead className="w-24 min-w-24 text-center">
+                  {t("endTime")}
+                </TableHead>
+                <TableHead className="w-24 min-w-24 text-center">
+                  {t("createTime")}
+                </TableHead>
+                <TableHead className="w-24 min-w-24 text-center">
+                  {t("content")}
+                </TableHead>
+                <TableHead className="w-24 min-w-24 text-center">
+                  {t("type")}
+                </TableHead>
+                <TableHead className="w-24 min-w-24 text-center">
+                  {t("action")}
+                </TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {data?.list?.map((item: any) => (
+                <TableRow key={Math.random()}>
+                  <TableCell className="w-24 text-center">
+                    {item.startTime}
+                  </TableCell>
+                  <TableCell className="w-24 text-center">
+                    {item.endTime}
+                  </TableCell>
+                  <TableCell className="w-24 text-center">
+                    {item.createTime}
+                  </TableCell>
+                  <TableCell className="w-24 text-center">
+                    {item.content}
+                  </TableCell>
+                  <TableCell className="w-24 text-center">
+                    {item.type}
+                  </TableCell>
+                  <TableCell className="w-24 text-center">
+                    <Actions data={item} showEdit={true} />
+                  </TableCell>
                 </TableRow>
-              </TableHeader>
-              <TableBody>
-                {data?.data?.map((item: any) => (
-                  <TableRow key={Math.random()}>
-                    <TableCell className="w-24 text-center">
-                      {item.beginTime}
-                    </TableCell>
-                    <TableCell className="w-24 text-center">
-                      {item.endTime}
-                    </TableCell>
-                    <TableCell className="w-24 text-center">
-                      {item.createTime}
-                    </TableCell>
-                    <TableCell className="w-24 text-center">
-                      {item.content}
-                    </TableCell>
-                    <TableCell className="w-24 text-center">
-                      {item.type}
-                    </TableCell>
-                    <TableCell className="w-24 text-center">
-                      <Actions data={item} />
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </Suspense>
+              ))}
+            </TableBody>
+          </Table>
           <ScrollBar orientation="horizontal" />
         </ListScrollArea>
+      </div>
+      <div className="pt-2">
+        <Pages
+          total={data?.total ?? 0}
+          currentPage={Number(data?.pages ?? 1)}
+          pageSize={Number(data?.size ?? 10)}
+        />
       </div>
     </>
   );

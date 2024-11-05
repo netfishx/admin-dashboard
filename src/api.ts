@@ -1,5 +1,8 @@
+"use server";
+
 import { apiRequest } from "./lib/request";
 import type { User } from "./lib/types";
+import { getSession } from "./session";
 
 export interface AgentData {
   upUserName: string;
@@ -87,5 +90,19 @@ export async function saveAnnouncement(data: Announcement) {
 }
 
 export async function getReviceOrder() {
-  return await apiRequest<{ status: boolean }>({ url: "/agent/reviceOrder" });
+  const user = await getSession();
+  return await apiRequest<{ status: boolean }>({
+    url: "/agent/reviceOrder",
+    token: user?.token,
+  });
+}
+
+export async function editReviceOrder({ status }: { status: boolean }) {
+  const user = await getSession();
+  return await apiRequest<{ status: boolean }>({
+    url: "/agent/reviceOrder",
+    method: "POST",
+    data: { status },
+    token: user?.token,
+  });
 }
