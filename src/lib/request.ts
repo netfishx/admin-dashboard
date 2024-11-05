@@ -123,7 +123,7 @@ export async function apiRequest<T>({
   const nextHeaders = await headers();
   const ip = nextHeaders.get("x-forwarded-for");
   const locale = nextHeaders.get("accept-language");
-  return await request({
+  return await request<T>({
     url,
     ip,
     locale,

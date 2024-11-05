@@ -6,6 +6,12 @@ export type Res<T> = {
 
 export type User = {
   id: number;
-  name: string;
+  mainId: number;
+  username: string;
+  nickname: string;
+  status: number;
+  inviteCode: string;
+  depositAddress: string;
   token: string;
+  permissions: string[];
 };

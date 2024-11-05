@@ -1,7 +1,6 @@
 "use server";
 
 import { apiRequest } from "@/lib/request";
-import type { User } from "@/lib/types";
 import { getSession } from "@/session";
 
 export interface AgentData {
@@ -19,14 +18,45 @@ export async function login(data: {
   code: string;
   randomStr: string;
 }) {
-  return await apiRequest<User>({
-    url: "/login",
+  const res = await apiRequest<{
+    userDetail: {
+      id: number;
+      mainId: number;
+      username: string;
+      nickname: string;
+      status: number;
+      inviteCode: string;
+      depositAddress: string;
+    };
+    accessToken: string;
+    permissions: string[];
+  }>({
+    url: "/agent/login",
     method: "POST",
-    data,
+    data: {
+      username: data.username,
+      password: data.password,
+      captchaImg: data.code,
+      captchaUuid: data.randomStr,
+    },
     header: {
       Authorization: "234234234",
     },
   });
+  return {
+    ...res,
+    data: {
+      id: res.data?.userDetail.id,
+      mainId: res.data?.userDetail.mainId,
+      username: res.data?.userDetail.username,
+      nickname: res.data?.userDetail.nickname,
+      status: res.data?.userDetail.status,
+      inviteCode: res.data?.userDetail.inviteCode,
+      depositAddress: res.data?.userDetail.depositAddress,
+      token: res.data?.accessToken,
+      permissions: res.data?.permissions,
+    },
+  };
 }
 export async function logout() {
   return await apiRequest({
