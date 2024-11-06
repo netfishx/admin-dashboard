@@ -310,7 +310,9 @@
       "proxystatus": "代理结算状态",
       "action": "操作",
       "more": "查看",
-      "reset": "重置"
+      "reset": "重置",
+      "startTime": "开始时间",
+      "endTime": "结束时间"
     },
     "periodlist": {
       "today": "今天",
