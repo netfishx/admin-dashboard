@@ -8,6 +8,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { HomeIcon } from "@/components/ui/home";
 
 import {
   Popover,
@@ -21,7 +22,6 @@ import {
   Copy,
   FileText,
   Gamepad2,
-  HomeIcon,
   MoonStar,
   QrCode,
   Scale,
@@ -140,7 +140,7 @@ function TitleIcon({ title }: { title: string }) {
     case "maintain":
       return <Cog className="size-4" />;
     default:
-      return <HomeIcon className="size-4" />;
+      return <HomeIcon />;
   }
 }
 
