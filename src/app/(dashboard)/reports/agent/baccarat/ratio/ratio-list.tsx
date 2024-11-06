@@ -68,7 +68,7 @@ export function RatioList() {
               </TableHead>
 
               <TableHead className="w-24 text-center sticky right-0 z-10 bg-muted">
-                {t("action")}
+                {t("more")}
               </TableHead>
             </TableRow>
           </TableHeader>
