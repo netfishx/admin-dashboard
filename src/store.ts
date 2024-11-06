@@ -28,3 +28,4 @@ export const agentIdAtom = atom<string>("");
 export const contentModalAtom = atom<boolean>(false);
 export const contentModalDataAtom = atom<Announcement | null>(null);
 export const contentEditModalAtom = atom<boolean>(false);
+export const editModalTitleAtom = atom<string>("");

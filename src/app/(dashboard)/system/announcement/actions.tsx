@@ -6,6 +6,7 @@ import {
   contentEditModalAtom,
   contentModalAtom,
   contentModalDataAtom,
+  editModalTitleAtom,
 } from "@/store";
 import { useSetAtom } from "jotai";
 import { useTranslations } from "next-intl";
@@ -20,6 +21,7 @@ export function Actions({
   const setContentModal = useSetAtom(contentModalAtom);
   const setContentModalData = useSetAtom(contentModalDataAtom);
   const setContentEditModal = useSetAtom(contentEditModalAtom);
+  const setEditModalTitle = useSetAtom(editModalTitleAtom);
   return (
     <>
       <Button
@@ -39,6 +41,7 @@ export function Actions({
           onClick={() => {
             setContentEditModal(true);
             setContentModalData(data);
+            setEditModalTitle(t("editModal"));
           }}
         >
           {t("edit")}

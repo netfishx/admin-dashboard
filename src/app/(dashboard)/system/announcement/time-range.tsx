@@ -34,10 +34,10 @@ export const times = {
   endTime: endOfDay(today).getTime(),
 };
 
-export function DateRangeModal({
+export function TimeRange({
   onDateRangeChange,
-}: { onDateRangeChange: (startDateTime: string) => void }) {
-  const t = useTranslations("report.orderlist");
+}: { onDateRangeChange: (startStr: string, endStr: string) => void }) {
+  const t = useTranslations("system.announcement");
 
   const [dateRange, setDateRange] = useState<DateRange>({
     from: startOfDay(today),
@@ -87,9 +87,33 @@ export function DateRangeModal({
       setMinutes(setHours(date, time.hours), time.minutes),
       time.seconds,
     );
-    onDateRangeChange(format(dateWithTime, "yyyy-MM-dd HH:mm:ss"));
     return format(dateWithTime, "yyyy-MM-dd HH:mm:ss");
   };
+
+  useEffect(() => {
+    if (dateRange?.from && dateRange?.to) {
+      const formattedStartDate = format(
+        setSeconds(
+          setMinutes(
+            setHours(dateRange.from, startTime.hours),
+            startTime.minutes,
+          ),
+          startTime.seconds,
+        ),
+        "yyyy-MM-dd HH:mm:ss",
+      );
+
+      const formattedEndDate = format(
+        setSeconds(
+          setMinutes(setHours(dateRange.to, endTime.hours), endTime.minutes),
+          endTime.seconds,
+        ),
+        "yyyy-MM-dd HH:mm:ss",
+      );
+
+      onDateRangeChange(formattedStartDate, formattedEndDate);
+    }
+  }, [dateRange, startTime, endTime, onDateRangeChange]);
 
   return (
     <div className="flex items-center gap-2 ">
@@ -104,16 +128,13 @@ export function DateRangeModal({
           >
             <CalendarIcon className="mr-2 h-4 w-4" />
             {dateRange?.from ? (
-              dateRange.to ? (
-                <>
-                  {formatDateWithTime(dateRange.from, startTime)} ~{" "}
-                  {formatDateWithTime(dateRange.to, endTime)}
-                </>
-              ) : (
-                formatDateWithTime(dateRange.from, startTime)
-              )
+              <>
+                {formatDateWithTime(dateRange.from, startTime)}
+                {dateRange.to &&
+                  ` ~ ${formatDateWithTime(dateRange.to, endTime)}`}
+              </>
             ) : (
-              <span>{t("choicedate")}</span>
+              <span>{t("selectTime")}</span>
             )}
           </Button>
         </PopoverTrigger>
@@ -127,7 +148,7 @@ export function DateRangeModal({
             />
             <div className="mt-4 pl-10">
               <div className="mb-4">
-                <p className="mb-2 text-sm font-medium">开始时间</p>
+                <p className="mb-2 text-sm font-medium">{t("startTime")}</p>
                 <div className="flex gap-2">
                   <Select
                     defaultValue={startTime.hours.toString()}
@@ -137,7 +158,7 @@ export function DateRangeModal({
                     }
                   >
                     <SelectTrigger className="w-[70px]">
-                      <SelectValue placeholder="时" />
+                      <SelectValue placeholder={t("hours")} />
                     </SelectTrigger>
                     <SelectContent>
                       {Array.from({ length: 24 }, (_, i) => (
@@ -155,7 +176,7 @@ export function DateRangeModal({
                     }
                   >
                     <SelectTrigger className="w-[70px]">
-                      <SelectValue placeholder="分" />
+                      <SelectValue placeholder={t("minutes")} />
                     </SelectTrigger>
                     <SelectContent>
                       {Array.from({ length: 60 }, (_, i) => (
@@ -173,7 +194,7 @@ export function DateRangeModal({
                     }
                   >
                     <SelectTrigger className="w-[70px]">
-                      <SelectValue placeholder="秒" />
+                      <SelectValue placeholder={t("seconds")} />
                     </SelectTrigger>
                     <SelectContent>
                       {Array.from({ length: 60 }, (_, i) => (
@@ -186,7 +207,7 @@ export function DateRangeModal({
                 </div>
               </div>
               <div>
-                <p className="mb-2 text-sm font-medium">结束时间</p>
+                <p className="mb-2 text-sm font-medium">{t("endTime")}</p>
                 <div className="flex gap-2">
                   <Select
                     defaultValue={endTime.hours.toString()}
@@ -196,7 +217,7 @@ export function DateRangeModal({
                     }
                   >
                     <SelectTrigger className="w-[70px]">
-                      <SelectValue placeholder="时" />
+                      <SelectValue placeholder={t("hours")} />
                     </SelectTrigger>
                     <SelectContent>
                       {Array.from({ length: 24 }, (_, i) => (
@@ -214,7 +235,7 @@ export function DateRangeModal({
                     }
                   >
                     <SelectTrigger className="w-[70px]">
-                      <SelectValue placeholder="分" />
+                      <SelectValue placeholder={t("minutes")} />
                     </SelectTrigger>
                     <SelectContent>
                       {Array.from({ length: 60 }, (_, i) => (
@@ -232,7 +253,7 @@ export function DateRangeModal({
                     }
                   >
                     <SelectTrigger className="w-[70px]">
-                      <SelectValue placeholder="秒" />
+                      <SelectValue placeholder={t("seconds")} />
                     </SelectTrigger>
                     <SelectContent>
                       {Array.from({ length: 60 }, (_, i) => (
