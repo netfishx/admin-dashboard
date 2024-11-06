@@ -11,7 +11,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useTranslations } from "next-intl";
-import { useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useQueryState } from "nuqs";
 
 export function RatioForm() {
@@ -21,9 +21,7 @@ export function RatioForm() {
   const [memberID, setMemberID] = useQueryState("memberID");
   const [roomeownerID, setRoomeownerID] = useQueryState("roomeownerID");
   const [uperagentID, setUperagentID] = useQueryState("uperagentID");
-  const [leastlevelID, setLeastlevelID] = useQueryState("leastlevelID");
-  const searchParams = useSearchParams();
-  const tabsType = searchParams.get("tabsType");
+  const router = useRouter();
 
   return (
     <div className="flex flex-col gap-2 bg-background py-2 px-4">
@@ -99,7 +97,7 @@ export function RatioForm() {
           <Button className="px-4 py-2 border rounded-md bg-white text-gray-700 border-gray-300 hover:bg-gray-100">
             {t("reset")}
           </Button>
-          <Button>{t("search")}</Button>
+          <Button onClick={() => router.refresh()}>{t("search")}</Button>
         </div>
       </div>
     </div>

@@ -149,3 +149,23 @@ export async function editReviceOrder({ status }: { status: boolean }) {
     token: user?.token,
   });
 }
+
+export async function getDailiReport(data: any) {
+  const user = await getSession();
+  return await apiRequest({
+    url: "/gareth/getDailiReport",
+    method: "POST",
+    data,
+    token: user?.token,
+  });
+}
+
+export async function getRatioReport(data: any) {
+  const user = await getSession();
+  return await apiRequest({
+    url: "/gareth/getRatioReport",
+    method: "POST",
+    data,
+    token: user?.token,
+  });
+}

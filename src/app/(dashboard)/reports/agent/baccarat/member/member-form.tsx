@@ -11,10 +11,12 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useTranslations } from "next-intl";
+import { useRouter } from "next/navigation";
 import { useQueryState } from "nuqs";
 
 export function MemberForm() {
   const t = useTranslations("report.agent");
+  const router = useRouter();
   const [gametype, setGameType] = useQueryState("gametype");
   const [gameName, setGameName] = useQueryState("gameName");
   const [leastlevelID, setLeastlevelID] = useQueryState("leastlevelID");
@@ -76,7 +78,7 @@ export function MemberForm() {
           <Button className="px-4 py-2 border rounded-md bg-white text-gray-700 border-gray-300 hover:bg-gray-100">
             {t("reset")}
           </Button>
-          <Button>{t("search")}</Button>
+          <Button onClick={() => router.refresh()}>{t("search")}</Button>
         </div>
       </div>
     </div>

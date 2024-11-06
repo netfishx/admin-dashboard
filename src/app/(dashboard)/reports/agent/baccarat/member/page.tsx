@@ -9,7 +9,7 @@ export default async function Page({ searchParams }: any) {
     <div className="flex flex-col gap-2 w-full h-full">
       {/* 会员下注 */}
       <MemberForm />
-      <Suspense fallback={null}>
+      <Suspense fallback={<div>loading...</div>}>
         <MemberList />
       </Suspense>
     </div>
