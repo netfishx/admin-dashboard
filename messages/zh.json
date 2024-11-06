@@ -394,6 +394,7 @@
       "add": "新增",
       "edit": "编辑",
       "addModal": "新增公告",
+      "editModal": "编辑公告",
       "announcementType": "公告类型：",
       "announcementContent": "公告内容：",
       "announcementTime": "公告时间：",
