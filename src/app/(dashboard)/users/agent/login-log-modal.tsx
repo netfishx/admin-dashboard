@@ -20,7 +20,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { cn } from "@/lib/utils";
-import { loginLogModalAtom, loginLogUserIdAtom } from "@/store";
+import { agentIdAtom, loginLogModalAtom } from "@/store";
 import { useAtom, useAtomValue } from "jotai";
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
@@ -28,7 +28,7 @@ import { useEffect, useState } from "react";
 export function LoginLogModal() {
   const t = useTranslations("users.agents");
   const [data, setData] = useState<LoginLog[]>([]);
-  const userId = useAtomValue(loginLogUserIdAtom);
+  const userId = useAtomValue(agentIdAtom);
   const [open, setOpen] = useAtom(loginLogModalAtom);
   const [total, setTotal] = useState<number>(0);
   const [page, setPage] = useState<number>(1);

@@ -19,9 +19,11 @@ export const gamesSupplierEditAtom = atom<{
   supplierId: string;
 }>();
 
+// 用户信息弹窗
+export const userInfoModalAtom = atom<boolean>(false);
 // 登录日志弹窗
 export const loginLogModalAtom = atom<boolean>(false);
-export const loginLogUserIdAtom = atom<string>("");
+export const agentIdAtom = atom<string>("");
 // 公告弹窗
 export const contentModalAtom = atom<boolean>(false);
 export const contentModalDataAtom = atom<Announcement | null>(null);
