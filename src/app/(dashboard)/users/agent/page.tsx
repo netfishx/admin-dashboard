@@ -54,8 +54,10 @@ async function AgentTable({
   const search = await searchParams;
   const { data } = await getAgents({
     ...search,
-    page: search.page ?? 1,
+    page: Number(search.page ?? 1),
+    size: Number(search.size ?? 10),
   });
+  console.info("agent list:", data);
   return (
     <>
       <div className="border rounded-sm">

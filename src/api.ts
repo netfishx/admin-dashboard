@@ -69,11 +69,11 @@ export async function logout() {
   });
 }
 
-export async function getAgents(data: any) {
+export async function getAgents(params: { page: number; size: number }) {
   const user = await getSession();
   return await apiRequest<WithPagination & { list: AgentData[] }>({
-    url: "/user",
-    data,
+    url: "/agent/user/main/getUnderAgent",
+    params,
     token: user?.token,
   });
 }
