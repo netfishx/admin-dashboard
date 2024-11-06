@@ -56,6 +56,7 @@
     "react-dom": "^19.0.0-rc-33c7bd9a-20241104",
     "react-hook-form": "^7.53.1",
     "react-is": "^19.0.0-rc-33c7bd9a-20241104",
+    "react-use": "^17.5.1",
     "recharts": "^2.13.3",
     "server-only": "^0.0.1",
     "sonner": "^1.7.0",

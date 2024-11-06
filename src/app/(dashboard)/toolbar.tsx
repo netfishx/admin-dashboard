@@ -10,9 +10,15 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import {
   ChevronDown,
   ClipboardCheck,
   Cog,
+  Copy,
   FileText,
   Gamepad2,
   HomeIcon,
@@ -27,14 +33,24 @@ import {
 import { useTranslations } from "next-intl";
 import { useTheme } from "next-themes";
 import { usePathname, useRouter } from "next/navigation";
+import { QRCodeSVG } from "qrcode.react";
 import { useState } from "react";
+import { useCopyToClipboard } from "react-use";
 
-export function Toolbar() {
-  const [name, _setName] = useState("Serati Ma");
+export function Toolbar({
+  username,
+  inviteCode,
+}: {
+  username: string;
+  inviteCode: string;
+}) {
+  const [name, _setName] = useState(username);
   const { resolvedTheme: mode, setTheme } = useTheme();
+  const [, copyToClipboard] = useCopyToClipboard();
   const router = useRouter();
   const pathname = usePathname();
   const firstPath = pathname.split("/")[1];
+  const t = useTranslations();
   return (
     <div className="w-full h-10 flex flex-row justify-between border-b px-2">
       <div className="flex flex-row gap-2 items-center text-sm">
@@ -56,9 +72,32 @@ export function Toolbar() {
             <Sun className="size-4" />
           )}
         </Button>
-        <Button variant="ghost" className="size-7 rounded-full border-2 px-1">
-          <QrCode className="size-4" />
-        </Button>
+        <Popover>
+          <PopoverTrigger asChild>
+            <Button
+              variant="ghost"
+              className="size-7 rounded-full border-2 px-1"
+            >
+              <QrCode className="size-4" />
+            </Button>
+          </PopoverTrigger>
+          <PopoverContent className="w-fit">
+            <QRCodeSVG value={inviteCode} />
+            <div className="text-xs pt-2 flex flex-row items-center justify-center">
+              <span>{t("inviteCode")}:</span>
+              <span>{inviteCode}</span>
+              <Button
+                variant="ghost"
+                className="size-4"
+                onClick={() => {
+                  copyToClipboard(inviteCode);
+                }}
+              >
+                <Copy className="size-4" />
+              </Button>
+            </div>
+          </PopoverContent>
+        </Popover>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="ghost" size="sm">
