@@ -1,8 +1,6 @@
 "use client";
 
-import { updateUser } from "@/api";
-import type { AgentData } from "@/api";
-import { getAgentInfo } from "@/api";
+import { type AgentData, getAgentInfo, updateAgent } from "@/api";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -15,8 +13,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { userInfoModalAtom } from "@/store";
-import { agentIdAtom } from "@/store";
+import { agentIdAtom, userInfoModalAtom } from "@/store";
 import { useAtomValue, useSetAtom } from "jotai";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
@@ -26,11 +23,11 @@ export function UserInfoModal() {
   const t = useTranslations("users.agents");
   const open = useAtomValue(userInfoModalAtom);
   const setOpen = useSetAtom(userInfoModalAtom);
+  const [editData, setEditData] = useState<AgentData | null>(null);
   const [username, setUsername] = useState("");
   const [nickname, setNickname] = useState("");
-  const router = useRouter();
   const [status, setStatus] = useState(1);
-  const [editData, setEditData] = useState<AgentData | null>(null);
+  const router = useRouter();
   const userId = useAtomValue(agentIdAtom);
   useEffect(() => {
     if (open) {
@@ -38,22 +35,32 @@ export function UserInfoModal() {
         console.info("getAgentInfo:", data);
         if (data) {
           setEditData(data);
+          setUsername(data.username);
+          setNickname(data.nickname);
+          setStatus(data.status);
         }
       });
     }
+    return () => {
+      setEditData(null);
+      setUsername("");
+      setNickname("");
+      setStatus(1);
+    };
   }, [open, userId]);
 
   const handleClickUpdateUserInfo = async () => {
-    if (editData) {
-      await updateUser({
-        ...editData,
-        username: username || editData.username || "",
-        nickname: nickname || editData.nickname || "",
-        status: status || editData.status || 1,
-      });
-      setOpen(false);
-      router.refresh();
-    }
+    const requestBody = {
+      id: userId,
+      username,
+      nickname,
+      status,
+    };
+    console.info("requestBody:", requestBody);
+    const { code, message } = await updateAgent(requestBody);
+    console.info("updateAgent:", code, message);
+    setOpen(false);
+    router.refresh();
   };
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -75,7 +82,7 @@ export function UserInfoModal() {
             </Label>
             <Input
               placeholder={t("placeholder")}
-              defaultValue={editData?.username}
+              value={username}
               className="w-1/2"
               onChange={(e) => setUsername(e.target.value)}
             />
@@ -86,7 +93,7 @@ export function UserInfoModal() {
             </Label>
             <Input
               placeholder={t("placeholder")}
-              defaultValue={editData?.nickname}
+              value={nickname}
               className="w-1/2"
               onChange={(e) => setNickname(e.target.value)}
             />
@@ -103,7 +110,7 @@ export function UserInfoModal() {
               {t("status")}
             </Label>
             <RadioGroup
-              defaultValue={editData?.status.toString()}
+              value={status.toString()}
               className="flex gap-2"
               onValueChange={(value) => setStatus(Number(value))}
             >
