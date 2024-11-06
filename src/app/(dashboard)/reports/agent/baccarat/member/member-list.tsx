@@ -1,5 +1,6 @@
 import { getDailiReport } from "@/api";
 import DetailButton from "@/app/(dashboard)/reports/agent/baccarat/member/detail-button";
+import Pages from "@/components/custom-pagination";
 import {
   Table,
   TableBody,
@@ -8,12 +9,25 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import type {
+  RatioReportTypes,
+  Res,
+  SearchParams,
+  WithPagination,
+} from "@/lib/types";
 import { getTranslations } from "next-intl/server";
 import { Suspense } from "react";
 
-export async function MemberList() {
+export async function MemberList({
+  searchParams,
+}: { searchParams: Promise<SearchParams> }) {
   const t = await getTranslations("report.agent");
-  const res: any = await getDailiReport({});
+  const search = await searchParams;
+  const { data } = (await getDailiReport({
+    ...searchParams,
+    page: search?.page ?? 1,
+  })) as Res<RatioReportTypes & WithPagination>;
+
   return (
     <Suspense fallback={<div>loading...</div>}>
       <div className="p-2 bg-background flex-1">
@@ -67,7 +81,7 @@ export async function MemberList() {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {res?.data?.list?.map((item: any) => (
+              {data?.list?.map((item: any) => (
                 <TableRow key={item.leastlevelID}>
                   <TableCell className="w-24 text-center">
                     {item.leastlevelID}
@@ -115,6 +129,13 @@ export async function MemberList() {
               ))}
             </TableBody>
           </Table>
+        </div>
+        <div className="pt-2">
+          <Pages
+            total={data?.total ?? 0}
+            currentPage={Number(data?.page ?? 1)}
+            pageSize={Number(data?.size ?? 10)}
+          />
         </div>
       </div>
     </Suspense>

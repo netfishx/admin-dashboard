@@ -15,3 +15,21 @@ export type User = {
   token: string;
   permissions: string[];
 };
+
+export type SearchParams = {
+  [key: string]: string | string[];
+};
+
+export type RatioReportListTypes = {
+  [key: string]: string | number | undefined | null | string[] | number[];
+};
+
+export type RatioReportTypes = {
+  list: RatioReportListTypes[];
+};
+
+export type WithPagination = {
+  page: number;
+  size: number;
+  total: number;
+};

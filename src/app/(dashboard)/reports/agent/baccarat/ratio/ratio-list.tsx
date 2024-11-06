@@ -1,4 +1,5 @@
 import { getRatioReport } from "@/api";
+import Pages from "@/components/custom-pagination";
 import {} from "@/components/ui/scroll-area";
 import {
   Table,
@@ -8,13 +9,25 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import type {
+  RatioReportTypes,
+  Res,
+  SearchParams,
+  WithPagination,
+} from "@/lib/types";
 import { getTranslations } from "next-intl/server";
 import { Suspense } from "react";
 import { DetailButton } from "./detail-button";
 
-export async function RatioList() {
+export async function RatioList({
+  searchParams,
+}: { searchParams: Promise<SearchParams> }) {
   const t = await getTranslations("report.agent");
-  const res: any = await getRatioReport({});
+  const search = await searchParams;
+  const { data } = (await getRatioReport({
+    ...searchParams,
+    page: search?.page ?? 1,
+  })) as Res<RatioReportTypes & WithPagination>;
 
   return (
     <Suspense fallback={<div>loading...</div>}>
@@ -60,7 +73,7 @@ export async function RatioList() {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {res?.data?.list?.map((item: any) => (
+              {data?.list?.map((item: any) => (
                 <TableRow key={item.agentOrOwnerId}>
                   <TableCell className="w-24 text-center">
                     {item.agentOrOwnerId}
@@ -99,6 +112,13 @@ export async function RatioList() {
               ))}
             </TableBody>
           </Table>
+        </div>
+        <div className="pt-2">
+          <Pages
+            total={data?.total ?? 0}
+            currentPage={Number(data?.page ?? 1)}
+            pageSize={Number(data?.size ?? 10)}
+          />
         </div>
       </div>
     </Suspense>
