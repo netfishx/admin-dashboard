@@ -70,9 +70,11 @@ export async function logout() {
 }
 
 export async function getAgents(data: any) {
+  const user = await getSession();
   return await apiRequest<WithPagination & { list: AgentData[] }>({
     url: "/user",
     data,
+    token: user?.token,
   });
 }
 export async function updateUser(data: AgentData) {
@@ -113,16 +115,20 @@ export interface Announcement {
   status: string;
 }
 export async function getAnnouncement(params: any) {
+  const user = await getSession();
   return await apiRequest<WithPagination & { list: Announcement[] }>({
     url: "/announcements",
     params,
+    token: user?.token,
   });
 }
 export async function saveAnnouncement(data: Announcement) {
+  const user = await getSession();
   return await apiRequest({
     url: "/addAnnouncements",
     method: "POST",
     data,
+    token: user?.token,
   });
 }
 
