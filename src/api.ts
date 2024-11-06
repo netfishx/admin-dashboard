@@ -2,6 +2,7 @@
 
 import { apiRequest } from "@/lib/request";
 import { getSession } from "@/session";
+import type { RatioReportListTypes } from "./lib/types";
 
 export interface AgentData {
   upUsername: string;
@@ -172,7 +173,7 @@ export async function editReviceOrder({ status }: { status: boolean }) {
 
 export async function getDailiReport(data: any) {
   const user = await getSession();
-  return await apiRequest({
+  return await apiRequest<WithPagination & { list: RatioReportListTypes[] }>({
     url: "/gareth/getDailiReport",
     method: "POST",
     data,
@@ -182,7 +183,7 @@ export async function getDailiReport(data: any) {
 
 export async function getRatioReport(data: any) {
   const user = await getSession();
-  return await apiRequest({
+  return await apiRequest<WithPagination & { list: RatioReportListTypes[] }>({
     url: "/gareth/getRatioReport",
     method: "POST",
     data,

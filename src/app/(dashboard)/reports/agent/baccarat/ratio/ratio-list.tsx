@@ -9,25 +9,18 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import type {
-  RatioReportTypes,
-  Res,
-  SearchParams,
-  WithPagination,
-} from "@/lib/types";
 import { getTranslations } from "next-intl/server";
 import { Suspense } from "react";
 import { DetailButton } from "./detail-button";
 
-export async function RatioList({
-  searchParams,
-}: { searchParams: Promise<SearchParams> }) {
+export async function RatioList({ searchParams }: { searchParams: any }) {
   const t = await getTranslations("report.agent");
   const search = await searchParams;
-  const { data } = (await getRatioReport({
+  const { data } = await getRatioReport({
     ...searchParams,
-    page: search?.page ?? 1,
-  })) as Res<RatioReportTypes & WithPagination>;
+    page: Number(search?.page ?? 1),
+    size: Number(search?.size ?? 10),
+  });
 
   return (
     <Suspense fallback={<div>loading...</div>}>

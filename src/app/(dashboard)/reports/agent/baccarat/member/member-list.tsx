@@ -9,24 +9,17 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import type {
-  RatioReportTypes,
-  Res,
-  SearchParams,
-  WithPagination,
-} from "@/lib/types";
 import { getTranslations } from "next-intl/server";
 import { Suspense } from "react";
 
-export async function MemberList({
-  searchParams,
-}: { searchParams: Promise<SearchParams> }) {
+export async function MemberList({ searchParams }: { searchParams: any }) {
   const t = await getTranslations("report.agent");
   const search = await searchParams;
-  const { data } = (await getDailiReport({
+  const { data } = await getDailiReport({
     ...searchParams,
-    page: search?.page ?? 1,
-  })) as Res<RatioReportTypes & WithPagination>;
+    page: Number(search?.page ?? 1),
+    size: Number(search?.size ?? 10),
+  });
 
   return (
     <Suspense fallback={<div>loading...</div>}>
