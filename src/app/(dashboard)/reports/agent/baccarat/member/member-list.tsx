@@ -1,4 +1,4 @@
-import { type WithPagination, getDailiReport } from "@/api";
+import { getDailiReport } from "@/api";
 import DetailButton from "@/app/(dashboard)/reports/agent/baccarat/member/detail-button";
 import Pages from "@/components/custom-pagination";
 import {
@@ -9,7 +9,12 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import type { RatioReportTypes, Res, SearchParams } from "@/lib/types";
+import type {
+  RatioReportTypes,
+  Res,
+  SearchParams,
+  WithPagination,
+} from "@/lib/types";
 import { getTranslations } from "next-intl/server";
 import { Suspense } from "react";
 
