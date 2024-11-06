@@ -13,11 +13,14 @@ import { useTranslations } from "next-intl";
 const tempData = "111111111111111111112221";
 const data = [
   {
-    agentOrOwnerId: tempData,
-    gameName: tempData,
+    leastlevelID: 111,
+    gameName: 111,
+    betNum: 0,
+    memberBetting: 0,
+    memberProfitLoss: 0,
     shareAmount: 0,
     blockAmount: 0,
-    deductAmount: 0,
+    throwAmount: 0,
     shareProfitLoss: 0,
     rebateIncome: 0,
     rebateExpense: 0,
@@ -37,10 +40,19 @@ export function MemberList() {
           <TableHeader>
             <TableRow className="bg-muted">
               <TableHead className="min-w-24 text-center">
-                {t("agentOrOwnerId")}
+                {t("leastlevelID")}
               </TableHead>
               <TableHead className="min-w-24 text-center">
                 {t("gameName")}
+              </TableHead>
+              <TableHead className="min-w-24 text-center">
+                {t("betNum")}
+              </TableHead>
+              <TableHead className="min-w-24 text-center">
+                {t("memberBetting")}
+              </TableHead>
+              <TableHead className="min-w-24 text-center">
+                {t("memberProfitLoss")}
               </TableHead>
               <TableHead className="min-w-24 text-center">
                 {t("shareAmount")}
@@ -67,18 +79,27 @@ export function MemberList() {
                 {t("totalProfitLossAmount")}
               </TableHead>
               <TableHead className="w-24 text-center sticky right-0 z-10 bg-muted">
-                {t("action")}
+                {t("more")}
               </TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {data.map((item) => (
-              <TableRow key={item.agentOrOwnerId}>
+              <TableRow key={item.leastlevelID}>
                 <TableCell className="w-24 text-center">
-                  {item.agentOrOwnerId}
+                  {item.leastlevelID}
                 </TableCell>
                 <TableCell className="w-24 text-center">
                   {item.gameName}
+                </TableCell>
+                <TableCell className="w-24 text-center">
+                  {item.betNum}
+                </TableCell>
+                <TableCell className="w-24 text-center">
+                  {item.memberBetting}
+                </TableCell>
+                <TableCell className="w-24 text-center">
+                  {item.memberProfitLoss}
                 </TableCell>
                 <TableCell className="w-24 text-center">
                   {item.shareAmount}
@@ -87,7 +108,7 @@ export function MemberList() {
                   {item.blockAmount}
                 </TableCell>
                 <TableCell className="w-24 text-center">
-                  {item.deductAmount}
+                  {item.throwAmount}
                 </TableCell>
                 <TableCell className="w-24 text-center">
                   {item.shareProfitLoss}
