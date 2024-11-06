@@ -7,6 +7,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+
 import { getTranslations } from "next-intl/server";
 import { Actions } from "../actions";
 export async function List({ data }: { data: any }) {
@@ -14,7 +15,6 @@ export async function List({ data }: { data: any }) {
   const user = {
     role: "admin",
   };
-
   return (
     <>
       <div className="p-2 mt-2 bg-background flex-1">

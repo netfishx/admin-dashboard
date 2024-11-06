@@ -1,5 +1,8 @@
 import { getTranslations } from "next-intl/server";
+
 import { type ReactNode, Suspense } from "react";
+import { ContentModal } from "./content-modal";
+import { AddModal } from "./modals/add-modal";
 import TabsItem from "./tabs-item";
 
 export default async function DashboardLayout({
@@ -21,6 +24,8 @@ export default async function DashboardLayout({
     <div className="w-full overflow-hidden">
       <TabsItem tabsContent={tabsContent} />
       <Suspense fallback={null}>{children}</Suspense>
+      <ContentModal />
+      <AddModal title={t("addModal")} />
     </div>
   );
 }

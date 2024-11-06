@@ -1,4 +1,5 @@
 import { atom } from "jotai";
+import type { Announcement } from "./api";
 
 export const lastErrorTimeAtom = atom<number>(0);
 export type Error = {
@@ -21,3 +22,7 @@ export const gamesSupplierEditAtom = atom<{
 // 登录日志弹窗
 export const loginLogModalAtom = atom<boolean>(false);
 export const loginLogUserIdAtom = atom<string>("");
+// 公告弹窗
+export const contentModalAtom = atom<boolean>(false);
+export const contentModalDataAtom = atom<Announcement | null>(null);
+export const contentEditModalAtom = atom<boolean>(false);
