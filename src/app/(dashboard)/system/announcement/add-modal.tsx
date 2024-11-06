@@ -20,17 +20,17 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 
 import { Label } from "@/components/ui/label";
-import { contentEditModalAtom, contentModalDataAtom } from "@/store";
+import {
+  contentEditModalAtom,
+  contentModalDataAtom,
+  editModalTitleAtom,
+} from "@/store";
 import { useAtom, useAtomValue } from "jotai";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
-import { DateRangeModal } from "../datarange-modal";
+import { TimeRange } from "./time-range";
 
-export function AddModal({
-  title,
-}: {
-  title: string;
-}) {
+export function AddModal() {
   const t = useTranslations("system.announcement");
   const [type, setType] = useState("");
   const [language, setLanguage] = useState("");
@@ -40,32 +40,33 @@ export function AddModal({
   const [startTime, setStartTime] = useState("");
   const [endTime, setEndTime] = useState("");
   const data = useAtomValue(contentModalDataAtom);
+  const editModalTitle = useAtomValue(editModalTitleAtom);
+  console.info("🌸 ~ data:", data);
   const handleClickAdd = async () => {
     const addParams = {
       type,
       language,
       content,
       status: "0",
-      startTime: startTime || "",
-      endTime: endTime || "",
+      startTime: new Date(startTime).getTime().toString() || "",
+      endTime: new Date(endTime).getTime().toString() || "",
       createTime: Date.now().toString(),
     };
     const res = await saveAnnouncement(addParams);
     setOpen(false);
   };
-  const [selectedDateTimeRange, setSelectedDateTimeRange] = useState({
-    startDateTime: null,
-    endDateTime: null,
-  });
+
   // 回调函数，用于接收子组件传递的时间数据
-  const handleDateRangeChange = (dateTime: string) => {
-    console.log("🌸 ~ dateTime:", dateTime);
+  const handleDateRangeChange = (start: string, end: string) => {
+    console.info("Selected date range:", start, end);
+    setStartTime(start);
+    setEndTime(end);
   };
   return (
-    <Dialog open={open}>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent className="max-w-5xl">
         <DialogHeader>
-          <DialogTitle>{title}</DialogTitle>
+          <DialogTitle>{editModalTitle}</DialogTitle>
           <DialogDescription />
         </DialogHeader>
         <div className="flex flex-col gap-2 w-full px-4">
@@ -95,8 +96,7 @@ export function AddModal({
             <Label className="shrink-0 w-1/4 text-right text-muted-foreground">
               {t("announcementTime")}
             </Label>
-            {/* <DateRangeFilter quickSetBtn={[]} /> */}
-            <DateRangeModal onDateRangeChange={handleDateRangeChange} />
+            <TimeRange onDateRangeChange={handleDateRangeChange} />
           </div>
           <div className="flex gap-4 items-center">
             <Label className="shrink-0 w-1/4 text-right text-muted-foreground">

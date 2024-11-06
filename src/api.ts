@@ -77,6 +77,15 @@ export async function getAgents(data: any) {
     token: user?.token,
   });
 }
+// 获取单个代理信息
+export async function getAgentInfo(params: { id: string }) {
+  const user = await getSession();
+  return await apiRequest<AgentData>({
+    url: "/agent/user/main/getById",
+    params,
+    token: user?.token,
+  });
+}
 export async function updateUser(data: AgentData) {
   return await apiRequest({ url: "/api/updateUser", method: "PUT", data });
 }

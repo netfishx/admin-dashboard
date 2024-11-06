@@ -18,7 +18,7 @@ export function ContentModal() {
   const data = useAtomValue(contentModalDataAtom);
 
   return (
-    <Dialog open={open}>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent className="max-w-5xl">
         <DialogHeader>
           <DialogTitle>{t("notifyAnnouncement")}</DialogTitle>

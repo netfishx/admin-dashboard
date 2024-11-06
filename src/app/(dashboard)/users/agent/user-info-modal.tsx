@@ -2,6 +2,7 @@
 
 import { updateUser } from "@/api";
 import type { AgentData } from "@/api";
+import { getAgentInfo } from "@/api";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -14,23 +15,34 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { userInfoModalAtom } from "@/store";
+import { agentIdAtom } from "@/store";
+import { useAtomValue, useSetAtom } from "jotai";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
-export function UserInfoModal({
-  open,
-  onOpenChange,
-  editData,
-}: {
-  open: boolean;
-  onOpenChange: (open: boolean) => void;
-  editData: AgentData | null;
-}) {
+import { useEffect, useState } from "react";
+
+export function UserInfoModal() {
   const t = useTranslations("users.agents");
+  const open = useAtomValue(userInfoModalAtom);
+  const setOpen = useSetAtom(userInfoModalAtom);
   const [username, setUsername] = useState("");
   const [nickname, setNickname] = useState("");
   const router = useRouter();
   const [status, setStatus] = useState(1);
+  const [editData, setEditData] = useState<AgentData | null>(null);
+  const userId = useAtomValue(agentIdAtom);
+  useEffect(() => {
+    if (open) {
+      getAgentInfo({ id: userId }).then(({ data }) => {
+        console.info("getAgentInfo:", data);
+        if (data) {
+          setEditData(data);
+        }
+      });
+    }
+  }, [open, userId]);
+
   const handleClickUpdateUserInfo = async () => {
     if (editData) {
       await updateUser({
@@ -39,12 +51,12 @@ export function UserInfoModal({
         nickname: nickname || editData.nickname || "",
         status: status || editData.status || 1,
       });
-      onOpenChange(false);
+      setOpen(false);
       router.refresh();
     }
   };
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent className="2xl:max-w-lg lg:max-w-md">
         <DialogHeader>
           <DialogTitle>{t("userInfo")}</DialogTitle>
@@ -111,7 +123,7 @@ export function UserInfoModal({
           </div>
         </div>
         <DialogFooter>
-          <Button variant="outline" onClick={() => onOpenChange(false)}>
+          <Button variant="outline" onClick={() => setOpen(false)}>
             {t("close")}
           </Button>
           <Button onClick={handleClickUpdateUserInfo}>{t("save")}</Button>
