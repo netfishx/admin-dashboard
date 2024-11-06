@@ -2,7 +2,7 @@ import { Suspense } from "react";
 import { MemberForm } from "./member-form";
 import { MemberList } from "./member-list";
 
-export default async function Page({ searchParams }: any) {
+export default async function Page({ searchParams }: { searchParams: any }) {
   // const params = await searchParams;
   // const data = await agentBaccaratReport(params);
   return (
@@ -10,7 +10,7 @@ export default async function Page({ searchParams }: any) {
       {/* 会员下注 */}
       <MemberForm />
       <Suspense fallback={<div>loading...</div>}>
-        <MemberList />
+        <MemberList searchParams={searchParams} />
       </Suspense>
     </div>
   );

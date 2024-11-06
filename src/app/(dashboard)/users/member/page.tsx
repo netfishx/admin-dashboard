@@ -20,11 +20,11 @@ import { useTranslations } from "next-intl";
 const data = [
   {
     id: 1,
-    upUserName: "z1234",
-    userLevel: "一级代理",
+    upUsername: "z1234",
+    deptId: "一级代理",
     userId: "A100",
-    userName: "s88888",
-    nickName: "哆啦A梦",
+    username: "s88888",
+    nickname: "哆啦A梦",
     status: "启用",
   },
 ];
@@ -36,7 +36,7 @@ export default function Page() {
       <div className="flex justify-between items-center bg-background py-2 px-4">
         <div className="flex gap-2 items-center">
           <div className="flex gap-2 items-center">
-            <Label className="shrink-0">{t("userName")}</Label>
+            <Label className="shrink-0">{t("username")}</Label>
             <Input placeholder={t("placeholder")} />
           </div>
           <div className="flex gap-2 items-center">
@@ -44,7 +44,7 @@ export default function Page() {
             <Input placeholder={t("placeholder")} />
           </div>
           <div className="flex gap-2 items-center">
-            <Label className="shrink-0">{t("upUserName")}</Label>
+            <Label className="shrink-0">{t("upUsername")}</Label>
             <Input placeholder={t("placeholder")} />
           </div>
           <div className="flex gap-2 items-center">
@@ -72,11 +72,11 @@ export default function Page() {
           <Table>
             <TableHeader>
               <TableRow className="bg-muted">
-                <TableHead>{t("upUserName")}</TableHead>
-                <TableHead>{t("userLevel")}</TableHead>
+                <TableHead>{t("upUsername")}</TableHead>
+                <TableHead>{t("deptId")}</TableHead>
                 <TableHead>{t("userId")}</TableHead>
-                <TableHead>{t("userName")}</TableHead>
-                <TableHead>{t("nickName")}</TableHead>
+                <TableHead>{t("username")}</TableHead>
+                <TableHead>{t("nickname")}</TableHead>
                 <TableHead>{t("status")}</TableHead>
                 <TableHead className="w-24 text-center">
                   {t("action")}
@@ -86,11 +86,11 @@ export default function Page() {
             <TableBody>
               {data.map((item) => (
                 <TableRow key={item.id}>
-                  <TableCell>{item.upUserName}</TableCell>
-                  <TableCell>{item.userLevel}</TableCell>
+                  <TableCell>{item.upUsername}</TableCell>
+                  <TableCell>{item.deptId}</TableCell>
                   <TableCell>{item.userId}</TableCell>
-                  <TableCell>{item.userName}</TableCell>
-                  <TableCell>{item.nickName}</TableCell>
+                  <TableCell>{item.username}</TableCell>
+                  <TableCell>{item.nickname}</TableCell>
                   <TableCell>{item.status}</TableCell>
                   <TableCell className="w-2/5 text-center">
                     <Button
