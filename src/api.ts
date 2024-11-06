@@ -86,8 +86,19 @@ export async function getAgentInfo(params: { id: string }) {
     token: user?.token,
   });
 }
-export async function updateUser(data: AgentData) {
-  return await apiRequest({ url: "/api/updateUser", method: "PUT", data });
+export async function updateAgent(data: {
+  id: string;
+  username?: string;
+  nickname?: string;
+  status?: number;
+}) {
+  const user = await getSession();
+  return await apiRequest({
+    url: "/agent/user/main/update",
+    method: "POST",
+    data,
+    token: user?.token,
+  });
 }
 export async function addUser(data: AgentData) {
   return await apiRequest({ url: "/api/addUser", method: "POST", data });
