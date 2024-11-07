@@ -12,7 +12,7 @@ export function Form() {
   const t = useTranslations("system.announcement");
   const router = useRouter();
 
-  const [agentId, setAgentId] = useQueryState("agentId", {
+  const [userId, setAgentId] = useQueryState("userId", {
     defaultValue: "",
   });
   const searchData = () => {
@@ -30,10 +30,10 @@ export function Form() {
                 <DateRangeFilter quickSetBtn={[]} />
               </div>
               <div className="flex gap-2 items-center">
-                <Label className="shrink-0">{t("agentId")}</Label>
+                <Label className="shrink-0">{t("userId")}</Label>
                 <Input
                   placeholder={t("placeholder")}
-                  value={agentId ?? ""}
+                  value={userId ?? ""}
                   onChange={(e) => setAgentId(e.target.value)}
                 />
               </div>
