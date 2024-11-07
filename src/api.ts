@@ -71,7 +71,7 @@ export async function logout() {
   });
 }
 
-// 获取代理列表
+// 用户管理-代理管理-获取代理列表
 export async function getAgents(params: { page: number; size: number }) {
   const user = await getSession();
   return await apiRequest<WithPagination & { list: AgentData[] }>({
@@ -80,7 +80,7 @@ export async function getAgents(params: { page: number; size: number }) {
     token: user?.token,
   });
 }
-// 获取单个代理信息
+// 用户管理-代理管理-获取单个代理信息
 export async function getAgentInfo(params: { id: string }) {
   const user = await getSession();
   return await apiRequest<AgentData>({
@@ -103,7 +103,7 @@ export async function updateAgent(data: {
     token: user?.token,
   });
 }
-// 重置代理返水次数
+// 用户管理-代理管理-重置代理返水次数
 export async function resetRestCount(data: { id: string }) {
   const user = await getSession();
   return await apiRequest({
@@ -113,7 +113,7 @@ export async function resetRestCount(data: { id: string }) {
     token: user?.token,
   });
 }
-// 添加代理
+// 用户管理-代理管理-添加代理
 export async function addAgent(data: {
   upUsername?: string;
   username: string;
@@ -128,7 +128,7 @@ export async function addAgent(data: {
     data,
   });
 }
-// 验证上级账号是否存在
+// 用户管理-代理管理-验证上级账号是否存在
 export async function verifyUpUsername(params: { username: string }) {
   const user = await getSession();
   return await apiRequest({
@@ -138,6 +138,43 @@ export async function verifyUpUsername(params: { username: string }) {
   });
 }
 
+export interface GameConfig {
+  gameType: number;
+  gameId: number;
+  status: number;
+  percent: number;
+  backRate: number;
+  holdStatus: number;
+  maxPercent: number;
+  parentStatus: number;
+}
+// 用户管理-代理管理-获取代理游戏设置
+export async function getAgentConfig(params: { userId: string }) {
+  const user = await getSession();
+  return await apiRequest<{ list: GameConfig[] }>({
+    url: "/agent/game/config/list",
+    params,
+    token: user?.token,
+  });
+}
+// 用户管理-代理管理-更新代理游戏设置
+export async function updateAgentGameConfig(data: {
+  userId: string;
+  list: {
+    gameId: number;
+    gameType: number;
+    percent: number;
+    status: number;
+  }[];
+}) {
+  const user = await getSession();
+  return await apiRequest({
+    url: "/agent/game/config/update",
+    method: "POST",
+    data,
+    token: user?.token,
+  });
+}
 export interface WithPagination {
   total: number;
   page: number;
@@ -248,7 +285,7 @@ export async function editMaintain(data: {
 export async function getDailiReport(data: any) {
   const user = await getSession();
   return await apiRequest<WithPagination & { list: RatioReportListTypes[] }>({
-    url: "/gareth/getDailiReport",
+    url: "/report/agent/baccarat/memberBet",
     method: "POST",
     data,
     token: user?.token,
@@ -258,7 +295,7 @@ export async function getDailiReport(data: any) {
 export async function getRatioReport(data: any) {
   const user = await getSession();
   return await apiRequest<WithPagination & { list: RatioReportListTypes[] }>({
-    url: "/gareth/getRatioReport",
+    url: "/report/agent/baccarat/stack",
     method: "POST",
     data,
     token: user?.token,

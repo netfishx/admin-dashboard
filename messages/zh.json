@@ -377,7 +377,8 @@
       "memberBetting": "会员下注",
       "leastlevelID": "末级代理ID",
       "betNum": "笔数",
-      "memberProfitLoss": "会员输赢"
+      "memberProfitLoss": "会员输赢",
+      "agentID": "代理ID"
     }
   },
   "pagination": {

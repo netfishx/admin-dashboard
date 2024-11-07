@@ -1,6 +1,7 @@
 "use client";
 
 import { MenuItem, MenuItemLink } from "@/app/(dashboard)/menu-item";
+import { times } from "@/components/daterange-filter";
 import {
   Collapsible,
   CollapsibleContent,
@@ -127,7 +128,7 @@ function OpenedMenu({ pathname }: { pathname: string }) {
           <MenuItem label={t("reports.period")} href="/reports/period" />
           <MenuItem
             label={t("reports.agent.baccarat")}
-            href="/reports/agent/baccarat/ratio"
+            href={`/reports/agent/baccarat/ratio?startTime=${times.startTime}&endTime=${times.endTime}`}
           />
           <MenuItem
             label={t("reports.agent.gundan")}

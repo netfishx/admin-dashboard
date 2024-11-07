@@ -25,7 +25,7 @@ export default function TopTabs() {
       <Tabs defaultValue={TabsTypes.RATIO} className="w-[400px]">
         <TabsList className="grid w-full grid-cols-2">
           <Link
-            href={`/reports/agent/baccarat/ratio?tabsType=${TabsTypes.RATIO}&startTime=${times.startTime}&endTime=${times.endTime}`}
+            href={`/reports/agent/baccarat/ratio?startTime=${times.startTime}&endTime=${times.endTime}`}
           >
             {/* biome-ignore lint/a11y/useKeyWithClickEvents: <explanation> */}
             <div
@@ -37,7 +37,7 @@ export default function TopTabs() {
           </Link>
 
           <Link
-            href={`/reports/agent/baccarat/member?tabsType=${TabsTypes.MEMBER}&startTime=${times.startTime}&endTime=${times.endTime}`}
+            href={`/reports/agent/baccarat/member?startTime=${times.startTime}&endTime=${times.endTime}`}
           >
             {/* biome-ignore lint/a11y/useKeyWithClickEvents: <explanation> */}
             <div

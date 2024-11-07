@@ -16,7 +16,9 @@ export async function MemberList({ searchParams }: { searchParams: any }) {
   const t = await getTranslations("report.agent");
   const search = await searchParams;
   const { data } = await getDailiReport({
-    ...searchParams,
+    ...search,
+    openStartTime: search?.startTime,
+    openEndTime: search?.endTime,
     page: Number(search?.page ?? 1),
     size: Number(search?.size ?? 10),
   });
@@ -75,9 +77,9 @@ export async function MemberList({ searchParams }: { searchParams: any }) {
             </TableHeader>
             <TableBody>
               {data?.list?.map((item: any) => (
-                <TableRow key={item.leastlevelID}>
+                <TableRow key={item.agentId}>
                   <TableCell className="w-24 text-center">
-                    {item.leastlevelID}
+                    {item.agentId}
                   </TableCell>
                   <TableCell className="w-24 text-center">
                     {item.gameName}
@@ -86,37 +88,37 @@ export async function MemberList({ searchParams }: { searchParams: any }) {
                     {item.betNum}
                   </TableCell>
                   <TableCell className="w-24 text-center">
-                    {item.memberBetting}
+                    {item.memberBetAmount}
                   </TableCell>
                   <TableCell className="w-24 text-center">
-                    {item.memberProfitLoss}
+                    {item.memberProfitLossAmount}
                   </TableCell>
                   <TableCell className="w-24 text-center">
-                    {item.shareAmount}
+                    {item.expectedShareAmount}
                   </TableCell>
                   <TableCell className="w-24 text-center">
-                    {item.blockAmount}
+                    {item.interceptAmount}
                   </TableCell>
                   <TableCell className="w-24 text-center">
                     {item.throwAmount}
                   </TableCell>
                   <TableCell className="w-24 text-center">
-                    {item.shareProfitLoss}
+                    {item.actualShareWinLoss}
                   </TableCell>
                   <TableCell className="w-24 text-center">
-                    {item.rebateIncome}
+                    {item.backIncome}
                   </TableCell>
                   <TableCell className="w-24 text-center">
-                    {item.rebateExpense}
+                    {item.backOutcome}
                   </TableCell>
                   <TableCell className="w-24 text-center">
-                    {item.netRebate}
+                    {item.pureBackAmount}
                   </TableCell>
                   <TableCell className="w-24 text-center">
                     {item.totalProfitLossAmount}
                   </TableCell>
                   <TableCell className="w-24 text-center sticky right-0 z-10 bg-background">
-                    <DetailButton />
+                    <DetailButton id={item.agentId} />
                   </TableCell>
                 </TableRow>
               ))}
