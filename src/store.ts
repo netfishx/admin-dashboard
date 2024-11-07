@@ -41,3 +41,10 @@ export const holdStatusAtom = atom<
     holdStatus: number;
   }[]
 >([]);
+export const ratioAtom = atom<
+  {
+    gameId: number;
+    percent: number;
+    maxPercent: number;
+  }[]
+>([]);
