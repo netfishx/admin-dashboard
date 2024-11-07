@@ -22,7 +22,7 @@ export default async function Page({
 }: { searchParams: Promise<{ [key: string]: string | string[] }> }) {
   return (
     <div className="flex flex-col gap-2 w-full">
-      <Suspense fallback={<div className="p-4" />}>
+      <Suspense fallback={<div className="h-10" />}>
         <Form />
       </Suspense>
       <div className="p-2 bg-background flex-1 gap-2">
