@@ -1,22 +1,27 @@
 "use client";
 import type { Announcement } from "@/api";
 import { Button } from "@/components/ui/button";
+import {} from "@/components/ui/dialog";
 import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
+  contentEditModalAtom,
+  contentModalAtom,
+  contentModalDataAtom,
+  editModalTitleAtom,
+} from "@/store";
+import { useSetAtom } from "jotai";
 import { useTranslations } from "next-intl";
-import { useState } from "react";
+
 export function Actions({
   data,
   showEdit = false,
 }: { data: Announcement; showEdit?: boolean }) {
   const t = useTranslations("system.announcement");
-  const [contentModalVisible, setContentModal] = useState(false);
+  // const [contentModalVisible, setContentModal] = useState(false);
+
+  const setContentModal = useSetAtom(contentModalAtom);
+  const setContentModalData = useSetAtom(contentModalDataAtom);
+  const setContentEditModal = useSetAtom(contentEditModalAtom);
+  const setEditModalTitle = useSetAtom(editModalTitleAtom);
   return (
     <>
       <Button
@@ -24,6 +29,7 @@ export function Actions({
         className="hover:no-underline hover:text-primary/80"
         onClick={() => {
           setContentModal(true);
+          setContentModalData(data);
         }}
       >
         {t("more")}
@@ -33,44 +39,14 @@ export function Actions({
           variant="link"
           className="hover:no-underline hover:text-primary/80"
           onClick={() => {
-            setContentModal(true);
+            setContentEditModal(true);
+            setContentModalData(data);
+            setEditModalTitle(t("editModal"));
           }}
         >
           {t("edit")}
         </Button>
       )}
-      <ContentModal
-        open={contentModalVisible}
-        onOpenChange={setContentModal}
-        data={data}
-      />
     </>
-  );
-}
-
-function ContentModal({
-  open,
-  onOpenChange,
-  data,
-}: {
-  open: boolean;
-  onOpenChange: (open: boolean) => void;
-  data: Announcement;
-}) {
-  const t = useTranslations("system.announcement");
-
-  return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-5xl">
-        <DialogHeader>
-          <DialogTitle>{t("notifyAnnouncement")}</DialogTitle>
-          <DialogDescription />
-        </DialogHeader>
-        <div>{data.content}</div>
-        <DialogFooter>
-          <Button onClick={() => onOpenChange(false)}>{t("save")}</Button>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
   );
 }

@@ -30,3 +30,13 @@ export type SupplierConfig = {
   lobbyTypeId: string;
   lobbyTypeName: string;
 };
+
+export type RatioReportListTypes = {
+  [key: string]: string | number | undefined | null | string[] | number[];
+};
+
+export type WithPagination = {
+  page: number;
+  size: number;
+  total: number;
+};

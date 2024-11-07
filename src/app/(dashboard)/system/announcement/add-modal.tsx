@@ -1,63 +1,72 @@
 "use client";
+import { saveAnnouncement } from "@/api";
 import { Button } from "@/components/ui/button";
-import { contentEditModalAtom, editModalTitleAtom } from "@/store";
-import { useAtom, useSetAtom } from "jotai";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Textarea } from "@/components/ui/textarea";
+
+import { Label } from "@/components/ui/label";
+import {
+  contentEditModalAtom,
+  contentModalDataAtom,
+  editModalTitleAtom,
+} from "@/store";
+import { useAtom, useAtomValue } from "jotai";
 import { useTranslations } from "next-intl";
-export function AddAnnouncement() {
-  const t = useTranslations("system.announcement");
-  const [, setOpen] = useAtom(contentEditModalAtom);
-  const setEditModalTitle = useSetAtom(editModalTitleAtom);
-  return (
-    <>
-      <Button
-        className="float-right mb-2"
-        onClick={() => {
-          setOpen(true);
-          setEditModalTitle(t("addModal"));
-        }}
-      >
-        {t("add")}
-      </Button>
-    </>
-  );
-}
-function AddModal({
-  open,
-  onOpenChange,
-  startTime,
-  endTime,
-}: {
-  open: boolean;
-  onOpenChange: (open: boolean) => void;
-  startTime: string | null;
-  endTime: string | null;
-}) {
-  const translations = useTranslations();
+import { useState } from "react";
+import { TimeRange } from "./time-range";
+
+export function AddModal() {
   const t = useTranslations("system.announcement");
   const [type, setType] = useState("");
   const [language, setLanguage] = useState("");
   const [content, setContent] = useState("");
   const [status, setStatus] = useState(0);
+  const [open, setOpen] = useAtom(contentEditModalAtom);
+  const [startTime, setStartTime] = useState("");
+  const [endTime, setEndTime] = useState("");
+  const data = useAtomValue(contentModalDataAtom);
+  const editModalTitle = useAtomValue(editModalTitleAtom);
+  console.info("🌸 ~ data:", data);
   const handleClickAdd = async () => {
     const addParams = {
       type,
       language,
       content,
       status: "0",
-      startTime: startTime || "",
-      endTime: endTime || "",
+      startTime: new Date(startTime).getTime().toString() || "",
+      endTime: new Date(endTime).getTime().toString() || "",
       createTime: Date.now().toString(),
     };
-    console.info("🌸 ~ addParams:", addParams);
     const res = await saveAnnouncement(addParams);
-    console.info("🌸 ~ res:", res);
-    onOpenChange(false);
+    setOpen(false);
+  };
+
+  // 回调函数，用于接收子组件传递的时间数据
+  const handleDateRangeChange = (start: string, end: string) => {
+    console.info("Selected date range:", start, end);
+    setStartTime(start);
+    setEndTime(end);
   };
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent className="max-w-5xl">
         <DialogHeader>
-          <DialogTitle>{t("addModal")}</DialogTitle>
+          <DialogTitle>{editModalTitle}</DialogTitle>
           <DialogDescription />
         </DialogHeader>
         <div className="flex flex-col gap-2 w-full px-4">
@@ -87,7 +96,7 @@ function AddModal({
             <Label className="shrink-0 w-1/4 text-right text-muted-foreground">
               {t("announcementTime")}
             </Label>
-            <DateRangeFilter quickSetBtn={[]} />
+            <TimeRange onDateRangeChange={handleDateRangeChange} />
           </div>
           <div className="flex gap-4 items-center">
             <Label className="shrink-0 w-1/4 text-right text-muted-foreground">
@@ -141,10 +150,10 @@ function AddModal({
           </div>
         </div>
         <DialogFooter>
-          <Button variant="outline" onClick={() => onOpenChange(false)}>
-            {translations("cancel")}
+          <Button variant="outline" onClick={() => setOpen(false)}>
+            {t("cancel")}
           </Button>
-          <Button onClick={handleClickAdd}>{translations("save")}</Button>
+          <Button onClick={handleClickAdd}>{t("save")}</Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

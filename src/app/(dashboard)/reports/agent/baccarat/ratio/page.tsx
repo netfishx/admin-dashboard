@@ -2,7 +2,7 @@ import { Suspense } from "react";
 import { RatioForm } from "./ratio-form";
 import { RatioList } from "./ratio-list";
 
-export default async function Page({ searchParams }: any) {
+export default async function Page({ searchParams }: { searchParams: any }) {
   // const params = await searchParams;
   // const data = await agentBaccaratReport(params);
   return (
@@ -10,7 +10,7 @@ export default async function Page({ searchParams }: any) {
       {/* 占成拦货 */}
       <RatioForm />
       <Suspense fallback={null}>
-        <RatioList />
+        <RatioList searchParams={searchParams} />
       </Suspense>
     </div>
   );

@@ -2,7 +2,7 @@
 
 import type { AgentData } from "@/api";
 import { Button } from "@/components/ui/button";
-import { loginLogModalAtom, loginLogUserIdAtom } from "@/store";
+import { agentIdAtom, loginLogModalAtom, userInfoModalAtom } from "@/store";
 import { useSetAtom } from "jotai";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
@@ -11,11 +11,9 @@ import { GameSettingModal } from "./game-setting-modal";
 import { LimitModal } from "./limit-modal";
 import { RebateModal } from "./rebate-modal";
 import { TransferMoneyModal } from "./transfer-money-modal";
-import { UserInfoModal } from "./user-info-modal";
 
 export default function Action({ data }: { data: AgentData }) {
   const t = useTranslations("users.agents");
-  const [userInfoModal, setUserInfoModal] = useState(false);
   const [transferMoneyModal, setTransferMoneyModal] = useState(false);
   const [gameSettingModal, setGameSettingModal] = useState(false);
   const [limitModal, setLimitModal] = useState(false);
@@ -23,14 +21,19 @@ export default function Action({ data }: { data: AgentData }) {
   // const [loginLogModal, setLoginLogModal] = useState(false);
   const [changeLogModal, setChangeLogModal] = useState(false);
 
+  // 用户信息
+  const setUserInfoModal = useSetAtom(userInfoModalAtom);
+
+  // 登录日志
   const setLoginLogModal = useSetAtom(loginLogModalAtom);
-  const setLoginLogUserId = useSetAtom(loginLogUserIdAtom);
+  const setAgentId = useSetAtom(agentIdAtom);
   return (
     <>
       <Button
         variant="link"
         className="hover:no-underline hover:text-primary/80 px-0"
         onClick={() => {
+          setAgentId(data.userId);
           setUserInfoModal(true);
         }}
       >
@@ -76,8 +79,8 @@ export default function Action({ data }: { data: AgentData }) {
         variant="link"
         className="hover:no-underline hover:text-primary/80 px-0"
         onClick={() => {
+          setAgentId(data.userId);
           setLoginLogModal(true);
-          setLoginLogUserId(data.userId);
         }}
       >
         {t("loginLog")}
@@ -91,11 +94,6 @@ export default function Action({ data }: { data: AgentData }) {
       >
         {t("changeLog")}
       </Button>
-      <UserInfoModal
-        open={userInfoModal}
-        onOpenChange={setUserInfoModal}
-        editData={data}
-      />
       <TransferMoneyModal
         open={transferMoneyModal}
         onOpenChange={setTransferMoneyModal}

@@ -3,6 +3,7 @@
 import { apiRequest } from "@/lib/request";
 import type { SupplierConfig } from "@/lib/types";
 import { getSession } from "@/session";
+import type { RatioReportListTypes } from "./lib/types";
 
 export interface AgentData {
   upUsername: string;
@@ -70,14 +71,36 @@ export async function logout() {
   });
 }
 
-export async function getAgents(data: any) {
+export async function getAgents(params: { page: number; size: number }) {
+  const user = await getSession();
   return await apiRequest<WithPagination & { list: AgentData[] }>({
-    url: "/user",
-    data,
+    url: "/agent/user/main/getUnderAgent",
+    params,
+    token: user?.token,
   });
 }
-export async function updateUser(data: AgentData) {
-  return await apiRequest({ url: "/api/updateUser", method: "PUT", data });
+// 获取单个代理信息
+export async function getAgentInfo(params: { id: string }) {
+  const user = await getSession();
+  return await apiRequest<AgentData>({
+    url: "/agent/user/main/getById",
+    params,
+    token: user?.token,
+  });
+}
+export async function updateAgent(data: {
+  id: string;
+  username?: string;
+  nickname?: string;
+  status?: number;
+}) {
+  const user = await getSession();
+  return await apiRequest({
+    url: "/agent/user/main/update",
+    method: "POST",
+    data,
+    token: user?.token,
+  });
 }
 export async function addUser(data: AgentData) {
   return await apiRequest({ url: "/api/addUser", method: "POST", data });
@@ -114,16 +137,20 @@ export interface Announcement {
   status: string;
 }
 export async function getAnnouncement(params: any) {
+  const user = await getSession();
   return await apiRequest<WithPagination & { list: Announcement[] }>({
     url: "/announcements",
     params,
+    token: user?.token,
   });
 }
 export async function saveAnnouncement(data: Announcement) {
+  const user = await getSession();
   return await apiRequest({
     url: "/addAnnouncements",
     method: "POST",
     data,
+    token: user?.token,
   });
 }
 
@@ -151,5 +178,25 @@ export async function getSuppliers(userId?: string) {
     url: "/api/getSupplier",
     token: user?.token,
     params: { userId },
+  });
+}
+
+export async function getDailiReport(data: any) {
+  const user = await getSession();
+  return await apiRequest<WithPagination & { list: RatioReportListTypes[] }>({
+    url: "/gareth/getDailiReport",
+    method: "POST",
+    data,
+    token: user?.token,
+  });
+}
+
+export async function getRatioReport(data: any) {
+  const user = await getSession();
+  return await apiRequest<WithPagination & { list: RatioReportListTypes[] }>({
+    url: "/gareth/getRatioReport",
+    method: "POST",
+    data,
+    token: user?.token,
   });
 }

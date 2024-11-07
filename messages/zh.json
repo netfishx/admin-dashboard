@@ -312,7 +312,9 @@
       "proxystatus": "代理结算状态",
       "action": "操作",
       "more": "查看",
-      "reset": "重置"
+      "reset": "重置",
+      "startTime": "开始时间",
+      "endTime": "结束时间"
     },
     "periodlist": {
       "today": "今天",
@@ -369,7 +371,9 @@
       "totalProfitLossAmount": "总盈亏金额",
       "ratioblock": "占成拦货",
       "memberBetting": "会员下注",
-      "leastlevelID": "末级代理ID"
+      "leastlevelID": "末级代理ID",
+      "betNum": "笔数",
+      "memberProfitLoss": "会员输赢"
     }
   },
   "pagination": {
@@ -394,18 +398,23 @@
       "add": "新增",
       "edit": "编辑",
       "addModal": "新增公告",
+      "editModal": "编辑公告",
       "announcementType": "公告类型：",
       "announcementContent": "公告内容：",
       "announcementTime": "公告时间：",
       "language": "语言：",
       "placeholder": "请输入",
+      "selectTime": "请输入",
       "platformAnnouncement": "平台通用公告",
       "agentAnnouncement": "代理公告",
       "memberAnnouncement": "会员公告",
       "platformRoomAnnouncement": "平台房间公告",
       "status": "状态",
       "enable": "启用",
-      "disable": "停用"
+      "disable": "停用",
+      "hours": "时",
+      "minutes": "分",
+      "seconds": "秒"
     }
   }
 }
