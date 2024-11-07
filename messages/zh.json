@@ -416,7 +416,10 @@
       "minutes": "分",
       "seconds": "秒",
       "reset": "重置",
-      "search": "查询"
+      "search": "查询",
+      "chinese": "中文",
+      "english": "英文",
+      "japanese": "日文"
     }
   }
 }

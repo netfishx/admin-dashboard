@@ -26,8 +26,7 @@ import {
 } from "@/store";
 import { useAtom, useAtomValue } from "jotai";
 import { useTranslations } from "next-intl";
-import { useState } from "react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { TimeRange } from "./time-range";
 
 export function AddModal() {
@@ -80,8 +79,6 @@ export function AddModal() {
       setType(data.type || "");
       setLanguage(data.language || "");
       setStatus(Number(data.status) || 0);
-      // setStartTime(formatTimestamp(data.startTime) || "");
-      // setEndTime(formatTimestamp(data.endTime) || "");
       setStartTime(data.startTime || "");
       setEndTime(data.endTime || "");
     }
@@ -141,9 +138,9 @@ export function AddModal() {
                 <SelectValue placeholder="请选择" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="0">中文</SelectItem>
-                <SelectItem value="1">英文</SelectItem>
-                <SelectItem value="2">日文</SelectItem>
+                <SelectItem value="0">{t("chinese")}</SelectItem>
+                <SelectItem value="1">{t("english")}</SelectItem>
+                <SelectItem value="2">{t("japanese")}</SelectItem>
               </SelectContent>
             </Select>
           </div>
