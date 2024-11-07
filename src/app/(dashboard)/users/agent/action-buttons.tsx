@@ -33,7 +33,7 @@ export default function Action({ data }: { data: AgentData }) {
         variant="link"
         className="hover:no-underline hover:text-primary/80 px-0"
         onClick={() => {
-          setAgentId(data.userId);
+          setAgentId(data.id);
           setUserInfoModal(true);
         }}
       >
@@ -79,7 +79,7 @@ export default function Action({ data }: { data: AgentData }) {
         variant="link"
         className="hover:no-underline hover:text-primary/80 px-0"
         onClick={() => {
-          setAgentId(data.userId);
+          setAgentId(data.id);
           setLoginLogModal(true);
         }}
       >

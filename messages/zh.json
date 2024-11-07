@@ -197,6 +197,7 @@
   "users": {
     "agents": {
       "addAgent": "新增代理",
+      "verify": "验证",
       "upUsername": "上级账号",
       "deptId": "用户层级",
       "userId": "用户ID",
@@ -221,6 +222,8 @@
       "close": "取消",
       "save": "确定",
       "restCount": "剩余尝试次数",
+      "password": "登入密码",
+      "confirmPassword": "再次输入登入密码",
       "statusLabel": {
         "0": "启用",
         "1": "停用",
