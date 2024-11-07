@@ -1,4 +1,5 @@
 import { atom } from "jotai";
+import type { SupplierConfig } from "./lib/types";
 
 export const lastErrorTimeAtom = atom<number>(0);
 export type Error = {
@@ -13,10 +14,7 @@ export const errorAtom = atom<Error>({
 export const sidebarAtom = atom<boolean>(true);
 
 export const gamesSupplierDialogAtom = atom<boolean>(false);
-export const gamesSupplierEditAtom = atom<{
-  game: string;
-  supplierId: string;
-}>();
+export const gamesSupplierEditAtom = atom<SupplierConfig | undefined>();
 
 // 登录日志弹窗
 export const loginLogModalAtom = atom<boolean>(false);

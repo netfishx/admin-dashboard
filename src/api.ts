@@ -1,6 +1,7 @@
 "use server";
 
 import { apiRequest } from "@/lib/request";
+import type { SupplierConfig } from "@/lib/types";
 import { getSession } from "@/session";
 
 export interface AgentData {
@@ -141,5 +142,14 @@ export async function editReviceOrder({ status }: { status: boolean }) {
     method: "POST",
     data: { status },
     token: user?.token,
+  });
+}
+
+export async function getSuppliers(userId?: string) {
+  const user = await getSession();
+  return await apiRequest<SupplierConfig[]>({
+    url: "/api/getSupplier",
+    token: user?.token,
+    params: { userId },
   });
 }

@@ -1,13 +1,12 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import type { SupplierConfig } from "@/lib/types";
 import { gamesSupplierDialogAtom, gamesSupplierEditAtom } from "@/store";
 import { useSetAtom } from "jotai";
 import { useTranslations } from "next-intl";
 
-export function EditButton({
-  data,
-}: { data: { game: string; supplierId: string } }) {
+export function EditButton({ data }: { data: SupplierConfig }) {
   const t = useTranslations("games.supplier");
   const setOpen = useSetAtom(gamesSupplierDialogAtom);
   const setData = useSetAtom(gamesSupplierEditAtom);

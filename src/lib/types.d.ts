@@ -15,3 +15,18 @@ export type User = {
   token: string;
   permissions: string[];
 };
+
+export type SupplierConfig = {
+  id: string;
+  gameType: number;
+  gameId: number;
+  videoLink: string;
+  userId: string;
+  userName: string;
+  distributionAmount: number;
+  distributionPercent: number;
+  lobbyId: string;
+  lobbyName: string;
+  lobbyTypeId: string;
+  lobbyTypeName: string;
+};

@@ -54,6 +54,7 @@ function AddModal({
   startTime: string | null;
   endTime: string | null;
 }) {
+  const translations = useTranslations();
   const t = useTranslations("system.announcement");
   const [type, setType] = useState("");
   const [language, setLanguage] = useState("");
@@ -163,9 +164,9 @@ function AddModal({
         </div>
         <DialogFooter>
           <Button variant="outline" onClick={() => onOpenChange(false)}>
-            {t("cancel")}
+            {translations("cancel")}
           </Button>
-          <Button onClick={handleClickAdd}>{t("save")}</Button>
+          <Button onClick={handleClickAdd}>{translations("save")}</Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

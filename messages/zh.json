@@ -1,5 +1,7 @@
 {
   "title": "代理后台",
+  "cancel": "取消",
+  "save": "确定",
   "inviteCode": "邀请码",
   "announcement": "公告",
   "more": "查看更多",
@@ -123,8 +125,6 @@
       "save": "保存",
       "name": "游戏名称",
       "switch": "拦货开关",
-      "confirm": "确定",
-      "cancel": "取消",
       "confirmText": "确定要开启拦货吗？"
     },
     "odds": {
@@ -164,19 +164,21 @@
       "tip": "（*不要超过最高比例）"
     },
     "supplier": {
+      "title": "供应商",
       "type": "游戏类别",
       "name": "游戏名称",
       "placeholder": "请选择",
       "search": "查询",
       "add": "新增",
       "video": "视频地址",
-      "replay": "回放地址",
       "supplierId": "供应商ID",
       "supplierName": "供应商名称",
       "quota": "分成定额",
       "percent": "分成百分比",
+      "gameHall": "所属游戏大厅",
+      "gameType": "所属游戏类型",
       "action": "操作",
-      "edit": "编辑"
+      "edit": "修改"
     },
     "maintain": {
       "name": "游戏名称",
@@ -389,8 +391,6 @@
       "agentId": "代理ID",
       "content": "内容",
       "action": "操作",
-      "cancel": "取消",
-      "save": "确定",
       "add": "新增",
       "edit": "编辑",
       "addModal": "新增公告",
