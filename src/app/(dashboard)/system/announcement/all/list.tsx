@@ -29,29 +29,30 @@ export async function List({
           <Table>
             <TableHeader className="sticky top-0">
               <TableRow className="bg-muted">
-                {user.role === "admin" && (
-                  <TableHead className="w-24 min-w-24 text-center">
-                    {t("startTime")}
-                  </TableHead>
-                )}
+                {/* admin permission */}
+                <TableHead className="w-24 min-w-24 text-center">
+                  {t("startTime")}
+                </TableHead>
+
                 <TableHead className="w-24 min-w-24 text-center">
                   {t("endTime")}
                 </TableHead>
-                {user.role === "admin" && (
-                  <TableHead className="w-24 min-w-24 text-center">
-                    {t("createTime")}
-                  </TableHead>
-                )}
-                {user.role === "admin" && (
-                  <TableHead className="w-24 min-w-24 text-center">
-                    {t("type")}
-                  </TableHead>
-                )}
-                {user.role === "admin" && (
-                  <TableHead className="w-24 min-w-24 text-center">
-                    {t("userId")}
-                  </TableHead>
-                )}
+
+                {/* admin permission */}
+                <TableHead className="w-24 min-w-24 text-center">
+                  {t("createTime")}
+                </TableHead>
+
+                {/* admin permission */}
+                <TableHead className="w-24 min-w-24 text-center">
+                  {t("type")}
+                </TableHead>
+
+                {/* admin permission */}
+                <TableHead className="w-24 min-w-24 text-center">
+                  {t("userId")}
+                </TableHead>
+
                 <TableHead className="w-24 min-w-24 text-center">
                   {t("content")}
                 </TableHead>
@@ -63,29 +64,29 @@ export async function List({
             <TableBody className="max-h-96 overflow-y-auto">
               {data?.list?.map((item: Announcement) => (
                 <TableRow key={Math.random()}>
-                  {user.role === "admin" && (
-                    <TableCell className="w-24 text-center">
-                      {formatTimestamp(item.startTime)}
-                    </TableCell>
-                  )}
+                  {/* admin permission */}
+                  <TableCell className="w-24 text-center">
+                    {formatTimestamp(item.startTime)}
+                  </TableCell>
+
                   <TableCell className="w-24 text-center">
                     {formatTimestamp(item.endTime)}
                   </TableCell>
-                  {user.role === "admin" && (
-                    <TableCell className="w-24 text-center">
-                      {formatTimestamp(item.createTime)}
-                    </TableCell>
-                  )}
-                  {user.role === "admin" && (
-                    <TableCell className="w-24 min-w-24 text-center">
-                      {item.type}
-                    </TableCell>
-                  )}
-                  {user.role === "admin" && (
-                    <TableCell className="w-24 min-w-24 text-center">
-                      {item.userId}
-                    </TableCell>
-                  )}
+                  {/* admin permission */}
+                  <TableCell className="w-24 text-center">
+                    {formatTimestamp(item.createTime)}
+                  </TableCell>
+
+                  {/* admin permission */}
+                  <TableCell className="w-24 min-w-24 text-center">
+                    {item.type}
+                  </TableCell>
+
+                  {/* admin permission */}
+                  <TableCell className="w-24 min-w-24 text-center">
+                    {item.userId}
+                  </TableCell>
+
                   <TableCell className="w-24 text-center">
                     {item.content}
                   </TableCell>
