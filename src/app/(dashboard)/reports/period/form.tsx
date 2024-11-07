@@ -36,7 +36,7 @@ export function Form() {
           <div className="flex justify-between items-center  py-2 px-4">
             <div className="flex gap-2 items-center">
               <div className="flex gap-2 items-center">
-                <Label className="shrink-0">{t("gameType")}</Label>
+                <Label className="shrink-0">{t("gameTypeName")}</Label>
                 <Select
                   value={gameType ?? ""}
                   onValueChange={(value) => setGameType(value)}

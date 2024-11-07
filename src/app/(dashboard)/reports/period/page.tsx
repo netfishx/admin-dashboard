@@ -47,7 +47,7 @@ async function PeriodTable({
   const search = await searchParams;
   const { data } = await getPeriodReport({
     size: search.size ?? 10,
-    pages: search.pages ?? 1,
+    page: search.page ?? 1,
   });
   return (
     <div className="flex flex-col gap-2 w-full">
@@ -59,13 +59,13 @@ async function PeriodTable({
                 <TableHeader className="sticky">
                   <TableRow className="bg-muted">
                     <TableHead className="min-w-32 text-center">
-                      {t("gameId")}
+                      {t("issueNumber")}
                     </TableHead>
                     <TableHead className="min-w-32 text-center">
                       {t("openTime")}
                     </TableHead>
                     <TableHead className="min-w-32 text-center">
-                      {t("gameType")}
+                      {t("gameTypeName")}
                     </TableHead>
                     <TableHead className="min-w-32 text-center">
                       {t("gameName")}
@@ -74,19 +74,19 @@ async function PeriodTable({
                       {t("betNum")}
                     </TableHead>
                     <TableHead className="min-w-32 text-center">
-                      {t("betMoneyAmount")}
+                      {t("betAmount")}
                     </TableHead>
                     <TableHead className="min-w-32 text-center">
-                      {t("heMoney")}
+                      {t("tieAmount")}
                     </TableHead>
                     <TableHead className="min-w-32 text-center">
-                      {t("ddMoney")}
+                      {t("pairBetAmount")}
                     </TableHead>
                     <TableHead className="min-w-32 text-center">
-                      {t("workMoney")}
+                      {t("validBetAmount")}
                     </TableHead>
                     <TableHead className="min-w-32 text-center">
-                      {t("memberBackMoney")}
+                      {t("memberBackAmount")}
                     </TableHead>
                     <TableHead className="w-24 text-center sticky right-0 bg-muted">
                       {t("action")}
@@ -95,15 +95,15 @@ async function PeriodTable({
                 </TableHeader>
                 <TableBody>
                   {data?.list?.map((item: any) => (
-                    <TableRow key={item.gameId}>
+                    <TableRow key={item.issueNumber}>
                       <TableCell className="w-24 text-center">
-                        {item.gameId}
+                        {item.issueNumber}
                       </TableCell>
                       <TableCell className="w-24 text-center">
                         {item.openTime}
                       </TableCell>
                       <TableCell className="w-24 text-center">
-                        {item.gameType}
+                        {item.gameTypeName}
                       </TableCell>
                       <TableCell className="w-24 text-center">
                         {item.gameName}
@@ -112,19 +112,19 @@ async function PeriodTable({
                         {item.betNum}
                       </TableCell>
                       <TableCell className="w-24 text-center">
-                        {item.betMoneyAmount}
+                        {item.betAmount}
                       </TableCell>
                       <TableCell className="w-24 text-center">
-                        {item.heMoney}
+                        {item.tieAmount}
                       </TableCell>
                       <TableCell className="w-24 text-center">
-                        {item.ddMoney}
+                        {item.pairBetAmount}
                       </TableCell>
                       <TableCell className="w-24 text-center">
-                        {item.workMoney}
+                        {item.validBetAmount}
                       </TableCell>
                       <TableCell className="w-24 text-center">
-                        {item.memberBackMoney}
+                        {item.memberBackAmount}
                       </TableCell>
                       <TableCell className="!sticky !right-0 bg-background w-24 text-center">
                         <Actions />

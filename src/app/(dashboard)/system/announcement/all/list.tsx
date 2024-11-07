@@ -48,7 +48,7 @@ export async function List({
               )}
               {user.role === "admin" && (
                 <TableHead className="w-24 min-w-24 text-center">
-                  {t("agentId")}
+                  {t("userId")}
                 </TableHead>
               )}
               <TableHead className="w-24 min-w-24 text-center">
@@ -82,7 +82,7 @@ export async function List({
                 )}
                 {user.role === "admin" && (
                   <TableCell className="w-24 min-w-24 text-center">
-                    {item.agentId}
+                    {item.userId}
                   </TableCell>
                 )}
                 <TableCell className="w-24 text-center">
