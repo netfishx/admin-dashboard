@@ -25,54 +25,56 @@ export async function List({
       <div className="p-2 mt-2 bg-background flex-1 gap-2">
         <AddAnnouncement />
         <ListScrollArea>
-          <Table>
-            <TableHeader className="sticky">
-              <TableRow className="bg-muted">
-                <TableHead className="w-24 min-w-24 text-center">
-                  {t("startTime")}
-                </TableHead>
-                <TableHead className="w-24 min-w-24 text-center">
-                  {t("endTime")}
-                </TableHead>
-                <TableHead className="w-24 min-w-24 text-center">
-                  {t("createTime")}
-                </TableHead>
-                <TableHead className="w-24 min-w-24 text-center">
-                  {t("content")}
-                </TableHead>
-                <TableHead className="w-24 min-w-24 text-center">
-                  {t("type")}
-                </TableHead>
-                <TableHead className="w-24 min-w-24 text-center">
-                  {t("action")}
-                </TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {data?.list?.map((item: any) => (
-                <TableRow key={Math.random()}>
-                  <TableCell className="w-24 text-center">
-                    {formatTimestamp(item.startTime)}
-                  </TableCell>
-                  <TableCell className="w-24 text-center">
-                    {formatTimestamp(item.endTime)}
-                  </TableCell>
-                  <TableCell className="w-24 text-center">
-                    {formatTimestamp(item.createTime)}
-                  </TableCell>
-                  <TableCell className="w-24 text-center">
-                    {item.content}
-                  </TableCell>
-                  <TableCell className="w-24 text-center">
-                    {item.type}
-                  </TableCell>
-                  <TableCell className="w-24 text-center">
-                    <Actions data={item} showEdit={true} />
-                  </TableCell>
+          <div className="max-h-[calc(100dvh-280px)] overflow-y-auto">
+            <Table>
+              <TableHeader className="sticky top-0">
+                <TableRow className="bg-muted">
+                  <TableHead className="w-24 min-w-24 text-center">
+                    {t("startTime")}
+                  </TableHead>
+                  <TableHead className="w-24 min-w-24 text-center">
+                    {t("endTime")}
+                  </TableHead>
+                  <TableHead className="w-24 min-w-24 text-center">
+                    {t("createTime")}
+                  </TableHead>
+                  <TableHead className="w-24 min-w-24 text-center">
+                    {t("content")}
+                  </TableHead>
+                  <TableHead className="w-24 min-w-24 text-center">
+                    {t("type")}
+                  </TableHead>
+                  <TableHead className="w-24 min-w-24 text-center">
+                    {t("action")}
+                  </TableHead>
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
+              </TableHeader>
+              <TableBody>
+                {data?.list?.map((item: any) => (
+                  <TableRow key={Math.random()}>
+                    <TableCell className="w-24 text-center">
+                      {formatTimestamp(item.startTime)}
+                    </TableCell>
+                    <TableCell className="w-24 text-center">
+                      {formatTimestamp(item.endTime)}
+                    </TableCell>
+                    <TableCell className="w-24 text-center">
+                      {formatTimestamp(item.createTime)}
+                    </TableCell>
+                    <TableCell className="w-24 text-center">
+                      {item.content}
+                    </TableCell>
+                    <TableCell className="w-24 text-center">
+                      {item.type}
+                    </TableCell>
+                    <TableCell className="w-24 text-center">
+                      <Actions data={item} showEdit={true} />
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </div>
           <ScrollBar orientation="horizontal" />
         </ListScrollArea>
       </div>

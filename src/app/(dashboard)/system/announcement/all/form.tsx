@@ -18,7 +18,9 @@ export function Form() {
   const searchData = () => {
     router.refresh();
   };
-
+  const reset = () => {
+    setAgentId("");
+  };
   return (
     <>
       <div className="flex flex-col gap-2 w-full">
@@ -40,7 +42,9 @@ export function Form() {
             </div>
           </div>
           <div className="flex gap-2 items-center float-right p-2">
-            <Button variant="outline">{t("reset")}</Button>
+            <Button variant="outline" onClick={reset}>
+              {t("reset")}
+            </Button>
             <Button onClick={searchData}>{t("search")}</Button>
           </div>
         </div>
