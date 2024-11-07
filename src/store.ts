@@ -19,6 +19,8 @@ export const supplierConfigAtom = atom<SupplierConfig | undefined>();
 
 // 用户信息弹窗
 export const userInfoModalAtom = atom<boolean>(false);
+// 游戏设置弹窗
+export const gameSettingModalAtom = atom<boolean>(false);
 // 登录日志弹窗
 export const loginLogModalAtom = atom<boolean>(false);
 export const agentIdAtom = atom<string>("");
