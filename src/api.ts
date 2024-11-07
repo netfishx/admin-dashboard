@@ -1,7 +1,7 @@
 "use server";
 
 import { apiRequest } from "@/lib/request";
-import type { GameConfig, MaintainGame, SupplierConfig } from "@/lib/types";
+import type { MaintainGame, SupplierConfig } from "@/lib/types";
 import { getSession } from "@/session";
 import type { RatioReportListTypes } from "./lib/types";
 
@@ -136,6 +136,18 @@ export async function verifyUpUsername(params: { username: string }) {
     params,
     token: user?.token,
   });
+}
+
+export interface GameConfig {
+  gameType: number;
+  gameId: number;
+  status: number;
+  percent: number;
+  backRate: number;
+  holdStatus: number;
+  maxPercent: number;
+  maxBackRate: number;
+  parentStatus: number;
 }
 // 用户管理-代理管理-获取代理游戏设置
 export async function getAgentConfig(params: { userId: string }) {
