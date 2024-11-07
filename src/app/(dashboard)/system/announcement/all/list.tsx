@@ -23,78 +23,80 @@ export async function List({
   };
   return (
     <>
-      <div className="p-2 mt-2 bg-background flex-1">
+      <div className="p-2 mt-2 bg-background flex-1 ">
         {user.role === "admin" && <Form />}
-        <Table>
-          <TableHeader className="sticky">
-            <TableRow className="bg-muted">
-              {user.role === "admin" && (
-                <TableHead className="w-24 min-w-24 text-center">
-                  {t("startTime")}
-                </TableHead>
-              )}
-              <TableHead className="w-24 min-w-24 text-center">
-                {t("endTime")}
-              </TableHead>
-              {user.role === "admin" && (
-                <TableHead className="w-24 min-w-24 text-center">
-                  {t("createTime")}
-                </TableHead>
-              )}
-              {user.role === "admin" && (
-                <TableHead className="w-24 min-w-24 text-center">
-                  {t("type")}
-                </TableHead>
-              )}
-              {user.role === "admin" && (
-                <TableHead className="w-24 min-w-24 text-center">
-                  {t("userId")}
-                </TableHead>
-              )}
-              <TableHead className="w-24 min-w-24 text-center">
-                {t("content")}
-              </TableHead>
-              <TableHead className="w-24 min-w-24 text-center">
-                {t("action")}
-              </TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {data?.list?.map((item: Announcement) => (
-              <TableRow key={Math.random()}>
+        <div className="max-h-[calc(100dvh-280px)] overflow-y-auto">
+          <Table>
+            <TableHeader className="sticky top-0">
+              <TableRow className="bg-muted">
                 {user.role === "admin" && (
-                  <TableCell className="w-24 text-center">
-                    {formatTimestamp(item.startTime)}
-                  </TableCell>
+                  <TableHead className="w-24 min-w-24 text-center">
+                    {t("startTime")}
+                  </TableHead>
                 )}
-                <TableCell className="w-24 text-center">
-                  {formatTimestamp(item.endTime)}
-                </TableCell>
+                <TableHead className="w-24 min-w-24 text-center">
+                  {t("endTime")}
+                </TableHead>
                 {user.role === "admin" && (
-                  <TableCell className="w-24 text-center">
-                    {formatTimestamp(item.createTime)}
-                  </TableCell>
+                  <TableHead className="w-24 min-w-24 text-center">
+                    {t("createTime")}
+                  </TableHead>
                 )}
                 {user.role === "admin" && (
-                  <TableCell className="w-24 min-w-24 text-center">
-                    {item.type}
-                  </TableCell>
+                  <TableHead className="w-24 min-w-24 text-center">
+                    {t("type")}
+                  </TableHead>
                 )}
                 {user.role === "admin" && (
-                  <TableCell className="w-24 min-w-24 text-center">
-                    {item.userId}
-                  </TableCell>
+                  <TableHead className="w-24 min-w-24 text-center">
+                    {t("userId")}
+                  </TableHead>
                 )}
-                <TableCell className="w-24 text-center">
-                  {item.content}
-                </TableCell>
-                <TableCell className="w-24 text-center">
-                  <Actions data={item} />
-                </TableCell>
+                <TableHead className="w-24 min-w-24 text-center">
+                  {t("content")}
+                </TableHead>
+                <TableHead className="w-24 min-w-24 text-center">
+                  {t("action")}
+                </TableHead>
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
+            </TableHeader>
+            <TableBody className="max-h-96 overflow-y-auto">
+              {data?.list?.map((item: Announcement) => (
+                <TableRow key={Math.random()}>
+                  {user.role === "admin" && (
+                    <TableCell className="w-24 text-center">
+                      {formatTimestamp(item.startTime)}
+                    </TableCell>
+                  )}
+                  <TableCell className="w-24 text-center">
+                    {formatTimestamp(item.endTime)}
+                  </TableCell>
+                  {user.role === "admin" && (
+                    <TableCell className="w-24 text-center">
+                      {formatTimestamp(item.createTime)}
+                    </TableCell>
+                  )}
+                  {user.role === "admin" && (
+                    <TableCell className="w-24 min-w-24 text-center">
+                      {item.type}
+                    </TableCell>
+                  )}
+                  {user.role === "admin" && (
+                    <TableCell className="w-24 min-w-24 text-center">
+                      {item.userId}
+                    </TableCell>
+                  )}
+                  <TableCell className="w-24 text-center">
+                    {item.content}
+                  </TableCell>
+                  <TableCell className="w-24 text-center">
+                    <Actions data={item} />
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </div>
       </div>
       <div className="pt-2">
         <Pages

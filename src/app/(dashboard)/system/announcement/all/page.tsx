@@ -10,6 +10,8 @@ export default async function All({
     size: search.size ?? 10,
     page: search.page ?? 1,
     userId: search.userId ?? "",
+    startTime: search.startTime ?? "",
+    endTime: search.endTime ?? "",
   });
   return (
     <>
