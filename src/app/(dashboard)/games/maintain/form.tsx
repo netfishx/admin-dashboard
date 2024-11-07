@@ -21,7 +21,7 @@ function BatchButton({
   );
   return (
     <Button
-      variant={status === 1 ? "destructive" : "default"}
+      variant={status === 0 ? "destructive" : "default"}
       disabled={isPending}
       onClick={() =>
         startTransition(async () => {
@@ -48,8 +48,8 @@ export function MaintainForm() {
   return (
     <div className="flex items-center justify-end gap-2 bg-background py-2 px-4">
       <Suspense fallback={null}>
-        <BatchButton status={1}>{t("batchOpen")}</BatchButton>
-        <BatchButton status={0}>{t("batchClose")}</BatchButton>
+        <BatchButton status={0}>{t("batchOpen")}</BatchButton>
+        <BatchButton status={1}>{t("batchClose")}</BatchButton>
       </Suspense>
     </div>
   );

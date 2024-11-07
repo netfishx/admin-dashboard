@@ -32,8 +32,8 @@ function EditButton({
       className={cn([
         "hover:no-underline",
         data.status
-          ? "hover:text-primary/80"
-          : "text-destructive hover:text-destructive/80",
+          ? "text-destructive hover:text-destructive/80"
+          : "hover:text-primary/80",
       ])}
       disabled={isPending}
       onClick={() => {
@@ -112,11 +112,11 @@ export function MaintainTable({
                 className={cn([
                   "p-1 rounded-sm w-24 inline-block",
                   item.status
-                    ? "text-destructive bg-destructive/20"
-                    : "text-primary bg-primary/20",
+                    ? "text-primary bg-primary/20"
+                    : "text-destructive bg-destructive/20",
                 ])}
               >
-                {item.status ? t("maintaining") : t("normal")}
+                {item.status ? t("normal") : t("maintaining")}
               </span>
             </TableCell>
             <TableCell>{item.updateBy}</TableCell>
@@ -125,7 +125,7 @@ export function MaintainTable({
             </TableCell>
             <TableCell className="w-24 text-center">
               <EditButton data={item}>
-                {item.status ? t("close") : t("open")}
+                {item.status ? t("open") : t("close")}
               </EditButton>
             </TableCell>
           </TableRow>
