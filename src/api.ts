@@ -1,7 +1,7 @@
 "use server";
 
 import { apiRequest } from "@/lib/request";
-import type { MaintainGame, SupplierConfig } from "@/lib/types";
+import type { GameConfig, MaintainGame, SupplierConfig } from "@/lib/types";
 import { getSession } from "@/session";
 import type { RatioReportListTypes } from "./lib/types";
 
@@ -270,6 +270,24 @@ export async function getPeriodReport(params: any) {
   return await apiRequest<WithPagination & { list: Announcement[] }>({
     url: "/getReports",
     params,
+    token: user?.token,
+  });
+}
+
+export async function getGameConfig() {
+  const user = await getSession();
+  return await apiRequest<GameConfig[]>({
+    url: "/game/config/list",
+    token: user?.token,
+  });
+}
+
+export async function editGameConfig(list: GameConfig[]) {
+  const user = await getSession();
+  return await apiRequest({
+    url: "/game/config/update",
+    method: "POST",
+    data: { list },
     token: user?.token,
   });
 }

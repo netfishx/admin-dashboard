@@ -27,3 +27,10 @@ export const contentModalAtom = atom<boolean>(false);
 export const contentModalDataAtom = atom<Announcement | null>(null);
 export const contentEditModalAtom = atom<boolean>(false);
 export const editModalTitleAtom = atom<string>("");
+
+export const holdStatusAtom = atom<
+  {
+    gameId: number;
+    holdStatus: number;
+  }[]
+>([]);

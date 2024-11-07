@@ -125,7 +125,8 @@
       "save": "保存",
       "name": "游戏名称",
       "switch": "拦货开关",
-      "confirmText": "确定要开启拦货吗？"
+      "success": "保存成功",
+      "failed": "保存失败"
     },
     "odds": {
       "type": "游戏类别",
