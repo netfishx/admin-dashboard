@@ -1,6 +1,6 @@
 "use client";
 
-import { type GameConfig, getAgentConfig, updateAgentGameConfig } from "@/api";
+import { getAgentConfig, updateAgentGameConfig } from "@/api";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -19,6 +19,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import type { GameConfig } from "@/lib/types";
 import { agentIdAtom, rebateModalAtom } from "@/store";
 import { useAtom, useAtomValue } from "jotai";
 import { useTranslations } from "next-intl";
@@ -48,7 +49,7 @@ export function RebateModal() {
           return {
             ...item,
             backRate:
-              Number(value) > item.maxBackRate
+              Number(value) > (item.maxBackRate ?? 0)
                 ? item.maxBackRate
                 : Number(value),
           };
