@@ -24,16 +24,18 @@ export function Actions({
   const setEditModalTitle = useSetAtom(editModalTitleAtom);
   return (
     <>
-      <Button
-        variant="link"
-        className="hover:no-underline hover:text-primary/80"
-        onClick={() => {
-          setContentModal(true);
-          setContentModalData(data);
-        }}
-      >
-        {t("more")}
-      </Button>
+      {!showEdit && (
+        <Button
+          variant="link"
+          className="hover:no-underline hover:text-primary/80"
+          onClick={() => {
+            setContentModal(true);
+            setContentModalData(data);
+          }}
+        >
+          {t("more")}
+        </Button>
+      )}
       {showEdit && (
         <Button
           variant="link"
