@@ -1,11 +1,17 @@
 export type Res<T> = {
-  size: number;
-  pages: number;
-  total: number;
-  list: any;
   code: number;
   data?: T;
   message?: string;
+};
+
+export type WithPagination = {
+  page: number;
+  size: number;
+  total: number;
+};
+
+export type PageData<T> = WithPagination & {
+  list: T[];
 };
 
 export type User = {
@@ -33,10 +39,4 @@ export type SupplierConfig = {
 
 export type RatioReportListTypes = {
   [key: string]: string | number | undefined | null | string[] | number[];
-};
-
-export type WithPagination = {
-  page: number;
-  size: number;
-  total: number;
 };
