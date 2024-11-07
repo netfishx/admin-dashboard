@@ -146,6 +146,7 @@ export interface GameConfig {
   backRate: number;
   holdStatus: number;
   maxPercent: number;
+  maxBackRate: number;
   parentStatus: number;
 }
 // 用户管理-代理管理-获取代理游戏设置

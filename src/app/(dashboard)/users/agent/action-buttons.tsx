@@ -5,30 +5,32 @@ import { Button } from "@/components/ui/button";
 import {
   agentIdAtom,
   gameSettingModalAtom,
+  limitModalAtom,
   loginLogModalAtom,
+  rebateModalAtom,
   userInfoModalAtom,
 } from "@/store";
 import { useSetAtom } from "jotai";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { ChangeLogModal } from "./change-log-modal";
-import { LimitModal } from "./limit-modal";
-import { RebateModal } from "./rebate-modal";
 import { TransferMoneyModal } from "./transfer-money-modal";
 
 export default function Action({ data }: { data: AgentData }) {
   const t = useTranslations("users.agents");
   const [transferMoneyModal, setTransferMoneyModal] = useState(false);
-  const [limitModal, setLimitModal] = useState(false);
-  const [rebateModal, setRebateModal] = useState(false);
   // const [loginLogModal, setLoginLogModal] = useState(false);
   const [changeLogModal, setChangeLogModal] = useState(false);
 
-  // 用户信息
+  // 用户信息 弹窗
   const setUserInfoModal = useSetAtom(userInfoModalAtom);
-  // 游戏设置
+  // 游戏设置 弹窗
   const setGameSettingModal = useSetAtom(gameSettingModalAtom);
-  // 登录日志
+  // 限额设置 弹窗
+  const setLimitModal = useSetAtom(limitModalAtom);
+  // 返水设置 弹窗
+  const setRebateModal = useSetAtom(rebateModalAtom);
+  // 登录日志 弹窗
   const setLoginLogModal = useSetAtom(loginLogModalAtom);
   const setAgentId = useSetAtom(agentIdAtom);
   return (
@@ -66,6 +68,7 @@ export default function Action({ data }: { data: AgentData }) {
         variant="link"
         className="hover:no-underline hover:text-primary/80 px-0"
         onClick={() => {
+          setAgentId(data.id);
           setLimitModal(true);
         }}
       >
@@ -75,6 +78,7 @@ export default function Action({ data }: { data: AgentData }) {
         variant="link"
         className="hover:no-underline hover:text-primary/80 px-0"
         onClick={() => {
+          setAgentId(data.id);
           setRebateModal(true);
         }}
       >
@@ -104,8 +108,6 @@ export default function Action({ data }: { data: AgentData }) {
         onOpenChange={setTransferMoneyModal}
         editData={data}
       />
-      <LimitModal open={limitModal} onOpenChange={setLimitModal} />
-      <RebateModal open={rebateModal} onOpenChange={setRebateModal} />
       <ChangeLogModal open={changeLogModal} onOpenChange={setChangeLogModal} />
     </>
   );
