@@ -60,5 +60,6 @@ export type GameConfig = {
   backRate?: number; // 反水比例 %
   holdStatus?: number; // 拦货状态 0关闭，1开启，
   maxPercent?: number; // 最大占城比例
+  maxBackRate?: number; // 最大反水比例
   parentStatus?: number; // 父级（整条链路）的彩种开关
 };
