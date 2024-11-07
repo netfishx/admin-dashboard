@@ -425,5 +425,14 @@
       "english": "英文",
       "japanese": "日文"
     }
+  },
+  "fund": {
+    "collection": {
+      "lock": "锁定",
+      "unlock": "解锁",
+      "stop": "停用",
+      "check": "查看私钥",
+      "add": "新增"
+    }
   }
 }
