@@ -1,3 +1,5 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -16,15 +18,13 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { limitModalAtom } from "@/store";
+import { useAtom } from "jotai";
 import { useTranslations } from "next-intl";
 
-export function LimitModal({
-  open,
-  onOpenChange,
-}: {
-  open: boolean;
-  onOpenChange: (open: boolean) => void;
-}) {
+export function LimitModal() {
+  const translations = useTranslations();
+  const [open, setOpen] = useAtom(limitModalAtom);
   const t = useTranslations("users.agents");
   const data = [
     {
@@ -35,7 +35,7 @@ export function LimitModal({
     },
   ];
   return (
-    <Dialog open={open} onOpenChange={(open) => onOpenChange(open)}>
+    <Dialog open={open} onOpenChange={(open) => setOpen(open)}>
       <DialogContent className="max-w-5xl">
         <DialogHeader>
           <DialogTitle>{t("limitSetting")}</DialogTitle>
@@ -82,10 +82,10 @@ export function LimitModal({
           </Table>
         </div>
         <DialogFooter>
-          <Button variant="outline" onClick={() => onOpenChange(false)}>
-            {t("close")}
+          <Button variant="outline" onClick={() => setOpen(false)}>
+            {translations("cancel")}
           </Button>
-          <Button>{t("save")}</Button>
+          <Button>{translations("confirm")}</Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>
