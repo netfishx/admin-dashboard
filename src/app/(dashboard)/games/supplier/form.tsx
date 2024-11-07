@@ -11,11 +11,13 @@ import {
 } from "@/components/ui/select";
 
 import { useTranslations } from "next-intl";
+import { useRouter } from "next/navigation";
 import { useQueryState } from "nuqs";
 
 export function SupplierForm() {
   const t = useTranslations("games.supplier");
-  const [id, setId] = useQueryState("id");
+  const [id, setId] = useQueryState("userId");
+  const router = useRouter();
 
   return (
     <div className="flex justify-between items-center bg-background py-2 px-4">
@@ -40,7 +42,7 @@ export function SupplierForm() {
           />
         </div>
       </div>
-      <Button>{t("search")}</Button>
+      <Button onClick={() => router.refresh()}>{t("search")}</Button>
     </div>
   );
 }

@@ -10,7 +10,7 @@ export default async function DashboardLayout({
 }) {
   return (
     <div className="w-full h-screen overflow-hidden flex">
-      <Suspense fallback={null}>
+      <Suspense fallback={<div className="w-56 min-[2400px]:w-96" />}>
         <SidebarWrapper />
       </Suspense>
       <main className="flex-1 flex flex-col">

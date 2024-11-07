@@ -7,12 +7,25 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Password } from "@/components/ui/password";
+import { Loader2 } from "lucide-react";
 import { nanoid } from "nanoid";
 import { useTranslations } from "next-intl";
 import Form from "next/form";
 import Image from "next/image";
 import { type FormEvent, useRef, useState } from "react";
+import { useFormStatus } from "react-dom";
 import { toast } from "sonner";
+
+function SubmitButton() {
+  const { pending } = useFormStatus();
+  const t = useTranslations("login");
+  return (
+    <Button disabled={pending}>
+      {pending ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
+      {t("button")}
+    </Button>
+  );
+}
 
 export function LoginForm() {
   const t = useTranslations("login");
@@ -98,7 +111,7 @@ export function LoginForm() {
               <input type="hidden" name="randomStr" value={randomStr} />
             </div>
           </div>
-          <Button>{t("button")}</Button>
+          <SubmitButton />
         </div>
       </div>
     </Form>

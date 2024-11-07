@@ -1,4 +1,4 @@
-import { getSuppliers } from "@/api";
+import { getSupplierConfigs } from "@/api";
 import { EditButton } from "@/app/(dashboard)/games/supplier/edit";
 import {
   Table,
@@ -20,8 +20,6 @@ async function SupplierTableHeader() {
         <TableHead>{t("video")}</TableHead>
         <TableHead>{t("supplierId")}</TableHead>
         <TableHead>{t("supplierName")}</TableHead>
-        <TableHead>{t("gameHall")}</TableHead>
-        <TableHead>{t("gameType")}</TableHead>
         <TableHead>{t("quota")}</TableHead>
         <TableHead>{t("percent")}</TableHead>
         <TableHead className="w-24 text-center">{t("action")}</TableHead>
@@ -34,7 +32,7 @@ export async function SupplierTable({
   searchParams,
 }: { searchParams: Promise<{ [key: string]: string | undefined }> }) {
   const { userId } = await searchParams;
-  const res = await getSuppliers(userId);
+  const res = await getSupplierConfigs(userId);
   return (
     <Table>
       <SupplierTableHeader />
@@ -45,8 +43,6 @@ export async function SupplierTable({
             <TableCell>{item.videoLink}</TableCell>
             <TableCell>{item.userId}</TableCell>
             <TableCell>{item.userName}</TableCell>
-            <TableCell>{item.lobbyName}</TableCell>
-            <TableCell>{item.lobbyTypeName}</TableCell>
             <TableCell>{item.distributionAmount}</TableCell>
             <TableCell>{item.distributionPercent}</TableCell>
             <TableCell className="w-24 text-center">

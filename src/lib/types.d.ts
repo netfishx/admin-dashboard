@@ -17,18 +17,14 @@ export type User = {
 };
 
 export type SupplierConfig = {
-  id: string;
+  id?: string;
   gameType: number;
   gameId: number;
   videoLink: string;
   userId: string;
-  userName: string;
+  userName?: string;
   distributionAmount: number;
   distributionPercent: number;
-  lobbyId: string;
-  lobbyName: string;
-  lobbyTypeId: string;
-  lobbyTypeName: string;
 };
 
 export type RatioReportListTypes = {

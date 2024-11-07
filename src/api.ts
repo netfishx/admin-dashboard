@@ -172,12 +172,22 @@ export async function editReviceOrder({ status }: { status: boolean }) {
   });
 }
 
-export async function getSuppliers(userId?: string) {
+export async function getSupplierConfigs(userId?: string) {
   const user = await getSession();
   return await apiRequest<SupplierConfig[]>({
-    url: "/api/getSupplier",
+    url: "/supplierConf/list",
     token: user?.token,
     params: { userId },
+  });
+}
+
+export async function editSupplierConfig(data: SupplierConfig) {
+  const user = await getSession();
+  return await apiRequest({
+    url: "/supplierConf/save",
+    method: "POST",
+    data,
+    token: user?.token,
   });
 }
 

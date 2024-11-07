@@ -1,5 +1,5 @@
 "use server";
-import { login, logout } from "@/api";
+import { editSupplierConfig, login, logout } from "@/api";
 // import { z } from "zod";
 // import { zfd } from "zod-form-data";
 import { setSession, signOut } from "@/session";
@@ -79,4 +79,17 @@ export async function loginAction(formData: FormData) {
 
 export async function signOutAction() {
   await Promise.all([logout(), signOut()]);
+}
+
+export async function editSupplierConfigAction(formData: FormData) {
+  const res = await editSupplierConfig({
+    id: formData.get("id") ? formData.get("id")?.toString() : undefined,
+    gameType: Number(formData.get("gameType")),
+    gameId: Number(formData.get("gameId")),
+    videoLink: formData.get("videoLink")?.toString() ?? "",
+    userId: formData.get("userId")?.toString() ?? "",
+    distributionAmount: Number(formData.get("distributionAmount")),
+    distributionPercent: Number(formData.get("distributionPercent")),
+  });
+  return res;
 }

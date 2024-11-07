@@ -15,7 +15,7 @@ export const errorAtom = atom<Error>({
 export const sidebarAtom = atom<boolean>(true);
 
 export const gamesSupplierDialogAtom = atom<boolean>(false);
-export const gamesSupplierEditAtom = atom<SupplierConfig | undefined>();
+export const supplierConfigAtom = atom<SupplierConfig | undefined>();
 
 // 用户信息弹窗
 export const userInfoModalAtom = atom<boolean>(false);
