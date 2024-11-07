@@ -13,6 +13,7 @@ import { useAtom, useAtomValue } from "jotai";
 import { useTranslations } from "next-intl";
 
 export function ContentModal() {
+  const translations = useTranslations();
   const t = useTranslations("system.announcement");
   const [open, setOpen] = useAtom(contentModalAtom);
   const data = useAtomValue(contentModalDataAtom);
@@ -26,7 +27,9 @@ export function ContentModal() {
         </DialogHeader>
         <div>{data?.content}</div>
         <DialogFooter>
-          <Button onClick={() => setOpen(false)}>{t("save")}</Button>
+          <Button onClick={() => setOpen(false)}>
+            {translations("confirm")}
+          </Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

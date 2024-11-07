@@ -138,7 +138,7 @@ export function SupplierDialog() {
           </div>
           <DialogFooter>
             <Button variant="outline">{translations("cancel")}</Button>
-            <Button type="submit">{translations("save")}</Button>
+            <Button type="submit">{translations("confirm")}</Button>
           </DialogFooter>
         </DialogContent>
       </Form>

@@ -1,23 +1,45 @@
 "use client";
+import { saveAnnouncement } from "@/api";
+import { DateRangeFilter } from "@/components/daterange-filter";
 import { Button } from "@/components/ui/button";
-import { contentEditModalAtom, editModalTitleAtom } from "@/store";
-import { useAtom, useSetAtom } from "jotai";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { Label } from "@/components/ui/label";
+import {} from "@/components/ui/radio-group";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Textarea } from "@/components/ui/textarea";
 import { useTranslations } from "next-intl";
+import { useSearchParams } from "next/navigation";
+import { useState } from "react";
 export function AddAnnouncement() {
   const t = useTranslations("system.announcement");
-  const [, setOpen] = useAtom(contentEditModalAtom);
-  const setEditModalTitle = useSetAtom(editModalTitleAtom);
+  const [open, setOpen] = useState(false);
+  const searchParams = useSearchParams();
+
   return (
     <>
-      <Button
-        className="float-right mb-2"
-        onClick={() => {
-          setOpen(true);
-          setEditModalTitle(t("addModal"));
-        }}
-      >
+      <Button className="float-right mb-2" onClick={() => setOpen(true)}>
         {t("add")}
       </Button>
+      <AddModal
+        open={open}
+        onOpenChange={setOpen}
+        startTime={searchParams.get("startTime")}
+        endTime={searchParams.get("endTime")}
+      />
     </>
   );
 }
@@ -48,9 +70,8 @@ function AddModal({
       endTime: endTime || "",
       createTime: Date.now().toString(),
     };
-    console.info("🌸 ~ addParams:", addParams);
+    // console.info("🌸 ~ addParams:", addParams);
     const res = await saveAnnouncement(addParams);
-    console.info("🌸 ~ res:", res);
     onOpenChange(false);
   };
   return (
@@ -144,7 +165,7 @@ function AddModal({
           <Button variant="outline" onClick={() => onOpenChange(false)}>
             {translations("cancel")}
           </Button>
-          <Button onClick={handleClickAdd}>{translations("save")}</Button>
+          <Button onClick={handleClickAdd}>{translations("confirm")}</Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

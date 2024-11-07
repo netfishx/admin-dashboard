@@ -20,17 +20,14 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 
 import { Label } from "@/components/ui/label";
-import {
-  contentEditModalAtom,
-  contentModalDataAtom,
-  editModalTitleAtom,
-} from "@/store";
+import { contentEditModalAtom, editModalTitleAtom } from "@/store";
 import { useAtom, useAtomValue } from "jotai";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { TimeRange } from "./time-range";
 
 export function AddModal() {
+  const translations = useTranslations();
   const t = useTranslations("system.announcement");
   const [type, setType] = useState("");
   const [language, setLanguage] = useState("");
@@ -39,9 +36,7 @@ export function AddModal() {
   const [open, setOpen] = useAtom(contentEditModalAtom);
   const [startTime, setStartTime] = useState("");
   const [endTime, setEndTime] = useState("");
-  const data = useAtomValue(contentModalDataAtom);
   const editModalTitle = useAtomValue(editModalTitleAtom);
-  console.info("🌸 ~ data:", data);
   const handleClickAdd = async () => {
     const addParams = {
       type,
@@ -151,9 +146,9 @@ export function AddModal() {
         </div>
         <DialogFooter>
           <Button variant="outline" onClick={() => setOpen(false)}>
-            {t("cancel")}
+            {translations("cancel")}
           </Button>
-          <Button onClick={handleClickAdd}>{t("save")}</Button>
+          <Button onClick={handleClickAdd}>{translations("confirm")}</Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

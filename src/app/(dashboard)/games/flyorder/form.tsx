@@ -25,6 +25,7 @@ import { useState } from "react";
 export function FlyOrderForm({
   data,
 }: { data: { game: string; isOpen: boolean }[] }) {
+  const translations = useTranslations();
   const t = useTranslations("games.flyorder");
   const [openList, setOpenList] = useState(
     data.filter((item) => item.isOpen).map((item) => item.game),
@@ -82,8 +83,8 @@ export function FlyOrderForm({
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel>{t("cancel")}</AlertDialogCancel>
-            <AlertDialogAction>{t("confirm")}</AlertDialogAction>
+            <AlertDialogCancel>{translations("cancel")}</AlertDialogCancel>
+            <AlertDialogAction>{translations("confirm")}</AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
