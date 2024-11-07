@@ -26,7 +26,6 @@ import {
 import { Calendar as CalendarIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
-import type { DateRange } from "react-day-picker";
 
 export const today = new Date();
 export const times = {
@@ -36,35 +35,55 @@ export const times = {
 
 export function TimeRange({
   onDateRangeChange,
-}: { onDateRangeChange: (startStr: string, endStr: string) => void }) {
+  range,
+}: {
+  onDateRangeChange: (startStr: string, endStr: string) => void;
+  range: [string, string];
+}) {
   const t = useTranslations("system.announcement");
+  // 使用 range 初始化 dateRange
+  const initialDateRange =
+    range[0] && range[1]
+      ? {
+          from: new Date(Number(range[0])),
+          to: new Date(Number(range[1])),
+        }
+      : {
+          from: startOfDay(today),
+          to: endOfDay(today),
+        };
 
-  const [dateRange, setDateRange] = useState<DateRange>({
-    from: startOfDay(today),
-    to: endOfDay(today),
-  });
-  const [startTime, setStartTime] = useState({
-    hours: 0,
-    minutes: 0,
-    seconds: 0,
-  });
-  const [endTime, setEndTime] = useState({
-    hours: 23,
-    minutes: 59,
-    seconds: 59,
-  });
-  useEffect(() => {
-    setDateRange({
-      from: startOfDay(today),
-      to: endOfDay(today),
-    });
-  }, []);
+  const initialStartTime =
+    range[0] && range[1]
+      ? {
+          hours: new Date(Number(range[0])).getHours(),
+          minutes: new Date(Number(range[0])).getMinutes(),
+          seconds: new Date(Number(range[0])).getSeconds(),
+        }
+      : { hours: 0, minutes: 0, seconds: 0 };
 
-  function handleDateRangeChange(range: DateRange | undefined) {
-    if (range) {
-      setDateRange(range);
-    }
+  const initialEndTime =
+    range[0] && range[1]
+      ? {
+          hours: new Date(Number(range[1])).getHours(),
+          minutes: new Date(Number(range[1])).getMinutes(),
+          seconds: new Date(Number(range[1])).getSeconds(),
+        }
+      : { hours: 23, minutes: 59, seconds: 59 };
+
+  const [dateRange, setDateRange] = useState(initialDateRange);
+  const [startTime, setStartTime] = useState(initialStartTime);
+  const [endTime, setEndTime] = useState(initialEndTime);
+
+  function handleDateRangeChange(range) {
+    setDateRange(range);
   }
+  useEffect(() => {
+    onDateRangeChange(
+      formatDateWithTime(dateRange?.from, startTime),
+      formatDateWithTime(dateRange?.to, endTime),
+    );
+  }, [dateRange, startTime, endTime, onDateRangeChange]);
 
   function handleTimeChange(
     type: "start" | "end",
@@ -90,31 +109,6 @@ export function TimeRange({
     return format(dateWithTime, "yyyy-MM-dd HH:mm:ss");
   };
 
-  useEffect(() => {
-    if (dateRange?.from && dateRange?.to) {
-      const formattedStartDate = format(
-        setSeconds(
-          setMinutes(
-            setHours(dateRange.from, startTime.hours),
-            startTime.minutes,
-          ),
-          startTime.seconds,
-        ),
-        "yyyy-MM-dd HH:mm:ss",
-      );
-
-      const formattedEndDate = format(
-        setSeconds(
-          setMinutes(setHours(dateRange.to, endTime.hours), endTime.minutes),
-          endTime.seconds,
-        ),
-        "yyyy-MM-dd HH:mm:ss",
-      );
-
-      onDateRangeChange(formattedStartDate, formattedEndDate);
-    }
-  }, [dateRange, startTime, endTime, onDateRangeChange]);
-
   return (
     <div className="flex items-center gap-2 ">
       <Popover>
@@ -127,6 +121,7 @@ export function TimeRange({
             )}
           >
             <CalendarIcon className="mr-2 h-4 w-4" />
+
             {dateRange?.from ? (
               <>
                 {formatDateWithTime(dateRange.from, startTime)}
@@ -162,7 +157,7 @@ export function TimeRange({
                     </SelectTrigger>
                     <SelectContent>
                       {Array.from({ length: 24 }, (_, i) => (
-                        <SelectItem key={i} value={i.toString()}>
+                        <SelectItem key={Math.random()} value={i.toString()}>
                           {i.toString().padStart(2, "0")}
                         </SelectItem>
                       ))}
@@ -180,7 +175,7 @@ export function TimeRange({
                     </SelectTrigger>
                     <SelectContent>
                       {Array.from({ length: 60 }, (_, i) => (
-                        <SelectItem key={i} value={i.toString()}>
+                        <SelectItem key={Math.random()} value={i.toString()}>
                           {i.toString().padStart(2, "0")}
                         </SelectItem>
                       ))}
@@ -198,7 +193,7 @@ export function TimeRange({
                     </SelectTrigger>
                     <SelectContent>
                       {Array.from({ length: 60 }, (_, i) => (
-                        <SelectItem key={i} value={i.toString()}>
+                        <SelectItem key={Math.random()} value={i.toString()}>
                           {i.toString().padStart(2, "0")}
                         </SelectItem>
                       ))}
@@ -221,7 +216,7 @@ export function TimeRange({
                     </SelectTrigger>
                     <SelectContent>
                       {Array.from({ length: 24 }, (_, i) => (
-                        <SelectItem key={i} value={i.toString()}>
+                        <SelectItem key={Math.random()} value={i.toString()}>
                           {i.toString().padStart(2, "0")}
                         </SelectItem>
                       ))}
@@ -239,7 +234,7 @@ export function TimeRange({
                     </SelectTrigger>
                     <SelectContent>
                       {Array.from({ length: 60 }, (_, i) => (
-                        <SelectItem key={i} value={i.toString()}>
+                        <SelectItem key={Math.random()} value={i.toString()}>
                           {i.toString().padStart(2, "0")}
                         </SelectItem>
                       ))}
@@ -257,7 +252,7 @@ export function TimeRange({
                     </SelectTrigger>
                     <SelectContent>
                       {Array.from({ length: 60 }, (_, i) => (
-                        <SelectItem key={i} value={i.toString()}>
+                        <SelectItem key={Math.random()} value={i.toString()}>
                           {i.toString().padStart(2, "0")}
                         </SelectItem>
                       ))}

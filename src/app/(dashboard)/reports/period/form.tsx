@@ -17,6 +17,7 @@ import { useQueryState } from "nuqs";
 
 export function Form() {
   const t = useTranslations("report.periodlist");
+
   const router = useRouter();
   const [gameType, setGameType] = useQueryState("gameType", {
     defaultValue: "1",
@@ -35,7 +36,7 @@ export function Form() {
           <div className="flex justify-between items-center  py-2 px-4">
             <div className="flex gap-2 items-center">
               <div className="flex gap-2 items-center">
-                <Label className="shrink-0">{t("gametype")}</Label>
+                <Label className="shrink-0">{t("gameType")}</Label>
                 <Select
                   value={gameType ?? ""}
                   onValueChange={(value) => setGameType(value)}
@@ -49,7 +50,7 @@ export function Form() {
                 </Select>
               </div>
               <div className="flex gap-2 items-center">
-                <Label className="shrink-0">{t("gamename")}</Label>
+                <Label className="shrink-0">{t("gameName")}</Label>
                 <Select
                   value={roomName ?? ""}
                   onValueChange={(value) => setRoomName(value)}

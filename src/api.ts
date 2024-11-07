@@ -200,3 +200,12 @@ export async function getRatioReport(data: any) {
     token: user?.token,
   });
 }
+
+export async function getPeriodReport(params: any) {
+  const user = await getSession();
+  return await apiRequest<WithPagination & { list: Announcement[] }>({
+    url: "/getReports",
+    params,
+    token: user?.token,
+  });
+}
