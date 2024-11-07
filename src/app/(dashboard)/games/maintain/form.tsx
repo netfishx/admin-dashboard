@@ -6,7 +6,7 @@ import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { parseAsArrayOf, parseAsString, useQueryState } from "nuqs";
-import { type ReactNode, useTransition } from "react";
+import { type ReactNode, Suspense, useTransition } from "react";
 import { toast } from "sonner";
 
 function BatchButton({
@@ -47,8 +47,10 @@ export function MaintainForm() {
   const t = useTranslations("games.maintain");
   return (
     <div className="flex items-center justify-end gap-2 bg-background py-2 px-4">
-      <BatchButton status={1}>{t("batchOpen")}</BatchButton>
-      <BatchButton status={0}>{t("batchClose")}</BatchButton>
+      <Suspense fallback={null}>
+        <BatchButton status={1}>{t("batchOpen")}</BatchButton>
+        <BatchButton status={0}>{t("batchClose")}</BatchButton>
+      </Suspense>
     </div>
   );
 }
