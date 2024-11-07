@@ -1,5 +1,4 @@
 "use client";
-import { EditNumber } from "@/components/edit-number";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -39,7 +38,7 @@ export function RebateForm({ data }: { data: any[] }) {
           </div>
           <div className="flex gap-2 items-center">
             <Label className="shrink-0">{t("column")}</Label>
-            <EditNumber />
+            {/* <EditNumber /> */}
           </div>
         </div>
         <div className="flex gap-2">
