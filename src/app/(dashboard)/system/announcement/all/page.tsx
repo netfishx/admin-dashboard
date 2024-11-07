@@ -9,6 +9,7 @@ export default async function All({
   const { data } = await getAnnouncement({
     size: search.size ?? 10,
     page: search.page ?? 1,
+    agentId: search.agentId ?? "",
   });
   return (
     <>

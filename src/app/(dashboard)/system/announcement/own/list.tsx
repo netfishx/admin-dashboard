@@ -11,8 +11,8 @@ import {
 } from "@/components/ui/table";
 import { getTranslations } from "next-intl/server";
 import { Actions } from "../actions";
+import { formatTimestamp } from "../tools";
 import { AddAnnouncement } from "./add-announcement";
-
 export async function List({ data }: { data: any }) {
   const t = await getTranslations("system.announcement");
 
@@ -48,13 +48,13 @@ export async function List({ data }: { data: any }) {
               {data?.list?.map((item: any) => (
                 <TableRow key={Math.random()}>
                   <TableCell className="w-24 text-center">
-                    {item.startTime}
+                    {formatTimestamp(item.startTime)}
                   </TableCell>
                   <TableCell className="w-24 text-center">
-                    {item.endTime}
+                    {formatTimestamp(item.endTime)}
                   </TableCell>
                   <TableCell className="w-24 text-center">
-                    {item.createTime}
+                    {formatTimestamp(item.createTime)}
                   </TableCell>
                   <TableCell className="w-24 text-center">
                     {item.content}

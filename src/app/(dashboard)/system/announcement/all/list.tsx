@@ -10,6 +10,8 @@ import {
 
 import { getTranslations } from "next-intl/server";
 import { Actions } from "../actions";
+import { formatTimestamp } from "../tools";
+import { Form } from "./form";
 export async function List({ data }: { data: any }) {
   const t = await getTranslations("system.announcement");
   const user = {
@@ -18,6 +20,7 @@ export async function List({ data }: { data: any }) {
   return (
     <>
       <div className="p-2 mt-2 bg-background flex-1">
+        {user.role === "admin" && <Form />}
         <Table>
           <TableHeader className="sticky">
             <TableRow className="bg-muted">
@@ -57,15 +60,15 @@ export async function List({ data }: { data: any }) {
               <TableRow key={Math.random()}>
                 {user.role === "admin" && (
                   <TableCell className="w-24 text-center">
-                    {item.startTime}
+                    {formatTimestamp(item.startTime)}
                   </TableCell>
                 )}
                 <TableCell className="w-24 text-center">
-                  {item.endTime}
+                  {formatTimestamp(item.endTime)}
                 </TableCell>
                 {user.role === "admin" && (
                   <TableCell className="w-24 text-center">
-                    {item.createTime}
+                    {formatTimestamp(item.createTime)}
                   </TableCell>
                 )}
                 {user.role === "admin" && (
@@ -92,7 +95,7 @@ export async function List({ data }: { data: any }) {
       <div className="pt-2">
         <Pages
           total={data?.total ?? 0}
-          currentPage={Number(data?.pages ?? 1)}
+          currentPage={Number(data?.page ?? 1)}
           pageSize={Number(data?.size ?? 10)}
         />
       </div>

@@ -1,5 +1,4 @@
 "use client";
-import { saveAnnouncement } from "@/api";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -20,10 +19,14 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 
 import { Label } from "@/components/ui/label";
-import { contentEditModalAtom, editModalTitleAtom } from "@/store";
+import {
+  contentEditModalAtom,
+  contentModalDataAtom,
+  editModalTitleAtom,
+} from "@/store";
 import { useAtom, useAtomValue } from "jotai";
 import { useTranslations } from "next-intl";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { TimeRange } from "./time-range";
 
 export function AddModal() {
@@ -37,26 +40,52 @@ export function AddModal() {
   const [startTime, setStartTime] = useState("");
   const [endTime, setEndTime] = useState("");
   const editModalTitle = useAtomValue(editModalTitleAtom);
+  const data = useAtomValue(contentModalDataAtom);
   const handleClickAdd = async () => {
-    const addParams = {
-      type,
-      language,
-      content,
-      status: "0",
-      startTime: new Date(startTime).getTime().toString() || "",
-      endTime: new Date(endTime).getTime().toString() || "",
-      createTime: Date.now().toString(),
-    };
-    const res = await saveAnnouncement(addParams);
-    setOpen(false);
+    console.info("startTime:", startTime);
+    console.info("endTime:", endTime);
+    // const addParams = {
+    //   type,
+    //   language,
+    //   content,
+    //   status: "0",
+    //   startTime: new Date(startTime).getTime().toString() || "",
+    //   endTime: new Date(endTime).getTime().toString() || "",
+    //   createTime: Date.now().toString(),
+    // };
+    // const res = await saveAnnouncement(addParams);
+    // setOpen(false);
   };
 
   // 回调函数，用于接收子组件传递的时间数据
   const handleDateRangeChange = (start: string, end: string) => {
-    console.info("Selected date range:", start, end);
     setStartTime(start);
     setEndTime(end);
+    console.info("Selected date range:", start, end);
   };
+
+  const resetFields = () => {
+    setType("");
+    setLanguage("");
+    setContent("");
+    setStatus(0);
+    setStartTime("");
+    setEndTime("");
+  };
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+  useEffect(() => {
+    if (data && editModalTitle === t("editModal")) {
+      setContent(data.content || "");
+      setType(data.type || "");
+      setLanguage(data.language || "");
+      setStatus(Number(data.status) || 0);
+      setStartTime(data.startTime || "");
+      setEndTime(data.endTime || "");
+    }
+    return () => {
+      resetFields();
+    };
+  }, [data, editModalTitle]);
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent className="max-w-5xl">
@@ -70,7 +99,7 @@ export function AddModal() {
               {t("announcementType")}
             </Label>
             <Select
-              defaultValue="1"
+              defaultValue="0"
               value={type}
               onValueChange={(value) => setType(value)}
             >
@@ -78,10 +107,10 @@ export function AddModal() {
                 <SelectValue placeholder="请选择" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="1">{t("platformAnnouncement")}</SelectItem>
-                <SelectItem value="2">{t("agentAnnouncement")}</SelectItem>
-                <SelectItem value="3">{t("memberAnnouncement")}</SelectItem>
-                <SelectItem value="4">
+                <SelectItem value="0">{t("platformAnnouncement")}</SelectItem>
+                <SelectItem value="1">{t("agentAnnouncement")}</SelectItem>
+                <SelectItem value="2">{t("memberAnnouncement")}</SelectItem>
+                <SelectItem value="3">
                   {t("platformRoomAnnouncement")}
                 </SelectItem>
               </SelectContent>
@@ -91,14 +120,17 @@ export function AddModal() {
             <Label className="shrink-0 w-1/4 text-right text-muted-foreground">
               {t("announcementTime")}
             </Label>
-            <TimeRange onDateRangeChange={handleDateRangeChange} />
+            <TimeRange
+              onDateRangeChange={handleDateRangeChange}
+              range={[startTime, endTime]}
+            />
           </div>
           <div className="flex gap-4 items-center">
             <Label className="shrink-0 w-1/4 text-right text-muted-foreground">
               {t("language")}
             </Label>
             <Select
-              defaultValue="1"
+              defaultValue="0"
               value={language}
               onValueChange={(value) => setLanguage(value)}
             >
@@ -106,9 +138,9 @@ export function AddModal() {
                 <SelectValue placeholder="请选择" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="1">中文</SelectItem>
-                <SelectItem value="2">英文</SelectItem>
-                <SelectItem value="3">日文</SelectItem>
+                <SelectItem value="0">{t("chinese")}</SelectItem>
+                <SelectItem value="1">{t("english")}</SelectItem>
+                <SelectItem value="2">{t("japanese")}</SelectItem>
               </SelectContent>
             </Select>
           </div>

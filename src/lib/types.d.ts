@@ -1,4 +1,8 @@
 export type Res<T> = {
+  size: number;
+  pages: number;
+  total: number;
+  list: any;
   code: number;
   data?: T;
   message?: string;
