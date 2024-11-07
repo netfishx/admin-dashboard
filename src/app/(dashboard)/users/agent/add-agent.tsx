@@ -1,7 +1,6 @@
 "use client";
 
-import { addUser } from "@/api";
-import Stepper from "@/components/stepper";
+import { addAgent, verifyUpUsername } from "@/api";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -13,6 +12,7 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Password } from "@/components/ui/password";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -35,47 +35,70 @@ function AddAgentModal({
   open: boolean;
   onOpenChange: (open: boolean) => void;
 }) {
+  const translation = useTranslations();
   const t = useTranslations("users.agents");
   const router = useRouter();
+  const [upUsername, setUpUsername] = useState("");
   const [username, setUsername] = useState("");
   const [nickname, setNickname] = useState("");
-  const [deptId, setDeptId] = useState<number>();
-  const [step, setStep] = useState(1);
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const handleClickAddAgent = async () => {
-    if (step === 1) {
-      setStep(2);
-      return;
-    }
-    await addUser({
+    const { data, code, message } = await addAgent({
       username,
       nickname,
-      deptId: deptId ?? 0,
-      upUsername: "z111",
-      userId: `A${Math.random().toString(36).substring(2, 15)}`,
-      status: 1,
+      password,
     });
+    console.info(data, code, message);
     onOpenChange(false);
     router.refresh();
   };
+  const closeDialog = () => {
+    setUsername("");
+    setNickname("");
+    setPassword("");
+    setConfirmPassword("");
+    onOpenChange(false);
+  };
+  const handleClickSearchUpUsername = async () => {
+    const { data, code, message } = await verifyUpUsername({
+      username: upUsername,
+    });
+    console.info(data, code, message);
+  };
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
+    <Dialog open={open} onOpenChange={closeDialog}>
       <DialogContent className="2xl:max-w-lg lg:max-w-md">
         <DialogHeader>
           <DialogTitle>{t("addAgent")}</DialogTitle>
           <DialogDescription />
         </DialogHeader>
-        <Stepper
+        {/* <Stepper
           steps={[t("userInfo"), t("gamesSetting")]}
           currentStep={step}
-        />
+        /> */}
         <div className="flex flex-col gap-2 w-full px-4">
+          <div className="flex gap-4 items-center">
+            <Label className="shrink-0 w-1/4 text-right text-muted-foreground">
+              {t("upUsername")} :
+            </Label>
+            <Input
+              placeholder={t("placeholder")}
+              className="w-1/2 max-w-[130px]"
+              value={upUsername}
+              onChange={(e) => setUpUsername(e.target.value)}
+            />
+            <Button size="sm" onClick={handleClickSearchUpUsername}>
+              {t("verify")}
+            </Button>
+          </div>
           <div className="flex gap-4 items-center">
             <Label className="shrink-0 w-1/4 text-right text-muted-foreground">
               {t("username")} :
             </Label>
             <Input
               placeholder={t("placeholder")}
-              className="w-1/2"
+              className="w-1/2 max-w-[200px]"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
             />
@@ -86,31 +109,41 @@ function AddAgentModal({
             </Label>
             <Input
               placeholder={t("placeholder")}
-              className="w-1/2"
+              className="w-1/2 max-w-[200px]"
               value={nickname}
               onChange={(e) => setNickname(e.target.value)}
             />
           </div>
           <div className="flex gap-4 items-center">
             <Label className="shrink-0 w-1/4 text-right text-muted-foreground">
-              {t("deptId")}
+              {t("password")}
             </Label>
-            <Input
+            <Password
+              type="password"
+              className="w-1/2 max-w-[200px] min-w-[200px]"
               placeholder={t("placeholder")}
-              className="w-1/2"
-              value={deptId}
-              onChange={(e) => setDeptId(Number(e.target.value))}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </div>
+          <div className="flex gap-4 items-center">
+            <Label className="shrink-0 w-1/4 text-right text-muted-foreground">
+              {t("confirmPassword")}
+            </Label>
+            <Password
+              type="password"
+              className="w-1/2 max-w-[200px] min-w-[200px]"
+              placeholder={t("placeholder")}
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
             />
           </div>
           <DialogFooter>
-            <Button
-              variant="outline"
-              onClick={() => (step === 1 ? onOpenChange(false) : setStep(1))}
-            >
-              {step === 1 ? t("close") : t("back")}
+            <Button variant="outline" onClick={closeDialog}>
+              {translation("cancel")}
             </Button>
             <Button onClick={handleClickAddAgent}>
-              {step === 1 ? t("next") : t("save")}
+              {translation("confirm")}
             </Button>
           </DialogFooter>
         </div>

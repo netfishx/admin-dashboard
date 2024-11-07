@@ -8,7 +8,7 @@ import type { RatioReportListTypes } from "./lib/types";
 export interface AgentData {
   upUsername: string;
   deptId: number;
-  userId: string;
+  id: string;
   username: string;
   nickname: string;
   status: number;
@@ -71,6 +71,7 @@ export async function logout() {
   });
 }
 
+// 获取代理列表
 export async function getAgents(params: { page: number; size: number }) {
   const user = await getSession();
   return await apiRequest<WithPagination & { list: AgentData[] }>({
@@ -102,8 +103,39 @@ export async function updateAgent(data: {
     token: user?.token,
   });
 }
-export async function addUser(data: AgentData) {
-  return await apiRequest({ url: "/api/addUser", method: "POST", data });
+// 重置代理返水次数
+export async function resetRestCount(data: { id: string }) {
+  const user = await getSession();
+  return await apiRequest({
+    url: "/agent/user/main/cleanLoginError",
+    method: "POST",
+    data,
+    token: user?.token,
+  });
+}
+// 添加代理
+export async function addAgent(data: {
+  upUsername?: string;
+  username: string;
+  nickname: string;
+  password: string;
+}) {
+  const user = await getSession();
+  return await apiRequest({
+    token: user?.token,
+    url: "/agent/user/main/createAccount",
+    method: "POST",
+    data,
+  });
+}
+// 验证上级账号是否存在
+export async function verifyUpUsername(params: { username: string }) {
+  const user = await getSession();
+  return await apiRequest({
+    url: "/agent/user/main/getByusername",
+    params,
+    token: user?.token,
+  });
 }
 
 export interface WithPagination {
@@ -135,6 +167,7 @@ export interface Announcement {
   type: string;
   language: string;
   status: string;
+  agentId?: string;
 }
 export async function getAnnouncement(params: any) {
   const user = await getSession();

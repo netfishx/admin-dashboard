@@ -16,8 +16,6 @@ export function Form() {
     defaultValue: "",
   });
   const searchData = () => {
-    console.log(agentId);
-
     router.refresh();
   };
 

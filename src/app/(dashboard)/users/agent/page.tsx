@@ -77,10 +77,10 @@ async function AgentTable({
           </TableHeader>
           <TableBody>
             {data?.list?.map((item: AgentData) => (
-              <TableRow key={item.userId}>
+              <TableRow key={item.id}>
                 <TableCell className="min-w-32">{item.upUsername}</TableCell>
                 <TableCell className="min-w-32">{item.deptId}</TableCell>
-                <TableCell className="min-w-32">{item.userId}</TableCell>
+                <TableCell className="min-w-32">{item.id}</TableCell>
                 <TableCell className="min-w-32">{item.username}</TableCell>
                 <TableCell className="min-w-32">{item.nickname}</TableCell>
                 <TableCell className="min-w-32">
