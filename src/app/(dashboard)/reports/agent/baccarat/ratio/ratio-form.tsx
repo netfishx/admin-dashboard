@@ -16,11 +16,10 @@ import { useQueryState } from "nuqs";
 
 export function RatioForm() {
   const t = useTranslations("report.agent");
-  const [gametype, setGameType] = useQueryState("gametype");
-  const [gameName, setGameName] = useQueryState("gameName");
-  const [memberID, setMemberID] = useQueryState("memberID");
-  const [roomeownerID, setRoomeownerID] = useQueryState("roomeownerID");
-  const [uperagentID, setUperagentID] = useQueryState("uperagentID");
+  const [gameId, setGameId] = useQueryState("gameId");
+  const [agentId, setagentId] = useQueryState("agentId");
+  const [houseOwnerId, setHouseOwnerId] = useQueryState("houseOwnerId");
+  const [parentAgentId, setParentAgentId] = useQueryState("parentAgentId");
   const router = useRouter();
 
   return (
@@ -28,26 +27,10 @@ export function RatioForm() {
       {/* 第一行 */}
       <div className="flex gap-4 items-center">
         <div className="flex gap-2 items-center">
-          <Label className="shrink-0">{t("gametype")}</Label>
-          <Select
-            value={gametype ?? ""}
-            onValueChange={(value) => setGameType(value)}
-            defaultValue="1"
-          >
-            <SelectTrigger className="w-28">
-              <SelectValue placeholder={t("placeholderselect")} />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="1">百家乐01</SelectItem>
-              <SelectItem value="2">百家乐02</SelectItem>
-            </SelectContent>
-          </Select>
-        </div>
-        <div className="flex gap-2 items-center">
           <Label className="shrink-0">{t("gameName")}</Label>
           <Select
-            value={gameName ?? ""}
-            onValueChange={(value) => setGameName(value)}
+            value={gameId ?? ""}
+            onValueChange={(value) => setGameId(value)}
             defaultValue="1"
           >
             <SelectTrigger className="w-28">
@@ -68,26 +51,26 @@ export function RatioForm() {
       {/* 第二行 */}
       <div className="flex gap-4 items-center">
         <div className="flex gap-2 items-center">
-          <Label className="shrink-0">{t("memberID")}</Label>
+          <Label className="shrink-0">{t("agentID")}</Label>
           <Input
-            value={memberID ?? ""}
-            onChange={(e) => setMemberID(e.target.value)}
+            value={agentId ?? ""}
+            onChange={(e) => setagentId(e.target.value)}
             placeholder={t("placeholderinput")}
           />
         </div>
         <div className="flex gap-2 items-center">
           <Label className="shrink-0">{t("roomeownerID")}</Label>
           <Input
-            value={roomeownerID ?? ""}
-            onChange={(e) => setRoomeownerID(e.target.value)}
+            value={houseOwnerId ?? ""}
+            onChange={(e) => setHouseOwnerId(e.target.value)}
             placeholder={t("placeholderinput")}
           />
         </div>
         <div className="flex gap-2 items-center">
           <Label className="shrink-0">{t("uperagentID")}</Label>
           <Input
-            value={uperagentID ?? ""}
-            onChange={(e) => setUperagentID(e.target.value)}
+            value={parentAgentId ?? ""}
+            onChange={(e) => setParentAgentId(e.target.value)}
             placeholder={t("placeholderinput")}
           />
         </div>

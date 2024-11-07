@@ -1,6 +1,6 @@
 import { getRatioReport } from "@/api";
+import DetailButton from "@/app/(dashboard)/reports/agent/baccarat/ratio/detail-button";
 import Pages from "@/components/custom-pagination";
-import {} from "@/components/ui/scroll-area";
 import {
   Table,
   TableBody,
@@ -9,17 +9,20 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import type { RatioReportListTypes } from "@/lib/types";
 import { getTranslations } from "next-intl/server";
 import { Suspense } from "react";
-import { DetailButton } from "./detail-button";
 
 export async function RatioList({
   searchParams,
 }: { searchParams: Promise<{ [key: string]: string | string[] }> }) {
   const t = await getTranslations("report.agent");
   const search = await searchParams;
+
   const { data } = await getRatioReport({
-    ...searchParams,
+    ...search,
+    openStartTime: search?.startTime,
+    openEndTime: search?.endTime,
     page: Number(search?.page ?? 1),
     size: Number(search?.size ?? 10),
   });
@@ -68,40 +71,40 @@ export async function RatioList({
               </TableRow>
             </TableHeader>
             <TableBody>
-              {data?.list?.map((item: any) => (
-                <TableRow key={item.agentOrOwnerId}>
+              {data?.list?.map((item: RatioReportListTypes) => (
+                <TableRow key={`${item.userId}`}>
                   <TableCell className="w-24 text-center">
-                    {item.agentOrOwnerId}
+                    {item.userId}
                   </TableCell>
                   <TableCell className="w-24 text-center">
                     {item.gameName}
                   </TableCell>
                   <TableCell className="w-24 text-center">
-                    {item.shareAmount}
+                    {item.expectedShareAmount}
                   </TableCell>
                   <TableCell className="w-24 text-center">
-                    {item.blockAmount}
+                    {item.interceptAmount}
                   </TableCell>
                   <TableCell className="w-24 text-center">
-                    {item.deductAmount}
+                    {item.throwAmount}
                   </TableCell>
                   <TableCell className="w-24 text-center">
-                    {item.shareProfitLoss}
+                    {item.actualShareWinLoss}
                   </TableCell>
                   <TableCell className="w-24 text-center">
-                    {item.rebateIncome}
+                    {item.backIncome}
                   </TableCell>
                   <TableCell className="w-24 text-center">
-                    {item.rebateExpense}
+                    {item.backOutcome}
                   </TableCell>
                   <TableCell className="w-24 text-center">
-                    {item.netRebate}
+                    {item.pureBackAmount}
                   </TableCell>
                   <TableCell className="w-24 text-center">
                     {item.totalProfitLossAmount}
                   </TableCell>
                   <TableCell className="w-24 text-center sticky right-0 z-10 bg-background">
-                    <DetailButton />
+                    <DetailButton id={item.userId as string} />
                   </TableCell>
                 </TableRow>
               ))}

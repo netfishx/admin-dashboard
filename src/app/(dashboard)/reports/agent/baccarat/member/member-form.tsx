@@ -17,30 +17,13 @@ import { useQueryState } from "nuqs";
 export function MemberForm() {
   const t = useTranslations("report.agent");
   const router = useRouter();
-  const [gametype, setGameType] = useQueryState("gametype");
-  const [gameName, setGameName] = useQueryState("gameName");
-  const [leastlevelID, setLeastlevelID] = useQueryState("leastlevelID");
+  const [gameName, setGameName] = useQueryState("gameId");
+  const [leastlevelID, setLeastlevelID] = useQueryState("agentId");
 
   return (
     <div className="flex flex-col gap-2 bg-background py-2 px-4">
       {/* 第一行 */}
       <div className="flex gap-4 items-center">
-        <div className="flex gap-2 items-center">
-          <Label className="shrink-0">{t("gametype")}</Label>
-          <Select
-            value={gametype ?? ""}
-            onValueChange={(value) => setGameType(value)}
-            defaultValue="1"
-          >
-            <SelectTrigger className="w-28">
-              <SelectValue placeholder={t("placeholderselect")} />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="1">百家乐01</SelectItem>
-              <SelectItem value="2">百家乐02</SelectItem>
-            </SelectContent>
-          </Select>
-        </div>
         <div className="flex gap-2 items-center">
           <Label className="shrink-0">{t("gameName")}</Label>
           <Select
@@ -64,7 +47,7 @@ export function MemberForm() {
       </div>
       <div className="flex gap-4 items-center">
         <div className="flex gap-2 items-center">
-          <Label className="shrink-0">{t("leastlevelID")}</Label>
+          <Label className="shrink-0">{t("agentID")}</Label>
           <Input
             value={leastlevelID ?? ""}
             onChange={(e) => setLeastlevelID(e.target.value)}
