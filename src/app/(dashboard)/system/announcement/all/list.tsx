@@ -8,11 +8,15 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
+import type { Announcement, WithPagination } from "@/api";
 import { getTranslations } from "next-intl/server";
 import { Actions } from "../actions";
 import { formatTimestamp } from "../tools";
 import { Form } from "./form";
-export async function List({ data }: { data: any }) {
+
+export async function List({
+  data,
+}: { data?: WithPagination & { list: Announcement[] } }) {
   const t = await getTranslations("system.announcement");
   const user = {
     role: "admin",
@@ -56,7 +60,7 @@ export async function List({ data }: { data: any }) {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {data?.list?.map((item: any) => (
+            {data?.list?.map((item: Announcement) => (
               <TableRow key={Math.random()}>
                 {user.role === "admin" && (
                   <TableCell className="w-24 text-center">

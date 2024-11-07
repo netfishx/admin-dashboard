@@ -40,7 +40,9 @@ export default async function Page({
   );
 }
 
-async function PeriodTable({ searchParams }: { searchParams: any }) {
+async function PeriodTable({
+  searchParams,
+}: { searchParams: Promise<{ [key: string]: string | string[] }> }) {
   const t = await getTranslations("report.periodlist");
   const search = await searchParams;
   const { data } = await getPeriodReport({

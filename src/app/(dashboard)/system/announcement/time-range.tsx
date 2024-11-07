@@ -75,8 +75,10 @@ export function TimeRange({
   const [startTime, setStartTime] = useState(initialStartTime);
   const [endTime, setEndTime] = useState(initialEndTime);
 
-  function handleDateRangeChange(range) {
-    setDateRange(range);
+  function handleDateRangeChange(range: { from: Date; to: Date } | undefined) {
+    if (range) {
+      setDateRange(range);
+    }
   }
   useEffect(() => {
     onDateRangeChange(
@@ -138,7 +140,10 @@ export function TimeRange({
             <Calendar
               mode="range"
               selected={dateRange}
-              onSelect={handleDateRangeChange}
+              onSelect={(value) =>
+                value &&
+                handleDateRangeChange(value as { from: Date; to: Date })
+              }
               numberOfMonths={1}
             />
             <div className="mt-4 pl-10">

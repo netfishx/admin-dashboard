@@ -1,3 +1,4 @@
+import type { Announcement, WithPagination } from "@/api";
 import Pages from "@/components/custom-pagination";
 import ListScrollArea from "@/components/list-scroll-area";
 import { ScrollBar } from "@/components/ui/scroll-area";
@@ -13,7 +14,10 @@ import { getTranslations } from "next-intl/server";
 import { Actions } from "../actions";
 import { formatTimestamp } from "../tools";
 import { AddAnnouncement } from "./add-announcement";
-export async function List({ data }: { data: any }) {
+
+export async function List({
+  data,
+}: { data?: WithPagination & { list: Announcement[] } }) {
   const t = await getTranslations("system.announcement");
 
   return (
@@ -75,7 +79,7 @@ export async function List({ data }: { data: any }) {
       <div className="pt-2">
         <Pages
           total={data?.total ?? 0}
-          currentPage={Number(data?.pages ?? 1)}
+          currentPage={Number(data?.page ?? 1)}
           pageSize={Number(data?.size ?? 10)}
         />
       </div>
