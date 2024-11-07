@@ -137,17 +137,6 @@ export async function verifyUpUsername(params: { username: string }) {
     token: user?.token,
   });
 }
-
-export interface GameConfig {
-  gameType: number;
-  gameId: number;
-  status: number;
-  percent: number;
-  backRate: number;
-  holdStatus: number;
-  maxPercent: number;
-  parentStatus: number;
-}
 // 用户管理-代理管理-获取代理游戏设置
 export async function getAgentConfig(params: { userId: string }) {
   const user = await getSession();
@@ -160,12 +149,7 @@ export async function getAgentConfig(params: { userId: string }) {
 // 用户管理-代理管理-更新代理游戏设置
 export async function updateAgentGameConfig(data: {
   userId: string;
-  list: {
-    gameId: number;
-    gameType: number;
-    percent: number;
-    status: number;
-  }[];
+  list: GameConfig[];
 }) {
   const user = await getSession();
   return await apiRequest({
