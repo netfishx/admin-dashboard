@@ -178,8 +178,10 @@ export function DateRangeFilter({
     "month",
     "lastmonth",
   ],
+  enableTimeSelect = true, // 新增的属性
 }: {
   quickSetBtn?: rangeType[];
+  enableTimeSelect?: boolean;
 }) {
   const t = useTranslations("report.orderlist");
 
@@ -311,8 +313,16 @@ export function DateRangeFilter({
       return format(dateRange.startTime, "yyyy-MM-dd HH:mm:ss");
     }
 
-    return `${format(dateRange.startTime, "yyyy-MM-dd HH:mm:ss")} ~ ${format(dateRange.endTime, "yyyy-MM-dd HH:mm:ss")}`;
-  }, [dateRange?.startTime, dateRange?.endTime, t]);
+    return enableTimeSelect
+      ? `${format(dateRange.startTime, "yyyy-MM-dd HH:mm:ss")} ~ ${format(
+          dateRange.endTime,
+          "yyyy-MM-dd HH:mm:ss",
+        )}`
+      : `${format(dateRange.startTime, "yyyy-MM-dd")} ~ ${format(
+          dateRange.endTime,
+          "yyyy-MM-dd",
+        )}`;
+  }, [dateRange?.startTime, dateRange?.endTime, t, enableTimeSelect]);
 
   return (
     <div className="flex items-center gap-2">
@@ -321,7 +331,7 @@ export function DateRangeFilter({
           <Button
             variant="outline"
             className={cn(
-              "justify-start text-left font-normal w-[380px]",
+              "justify-start text-left font-normal",
               !dateRange && "text-muted-foreground",
             )}
           >
@@ -341,14 +351,14 @@ export function DateRangeFilter({
               onSelect={handleDateRangeChange}
               numberOfMonths={1}
             />
-            {dateRange?.startTime && (
+            {enableTimeSelect && dateRange?.startTime && (
               <TimeSelect
                 type="start"
                 date={dateRange.startTime}
                 onTimeChange={handleTimeChange}
               />
             )}
-            {dateRange?.endTime && (
+            {enableTimeSelect && dateRange?.endTime && (
               <TimeSelect
                 type="end"
                 date={dateRange.endTime}

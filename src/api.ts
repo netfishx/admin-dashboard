@@ -248,7 +248,7 @@ export async function editMaintain(data: {
 export async function getDailiReport(data: any) {
   const user = await getSession();
   return await apiRequest<WithPagination & { list: RatioReportListTypes[] }>({
-    url: "/gareth/getDailiReport",
+    url: "/report/agent/baccarat/memberBet",
     method: "POST",
     data,
     token: user?.token,
@@ -258,7 +258,7 @@ export async function getDailiReport(data: any) {
 export async function getRatioReport(data: any) {
   const user = await getSession();
   return await apiRequest<WithPagination & { list: RatioReportListTypes[] }>({
-    url: "/gareth/getRatioReport",
+    url: "/report/agent/baccarat/stack",
     method: "POST",
     data,
     token: user?.token,
