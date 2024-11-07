@@ -17,13 +17,17 @@ import { AddAnnouncement } from "./add-announcement";
 
 export async function List({
   data,
-}: { data?: WithPagination & { list: Announcement[] } }) {
+  announcementDicts,
+}: {
+  data?: WithPagination & { list: Announcement[] };
+  announcementDicts: { key: string; value: string }[];
+}) {
   const t = await getTranslations("system.announcement");
 
   return (
     <>
       <div className="p-2 mt-2 bg-background flex-1 gap-2">
-        <AddAnnouncement />
+        <AddAnnouncement announcementDicts={announcementDicts} />
         <ListScrollArea>
           <div className="max-h-[calc(100dvh-280px)] overflow-y-auto">
             <Table>
