@@ -48,6 +48,11 @@ async function PeriodTable({
   const { data } = await getPeriodReport({
     size: search.size ?? 10,
     page: search.page ?? 1,
+    startTime: search.startTime ?? "",
+    endTime: search.endTime ?? "",
+    gameTypeName: search.gameTypeName ?? "",
+    gameName: search.gameName ?? "",
+    issueNumber: search.issueNumber ?? "",
   });
   return (
     <div className="flex flex-col gap-2 w-full">

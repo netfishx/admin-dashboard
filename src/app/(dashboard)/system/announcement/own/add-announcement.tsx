@@ -24,7 +24,11 @@ import { Textarea } from "@/components/ui/textarea";
 import { useTranslations } from "next-intl";
 import { useSearchParams } from "next/navigation";
 import { useState } from "react";
-export function AddAnnouncement() {
+export function AddAnnouncement({
+  announcementDicts,
+}: {
+  announcementDicts: { key: string; value: string }[];
+}) {
   const t = useTranslations("system.announcement");
   const [open, setOpen] = useState(false);
   const searchParams = useSearchParams();
@@ -39,6 +43,7 @@ export function AddAnnouncement() {
         onOpenChange={setOpen}
         startTime={searchParams.get("startTime")}
         endTime={searchParams.get("endTime")}
+        announcementDicts={announcementDicts}
       />
     </>
   );
@@ -48,11 +53,13 @@ function AddModal({
   onOpenChange,
   startTime,
   endTime,
+  announcementDicts,
 }: {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   startTime: string | null;
   endTime: string | null;
+  announcementDicts: { key: string; value: string }[];
 }) {
   const translations = useTranslations();
   const t = useTranslations("system.announcement");
@@ -96,12 +103,11 @@ function AddModal({
                 <SelectValue placeholder="请选择" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="1">{t("platformAnnouncement")}</SelectItem>
-                <SelectItem value="2">{t("agentAnnouncement")}</SelectItem>
-                <SelectItem value="3">{t("memberAnnouncement")}</SelectItem>
-                <SelectItem value="4">
-                  {t("platformRoomAnnouncement")}
-                </SelectItem>
+                {announcementDicts.map((item) => (
+                  <SelectItem key={item.key} value={item.key}>
+                    {item.value}
+                  </SelectItem>
+                ))}
               </SelectContent>
             </Select>
           </div>
