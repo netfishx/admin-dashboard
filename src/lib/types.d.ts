@@ -37,6 +37,17 @@ export type SupplierConfig = {
   distributionPercent: number;
 };
 
+export type MaintainGame = {
+  id: string;
+  gameType: number;
+  gameId: number;
+  status: number;
+  gameName: string;
+  updateTime: number;
+  updateBy: string;
+  updateUserId: string;
+};
+
 export type RatioReportListTypes = {
   [key: string]: string | number | undefined | null | string[] | number[];
 };

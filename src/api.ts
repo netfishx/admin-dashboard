@@ -1,7 +1,7 @@
 "use server";
 
 import { apiRequest } from "@/lib/request";
-import type { SupplierConfig } from "@/lib/types";
+import type { MaintainGame, SupplierConfig } from "@/lib/types";
 import { getSession } from "@/session";
 import type { RatioReportListTypes } from "./lib/types";
 
@@ -185,6 +185,27 @@ export async function editSupplierConfig(data: SupplierConfig) {
   const user = await getSession();
   return await apiRequest({
     url: "/supplierConf/save",
+    method: "POST",
+    data,
+    token: user?.token,
+  });
+}
+
+export async function getMaintainList() {
+  const user = await getSession();
+  return await apiRequest<MaintainGame[]>({
+    url: "/gameSwitch/list",
+    token: user?.token,
+  });
+}
+
+export async function editMaintain(data: {
+  status: number;
+  ids: string[];
+}) {
+  const user = await getSession();
+  return await apiRequest({
+    url: "/gameSwitch/update",
     method: "POST",
     data,
     token: user?.token,
