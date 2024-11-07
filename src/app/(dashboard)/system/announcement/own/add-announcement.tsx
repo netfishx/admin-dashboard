@@ -71,7 +71,8 @@ function AddModal({
       createTime: Date.now().toString(),
     };
     // console.info("🌸 ~ addParams:", addParams);
-    const res = await saveAnnouncement(addParams);
+    const { code, message, data } = await saveAnnouncement(addParams);
+    console.info(code, message, data);
     onOpenChange(false);
   };
   return (

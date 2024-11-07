@@ -29,7 +29,7 @@ export function WeekChart({
   function formatTooltipLabel(label: string) {
     return `${label} ${t("totalDeposits")}`;
   }
-  function formatTooltipValue(value: any) {
+  function formatTooltipValue(value: number) {
     return [`${value}`];
   }
 

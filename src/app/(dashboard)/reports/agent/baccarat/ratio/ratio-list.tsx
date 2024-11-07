@@ -13,7 +13,9 @@ import { getTranslations } from "next-intl/server";
 import { Suspense } from "react";
 import { DetailButton } from "./detail-button";
 
-export async function RatioList({ searchParams }: { searchParams: any }) {
+export async function RatioList({
+  searchParams,
+}: { searchParams: Promise<{ [key: string]: string | string[] }> }) {
   const t = await getTranslations("report.agent");
   const search = await searchParams;
   const { data } = await getRatioReport({

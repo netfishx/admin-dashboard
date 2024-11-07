@@ -30,7 +30,7 @@ const chartConfig = {
   },
 } satisfies ChartConfig;
 
-export function DayChart({ title }: any) {
+export function DayChart({ title }: { title: string }) {
   const t = useTranslations("chart");
   const chartData = [
     { browser: `${t("bjl01")}`, visitors: 275, fill: "var(--color-bjl01)" },

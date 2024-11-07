@@ -167,6 +167,7 @@ export interface Announcement {
   type: string;
   language: string;
   status: string;
+  agentId?: string;
 }
 export async function getAnnouncement(params: any) {
   const user = await getSession();
