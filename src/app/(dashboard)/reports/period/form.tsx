@@ -19,13 +19,13 @@ export function Form() {
   const t = useTranslations("report.periodlist");
 
   const router = useRouter();
-  const [gameType, setGameType] = useQueryState("gameType", {
+  const [gameTypeName, setGameTypeName] = useQueryState("gameTypeName", {
     defaultValue: "1",
   });
-  const [roomName, setRoomName] = useQueryState("roomName", {
-    defaultValue: "1",
+  const [gameName, setGameName] = useQueryState("gameName", {
+    defaultValue: "",
   });
-  const [gameId, setGameId] = useQueryState("gameId", {
+  const [issueNumber, setIssueNumber] = useQueryState("issueNumber", {
     defaultValue: "",
   });
 
@@ -38,8 +38,8 @@ export function Form() {
               <div className="flex gap-2 items-center">
                 <Label className="shrink-0">{t("gameTypeName")}</Label>
                 <Select
-                  value={gameType ?? ""}
-                  onValueChange={(value) => setGameType(value)}
+                  value={gameTypeName ?? ""}
+                  onValueChange={(value) => setGameTypeName(value)}
                 >
                   <SelectTrigger className="w-28">
                     <SelectValue placeholder={t("placeholderselect")} />
@@ -52,28 +52,33 @@ export function Form() {
               <div className="flex gap-2 items-center">
                 <Label className="shrink-0">{t("gameName")}</Label>
                 <Select
-                  value={roomName ?? ""}
-                  onValueChange={(value) => setRoomName(value)}
+                  value={gameName ?? ""}
+                  onValueChange={(value) => setGameName(value)}
                 >
                   <SelectTrigger className="w-28">
                     <SelectValue placeholder={t("placeholderselect")} />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="1">百家乐01</SelectItem>
+                    <SelectItem value="0">百家乐01</SelectItem>
+                    <SelectItem value="1">百家乐02</SelectItem>
+                    <SelectItem value="2">百家乐03</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
               <div className="flex gap-2 items-center">
-                <Label className="shrink-0">{t("gameId")}</Label>
+                <Label className="shrink-0">{t("issueNumber")}</Label>
                 <Input
                   placeholder={t("placeholderinput")}
-                  value={gameId ?? ""}
-                  onChange={(e) => setGameId(e.target.value)}
+                  value={issueNumber ?? ""}
+                  onChange={(e) => setIssueNumber(e.target.value)}
                 />
               </div>
               <div className="flex gap-2 items-center">
                 <Label className="shrink-0">{t("openTime")}</Label>
-                <DateRangeFilter quickSetBtn={["today", "yesterday"]} />
+                <DateRangeFilter
+                  quickSetBtn={["today", "yesterday"]}
+                  enableTimeSelect={false}
+                />
               </div>
             </div>
           </div>
