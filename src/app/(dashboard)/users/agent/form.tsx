@@ -20,6 +20,7 @@ export default function Form() {
   const [username, setUsername] = useQueryState("username", {
     defaultValue: "",
   });
+  // todo: userId => id
   const [userId, setUserId] = useQueryState("userId", {
     defaultValue: "",
   });
@@ -66,10 +67,10 @@ export default function Form() {
               <SelectValue placeholder={t("placeholder")} />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="0">{t("all")}</SelectItem>
-              <SelectItem value="1">{t("enable")}</SelectItem>
-              <SelectItem value="2">{t("disable")}</SelectItem>
-              <SelectItem value="3">{t("freeze")}</SelectItem>
+              <SelectItem value="null">{t("all")}</SelectItem>
+              <SelectItem value="0">{t("enable")}</SelectItem>
+              <SelectItem value="1">{t("disable")}</SelectItem>
+              <SelectItem value="2">{t("freeze")}</SelectItem>
             </SelectContent>
           </Select>
         </div>
