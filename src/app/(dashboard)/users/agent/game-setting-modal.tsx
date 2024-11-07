@@ -1,3 +1,6 @@
+"use client";
+
+import { type GameConfig, getAgentConfig, updateAgentGameConfig } from "@/api";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -17,23 +20,65 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { agentIdAtom, gameSettingModalAtom } from "@/store";
+import { useAtom, useAtomValue } from "jotai";
 import { useTranslations } from "next-intl";
-const data = [
-  {
-    game: "百家乐01",
-    value: 1,
-  },
-];
-export function GameSettingModal({
-  open,
-  onOpenChange,
-}: {
-  open: boolean;
-  onOpenChange: (open: boolean) => void;
-}) {
+import { useEffect, useState } from "react";
+
+export function GameSettingModal() {
+  const translations = useTranslations();
   const t = useTranslations("users.agents");
+  const userId = useAtomValue(agentIdAtom);
+  const [open, setOpen] = useAtom(gameSettingModalAtom);
+  const [data, setData] = useState<{ list: GameConfig[] } | undefined>();
+  useEffect(() => {
+    if (userId && open) {
+      getAgentConfig({ userId }).then(({ data }) => {
+        console.info("game config", data);
+        setData(data);
+      });
+    }
+  }, [userId, open]);
+  const handleChangePercent = (gameId: number, percent: number) => {
+    if (data) {
+      const newList = data.list.map((item) =>
+        item.gameId === gameId
+          ? {
+              ...item,
+              percent: percent > item.maxPercent ? item.maxPercent : percent,
+            }
+          : item,
+      );
+      setData({ ...data, list: newList });
+    }
+  };
+  const handleChangeStatus = (gameId: number, status: number) => {
+    if (data) {
+      const newList = data.list.map((item) =>
+        item.gameId === gameId ? { ...item, status } : item,
+      );
+      setData({ ...data, list: newList });
+    }
+  };
+  const handleClickUpdate = () => {
+    if (data) {
+      const { list } = data;
+      const req = list.map((item) => ({
+        gameId: item.gameId,
+        gameType: item.gameType,
+        percent: item.percent,
+        status: item.status,
+      }));
+      updateAgentGameConfig({ userId, list: req }).then(
+        ({ data, code, message }) => {
+          console.info(data, code, message);
+          setOpen(false);
+        },
+      );
+    }
+  };
   return (
-    <Dialog open={open} onOpenChange={(open) => onOpenChange(open)}>
+    <Dialog open={open} onOpenChange={(open) => setOpen(open)}>
       <DialogContent className="2xl:max-w-lg lg:max-w-md">
         <DialogHeader>
           <DialogTitle>{t("gamesSetting")}</DialogTitle>
@@ -51,18 +96,37 @@ export function GameSettingModal({
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {data.map((item) => (
-                  <TableRow key={item.game}>
-                    <TableCell>{item.game}</TableCell>
-                    <TableCell>
-                      <Switch />
-                    </TableCell>
-                    <TableCell className="flex items-center gap-2">
-                      <Input defaultValue={item.value} />
-                      <span className="text-destructive">(40%)</span>
-                    </TableCell>
-                  </TableRow>
-                ))}
+                {data?.list
+                  .filter((item) => item.gameType === 61)
+                  .map((item) => (
+                    <TableRow key={item.gameId}>
+                      <TableCell>{item.gameType}</TableCell>
+                      <TableCell>
+                        <Switch
+                          checked={item.status === 1}
+                          onCheckedChange={(checked) => {
+                            handleChangeStatus(item.gameId, checked ? 1 : 0);
+                          }}
+                        />
+                      </TableCell>
+                      <TableCell className="flex items-center gap-2">
+                        <Input
+                          value={item.percent}
+                          type="number"
+                          max={item.maxPercent}
+                          onChange={(e) => {
+                            handleChangePercent(
+                              item.gameId,
+                              Number(e.target.value),
+                            );
+                          }}
+                        />
+                        <span className="text-destructive">
+                          {`(${item.maxPercent}%)`}
+                        </span>
+                      </TableCell>
+                    </TableRow>
+                  ))}
               </TableBody>
             </Table>
           </div>
@@ -78,23 +142,30 @@ export function GameSettingModal({
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {data.map((item) => (
-                  <TableRow key={item.game}>
-                    <TableCell>{item.game}</TableCell>
-                    <TableCell>
-                      <Switch />
-                    </TableCell>
-                  </TableRow>
-                ))}
+                {data?.list
+                  .filter((item) => item.gameType === 20)
+                  .map((item) => (
+                    <TableRow key={item.gameId}>
+                      <TableCell>{item.gameType}</TableCell>
+                      <TableCell>
+                        <Switch
+                          checked={item.status === 1}
+                          onCheckedChange={(checked) => {
+                            handleChangeStatus(item.gameId, checked ? 1 : 0);
+                          }}
+                        />
+                      </TableCell>
+                    </TableRow>
+                  ))}
               </TableBody>
             </Table>
           </div>
         </div>
         <DialogFooter>
-          <Button variant="outline" onClick={() => onOpenChange(false)}>
-            {t("close")}
+          <Button variant="outline" onClick={() => setOpen(false)}>
+            {translations("cancel")}
           </Button>
-          <Button>{t("save")}</Button>
+          <Button onClick={handleClickUpdate}>{translations("confirm")}</Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

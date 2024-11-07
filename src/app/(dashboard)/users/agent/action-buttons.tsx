@@ -2,12 +2,16 @@
 
 import type { AgentData } from "@/api";
 import { Button } from "@/components/ui/button";
-import { agentIdAtom, loginLogModalAtom, userInfoModalAtom } from "@/store";
+import {
+  agentIdAtom,
+  gameSettingModalAtom,
+  loginLogModalAtom,
+  userInfoModalAtom,
+} from "@/store";
 import { useSetAtom } from "jotai";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { ChangeLogModal } from "./change-log-modal";
-import { GameSettingModal } from "./game-setting-modal";
 import { LimitModal } from "./limit-modal";
 import { RebateModal } from "./rebate-modal";
 import { TransferMoneyModal } from "./transfer-money-modal";
@@ -15,7 +19,6 @@ import { TransferMoneyModal } from "./transfer-money-modal";
 export default function Action({ data }: { data: AgentData }) {
   const t = useTranslations("users.agents");
   const [transferMoneyModal, setTransferMoneyModal] = useState(false);
-  const [gameSettingModal, setGameSettingModal] = useState(false);
   const [limitModal, setLimitModal] = useState(false);
   const [rebateModal, setRebateModal] = useState(false);
   // const [loginLogModal, setLoginLogModal] = useState(false);
@@ -23,7 +26,8 @@ export default function Action({ data }: { data: AgentData }) {
 
   // 用户信息
   const setUserInfoModal = useSetAtom(userInfoModalAtom);
-
+  // 游戏设置
+  const setGameSettingModal = useSetAtom(gameSettingModalAtom);
   // 登录日志
   const setLoginLogModal = useSetAtom(loginLogModalAtom);
   const setAgentId = useSetAtom(agentIdAtom);
@@ -52,6 +56,7 @@ export default function Action({ data }: { data: AgentData }) {
         variant="link"
         className="hover:no-underline hover:text-primary/80 px-0"
         onClick={() => {
+          setAgentId(data.id);
           setGameSettingModal(true);
         }}
       >
@@ -98,10 +103,6 @@ export default function Action({ data }: { data: AgentData }) {
         open={transferMoneyModal}
         onOpenChange={setTransferMoneyModal}
         editData={data}
-      />
-      <GameSettingModal
-        open={gameSettingModal}
-        onOpenChange={setGameSettingModal}
       />
       <LimitModal open={limitModal} onOpenChange={setLimitModal} />
       <RebateModal open={rebateModal} onOpenChange={setRebateModal} />
