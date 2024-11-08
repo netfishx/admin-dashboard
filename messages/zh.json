@@ -444,7 +444,13 @@
       "checkStep1Title": "资金密码验证",
       "checkStep2Title": "查看密钥",
       "checkStep1Desc": "请输入您的资金密码",
-      "password": "资金密码"
+      "password": "资金密码",
+      "copy": "复制",
+      "copied": "已复制！",
+      "copySecret": "复制秘钥",
+      "secretInfo": "秘钥信息",
+      "secretKey": "秘钥",
+      "secretWarning": "请务必保管好秘钥，否则资金将全部丢失！"
 
     }
   }

@@ -83,7 +83,7 @@ export function CheckDialog(props: Dialogprops) {
                 {/* Header row */}
                 <div className="flex divide-x divide-gray-200">
                   <div className="py-2.5 px-4 text-gray-600 bg-gray-50 w-24 text-sm">
-                    秘钥信息
+                    {t("secretInfo")}
                   </div>
                   <div className="py-2.5 px-4 flex-1 flex justify-between items-center bg-card">
                     <span className="text-gray-800 font-mono text-sm">
@@ -105,7 +105,7 @@ export function CheckDialog(props: Dialogprops) {
                           </button>
                         </TooltipTrigger>
                         <TooltipContent>
-                          <p>{copied ? "已复制！" : "复制"}</p>
+                          <p>{copied ? t("copied") : t("copy")}</p>
                         </TooltipContent>
                       </Tooltip>
                     </TooltipProvider>
@@ -116,7 +116,7 @@ export function CheckDialog(props: Dialogprops) {
                 <div className="px-4 py-2 border-t border-gray-200">
                   <div className="flex items-center gap-1.5 text-red-500 text-sm">
                     <AlertTriangle className="h-4 w-4" />
-                    <span>*请务必保管好秘钥，否则资金将全部丢失！</span>
+                    <span>{t("secretWarning")}</span>
                   </div>
                 </div>
               </Card>
