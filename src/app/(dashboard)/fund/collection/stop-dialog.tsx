@@ -16,7 +16,7 @@ interface Dialogprops {
   onOpenChange: (open: boolean) => void;
 }
 
-export function UnlockDialog(props: Dialogprops) {
+export function StopDialog(props: Dialogprops) {
   const { onOpenChange } = props;
   const t = useTranslations("fund.collection");
   const translations = useTranslations();
@@ -24,8 +24,8 @@ export function UnlockDialog(props: Dialogprops) {
     <AlertDialog open={true} onOpenChange={onOpenChange}>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>{t("unlockTitle")}</AlertDialogTitle>
-          <AlertDialogDescription>{t("unlockDesc")}</AlertDialogDescription>
+          <AlertDialogTitle>{t("stopTitle")}</AlertDialogTitle>
+          <AlertDialogDescription>{t("stopDesc")}</AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>{translations("cancel")}</AlertDialogCancel>

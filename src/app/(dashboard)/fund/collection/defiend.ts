@@ -7,5 +7,6 @@ export enum ShowStatus {
   STOP = "STOP",
   // 查看私钥
   CHECK = "CHECK",
+  // 新增
   ADD = "ADD",
 }

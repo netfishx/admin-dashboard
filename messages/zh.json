@@ -432,7 +432,20 @@
       "unlock": "解锁",
       "stop": "停用",
       "check": "查看私钥",
-      "add": "新增"
+      "add": "新增",
+      "unlockDesc": "请确定是否解锁地址",
+      "lockDesc": "请确定是否锁定地址",
+      "stopDesc": "请确定是否停用地址",
+      "unlockConfirm": "确定",
+      "unlockCancel": "取消",
+      "unlockTitle": "操作确认",
+      "lockTitle": "操作确认",
+      "stopTitle": "操作确认",
+      "checkStep1Title": "资金密码验证",
+      "checkStep2Title": "查看密钥",
+      "checkStep1Desc": "请输入您的资金密码",
+      "password": "资金密码"
+
     }
   }
 }

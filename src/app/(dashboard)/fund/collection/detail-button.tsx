@@ -5,6 +5,8 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { CheckDialog } from "./check-dialog";
 import { ShowStatus } from "./defiend";
+import { LockDialog } from "./lock-dialog";
+import { StopDialog } from "./stop-dialog";
 import { UnlockDialog } from "./unlock-dialog";
 
 export default function DetailButton(props: { id: string }) {
@@ -45,15 +47,21 @@ export default function DetailButton(props: { id: string }) {
       >
         {t("stop")}
       </Button>
-
-      <UnlockDialog
-        open={showStatus === ShowStatus.UNLOCK}
-        onOpenChange={() => setShowStatus(undefined)}
-      />
-      <CheckDialog
-        open={showStatus === ShowStatus.CHECK}
-        onOpenChange={() => setShowStatus(undefined)}
-      />
+      {showStatus === ShowStatus.UNLOCK && (
+        <UnlockDialog onOpenChange={() => setShowStatus(undefined)} />
+      )}
+      {showStatus === ShowStatus.LOCK && (
+        <LockDialog onOpenChange={() => setShowStatus(undefined)} />
+      )}
+      {showStatus === ShowStatus.STOP && (
+        <StopDialog onOpenChange={() => setShowStatus(undefined)} />
+      )}
+      {showStatus === ShowStatus.CHECK && (
+        <CheckDialog
+          open={showStatus === ShowStatus.CHECK}
+          onOpenChange={() => setShowStatus(undefined)}
+        />
+      )}
     </div>
   );
 }
