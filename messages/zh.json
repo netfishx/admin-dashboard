@@ -461,6 +461,35 @@
     }
   },
   "personal": {
+    "info": {
+      "account": "账号",
+      "inviteCode": "邀请码",
+      "creditAmount": "授信总额",
+      "pendingAmount": "会员待还",
+      "withdrawFreezeAmount": "提现冻结金额",
+      "recharge": "充值",
+      "withdraw": "提款",
+      "userInfo": "用户信息",
+      "walletInfo": "钱包信息",
+      "balance": "总余额",
+      "availableBalance": "可用余额",
+      "freezeBalance": "冻结余额",
+      "withdrawPassword": "提款密码",
+      "withdrawAmount": "提款金额",
+      "google2fa": "谷歌二次验证",
+      "google2faCode": "二次验证码",
+      "verify": "验证",
+      "password": "资金密码",
+      "serviceFee": "手续费",
+      "walletAddress": "收款钱包地址",
+      "tips01": "提款金额不可大于可用余额",
+      "tips02": "因余额变动频繁，执行提现操作时建议暂时停止接单",
+      "tips03": "注意",
+      "tips04": "仅能向此地址充入AK，充入其他资产将无法找回",
+      "mainNet": "主网",
+      "qrCode": "二维码",
+      "depositAddress": "充币地址"
+    },
     "security": {
       "title": "安全设置",
       "loginPassword": "登录密码",
@@ -506,4 +535,5 @@
       "confirmMoneyPassword":"确认资金密码"
     }
   }
+   
 }

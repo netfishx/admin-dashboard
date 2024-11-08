@@ -4,17 +4,29 @@ import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { CheckDialog } from "./check-dialog";
-import { ShowStatus } from "./defiend";
 import { LockDialog } from "./lock-dialog";
 import { StopDialog } from "./stop-dialog";
 import { UnlockDialog } from "./unlock-dialog";
 
 export default function DetailButton(props: { id: string }) {
+  type ShowStatusType = "LOCK" | "UNLOCK" | "STOP" | "CHECK" | "ADD";
+  const ShowStatus = {
+    // 锁定
+    LOCK: "LOCK",
+    // 解锁
+    UNLOCK: "UNLOCK",
+    // 停用
+    STOP: "STOP",
+    // 查看私钥
+    CHECK: "CHECK",
+    // 新增
+    ADD: "ADD",
+  };
   const { id } = props;
   const t = useTranslations("fund.collection");
   const router = useRouter();
-  const [showStatus, setShowStatus] = useState<ShowStatus>();
-  function handleDetail(status: ShowStatus) {
+  const [showStatus, setShowStatus] = useState<ShowStatusType>();
+  function handleDetail(status: ShowStatusType) {
     setShowStatus(status);
   }
   return (
@@ -22,28 +34,28 @@ export default function DetailButton(props: { id: string }) {
       <Button
         variant="link"
         className="hover:no-underline hover:text-primary/80"
-        onClick={() => handleDetail(ShowStatus.UNLOCK)}
+        onClick={() => handleDetail("UNLOCK")}
       >
         {t("unlock")}
       </Button>
       <Button
         variant="link"
         className="hover:no-underline hover:text-primary/80"
-        onClick={() => handleDetail(ShowStatus.CHECK)}
+        onClick={() => handleDetail("CHECK")}
       >
         {t("check")}
       </Button>
       <Button
         variant="link"
         className="hover:no-underline hover:text-primary/80 text-red-500"
-        onClick={() => handleDetail(ShowStatus.LOCK)}
+        onClick={() => handleDetail("LOCK")}
       >
         {t("lock")}
       </Button>
       <Button
         variant="link"
         className="hover:no-underline hover:text-primary/80 text-red-500"
-        onClick={() => handleDetail(ShowStatus.STOP)}
+        onClick={() => handleDetail("STOP")}
       >
         {t("stop")}
       </Button>
