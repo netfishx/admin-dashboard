@@ -1,4 +1,5 @@
 "use client";
+import { EditNumber } from "@/components/edit-number";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -18,9 +19,13 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { useTranslations } from "next-intl";
+import { useState } from "react";
 
 export function RebateForm({ data }: { data: any[] }) {
   const t = useTranslations("games.rebate");
+  const [step, setStep] = useState(1);
+
+  function handleEdit(num: number) {}
   return (
     <div className="flex flex-col gap-2 w-full">
       <div className="flex justify-between items-center bg-background py-2 px-4">
@@ -38,7 +43,7 @@ export function RebateForm({ data }: { data: any[] }) {
           </div>
           <div className="flex gap-2 items-center">
             <Label className="shrink-0">{t("column")}</Label>
-            {/* <EditNumber /> */}
+            <EditNumber step={step} setStep={setStep} handleEdit={handleEdit} />
           </div>
         </div>
         <div className="flex gap-2">
