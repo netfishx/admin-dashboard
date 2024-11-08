@@ -1,7 +1,7 @@
 "use client";
+import { editGameConfig } from "@/api";
 import { EditNumber } from "@/components/edit-number";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { Button, type ButtonProps } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import {
   Select,
@@ -10,73 +10,93 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
+import {} from "@/components/ui/table";
+import { rebateAtom } from "@/store";
+import { useAtom } from "jotai";
+import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { type ReactNode, useState, useTransition } from "react";
+import { toast } from "sonner";
 
-export function RebateForm({ data }: { data: any[] }) {
+function RebateButton({
+  children,
+  onClick,
+  ...props
+}: { children: ReactNode; onClick: () => void } & ButtonProps) {
+  const [isPending, startTransition] = useTransition();
+  return (
+    <Button
+      {...props}
+      disabled={isPending}
+      onClick={() => {
+        startTransition(onClick);
+      }}
+    >
+      {isPending ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
+      {children}
+    </Button>
+  );
+}
+
+export function RebateForm() {
   const t = useTranslations("games.rebate");
+  const [list, setList] = useAtom(rebateAtom);
+  const router = useRouter();
   const [step, setStep] = useState(1);
 
-  function handleEdit(num: number) {}
+  function handleEdit(num: number) {
+    setList(
+      list.map((item) => ({
+        ...item,
+        backRate:
+          item.backRate + num < 0
+            ? 0
+            : item.backRate + num > item.maxBackRate
+              ? item.maxBackRate
+              : item.backRate + num,
+      })),
+    );
+  }
   return (
-    <div className="flex flex-col gap-2 w-full">
-      <div className="flex justify-between items-center bg-background py-2 px-4">
-        <div className="flex gap-2">
-          <div className="flex gap-2 items-center">
-            <Label className="shrink-0">{t("type")}</Label>
-            <Select defaultValue="1" disabled>
-              <SelectTrigger className="w-28">
-                <SelectValue placeholder="请选择" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="1">百家乐</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-          <div className="flex gap-2 items-center">
-            <Label className="shrink-0">{t("column")}</Label>
-            <EditNumber step={step} setStep={setStep} handleEdit={handleEdit} />
-          </div>
+    <>
+      <div className="flex gap-2">
+        <div className="flex gap-2 items-center">
+          <Label className="shrink-0">{t("type")}</Label>
+          <Select defaultValue="1" disabled>
+            <SelectTrigger className="w-28">
+              <SelectValue placeholder="请选择" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="1">百家乐</SelectItem>
+            </SelectContent>
+          </Select>
         </div>
-        <div className="flex gap-2">
-          <Button variant="destructive">{t("reset")}</Button>
-          <Button>{t("save")}</Button>
+        <div className="flex gap-2 items-center">
+          <Label className="shrink-0">{t("column")}</Label>
+          <EditNumber step={step} setStep={setStep} handleEdit={handleEdit} />
         </div>
       </div>
-      <div className="p-2 bg-background flex-1">
-        <div className="border rounded-sm">
-          <Table>
-            <TableHeader>
-              <TableRow className="bg-muted">
-                <TableHead>{t("name")}</TableHead>
-                <TableHead className="min-w-32 w-1/2">
-                  {t("rebate")}
-                  <span className="text-destructive">{t("tip")}</span>
-                </TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {data.map((item) => (
-                <TableRow key={item.game}>
-                  <TableCell>{item.game}</TableCell>
-                  <TableCell className="flex items-center gap-2">
-                    <Input defaultValue={item.value} />
-                    <span className="text-destructive">(40%)</span>
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </div>
+      <div className="flex gap-2">
+        <RebateButton
+          onClick={async () => {
+            const res = await editGameConfig(
+              list.map(({ gameId, backRate }) => ({
+                gameId,
+                backRate,
+              })),
+            );
+            if (res.code === 0) {
+              toast.success(t("success"));
+              router.refresh();
+            } else {
+              toast.error(res.message ?? t("failed"));
+            }
+          }}
+        >
+          {t("save")}
+        </RebateButton>
       </div>
-    </div>
+    </>
   );
 }

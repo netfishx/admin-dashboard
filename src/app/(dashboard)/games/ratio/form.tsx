@@ -79,14 +79,6 @@ export function RatioForm() {
       </div>
       <div className="flex gap-2">
         <RatioButton
-          variant="destructive"
-          onClick={() => {
-            console.info("234234");
-          }}
-        >
-          {t("reset")}
-        </RatioButton>
-        <RatioButton
           onClick={async () => {
             const res = await editGameConfig(
               list.map(({ gameId, percent }) => ({

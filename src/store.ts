@@ -48,3 +48,10 @@ export const ratioAtom = atom<
     maxPercent: number;
   }[]
 >([]);
+export const rebateAtom = atom<
+  {
+    gameId: number;
+    backRate: number;
+    maxBackRate: number;
+  }[]
+>([]);
