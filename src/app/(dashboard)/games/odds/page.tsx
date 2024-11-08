@@ -1,4 +1,5 @@
-import { OddsForm } from "@/app/(dashboard)/games/odds/form";
+import { getGameOdds } from "@/api";
+import { Suspense } from "react";
 
 const data = [
   {
@@ -38,6 +39,18 @@ const data = [
   },
 ];
 
+async function Data() {
+  const res = await getGameOdds({ gameId: 1 });
+  return <>{JSON.stringify(res.data)}</>;
+}
+
 export default function Page() {
-  return <OddsForm data={data} />;
+  return (
+    <>
+      {/* <OddsForm data={data} /> */}
+      <Suspense fallback={<div>Loading...</div>}>
+        <Data />
+      </Suspense>
+    </>
+  );
 }

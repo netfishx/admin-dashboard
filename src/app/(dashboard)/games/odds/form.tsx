@@ -86,14 +86,16 @@ export function OddsForm({ data }: { data: any[] }) {
           <Table>
             <TableHeader>
               <TableRow className="bg-muted">
-                <TableHead className="min-w-16">{t("smallType")}</TableHead>
-                <TableHead className="min-w-24">{t("odds")}</TableHead>
-                <TableHead className="min-w-40">{t("min")}</TableHead>
-                <TableHead className="min-w-72">
+                <TableHead className="min-w-24">{t("smallType")}</TableHead>
+                <TableHead className="text-center w-32">{t("odds")}</TableHead>
+                <TableHead className="text-center min-w-40">
+                  {t("min")}
+                </TableHead>
+                <TableHead className="text-center min-w-72">
                   {t("max")}
                   <span className="text-destructive">{t("tip")}</span>
                 </TableHead>
-                <TableHead className="min-w-72">
+                <TableHead className="text-center min-w-72">
                   {t("total")}
                   <span className="text-destructive">{t("tip")}</span>
                 </TableHead>
@@ -110,10 +112,16 @@ export function OddsForm({ data }: { data: any[] }) {
                     <Input defaultValue={item.min} />
                   </TableCell>
                   <TableCell>
-                    <Input defaultValue={item.max} />
+                    <div className="flex items-center gap-2">
+                      <Input defaultValue={item.max} />
+                      <span className="text-destructive w-20">(10000000)</span>
+                    </div>
                   </TableCell>
                   <TableCell>
-                    <Input defaultValue={item.period} />
+                    <div className="flex items-center gap-2">
+                      <Input defaultValue={item.period} />
+                      <span className="text-destructive w-20">(10000000)</span>
+                    </div>
                   </TableCell>
                 </TableRow>
               ))}

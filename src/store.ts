@@ -46,7 +46,14 @@ export const holdStatusAtom = atom<
 export const ratioAtom = atom<
   {
     gameId: number;
-    percent: number;
-    maxPercent: number;
+    percent: string;
+    maxPercent: string;
+  }[]
+>([]);
+export const rebateAtom = atom<
+  {
+    gameId: number;
+    backRate: string;
+    maxBackRate: string;
   }[]
 >([]);

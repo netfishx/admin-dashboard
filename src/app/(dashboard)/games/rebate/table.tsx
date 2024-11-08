@@ -3,35 +3,35 @@
 import { Input } from "@/components/ui/input";
 import { TableBody, TableCell, TableRow } from "@/components/ui/table";
 import type { GameConfig } from "@/lib/types";
-import { ratioAtom } from "@/store";
+import { rebateAtom } from "@/store";
 import { useAtom } from "jotai";
 import { useEffect } from "react";
 
-export function RatioTable({ data }: { data: GameConfig[] }) {
-  const [list, setRatio] = useAtom(ratioAtom);
+export function RebateTable({ data }: { data: GameConfig[] }) {
+  const [list, setRebate] = useAtom(rebateAtom);
   useEffect(() => {
-    setRatio(
+    setRebate(
       data.map((item) => ({
         gameId: item.gameId,
-        percent: item.percent ?? "0",
-        maxPercent: item.maxPercent ?? "0",
+        backRate: item.backRate ?? "0",
+        maxBackRate: item.maxBackRate ?? "0",
       })),
     );
-  }, [data, setRatio]);
+  }, [data, setRebate]);
 
-  const handleRatioChange = (changedPercent: string, id: number) => {
-    setRatio(
-      list.map(({ gameId, percent, maxPercent }) => ({
+  const handleRebateChange = (rebate: string, id: number) => {
+    setRebate(
+      list.map(({ gameId, backRate, maxBackRate }) => ({
         gameId,
-        percent:
+        backRate:
           id === gameId
-            ? Number(changedPercent) < 0
+            ? Number(rebate) < 0
               ? "0"
-              : Number(changedPercent) > Number(maxPercent)
-                ? maxPercent
-                : changedPercent
-            : percent,
-        maxPercent,
+              : Number(rebate) > Number(maxBackRate)
+                ? maxBackRate
+                : rebate
+            : backRate,
+        maxBackRate,
       })),
     );
   };
@@ -42,15 +42,15 @@ export function RatioTable({ data }: { data: GameConfig[] }) {
           <TableCell>{item.gameId}</TableCell>
           <TableCell className="flex items-center gap-2">
             <Input
-              value={item.percent}
+              value={item.backRate}
               type="number"
               min={0}
-              max={item.maxPercent ?? 0}
+              max={item.maxBackRate ?? 0}
               step={0.01}
-              onChange={(e) => handleRatioChange(e.target.value, item.gameId)}
+              onChange={(e) => handleRebateChange(e.target.value, item.gameId)}
             />
             <span className="text-destructive w-16">
-              ({item.maxPercent ?? 0}%)
+              ({item.maxBackRate ?? 0}%)
             </span>
           </TableCell>
         </TableRow>

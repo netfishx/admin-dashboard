@@ -50,11 +50,11 @@ export function RatioForm() {
       list.map((item) => ({
         ...item,
         percent:
-          item.percent + num < 0
-            ? 0
-            : item.percent + num > item.maxPercent
+          Number(item.percent) + num < 0
+            ? "0"
+            : Number(item.percent) + num > Number(item.maxPercent)
               ? item.maxPercent
-              : item.percent + num,
+              : (Number(item.percent) + num).toString(),
       })),
     );
   }
@@ -78,14 +78,6 @@ export function RatioForm() {
         </div>
       </div>
       <div className="flex gap-2">
-        <RatioButton
-          variant="destructive"
-          onClick={() => {
-            console.info("234234");
-          }}
-        >
-          {t("reset")}
-        </RatioButton>
         <RatioButton
           onClick={async () => {
             const res = await editGameConfig(

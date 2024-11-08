@@ -22,7 +22,7 @@ export function EditNumber({
         -
       </Button>
       <Input
-        className="rounded-none w-12 text-center [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+        className="rounded-none w-14 text-center [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
         value={step}
         onChange={(e) => {
           setStep(Number(e.target.value));
