@@ -489,9 +489,7 @@
       "mainNet": "主网",
       "qrCode": "二维码",
       "depositAddress": "充币地址"
-    }
-  },
-  "personal": {
+    },
     "security": {
       "title": "安全设置",
       "loginPassword": "登录密码",
@@ -537,4 +535,5 @@
       "confirmMoneyPassword":"确认资金密码"
     }
   }
+   
 }
