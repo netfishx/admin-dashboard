@@ -456,8 +456,9 @@
       "copySecret": "复制秘钥",
       "secretInfo": "秘钥信息",
       "secretKey": "秘钥",
-      "secretWarning": "请务必保管好秘钥，否则资金将全部丢失！"
-
+      "secretWarning": "请务必保管好秘钥，否则资金将全部丢失！",
+      "addTitle": "操作确认",
+      "addDesc": "请确认是否新增归集地址"
     }
   }
 }

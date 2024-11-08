@@ -57,10 +57,7 @@ export default function DetailButton(props: { id: string }) {
         <StopDialog onOpenChange={() => setShowStatus(undefined)} />
       )}
       {showStatus === ShowStatus.CHECK && (
-        <CheckDialog
-          open={showStatus === ShowStatus.CHECK}
-          onOpenChange={() => setShowStatus(undefined)}
-        />
+        <CheckDialog onOpenChange={() => setShowStatus(undefined)} />
       )}
     </div>
   );
