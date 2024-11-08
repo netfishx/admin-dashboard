@@ -1,8 +1,8 @@
 "use client";
 
 import { Checkbox } from "@/components/ui/checkbox";
-import { ChevronDownIcon, ChevronRightIcon } from "@radix-ui/react-icons";
 import * as React from "react";
+import { ChevronDown, ChevronRight } from "lucide-react";
 
 export interface TreeNode {
   id: string;
@@ -40,9 +40,9 @@ function TreeNode({
               aria-label={isOpen ? "Collapse" : "Expand"}
             >
               {isOpen ? (
-                <ChevronDownIcon className="h-4 w-4" />
+                <ChevronDown className="h-4 w-4" />
               ) : (
-                <ChevronRightIcon className="h-4 w-4" />
+                <ChevronRight className="h-4 w-4" />
               )}
             </button>
           )}

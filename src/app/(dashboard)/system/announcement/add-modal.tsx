@@ -104,7 +104,7 @@ export function AddModal() {
               onValueChange={(value) => setType(value)}
             >
               <SelectTrigger className="w-[280px]">
-                <SelectValue placeholder="请选择" />
+                <SelectValue placeholder={t("placeholderselect")} />
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="0">{t("platformAnnouncement")}</SelectItem>
@@ -135,7 +135,7 @@ export function AddModal() {
               onValueChange={(value) => setLanguage(value)}
             >
               <SelectTrigger className="w-[280px]">
-                <SelectValue placeholder="请选择" />
+                <SelectValue placeholder={t("placeholderselect")} />
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="0">{t("chinese")}</SelectItem>

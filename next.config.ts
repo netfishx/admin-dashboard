@@ -31,7 +31,6 @@ const nextConfig: NextConfig = {
       dynamic: 1,
       static: 60 * 60 * 24,
     },
-    optimizePackageImports: ["@radix-ui/react-icons"],
   },
   images: {
     dangerouslyAllowSVG: true,

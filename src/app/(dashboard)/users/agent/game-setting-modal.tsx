@@ -1,6 +1,6 @@
 "use client";
 
-import { type GameConfig, getAgentConfig, updateAgentGameConfig } from "@/api";
+import { getAgentConfig, updateAgentGameConfig } from "@/api";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -20,6 +20,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import type { GameConfig } from "@/lib/types";
 import { agentIdAtom, gameSettingModalAtom } from "@/store";
 import { useAtom, useAtomValue } from "jotai";
 import { useTranslations } from "next-intl";
@@ -45,7 +46,8 @@ export function GameSettingModal() {
         item.gameId === gameId
           ? {
               ...item,
-              percent: percent > item.maxPercent ? item.maxPercent : percent,
+              percent:
+                percent > (item.maxPercent ?? 0) ? item.maxPercent : percent,
             }
           : item,
       );

@@ -1,7 +1,7 @@
 "use server";
 
 import { apiRequest } from "@/lib/request";
-import type { MaintainGame, SupplierConfig } from "@/lib/types";
+import type { GameConfig, MaintainGame, SupplierConfig } from "@/lib/types";
 import { getSession } from "@/session";
 import type { RatioReportListTypes } from "./lib/types";
 
@@ -138,16 +138,6 @@ export async function verifyUpUsername(params: { username: string }) {
   });
 }
 
-export interface GameConfig {
-  gameType: number;
-  gameId: number;
-  status: number;
-  percent: number;
-  backRate: number;
-  holdStatus: number;
-  maxPercent: number;
-  parentStatus: number;
-}
 // 用户管理-代理管理-获取代理游戏设置
 export async function getAgentConfig(params: { userId: string }) {
   const user = await getSession();
@@ -160,12 +150,7 @@ export async function getAgentConfig(params: { userId: string }) {
 // 用户管理-代理管理-更新代理游戏设置
 export async function updateAgentGameConfig(data: {
   userId: string;
-  list: {
-    gameId: number;
-    gameType: number;
-    percent: number;
-    status: number;
-  }[];
+  list: GameConfig[];
 }) {
   const user = await getSession();
   return await apiRequest({
@@ -307,6 +292,24 @@ export async function getPeriodReport(params: any) {
   return await apiRequest<WithPagination & { list: Announcement[] }>({
     url: "/getReports",
     params,
+    token: user?.token,
+  });
+}
+
+export async function getGameConfig() {
+  const user = await getSession();
+  return await apiRequest<GameConfig[]>({
+    url: "/game/config/list",
+    token: user?.token,
+  });
+}
+
+export async function editGameConfig(list: GameConfig[]) {
+  const user = await getSession();
+  return await apiRequest({
+    url: "/game/config/update",
+    method: "POST",
+    data: { list },
     token: user?.token,
   });
 }

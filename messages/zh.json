@@ -125,7 +125,8 @@
       "save": "保存",
       "name": "游戏名称",
       "switch": "拦货开关",
-      "confirmText": "确定要开启拦货吗？"
+      "success": "保存成功",
+      "failed": "保存失败"
     },
     "odds": {
       "type": "游戏类别",
@@ -151,7 +152,9 @@
       "reset": "恢复默认",
       "save": "保存",
       "ratio": "占成比例",
-      "tip": "（*不要超过最高比例）"
+      "tip": "（*不要超过最高比例）",
+      "success": "保存成功",
+      "failed": "保存失败"
     },
     "rebate": {
       "type": "游戏类别",
@@ -161,7 +164,9 @@
       "reset": "恢复默认",
       "save": "保存",
       "rebate": "退水比例",
-      "tip": "（*不要超过最高比例）"
+      "tip": "（*不要超过最高比例）",
+      "success": "保存成功",
+      "failed": "保存失败"
     },
     "supplier": {
       "title": "供应商",
@@ -329,11 +334,10 @@
       "choicedate": "选择日期范围",
       "gameTypeName": "游戏种类",
       "gameName": "游戏名称",
-      "gameId": "期号",
+      "issueNumber": "期号",
       "openTime": "开奖日期",
       "placeholderselect": "请选择",
       "placeholderinput": "请输入",
-      "issueNumber": "期号",
       "reset": "重置",
       "search": "查询",
       "download": "生成下载任务",
@@ -408,6 +412,7 @@
       "announcementTime": "公告时间：",
       "language": "语言：",
       "placeholder": "请输入",
+      "placeholderselect": "请选择",
       "selectTime": "请输入",
       "platformAnnouncement": "平台通用公告",
       "agentAnnouncement": "代理公告",

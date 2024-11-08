@@ -14,7 +14,11 @@ export default async function DashboardLayout({
         <SidebarWrapper />
       </Suspense>
       <main className="flex-1 flex flex-col">
-        <Suspense fallback={null}>
+        <Suspense
+          fallback={
+            <div className="w-full h-10 flex flex-row justify-between border-b px-2" />
+          }
+        >
           <ToolbarWrapper />
         </Suspense>
         <div className="flex-1 bg-accent">

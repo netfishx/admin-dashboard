@@ -9,7 +9,13 @@ export default function Page({
 }: { searchParams: Promise<{ [key: string]: string | undefined }> }) {
   return (
     <div className="flex flex-col gap-2 w-full">
-      <Suspense fallback={null}>
+      <Suspense
+        fallback={
+          <div className="flex justify-between items-center bg-background py-2 px-4">
+            <Skeleton className="w-full h-9 opacity-20" />
+          </div>
+        }
+      >
         <SupplierForm />
       </Suspense>
       <div className="p-2 bg-background flex-1 flex flex-col gap-2">

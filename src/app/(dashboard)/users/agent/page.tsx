@@ -22,24 +22,15 @@ export default async function Page({
 }: { searchParams: Promise<{ [key: string]: string | string[] }> }) {
   return (
     <div className="flex flex-col gap-2 w-full">
-      <Suspense fallback={null}>
+      <Suspense fallback={<div className="h-10" />}>
         <Form />
       </Suspense>
       <div className="p-2 bg-background flex-1 gap-2">
         <div className="pb-2">
           <AddAgent />
         </div>
-        <Suspense
-          fallback={
-            <div className="flex flex-col gap-4 p-4">
-              <Skeleton className="w-full h-6" />
-              <Skeleton className="w-full h-6" />
-              <Skeleton className="w-full h-6" />
-              <Skeleton className="w-2/3 h-6" />
-            </div>
-          }
-        >
-          <AgentTable searchParams={searchParams} />
+        <Suspense fallback={null}>
+          <TableWrapper searchParams={searchParams} />
         </Suspense>
       </div>
       <Modals />
@@ -47,7 +38,7 @@ export default async function Page({
   );
 }
 
-async function AgentTable({
+async function TableWrapper({
   searchParams,
 }: { searchParams: Promise<{ [key: string]: string | string[] }> }) {
   const t = await getTranslations("users.agents");
@@ -75,32 +66,19 @@ async function AgentTable({
               </TableHead>
             </TableRow>
           </TableHeader>
-          <TableBody>
-            {data?.list?.map((item: AgentData) => (
-              <TableRow key={item.id}>
-                <TableCell className="min-w-32">{item.upUsername}</TableCell>
-                <TableCell className="min-w-32">{item.deptId}</TableCell>
-                <TableCell className="min-w-32">{item.id}</TableCell>
-                <TableCell className="min-w-32">{item.username}</TableCell>
-                <TableCell className="min-w-32">{item.nickname}</TableCell>
-                <TableCell className="min-w-32">
-                  <div
-                    className={cn(
-                      "px-2 rounded-sm w-fit",
-                      item.status === 0 && "text-green bg-green/10",
-                      item.status === 1 && "text-destructive bg-destructive/10",
-                      item.status === 2 && "text-orange bg-orange/10",
-                    )}
-                  >
-                    {t(`statusLabel.${item.status}`)}
-                  </div>
-                </TableCell>
-                <TableCell className="min-w-[400px] text-center flex gap-2 2xl:gap-6">
-                  <Action data={item} />
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
+          <Suspense
+            fallback={
+              <TableBody>
+                <TableRow>
+                  <TableCell colSpan={7} className="h-20">
+                    <Skeleton className="w-full h-6" />
+                  </TableCell>
+                </TableRow>
+              </TableBody>
+            }
+          >
+            <TableBodyWrapper list={data?.list} />
+          </Suspense>
         </Table>
       </div>
       <div className="pt-2">
@@ -111,5 +89,37 @@ async function AgentTable({
         />
       </div>
     </>
+  );
+}
+
+async function TableBodyWrapper({ list }: { list: AgentData[] | undefined }) {
+  const t = await getTranslations("users.agents");
+  return (
+    <TableBody>
+      {list?.map((item) => (
+        <TableRow key={item.id}>
+          <TableCell className="min-w-32">{item.upUsername}</TableCell>
+          <TableCell className="min-w-32">{item.deptId}</TableCell>
+          <TableCell className="min-w-32">{item.id}</TableCell>
+          <TableCell className="min-w-32">{item.username}</TableCell>
+          <TableCell className="min-w-32">{item.nickname}</TableCell>
+          <TableCell className="min-w-32">
+            <div
+              className={cn(
+                "px-2 rounded-sm w-fit",
+                item.status === 0 && "text-green bg-green/10",
+                item.status === 1 && "text-destructive bg-destructive/10",
+                item.status === 2 && "text-orange bg-orange/10",
+              )}
+            >
+              {t(`statusLabel.${item.status}`)}
+            </div>
+          </TableCell>
+          <TableCell className="min-w-[400px] text-center flex gap-2 2xl:gap-6">
+            <Action data={item} />
+          </TableCell>
+        </TableRow>
+      ))}
+    </TableBody>
   );
 }
