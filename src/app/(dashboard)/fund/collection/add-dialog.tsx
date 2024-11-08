@@ -1,28 +1,37 @@
 "use client";
 import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
-import {} from "@/components/ui/scroll-area";
-import {} from "@/components/ui/table";
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
+import { useTranslations } from "next-intl";
 
 interface Dialogprops {
-  open: boolean;
+  open?: boolean;
   onOpenChange: (open: boolean) => void;
 }
 
-export function Adddialog(props: Dialogprops) {
-  const { open, onOpenChange } = props;
+export function AddDialog(props: Dialogprops) {
+  const { open = true, onOpenChange } = props;
+  const t = useTranslations("fund.collection");
+  const translations = useTranslations();
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="w-[500px]">
-        <DialogHeader>
-          <DialogTitle>详情</DialogTitle>
-        </DialogHeader>
-        add
-      </DialogContent>
-    </Dialog>
+    <AlertDialog open={open} onOpenChange={onOpenChange}>
+      <AlertDialogContent>
+        <AlertDialogHeader>
+          <AlertDialogTitle>{t("addTitle")}</AlertDialogTitle>
+          <AlertDialogDescription>{t("addDesc")}</AlertDialogDescription>
+        </AlertDialogHeader>
+        <AlertDialogFooter>
+          <AlertDialogCancel>{translations("cancel")}</AlertDialogCancel>
+          <AlertDialogAction>{translations("confirm")}</AlertDialogAction>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
   );
 }

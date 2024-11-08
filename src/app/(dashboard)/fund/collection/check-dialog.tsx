@@ -21,12 +21,12 @@ import { useTranslations } from "next-intl";
 import { useState } from "react";
 
 interface Dialogprops {
-  open: boolean;
+  open?: boolean;
   onOpenChange: (open: boolean) => void;
 }
 
 export function CheckDialog(props: Dialogprops) {
-  const { open, onOpenChange } = props;
+  const { open = true, onOpenChange } = props;
   const t = useTranslations("fund.collection");
   const translations = useTranslations();
   const [step, setStep] = useState(1);

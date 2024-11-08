@@ -17,11 +17,11 @@ interface Dialogprops {
 }
 
 export function LockDialog(props: Dialogprops) {
-  const { onOpenChange } = props;
+  const { open = true, onOpenChange } = props;
   const t = useTranslations("fund.collection");
   const translations = useTranslations();
   return (
-    <AlertDialog open={true} onOpenChange={onOpenChange}>
+    <AlertDialog open={open} onOpenChange={onOpenChange}>
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>{t("lockTitle")}</AlertDialogTitle>
