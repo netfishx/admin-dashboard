@@ -1,7 +1,13 @@
 "use server";
 
 import { apiRequest } from "@/lib/request";
-import type { GameConfig, MaintainGame, SupplierConfig } from "@/lib/types";
+import type {
+  ChangeLog,
+  GameConfig,
+  MaintainGame,
+  PageData,
+  SupplierConfig,
+} from "@/lib/types";
 import { getSession } from "@/session";
 import type { RatioReportListTypes } from "./lib/types";
 
@@ -128,15 +134,6 @@ export async function addAgent(data: {
     data,
   });
 }
-// 用户管理-代理管理-验证上级账号是否存在
-export async function verifyUpUsername(params: { username: string }) {
-  const user = await getSession();
-  return await apiRequest({
-    url: "/agent/user/main/getByusername",
-    params,
-    token: user?.token,
-  });
-}
 
 // 用户管理-代理管理-获取代理游戏设置
 export async function getAgentConfig(params: { userId: string }) {
@@ -157,6 +154,24 @@ export async function updateAgentGameConfig(data: {
     url: "/agent/game/config/update",
     method: "POST",
     data,
+    token: user?.token,
+  });
+}
+// 用户管理-代理管理-获取代理变更日志
+export async function getChangeLog(params: {
+  targetUserId: string;
+  appType: string;
+  pageNum?: number;
+  pageSize?: number;
+}) {
+  // const user = await getSession();
+  const user = {
+    token:
+      "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBR0VOVCIsImlhdCI6MTczMDk2ODk1NywidXNlcl9pZCI6IjgiLCJ1c2VyX2xvZ2luX3VuaXF1ZV9mbGFnIjoiODYzMjQ5NjItYWFiMS00YmE2LTk4ZjItZmQxODNlMjkzNjAzIn0.pGx1pnzbo8jimxNCOXWi1yYZHigx5H2JHbxciy6h1Us",
+  };
+  return await apiRequest<PageData<ChangeLog>>({
+    url: "/operateLog/list",
+    params,
     token: user?.token,
   });
 }

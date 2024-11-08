@@ -1,6 +1,6 @@
 "use client";
 
-import { addAgent, verifyUpUsername } from "@/api";
+import { addAgent } from "@/api";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -60,12 +60,6 @@ function AddAgentModal({
     setConfirmPassword("");
     onOpenChange(false);
   };
-  const handleClickSearchUpUsername = async () => {
-    const { data, code, message } = await verifyUpUsername({
-      username: upUsername,
-    });
-    console.info(data, code, message);
-  };
   return (
     <Dialog open={open} onOpenChange={closeDialog}>
       <DialogContent className="2xl:max-w-lg lg:max-w-md">
@@ -73,28 +67,21 @@ function AddAgentModal({
           <DialogTitle>{t("addAgent")}</DialogTitle>
           <DialogDescription />
         </DialogHeader>
-        {/* <Stepper
-          steps={[t("userInfo"), t("gamesSetting")]}
-          currentStep={step}
-        /> */}
         <div className="flex flex-col gap-2 w-full px-4">
           <div className="flex gap-4 items-center">
             <Label className="shrink-0 w-1/4 text-right text-muted-foreground">
-              {t("upUsername")} :
+              {t("upUsername")}
             </Label>
             <Input
               placeholder={t("placeholder")}
-              className="w-1/2 max-w-[130px]"
+              className="w-1/2 max-w-[200px]"
               value={upUsername}
               onChange={(e) => setUpUsername(e.target.value)}
             />
-            <Button size="sm" onClick={handleClickSearchUpUsername}>
-              {t("verify")}
-            </Button>
           </div>
           <div className="flex gap-4 items-center">
             <Label className="shrink-0 w-1/4 text-right text-muted-foreground">
-              {t("username")} :
+              {t("username")}
             </Label>
             <Input
               placeholder={t("placeholder")}

@@ -5,8 +5,8 @@ export type Res<T> = {
 };
 
 export type WithPagination = {
-  page: number;
-  size: number;
+  pageNum: number;
+  pageSize: number;
   total: number;
 };
 
@@ -62,4 +62,20 @@ export type GameConfig = {
   maxPercent?: number; // 最大占城比例
   maxBackRate?: number; // 最大反水比例
   parentStatus?: number; // 父级（整条链路）的彩种开关
+};
+
+export type ChangeLog = {
+  id: string; // 主键ID
+  operateTime: number; // 操作时间
+  userId: string; // 用户ID
+  mainId: number; // 主用户ID
+  userName: string; // 用户名
+  userNickName: string; // 用户昵称
+  createTime: number; // 操作时间
+  appType: string; // 应用类型
+  bizType: string; // 业务类型
+  targetUserId: string; // 目标用户ID
+  remoteIp: string; // 操作IP
+  region: string; // 地区
+  msg: string; // 变更内容
 };
