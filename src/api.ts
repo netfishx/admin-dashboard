@@ -2,10 +2,15 @@
 
 import { apiRequest } from "@/lib/request";
 import type {
+  Announcement,
+  AnnouncementList,
+  AnnouncementListRequest,
   ChangeLog,
   GameConfig,
+  GameOdds,
   MaintainGame,
   PageData,
+  PeriodReport,
   SupplierConfig,
 } from "@/lib/types";
 import { getSession } from "@/session";
@@ -164,11 +169,7 @@ export async function getChangeLog(params: {
   pageNum?: number;
   pageSize?: number;
 }) {
-  // const user = await getSession();
-  const user = {
-    token:
-      "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBR0VOVCIsImlhdCI6MTczMDk2ODk1NywidXNlcl9pZCI6IjgiLCJ1c2VyX2xvZ2luX3VuaXF1ZV9mbGFnIjoiODYzMjQ5NjItYWFiMS00YmE2LTk4ZjItZmQxODNlMjkzNjAzIn0.pGx1pnzbo8jimxNCOXWi1yYZHigx5H2JHbxciy6h1Us",
-  };
+  const user = await getSession();
   return await apiRequest<PageData<ChangeLog>>({
     url: "/operateLog/list",
     params,
@@ -196,18 +197,10 @@ export async function getLoginLog(data: any) {
 export async function agentBaccaratReport(data: any) {
   return await apiRequest({ url: "/api/agentBaccaratReport", data });
 }
-export interface Announcement {
-  id?: string;
-  startTime: string;
-  endTime: string;
-  content: string;
-  type: string;
-  language: string;
-  status: string;
-}
-export async function getAnnouncement(params: Announcement) {
+
+export async function getAnnouncement(params: AnnouncementListRequest) {
   const user = await getSession();
-  return await apiRequest<WithPagination & { list: Announcement[] }>({
+  return await apiRequest<PageData<AnnouncementList>>({
     url: "/announcements",
     params,
     token: user?.token,
@@ -302,9 +295,9 @@ export async function getRatioReport(data: any) {
   });
 }
 
-export async function getPeriodReport(params: any) {
+export async function getPeriodReport(params: PeriodReport) {
   const user = await getSession();
-  return await apiRequest<WithPagination & { list: Announcement[] }>({
+  return await apiRequest<WithPagination & { list: PeriodReport[] }>({
     url: "/getReports",
     params,
     token: user?.token,

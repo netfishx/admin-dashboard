@@ -46,13 +46,13 @@ async function PeriodTable({
   const t = await getTranslations("report.periodlist");
   const search = await searchParams;
   const { data } = await getPeriodReport({
-    size: search.size ?? 10,
-    page: search.page ?? 1,
-    startTime: search.startTime ?? "",
-    endTime: search.endTime ?? "",
-    gameTypeName: search.gameTypeName ?? "",
-    gameName: search.gameName ?? "",
-    issueNumber: search.issueNumber ?? "",
+    size: Number(search.size ?? 10),
+    page: Number(search.page ?? 1),
+    startTime: search.startTime?.toString() ?? "",
+    endTime: search.endTime?.toString() ?? "",
+    gameTypeName: search.gameTypeName?.toString() ?? "",
+    gameName: search.gameName?.toString() ?? "",
+    issueNumber: search.issueNumber?.toString() ?? "",
   });
   return (
     <div className="flex flex-col gap-2 w-full">
