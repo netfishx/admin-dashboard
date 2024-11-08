@@ -428,8 +428,7 @@
       "search": "查询",
       "chinese": "中文",
       "english": "英文",
-      "japanese": "日文",
-      "success": "新增成功"
+      "japanese": "日文"
     }
   },
   "fund": {
@@ -490,6 +489,52 @@
       "mainNet": "主网",
       "qrCode": "二维码",
       "depositAddress": "充币地址"
+    }
+  },
+  "personal": {
+    "security": {
+      "title": "安全设置",
+      "loginPassword": "登录密码",
+      "loginPasswordDes": "登录时使用",
+      "loginPasswordBtnText": "修改",
+      "googleVerification": "谷歌验证",
+      "googleVerificationDes": "提现、转账等敏感操作需输入谷歌验证码",
+      "setting": "设置",
+      "edit": "修改",
+      "fundPassword": "资金密码",
+      "fundPasswordDes": "交易、提现时使用",
+      "reset": "重置",
+      "passwordModalTitle": "修改密码",
+      "passwordModalDesc": "请输入您的登录密码",
+      "confirm": "确定",
+      "cancel": "取消",
+      "changePassword": "修改密码",
+      "oldPassword": "旧密码",
+      "newPassword": "新密码",
+      "confirmPassword": "二次确认密码",
+      "confirmPasswordDesc": "请输入二次确认密码",
+      "placeholderOld": "请输入旧密码",
+      "placeholderNew": "请输入新密码",
+      "placeholderConfirm": "请输入二次确认密码",
+      "googleAuthTitle": "谷歌验证绑定",
+      "step1Title": "安装完成后打开Google Auth",
+      "step1iOS": "iOS用户登录APP Store 搜索“Authenticator”下载",
+      "step1Android": "安卓用户登录Google Play 搜索“谷歌验证器”下载",
+      "iosQRCode": "iOS用户扫码直接下载",
+      "androidQRCode": "安卓用户扫码直接下载",
+      "step2Title": "在谷歌验证器中添加密钥并备份",
+      "step2Warning": "如果因用手机丢失或更换失去对该账号的访问验证，将无法恢复必须下方秘钥保存备份。",
+      "secretLabel": "秘钥：",
+      "secretCode": "O3W3MEH6E65S7IEA",
+      "copy": "复制",
+      "step3Title": "请将您获得的验证码填入下方输入框，并完成验证",
+      "googleCodeLabel": "* 谷歌验证码",
+      "placeholder": "请输入谷歌验证码",
+      "editMoneyPassword": "修改资金密码",
+      "moneyModalDesc": "请输入资金密码",
+      "setMoneyPassword": "设置资金密码",
+      "confirmMoneyDesc": "请输入确认资金密码",
+      "confirmMoneyPassword":"确认资金密码"
     }
   }
 }

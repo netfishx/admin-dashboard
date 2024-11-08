@@ -92,3 +92,47 @@ export type ChangeLog = {
   region: string; // 地区
   msg: string; // 变更内容
 };
+
+// 公告新增 编辑
+export type Announcement = {
+  id?: string;
+  startTime: string;
+  endTime: string;
+  content: string;
+  type: string;
+  language: string;
+  status: string;
+  userId?: string;
+};
+// 公告列表请求
+export type AnnouncementListRequest = {
+  pageSize: number;
+  pageNum: number;
+  userId?: string;
+  startTime: string;
+  endTime: string;
+};
+
+// 公告列表返回
+export type AnnouncementList = {
+  id: string;
+  userId: string;
+  type: number;
+  startTime: number;
+  endTime: number;
+  language: string;
+  content: string;
+  status: number;
+  createTime: number;
+  updateTime: number;
+};
+
+export type PeriodReport = {
+  page: number;
+  size: number;
+  startTime: string;
+  endTime: string;
+  issueNumber: string;
+  gameTypeName: string;
+  gameName: string;
+};
