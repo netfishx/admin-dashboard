@@ -428,7 +428,37 @@
       "search": "查询",
       "chinese": "中文",
       "english": "英文",
-      "japanese": "日文"
+      "japanese": "日文",
+      "success": "新增成功"
+    }
+  },
+  "fund": {
+    "collection": {
+      "lock": "锁定",
+      "unlock": "解锁",
+      "stop": "停用",
+      "check": "查看私钥",
+      "add": "新增",
+      "unlockDesc": "请确定是否解锁地址",
+      "lockDesc": "请确定是否锁定地址",
+      "stopDesc": "请确定是否停用地址",
+      "unlockConfirm": "确定",
+      "unlockCancel": "取消",
+      "unlockTitle": "操作确认",
+      "lockTitle": "操作确认",
+      "stopTitle": "操作确认",
+      "checkStep1Title": "资金密码验证",
+      "checkStep2Title": "查看密钥",
+      "checkStep1Desc": "请输入您的资金密码",
+      "password": "资金密码",
+      "copy": "复制",
+      "copied": "已复制！",
+      "copySecret": "复制秘钥",
+      "secretInfo": "秘钥信息",
+      "secretKey": "秘钥",
+      "secretWarning": "请务必保管好秘钥，否则资金将全部丢失！",
+      "addTitle": "操作确认",
+      "addDesc": "请确认是否新增归集地址"
     }
   }
 }

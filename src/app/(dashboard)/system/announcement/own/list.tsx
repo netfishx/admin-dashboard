@@ -29,7 +29,7 @@ export async function List({
       <div className="p-2 mt-2 bg-background flex-1 gap-2">
         <AddAnnouncement announcementDicts={announcementDicts} />
         <ListScrollArea>
-          <div className="max-h-[calc(100dvh-280px)] overflow-y-auto">
+          <div className="max-h-[calc(100dvh-220px)] overflow-y-auto">
             <Table>
               <TableHeader className="sticky top-0">
                 <TableRow className="bg-muted">
