@@ -50,11 +50,11 @@ export function RatioForm() {
       list.map((item) => ({
         ...item,
         percent:
-          item.percent + num < 0
-            ? 0
-            : item.percent + num > item.maxPercent
+          Number(item.percent) + num < 0
+            ? "0"
+            : Number(item.percent) + num > Number(item.maxPercent)
               ? item.maxPercent
-              : item.percent + num,
+              : (Number(item.percent) + num).toString(),
       })),
     );
   }

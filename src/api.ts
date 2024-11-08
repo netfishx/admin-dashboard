@@ -1,7 +1,12 @@
 "use server";
 
 import { apiRequest } from "@/lib/request";
-import type { GameConfig, MaintainGame, SupplierConfig } from "@/lib/types";
+import type {
+  GameConfig,
+  GameOdds,
+  MaintainGame,
+  SupplierConfig,
+} from "@/lib/types";
 import { getSession } from "@/session";
 import type { RatioReportListTypes } from "./lib/types";
 
@@ -311,5 +316,14 @@ export async function editGameConfig(list: GameConfig[]) {
     method: "POST",
     data: { list },
     token: user?.token,
+  });
+}
+
+export async function getGameOdds({ gameId }: { gameId: number }) {
+  const user = await getSession();
+  return await apiRequest<GameOdds[]>({
+    url: "/game/oddsLimit/list",
+    token: user?.token,
+    params: { gameId },
   });
 }

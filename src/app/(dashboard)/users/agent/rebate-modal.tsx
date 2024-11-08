@@ -49,9 +49,9 @@ export function RebateModal() {
           return {
             ...item,
             backRate:
-              Number(value) > (item.maxBackRate ?? 0)
+              Number(value) > (Number(item.maxBackRate) ?? 0)
                 ? item.maxBackRate
-                : Number(value),
+                : value,
           };
         }
         return item;

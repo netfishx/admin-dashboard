@@ -50,11 +50,11 @@ export function RebateForm() {
       list.map((item) => ({
         ...item,
         backRate:
-          item.backRate + num < 0
-            ? 0
-            : item.backRate + num > item.maxBackRate
+          Number(item.backRate) + num < 0
+            ? "0"
+            : Number(item.backRate) + num > Number(item.maxBackRate)
               ? item.maxBackRate
-              : item.backRate + num,
+              : (Number(item.backRate) + num).toString(),
       })),
     );
   }

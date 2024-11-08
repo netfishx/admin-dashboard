@@ -13,21 +13,21 @@ export function RatioTable({ data }: { data: GameConfig[] }) {
     setRatio(
       data.map((item) => ({
         gameId: item.gameId,
-        percent: item.percent ?? 0,
-        maxPercent: item.maxPercent ?? 0,
+        percent: item.percent ?? "0",
+        maxPercent: item.maxPercent ?? "0",
       })),
     );
   }, [data, setRatio]);
 
-  const handleRatioChange = (changedPercent: number, id: number) => {
+  const handleRatioChange = (changedPercent: string, id: number) => {
     setRatio(
       list.map(({ gameId, percent, maxPercent }) => ({
         gameId,
         percent:
           id === gameId
-            ? changedPercent < 0
-              ? 0
-              : changedPercent > maxPercent
+            ? Number(changedPercent) < 0
+              ? "0"
+              : Number(changedPercent) > Number(maxPercent)
                 ? maxPercent
                 : changedPercent
             : percent,
@@ -47,11 +47,11 @@ export function RatioTable({ data }: { data: GameConfig[] }) {
               min={0}
               max={item.maxPercent ?? 0}
               step={0.01}
-              onChange={(e) =>
-                handleRatioChange(Number(e.target.value), item.gameId)
-              }
+              onChange={(e) => handleRatioChange(e.target.value, item.gameId)}
             />
-            <span className="text-destructive">({item.maxPercent ?? 0}%)</span>
+            <span className="text-destructive w-16">
+              ({item.maxPercent ?? 0}%)
+            </span>
           </TableCell>
         </TableRow>
       ))}
