@@ -182,16 +182,15 @@ export async function agentBaccaratReport(data: any) {
   return await apiRequest({ url: "/api/agentBaccaratReport", data });
 }
 export interface Announcement {
+  id?: string;
   startTime: string;
   endTime: string;
   content: string;
-  createTime: string;
   type: string;
   language: string;
   status: string;
-  userId?: string;
 }
-export async function getAnnouncement(params: any) {
+export async function getAnnouncement(params: Announcement) {
   const user = await getSession();
   return await apiRequest<WithPagination & { list: Announcement[] }>({
     url: "/announcements",
@@ -199,6 +198,7 @@ export async function getAnnouncement(params: any) {
     token: user?.token,
   });
 }
+// 系统管理-公告管理-添加公告/编辑公告
 export async function saveAnnouncement(data: Announcement) {
   const user = await getSession();
   return await apiRequest({

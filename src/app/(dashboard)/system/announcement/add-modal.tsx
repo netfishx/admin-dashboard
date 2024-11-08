@@ -18,6 +18,7 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 
+import { saveAnnouncement } from "@/api";
 import { Label } from "@/components/ui/label";
 import {
   contentEditModalAtom,
@@ -26,35 +27,36 @@ import {
 } from "@/store";
 import { useAtom, useAtomValue } from "jotai";
 import { useTranslations } from "next-intl";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { TimeRange } from "./time-range";
 
 export function AddModal() {
   const translations = useTranslations();
+  const router = useRouter();
   const t = useTranslations("system.announcement");
   const [type, setType] = useState("");
   const [language, setLanguage] = useState("");
   const [content, setContent] = useState("");
-  const [status, setStatus] = useState(0);
+  const [status, setStatus] = useState("0");
   const [open, setOpen] = useAtom(contentEditModalAtom);
   const [startTime, setStartTime] = useState("");
   const [endTime, setEndTime] = useState("");
   const editModalTitle = useAtomValue(editModalTitleAtom);
   const data = useAtomValue(contentModalDataAtom);
   const handleClickAdd = async () => {
-    console.info("startTime:", startTime);
-    console.info("endTime:", endTime);
-    // const addParams = {
-    //   type,
-    //   language,
-    //   content,
-    //   status: "0",
-    //   startTime: new Date(startTime).getTime().toString() || "",
-    //   endTime: new Date(endTime).getTime().toString() || "",
-    //   createTime: Date.now().toString(),
-    // };
-    // const res = await saveAnnouncement(addParams);
-    // setOpen(false);
+    const addParams = {
+      id: data?.id,
+      type,
+      language,
+      content,
+      status,
+      startTime: new Date(startTime).getTime().toString() || "",
+      endTime: new Date(endTime).getTime().toString() || "",
+    };
+    const { code, message } = await saveAnnouncement(addParams);
+    setOpen(false);
+    router.refresh();
   };
 
   // 回调函数，用于接收子组件传递的时间数据
@@ -68,7 +70,7 @@ export function AddModal() {
     setType("");
     setLanguage("");
     setContent("");
-    setStatus(0);
+    setStatus("0");
     setStartTime("");
     setEndTime("");
   };
@@ -78,7 +80,7 @@ export function AddModal() {
       setContent(data.content || "");
       setType(data.type || "");
       setLanguage(data.language || "");
-      setStatus(Number(data.status) || 0);
+      setStatus(data.status || "0");
       setStartTime(data.startTime || "");
       setEndTime(data.endTime || "");
     }
@@ -163,7 +165,7 @@ export function AddModal() {
               defaultValue="0"
               className="flex gap-2"
               value={status.toString()}
-              onValueChange={(value) => setStatus(Number(value))}
+              onValueChange={(value) => setStatus(value)}
             >
               <div className="flex items-center space-x-2">
                 <RadioGroupItem value="0" id="0" />

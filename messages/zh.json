@@ -428,7 +428,8 @@
       "search": "查询",
       "chinese": "中文",
       "english": "英文",
-      "japanese": "日文"
+      "japanese": "日文",
+      "success": "新增成功"
     }
   },
   "fund": {
