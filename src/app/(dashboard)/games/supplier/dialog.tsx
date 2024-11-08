@@ -19,37 +19,15 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import type { GameType } from "@/lib/types";
 import { gamesSupplierDialogAtom, supplierConfigAtom } from "@/store";
-import * as VisuallyHidden from "@radix-ui/react-visually-hidden";
+import { Root as VisuallyHiddenRoot } from "@radix-ui/react-visually-hidden";
 import { useAtom, useAtomValue } from "jotai";
 import { useTranslations } from "next-intl";
 import Form from "next/form";
 import { useRouter } from "next/navigation";
 import { useRef, useState } from "react";
 import { toast } from "sonner";
-
-const games = [
-  {
-    name: "百家乐01",
-    id: "1",
-    type: "Baccarat",
-  },
-  {
-    name: "百家乐02",
-    id: "2",
-    type: "Baccarat",
-  },
-  {
-    name: "百家乐03",
-    id: "3",
-    type: "Baccarat",
-  },
-  {
-    name: "百家乐04",
-    id: "4",
-    type: "Baccarat",
-  },
-];
 
 const suppliers = [
   {
@@ -66,7 +44,13 @@ const suppliers = [
   },
 ];
 
-export function SupplierDialog() {
+export function SupplierDialog({ games }: { games: GameType[] }) {
+  const gameList = games.flatMap((item) =>
+    item.list.map((game) => ({
+      ...game,
+      gameType: item.gameType,
+    })),
+  );
   const translations = useTranslations();
   const t = useTranslations("games.supplier");
   const [open, setOpen] = useAtom(gamesSupplierDialogAtom);
@@ -84,9 +68,9 @@ export function SupplierDialog() {
       >
         <DialogHeader>
           <DialogTitle>{`${data ? t("edit") : t("add")}${t("title")}`}</DialogTitle>
-          <VisuallyHidden.Root>
+          <VisuallyHiddenRoot>
             <DialogDescription>编辑供应商配置</DialogDescription>
-          </VisuallyHidden.Root>
+          </VisuallyHiddenRoot>
         </DialogHeader>
         <Form
           action=""
@@ -106,22 +90,24 @@ export function SupplierDialog() {
         >
           <input type="hidden" name="id" value={data?.id} />
           <div className="flex flex-col gap-4">
-            <input type="hidden" name="gameType" value={1} />
             <div className="flex gap-2 items-center">
               <Label className="w-20 text-end">{t("name")}</Label>
               <Select
                 required
                 defaultValue={data?.gameId?.toString()}
-                name="gameId"
+                name="game"
                 disabled={!!data?.gameId}
               >
                 <SelectTrigger className="flex-1">
                   <SelectValue placeholder={t("placeholder")} />
                 </SelectTrigger>
                 <SelectContent>
-                  {games.map((item) => (
-                    <SelectItem key={item.id} value={item.id}>
-                      {item.name}
+                  {gameList.map((item) => (
+                    <SelectItem
+                      key={item.gameId}
+                      value={`${item.gameType}-${item.gameId}`}
+                    >
+                      {item.gameIdLabel}
                     </SelectItem>
                   ))}
                 </SelectContent>

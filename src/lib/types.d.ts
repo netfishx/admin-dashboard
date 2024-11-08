@@ -14,6 +14,17 @@ export type PageData<T> = WithPagination & {
   list: T[];
 };
 
+export type Game = {
+  gameId: number;
+  gameIdLabel: string;
+};
+
+export type GameType = {
+  gameType: number;
+  gameTypeLabel: string;
+  list: Game[];
+};
+
 export type User = {
   id: string;
   mainId: string;
@@ -55,6 +66,7 @@ export type RatioReportListTypes = {
 export type GameConfig = {
   gameType?: number;
   gameId: number;
+  gameName?: string;
   status?: number; //彩种开关 0 关闭1=开启
   percent?: string; //占成比例 %
   backRate?: string; // 反水比例 %
@@ -66,6 +78,7 @@ export type GameConfig = {
 
 export type GameOdds = {
   oddsType: number; // 赔率id
+  oddsLabel: string; // 赔率名称
   odds: string; // 赔率
   betType: number; // 投注类型
   minBet: number; // 最低投注金额

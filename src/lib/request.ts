@@ -118,7 +118,7 @@ export async function apiRequest<T>({
   // biome-ignore lint/suspicious/noExplicitAny: <explanation>
   data?: any;
   token?: string;
-  expire?: number;
+  expire?: number | "default" | "minutes" | "days" | "max";
 }): Promise<Res<T>> {
   const nextHeaders = await headers();
   const ip = nextHeaders.get("x-forwarded-for");

@@ -11,18 +11,20 @@ export function RebateTable({ data }: { data: GameConfig[] }) {
   const [list, setRebate] = useAtom(rebateAtom);
   useEffect(() => {
     setRebate(
-      data.map((item) => ({
-        gameId: item.gameId,
-        backRate: item.backRate ?? "0",
-        maxBackRate: item.maxBackRate ?? "0",
+      data.map(({ gameId, gameName, backRate, maxBackRate }) => ({
+        gameId,
+        gameName,
+        backRate: backRate ?? "0",
+        maxBackRate: maxBackRate ?? "0",
       })),
     );
   }, [data, setRebate]);
 
   const handleRebateChange = (rebate: string, id: number) => {
     setRebate(
-      list.map(({ gameId, backRate, maxBackRate }) => ({
+      list.map(({ gameId, gameName, backRate, maxBackRate }) => ({
         gameId,
+        gameName,
         backRate:
           id === gameId
             ? Number(rebate) < 0
@@ -39,7 +41,7 @@ export function RebateTable({ data }: { data: GameConfig[] }) {
     <TableBody>
       {list.map((item) => (
         <TableRow key={item.gameId}>
-          <TableCell>{item.gameId}</TableCell>
+          <TableCell>{item.gameName}</TableCell>
           <TableCell className="flex items-center gap-2">
             <Input
               value={item.backRate}

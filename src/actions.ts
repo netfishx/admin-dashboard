@@ -82,10 +82,12 @@ export async function signOutAction() {
 }
 
 export async function editSupplierConfigAction(formData: FormData) {
+  const game = formData.get("game")?.toString();
+  const [gameType, gameId] = game?.split("-") ?? [];
   const res = await editSupplierConfig({
     id: formData.get("id") ? formData.get("id")?.toString() : undefined,
-    gameType: Number(formData.get("gameType")),
-    gameId: Number(formData.get("gameId")),
+    gameType: Number(gameType ?? 0),
+    gameId: Number(gameId ?? 0),
     videoLink: formData.get("videoLink")?.toString() ?? "",
     userId: formData.get("userId")?.toString() ?? "",
     distributionAmount: Number(formData.get("distributionAmount")),

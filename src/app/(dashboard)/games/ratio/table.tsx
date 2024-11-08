@@ -11,18 +11,20 @@ export function RatioTable({ data }: { data: GameConfig[] }) {
   const [list, setRatio] = useAtom(ratioAtom);
   useEffect(() => {
     setRatio(
-      data.map((item) => ({
-        gameId: item.gameId,
-        percent: item.percent ?? "0",
-        maxPercent: item.maxPercent ?? "0",
+      data.map(({ gameId, gameName, percent, maxPercent }) => ({
+        gameId,
+        gameName,
+        percent: percent ?? "0",
+        maxPercent: maxPercent ?? "0",
       })),
     );
   }, [data, setRatio]);
 
   const handleRatioChange = (changedPercent: string, id: number) => {
     setRatio(
-      list.map(({ gameId, percent, maxPercent }) => ({
+      list.map(({ gameId, gameName, percent, maxPercent }) => ({
         gameId,
+        gameName,
         percent:
           id === gameId
             ? Number(changedPercent) < 0
@@ -39,7 +41,7 @@ export function RatioTable({ data }: { data: GameConfig[] }) {
     <TableBody>
       {list.map((item) => (
         <TableRow key={item.gameId}>
-          <TableCell>{item.gameId}</TableCell>
+          <TableCell>{item.gameName}</TableCell>
           <TableCell className="flex items-center gap-2">
             <Input
               value={item.percent}

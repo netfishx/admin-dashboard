@@ -38,12 +38,14 @@ export const editModalTitleAtom = atom<string>("");
 export const holdStatusAtom = atom<
   {
     gameId: number;
+    gameName?: string;
     holdStatus: number;
   }[]
 >([]);
 export const ratioAtom = atom<
   {
     gameId: number;
+    gameName?: string;
     percent: string;
     maxPercent: string;
   }[]
@@ -51,7 +53,13 @@ export const ratioAtom = atom<
 export const rebateAtom = atom<
   {
     gameId: number;
+    gameName?: string;
     backRate: string;
     maxBackRate: string;
   }[]
 >([]);
+export const oddsAtom = atom<Record<number, string>>({});
+export const limitAtom = atom<
+  Record<number, { minBet?: number; maxBet?: number; maxBetPeriod?: number }>
+>({});
+export const changedOddsLimitAtom = atom<Set<string>>(new Set<string>());

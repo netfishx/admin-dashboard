@@ -4,6 +4,7 @@ import { apiRequest } from "@/lib/request";
 import type {
   GameConfig,
   GameOdds,
+  GameType,
   MaintainGame,
   SupplierConfig,
 } from "@/lib/types";
@@ -17,6 +18,16 @@ export interface AgentData {
   username: string;
   nickname: string;
   status: number;
+}
+
+export async function getGameList(type: number) {
+  const user = await getSession();
+  return await apiRequest<GameType[]>({
+    url: "/game/list",
+    params: { type },
+    token: user?.token,
+    expire: "max",
+  });
 }
 
 export async function login(data: {
@@ -303,10 +314,22 @@ export async function getPeriodReport(params: any) {
 
 export async function getGameConfig() {
   const user = await getSession();
-  return await apiRequest<GameConfig[]>({
-    url: "/game/config/list",
-    token: user?.token,
-  });
+  const [res, res2] = await Promise.all([
+    getGameList(1),
+    apiRequest<GameConfig[]>({
+      url: "/game/config/list",
+      token: user?.token,
+    }),
+  ]);
+  return {
+    ...res2,
+    data: res2.data?.map((item) => ({
+      ...item,
+      gameName: res.data
+        ?.find((i) => i.gameType === item.gameType)
+        ?.list.find((i) => i.gameId === item.gameId)?.gameIdLabel,
+    })),
+  };
 }
 
 export async function editGameConfig(list: GameConfig[]) {

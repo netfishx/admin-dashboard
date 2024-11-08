@@ -1,8 +1,14 @@
+import { getGameList } from "@/api";
 import { Add } from "@/app/(dashboard)/games/supplier/add";
 import { SupplierForm } from "@/app/(dashboard)/games/supplier/form";
 import { SupplierTable } from "@/app/(dashboard)/games/supplier/table";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Suspense } from "react";
+
+async function AddButtonWrapper() {
+  const res = await getGameList(1);
+  return <Add games={res.data ?? []} />;
+}
 
 export default function Page({
   searchParams,
@@ -20,7 +26,9 @@ export default function Page({
       </Suspense>
       <div className="p-2 bg-background flex-1 flex flex-col gap-2">
         <div className="flex justify-end">
-          <Add />
+          <Suspense>
+            <AddButtonWrapper />
+          </Suspense>
         </div>
         <div className="border rounded-sm">
           <Suspense

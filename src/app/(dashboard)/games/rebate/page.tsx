@@ -62,7 +62,7 @@ export default function Page() {
       </div>
       <div className="p-2 bg-background flex-1">
         <div className="border rounded-sm">
-          <Suspense fallback={null}>
+          <Suspense>
             <TableWrapper />
           </Suspense>
         </div>

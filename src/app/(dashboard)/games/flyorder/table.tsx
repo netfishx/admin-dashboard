@@ -10,17 +10,19 @@ export function FlyOrderTable({ data }: { data: GameConfig[] }) {
   const [list, setHoldStatus] = useAtom(holdStatusAtom);
   useEffect(() => {
     setHoldStatus(
-      data.map((item) => ({
-        gameId: item.gameId,
-        holdStatus: item.holdStatus ?? 0,
+      data.map(({ gameId, gameName, holdStatus }) => ({
+        gameId,
+        gameName,
+        holdStatus: holdStatus ?? 0,
       })),
     );
   }, [data, setHoldStatus]);
 
   const handleStatusChange = (checked: boolean, id: number) => {
     setHoldStatus(
-      list.map(({ gameId, holdStatus }) => ({
+      list.map(({ gameId, gameName, holdStatus }) => ({
         gameId,
+        gameName,
         holdStatus: id === gameId ? (checked ? 1 : 0) : holdStatus,
       })),
     );
@@ -30,7 +32,7 @@ export function FlyOrderTable({ data }: { data: GameConfig[] }) {
     <TableBody>
       {data.map((item) => (
         <TableRow key={item.gameId}>
-          <TableCell>{item.gameId}</TableCell>
+          <TableCell>{item.gameName}</TableCell>
           <TableCell className="w-32 flex justify-center items-center h-10">
             <Switch
               defaultChecked={item.holdStatus === 1}

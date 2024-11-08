@@ -1,4 +1,4 @@
-import { getSupplierConfigs } from "@/api";
+import { getGameList, getSupplierConfigs } from "@/api";
 import { EditButton } from "@/app/(dashboard)/games/supplier/edit";
 import {
   Table,
@@ -32,14 +32,24 @@ export async function SupplierTable({
   searchParams,
 }: { searchParams: Promise<{ [key: string]: string | undefined }> }) {
   const { userId } = await searchParams;
-  const res = await getSupplierConfigs(userId);
+  const [configs, games] = await Promise.all([
+    getSupplierConfigs(userId),
+    getGameList(1),
+  ]);
   return (
     <Table>
       <SupplierTableHeader />
       <TableBody>
-        {res.data?.map((item) => (
+        {configs.data?.map((item) => (
           <TableRow key={item.id}>
-            <TableCell>{item.gameId}</TableCell>
+            <TableCell>
+              {
+                games.data
+                  ?.find((game) => game.gameType === item.gameType)
+                  ?.list?.find((game) => game.gameId === item.gameId)
+                  ?.gameIdLabel
+              }
+            </TableCell>
             <TableCell>{item.videoLink}</TableCell>
             <TableCell>{item.userId}</TableCell>
             <TableCell>{item.userName}</TableCell>
