@@ -27,6 +27,8 @@ export const limitModalAtom = atom<boolean>(false);
 export const rebateModalAtom = atom<boolean>(false);
 // 用户管理-代理管理-登录日志弹窗
 export const loginLogModalAtom = atom<boolean>(false);
+// 用户管理-代理管理-变更日志弹窗
+export const changeLogModalAtom = atom<boolean>(false);
 // 用户管理-代理管理-代理ID
 export const agentIdAtom = atom<string>("");
 // 公告弹窗
@@ -44,14 +46,14 @@ export const holdStatusAtom = atom<
 export const ratioAtom = atom<
   {
     gameId: number;
-    percent: number;
-    maxPercent: number;
+    percent: string;
+    maxPercent: string;
   }[]
 >([]);
 export const rebateAtom = atom<
   {
     gameId: number;
-    backRate: number;
-    maxBackRate: number;
+    backRate: string;
+    maxBackRate: string;
   }[]
 >([]);

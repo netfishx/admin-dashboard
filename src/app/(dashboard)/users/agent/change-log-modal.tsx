@@ -1,3 +1,7 @@
+"use client";
+
+import { getChangeLog } from "@/api";
+import { ModalPagination } from "@/components/modal-pagination";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -15,31 +19,42 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { cn } from "@/lib/utils";
+import type { ChangeLog } from "@/lib/types";
+import { agentIdAtom, changeLogModalAtom } from "@/store";
+import { useAtom, useAtomValue } from "jotai";
 import { useTranslations } from "next-intl";
-export function ChangeLogModal({
-  open,
-  onOpenChange,
-}: {
-  open: boolean;
-  onOpenChange: (open: boolean) => void;
-}) {
+import { useEffect, useState } from "react";
+
+export function ChangeLogModal() {
+  const translation = useTranslations();
   const t = useTranslations("users.agents");
-  const data = [
-    {
-      id: 1,
-      operateTime: "2024-01-01 12:00:00",
-      operater: "admin",
-      username: "user1",
-      ip: "192.168.1.1",
-      address: "中国",
-      operateType: "修改",
-      operateDesc: "修改退水比例",
-      status: 2,
-    },
-  ];
+  const [open, setOpen] = useAtom(changeLogModalAtom);
+  const targetUserId = useAtomValue(agentIdAtom);
+  const [pageNum, setPageNum] = useState<number>(1);
+  const [pageSize, setPageSize] = useState<number>(10);
+  const [total, setTotal] = useState<number>(0);
+  const [data, setData] = useState<{ list: ChangeLog[] }>({ list: [] });
+
+  useEffect(() => {
+    if (targetUserId && open) {
+      getChangeLog({
+        targetUserId,
+        appType: "AGENT",
+        pageNum,
+        pageSize,
+      }).then(({ data }) => {
+        console.info(data);
+        if (data) {
+          setData(data);
+          setTotal(data.total);
+          setPageNum(data.pageNum);
+          setPageSize(data.pageSize);
+        }
+      });
+    }
+  }, [targetUserId, open, pageNum, pageSize]);
   return (
-    <Dialog open={open} onOpenChange={(open) => onOpenChange(open)}>
+    <Dialog open={open} onOpenChange={(open) => setOpen(open)}>
       <DialogContent className="max-w-5xl">
         <DialogHeader>
           <DialogTitle>{t("changeLog")}</DialogTitle>
@@ -56,41 +71,35 @@ export function ChangeLogModal({
                 <TableHead>{t("address")}</TableHead>
                 <TableHead>{t("operateType")}</TableHead>
                 <TableHead>{t("operateDesc")}</TableHead>
-                <TableHead>{t("status")}</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
-              {data.map((item) => (
+              {data?.list?.map((item) => (
                 <TableRow key={item.id}>
                   <TableCell>{item.operateTime}</TableCell>
-                  <TableCell>{item.operater}</TableCell>
-                  <TableCell>{item.username}</TableCell>
-                  <TableCell>{item.ip}</TableCell>
-                  <TableCell>{item.address}</TableCell>
-                  <TableCell>{item.operateType}</TableCell>
-                  <TableCell>{item.operateDesc}</TableCell>
-                  <TableCell>
-                    <div
-                      className={cn(
-                        "px-2 rounded-sm w-fit",
-                        item.status === 1 && "text-primary bg-primary/10",
-                        item.status === 2 &&
-                          "text-destructive bg-destructive/10",
-                      )}
-                    >
-                      {t(`statusLabel.${item.status}`)}
-                    </div>
-                  </TableCell>
+                  <TableCell>{item.userNickName}</TableCell>
+                  <TableCell>{item.userName}</TableCell>
+                  <TableCell>{item.remoteIp}</TableCell>
+                  <TableCell>{item.region}</TableCell>
+                  <TableCell>{item.bizType}</TableCell>
+                  <TableCell>{item.msg}</TableCell>
                 </TableRow>
               ))}
             </TableBody>
           </Table>
         </div>
+        <ModalPagination
+          total={total}
+          currentPage={pageNum}
+          size={pageSize}
+          setPage={setPageNum}
+          setSize={setPageSize}
+        />
         <DialogFooter>
-          <Button variant="outline" onClick={() => onOpenChange(false)}>
-            {t("close")}
+          <Button variant="outline" onClick={() => setOpen(false)}>
+            {translation("cancel")}
           </Button>
-          <Button>{t("save")}</Button>
+          <Button>{translation("confirm")}</Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

@@ -47,7 +47,9 @@ export function GameSettingModal() {
           ? {
               ...item,
               percent:
-                percent > (item.maxPercent ?? 0) ? item.maxPercent : percent,
+                Number(percent) > (Number(item.maxPercent) ?? 0)
+                  ? item.maxPercent
+                  : percent.toString(),
             }
           : item,
       );

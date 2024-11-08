@@ -13,21 +13,21 @@ export function RebateTable({ data }: { data: GameConfig[] }) {
     setRebate(
       data.map((item) => ({
         gameId: item.gameId,
-        backRate: item.backRate ?? 0,
-        maxBackRate: item.maxBackRate ?? 0,
+        backRate: item.backRate ?? "0",
+        maxBackRate: item.maxBackRate ?? "0",
       })),
     );
   }, [data, setRebate]);
 
-  const handleRebateChange = (rebate: number, id: number) => {
+  const handleRebateChange = (rebate: string, id: number) => {
     setRebate(
       list.map(({ gameId, backRate, maxBackRate }) => ({
         gameId,
         backRate:
           id === gameId
-            ? rebate < 0
-              ? 0
-              : rebate > maxBackRate
+            ? Number(rebate) < 0
+              ? "0"
+              : Number(rebate) > Number(maxBackRate)
                 ? maxBackRate
                 : rebate
             : backRate,
@@ -47,11 +47,11 @@ export function RebateTable({ data }: { data: GameConfig[] }) {
               min={0}
               max={item.maxBackRate ?? 0}
               step={0.01}
-              onChange={(e) =>
-                handleRebateChange(Number(e.target.value), item.gameId)
-              }
+              onChange={(e) => handleRebateChange(e.target.value, item.gameId)}
             />
-            <span className="text-destructive">({item.maxBackRate ?? 0}%)</span>
+            <span className="text-destructive w-16">
+              ({item.maxBackRate ?? 0}%)
+            </span>
           </TableCell>
         </TableRow>
       ))}
