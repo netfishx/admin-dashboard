@@ -79,11 +79,11 @@ export function AddModal() {
   useEffect(() => {
     if (data && editModalTitle === t("editModal")) {
       setContent(data.content || "");
-      setType(data.type || "");
+      setType(data.type.toString() || "");
       setLanguage(data.language || "");
-      setStatus(data.status || "0");
-      setStartTime(data.startTime || "");
-      setEndTime(data.endTime || "");
+      setStatus(data.status.toString() || "0");
+      setStartTime(data.startTime.toString() || "");
+      setEndTime(data.endTime.toString() || "");
     }
     return () => {
       resetFields();

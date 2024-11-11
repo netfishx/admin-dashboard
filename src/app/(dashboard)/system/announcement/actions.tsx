@@ -1,7 +1,6 @@
 "use client";
-import type { Announcement } from "@/api";
 import { Button } from "@/components/ui/button";
-import {} from "@/components/ui/dialog";
+import type { AnnouncementList } from "@/lib/types";
 import {
   contentEditModalAtom,
   contentModalAtom,
@@ -14,7 +13,7 @@ import { useTranslations } from "next-intl";
 export function Actions({
   data,
   showEdit = false,
-}: { data: Announcement; showEdit?: boolean }) {
+}: { data: AnnouncementList; showEdit?: boolean }) {
   const t = useTranslations("system.announcement");
   // const [contentModalVisible, setContentModal] = useState(false);
 
