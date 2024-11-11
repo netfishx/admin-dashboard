@@ -60,8 +60,10 @@ export const rebateAtom = atom<
     maxBackRate: string;
   }[]
 >([]);
-export const oddsAtom = atom<Record<number, string>>({});
-export const limitAtom = atom<
-  Record<number, { minBet?: number; maxBet?: number; maxBetPeriod?: number }>
->({});
+export const oddsAtom = atom<{
+  [key: number]: string;
+}>({});
+export const limitAtom = atom<{
+  [key: number]: { minBet?: number; maxBet?: number; maxBetPeriod?: number };
+}>({});
 export const changedOddsLimitAtom = atom<Set<string>>(new Set<string>());
