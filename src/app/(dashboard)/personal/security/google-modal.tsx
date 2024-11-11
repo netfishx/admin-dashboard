@@ -1,6 +1,7 @@
 "use client";
 import { Apple } from "@/components/icons/apple";
 import { GooglePlay } from "@/components/icons/google";
+import { InfoFilled } from "@/components/icons/info";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -100,12 +101,11 @@ export function GoogleModal({
 
             <div className="rounded-lg bg-muted/50 p-4">
               <div className="flex items-start gap-2">
-                <div className="mt-1 h-4 w-4 rounded-full bg- p-1">
-                  <div className="h-2 w-2 rounded-full bg-orange" />
+                <div className="mt-1 h-4 w-4 rounded-full">
+                  {/* <div className="h-2 w-2 rounded-full bg-orange" /> */}
+                  <InfoFilled className="size-4 text-chart-4" />
                 </div>
-                <p className="text-sm text-muted-foreground">
-                  {t("step2Warning")}
-                </p>
+                <p className="text-sm text-chart-4">{t("step2Warning")}</p>
               </div>
               <div className="mt-4 flex justify-center">
                 <span className="border p-4 inline-block">

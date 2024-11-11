@@ -7,31 +7,16 @@ export default async function Own({
 }: { searchParams: Promise<{ [key: string]: string | string[] }> }) {
   const search = await searchParams;
   const { data } = await getAnnouncement({
-    size: search.size ?? 10,
-    page: search.page ?? 1,
+    pageSize: Number(search.size ?? 10),
+    pageNum: Number(search.page ?? 1),
+    startTime: String(search.startTime ?? ""),
+    endTime: String(search.endTime ?? ""),
   });
-  const announcementDicts = [
-    {
-      key: "0",
-      value: "平台公告",
-    },
-    {
-      key: "1",
-      value: "代理公告",
-    },
-    {
-      key: "2",
-      value: "大厅公告",
-    },
-    {
-      key: "3",
-      value: "房间公告",
-    },
-  ];
+
   return (
     <>
       <Suspense fallback={<div>loading...</div>}>
-        <List data={data} announcementDicts={announcementDicts} />
+        <List data={data} />
       </Suspense>
     </>
   );
