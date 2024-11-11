@@ -1,3 +1,4 @@
+import { ChangeLogModal } from "./change-log-modal";
 import { GameSettingModal } from "./game-setting-modal";
 import { LimitModal } from "./limit-modal";
 import { LoginLogModal } from "./login-log-modal";
@@ -11,6 +12,7 @@ export function Modals() {
       <GameSettingModal />
       <LimitModal />
       <RebateModal />
+      <ChangeLogModal />
     </>
   );
 }

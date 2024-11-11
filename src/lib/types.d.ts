@@ -5,8 +5,8 @@ export type Res<T> = {
 };
 
 export type WithPagination = {
-  page: number;
-  size: number;
+  pageNum: number;
+  pageSize: number;
   total: number;
 };
 
@@ -88,4 +88,64 @@ export type GameOdds = {
   maxBetPeriodLimit: number; // 每局最大投注额度上限
   canEdit: boolean; // 限红是否可修改 true=可编辑，false不可编辑
   groupId: number; // 限红分组id，同样的id 限红一起改
+};
+
+export type ChangeLog = {
+  id: string; // 主键ID
+  operateTime: number; // 操作时间
+  userId: string; // 用户ID
+  mainId: number; // 主用户ID
+  userName: string; // 用户名
+  userNickName: string; // 用户昵称
+  createTime: number; // 操作时间
+  appType: string; // 应用类型
+  bizType: string; // 业务类型
+  targetUserId: string; // 目标用户ID
+  remoteIp: string; // 操作IP
+  region: string; // 地区
+  msg: string; // 变更内容
+};
+
+// 公告新增 编辑
+export type Announcement = {
+  id?: string;
+  startTime: string;
+  endTime: string;
+  content: string;
+  type: string;
+  language: string;
+  status: string;
+  userId?: string;
+};
+// 公告列表请求
+export type AnnouncementListRequest = {
+  pageSize: number;
+  pageNum: number;
+  userId?: string;
+  startTime: string;
+  endTime: string;
+};
+
+// 公告列表返回
+export type AnnouncementList = {
+  id: string;
+  userId: string;
+  type: number;
+  startTime: number;
+  endTime: number;
+  language: string;
+  content: string;
+  status: number;
+  createTime: number;
+  updateTime: number;
+};
+
+export type PeriodReport = {
+  page: number;
+  size: number;
+  startTime: string;
+  endTime: string;
+  issueNumber: string;
+  gameTypeName: string;
+  gameName: string;
 };

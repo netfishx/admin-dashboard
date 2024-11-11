@@ -34,9 +34,9 @@ export default function Pages({
   const t = useTranslations("pagination");
   const router = useRouter();
   const query = useSearchParams();
-  const handlePageSizeChange = (size: string) => {
+  const handlePageSizeChange = (pageSize: string) => {
     router.push(
-      `${pathname}?${new URLSearchParams({ ...Object.fromEntries(query.entries()), size, page: String(1) }).toString()}`,
+      `${pathname}?${new URLSearchParams({ ...Object.fromEntries(query.entries()), pageSize, pageNum: String(1) }).toString()}`,
     );
   };
   return (
@@ -52,7 +52,7 @@ export default function Pages({
             <Link
               href={{
                 pathname,
-                query: { ...Object.fromEntries(query.entries()), page: 1 },
+                query: { ...Object.fromEntries(query.entries()), pageNum: 1 },
               }}
               className={`w-6 h-4 rounded-full flex items-center justify-center px-1 ${currentPage === 1 ? "cursor-not-allowed text-muted-foreground" : ""}`}
             >
@@ -71,7 +71,7 @@ export default function Pages({
                   pathname,
                   query: {
                     ...Object.fromEntries(query.entries()),
-                    page: currentPage - 1,
+                    pageNum: currentPage - 1,
                   },
                 }}
               />
@@ -94,7 +94,7 @@ export default function Pages({
                   pathname,
                   query: {
                     ...Object.fromEntries(query.entries()),
-                    page: currentPage + 1,
+                    pageNum: currentPage + 1,
                   },
                 }}
               />
@@ -106,7 +106,7 @@ export default function Pages({
                 pathname,
                 query: {
                   ...Object.fromEntries(query.entries()),
-                  page: totalPage,
+                  pageNum: totalPage,
                 },
               }}
               className={`w-6 h-4 bg-background rounded-full flex items-center justify-center px-1 ${currentPage === totalPage ? "cursor-not-allowed text-muted-foreground" : ""}`}

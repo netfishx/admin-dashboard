@@ -7,8 +7,8 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-
-import type { Announcement, WithPagination } from "@/api";
+import type { WithPagination } from "@/lib/types";
+import type { AnnouncementList } from "@/lib/types";
 import { getTranslations } from "next-intl/server";
 import { Actions } from "../actions";
 import { formatTimestamp } from "../tools";
@@ -16,7 +16,7 @@ import { Form } from "./form";
 
 export async function List({
   data,
-}: { data?: WithPagination & { list: Announcement[] } }) {
+}: { data?: WithPagination & { list: AnnouncementList[] } }) {
   const t = await getTranslations("system.announcement");
   const user = {
     role: "admin",
@@ -62,7 +62,7 @@ export async function List({
               </TableRow>
             </TableHeader>
             <TableBody className="max-h-96 overflow-y-auto">
-              {data?.list?.map((item: Announcement) => (
+              {data?.list?.map((item) => (
                 <TableRow key={Math.random()}>
                   {/* admin permission */}
                   <TableCell className="w-24 text-center">
@@ -102,8 +102,8 @@ export async function List({
       <div className="pt-2">
         <Pages
           total={data?.total ?? 0}
-          currentPage={Number(data?.page ?? 1)}
-          pageSize={Number(data?.size ?? 10)}
+          currentPage={Number(data?.pageNum ?? 1)}
+          pageSize={Number(data?.pageSize ?? 10)}
         />
       </div>
     </>

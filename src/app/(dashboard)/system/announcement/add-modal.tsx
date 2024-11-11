@@ -53,6 +53,7 @@ export function AddModal() {
       status,
       startTime: new Date(startTime).getTime().toString() || "",
       endTime: new Date(endTime).getTime().toString() || "",
+      userId: "",
     };
     const { code, message } = await saveAnnouncement(addParams);
     setOpen(false);

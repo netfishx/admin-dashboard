@@ -4,6 +4,7 @@ import type { AgentData } from "@/api";
 import { Button } from "@/components/ui/button";
 import {
   agentIdAtom,
+  changeLogModalAtom,
   gameSettingModalAtom,
   limitModalAtom,
   loginLogModalAtom,
@@ -13,14 +14,11 @@ import {
 import { useSetAtom } from "jotai";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
-import { ChangeLogModal } from "./change-log-modal";
 import { TransferMoneyModal } from "./transfer-money-modal";
 
 export default function Action({ data }: { data: AgentData }) {
   const t = useTranslations("users.agents");
   const [transferMoneyModal, setTransferMoneyModal] = useState(false);
-  // const [loginLogModal, setLoginLogModal] = useState(false);
-  const [changeLogModal, setChangeLogModal] = useState(false);
 
   // 用户信息 弹窗
   const setUserInfoModal = useSetAtom(userInfoModalAtom);
@@ -32,6 +30,9 @@ export default function Action({ data }: { data: AgentData }) {
   const setRebateModal = useSetAtom(rebateModalAtom);
   // 登录日志 弹窗
   const setLoginLogModal = useSetAtom(loginLogModalAtom);
+  // 变更日志 弹窗
+  const setChangeLogModal = useSetAtom(changeLogModalAtom);
+  // 代理ID
   const setAgentId = useSetAtom(agentIdAtom);
   return (
     <>
@@ -98,6 +99,7 @@ export default function Action({ data }: { data: AgentData }) {
         variant="link"
         className="hover:no-underline hover:text-primary/80 px-0"
         onClick={() => {
+          setAgentId(data.id);
           setChangeLogModal(true);
         }}
       >
@@ -108,7 +110,6 @@ export default function Action({ data }: { data: AgentData }) {
         onOpenChange={setTransferMoneyModal}
         editData={data}
       />
-      <ChangeLogModal open={changeLogModal} onOpenChange={setChangeLogModal} />
     </>
   );
 }

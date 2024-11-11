@@ -6,12 +6,13 @@ export default async function All({
   searchParams,
 }: { searchParams: Promise<{ [key: string]: string | string[] }> }) {
   const search = await searchParams;
+
   const { data } = await getAnnouncement({
-    size: search.size ?? 10,
-    page: search.page ?? 1,
-    userId: search.userId ?? "",
-    startTime: search.startTime ?? "",
-    endTime: search.endTime ?? "",
+    pageSize: Number(search.pageSize ?? 10),
+    pageNum: Number(search.pageNum ?? 1),
+    userId: (search.userId ?? "") as string,
+    startTime: (search.startTime ?? "") as string,
+    endTime: (search.endTime ?? "") as string,
   });
   return (
     <>
