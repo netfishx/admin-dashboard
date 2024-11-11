@@ -23,8 +23,7 @@ export function MenuItem({
   hasChildren?: boolean;
 }) {
   const pathname = usePathname();
-  const newHref = `/${href?.split("/")[1]}/${href?.split("/")[2]}`;
-  const isActive = !!href && pathname.startsWith(newHref);
+  const isActive = !!href && pathname === href;
 
   return (
     <Button
