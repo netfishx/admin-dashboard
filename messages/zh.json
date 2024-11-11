@@ -533,7 +533,9 @@
       "moneyModalDesc": "请输入资金密码",
       "setMoneyPassword": "设置资金密码",
       "confirmMoneyDesc": "请输入确认资金密码",
-      "confirmMoneyPassword":"确认资金密码"
+      "confirmMoneyPassword":"确认资金密码",
+      "editGoogleAuthTitle": "重置谷歌验证",
+      "editMoneyPasswordTitle": "修改资金密码"
     }
   } 
 }
