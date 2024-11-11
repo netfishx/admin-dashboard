@@ -1,4 +1,4 @@
-import { type AgentData, getAgents } from "@/api";
+import { getAgents } from "@/api";
 import Pages from "@/components/custom-pagination";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
@@ -9,6 +9,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import type { AgentData } from "@/lib/types";
 import { cn } from "@/lib/utils";
 import { getTranslations } from "next-intl/server";
 import { Suspense } from "react";
