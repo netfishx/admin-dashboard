@@ -14,6 +14,7 @@ import type {
   PeriodReport,
   SupplierConfig,
   UserBasicInfo,
+  WithdrawFormData,
 } from "@/lib/types";
 import { getSession } from "@/session";
 import type { RatioReportListTypes } from "./lib/types";
@@ -359,6 +360,16 @@ export async function getUserBasicInfo() {
   const user = await getSession();
   return await apiRequest<UserBasicInfo>({
     url: "/agent/center/base/info",
+    token: user?.token,
+  });
+}
+
+export async function postUserInfoWithdraw(data: WithdrawFormData) {
+  const user = await getSession();
+  return await apiRequest({
+    url: "/order/withdraw/agent/apply",
+    method: "POST",
+    data,
     token: user?.token,
   });
 }
