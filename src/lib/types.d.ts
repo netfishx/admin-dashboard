@@ -149,3 +149,18 @@ export type PeriodReport = {
   gameTypeName: string;
   gameName: string;
 };
+
+// 个人中心-基本信息
+export type UserBasicInfo = {
+  userId: string; // User ID as a string
+  userAccount: string; // User account name
+  inviteCode: string; // Invite code
+  totalBalanceMoney: number; // Total balance money
+  usableBalanceMoney: number; // Usable balance money
+  gameFreezeMoney: number; // Amount frozen for game-related activities
+  totalCreditMoney: number; // Total credit money
+  memberToBeRepaidMoney: number; // Money to be repaid by the member
+  memberUnusedMoney: number; // Unused money by the member
+  withdrawFreezeMoney: number; // Amount frozen for withdrawal
+  chainAddress: string; // Blockchain address
+};
