@@ -1,4 +1,6 @@
 import { getGameConfig, getGameList, getGameOdds } from "@/api";
+import { OddsForm } from "@/app/(dashboard)/games/odds/form";
+import { OddsTable } from "@/app/(dashboard)/games/odds/table";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
   Table,
@@ -10,8 +12,6 @@ import {
 } from "@/components/ui/table";
 import { useTranslations } from "next-intl";
 import { Suspense, use } from "react";
-import { OddsForm } from "./form";
-import { OddsTable } from "./table";
 
 async function FormWrapper() {
   const [list, dict] = await Promise.all([getGameConfig(), getGameList(1)]);

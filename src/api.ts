@@ -12,12 +12,13 @@ import type {
   MaintainGame,
   PageData,
   PeriodReport,
+  RatioReportListTypes,
   SupplierConfig,
   UserBasicInfo,
   WithdrawFormData,
 } from "@/lib/types";
+
 import { getSession } from "@/session";
-import type { RatioReportListTypes } from "./lib/types";
 
 export interface AgentData {
   upUsername: string;
