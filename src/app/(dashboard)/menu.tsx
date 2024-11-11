@@ -129,6 +129,7 @@ function OpenedMenu({ pathname }: { pathname: string }) {
           <MenuItem
             label={t("reports.agent.baccarat")}
             href={`/reports/agent/baccarat/ratio?startTime=${times.startTime}&endTime=${times.endTime}`}
+            subHref={["/reports/agent/baccarat/member"]}
           />
           <MenuItem
             label={t("reports.agent.gundan")}
@@ -218,6 +219,7 @@ function OpenedMenu({ pathname }: { pathname: string }) {
           <MenuItem
             label={t("system.announcement.title")}
             href="/system/announcement/all"
+            subHref={["/system/announcement/own"]}
           />
         </CollapsibleContent>
       </Collapsible>
