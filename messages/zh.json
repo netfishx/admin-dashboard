@@ -488,7 +488,8 @@
       "tips04": "仅能向此地址充入AK，充入其他资产将无法找回",
       "mainNet": "主网",
       "qrCode": "二维码",
-      "depositAddress": "充币地址"
+      "depositAddress": "充币地址",
+      "unUsedCredit": "未使用授信"
     },
     "security": {
       "title": "安全设置",

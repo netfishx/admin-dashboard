@@ -13,6 +13,7 @@ import type {
   PageData,
   PeriodReport,
   SupplierConfig,
+  UserBasicInfo,
 } from "@/lib/types";
 import { getSession } from "@/session";
 import type { RatioReportListTypes } from "./lib/types";
@@ -351,5 +352,13 @@ export async function getGameOdds({ gameId }: { gameId: number }) {
     url: "/game/oddsLimit/list",
     token: user?.token,
     params: { gameId },
+  });
+}
+
+export async function getUserBasicInfo() {
+  const user = await getSession();
+  return await apiRequest<UserBasicInfo>({
+    url: "/agent/center/base/info",
+    token: user?.token,
   });
 }
