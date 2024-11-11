@@ -429,6 +429,11 @@
       "chinese": "中文",
       "english": "英文",
       "japanese": "日文"
+    },
+    "resource": {
+      "title": "资源列表",
+      "name": "资源名称",
+      "code": "资源编码"
     }
   },
   "fund": {
@@ -533,7 +538,7 @@
       "moneyModalDesc": "请输入资金密码",
       "setMoneyPassword": "设置资金密码",
       "confirmMoneyDesc": "请输入确认资金密码",
-      "confirmMoneyPassword":"确认资金密码"
+      "confirmMoneyPassword": "确认资金密码"
     }
-  } 
+  }
 }
