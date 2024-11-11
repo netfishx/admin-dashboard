@@ -63,6 +63,18 @@ export type RatioReportListTypes = {
   [key: string]: string | number | undefined | null | string[] | number[];
 };
 
+export type MemberList = {
+  id: string;
+  level: string;
+  username: string;
+  nickname: string;
+  status: number;
+  upUsername: string;
+  debtAmount: number;
+  creditAmount: number;
+  depositAddress: string;
+};
+
 export type GameConfig = {
   gameType?: number;
   gameId: number;
