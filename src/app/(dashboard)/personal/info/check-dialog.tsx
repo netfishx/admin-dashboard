@@ -1,4 +1,5 @@
 "use client";
+import { postUserInfoWithdraw } from "@/api";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -10,6 +11,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {} from "@/components/ui/tooltip";
+import type { WithdrawFormData } from "@/lib/types";
 import { cn } from "@/lib/utils";
 import {} from "lucide-react";
 import { useTranslations } from "next-intl";
@@ -62,19 +64,25 @@ function FormField({
   );
 }
 
-function WithdrawForm() {
+function WithdrawForm(props: {
+  getFormData: (data: WithdrawFormData) => void;
+}) {
+  const { getFormData } = props;
   const t = useTranslations("personal.info");
   const translations = useTranslations();
   const [formData, setFormData] = useState({
     availableAmount: "1,000,000.00",
-    withdrawAmount: "",
-    serviceFee: "0.00",
-    walletAddress: "",
-    password: "",
+    withdrawMoney: "",
+    withdrawFee: "0.00",
+    withdrawWay: "",
+    secret: "",
   });
 
-  const handleChange = (field: string) => (value: string) => {
-    setFormData((prev) => ({ ...prev, [field]: value }));
+  const handleChange = (field: keyof typeof formData) => (value: string) => {
+    const newData = { ...formData };
+    newData[field] = value;
+    setFormData(newData);
+    getFormData(newData);
   };
 
   const warningNotes = [t("tips01"), t("tips02")];
@@ -92,8 +100,8 @@ function WithdrawForm() {
         <div className="space-y-4">
           <FormField
             label={t("withdrawAmount")}
-            value={formData.withdrawAmount}
-            onChange={handleChange("withdrawAmount")}
+            value={formData.withdrawMoney}
+            onChange={handleChange("withdrawMoney")}
             required
             placeholder={t("withdrawAmount")}
           />
@@ -108,27 +116,27 @@ function WithdrawForm() {
         </div>
 
         <FormField
-          label={t("serviceFee")}
-          value={formData.serviceFee}
-          onChange={handleChange("serviceFee")}
+          label={t("withdrawFee")}
+          value={formData.withdrawFee}
+          onChange={handleChange("withdrawFee")}
           readOnly
         />
 
         <FormField
-          label={t("walletAddress")}
-          value={formData.walletAddress}
-          onChange={handleChange("walletAddress")}
+          label={t("withdrawWay")}
+          value={formData.withdrawWay}
+          onChange={handleChange("withdrawWay")}
           required
-          placeholder={t("walletAddress")}
+          placeholder={t("withdrawWay")}
         />
 
         <FormField
-          label={t("password")}
-          value={formData.password}
-          onChange={handleChange("password")}
+          label={t("secret")}
+          value={formData.secret}
+          onChange={handleChange("secret")}
           required
-          type="password"
-          placeholder={t("password")}
+          type="secret"
+          placeholder={t("secret")}
         />
       </div>
     </div>
@@ -140,9 +148,21 @@ export function CheckDialog(props: Dialogprops) {
   const t = useTranslations("personal.info");
   const translations = useTranslations();
   const [step, setStep] = useState(1);
-  const handleNext = () => {
+  const [formData, setFormData] = useState<WithdrawFormData>({
+    availableAmount: "",
+    withdrawMoney: "",
+    withdrawFee: "",
+    withdrawWay: "",
+    secret: "",
+  });
+  const handleNext = async () => {
     setStep(2);
+    const res = await postUserInfoWithdraw(formData);
+    console.log(res, "res");
     // onOpenChange(false);
+  };
+  const handleChange = (data: WithdrawFormData) => {
+    setFormData(data);
   };
 
   return (
@@ -154,7 +174,7 @@ export function CheckDialog(props: Dialogprops) {
               <DialogTitle>{t("withdraw")}</DialogTitle>
             </DialogHeader>
             <div className="gap-2 items-center">
-              <WithdrawForm />
+              <WithdrawForm getFormData={handleChange} />
             </div>
             <DialogFooter>
               <Button variant="outline" onClick={() => onOpenChange(false)}>

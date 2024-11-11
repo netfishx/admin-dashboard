@@ -164,3 +164,12 @@ export type UserBasicInfo = {
   withdrawFreezeMoney: number; // Amount frozen for withdrawal
   chainAddress: string; // Blockchain address
 };
+
+// 提现表单数据
+export type WithdrawFormData = {
+  availableAmount: string;
+  withdrawMoney: string;
+  withdrawFee: string;
+  withdrawWay: string;
+  secret: string;
+};
