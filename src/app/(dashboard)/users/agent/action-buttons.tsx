@@ -1,7 +1,7 @@
 "use client";
 
-import type { AgentData } from "@/api";
 import { Button } from "@/components/ui/button";
+import type { AgentData } from "@/lib/types";
 import {
   agentIdAtom,
   changeLogModalAtom,

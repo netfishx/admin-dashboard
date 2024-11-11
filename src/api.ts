@@ -2,6 +2,7 @@
 
 import { apiRequest } from "@/lib/request";
 import type {
+  AgentData,
   Announcement,
   AnnouncementAgentListRequest,
   AnnouncementList,
@@ -10,6 +11,7 @@ import type {
   GameConfig,
   GameOdds,
   GameType,
+  LoginLog,
   MaintainGame,
   MemberList,
   PageData,
@@ -22,15 +24,6 @@ import type {
 } from "@/lib/types";
 
 import { getSession } from "@/session";
-
-export interface AgentData {
-  upUsername: string;
-  deptId: number;
-  id: string;
-  username: string;
-  nickname: string;
-  status: number;
-}
 
 export async function getGameList(type: number) {
   const user = await getSession();
@@ -205,13 +198,7 @@ export async function getMemberList(params: {
     token: user?.token,
   });
 }
-export interface LoginLog {
-  userId: string;
-  loginTime: string;
-  ip: string;
-  address: string;
-  status: number;
-}
+
 export async function getLoginLog(data: any) {
   return await apiRequest<WithPagination & { data: LoginLog[] }>({
     url: "/api/getLoginLog",
@@ -313,7 +300,7 @@ export async function editMaintain(data: {
 
 export async function getDailiReport(data: any) {
   const user = await getSession();
-  return await apiRequest<WithPagination & { list: RatioReportListTypes[] }>({
+  return await apiRequest<PageData<RatioReportListTypes>>({
     url: "/report/agent/baccarat/memberBet",
     method: "POST",
     data,
@@ -323,7 +310,7 @@ export async function getDailiReport(data: any) {
 
 export async function getRatioReport(data: any) {
   const user = await getSession();
-  return await apiRequest<WithPagination & { list: RatioReportListTypes[] }>({
+  return await apiRequest<PageData<RatioReportListTypes>>({
     url: "/report/agent/baccarat/stack",
     method: "POST",
     data,
@@ -333,7 +320,7 @@ export async function getRatioReport(data: any) {
 
 export async function getPeriodReport(params: PeriodReport) {
   const user = await getSession();
-  return await apiRequest<WithPagination & { list: PeriodReport[] }>({
+  return await apiRequest<PageData<PeriodReport>>({
     url: "/getReports",
     params,
     token: user?.token,
