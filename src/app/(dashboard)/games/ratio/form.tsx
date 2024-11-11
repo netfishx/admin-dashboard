@@ -12,6 +12,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { ratioAtom } from "@/store";
+import { Big } from "big.js";
 import { useAtom } from "jotai";
 import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
@@ -49,12 +50,11 @@ export function RatioForm() {
     setList(
       list.map((item) => ({
         ...item,
-        percent:
-          Number(item.percent) + num < 0
-            ? "0"
-            : Number(item.percent) + num > Number(item.maxPercent)
-              ? item.maxPercent
-              : (Number(item.percent) + num).toString(),
+        percent: Big(item.percent).add(num).lt(0)
+          ? "0"
+          : Big(item.percent).add(num).gt(item.maxPercent)
+            ? item.maxPercent
+            : Big(item.percent).add(num).toString(),
       })),
     );
   }

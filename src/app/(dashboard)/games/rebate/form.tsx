@@ -10,8 +10,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import {} from "@/components/ui/table";
 import { rebateAtom } from "@/store";
+import { Big } from "big.js";
 import { useAtom } from "jotai";
 import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
@@ -49,12 +49,11 @@ export function RebateForm() {
     setList(
       list.map((item) => ({
         ...item,
-        backRate:
-          Number(item.backRate) + num < 0
-            ? "0"
-            : Number(item.backRate) + num > Number(item.maxBackRate)
-              ? item.maxBackRate
-              : (Number(item.backRate) + num).toString(),
+        backRate: Big(item.backRate).add(num).lt(0)
+          ? "0"
+          : Big(item.backRate).add(num).gt(item.maxBackRate)
+            ? item.maxBackRate
+            : Big(item.backRate).add(num).toString(),
       })),
     );
   }
