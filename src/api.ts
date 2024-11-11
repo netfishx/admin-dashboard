@@ -355,7 +355,6 @@ export async function getGameOdds({ gameId }: { gameId: number }) {
   });
 }
 
-<<<<<<< HEAD
 export async function syncGameOdds({ gameId }: { gameId: number }) {
   const user = await getSession();
   return await apiRequest({
@@ -383,12 +382,14 @@ export async function updateGameOdds(data: {
     url: "/game/oddsLimit/update",
     method: "POST",
     data,
-=======
+    token: user?.token,
+  });
+}
+
 export async function getUserBasicInfo() {
   const user = await getSession();
   return await apiRequest<UserBasicInfo>({
     url: "/agent/center/base/info",
->>>>>>> b038564722f18f7680a4421e11700feeaab56abb
     token: user?.token,
   });
 }
