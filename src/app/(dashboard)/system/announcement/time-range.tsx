@@ -41,33 +41,41 @@ export function TimeRange({
   range: [string, string];
 }) {
   const t = useTranslations("system.announcement");
+  const toDate = (input: string) => {
+    // biome-ignore lint/performance/useTopLevelRegex: <explanation>
+    if (/^\d+$/.test(input)) {
+      return new Date(Number(input));
+      // biome-ignore lint/style/noUselessElse: <explanation>
+    } else {
+      // 含有非数字字符的字符串，认为是日期字符串
+      return new Date(input.replace(" ", "T"));
+    }
+  };
   // 使用 range 初始化 dateRange
   const initialDateRange =
     range[0] && range[1]
       ? {
-          from: new Date(Number(range[0])),
-          to: new Date(Number(range[1])),
+          from: toDate(range[0]),
+          to: toDate(range[1]),
         }
       : {
           from: startOfDay(today),
           to: endOfDay(today),
         };
-
   const initialStartTime =
     range[0] && range[1]
       ? {
-          hours: new Date(Number(range[0])).getHours(),
-          minutes: new Date(Number(range[0])).getMinutes(),
-          seconds: new Date(Number(range[0])).getSeconds(),
+          hours: toDate(range[0]).getHours(),
+          minutes: toDate(range[0]).getMinutes(),
+          seconds: toDate(range[0]).getSeconds(),
         }
       : { hours: 0, minutes: 0, seconds: 0 };
-
   const initialEndTime =
     range[0] && range[1]
       ? {
-          hours: new Date(Number(range[1])).getHours(),
-          minutes: new Date(Number(range[1])).getMinutes(),
-          seconds: new Date(Number(range[1])).getSeconds(),
+          hours: toDate(range[1]).getHours(),
+          minutes: toDate(range[1]).getMinutes(),
+          seconds: toDate(range[1]).getSeconds(),
         }
       : { hours: 23, minutes: 59, seconds: 59 };
 
@@ -123,7 +131,6 @@ export function TimeRange({
             )}
           >
             <CalendarIcon className="mr-2 h-4 w-4" />
-
             {dateRange?.from ? (
               <>
                 {formatDateWithTime(dateRange.from, startTime)}
