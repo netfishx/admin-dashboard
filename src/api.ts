@@ -10,11 +10,13 @@ import type {
   GameOdds,
   GameType,
   MaintainGame,
+  MemberList,
   PageData,
   PeriodReport,
   RatioReportListTypes,
   SupplierConfig,
   UserBasicInfo,
+  WithPagination,
   WithdrawFormData,
 } from "@/lib/types";
 
@@ -99,7 +101,7 @@ export async function logout() {
 // 用户管理-代理管理-获取代理列表
 export async function getAgents(params: { page: number; size: number }) {
   const user = await getSession();
-  return await apiRequest<WithPagination & { list: AgentData[] }>({
+  return await apiRequest<PageData<AgentData>>({
     url: "/agent/user/main/getUnderAgent",
     params,
     token: user?.token,
@@ -158,7 +160,7 @@ export async function addAgent(data: {
 export async function getAgentConfig(params: { userId: string }) {
   const user = await getSession();
   return await apiRequest<{ list: GameConfig[] }>({
-    url: "/agent/game/config/list",
+    url: "/game/config/list",
     params,
     token: user?.token,
   });
@@ -170,7 +172,7 @@ export async function updateAgentGameConfig(data: {
 }) {
   const user = await getSession();
   return await apiRequest({
-    url: "/agent/game/config/update",
+    url: "/game/config/update",
     method: "POST",
     data,
     token: user?.token,
@@ -190,10 +192,17 @@ export async function getChangeLog(params: {
     token: user?.token,
   });
 }
-export interface WithPagination {
-  total: number;
-  page: number;
-  size: number;
+
+export async function getMemberList(params: {
+  pageNum: number;
+  pageSize: number;
+}) {
+  const user = await getSession();
+  return await apiRequest<PageData<MemberList>>({
+    url: "/member/user/main/getUnderMember",
+    params,
+    token: user?.token,
+  });
 }
 export interface LoginLog {
   userId: string;
