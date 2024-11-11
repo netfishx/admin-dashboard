@@ -3,6 +3,7 @@
 import { apiRequest } from "@/lib/request";
 import type {
   Announcement,
+  AnnouncementAgentListRequest,
   AnnouncementList,
   AnnouncementListRequest,
   ChangeLog,
@@ -212,10 +213,22 @@ export async function agentBaccaratReport(data: any) {
   return await apiRequest({ url: "/api/agentBaccaratReport", data });
 }
 
+// 系统管理-公告管理-全平台公告
 export async function getAnnouncement(params: AnnouncementListRequest) {
   const user = await getSession();
   return await apiRequest<PageData<AnnouncementList>>({
-    url: "/announcements",
+    url: "/announcement/getPageListByPlatform",
+    params,
+    token: user?.token,
+  });
+}
+// 系统管理-公告管理-本级公告
+export async function getAgentAnnouncement(
+  params: AnnouncementAgentListRequest,
+) {
+  const user = await getSession();
+  return await apiRequest<PageData<AnnouncementList>>({
+    url: "/announcement/getPageListByUserId",
     params,
     token: user?.token,
   });
@@ -224,7 +237,7 @@ export async function getAnnouncement(params: AnnouncementListRequest) {
 export async function saveAnnouncement(data: Announcement) {
   const user = await getSession();
   return await apiRequest({
-    url: "/addAnnouncements",
+    url: "/announcement/sendAnnouncement",
     method: "POST",
     data,
     token: user?.token,
@@ -357,6 +370,61 @@ export async function getGameOdds({ gameId }: { gameId: number }) {
   });
 }
 
+// 获取谷歌二维码
+export async function getGoogleQrCode() {
+  const user = await getSession();
+  return await apiRequest<{ secret: string; qrcode: string }>({
+    url: "/agent/center/google/qrCode",
+    token: user?.token,
+  });
+}
+// 绑定谷歌验证
+export async function bindGoogleAuth(data: { code: string; secret: string }) {
+  const user = await getSession();
+  return await apiRequest({
+    url: "/agent/center/google/bind",
+    method: "POST",
+    data,
+    token: user?.token,
+  });
+}
+// 解绑谷歌验证 重置
+export async function unbindGoogleAuth(data: { secret: string; code: string }) {
+  const user = await getSession();
+  return await apiRequest({
+    url: "/agent/center/google/unbind",
+    method: "POST",
+    data,
+    token: user?.token,
+  });
+}
+// 设置资金密码
+export async function bindFundPassword(data: {
+  secret: string;
+  userId: string;
+}) {
+  const user = await getSession();
+  return await apiRequest({
+    url: "/agent/center/fund/bind",
+    method: "POST",
+    data,
+    token: user?.token,
+  });
+}
+
+// 修改资金密码
+export async function editFundPassword(data: {
+  oldSecret: string;
+  newSecret: string;
+}) {
+  const user = await getSession();
+  return await apiRequest({
+    url: "/agent/center/fund/edit",
+    method: "POST",
+    data,
+    token: user?.token,
+  });
+}
 export async function syncGameOdds({ gameId }: { gameId: number }) {
   const user = await getSession();
   return await apiRequest({

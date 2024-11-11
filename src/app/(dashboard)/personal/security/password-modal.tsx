@@ -17,7 +17,10 @@ import { useState } from "react";
 export function PasswordModal({
   open,
   onOpenChange,
-}: { open: boolean; onOpenChange: (open: boolean) => void }) {
+}: {
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+}) {
   const t = useTranslations("personal.security");
   const translations = useTranslations("");
   const [oldPassword, setOldPassword] = useState("");
@@ -33,8 +36,8 @@ export function PasswordModal({
 
         <div className="flex gap-2 items-center pt-4">
           <div className="flex gap-4 items-center">
-            <Label className="shrink-0   w-[100px] text-right text-muted-foreground">
-              <span className="text-red-500">*</span>
+            <Label className="shrink-0 w-[100px] text-right text-muted-foreground">
+              <span className="text-destructive">*</span>
               {t("oldPassword")}
             </Label>
             <Input
@@ -48,7 +51,7 @@ export function PasswordModal({
         <div className="flex gap-2 items-center">
           <div className="flex gap-4 items-center">
             <Label className="shrink-0  w-[100px] text-right text-muted-foreground">
-              <span className="text-red-500">*</span>
+              <span className="text-destructive">*</span>
               {t("newPassword")}
             </Label>
             <Input

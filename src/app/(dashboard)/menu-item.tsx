@@ -14,6 +14,7 @@ export function MenuItem({
   href,
   isOpen,
   hasChildren,
+  subHref = [],
   ...props
 }: {
   icon?: ReactNode;
@@ -21,9 +22,15 @@ export function MenuItem({
   href?: string;
   isOpen?: boolean;
   hasChildren?: boolean;
+  subHref?: string[];
 }) {
   const pathname = usePathname();
-  const isActive = !!href && pathname === href;
+  const h = href?.split("?")[0];
+  const handleIsActive = () => {
+    return pathname === h || subHref?.includes(pathname);
+  };
+
+  const isActive = handleIsActive();
 
   return (
     <Button

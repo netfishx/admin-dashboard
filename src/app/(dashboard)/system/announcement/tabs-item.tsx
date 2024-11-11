@@ -1,4 +1,5 @@
 "use client";
+import { times } from "@/components/daterange-filter";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -18,13 +19,18 @@ export default function TabsItem({
       <div className="p-2 bg-background gap-2">
         <Tabs value={tabValue()}>
           <TabsList>
-            {tabsContent.map((tab) => (
-              <TabsTrigger key={tab.value} value={tab.value}>
-                <Link href={`/system/announcement/${tab.value}`}>
-                  {tab.label}
-                </Link>
-              </TabsTrigger>
-            ))}
+            <TabsTrigger value={tabsContent[0].value}>
+              <Link
+                href={`/system/announcement/${tabsContent[0].value}?startTime=${times.startTime}&endTime=${times.endTime}`}
+              >
+                {tabsContent[0].label}
+              </Link>
+            </TabsTrigger>
+            <TabsTrigger value={tabsContent[1].value}>
+              <Link href={`/system/announcement/${tabsContent[1].value}`}>
+                {tabsContent[1].label}
+              </Link>
+            </TabsTrigger>
           </TabsList>
         </Tabs>
       </div>
