@@ -26,7 +26,7 @@ async function FormWrapper() {
 async function TableBodyWrapper({ gameId }: { gameId?: number }) {
   if (!gameId) {
     const res = await getGameConfig();
-    gameId = res.data?.[0]?.gameId ?? 0;
+    gameId = res.data?.filter((item) => item.status === 1)?.[0]?.gameId ?? 0;
   }
   const res = await getGameOdds({ gameId });
   return <OddsTable list={res.data ?? []} />;

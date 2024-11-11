@@ -353,3 +353,34 @@ export async function getGameOdds({ gameId }: { gameId: number }) {
     params: { gameId },
   });
 }
+
+export async function syncGameOdds({ gameId }: { gameId: number }) {
+  const user = await getSession();
+  return await apiRequest({
+    url: "/game/oddsLimit/sync",
+    method: "POST",
+    data: { gameId },
+    token: user?.token,
+  });
+}
+export async function restoreGameOdds({ gameId }: { gameId: number }) {
+  const user = await getSession();
+  return await apiRequest({
+    url: "/game/oddsLimit/restore",
+    method: "POST",
+    data: { gameId },
+    token: user?.token,
+  });
+}
+export async function updateGameOdds(data: {
+  gameId: number;
+  list: GameOdds[];
+}) {
+  const user = await getSession();
+  return await apiRequest({
+    url: "/game/oddsLimit/update",
+    method: "POST",
+    data,
+    token: user?.token,
+  });
+}

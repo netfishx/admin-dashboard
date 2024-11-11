@@ -1,6 +1,5 @@
-import type { AnnouncementList } from "@/lib/types";
+import type { AnnouncementList, SupplierConfig } from "@/lib/types";
 import { atom } from "jotai";
-import type { SupplierConfig } from "./lib/types";
 
 export const lastErrorTimeAtom = atom<number>(0);
 export type Error = {
@@ -61,9 +60,15 @@ export const rebateAtom = atom<
   }[]
 >([]);
 export const oddsAtom = atom<{
-  [key: number]: string;
+  [key: string]: string;
 }>({});
 export const limitAtom = atom<{
-  [key: number]: { minBet?: number; maxBet?: number; maxBetPeriod?: number };
+  [key: string]: {
+    minBet?: number;
+    maxBet?: number;
+    maxBetLimit?: number;
+    maxBetPeriod?: number;
+    maxBetPeriodLimit?: number;
+  };
 }>({});
-export const changedOddsLimitAtom = atom<Set<string>>(new Set<string>());
+export const changedOddsLimitAtom = atom<string[]>([]);

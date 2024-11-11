@@ -78,16 +78,16 @@ export type GameConfig = {
 
 export type GameOdds = {
   oddsType: number; // 赔率id
-  oddsLabel: string; // 赔率名称
-  odds: string; // 赔率
+  oddsLabel?: string; // 赔率名称
+  odds?: string; // 赔率
   betType: number; // 投注类型
-  minBet: number; // 最低投注金额
-  maxBet: number; // 最大投注金额
-  maxBetLimit: number; // 最大投注金额上限
-  maxBetPeriod: number; // 每局最大投注额度
-  maxBetPeriodLimit: number; // 每局最大投注额度上限
-  canEdit: boolean; // 限红是否可修改 true=可编辑，false不可编辑
-  groupId: number; // 限红分组id，同样的id 限红一起改
+  minBet?: number; // 最低投注金额
+  maxBet?: number; // 最大投注金额
+  maxBetLimit?: number; // 最大投注金额上限
+  maxBetPeriod?: number; // 每局最大投注额度
+  maxBetPeriodLimit?: number; // 每局最大投注额度上限
+  canEdit?: boolean; // 限红是否可修改 true=可编辑，false不可编辑
+  groupId?: number; // 限红分组id，同样的id 限红一起改
 };
 
 export type ChangeLog = {

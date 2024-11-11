@@ -4,6 +4,7 @@ import { Input } from "@/components/ui/input";
 import { TableBody, TableCell, TableRow } from "@/components/ui/table";
 import type { GameOdds } from "@/lib/types";
 import { changedOddsLimitAtom, limitAtom, oddsAtom } from "@/store";
+import { uniq } from "es-toolkit";
 import { useAtom } from "jotai";
 import { useEffect } from "react";
 
@@ -13,15 +14,24 @@ export function OddsTable({ list }: { list: GameOdds[] }) {
   const [limit, setLimit] = useAtom(limitAtom);
 
   useEffect(() => {
-    setOdds(Object.fromEntries(list.map((item) => [item.oddsType, item.odds])));
+    setOdds(
+      Object.fromEntries(
+        list.map((item) => [
+          `${item.oddsType}-${item.betType}`,
+          item.odds ?? "",
+        ]),
+      ),
+    );
     setLimit(
       Object.fromEntries(
         list.map((item) => [
-          item.betType,
+          `${item.oddsType}-${item.betType}`,
           {
             minBet: item.minBet,
             maxBet: item.maxBet,
+            maxBetLimit: item.maxBetLimit,
             maxBetPeriod: item.maxBetPeriod,
+            maxBetPeriodLimit: item.maxBetPeriodLimit,
           },
         ]),
       ),
@@ -29,26 +39,34 @@ export function OddsTable({ list }: { list: GameOdds[] }) {
   }, [list, setOdds, setLimit]);
 
   function handleOddsChange(oddsType: number, betType: number, value: string) {
-    // setChangedList(changedList.add(`${oddsType}-${betType}`));
+    setChangedList(uniq([...changedList, `${oddsType}-${betType}`]));
     setOdds({
       ...odds,
-      [oddsType]: value,
+      [`${oddsType}-${betType}`]: value,
     });
   }
 
   function handleLimitChange(
     oddsType: number,
     betType: number,
+    groupId: number,
     field: "minBet" | "maxBet" | "maxBetPeriod",
     value: number,
   ) {
-    setChangedList(changedList.add(`${oddsType}-${betType}`));
+    setChangedList(uniq([...changedList, `${oddsType}-${betType}`]));
     setLimit({
       ...limit,
-      [betType]: {
-        ...limit[betType],
-        [field]: value,
-      },
+      ...Object.fromEntries(
+        list
+          .filter((item) => item.groupId === groupId)
+          .map((item) => [
+            `${item.oddsType}-${item.betType}`,
+            {
+              ...limit[`${item.oddsType}-${item.betType}`],
+              [field]: value,
+            },
+          ]),
+      ),
     });
   }
   return (
@@ -58,7 +76,7 @@ export function OddsTable({ list }: { list: GameOdds[] }) {
           <TableCell>{item.oddsLabel}</TableCell>
           <TableCell>
             <Input
-              value={odds[item.oddsType] ?? ""}
+              value={odds[`${item.oddsType}-${item.betType}`] ?? ""}
               type="number"
               min={0}
               step={0.01}
@@ -69,7 +87,7 @@ export function OddsTable({ list }: { list: GameOdds[] }) {
           </TableCell>
           <TableCell>
             <Input
-              value={limit[item.betType]?.minBet ?? ""}
+              value={limit[`${item.oddsType}-${item.betType}`]?.minBet ?? ""}
               type="number"
               min={1}
               disabled={!item.canEdit}
@@ -77,6 +95,7 @@ export function OddsTable({ list }: { list: GameOdds[] }) {
                 handleLimitChange(
                   item.oddsType,
                   item.betType,
+                  item.groupId ?? 0,
                   "minBet",
                   Number(e.target.value),
                 )
@@ -86,7 +105,7 @@ export function OddsTable({ list }: { list: GameOdds[] }) {
           <TableCell>
             <div className="flex items-center gap-2">
               <Input
-                value={limit[item.betType]?.maxBet ?? ""}
+                value={limit[`${item.oddsType}-${item.betType}`]?.maxBet ?? ""}
                 type="number"
                 min={1}
                 max={item.maxBetLimit ?? 1}
@@ -95,6 +114,7 @@ export function OddsTable({ list }: { list: GameOdds[] }) {
                   handleLimitChange(
                     item.oddsType,
                     item.betType,
+                    item.groupId ?? 0,
                     "maxBet",
                     Number(e.target.value),
                   )
@@ -108,7 +128,9 @@ export function OddsTable({ list }: { list: GameOdds[] }) {
           <TableCell>
             <div className="flex items-center gap-2">
               <Input
-                value={limit[item.betType]?.maxBetPeriod ?? ""}
+                value={
+                  limit[`${item.oddsType}-${item.betType}`]?.maxBetPeriod ?? ""
+                }
                 type="number"
                 min={1}
                 max={item.maxBetPeriodLimit ?? 1}
@@ -117,6 +139,7 @@ export function OddsTable({ list }: { list: GameOdds[] }) {
                   handleLimitChange(
                     item.oddsType,
                     item.betType,
+                    item.groupId ?? 0,
                     "maxBetPeriod",
                     Number(e.target.value),
                   )
