@@ -39,7 +39,6 @@ export function List() {
   const t = useTranslations("report.orderlist");
   return (
     <div className="p-2 bg-background flex-1">
-      <div className="py-2">注单列表-真人视讯</div>
       <div className="border rounded-sm relative">
         <ListScrollArea>
           <Table>

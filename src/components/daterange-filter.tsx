@@ -382,7 +382,7 @@ export function DateRangeFilter({
 
       <div className="flex gap-2">
         {quickSetBtn?.map((type) => (
-          <Button key={type} onClick={() => handleQuickSelect(type)}>
+          <Button size="sm" key={type} onClick={() => handleQuickSelect(type)}>
             {t(type)}
           </Button>
         ))}
