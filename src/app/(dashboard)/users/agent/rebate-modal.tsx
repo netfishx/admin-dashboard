@@ -32,7 +32,7 @@ export function RebateModal() {
   const [open, setOpen] = useAtom(rebateModalAtom);
   const userId = useAtomValue(agentIdAtom);
 
-  const [data, setData] = useState<{ list: GameConfig[] | undefined }>();
+  const [data, setData] = useState<GameConfig[] | undefined>();
   useEffect(() => {
     if (userId && open) {
       getAgentConfig({ userId }).then(({ data }) => {
@@ -43,8 +43,8 @@ export function RebateModal() {
   }, [userId, open]);
 
   const handleChange = (gameId: number, value: string) => {
-    if (data?.list) {
-      const list = data.list.map((item) => {
+    if (data) {
+      const list = data.map((item) => {
         if (item.gameId === gameId) {
           return {
             ...item,
@@ -56,15 +56,15 @@ export function RebateModal() {
         }
         return item;
       });
-      setData({ ...data, list });
+      setData(list);
     }
   };
 
   const handleConfirm = () => {
-    if (data?.list) {
+    if (data) {
       updateAgentGameConfig({
         userId,
-        list: data.list,
+        list: data,
       }).then(({ data, message, code }) => {
         console.info(data, message, code);
         setOpen(false);
@@ -87,7 +87,7 @@ export function RebateModal() {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {data?.list
+              {data
                 ?.filter((item) => item.gameType === 61)
                 .map((item) => (
                   <TableRow key={item.gameId}>
@@ -96,6 +96,9 @@ export function RebateModal() {
                       <Input
                         value={item.backRate}
                         type="number"
+                        step={0.01}
+                        min={0}
+                        max={item.maxBackRate ?? 0}
                         onChange={(e) => {
                           handleChange(item.gameId, e.target.value);
                         }}

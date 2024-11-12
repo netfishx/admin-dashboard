@@ -109,7 +109,7 @@ export default function Pages({
                   pageNum: totalPage,
                 },
               }}
-              className={`w-6 h-4 bg-background rounded-full flex items-center justify-center px-1 ${currentPage === totalPage ? "cursor-not-allowed text-muted-foreground" : ""}`}
+              className={`w-6 h-4 rounded-full flex items-center justify-center px-1 ${currentPage === totalPage ? "cursor-not-allowed text-muted-foreground" : ""}`}
             >
               <ChevronLast className="size-4" />
             </Link>

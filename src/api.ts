@@ -153,7 +153,7 @@ export async function addAgent(data: {
 // 用户管理-代理管理-获取代理游戏设置
 export async function getAgentConfig(params: { userId: string }) {
   const user = await getSession();
-  return await apiRequest<{ list: GameConfig[] }>({
+  return await apiRequest<GameConfig[]>({
     url: "/game/config/list",
     params,
     token: user?.token,
