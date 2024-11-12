@@ -26,7 +26,6 @@ export async function MemberList({ searchParams }: { searchParams: any }) {
   return (
     <Suspense fallback={<div>loading...</div>}>
       <div className="p-2 bg-background flex-1">
-        <div className="py-2">{t("title")}</div>
         <div className="border rounded-sm relative">
           <Table>
             <TableHeader>
