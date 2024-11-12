@@ -1,5 +1,6 @@
 "use client";
 
+import { getGameConfig, getGameOdds } from "@/api";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -10,6 +11,15 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Skeleton } from "@/components/ui/skeleton";
 import {
   Table,
   TableBody,
@@ -18,22 +28,58 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { limitModalAtom } from "@/store";
-import { useAtom } from "jotai";
+import type { GameConfig, GameOdds } from "@/lib/types";
+import { agentIdAtom, limitModalAtom } from "@/store";
+import { useAtom, useAtomValue } from "jotai";
 import { useTranslations } from "next-intl";
+import { Suspense, useEffect, useState } from "react";
 
 export function LimitModal() {
   const translations = useTranslations();
   const [open, setOpen] = useAtom(limitModalAtom);
+  const userId = useAtomValue(agentIdAtom);
   const t = useTranslations("users.agents");
-  const data = [
-    {
-      name: "百家乐",
-      min: 100,
-      max: 100000,
-      period: 1000000,
-    },
-  ];
+  const [list, setList] = useState<GameConfig[]>([]);
+  const [gameId, setGameId] = useState<number>();
+  const [data, setData] = useState<GameOdds[]>([]);
+  useEffect(() => {
+    if (open && userId) {
+      getGameConfig().then(({ data }) => {
+        console.info(data);
+        const list = data?.filter((item) => item.status === 1) ?? [];
+        setList(list);
+        setGameId(list[0]?.gameId ?? 0);
+      });
+    }
+  }, [open, userId]);
+  useEffect(() => {
+    if (gameId) {
+      getGameOdds({ gameId }).then(({ data }) => {
+        console.info(data);
+        setData(data ?? []);
+      });
+    }
+  }, [gameId]);
+
+  const handleLimitChange = (
+    oddsType: number,
+    betType: number,
+    groupId: number,
+    key: string,
+    value: number,
+  ) => {
+    console.info(oddsType, betType, groupId, key, value);
+    setData(
+      data.map((item) =>
+        item.groupId === groupId ? { ...item, [key]: value } : item,
+      ),
+    );
+  };
+
+  const handleSave = () => {
+    console.info(data);
+  };
+
   return (
     <Dialog open={open} onOpenChange={(open) => setOpen(open)}>
       <DialogContent className="max-w-5xl">
@@ -41,6 +87,11 @@ export function LimitModal() {
           <DialogTitle>{t("limitSetting")}</DialogTitle>
           <DialogDescription />
         </DialogHeader>
+        <div className="py-2 px-4 bg-background">
+          <Suspense fallback={<Skeleton className="h-9 w-full" />}>
+            <Form list={list} setGameId={setGameId} gameId={gameId} />
+          </Suspense>
+        </div>
         <div className="border rounded-sm">
           <Table>
             <TableHeader>
@@ -53,28 +104,69 @@ export function LimitModal() {
             </TableHeader>
             <TableBody>
               {data.map((item) => (
-                <TableRow key={item.name}>
-                  <TableCell>{item.name}</TableCell>
+                <TableRow key={`${item.oddsType}-${item.betType}`}>
+                  <TableCell>{item.oddsLabel}</TableCell>
                   <TableCell>
                     <Input
-                      defaultValue={item.min}
+                      value={item.minBet}
                       className="inline-block max-w-32 min-w-28"
+                      type="number"
+                      disabled={!item.canEdit}
+                      min={1}
+                      onChange={(e) =>
+                        handleLimitChange(
+                          item.oddsType,
+                          item.betType,
+                          item.groupId ?? 0,
+                          "minBet",
+                          Number(e.target.value),
+                        )
+                      }
                     />
-                    <span className="text-destructive">({item.min})</span>
                   </TableCell>
                   <TableCell>
                     <Input
-                      defaultValue={item.max}
+                      value={item.maxBet}
                       className="inline-block max-w-32 min-w-28"
+                      type="number"
+                      min={1}
+                      max={item.maxBetLimit ?? 1}
+                      disabled={!item.canEdit}
+                      onChange={(e) =>
+                        handleLimitChange(
+                          item.oddsType,
+                          item.betType,
+                          item.groupId ?? 0,
+                          "maxBet",
+                          Number(e.target.value),
+                        )
+                      }
                     />
-                    <span className="text-destructive">({item.max})</span>
+                    <span className="text-destructive">
+                      ({item.maxBetLimit})
+                    </span>
                   </TableCell>
                   <TableCell>
                     <Input
-                      defaultValue={item.period}
+                      value={item.maxBetPeriod}
                       className="inline-block max-w-32 min-w-28"
+                      type="number"
+                      min={1}
+                      max={item.maxBetPeriodLimit ?? 1}
+                      disabled={!item.canEdit}
+                      onChange={(e) =>
+                        handleLimitChange(
+                          item.oddsType,
+                          item.betType,
+                          item.groupId ?? 0,
+                          "maxBetPeriod",
+                          Number(e.target.value),
+                        )
+                      }
                     />
-                    <span className="text-destructive">({item.period})</span>
+                    <span className="text-destructive">
+                      ({item.maxBetPeriodLimit})
+                    </span>
                   </TableCell>
                 </TableRow>
               ))}
@@ -85,9 +177,43 @@ export function LimitModal() {
           <Button variant="outline" onClick={() => setOpen(false)}>
             {translations("cancel")}
           </Button>
-          <Button>{translations("confirm")}</Button>
+          <Button onClick={handleSave}>{translations("confirm")}</Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>
+  );
+}
+
+function Form({
+  list,
+  setGameId,
+  gameId,
+}: {
+  list: GameConfig[];
+  setGameId: (gameId: number) => void;
+  gameId: number | undefined;
+}) {
+  const t = useTranslations("users.agents");
+  return (
+    <>
+      <div className="flex gap-2 items-center">
+        <Label>{t("name")}</Label>
+        <Select
+          value={gameId?.toString() ?? ""}
+          onValueChange={(value) => setGameId(Number(value))}
+        >
+          <SelectTrigger className="w-36">
+            <SelectValue placeholder={t("placeholder")} />
+          </SelectTrigger>
+          <SelectContent>
+            {list.map((item) => (
+              <SelectItem key={item.gameId} value={item.gameId.toString()}>
+                {item.gameName}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      </div>
+    </>
   );
 }

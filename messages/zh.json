@@ -209,7 +209,7 @@
   },
   "users": {
     "agents": {
-      "addAgent": "新增代理",
+      "addAgent": "新增",
       "verify": "验证",
       "upUsername": "上级账号",
       "deptId": "用户层级",

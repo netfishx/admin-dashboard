@@ -156,7 +156,7 @@ export async function addAgent(data: {
 // 用户管理-代理管理-获取代理游戏设置
 export async function getAgentConfig(params: { userId: string }) {
   const user = await getSession();
-  return await apiRequest<{ list: GameConfig[] }>({
+  return await apiRequest<GameConfig[]>({
     url: "/game/config/list",
     params,
     token: user?.token,
@@ -330,13 +330,14 @@ export async function getPeriodReport(params: PeriodReport) {
   });
 }
 
-export async function getGameConfig() {
+export async function getGameConfig(userId?: string) {
   const user = await getSession();
   const [res, res2] = await Promise.all([
     getGameList(1),
     apiRequest<GameConfig[]>({
       url: "/game/config/list",
       token: user?.token,
+      params: userId ? { userId } : undefined,
     }),
   ]);
   return {
