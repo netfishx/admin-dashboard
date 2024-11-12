@@ -207,6 +207,33 @@ export type WithdrawFormData = {
   secret: string;
 };
 
+export type ApplyData = {
+  id: string;
+  orderNo: string;
+  userId: string;
+  userType: number;
+  username: string;
+  nickname: string;
+  parentAccount: string;
+  withdrawMoney: string;
+  applyTime: string;
+  approverName: string;
+  approverStatus: number;
+  withdrawMode: number;
+  moneyStatus: number;
+};
+export type ApplyList = WithPagination & {
+  list: ApplyData[];
+};
+export type ApplyListRequest = {
+  startTime: string;
+  endTime: string;
+  approverStatus?: string | null;
+  pageNum: number;
+  pageSize: number;
+  userId?: string | null;
+  parentAccount?: string | null;
+};
 // 供应商报表listitem
 export type SupplierReportListItem = {
   supplierId: string; // 供应商ID

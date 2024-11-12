@@ -25,7 +25,8 @@ export function ContentModal() {
           <DialogTitle>{t("notifyAnnouncement")}</DialogTitle>
           <DialogDescription />
         </DialogHeader>
-        <div>{data?.content}</div>
+        {/* todo content*/}
+        {/* <div>{data?.content[0].content}</div> */}
         <DialogFooter>
           <Button onClick={() => setOpen(false)}>
             {translations("confirm")}

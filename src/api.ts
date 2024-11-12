@@ -7,6 +7,8 @@ import type {
   AnnouncementAgentListRequest,
   AnnouncementList,
   AnnouncementListRequest,
+  ApplyData,
+  ApplyListRequest,
   ChangeLog,
   GameConfig,
   GameOdds,
@@ -471,6 +473,14 @@ export async function postUserInfoWithdraw(data: WithdrawFormData) {
   });
 }
 
+export async function getWithdrawApplyList(params: ApplyListRequest) {
+  const user = await getSession();
+  return await apiRequest<WithPagination & { list: ApplyData[] }>({
+    url: "/order/withdraw/page",
+    params,
+    token: user?.token,
+  });
+}
 export async function getSupplierReportList() {
   const user = await getSession();
   return await apiRequest<PageData<SupplierReportListItem>>({

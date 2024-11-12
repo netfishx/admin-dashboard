@@ -34,7 +34,11 @@ export default async function Page({
           </div>
         }
       >
-        <PeriodTable searchParams={searchParams} />
+        <div className="p-2 bg-background flex-1 gap-2">
+          <Suspense fallback={null}>
+            <PeriodTable searchParams={searchParams} />
+          </Suspense>
+        </div>
       </Suspense>
     </div>
   );
@@ -131,7 +135,7 @@ async function PeriodTable({
                       <TableCell className="w-24 text-center">
                         {item.memberBackAmount}
                       </TableCell>
-                      <TableCell className="!sticky !right-0 bg-background w-24 text-center">
+                      <TableCell className="sticky right-0 bg-background w-24 text-center">
                         <Actions />
                       </TableCell>
                     </TableRow>

@@ -169,7 +169,7 @@ export function AddModal() {
             <Label className="shrink-0 w-1/4 text-right text-muted-foreground">
               {t("language")}
             </Label>
-            <Select
+            {/* <Select
               defaultValue="0"
               value={language}
               onValueChange={handleLanguageChange}
@@ -182,7 +182,10 @@ export function AddModal() {
                 <SelectItem value="en">{t("english")}</SelectItem>
                 <SelectItem value="jp">{t("japanese")}</SelectItem>
               </SelectContent>
-            </Select>
+            </Select> */}
+            <Button onClick={() => handleLanguageChange("cn")}>
+              {t("chinese")}
+            </Button>
           </div>
           <div className="flex gap-4 items-center">
             <Label className="shrink-0 w-1/4 text-right text-muted-foreground">
