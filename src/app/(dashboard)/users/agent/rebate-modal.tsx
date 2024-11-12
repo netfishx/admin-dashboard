@@ -1,6 +1,6 @@
 "use client";
 
-import { getAgentConfig, updateAgentGameConfig } from "@/api";
+import { getGameConfig, updateAgentGameConfig } from "@/api";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -35,7 +35,7 @@ export function RebateModal() {
   const [data, setData] = useState<GameConfig[] | undefined>();
   useEffect(() => {
     if (userId && open) {
-      getAgentConfig({ userId }).then(({ data }) => {
+      getGameConfig(userId).then(({ data }) => {
         console.info(data);
         setData(data);
       });
@@ -91,7 +91,7 @@ export function RebateModal() {
                 ?.filter((item) => item.gameType === 61)
                 .map((item) => (
                   <TableRow key={item.gameId}>
-                    <TableCell>{item.gameId}</TableCell>
+                    <TableCell>{item.gameName}</TableCell>
                     <TableCell className="flex items-center gap-2">
                       <Input
                         value={item.backRate}

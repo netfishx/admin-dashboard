@@ -327,13 +327,14 @@ export async function getPeriodReport(params: PeriodReport) {
   });
 }
 
-export async function getGameConfig() {
+export async function getGameConfig(userId?: string) {
   const user = await getSession();
   const [res, res2] = await Promise.all([
     getGameList(1),
     apiRequest<GameConfig[]>({
       url: "/game/config/list",
       token: user?.token,
+      params: userId ? { userId } : undefined,
     }),
   ]);
   return {
