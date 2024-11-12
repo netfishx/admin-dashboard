@@ -44,7 +44,7 @@ export function ListFilter() {
       {/* First row */}
       <div className="flex gap-4 items-center">
         <div className="flex gap-2 items-center">
-          <Label>结算日期</Label>
+          <Label>{t("pickdate")}</Label>
           <DateRangeFilter enableTimeSelect />
         </div>
         <div className="flex gap-4 items-center">
@@ -60,7 +60,7 @@ export function ListFilter() {
       {/* Second row */}
       <div className="flex gap-4 items-center">
         <div className="flex gap-4 items-center">
-          <Label className="shrink-0">游戏类型</Label>
+          <Label className="shrink-0">{t("gametype")}</Label>
           {gameTypeOptions.map((game) => (
             <div key={game.id} className="flex items-center space-x-2">
               <Checkbox

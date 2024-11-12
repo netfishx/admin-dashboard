@@ -418,7 +418,26 @@
       "roomType": "房间类型",
       "issueNumber": "期数",
       "playerNumber": "人数",
-      "player": "人次"
+      "player": "人次",
+      "pickdate": "结算日期"
+    },
+    "supplier": {
+      "supplierID": "供应商ID",
+      "supplierName": "供应商名称",
+      "date": "日期",
+      "game": "游戏",
+      "betNum": "下注笔数",
+      "validAmount": "有效金额",
+      "proportionAmount": "比例分成金额",
+      "daterange": "日期范围",
+      "reset": "重置",
+      "search": "查询",
+      "placeholderselect": "请选择",
+      "placeholderinput": "请输入",
+      "gameName": "游戏名称",
+      "roomType": "房间类型",
+      "betAmount": "下注金额",
+      "validBetAmount": "有效金额"
     }
   },
   "pagination": {
