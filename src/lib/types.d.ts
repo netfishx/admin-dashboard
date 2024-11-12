@@ -206,3 +206,44 @@ export type WithdrawFormData = {
   withdrawWay: string;
   secret: string;
 };
+
+export type ApplyData = {
+  id: string;
+  orderNo: string;
+  userId: string;
+  userType: number;
+  username: string;
+  nickname: string;
+  parentAccount: string;
+  withdrawMoney: string;
+  applyTime: string;
+  approverName: string;
+  approverStatus: number;
+  withdrawMode: number;
+  moneyStatus: number;
+};
+export type ApplyList = WithPagination & {
+  list: ApplyData[];
+};
+export type ApplyListRequest = {
+  startTime: string;
+  endTime: string;
+  approverStatus?: string | null;
+  pageNum: number;
+  pageSize: number;
+  userId?: string | null;
+  parentAccount?: string | null;
+};
+// 供应商报表listitem
+export type SupplierReportListItem = {
+  supplierId: string; // 供应商ID
+  analysisTime: number; // 日期（时间戳格式）
+  gameName: string; // 游戏名称
+  gameId: number; // 游戏ID
+  betNum: number; // 下注笔数
+  validAmount: number; // 有效金额
+  shareAmount: number; // 比例分成金额
+  totalBetNum: number; // 累计下注笔数
+  totalValidAmount: number; // 累计有效金额
+  totalShareAmount: number; // 累计比例分成金额
+};

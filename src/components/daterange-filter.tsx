@@ -179,30 +179,36 @@ export function DateRangeFilter({
     "lastmonth",
   ],
   enableTimeSelect = true, // 新增的属性
+  startTimeText = "startTime",
+  endTimeText = "endTime",
 }: {
   quickSetBtn?: rangeType[];
   enableTimeSelect?: boolean;
+  startTimeText?: string;
+  endTimeText?: string;
   onChange?: (dateRange: DateRange) => void;
 }) {
   const t = useTranslations("report.orderlist");
 
   const [dateRange, setDateRange] = useQueryStates({
-    startTime: parseAsInteger
+    [startTimeText]: parseAsInteger
       .withDefault(startOfDay(today).getTime())
       .withOptions({
         clearOnDefault: false,
       }),
-    endTime: parseAsInteger.withDefault(endOfDay(today).getTime()).withOptions({
-      clearOnDefault: false,
-    }),
+    [endTimeText]: parseAsInteger
+      .withDefault(endOfDay(today).getTime())
+      .withOptions({
+        clearOnDefault: false,
+      }),
   });
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     startTransition(async () => {
       await setDateRange({
-        startTime: startOfDay(today).getTime(),
-        endTime: endOfDay(today).getTime(),
+        [startTimeText]: startOfDay(today).getTime(),
+        [endTimeText]: endOfDay(today).getTime(),
       });
     });
   }, []);
@@ -249,11 +255,15 @@ export function DateRangeFilter({
         default:
           return;
       }
-      setDateRange({ startTime: from.getTime(), endTime: to.getTime() });
+      setDateRange({
+        [startTimeText]: from.getTime(),
+        [endTimeText]: to.getTime(),
+      });
     },
     [setDateRange],
   );
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   const handleTimeChange = useCallback(
     (
       type: "start" | "end",
@@ -262,8 +272,8 @@ export function DateRangeFilter({
     ) => {
       const currentDate =
         type === "start"
-          ? new Date(dateRange.startTime)
-          : new Date(dateRange.endTime);
+          ? new Date(dateRange[startTimeText])
+          : new Date(dateRange[endTimeText]);
 
       const newDate = set(currentDate, {
         [timeUnit]: Number.parseInt(value, 10),
@@ -271,10 +281,10 @@ export function DateRangeFilter({
 
       setDateRange((prev) => ({
         ...prev,
-        [type === "start" ? "startTime" : "endTime"]: newDate.getTime(),
+        [type === "start" ? startTimeText : endTimeText]: newDate.getTime(),
       }));
     },
-    [dateRange.startTime, dateRange.endTime, setDateRange],
+    [dateRange[startTimeText], dateRange[endTimeText], setDateRange],
   );
 
   const handleDateRangeChange = useCallback(
@@ -282,48 +292,48 @@ export function DateRangeFilter({
       if (range) {
         const startDate = range.from
           ? set(range.from, {
-              hours: new Date(dateRange.startTime).getHours(),
-              minutes: new Date(dateRange.startTime).getMinutes(),
-              seconds: new Date(dateRange.startTime).getSeconds(),
+              hours: new Date(dateRange[startTimeText]).getHours(),
+              minutes: new Date(dateRange[startTimeText]).getMinutes(),
+              seconds: new Date(dateRange[startTimeText]).getSeconds(),
             })
           : undefined;
 
         const endDate = range.to
           ? set(endOfDay(range.to), {
-              hours: new Date(dateRange.endTime).getHours(),
-              minutes: new Date(dateRange.endTime).getMinutes(),
-              seconds: new Date(dateRange.endTime).getSeconds(),
+              hours: new Date(dateRange[endTimeText]).getHours(),
+              minutes: new Date(dateRange[endTimeText]).getMinutes(),
+              seconds: new Date(dateRange[endTimeText]).getSeconds(),
             })
           : undefined;
 
         setDateRange({
-          startTime: startDate?.getTime(),
-          endTime: endDate?.getTime(),
+          [startTimeText]: startDate?.getTime(),
+          [endTimeText]: endDate?.getTime(),
         });
       }
     },
-    [dateRange.startTime, dateRange.endTime, setDateRange],
+    [dateRange[startTimeText], dateRange[endTimeText], setDateRange],
   );
 
   const formattedDateRange = useMemo(() => {
-    if (!dateRange?.startTime) {
+    if (!dateRange[startTimeText]) {
       return t("choicedate");
     }
 
-    if (!dateRange.endTime) {
-      return format(dateRange.startTime, "yyyy-MM-dd HH:mm:ss");
+    if (!dateRange[endTimeText]) {
+      return format(dateRange[startTimeText], "yyyy-MM-dd HH:mm:ss");
     }
 
     return enableTimeSelect
-      ? `${format(dateRange.startTime, "yyyy-MM-dd HH:mm:ss")} ~ ${format(
-          dateRange.endTime,
+      ? `${format(dateRange[startTimeText], "yyyy-MM-dd HH:mm:ss")} ~ ${format(
+          dateRange[endTimeText],
           "yyyy-MM-dd HH:mm:ss",
         )}`
-      : `${format(dateRange.startTime, "yyyy-MM-dd")} ~ ${format(
-          dateRange.endTime,
+      : `${format(dateRange[startTimeText], "yyyy-MM-dd")} ~ ${format(
+          dateRange[endTimeText],
           "yyyy-MM-dd",
         )}`;
-  }, [dateRange?.startTime, dateRange?.endTime, t, enableTimeSelect]);
+  }, [dateRange[startTimeText], dateRange[endTimeText], t, enableTimeSelect]);
 
   return (
     <div className="flex items-center gap-2">
@@ -346,23 +356,23 @@ export function DateRangeFilter({
               autoFocus
               mode="range"
               selected={{
-                from: new Date(dateRange?.startTime),
-                to: new Date(dateRange?.endTime),
+                from: new Date(dateRange[startTimeText]),
+                to: new Date(dateRange[endTimeText]),
               }}
               onSelect={handleDateRangeChange}
               numberOfMonths={1}
             />
-            {enableTimeSelect && dateRange?.startTime && (
+            {enableTimeSelect && dateRange[startTimeText] && (
               <TimeSelect
                 type="start"
-                date={dateRange.startTime}
+                date={dateRange[startTimeText]}
                 onTimeChange={handleTimeChange}
               />
             )}
-            {enableTimeSelect && dateRange?.endTime && (
+            {enableTimeSelect && dateRange[endTimeText] && (
               <TimeSelect
                 type="end"
-                date={dateRange.endTime}
+                date={dateRange[endTimeText]}
                 onTimeChange={handleTimeChange}
               />
             )}
@@ -372,7 +382,7 @@ export function DateRangeFilter({
 
       <div className="flex gap-2">
         {quickSetBtn?.map((type) => (
-          <Button key={type} onClick={() => handleQuickSelect(type)}>
+          <Button size="sm" key={type} onClick={() => handleQuickSelect(type)}>
             {t(type)}
           </Button>
         ))}

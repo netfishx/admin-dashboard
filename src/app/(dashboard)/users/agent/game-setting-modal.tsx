@@ -1,6 +1,6 @@
 "use client";
 
-import { getAgentConfig, updateAgentGameConfig } from "@/api";
+import { getGameConfig, updateAgentGameConfig } from "@/api";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -31,10 +31,10 @@ export function GameSettingModal() {
   const t = useTranslations("users.agents");
   const userId = useAtomValue(agentIdAtom);
   const [open, setOpen] = useAtom(gameSettingModalAtom);
-  const [data, setData] = useState<{ list: GameConfig[] } | undefined>();
+  const [data, setData] = useState<GameConfig[] | undefined>();
   useEffect(() => {
     if (userId && open) {
-      getAgentConfig({ userId }).then(({ data }) => {
+      getGameConfig(userId).then(({ data }) => {
         console.info("game config", data);
         setData(data);
       });
@@ -42,7 +42,7 @@ export function GameSettingModal() {
   }, [userId, open]);
   const handleChangePercent = (gameId: number, percent: number) => {
     if (data) {
-      const newList = data.list.map((item) =>
+      const newList = data.map((item) =>
         item.gameId === gameId
           ? {
               ...item,
@@ -53,21 +53,20 @@ export function GameSettingModal() {
             }
           : item,
       );
-      setData({ ...data, list: newList });
+      setData(newList);
     }
   };
   const handleChangeStatus = (gameId: number, status: number) => {
     if (data) {
-      const newList = data.list.map((item) =>
+      const newList = data.map((item) =>
         item.gameId === gameId ? { ...item, status } : item,
       );
-      setData({ ...data, list: newList });
+      setData(newList);
     }
   };
   const handleClickUpdate = () => {
     if (data) {
-      const { list } = data;
-      const req = list.map((item) => ({
+      const req = data.map((item) => ({
         gameId: item.gameId,
         gameType: item.gameType,
         percent: item.percent,
@@ -100,11 +99,11 @@ export function GameSettingModal() {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {data?.list
-                  .filter((item) => item.gameType === 61)
+                {data
+                  ?.filter((item) => item.gameType === 61)
                   .map((item) => (
                     <TableRow key={item.gameId}>
-                      <TableCell>{item.gameType}</TableCell>
+                      <TableCell>{item.gameName}</TableCell>
                       <TableCell>
                         <Switch
                           checked={item.status === 1}
@@ -146,11 +145,11 @@ export function GameSettingModal() {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {data?.list
-                  .filter((item) => item.gameType === 20)
+                {data
+                  ?.filter((item) => item.gameType === 20)
                   .map((item) => (
                     <TableRow key={item.gameId}>
-                      <TableCell>{item.gameType}</TableCell>
+                      <TableCell>{item.gameId}</TableCell>
                       <TableCell>
                         <Switch
                           checked={item.status === 1}

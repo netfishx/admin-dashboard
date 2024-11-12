@@ -22,7 +22,9 @@ export function AddAgent() {
   const [open, setOpen] = useState(false);
   return (
     <>
-      <Button onClick={() => setOpen(true)}>{t("addAgent")}</Button>
+      <Button size="sm" onClick={() => setOpen(true)}>
+        {t("addAgent")}
+      </Button>
       <AddAgentModal open={open} onOpenChange={setOpen} />
     </>
   );
@@ -67,9 +69,9 @@ function AddAgentModal({
           <DialogTitle>{t("addAgent")}</DialogTitle>
           <DialogDescription />
         </DialogHeader>
-        <div className="flex flex-col gap-2 w-full px-4">
+        <div className="flex flex-col gap-4 w-full px-4">
           <div className="flex gap-4 items-center">
-            <Label className="shrink-0 w-1/4 text-right text-muted-foreground">
+            <Label className="shrink-0 w-[120px] text-right text-muted-foreground">
               {t("upUsername")}
             </Label>
             <Input
@@ -80,7 +82,7 @@ function AddAgentModal({
             />
           </div>
           <div className="flex gap-4 items-center">
-            <Label className="shrink-0 w-1/4 text-right text-muted-foreground">
+            <Label className="shrink-0 w-[120px] text-right text-muted-foreground">
               {t("username")}
             </Label>
             <Input
@@ -91,7 +93,7 @@ function AddAgentModal({
             />
           </div>
           <div className="flex gap-4 items-center">
-            <Label className="shrink-0 w-1/4 text-right text-muted-foreground">
+            <Label className="shrink-0 w-[120px] text-right text-muted-foreground">
               {t("nickname")}
             </Label>
             <Input
@@ -102,7 +104,7 @@ function AddAgentModal({
             />
           </div>
           <div className="flex gap-4 items-center">
-            <Label className="shrink-0 w-1/4 text-right text-muted-foreground">
+            <Label className="shrink-0 w-[120px] text-right text-muted-foreground">
               {t("password")}
             </Label>
             <Password
@@ -114,7 +116,7 @@ function AddAgentModal({
             />
           </div>
           <div className="flex gap-4 items-center">
-            <Label className="shrink-0 w-1/4 text-right text-muted-foreground">
+            <Label className="shrink-0 w-[120px] text-right text-muted-foreground">
               {t("confirmPassword")}
             </Label>
             <Password

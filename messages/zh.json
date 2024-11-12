@@ -2,9 +2,14 @@
   "title": "代理后台",
   "cancel": "取消",
   "confirm": "确定",
+  "reset": "重置",
+  "search": "查询",
+  "action": "操作",
   "inviteCode": "邀请码",
   "announcement": "公告",
   "more": "查看更多",
+  "placeholder": "请输入",
+  "placeholderSelect": "请选择",
   "gameTotalProfit": "游戏总盈亏",
   "totalDeposit": "总存款金额",
   "totalWithdrawal": "游戏总盈亏",
@@ -204,7 +209,7 @@
   },
   "users": {
     "agents": {
-      "addAgent": "新增代理",
+      "addAgent": "新增",
       "verify": "验证",
       "upUsername": "上级账号",
       "deptId": "用户层级",
@@ -420,7 +425,27 @@
       "agentID": "代理ID",
       "roomType": "房间类型",
       "issueNumber": "期数",
-      "playerNumber": "人数"
+      "playerNumber": "人数",
+      "player": "人次",
+      "pickdate": "结算日期"
+    },
+    "supplier": {
+      "supplierID": "供应商ID",
+      "supplierName": "供应商名称",
+      "date": "日期",
+      "game": "游戏",
+      "betNum": "下注笔数",
+      "validAmount": "有效金额",
+      "proportionAmount": "比例分成金额",
+      "daterange": "日期范围",
+      "reset": "重置",
+      "search": "查询",
+      "placeholderselect": "请选择",
+      "placeholderinput": "请输入",
+      "gameName": "游戏名称",
+      "roomType": "房间类型",
+      "betAmount": "下注金额",
+      "validBetAmount": "有效金额"
     }
   },
   "pagination": {
@@ -577,9 +602,47 @@
       "moneyModalDesc": "请输入资金密码",
       "setMoneyPassword": "设置资金密码",
       "confirmMoneyDesc": "请输入确认资金密码",
-      "confirmMoneyPassword": "确认资金密码",
+      "confirmMoneyPassword":"确认资金密码",
       "editGoogleAuthTitle": "重置谷歌验证",
       "editMoneyPasswordTitle": "修改资金密码"
+    }
+  },
+  "withdraw": {
+    "apply": {
+      "dateRange": "时间范围",
+      "auditStatus": "审核状态",
+      "all": "全部",
+      "enable": "通过",
+      "freeze": "冻结",
+      "userId": "用户ID",
+      "parentAccount": "上级账号",
+      "placeholder": "请输入",
+    
+      "orderNo": "申请单号",
+      "username": "用户ID",
+      "userType": "层级",
+      "account": "账号",
+      "nickname": "昵称",
+      "withdrawMoney": "提款金额",
+      "applyTime": "申请提款时间",
+      "approverTime": "处理时间",
+      "approverName": "处理人",
+      "approverStatus": "审核状态",
+      "withdrawMode": "出金模式",
+      "remark": "资金状态",
+      "moneyStatus": "资金状态",
+      "lock": "锁定",
+      "pass": "通过",
+      "reject": "拒绝",
+      "flow": "流水",
+      "confirm": "确认到账",
+      "again": "再次发起",
+      "withdrawFee": "手续费",
+      "withdrawWay": "用户收款方式", 
+      "withdrawStatus": "预估实际到账",
+      "withdrawModeNew": "用户收款方式",
+      "withdrawAmount": "资金信息",
+      "action": "操作"
     }
   }
 }
