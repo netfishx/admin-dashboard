@@ -10,8 +10,8 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { useTranslations } from "next-intl";
+import DetailButton from "./detail-button";
 
-const tempData = "111111111111111111112221";
 const data = [
   {
     ordernumber: "123",
@@ -23,7 +23,7 @@ const data = [
 ];
 
 export function List() {
-  const t = useTranslations("report.orderlist");
+  const t = useTranslations("report.agent");
   return (
     <div className="p-2 bg-background flex-1">
       <div className="border rounded-sm relative">
@@ -31,13 +31,23 @@ export function List() {
           <Table>
             <TableHeader>
               <TableRow className="bg-muted">
-                <TableHead className="min-w-24 text-center">代理ID</TableHead>
-                <TableHead className="min-w-24 text-center">游戏名称</TableHead>
-                <TableHead className="min-w-24 text-center">房间类型</TableHead>
-                <TableHead className="min-w-24 text-center">期数</TableHead>
-                <TableHead className="min-w-24 text-center">人数</TableHead>
+                <TableHead className="min-w-24 text-center">
+                  {t("agentID")}
+                </TableHead>
+                <TableHead className="min-w-24 text-center">
+                  {t("gameName")}
+                </TableHead>
+                <TableHead className="min-w-24 text-center">
+                  {t("roomType")}
+                </TableHead>
+                <TableHead className="min-w-24 text-center">
+                  {t("issueNumber")}
+                </TableHead>
+                <TableHead className="min-w-24 text-center">
+                  {t("playerNumber")}
+                </TableHead>
                 <TableHead className="w-24 text-center sticky right-0 z-10 bg-muted">
-                  详情
+                  {t("more")}
                 </TableHead>
               </TableRow>
             </TableHeader>
@@ -58,6 +68,9 @@ export function List() {
                   </TableCell>
                   <TableCell className="w-24 text-center">
                     {item.playerNumber}
+                  </TableCell>
+                  <TableCell className="w-24 text-center">
+                    <DetailButton />
                   </TableCell>
                 </TableRow>
               ))}
