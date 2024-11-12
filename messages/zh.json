@@ -417,7 +417,8 @@
       "agentID": "代理ID",
       "roomType": "房间类型",
       "issueNumber": "期数",
-      "playerNumber": "人数"
+      "playerNumber": "人数",
+      "player": "人次"
     }
   },
   "pagination": {

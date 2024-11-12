@@ -82,6 +82,26 @@ export function List() {
       <div className="pt-2">
         <Pages total={0} currentPage={1} pageSize={10} />
       </div>
+      <div className="pt-2 w-1/3">
+        <Table>
+          <TableHeader>
+            <TableRow className="bg-muted">
+              <TableHead className="min-w-24 text-center">
+                {t("issueNumber")}
+              </TableHead>
+              <TableHead className="min-w-24 text-center">
+                {t("player")}
+              </TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            <TableRow>
+              <TableCell className="w-24 text-center">123</TableCell>
+              <TableCell className="w-24 text-center">4456</TableCell>
+            </TableRow>
+          </TableBody>
+        </Table>
+      </div>
     </div>
   );
 }
