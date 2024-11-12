@@ -1,6 +1,17 @@
 "use client";
 import { restoreGameOdds, syncGameOdds, updateGameOdds } from "@/api";
 import { EditNumber } from "@/components/edit-number";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import {
@@ -14,11 +25,79 @@ import type { GameConfig, GameType } from "@/lib/types";
 import { changedOddsLimitAtom, limitAtom, oddsAtom } from "@/store";
 import Big from "big.js";
 import { useAtom } from "jotai";
+import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { parseAsString, useQueryStates } from "nuqs";
-import { useState } from "react";
+import { useState, useTransition } from "react";
 import { toast } from "sonner";
+
+function SyncButton({ onClick }: { onClick: () => void }) {
+  const t = useTranslations("games.odds");
+  const translations = useTranslations();
+  const [isPending, startTransition] = useTransition();
+  return (
+    <AlertDialog>
+      <AlertDialogTrigger asChild>
+        <Button disabled={isPending} variant="outline">
+          {isPending ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
+          {t("sync")}
+        </Button>
+      </AlertDialogTrigger>
+      <AlertDialogContent>
+        <AlertDialogHeader>
+          <AlertDialogTitle>{t("syncTitle")}</AlertDialogTitle>
+          <AlertDialogDescription />
+        </AlertDialogHeader>
+        <AlertDialogFooter>
+          <AlertDialogCancel>{translations("cancel")}</AlertDialogCancel>
+          <AlertDialogAction onClick={() => startTransition(onClick)}>
+            {translations("confirm")}
+          </AlertDialogAction>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
+  );
+}
+
+function RestoreButton({ onClick }: { onClick: () => void }) {
+  const t = useTranslations("games.odds");
+  const translations = useTranslations();
+  const [isPending, startTransition] = useTransition();
+  return (
+    <AlertDialog>
+      <AlertDialogTrigger asChild>
+        <Button disabled={isPending} variant="destructive">
+          {isPending ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
+          {t("reset")}
+        </Button>
+      </AlertDialogTrigger>
+      <AlertDialogContent>
+        <AlertDialogHeader>
+          <AlertDialogTitle>{t("restoreTitle")}</AlertDialogTitle>
+          <AlertDialogDescription />
+        </AlertDialogHeader>
+        <AlertDialogFooter>
+          <AlertDialogCancel>{translations("cancel")}</AlertDialogCancel>
+          <AlertDialogAction onClick={() => startTransition(onClick)}>
+            {translations("confirm")}
+          </AlertDialogAction>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
+  );
+}
+
+function SaveButton({ onClick }: { onClick: () => void }) {
+  const t = useTranslations("games.odds");
+  const [isPending, startTransition] = useTransition();
+  return (
+    <Button disabled={isPending} onClick={() => startTransition(onClick)}>
+      {isPending ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
+      {t("save")}
+    </Button>
+  );
+}
 
 export function OddsForm({
   list,
@@ -193,13 +272,9 @@ export function OddsForm({
         </div>
       </div>
       <div className="flex gap-2">
-        <Button variant="outline" onClick={handleSync}>
-          {t("sync")}
-        </Button>
-        <Button variant="destructive" onClick={handleRestore}>
-          {t("reset")}
-        </Button>
-        <Button onClick={handleSave}>{t("save")}</Button>
+        <SyncButton onClick={handleSync} />
+        <RestoreButton onClick={handleRestore} />
+        <SaveButton onClick={handleSave} />
       </div>
     </>
   );

@@ -142,7 +142,9 @@
       "max": "个人单注最高限额",
       "total": "个人单期最高限额",
       "tip": "（*不要超过最高限额）",
-      "smallType": "玩法"
+      "smallType": "玩法",
+      "syncTitle": "请确认是否同步到同类游戏？",
+      "restoreTitle": "请确认是否恢复默认赔率？"
     },
     "ratio": {
       "type": "游戏类别",

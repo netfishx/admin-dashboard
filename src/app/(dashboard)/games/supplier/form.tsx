@@ -9,15 +9,18 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Loader2 } from "lucide-react";
 
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useQueryState } from "nuqs";
+import { useTransition } from "react";
 
 export function SupplierForm() {
   const t = useTranslations("games.supplier");
   const [id, setId] = useQueryState("userId");
   const router = useRouter();
+  const [isPending, startTransition] = useTransition();
 
   return (
     <div className="flex justify-between items-center bg-background py-2 px-4">
@@ -42,7 +45,15 @@ export function SupplierForm() {
           />
         </div>
       </div>
-      <Button onClick={() => router.refresh()}>{t("search")}</Button>
+      <Button
+        onClick={() => {
+          startTransition(router.refresh);
+        }}
+        disabled={isPending}
+      >
+        {isPending ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
+        {t("search")}
+      </Button>
     </div>
   );
 }
