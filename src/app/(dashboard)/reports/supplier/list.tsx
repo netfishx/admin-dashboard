@@ -9,21 +9,11 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import type { PageData, SupplierReportListItem } from "@/lib/types";
 import { useTranslations } from "next-intl";
-import DetailButton from "./detail-button";
 
-const data = [
-  {
-    ordernumber: "123",
-    gameName: "百家乐",
-    roomType: "大厅",
-    issueNumber: "123",
-    playerNumber: "123",
-  },
-];
-
-export function List() {
-  const t = useTranslations("report.agent");
+export function List({ data }: { data: PageData<SupplierReportListItem> }) {
+  const t = useTranslations("report.supplier");
   return (
     <div className="p-2 bg-background flex-1">
       <div className="border rounded-sm relative">
@@ -32,45 +22,51 @@ export function List() {
             <TableHeader>
               <TableRow className="bg-muted">
                 <TableHead className="min-w-24 text-center">
-                  {t("agentID")}
+                  {t("supplierID")}
                 </TableHead>
                 <TableHead className="min-w-24 text-center">
-                  {t("gameName")}
+                  {t("supplierName")}
                 </TableHead>
                 <TableHead className="min-w-24 text-center">
-                  {t("roomType")}
+                  {t("date")}
                 </TableHead>
                 <TableHead className="min-w-24 text-center">
-                  {t("issueNumber")}
+                  {t("game")}
                 </TableHead>
                 <TableHead className="min-w-24 text-center">
-                  {t("playerNumber")}
+                  {t("betNum")}
                 </TableHead>
-                <TableHead className="w-24 text-center sticky right-0 z-10 bg-muted">
-                  {t("more")}
+                <TableHead className="min-w-24 text-center">
+                  {t("validAmount")}
+                </TableHead>
+                <TableHead className="min-w-24 text-center">
+                  {t("proportionAmount")}
                 </TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
-              {data.map((item) => (
-                <TableRow key={item.ordernumber}>
+              {data?.list?.map((item) => (
+                <TableRow key={item.supplierId}>
                   <TableCell className="w-24 text-center">
-                    {item.ordernumber}
+                    {item.supplierId}
                   </TableCell>
                   <TableCell className="w-24 text-center">
                     {item.gameName}
                   </TableCell>
                   <TableCell className="w-24 text-center">
-                    {item.roomType}
+                    {item.analysisTime}
                   </TableCell>
                   <TableCell className="w-24 text-center">
-                    {item.issueNumber}
+                    {item.gameId}
                   </TableCell>
                   <TableCell className="w-24 text-center">
-                    {item.playerNumber}
+                    {item.betNum}
                   </TableCell>
                   <TableCell className="w-24 text-center">
-                    <DetailButton />
+                    {item.validAmount}
+                  </TableCell>
+                  <TableCell className="w-24 text-center">
+                    {item.shareAmount}
                   </TableCell>
                 </TableRow>
               ))}
@@ -82,22 +78,32 @@ export function List() {
       <div className="pt-2">
         <Pages total={0} currentPage={1} pageSize={10} />
       </div>
-      <div className="pt-2 w-1/3">
+      <div className="pt-2 w-2/5">
         <Table>
           <TableHeader>
             <TableRow className="bg-muted">
               <TableHead className="min-w-24 text-center">
-                {t("issueNumber")}
+                {t("betNum")}
               </TableHead>
               <TableHead className="min-w-24 text-center">
-                {t("player")}
+                {t("betAmount")}
+              </TableHead>
+              <TableHead className="min-w-24 text-center">
+                {t("validBetAmount")}
               </TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             <TableRow>
-              <TableCell className="w-24 text-center">123</TableCell>
-              <TableCell className="w-24 text-center">4456</TableCell>
+              <TableCell className="w-24 text-center">
+                {data?.list?.[0]?.totalBetNum ?? 0}
+              </TableCell>
+              <TableCell className="w-24 text-center">
+                {data?.list?.[0]?.totalValidAmount ?? 0}
+              </TableCell>
+              <TableCell className="w-24 text-center">
+                {data?.list?.[0]?.totalShareAmount ?? 0}
+              </TableCell>
             </TableRow>
           </TableBody>
         </Table>

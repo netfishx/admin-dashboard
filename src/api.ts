@@ -18,6 +18,7 @@ import type {
   PeriodReport,
   RatioReportListTypes,
   SupplierConfig,
+  SupplierReportListItem,
   UserBasicInfo,
   WithPagination,
   WithdrawFormData,
@@ -466,6 +467,14 @@ export async function postUserInfoWithdraw(data: WithdrawFormData) {
     url: "/order/withdraw/agent/apply",
     method: "POST",
     data,
+    token: user?.token,
+  });
+}
+
+export async function getSupplierReportList() {
+  const user = await getSession();
+  return await apiRequest<PageData<SupplierReportListItem>>({
+    url: "/report/agent/baccarat/supply",
     token: user?.token,
   });
 }
