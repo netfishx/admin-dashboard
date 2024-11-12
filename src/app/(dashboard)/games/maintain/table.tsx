@@ -1,5 +1,16 @@
 "use client";
 import { editMaintain } from "@/api";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
@@ -26,32 +37,55 @@ function EditButton({
 }: { children: ReactNode; data: MaintainGame }) {
   const [isPending, startTransition] = useTransition();
   const router = useRouter();
+  const t = useTranslations();
+  const translations = useTranslations("games.maintain");
   return (
-    <Button
-      variant="link"
-      className={cn([
-        "hover:no-underline",
-        data.status
-          ? "text-destructive hover:text-destructive/80"
-          : "hover:text-primary/80",
-      ])}
-      disabled={isPending}
-      onClick={() => {
-        startTransition(async () => {
-          const res = await editMaintain({
-            status: data.status ? 0 : 1,
-            ids: [data.id],
-          });
-          if (res.code === 0) {
-            router.refresh();
-          } else {
-            toast.error(res.message);
-          }
-        });
-      }}
-    >
-      {isPending ? <Loader2 className="w-4 h-4 animate-spin" /> : children}
-    </Button>
+    <AlertDialog>
+      <AlertDialogTrigger asChild>
+        <Button
+          variant="link"
+          className={cn([
+            "hover:no-underline",
+            data.status
+              ? "text-destructive hover:text-destructive/80"
+              : "hover:text-primary/80",
+          ])}
+          disabled={isPending}
+        >
+          {isPending ? <Loader2 className="w-4 h-4 animate-spin" /> : children}
+        </Button>
+      </AlertDialogTrigger>
+      <AlertDialogContent>
+        <AlertDialogHeader>
+          <AlertDialogTitle>
+            {translations("title", {
+              status: translations(data.status === 1 ? "open" : "close"),
+            })}
+          </AlertDialogTitle>
+          <AlertDialogDescription />
+        </AlertDialogHeader>
+        <AlertDialogFooter>
+          <AlertDialogCancel>{t("cancel")}</AlertDialogCancel>
+          <AlertDialogAction
+            onClick={() => {
+              startTransition(async () => {
+                const res = await editMaintain({
+                  status: data.status ? 0 : 1,
+                  ids: [data.id],
+                });
+                if (res.code === 0) {
+                  router.refresh();
+                } else {
+                  toast.error(res.message);
+                }
+              });
+            }}
+          >
+            {t("confirm")}
+          </AlertDialogAction>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
   );
 }
 

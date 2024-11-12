@@ -196,7 +196,8 @@
       "close": "结束维护",
       "batchOpen": "批量开启维护",
       "batchClose": "批量结束维护",
-      "action": "操作"
+      "action": "操作",
+      "title": "请确认是否{status}？"
     }
   },
   "users": {

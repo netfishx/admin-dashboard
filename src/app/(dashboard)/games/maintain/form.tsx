@@ -1,6 +1,16 @@
 "use client";
-
 import { editMaintain } from "@/api";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
@@ -19,27 +29,50 @@ function BatchButton({
     "checked",
     parseAsArrayOf(parseAsString).withDefault([]),
   );
+  const t = useTranslations();
+  const translations = useTranslations("games.maintain");
   return (
-    <Button
-      variant={status === 0 ? "destructive" : "default"}
-      disabled={isPending}
-      onClick={() =>
-        startTransition(async () => {
-          const res = await editMaintain({
-            status,
-            ids: checked,
-          });
-          if (res.code === 0) {
-            router.refresh();
-          } else {
-            toast.error(res.message);
-          }
-        })
-      }
-    >
-      {isPending ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
-      {children}
-    </Button>
+    <AlertDialog>
+      <AlertDialogTrigger asChild>
+        <Button
+          variant={status === 0 ? "destructive" : "default"}
+          disabled={isPending}
+        >
+          {isPending ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
+          {children}
+        </Button>
+      </AlertDialogTrigger>
+      <AlertDialogContent>
+        <AlertDialogHeader>
+          <AlertDialogTitle>
+            {translations("title", {
+              status: translations(status === 0 ? "open" : "close"),
+            })}
+          </AlertDialogTitle>
+          <AlertDialogDescription />
+        </AlertDialogHeader>
+        <AlertDialogFooter>
+          <AlertDialogCancel>{t("cancel")}</AlertDialogCancel>
+          <AlertDialogAction
+            onClick={() =>
+              startTransition(async () => {
+                const res = await editMaintain({
+                  status,
+                  ids: checked,
+                });
+                if (res.code === 0) {
+                  router.refresh();
+                } else {
+                  toast.error(res.message);
+                }
+              })
+            }
+          >
+            {t("confirm")}
+          </AlertDialogAction>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
   );
 }
 

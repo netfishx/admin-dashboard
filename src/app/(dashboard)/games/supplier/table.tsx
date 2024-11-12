@@ -17,8 +17,8 @@ async function SupplierTableHeader() {
     <TableHeader>
       <TableRow className="bg-muted">
         <TableHead>{t("name")}</TableHead>
-        <TableHead>{t("video")}</TableHead>
-        <TableHead>{t("supplierId")}</TableHead>
+        <TableHead className="min-w-60">{t("video")}</TableHead>
+        <TableHead className="min-w-60">{t("supplierId")}</TableHead>
         <TableHead>{t("supplierName")}</TableHead>
         <TableHead>{t("quota")}</TableHead>
         <TableHead>{t("percent")}</TableHead>
