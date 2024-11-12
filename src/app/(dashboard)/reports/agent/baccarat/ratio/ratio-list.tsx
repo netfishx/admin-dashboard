@@ -104,7 +104,7 @@ export async function RatioList({
                     {item.totalProfitLossAmount}
                   </TableCell>
                   <TableCell className="w-24 text-center sticky right-0 z-10 bg-background">
-                    <DetailButton id={item.userId as string} />
+                    <DetailButton item={item} />
                   </TableCell>
                 </TableRow>
               ))}

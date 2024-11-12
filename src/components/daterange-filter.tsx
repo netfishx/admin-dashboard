@@ -182,6 +182,7 @@ export function DateRangeFilter({
 }: {
   quickSetBtn?: rangeType[];
   enableTimeSelect?: boolean;
+  onChange?: (dateRange: DateRange) => void;
 }) {
   const t = useTranslations("report.orderlist");
 
