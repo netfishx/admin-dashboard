@@ -6,7 +6,6 @@ import { MultiSelect } from "@/components/multi-select";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import {} from "@/components/ui/select";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useQueryState } from "nuqs";
@@ -35,7 +34,7 @@ export function Form() {
     })),
   ];
   const handleChange = (selected: number[]) => {
-    console.log("🌸 ~ selected:", selected);
+    console.info("~ selected:", selected);
     // const approverStatuslist = selected.map((item) =>
     //   Number.parseInt(item.value, 10),
     // );
