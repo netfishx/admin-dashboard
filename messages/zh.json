@@ -414,7 +414,10 @@
       "leastlevelID": "末级代理ID",
       "betNum": "笔数",
       "memberProfitLoss": "会员输赢",
-      "agentID": "代理ID"
+      "agentID": "代理ID",
+      "roomType": "房间类型",
+      "issueNumber": "期数",
+      "playerNumber": "人数"
     }
   },
   "pagination": {
