@@ -153,7 +153,7 @@ export function SupplierDialog({ games }: { games: GameType[] }) {
                 type="number"
                 className="flex-1"
                 min={0}
-                step={0.01}
+                step={1}
                 required
                 placeholder={t("quota")}
                 defaultValue={data?.distributionAmount}

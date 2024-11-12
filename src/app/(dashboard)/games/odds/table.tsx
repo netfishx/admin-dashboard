@@ -79,7 +79,7 @@ export function OddsTable({ list }: { list: GameOdds[] }) {
               value={odds[`${item.oddsType}-${item.betType}`] ?? ""}
               type="number"
               min={0}
-              step={0.01}
+              step={0.001}
               onChange={(e) =>
                 handleOddsChange(item.oddsType, item.betType, e.target.value)
               }
