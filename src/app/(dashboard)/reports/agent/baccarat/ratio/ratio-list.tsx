@@ -114,8 +114,8 @@ export async function RatioList({
         <div className="pt-2">
           <Pages
             total={data?.total ?? 0}
-            currentPage={Number(data?.page ?? 1)}
-            pageSize={Number(data?.size ?? 10)}
+            currentPage={Number(data?.pageNum ?? 1)}
+            pageSize={Number(data?.pageSize ?? 10)}
           />
         </div>
       </div>

@@ -1,5 +1,5 @@
 "use client";
-import { type LoginLog, getLoginLog } from "@/api";
+import { getLoginLog } from "@/api";
 import { ModalPagination } from "@/components/modal-pagination";
 import { Button } from "@/components/ui/button";
 import {
@@ -19,6 +19,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import type { LoginLog } from "@/lib/types";
 import { cn } from "@/lib/utils";
 import { agentIdAtom, loginLogModalAtom } from "@/store";
 import { useAtom, useAtomValue } from "jotai";
@@ -39,8 +40,8 @@ export function LoginLogModal() {
         if (data) {
           setData(data.data);
           setTotal(data.total);
-          setPage(data.page);
-          setSize(data.size);
+          setPage(data.pageNum);
+          setSize(data.pageSize);
         }
       });
     }

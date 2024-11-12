@@ -62,6 +62,33 @@ export type MaintainGame = {
 export type RatioReportListTypes = {
   [key: string]: string | number | undefined | null | string[] | number[];
 };
+export interface AgentData {
+  upUsername: string;
+  deptId: number;
+  id: string;
+  username: string;
+  nickname: string;
+  status: number;
+}
+export type MemberList = {
+  id: string;
+  level: string;
+  username: string;
+  nickname: string;
+  status: number;
+  upUsername: string;
+  debtAmount: number;
+  creditAmount: number;
+  depositAddress: string;
+};
+
+export interface LoginLog {
+  userId: string;
+  loginTime: string;
+  ip: string;
+  address: string;
+  status: number;
+}
 
 export type GameConfig = {
   gameType?: number;
