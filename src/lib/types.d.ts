@@ -62,6 +62,33 @@ export type MaintainGame = {
 export type RatioReportListTypes = {
   [key: string]: string | number | undefined | null | string[] | number[];
 };
+export interface AgentData {
+  upUsername: string;
+  deptId: number;
+  id: string;
+  username: string;
+  nickname: string;
+  status: number;
+}
+export type MemberList = {
+  id: string;
+  level: string;
+  username: string;
+  nickname: string;
+  status: number;
+  upUsername: string;
+  debtAmount: number;
+  creditAmount: number;
+  depositAddress: string;
+};
+
+export interface LoginLog {
+  userId: string;
+  loginTime: string;
+  ip: string;
+  address: string;
+  status: number;
+}
 
 export type GameConfig = {
   gameType?: number;
@@ -108,22 +135,28 @@ export type ChangeLog = {
 
 // 公告新增 编辑
 export type Announcement = {
-  id?: string;
-  startTime: string;
-  endTime: string;
-  content: string;
+  id?: string | null; // 编辑时传
   type: string;
-  language: string;
+  content: { language: string; content: string }[];
   status: string;
-  userId?: string;
+  startTime: number | null;
+  endTime: number | null;
 };
-// 公告列表请求
+// 公告列表请求 全平台
 export type AnnouncementListRequest = {
   pageSize: number;
   pageNum: number;
   userId?: string;
-  startTime: string;
-  endTime: string;
+  startTime?: string;
+  endTime?: string;
+  language: string;
+};
+// 公告列表请求 本级
+export type AnnouncementAgentListRequest = {
+  level: number | string;
+  language: string;
+  pageSize: number;
+  pageNum: number;
 };
 
 // 公告列表返回

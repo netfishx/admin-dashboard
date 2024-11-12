@@ -19,8 +19,8 @@ export async function MemberList({ searchParams }: { searchParams: any }) {
     ...search,
     openStartTime: search?.startTime,
     openEndTime: search?.endTime,
-    page: Number(search?.page ?? 1),
-    size: Number(search?.size ?? 10),
+    pageNum: Number(search?.pageNum ?? 1),
+    pageSize: Number(search?.pageSize ?? 10),
   });
 
   return (
@@ -128,8 +128,8 @@ export async function MemberList({ searchParams }: { searchParams: any }) {
         <div className="pt-2">
           <Pages
             total={data?.total ?? 0}
-            currentPage={Number(data?.page ?? 1)}
-            pageSize={Number(data?.size ?? 10)}
+            currentPage={Number(data?.pageNum ?? 1)}
+            pageSize={Number(data?.pageSize ?? 10)}
           />
         </div>
       </div>

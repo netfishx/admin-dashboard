@@ -7,7 +7,7 @@ index 26e4749318b071edb92b4256c2d1e268b267aa6e..9e5c7af772ba1e107c9d0afe4b346216
    "description": "👻 Primitive and flexible state management for React",
    "private": false,
 -  "type": "commonjs",
-   "version": "2.10.1",
+   "version": "2.10.2",
    "main": "./index.js",
    "types": "./index.d.ts",
    "typesVersions": {

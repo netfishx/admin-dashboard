@@ -1,4 +1,3 @@
-import type { AgentData } from "@/api";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -11,6 +10,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Password } from "@/components/ui/password";
+import type { AgentData } from "@/lib/types";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 

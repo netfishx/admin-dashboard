@@ -1,4 +1,4 @@
-import { type AgentData, getAgents } from "@/api";
+import { getAgents } from "@/api";
 import Pages from "@/components/custom-pagination";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
@@ -9,6 +9,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import type { AgentData } from "@/lib/types";
 import { cn } from "@/lib/utils";
 import { getTranslations } from "next-intl/server";
 import { Suspense } from "react";
@@ -90,8 +91,8 @@ async function TableWrapper({
       <div className="pt-2">
         <Pages
           total={data?.total ?? 0}
-          currentPage={Number(data?.page ?? 1)}
-          pageSize={Number(data?.size ?? 10)}
+          currentPage={Number(data?.pageNum ?? 1)}
+          pageSize={Number(data?.pageSize ?? 10)}
         />
       </div>
     </>
@@ -121,7 +122,7 @@ async function TableBodyWrapper({ list }: { list: AgentData[] | undefined }) {
               {t(`statusLabel.${item.status}`)}
             </div>
           </TableCell>
-          <TableCell className="min-w-[400px] text-center flex gap-2 2xl:gap-6">
+          <TableCell className="min-w-[400px] text-center flex justify-between">
             <Action data={item} />
           </TableCell>
         </TableRow>

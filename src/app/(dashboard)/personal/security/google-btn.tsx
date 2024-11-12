@@ -5,14 +5,22 @@ import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { GoogleModal } from "./google-modal";
 
-export function GoogleBtn() {
+export function GoogleBtn({
+  secret,
+  qrcode,
+}: { secret: string; qrcode: string }) {
   const t = useTranslations("personal.security");
   const [open, setOpen] = useState(false);
   return (
     <>
       <Button onClick={() => setOpen(true)}>{t("setting")}</Button>
 
-      <GoogleModal open={open} onOpenChange={setOpen} />
+      <GoogleModal
+        open={open}
+        onOpenChange={setOpen}
+        secret={secret}
+        qrcode={qrcode}
+      />
     </>
   );
 }

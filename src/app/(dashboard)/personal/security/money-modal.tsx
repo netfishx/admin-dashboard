@@ -1,5 +1,6 @@
 "use client";
 
+import { bindFundPassword, editFundPassword } from "@/api";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -13,7 +14,6 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
-
 export function MoneyModal({
   open,
   onOpenChange,
@@ -23,34 +23,56 @@ export function MoneyModal({
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const isEdit = false;
+  const submit = async () => {
+    setLoading(true);
+    if (isEdit) {
+      const { code, message } = await editFundPassword({
+        oldSecret: oldPassword,
+        newSecret: newPassword,
+      });
+    } else {
+      const { code, message } = await bindFundPassword({
+        secret: newPassword,
+        userId: "-1",
+      });
+    }
+
+    setLoading(false);
+  };
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>{t("editMoneyPassword")}</DialogTitle>
+          <DialogTitle>
+            {isEdit ? t("editMoneyPasswordTitle") : t("setMoneyPassword")}
+          </DialogTitle>
           <DialogDescription />
         </DialogHeader>
-
-        <div className="flex gap-2 items-center pt-4">
-          <div className="flex gap-4 items-center">
-            <Label className="shrink-0 w-[100px] text-right text-muted-foreground">
-              <span className="text-red-500">*</span>
-              {t("oldPassword")}
-            </Label>
-            <Input
-              type="password"
-              placeholder={t("placeholderOld")}
-              value={oldPassword}
-              onChange={(e) => setOldPassword(e.target.value)}
-            />
+        {isEdit ? (
+          <div className="flex gap-2 items-center pt-4">
+            <div className="flex gap-4 items-center">
+              <Label className="shrink-0 w-[100px] text-right text-muted-foreground">
+                <span className="text-destructive">*</span>
+                {t("oldPassword")}
+              </Label>
+              <Input
+                type="password"
+                placeholder={t("placeholderOld")}
+                value={oldPassword}
+                onChange={(e) => setOldPassword(e.target.value)}
+              />
+            </div>
           </div>
-        </div>
+        ) : null}
+
         <div className="flex gap-2 items-center">
           <div className="flex gap-4 items-center">
             <Label className="shrink-0 w-[100px] text-right text-muted-foreground">
-              <span className="text-red-500">*</span>
-              {t("newPassword")}
+              <span className="text-destructive">*</span>
+              {isEdit ? t("newPassword") : t("fundPassword")}
             </Label>
             <Input
               type="password"
@@ -60,9 +82,11 @@ export function MoneyModal({
             />
           </div>
         </div>
+
         <div className="flex gap-2 items-center">
           <div className="flex gap-4 items-center">
             <Label className="shrink-0 w-[100px] text-right text-muted-foreground">
+              <span className="text-destructive">*</span>
               {t("confirmMoneyPassword")}
             </Label>
             <Input
@@ -78,7 +102,9 @@ export function MoneyModal({
           <Button variant="outline" onClick={() => onOpenChange(false)}>
             {translations("cancel")}
           </Button>
-          <Button>{translations("confirm")}</Button>
+          <Button onClick={submit} disabled={loading}>
+            {translations("confirm")}
+          </Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>
