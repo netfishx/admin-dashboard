@@ -21,6 +21,10 @@ export const approverStatusDict = [
     value: 2,
     label: "已拒绝",
   },
+  {
+    value: 3,
+    label: "已通过",
+  },
 ];
 export const withdrawModeDict = [
   {

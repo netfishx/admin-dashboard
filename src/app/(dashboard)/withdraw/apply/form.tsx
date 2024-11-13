@@ -1,11 +1,16 @@
 "use client";
 
 import { DateRangeFilter } from "@/components/daterange-filter";
-import { MultiSelect } from "@/components/multi-select";
-
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useQueryState } from "nuqs";
@@ -21,26 +26,20 @@ export function Form() {
   const [parentAccount, setParentAccount] = useQueryState("parentAccount", {
     defaultValue: "",
   });
-  //   const [approverStatusList, setApproverStatusList] = useQueryState(
-  //     "approverStatusList",
-  //     {
-  //       defaultValue: [],
-  //     },
-  //   );
+  const [approverStatus, setApproverStatus] = useQueryState<string | null>(
+    "approverStatus",
+    {
+      defaultValue: null,
+      parse: (value) => value as string | null,
+    },
+  );
   const approverStatusOptions = [
     ...approverStatusDict.map((item) => ({
       value: item.value.toString(),
       label: item.label,
     })),
   ];
-  const handleChange = (selected: number[]) => {
-    console.info("~ selected:", selected);
-    // const approverStatuslist = selected.map((item) =>
-    //   Number.parseInt(item.value, 10),
-    // );
-    // // setApproverStatusList(approverStatuslist);
-    // return approverStatuslist;
-  };
+
   return (
     <div className="flex flex-col gap-2  bg-background py-2 px-4">
       <div className="flex gap-2 items-center">
@@ -50,10 +49,27 @@ export function Form() {
         </div>
         <div className="flex gap-2 items-center">
           <Label className="shrink-0">{t("auditStatus")}</Label>
-          <MultiSelect
-            options={approverStatusOptions}
-            onChange={handleChange}
-          />
+          <Select
+            defaultValue={approverStatusOptions[0]?.value}
+            onValueChange={(value) =>
+              setApproverStatus(value === "null" ? null : value)
+            }
+            value={approverStatus}
+          >
+            <SelectTrigger className="w-36">
+              <SelectValue placeholder={t("placeholder")} />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem key="all" value="null">
+                全部
+              </SelectItem>
+              {approverStatusOptions.map((item) => (
+                <SelectItem key={item.value} value={item.value}>
+                  {item.label}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
         </div>
         <div className="flex gap-2 items-center">
           <Label className="shrink-0">{t("userId")}</Label>
