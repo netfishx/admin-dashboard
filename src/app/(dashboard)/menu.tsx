@@ -226,7 +226,7 @@ function OpenedMenu({ pathname }: { pathname: string }) {
           <MenuItem label={t("system.resource")} href="/system/resource" />
           <MenuItem
             label={t("system.announcement.title")}
-            href={`/system/announcement/all?startTime=${times.startTime}&endTime=${times.endTime}`}
+            href={"/system/announcement/all"}
             subHref={["/system/announcement/own"]}
           />
         </CollapsibleContent>

@@ -37,8 +37,9 @@ export default function Action({ data }: { data: AgentData }) {
   return (
     <>
       <Button
-        variant="link"
-        className="hover:no-underline hover:text-primary/80 px-0"
+        variant="ghost"
+        size="sm"
+        className="text-primary hover:text-primary/80 text-sm"
         onClick={() => {
           setAgentId(data.id);
           setUserInfoModal(true);
@@ -47,8 +48,9 @@ export default function Action({ data }: { data: AgentData }) {
         {t("userInfo")}
       </Button>
       <Button
-        variant="link"
-        className="hover:no-underline hover:text-primary/80 px-0"
+        variant="ghost"
+        size="sm"
+        className="text-primary hover:text-primary/80 text-sm"
         onClick={() => {
           setTransferMoneyModal(true);
         }}
@@ -56,8 +58,9 @@ export default function Action({ data }: { data: AgentData }) {
         {t("transferMoney")}
       </Button>
       <Button
-        variant="link"
-        className="hover:no-underline hover:text-primary/80 px-0"
+        variant="ghost"
+        size="sm"
+        className="text-primary hover:text-primary/80 text-sm"
         onClick={() => {
           setAgentId(data.id);
           setGameSettingModal(true);
@@ -66,8 +69,9 @@ export default function Action({ data }: { data: AgentData }) {
         {t("gamesSetting")}
       </Button>
       <Button
-        variant="link"
-        className="hover:no-underline hover:text-primary/80 px-0"
+        variant="ghost"
+        size="sm"
+        className="text-primary hover:text-primary/80 text-sm"
         onClick={() => {
           setAgentId(data.id);
           setLimitModal(true);
@@ -76,8 +80,9 @@ export default function Action({ data }: { data: AgentData }) {
         {t("limitSetting")}
       </Button>
       <Button
-        variant="link"
-        className="hover:no-underline hover:text-primary/80 px-0"
+        variant="ghost"
+        size="sm"
+        className="text-primary hover:text-primary/80 text-sm"
         onClick={() => {
           setAgentId(data.id);
           setRebateModal(true);
@@ -86,8 +91,9 @@ export default function Action({ data }: { data: AgentData }) {
         {t("rebateSetting")}
       </Button>
       <Button
-        variant="link"
-        className="hover:no-underline hover:text-primary/80 px-0"
+        variant="ghost"
+        size="sm"
+        className="text-primary hover:text-primary/80 text-sm"
         onClick={() => {
           setAgentId(data.id);
           setLoginLogModal(true);
@@ -96,8 +102,9 @@ export default function Action({ data }: { data: AgentData }) {
         {t("loginLog")}
       </Button>
       <Button
-        variant="link"
-        className="hover:no-underline hover:text-primary/80 px-0"
+        variant="ghost"
+        size="sm"
+        className="text-primary hover:text-primary/80 text-sm"
         onClick={() => {
           setAgentId(data.id);
           setChangeLogModal(true);
