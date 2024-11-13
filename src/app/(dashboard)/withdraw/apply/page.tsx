@@ -1,6 +1,5 @@
 import { getWithdrawApplyList } from "@/api";
 import Pages from "@/components/custom-pagination";
-import { Empty } from "@/components/empty";
 import ListScrollArea from "@/components/list-scroll-area";
 import { ScrollBar } from "@/components/ui/scroll-area";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -24,6 +23,7 @@ import {
 } from "../tools";
 import { Actions } from "./actions";
 import { Form } from "./form";
+import { MoneyBtn } from "./money-btn";
 
 export default async function Page({
   searchParams,
@@ -109,97 +109,90 @@ async function TableWrapper({
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {data?.list && data.list.length > 0 ? (
-                  data.list.map((item) => (
-                    <TableRow key={item.id}>
-                      <TableCell className="min-w-32 text-center">
-                        {item.orderNo}
-                      </TableCell>
-                      <TableCell className="min-w-32 text-center">
-                        {item.userId}
-                      </TableCell>
-                      <TableCell className="min-w-32 text-center">
-                        {translateValue(item.userType, userTypeDict)}
-                      </TableCell>
-                      <TableCell className="min-w-32 text-center">
-                        {item.username}
-                      </TableCell>
-                      <TableCell className="min-w-32 text-center">
-                        {item.nickname}
-                      </TableCell>
-                      <TableCell className="min-w-32 text-center">
-                        {item.parentAccount}
-                      </TableCell>
-                      <TableCell className="min-w-32 text-center">
-                        {item.withdrawMoney}
-                      </TableCell>
-                      <TableCell className="min-w-32 text-center">
-                        {item.applyTime}
-                      </TableCell>
-                      <TableCell className="min-w-32 text-center">
-                        {item.approverName}
-                      </TableCell>
-                      <TableCell className="min-w-32 text-center">
-                        <div
-                          className={cn(
-                            "px-2 rounded-sm w-fit text-center inline-block",
-                            item.approverStatus === 0 &&
-                              "text-primary bg-primary/10",
-                            item.approverStatus === 1 &&
-                              "text-muted-foreground bg-muted-foreground/10",
-                            item.approverStatus === 2 &&
-                              "text-destructive bg-destructive/10",
-                            item.approverStatus === 3 &&
-                              "text-green bg-green/10",
-                          )}
-                        >
-                          {translateValue(
-                            item.approverStatus,
-                            approverStatusDict,
-                          )}
-                        </div>
-                      </TableCell>
-                      <TableCell className="min-w-32 text-center">
-                        <div
-                          className={cn(
-                            "px-2 rounded-sm w-fit text-center inline-block",
-                            item.withdrawMode === 0 && "text-green bg-green/10",
-                            item.withdrawMode === 1 &&
-                              "text-orange bg-orange/10",
-                          )}
-                        >
-                          {translateValue(item.withdrawMode, withdrawModeDict)}
-                        </div>
-                      </TableCell>
-                      <TableCell className="min-w-32 text-center">
-                        <div
-                          className={cn(
-                            "px-2 rounded-sm w-fit text-center inline-block",
-                            item.moneyStatus === 0 &&
-                              "text-primary bg-primary/10",
-                            item.moneyStatus === 1 && "text-green bg-green/10",
-                            item.moneyStatus === 2 &&
-                              "text-destructive bg-destructive/10",
-                          )}
-                        >
-                          {translateValue(item.moneyStatus, moneyStatusDict)}
-                        </div>
-                      </TableCell>
-                      <TableCell className="min-w-48 text-center sticky right-0 bg-background z-20 shadow-[-4px_0_8px_-6px_rgba(0,0,0,0.2)]">
-                        <Actions data={item} />
-                      </TableCell>
-                    </TableRow>
-                  ))
-                ) : (
-                  <Empty colSpan={12} />
-                )}
+                {data?.list.map((item) => (
+                  <TableRow key={item.id}>
+                    <TableCell className="min-w-32 text-center">
+                      {item.orderNo}
+                    </TableCell>
+                    <TableCell className="min-w-32 text-center">
+                      {item.userId}
+                    </TableCell>
+                    <TableCell className="min-w-32 text-center">
+                      {translateValue(item.userType, userTypeDict)}
+                    </TableCell>
+                    <TableCell className="min-w-32 text-center">
+                      {item.username}
+                    </TableCell>
+                    <TableCell className="min-w-32 text-center">
+                      {item.nickname}
+                    </TableCell>
+                    <TableCell className="min-w-32 text-center">
+                      {item.parentAccount}
+                    </TableCell>
+                    <TableCell className="min-w-32 text-center text-primary font-bold">
+                      <MoneyBtn data={item} />
+                    </TableCell>
+                    <TableCell className="min-w-32 text-center">
+                      {item.applyTime}
+                    </TableCell>
+                    <TableCell className="min-w-32 text-center">
+                      {item.approverName}
+                    </TableCell>
+                    <TableCell className="min-w-32 text-center">
+                      <div
+                        className={cn(
+                          "px-2 rounded-sm w-fit text-center inline-block",
+                          item.approverStatus === 0 &&
+                            "text-primary bg-primary/10",
+                          item.approverStatus === 1 &&
+                            "text-muted-foreground bg-muted-foreground/10",
+                          item.approverStatus === 2 &&
+                            "text-destructive bg-destructive/10",
+                          item.approverStatus === 3 && "text-green bg-green/10",
+                        )}
+                      >
+                        {translateValue(
+                          item.approverStatus,
+                          approverStatusDict,
+                        )}
+                      </div>
+                    </TableCell>
+                    <TableCell className="min-w-32 text-center">
+                      <div
+                        className={cn(
+                          "px-2 rounded-sm w-fit text-center inline-block",
+                          item.withdrawMode === 0 && "text-green bg-green/10",
+                          item.withdrawMode === 1 && "text-orange bg-orange/10",
+                        )}
+                      >
+                        {translateValue(item.withdrawMode, withdrawModeDict)}
+                      </div>
+                    </TableCell>
+                    <TableCell className="min-w-32 text-center">
+                      <div
+                        className={cn(
+                          "px-2 rounded-sm w-fit text-center inline-block",
+                          item.moneyStatus === 0 &&
+                            "text-primary bg-primary/10",
+                          item.moneyStatus === 1 && "text-green bg-green/10",
+                          item.moneyStatus === 2 &&
+                            "text-destructive bg-destructive/10",
+                        )}
+                      >
+                        {translateValue(item.moneyStatus, moneyStatusDict)}
+                      </div>
+                    </TableCell>
+                    <TableCell className="min-w-48 text-center sticky right-0 bg-background z-20 shadow-[-4px_0_8px_-6px_rgba(0,0,0,0.2)]">
+                      <Actions data={item} />
+                    </TableCell>
+                  </TableRow>
+                ))}
               </TableBody>
             </Table>
           </Suspense>
           <ScrollBar orientation="horizontal" />
         </ListScrollArea>
       </div>
-
       <div className="pt-2">
         <Pages
           total={data?.total ?? 0}

@@ -1,6 +1,5 @@
 import { getPeriodReport } from "@/api";
 import Pages from "@/components/custom-pagination";
-import { Empty } from "@/components/empty";
 import ListScrollArea from "@/components/list-scroll-area";
 import { ScrollBar } from "@/components/ui/scroll-area";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -105,47 +104,43 @@ async function PeriodTable({
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {data?.list && data.list.length > 0 ? (
-                    data?.list?.map((item) => (
-                      <TableRow key={item.issueNumber}>
-                        <TableCell className="w-24 text-center">
-                          {item.issueNumber}
-                        </TableCell>
-                        <TableCell className="w-24 text-center">
-                          {item.openTime}
-                        </TableCell>
-                        <TableCell className="w-24 text-center">
-                          {item.gameTypeName}
-                        </TableCell>
-                        <TableCell className="w-24 text-center">
-                          {item.gameName}
-                        </TableCell>
-                        <TableCell className="w-24 text-center">
-                          {item.betNum}
-                        </TableCell>
-                        <TableCell className="w-24 text-center">
-                          {item.betAmount}
-                        </TableCell>
-                        <TableCell className="w-24 text-center">
-                          {item.tieAmount}
-                        </TableCell>
-                        <TableCell className="w-24 text-center">
-                          {item.pairBetAmount}
-                        </TableCell>
-                        <TableCell className="w-24 text-center">
-                          {item.validBetAmount}
-                        </TableCell>
-                        <TableCell className="w-24 text-center">
-                          {item.memberBackAmount}
-                        </TableCell>
-                        <TableCell className="sticky right-0 bg-background w-24 text-center">
-                          <Actions />
-                        </TableCell>
-                      </TableRow>
-                    ))
-                  ) : (
-                    <Empty colSpan={10} />
-                  )}
+                  {data?.list?.map((item) => (
+                    <TableRow key={item.issueNumber}>
+                      <TableCell className="w-24 text-center">
+                        {item.issueNumber}
+                      </TableCell>
+                      <TableCell className="w-24 text-center">
+                        {item.openTime}
+                      </TableCell>
+                      <TableCell className="w-24 text-center">
+                        {item.gameTypeName}
+                      </TableCell>
+                      <TableCell className="w-24 text-center">
+                        {item.gameName}
+                      </TableCell>
+                      <TableCell className="w-24 text-center">
+                        {item.betNum}
+                      </TableCell>
+                      <TableCell className="w-24 text-center">
+                        {item.betAmount}
+                      </TableCell>
+                      <TableCell className="w-24 text-center">
+                        {item.tieAmount}
+                      </TableCell>
+                      <TableCell className="w-24 text-center">
+                        {item.pairBetAmount}
+                      </TableCell>
+                      <TableCell className="w-24 text-center">
+                        {item.validBetAmount}
+                      </TableCell>
+                      <TableCell className="w-24 text-center">
+                        {item.memberBackAmount}
+                      </TableCell>
+                      <TableCell className="sticky right-0 bg-background w-24 text-center">
+                        <Actions />
+                      </TableCell>
+                    </TableRow>
+                  ))}
                 </TableBody>
               </Table>
             </Suspense>

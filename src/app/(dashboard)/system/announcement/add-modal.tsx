@@ -47,15 +47,14 @@ export function AddModal() {
   const [contentData, setContentData] = useState<
     { language: string; content: string }[]
   >([]); // 用于存储每个语言的内容
-
   const handleClickAdd = async () => {
     const addParams = {
       id: data?.id || null,
       type,
       content: contentData,
       status,
-      startTime: Number(new Date(startTime).getTime()) || null,
-      endTime: Number(new Date(endTime).getTime()) || null,
+      startTime: startTime ? new Date(startTime).getTime() : null,
+      endTime: endTime ? new Date(endTime).getTime() : null,
     };
     console.info("addParams", addParams);
     console.info("contentData", contentData);
