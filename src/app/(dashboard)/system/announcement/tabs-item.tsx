@@ -1,5 +1,4 @@
 "use client";
-import { times } from "@/components/daterange-filter";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -20,9 +19,7 @@ export default function TabsItem({
         <Tabs value={tabValue()}>
           <TabsList>
             <TabsTrigger value={tabsContent[0].value}>
-              <Link
-                href={`/system/announcement/${tabsContent[0].value}?startTime=${times.startTime}&endTime=${times.endTime}`}
-              >
+              <Link href={`/system/announcement/${tabsContent[0].value}`}>
                 {tabsContent[0].label}
               </Link>
             </TabsTrigger>

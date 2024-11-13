@@ -149,7 +149,6 @@ export type AnnouncementListRequest = {
   userId?: string;
   startTime?: string;
   endTime?: string;
-  language: string;
 };
 // 公告列表请求 本级
 export type AnnouncementAgentListRequest = {
