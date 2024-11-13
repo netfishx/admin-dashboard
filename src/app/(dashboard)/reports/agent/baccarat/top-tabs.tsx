@@ -1,6 +1,5 @@
 "use client";
 import { TabsTypes } from "@/app/(dashboard)/reports/agent/baccarat/defiend";
-import { times } from "@/components/daterange-filter";
 import { Tabs, TabsList } from "@/components/ui/tabs";
 import { cn } from "@/lib/utils";
 import { useTranslations } from "next-intl";
@@ -24,9 +23,7 @@ export default function TopTabs() {
     <div className="flex flex-col gap-2 bg-background py-2 px-4">
       <Tabs defaultValue={TabsTypes.RATIO} className="w-[400px]">
         <TabsList className="grid w-full grid-cols-2">
-          <Link
-            href={`/reports/agent/baccarat/ratio?startTime=${times.startTime}&endTime=${times.endTime}`}
-          >
+          <Link href="/reports/agent/baccarat/ratio">
             {/* biome-ignore lint/a11y/useKeyWithClickEvents: <explanation> */}
             <div
               className={getTabStyle(TabsTypes.RATIO)}
@@ -36,9 +33,7 @@ export default function TopTabs() {
             </div>
           </Link>
 
-          <Link
-            href={`/reports/agent/baccarat/member?startTime=${times.startTime}&endTime=${times.endTime}`}
-          >
+          <Link href="/reports/agent/baccarat/member">
             {/* biome-ignore lint/a11y/useKeyWithClickEvents: <explanation> */}
             <div
               className={getTabStyle(TabsTypes.MEMBER)}

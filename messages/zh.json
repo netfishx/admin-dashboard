@@ -446,6 +446,25 @@
       "roomType": "房间类型",
       "betAmount": "下注金额",
       "validBetAmount": "有效金额"
+    },
+    "member": {
+      "member_id": "会员ID",
+      "member_type": "会员类别",
+      "game_category": "游戏种类",
+      "game_name": "游戏名称",
+      "bet_count": "下注笔数",
+      "bet_amount": "下注金额",
+      "valid_amount": "有效金额",
+      "win_loss_amount": "输赢金额",
+      "cashback_amount": "返水金额",
+      "profit_loss_result": "盈亏结果",
+      "details": "详情",
+      "gameId": "游戏种类",
+      "placeholderselect": "请选择",
+      "placeholderinput": "请输入",
+      "search": "查询",
+      "reset": "重置",
+      "gameName": "游戏名称"
     }
   },
   "pagination": {
