@@ -18,6 +18,7 @@ import type {
   MemberList,
   PageData,
   PeriodReport,
+  PeriodReportList,
   RatioReportListTypes,
   SupplierConfig,
   SupplierReportListItem,
@@ -323,7 +324,7 @@ export async function getRatioReport(data: any) {
 
 export async function getPeriodReport(params: PeriodReport) {
   const user = await getSession();
-  return await apiRequest<PageData<PeriodReport>>({
+  return await apiRequest<PageData<PeriodReportList>>({
     url: "/getReports",
     params,
     token: user?.token,

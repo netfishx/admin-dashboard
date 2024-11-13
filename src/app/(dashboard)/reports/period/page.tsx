@@ -1,5 +1,6 @@
 import { getPeriodReport } from "@/api";
 import Pages from "@/components/custom-pagination";
+import { Empty } from "@/components/empty";
 import ListScrollArea from "@/components/list-scroll-area";
 import { ScrollBar } from "@/components/ui/scroll-area";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -15,6 +16,7 @@ import { getTranslations } from "next-intl/server";
 import { Suspense } from "react";
 import { Actions } from "./actions";
 import { Form } from "./form";
+
 export default async function Page({
   searchParams,
 }: { searchParams: Promise<{ [key: string]: string | string[] }> }) {
@@ -50,8 +52,8 @@ async function PeriodTable({
   const t = await getTranslations("report.periodlist");
   const search = await searchParams;
   const { data } = await getPeriodReport({
-    size: Number(search.size ?? 10),
-    page: Number(search.page ?? 1),
+    pageSize: Number(search.pageSize ?? 10),
+    pageNum: Number(search.pageNum ?? 1),
     startTime: search.startTime?.toString() ?? "",
     endTime: search.endTime?.toString() ?? "",
     gameTypeName: search.gameTypeName?.toString() ?? "",
@@ -103,43 +105,47 @@ async function PeriodTable({
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {data?.list?.map((item: any) => (
-                    <TableRow key={item.issueNumber}>
-                      <TableCell className="w-24 text-center">
-                        {item.issueNumber}
-                      </TableCell>
-                      <TableCell className="w-24 text-center">
-                        {item.openTime}
-                      </TableCell>
-                      <TableCell className="w-24 text-center">
-                        {item.gameTypeName}
-                      </TableCell>
-                      <TableCell className="w-24 text-center">
-                        {item.gameName}
-                      </TableCell>
-                      <TableCell className="w-24 text-center">
-                        {item.betNum}
-                      </TableCell>
-                      <TableCell className="w-24 text-center">
-                        {item.betAmount}
-                      </TableCell>
-                      <TableCell className="w-24 text-center">
-                        {item.tieAmount}
-                      </TableCell>
-                      <TableCell className="w-24 text-center">
-                        {item.pairBetAmount}
-                      </TableCell>
-                      <TableCell className="w-24 text-center">
-                        {item.validBetAmount}
-                      </TableCell>
-                      <TableCell className="w-24 text-center">
-                        {item.memberBackAmount}
-                      </TableCell>
-                      <TableCell className="sticky right-0 bg-background w-24 text-center">
-                        <Actions />
-                      </TableCell>
-                    </TableRow>
-                  ))}
+                  {data?.list && data.list.length > 0 ? (
+                    data?.list?.map((item) => (
+                      <TableRow key={item.issueNumber}>
+                        <TableCell className="w-24 text-center">
+                          {item.issueNumber}
+                        </TableCell>
+                        <TableCell className="w-24 text-center">
+                          {item.openTime}
+                        </TableCell>
+                        <TableCell className="w-24 text-center">
+                          {item.gameTypeName}
+                        </TableCell>
+                        <TableCell className="w-24 text-center">
+                          {item.gameName}
+                        </TableCell>
+                        <TableCell className="w-24 text-center">
+                          {item.betNum}
+                        </TableCell>
+                        <TableCell className="w-24 text-center">
+                          {item.betAmount}
+                        </TableCell>
+                        <TableCell className="w-24 text-center">
+                          {item.tieAmount}
+                        </TableCell>
+                        <TableCell className="w-24 text-center">
+                          {item.pairBetAmount}
+                        </TableCell>
+                        <TableCell className="w-24 text-center">
+                          {item.validBetAmount}
+                        </TableCell>
+                        <TableCell className="w-24 text-center">
+                          {item.memberBackAmount}
+                        </TableCell>
+                        <TableCell className="sticky right-0 bg-background w-24 text-center">
+                          <Actions />
+                        </TableCell>
+                      </TableRow>
+                    ))
+                  ) : (
+                    <Empty colSpan={10} />
+                  )}
                 </TableBody>
               </Table>
             </Suspense>

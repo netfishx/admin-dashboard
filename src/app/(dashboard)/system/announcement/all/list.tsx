@@ -1,4 +1,5 @@
 import Pages from "@/components/custom-pagination";
+import { Empty } from "@/components/empty";
 import {
   Table,
   TableBody,
@@ -67,39 +68,43 @@ export async function List({
                     </TableRow>
                   </TableHeader>
                   <TableBody className="max-h-96 overflow-y-auto">
-                    {data?.list?.map((item) => (
-                      <TableRow key={Math.random()}>
-                        {/* admin permission */}
-                        <TableCell className="w-24 text-center">
-                          {formatTimestamp(item.startTime)}
-                        </TableCell>
+                    {data?.list && data.list.length > 0 ? (
+                      data?.list?.map((item) => (
+                        <TableRow key={Math.random()}>
+                          {/* admin permission */}
+                          <TableCell className="w-24 text-center">
+                            {formatTimestamp(item.startTime)}
+                          </TableCell>
 
-                        <TableCell className="w-24 text-center">
-                          {formatTimestamp(item.endTime)}
-                        </TableCell>
-                        {/* admin permission */}
-                        <TableCell className="w-24 text-center">
-                          {formatTimestamp(item.createTime)}
-                        </TableCell>
+                          <TableCell className="w-24 text-center">
+                            {formatTimestamp(item.endTime)}
+                          </TableCell>
+                          {/* admin permission */}
+                          <TableCell className="w-24 text-center">
+                            {formatTimestamp(item.createTime)}
+                          </TableCell>
 
-                        {/* admin permission */}
-                        <TableCell className="w-24 min-w-24 text-center">
-                          {item.type}
-                        </TableCell>
+                          {/* admin permission */}
+                          <TableCell className="w-24 min-w-24 text-center">
+                            {item.type}
+                          </TableCell>
 
-                        {/* admin permission */}
-                        <TableCell className="w-24 min-w-24 text-center">
-                          {item.userId}
-                        </TableCell>
+                          {/* admin permission */}
+                          <TableCell className="w-24 min-w-24 text-center">
+                            {item.userId}
+                          </TableCell>
 
-                        <TableCell className="w-24 text-center">
-                          {/* {item.content} */}
-                        </TableCell>
-                        <TableCell className="w-24 text-center">
-                          <Actions data={item} />
-                        </TableCell>
-                      </TableRow>
-                    ))}
+                          <TableCell className="w-24 text-center">
+                            {/* {item.content} */}
+                          </TableCell>
+                          <TableCell className="w-24 text-center">
+                            <Actions data={item} />
+                          </TableCell>
+                        </TableRow>
+                      ))
+                    ) : (
+                      <Empty colSpan={7} />
+                    )}
                   </TableBody>
                 </Table>
               </div>
