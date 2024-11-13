@@ -43,12 +43,13 @@ function EditButton({
     <AlertDialog>
       <AlertDialogTrigger asChild>
         <Button
-          variant="link"
+          variant="ghost"
+          size="sm"
           className={cn([
-            "hover:no-underline",
+            "text-sm",
             data.status
               ? "text-destructive hover:text-destructive/80"
-              : "hover:text-primary/80",
+              : "text-primary hover:text-primary/80",
           ])}
           disabled={isPending}
         >

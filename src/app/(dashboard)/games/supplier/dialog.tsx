@@ -23,16 +23,17 @@ import type { GameType } from "@/lib/types";
 import { gamesSupplierDialogAtom, supplierConfigAtom } from "@/store";
 import { Root as VisuallyHiddenRoot } from "@radix-ui/react-visually-hidden";
 import { useAtom, useAtomValue } from "jotai";
+import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Form from "next/form";
 import { useRouter } from "next/navigation";
-import { useRef, useState } from "react";
+import { useRef, useState, useTransition } from "react";
 import { toast } from "sonner";
 
 const suppliers = [
   {
     name: "1111",
-    id: "1",
+    id: "AB123456789012345678",
   },
   {
     name: "2222",
@@ -59,6 +60,7 @@ export function SupplierDialog({ games }: { games: GameType[] }) {
   const supplierName = suppliers.find((item) => item.id === supplierId)?.name;
   const ref = useRef<HTMLFormElement>(null);
   const router = useRouter();
+  const [isPending, startTransition] = useTransition();
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent
@@ -74,17 +76,19 @@ export function SupplierDialog({ games }: { games: GameType[] }) {
         </DialogHeader>
         <Form
           action=""
-          onSubmit={async (e) => {
+          onSubmit={(e) => {
             e.preventDefault();
-            const res = await editSupplierConfigAction(
-              new FormData(e.currentTarget),
-            );
-            if (res.code === 0) {
-              setOpen(false);
-              router.refresh();
-            } else {
-              toast.error(res.message);
-            }
+            startTransition(async () => {
+              const res = await editSupplierConfigAction(
+                new FormData(e.currentTarget),
+              );
+              if (res.code === 0) {
+                setOpen(false);
+                router.refresh();
+              } else {
+                toast.error(res.message);
+              }
+            });
           }}
           ref={ref}
         >
@@ -93,8 +97,8 @@ export function SupplierDialog({ games }: { games: GameType[] }) {
             <div className="flex gap-2 items-center">
               <Label className="w-20 text-end">{t("name")}</Label>
               <Select
-                required
-                defaultValue={data ? `${data.gameType}-${data.gameId}` : ""}
+                required={true}
+                defaultValue={data && `${data.gameType}-${data.gameId}`}
                 name="game"
                 disabled={!!data?.gameId}
               >
@@ -129,7 +133,7 @@ export function SupplierDialog({ games }: { games: GameType[] }) {
                 value={supplierId}
                 onValueChange={setSupplierId}
                 name="userId"
-                required
+                required={true}
               >
                 <SelectTrigger className="flex-1">
                   <SelectValue placeholder={t("placeholder")} />
@@ -192,7 +196,9 @@ export function SupplierDialog({ games }: { games: GameType[] }) {
                 ref.current.requestSubmit();
               }
             }}
+            disabled={isPending}
           >
+            {isPending && <Loader2 className="w-4 h-4 animate-spin" />}
             {translations("confirm")}
           </Button>
         </DialogFooter>
