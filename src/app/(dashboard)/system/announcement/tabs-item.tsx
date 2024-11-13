@@ -1,32 +1,30 @@
 "use client";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-export default function TabsItem({
-  tabsContent,
-}: {
-  tabsContent: { label: string; value: string }[];
-}) {
+export default function TabsItem() {
+  const t = useTranslations("system.announcement");
+
   const pathname = usePathname();
 
-  const tabValue = () => {
-    const lastPath = pathname.split("/").pop();
-    return lastPath !== "announcement" ? lastPath : tabsContent[0].value;
-  };
   return (
     <div className="flex flex-col gap-2 w-full">
       <div className="p-2 bg-background gap-2">
-        <Tabs value={tabValue()}>
+        <Tabs defaultValue="all" value={pathname.split("/").pop()}>
           <TabsList>
-            <TabsTrigger value={tabsContent[0].value}>
-              <Link href={`/system/announcement/${tabsContent[0].value}`}>
-                {tabsContent[0].label}
+            {/* <TabsTrigger value="all">
+              <Link href="/system/announcement/all">
+                {t("allAgentAnnouncement")}
+              </Link>
+            </TabsTrigger> */}
+            <TabsTrigger value="all">
+              <Link href="/system/announcement/all">
+                {t("notifyAnnouncement")}
               </Link>
             </TabsTrigger>
-            <TabsTrigger value={tabsContent[1].value}>
-              <Link href={`/system/announcement/${tabsContent[1].value}`}>
-                {tabsContent[1].label}
-              </Link>
+            <TabsTrigger value="own">
+              <Link href="/system/announcement/own">{t("myAnnouncement")}</Link>
             </TabsTrigger>
           </TabsList>
         </Tabs>

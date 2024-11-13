@@ -27,12 +27,6 @@ import { Calendar as CalendarIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 
-export const today = new Date();
-export const times = {
-  startTime: startOfDay(today).getTime(),
-  endTime: endOfDay(today).getTime(),
-};
-
 export function TimeRange({
   onDateRangeChange,
   range,
@@ -59,8 +53,8 @@ export function TimeRange({
           to: toDate(range[1]),
         }
       : {
-          from: startOfDay(today),
-          to: endOfDay(today),
+          from: startOfDay(Date.now()),
+          to: endOfDay(Date.now()),
         };
   const initialStartTime =
     range[0] && range[1]

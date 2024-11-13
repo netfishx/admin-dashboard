@@ -125,10 +125,7 @@ function OpenedMenu({ pathname }: { pathname: string }) {
             label={t("reports.order.gundan")}
             href="/reports/order/gundan"
           />
-          <MenuItem
-            label={t("reports.period")}
-            href={`/reports/period?startTime=${times.startTime}&endTime=${times.endTime}`}
-          />
+          <MenuItem label={t("reports.period")} href="/reports/period" />
           <MenuItem
             label={t("reports.agent.baccarat")}
             href={`/reports/agent/baccarat/ratio?startTime=${times.startTime}&endTime=${times.endTime}`}
@@ -165,14 +162,8 @@ function OpenedMenu({ pathname }: { pathname: string }) {
           />
         </CollapsibleTrigger>
         <CollapsibleContent className="flex flex-col gap-1 px-6">
-          <MenuItem
-            label={t("withdraw.apply")}
-            href={`/withdraw/apply?startTime=${times.startTime}&endTime=${times.endTime}`}
-          />
-          <MenuItem
-            label={t("withdraw.audit")}
-            href={`/withdraw/audit?startTime=${times.startTime}&endTime=${times.endTime}`}
-          />
+          <MenuItem label={t("withdraw.apply")} href="/withdraw/apply" />
+          <MenuItem label={t("withdraw.audit")} href="/withdraw/audit" />
         </CollapsibleContent>
       </Collapsible>
       <Collapsible
@@ -226,7 +217,7 @@ function OpenedMenu({ pathname }: { pathname: string }) {
           <MenuItem label={t("system.resource")} href="/system/resource" />
           <MenuItem
             label={t("system.announcement.title")}
-            href={"/system/announcement/all"}
+            href="/system/announcement/all"
             subHref={["/system/announcement/own"]}
           />
         </CollapsibleContent>
