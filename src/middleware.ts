@@ -6,6 +6,12 @@ export async function middleware(request: NextRequest) {
   if (!(user || request.nextUrl.pathname === "/login")) {
     return Response.redirect(new URL("/login", request.url));
   }
+  if (
+    !user?.permissions?.includes("agentStat") &&
+    request.nextUrl.pathname !== "/reports/supplier"
+  ) {
+    return Response.redirect(new URL("/reports/supplier", request.url));
+  }
   return NextResponse.next();
 }
 
