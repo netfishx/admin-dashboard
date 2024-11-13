@@ -223,7 +223,6 @@ function OpenedMenu({ pathname }: { pathname: string }) {
         <CollapsibleContent className="flex flex-col gap-1 px-6">
           <MenuItem label={t("system.role")} href="/system/role" />
           <MenuItem label={t("system.subaccount")} href="/system/subaccount" />
-          <MenuItem label={t("system.platform")} href="/system/platform" />
           <MenuItem label={t("system.resource")} href="/system/resource" />
           <MenuItem
             label={t("system.announcement.title")}
