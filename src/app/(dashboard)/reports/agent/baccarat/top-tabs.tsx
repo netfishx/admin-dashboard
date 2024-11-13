@@ -23,7 +23,7 @@ export default function TopTabs() {
     <div className="flex flex-col gap-2 bg-background py-2 px-4">
       <Tabs defaultValue={TabsTypes.RATIO} className="w-[400px]">
         <TabsList className="grid w-full grid-cols-2">
-          <Link href={"/reports/agent/baccarat/ratio"}>
+          <Link href="/reports/agent/baccarat/ratio">
             {/* biome-ignore lint/a11y/useKeyWithClickEvents: <explanation> */}
             <div
               className={getTabStyle(TabsTypes.RATIO)}
@@ -33,9 +33,7 @@ export default function TopTabs() {
             </div>
           </Link>
 
-          <Link
-            href={`/reports/agent/baccarat/member?startTime=${times.startTime}&endTime=${times.endTime}`}
-          >
+          <Link href="/reports/agent/baccarat/member">
             {/* biome-ignore lint/a11y/useKeyWithClickEvents: <explanation> */}
             <div
               className={getTabStyle(TabsTypes.MEMBER)}
