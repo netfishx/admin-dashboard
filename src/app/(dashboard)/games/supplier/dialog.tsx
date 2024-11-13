@@ -94,7 +94,7 @@ export function SupplierDialog({ games }: { games: GameType[] }) {
               <Label className="w-20 text-end">{t("name")}</Label>
               <Select
                 required
-                defaultValue={data?.gameId?.toString()}
+                defaultValue={data ? `${data.gameType}-${data.gameId}` : ""}
                 name="game"
                 disabled={!!data?.gameId}
               >

@@ -264,11 +264,23 @@ export async function editReviceOrder({ status }: { status: boolean }) {
 
 export async function getSupplierConfigs(userId?: string) {
   const user = await getSession();
-  return await apiRequest<SupplierConfig[]>({
-    url: "/supplierConf/list",
-    token: user?.token,
-    params: { userId },
-  });
+  const [res, res2] = await Promise.all([
+    getGameList(1),
+    apiRequest<SupplierConfig[]>({
+      url: "/supplierConf/list",
+      token: user?.token,
+      params: { userId },
+    }),
+  ]);
+  return {
+    ...res2,
+    data: res2.data?.map((item) => ({
+      ...item,
+      gameName: res.data
+        ?.find((i) => i.gameType === item.gameType)
+        ?.list.find((i) => i.gameId === item.gameId)?.gameIdLabel,
+    })),
+  };
 }
 
 export async function editSupplierConfig(data: SupplierConfig) {

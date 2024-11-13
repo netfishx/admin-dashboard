@@ -41,6 +41,7 @@ export type SupplierConfig = {
   id?: string;
   gameType: number;
   gameId: number;
+  gameName?: string;
   videoLink: string;
   userId: string;
   userName?: string;
