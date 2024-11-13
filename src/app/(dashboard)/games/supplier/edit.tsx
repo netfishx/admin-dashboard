@@ -12,8 +12,9 @@ export function EditButton({ data }: { data: SupplierConfig }) {
   const setData = useSetAtom(supplierConfigAtom);
   return (
     <Button
-      variant="link"
-      className="hover:no-underline hover:text-primary/80"
+      variant="ghost"
+      size="sm"
+      className="text-primary hover:text-primary/80"
       onClick={() => {
         setData(data);
         setOpen(true);
