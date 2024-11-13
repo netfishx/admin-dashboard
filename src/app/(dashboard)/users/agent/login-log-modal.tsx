@@ -48,7 +48,10 @@ export function LoginLogModal() {
   }, [userId, page, size]);
   return (
     <Dialog open={open} onOpenChange={(open) => setOpen(open)}>
-      <DialogContent className="2xl:max-w-2xl lg:max-w-xl">
+      <DialogContent
+        className="2xl:max-w-2xl lg:max-w-xl"
+        onPointerDownOutside={(e) => e.preventDefault()}
+      >
         <DialogHeader>
           <DialogTitle>{t("loginLog")}</DialogTitle>
           <DialogDescription />

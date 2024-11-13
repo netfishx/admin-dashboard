@@ -66,7 +66,7 @@ async function TableWrapper({
                 <TableHead className="min-w-28">{t("walletAddress")}</TableHead>
                 <TableHead className="min-w-28">{t("debtAmount")}</TableHead>
                 <TableHead className="min-w-28">{t("creditAmount")}</TableHead>
-                <TableHead className="min-w-14">{t("status")}</TableHead>
+                <TableHead className="min-w-20">{t("status")}</TableHead>
                 <TableHead className="min-w-[550px] text-center sticky right-0 bg-muted">
                   {t("action")}
                 </TableHead>
@@ -106,15 +106,15 @@ async function TableBodyWrapper({ list }: { list: MemberList[] | undefined }) {
     <TableBody>
       {list?.map((item) => (
         <TableRow key={item.id}>
-          <TableCell className="min-w-28">{item.upUsername}</TableCell>
-          <TableCell className="min-w-28">{item.level}</TableCell>
-          <TableCell className="min-w-20">{item.id}</TableCell>
-          <TableCell className="min-w-14">{item.username}</TableCell>
-          <TableCell className="min-w-14">{item.nickname}</TableCell>
-          <TableCell className="min-w-28">{item.depositAddress}</TableCell>
-          <TableCell className="min-w-28">{item.debtAmount}</TableCell>
-          <TableCell className="min-w-28">{item.creditAmount}</TableCell>
-          <TableCell className="min-w-24">
+          <TableCell>{item.upUsername}</TableCell>
+          <TableCell>{item.level}</TableCell>
+          <TableCell>{item.id}</TableCell>
+          <TableCell>{item.username}</TableCell>
+          <TableCell>{item.nickname}</TableCell>
+          <TableCell>{item.depositAddress}</TableCell>
+          <TableCell>{item.debtAmount}</TableCell>
+          <TableCell>{item.creditAmount}</TableCell>
+          <TableCell>
             <div
               className={cn(
                 "px-2 rounded-sm w-fit",
@@ -125,7 +125,7 @@ async function TableBodyWrapper({ list }: { list: MemberList[] | undefined }) {
               {t(`statusLabel.${item.status}`)}
             </div>
           </TableCell>
-          <TableCell className="min-w-[550px] text-center flex justify-between sticky right-0 bg-background">
+          <TableCell className="flex justify-between sticky right-0 bg-background">
             <Actions data={item} />
           </TableCell>
         </TableRow>

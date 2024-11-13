@@ -31,7 +31,10 @@ export function TransferMoneyModal({
   };
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="2xl:max-w-lg lg:max-w-md">
+      <DialogContent
+        className="2xl:max-w-lg lg:max-w-md"
+        onPointerDownOutside={(e) => e.preventDefault()}
+      >
         <DialogHeader>
           <DialogTitle>{t("transferMoney")}</DialogTitle>
           <DialogDescription />
