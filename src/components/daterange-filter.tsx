@@ -181,12 +181,15 @@ export function DateRangeFilter({
   enableTimeSelect = true, // 新增的属性
   startTimeText = "startTime",
   endTimeText = "endTime",
+  // biome-ignore lint/suspicious/noEmptyBlockStatements: <explanation>
+  onChange = () => {},
 }: {
   quickSetBtn?: rangeType[];
   enableTimeSelect?: boolean;
   startTimeText?: string;
   endTimeText?: string;
-  onChange?: (dateRange: DateRange) => void;
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+  onChange?: (dateRange: any) => void;
 }) {
   const t = useTranslations("report.orderlist");
 
@@ -207,6 +210,10 @@ export function DateRangeFilter({
   useEffect(() => {
     startTransition(async () => {
       await setDateRange({
+        [startTimeText]: startOfDay(today).getTime(),
+        [endTimeText]: endOfDay(today).getTime(),
+      });
+      onChange?.({
         [startTimeText]: startOfDay(today).getTime(),
         [endTimeText]: endOfDay(today).getTime(),
       });
@@ -259,8 +266,12 @@ export function DateRangeFilter({
         [startTimeText]: from.getTime(),
         [endTimeText]: to.getTime(),
       });
+      onChange?.({
+        [startTimeText]: from.getTime(),
+        [endTimeText]: to.getTime(),
+      });
     },
-    [setDateRange],
+    [setDateRange, onChange],
   );
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
@@ -279,12 +290,16 @@ export function DateRangeFilter({
         [timeUnit]: Number.parseInt(value, 10),
       });
 
-      setDateRange((prev) => ({
-        ...prev,
-        [type === "start" ? startTimeText : endTimeText]: newDate.getTime(),
-      }));
+      setDateRange((prev) => {
+        const updatedRange = {
+          ...prev,
+          [type === "start" ? startTimeText : endTimeText]: newDate.getTime(),
+        };
+        onChange?.(updatedRange); // Pass the updated range to onChange
+        return updatedRange;
+      });
     },
-    [dateRange[startTimeText], dateRange[endTimeText], setDateRange],
+    [dateRange[startTimeText], dateRange[endTimeText], setDateRange, onChange],
   );
 
   const handleDateRangeChange = useCallback(
@@ -307,6 +322,10 @@ export function DateRangeFilter({
           : undefined;
 
         setDateRange({
+          [startTimeText]: startDate?.getTime(),
+          [endTimeText]: endDate?.getTime(),
+        });
+        onChange?.({
           [startTimeText]: startDate?.getTime(),
           [endTimeText]: endDate?.getTime(),
         });
