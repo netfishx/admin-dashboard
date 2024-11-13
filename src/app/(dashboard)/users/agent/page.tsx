@@ -62,13 +62,13 @@ async function TableWrapper({
         <Table>
           <TableHeader>
             <TableRow className="bg-muted">
-              <TableHead className="min-w-32">{t("upUsername")}</TableHead>
-              <TableHead className="min-w-32">{t("deptId")}</TableHead>
-              <TableHead className="min-w-32">{t("userId")}</TableHead>
-              <TableHead className="min-w-32">{t("username")}</TableHead>
-              <TableHead className="min-w-32">{t("nickname")}</TableHead>
-              <TableHead className="min-w-32">{t("status")}</TableHead>
-              <TableHead className="min-w-[400px] text-center">
+              <TableHead>{t("upUsername")}</TableHead>
+              <TableHead>{t("deptId")}</TableHead>
+              <TableHead>{t("userId")}</TableHead>
+              <TableHead>{t("username")}</TableHead>
+              <TableHead>{t("nickname")}</TableHead>
+              <TableHead>{t("status")}</TableHead>
+              <TableHead className="min-w-[480px] text-center">
                 {t("action")}
               </TableHead>
             </TableRow>
@@ -105,12 +105,12 @@ async function TableBodyWrapper({ list }: { list: AgentData[] | undefined }) {
     <TableBody>
       {list?.map((item) => (
         <TableRow key={item.id}>
-          <TableCell className="min-w-32">{item.upUsername}</TableCell>
-          <TableCell className="min-w-32">{item.deptId}</TableCell>
-          <TableCell className="min-w-32">{item.id}</TableCell>
-          <TableCell className="min-w-32">{item.username}</TableCell>
-          <TableCell className="min-w-32">{item.nickname}</TableCell>
-          <TableCell className="min-w-32">
+          <TableCell>{item.upUsername}</TableCell>
+          <TableCell>{item.deptId}</TableCell>
+          <TableCell>{item.id}</TableCell>
+          <TableCell>{item.username}</TableCell>
+          <TableCell>{item.nickname}</TableCell>
+          <TableCell className="">
             <div
               className={cn(
                 "px-2 rounded-sm w-fit",
@@ -122,7 +122,7 @@ async function TableBodyWrapper({ list }: { list: AgentData[] | undefined }) {
               {t(`statusLabel.${item.status}`)}
             </div>
           </TableCell>
-          <TableCell className="min-w-[400px] text-center flex justify-between">
+          <TableCell className="text-center">
             <Action data={item} />
           </TableCell>
         </TableRow>
