@@ -1,5 +1,4 @@
 "use client";
-import { times } from "@/components/daterange-filter";
 import { Button } from "@/components/ui/button";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
@@ -9,9 +8,7 @@ export default function DetailButton(props: { id: string }) {
   const t = useTranslations("report.orderlist");
   const router = useRouter();
   function handleDetail() {
-    router.push(
-      `/reports/agent/baccarat/member?agentId=${id}&page=1&size=10&startTime=${times.startTime}&endTime=${times.endTime}`,
-    );
+    router.push(`/reports/agent/baccarat/member?agentId=${id}&page=1&size=10`);
   }
   return (
     <div>

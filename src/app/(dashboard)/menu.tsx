@@ -131,7 +131,7 @@ function OpenedMenu({ pathname }: { pathname: string }) {
           />
           <MenuItem
             label={t("reports.agent.baccarat")}
-            href={`/reports/agent/baccarat/ratio?startTime=${times.startTime}&endTime=${times.endTime}`}
+            href={"/reports/agent/baccarat/ratio"}
             subHref={["/reports/agent/baccarat/member"]}
           />
           <MenuItem
