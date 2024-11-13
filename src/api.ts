@@ -486,7 +486,7 @@ export async function postUserInfoWithdraw(data: WithdrawFormData) {
     token: user?.token,
   });
 }
-
+// 提款申请
 export async function getWithdrawApplyList(params: ApplyListRequest) {
   const user = await getSession();
   return await apiRequest<WithPagination & { list: ApplyData[] }>({
@@ -495,6 +495,40 @@ export async function getWithdrawApplyList(params: ApplyListRequest) {
     token: user?.token,
   });
 }
+// 提款申请-锁定
+export async function lockApply(data: { id: string }) {
+  const user = await getSession();
+  return await apiRequest({
+    url: "/order/withdraw/locked",
+    method: "POST",
+    data,
+    token: user?.token,
+  });
+}
+// 通过 拒绝
+export async function auditWithdrawRecord(data: {
+  id: string;
+  approverStatusEnum: number;
+}) {
+  const user = await getSession();
+  return await apiRequest({
+    url: "/order/withdraw/audit",
+    method: "POST",
+    data,
+    token: user?.token,
+  });
+}
+// 再次发起
+export async function againApply(data: { id: string }) {
+  const user = await getSession();
+  return await apiRequest({
+    url: "/order/withdraw/retry",
+    method: "POST",
+    data,
+    token: user?.token,
+  });
+}
+
 export async function getSupplierReportList() {
   const user = await getSession();
   return await apiRequest<PageData<SupplierReportListItem>>({

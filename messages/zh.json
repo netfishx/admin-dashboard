@@ -617,7 +617,6 @@
       "userId": "用户ID",
       "parentAccount": "上级账号",
       "placeholder": "请输入",
-    
       "orderNo": "申请单号",
       "username": "用户ID",
       "userType": "层级",
@@ -642,7 +641,11 @@
       "withdrawStatus": "预估实际到账",
       "withdrawModeNew": "用户收款方式",
       "withdrawAmount": "资金信息",
-      "action": "操作"
+      "action": "操作",
+      "lockDesc": "确定锁定该申请单吗？",
+      "approverDesc": "确定通过该申请单吗？",
+      "rejectDesc": "确定拒绝该申请单吗？",
+      "flowDesc": "确定再次发起该申请单吗？"
     }
   }
 }
