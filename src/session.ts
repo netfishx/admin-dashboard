@@ -52,6 +52,11 @@ export async function setSession(user: User) {
   });
 }
 
+export async function hasPermission(permission: string) {
+  const session = await getSession();
+  return session?.permissions.includes(permission);
+}
+
 export async function signOut() {
   (await cookies()).delete("session");
 }
