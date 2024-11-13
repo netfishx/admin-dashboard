@@ -3,11 +3,12 @@ import { type NextRequest, NextResponse } from "next/server";
 
 export async function middleware(request: NextRequest) {
   const user = await getSession();
-  if (!(user || request.nextUrl.pathname === "/login")) {
+  if (!user && request.nextUrl.pathname !== "/login") {
     return Response.redirect(new URL("/login", request.url));
   }
   if (
-    !user?.permissions?.includes("agentStat") &&
+    user &&
+    !user?.permissions?.includes("agentSta") &&
     request.nextUrl.pathname !== "/reports/supplier"
   ) {
     return Response.redirect(new URL("/reports/supplier", request.url));

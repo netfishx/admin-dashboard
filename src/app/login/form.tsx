@@ -35,7 +35,9 @@ export function LoginForm() {
       return;
     }
     const res = await loginAction(new FormData(ref.current));
-    toast.error(res.message);
+    if (res?.message) {
+      toast.error(res.message);
+    }
   }
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
