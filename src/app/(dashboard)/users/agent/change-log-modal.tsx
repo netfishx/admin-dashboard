@@ -55,7 +55,10 @@ export function ChangeLogModal() {
   }, [targetUserId, open, pageNum, pageSize]);
   return (
     <Dialog open={open} onOpenChange={(open) => setOpen(open)}>
-      <DialogContent className="max-w-5xl">
+      <DialogContent
+        className="max-w-5xl"
+        onPointerDownOutside={(e) => e.preventDefault()}
+      >
         <DialogHeader>
           <DialogTitle>{t("changeLog")}</DialogTitle>
           <DialogDescription />

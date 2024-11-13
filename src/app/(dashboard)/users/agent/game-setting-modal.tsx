@@ -82,7 +82,10 @@ export function GameSettingModal() {
   };
   return (
     <Dialog open={open} onOpenChange={(open) => setOpen(open)}>
-      <DialogContent className="2xl:max-w-lg lg:max-w-md">
+      <DialogContent
+        className="2xl:max-w-lg lg:max-w-md"
+        onPointerDownOutside={(e) => e.preventDefault()}
+      >
         <DialogHeader>
           <DialogTitle>{t("gamesSetting")}</DialogTitle>
           <DialogDescription />
