@@ -8,7 +8,7 @@ export async function middleware(request: NextRequest) {
   }
   if (
     user &&
-    !user?.permissions?.includes("agentSta") &&
+    !user?.permissions?.includes("agent") &&
     request.nextUrl.pathname !== "/reports/supplier"
   ) {
     return Response.redirect(new URL("/reports/supplier", request.url));
