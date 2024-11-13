@@ -1,4 +1,5 @@
 import Pages from "@/components/custom-pagination";
+import { Empty } from "@/components/empty";
 import ListScrollArea from "@/components/list-scroll-area";
 import { ScrollBar } from "@/components/ui/scroll-area";
 import {
@@ -52,28 +53,32 @@ export async function List({
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {data?.list?.map((item: any) => (
-                  <TableRow key={Math.random()}>
-                    <TableCell className="w-24 text-center">
-                      {formatTimestamp(item.startTime)}
-                    </TableCell>
-                    <TableCell className="w-24 text-center">
-                      {formatTimestamp(item.endTime)}
-                    </TableCell>
-                    <TableCell className="w-24 text-center">
-                      {formatTimestamp(item.createTime)}
-                    </TableCell>
-                    <TableCell className="w-24 text-center">
-                      {item.content}
-                    </TableCell>
-                    <TableCell className="w-24 text-center">
-                      {item.type}
-                    </TableCell>
-                    <TableCell className="w-24 text-center">
-                      <Actions data={item} showEdit={true} />
-                    </TableCell>
-                  </TableRow>
-                ))}
+                {data?.list && data.list.length > 0 ? (
+                  data?.list?.map((item) => (
+                    <TableRow key={Math.random()}>
+                      <TableCell className="w-24 text-center">
+                        {formatTimestamp(item.startTime)}
+                      </TableCell>
+                      <TableCell className="w-24 text-center">
+                        {formatTimestamp(item.endTime)}
+                      </TableCell>
+                      <TableCell className="w-24 text-center">
+                        {formatTimestamp(item.createTime)}
+                      </TableCell>
+                      <TableCell className="w-24 text-center">
+                        {item.content}
+                      </TableCell>
+                      <TableCell className="w-24 text-center">
+                        {item.type}
+                      </TableCell>
+                      <TableCell className="w-24 text-center">
+                        <Actions data={item} showEdit={true} />
+                      </TableCell>
+                    </TableRow>
+                  ))
+                ) : (
+                  <Empty colSpan={6} />
+                )}
               </TableBody>
             </Table>
           </div>

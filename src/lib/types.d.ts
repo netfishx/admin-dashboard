@@ -174,13 +174,26 @@ export type AnnouncementList = {
 };
 
 export type PeriodReport = {
-  page: number;
-  size: number;
+  pageSize: number;
+  pageNum: number;
   startTime: string;
   endTime: string;
   issueNumber: string;
   gameTypeName: string;
   gameName: string;
+};
+
+export type PeriodReportList = WithPagination & {
+  issueNumber: string;
+  openTime: string;
+  gameTypeName: string;
+  gameName: string;
+  betNum: number | string;
+  betAmount: number | string;
+  tieAmount: number | string;
+  pairBetAmount: number | string;
+  validBetAmount: number | string;
+  memberBackAmount: number | string;
 };
 
 // 个人中心-基本信息
@@ -222,13 +235,11 @@ export type ApplyData = {
   withdrawMode: number;
   moneyStatus: number;
 };
-export type ApplyList = WithPagination & {
-  list: ApplyData[];
-};
+
 export type ApplyListRequest = {
   startTime: string;
   endTime: string;
-  approverStatus?: string | null;
+  approverStatus?: number | null;
   pageNum: number;
   pageSize: number;
   userId?: string | null;
