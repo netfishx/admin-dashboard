@@ -668,6 +668,28 @@
       "approverDesc": "确定通过该申请单吗？",
       "rejectDesc": "确定拒绝该申请单吗？",
       "flowDesc": "确定再次发起该申请单吗？"
+    },
+    "audit": {
+      "gameTypeName": "游戏种类",
+      "gameName": "游戏名称",
+      "issueNumber": "期号",
+      "openTime": "开奖时间"  ,
+      "dateRange": "稽核创建日期",
+      "all": "全部",
+      "enable": "通过",
+      "placeholderselect": "请选择",
+      "placeholder": "请输入",
+      "memberId": "会员ID",
+      "orderNo": "稽核订单号",
+      "businessOrderNo": "业务订单号",
+      "auditOrderNo": "稽核订单号",
+      "auditCreateTime": "稽核创建时间",
+      "businessOrderType": "业务订单类型",
+      "orderAmount": "订单金额",
+      "auditMultiple": "稽核倍数",
+      "validBetAmount": "有效投注",
+      "remainingAudit": "剩余稽核",
+      "auditStatus": "稽核状态"  
     }
   }
 }

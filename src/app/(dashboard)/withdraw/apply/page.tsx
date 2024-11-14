@@ -12,6 +12,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { cn } from "@/lib/utils";
+import { endOfDay, startOfDay } from "date-fns";
 import { getTranslations } from "next-intl/server";
 import { Suspense } from "react";
 import { translateValue } from "../tools";
@@ -24,7 +25,6 @@ import {
 import { Actions } from "./actions";
 import { Form } from "./form";
 import { MoneyBtn } from "./money-btn";
-
 export default async function Page({
   searchParams,
 }: { searchParams: Promise<{ [key: string]: string | string[] }> }) {
@@ -50,9 +50,12 @@ async function TableWrapper({
   const t = await getTranslations("withdraw.apply");
 
   const search = await searchParams;
+  const now = Date.now();
+  const start = search.startTime ?? startOfDay(now).getTime();
+  const end = search.endTime ?? endOfDay(now).getTime();
   const { data } = await getWithdrawApplyList({
-    startTime: search.startTime as string,
-    endTime: search.endTime as string,
+    startTime: Number(start),
+    endTime: Number(end),
     approverStatus: Number(search.approverStatus),
     pageNum: Number(search.pageNum ?? 1),
     pageSize: Number(search.pageSize ?? 10),
@@ -63,7 +66,13 @@ async function TableWrapper({
     <div className="p-2 bg-background flex-1 w-full ">
       <div className="relative overflow-y-auto overflow-x-auto border rounded-sm">
         <ListScrollArea>
-          <Suspense fallback={<div>loading...</div>}>
+          <Suspense
+            fallback={
+              <div className="bg-background py-2">
+                <Skeleton className="h-9 w-full opacity-25" />
+              </div>
+            }
+          >
             <Table>
               <TableHeader>
                 <TableRow className="bg-muted">
@@ -193,13 +202,15 @@ async function TableWrapper({
           <ScrollBar orientation="horizontal" />
         </ListScrollArea>
       </div>
-      <div className="pt-2">
-        <Pages
-          total={data?.total ?? 0}
-          currentPage={Number(data?.pageNum ?? 1)}
-          pageSize={Number(data?.pageSize ?? 10)}
-        />
-      </div>
+      {Number(data?.total) > 0 && (
+        <div className="pt-2">
+          <Pages
+            total={data?.total ?? 0}
+            currentPage={Number(data?.pageNum ?? 1)}
+            pageSize={Number(data?.pageSize ?? 10)}
+          />
+        </div>
+      )}
     </div>
   );
 }

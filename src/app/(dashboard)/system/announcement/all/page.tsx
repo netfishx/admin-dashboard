@@ -1,4 +1,5 @@
 import { getAnnouncement } from "@/api";
+import { Skeleton } from "@/components/ui/skeleton";
 import { endOfDay, startOfDay } from "date-fns";
 import { Suspense } from "react";
 import { List } from "./list";
@@ -15,11 +16,17 @@ export default async function All({
     pageSize: Number(search.pageSize ?? 10),
     pageNum: Number(search.pageNum ?? 1),
     userId: (search.userId ?? "") as string,
-    startTime: start as string,
-    endTime: end as string,
+    startTime: Number(start),
+    endTime: Number(end),
   });
   return (
-    <Suspense fallback={<div>loading...</div>}>
+    <Suspense
+      fallback={
+        <div className="bg-background py-2">
+          <Skeleton className="h-9 w-full opacity-25" />
+        </div>
+      }
+    >
       <List data={data} />
     </Suspense>
   );

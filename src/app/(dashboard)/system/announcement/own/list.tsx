@@ -78,13 +78,15 @@ export async function List({
         </div>
         <ScrollBar orientation="horizontal" />
       </ListScrollArea>
-      <div className="pt-2">
-        <Pages
-          total={data?.total ?? 0}
-          currentPage={Number(data?.pageNum ?? 1)}
-          pageSize={Number(data?.pageSize ?? 10)}
-        />
-      </div>
+      {Number(data?.total) > 0 && (
+        <div className="pt-2">
+          <Pages
+            total={data?.total ?? 0}
+            currentPage={Number(data?.pageNum ?? 1)}
+            pageSize={Number(data?.pageSize ?? 10)}
+          />
+        </div>
+      )}
     </div>
   );
 }
