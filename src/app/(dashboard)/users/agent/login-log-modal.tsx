@@ -36,14 +36,16 @@ export function LoginLogModal() {
   const [size, setSize] = useState<number>(10);
   useEffect(() => {
     if (userId) {
-      getLoginLog({ userId, page, size }).then(({ data }) => {
-        if (data) {
-          setData(data.data);
-          setTotal(data.total);
-          setPage(data.pageNum);
-          setSize(data.pageSize);
-        }
-      });
+      getLoginLog({ userId, pageNum: page, pageSize: size }).then(
+        ({ data }) => {
+          if (data) {
+            setData(data.list);
+            setTotal(data.total);
+            setPage(data.pageNum);
+            setSize(data.pageSize);
+          }
+        },
+      );
     }
   }, [userId, page, size]);
   return (

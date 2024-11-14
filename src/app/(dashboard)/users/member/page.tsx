@@ -58,16 +58,16 @@ async function TableWrapper({
           <Table>
             <TableHeader>
               <TableRow className="bg-muted">
-                <TableHead className="min-w-28">{t("upUsername")}</TableHead>
+                <TableHead>{t("upUsername")}</TableHead>
                 <TableHead className="min-w-28">{t("deptId")}</TableHead>
-                <TableHead className="min-w-20">{t("userId")}</TableHead>
-                <TableHead className="min-w-14">{t("username")}</TableHead>
-                <TableHead className="min-w-14">{t("nickname")}</TableHead>
+                <TableHead className="min-w-60">{t("userId")}</TableHead>
+                <TableHead>{t("username")}</TableHead>
+                <TableHead>{t("nickname")}</TableHead>
                 <TableHead className="min-w-28">{t("walletAddress")}</TableHead>
                 <TableHead className="min-w-28">{t("debtAmount")}</TableHead>
                 <TableHead className="min-w-28">{t("creditAmount")}</TableHead>
                 <TableHead className="min-w-20">{t("status")}</TableHead>
-                <TableHead className="min-w-[550px] text-center sticky right-0 bg-muted">
+                <TableHead className="min-w-[700px] text-center sticky right-0 bg-muted">
                   {t("action")}
                 </TableHead>
               </TableRow>
@@ -125,8 +125,8 @@ async function TableBodyWrapper({ list }: { list: MemberList[] | undefined }) {
               {t(`statusLabel.${item.status}`)}
             </div>
           </TableCell>
-          <TableCell className="flex justify-between sticky right-0 bg-background">
-            <Actions data={item} />
+          <TableCell className="text-center sticky right-0 bg-background">
+            <Actions />
           </TableCell>
         </TableRow>
       ))}
