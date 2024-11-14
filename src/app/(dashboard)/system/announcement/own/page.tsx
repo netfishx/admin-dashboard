@@ -11,7 +11,6 @@ export default async function Own({
     pageSize: Number(search.pageSize ?? 10),
     pageNum: Number(search.pageNum ?? 1),
     level: 0,
-    language: "cn",
   });
 
   return (

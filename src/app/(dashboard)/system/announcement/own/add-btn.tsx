@@ -7,7 +7,7 @@ import {
 } from "@/store";
 import { useAtom, useSetAtom } from "jotai";
 import { useTranslations } from "next-intl";
-export function AddAnnouncement() {
+export function AddBtn() {
   const t = useTranslations("system.announcement");
   const [, setOpen] = useAtom(contentEditModalAtom);
   const setEditModalTitle = useSetAtom(editModalTitleAtom);

@@ -30,9 +30,11 @@ import { useEffect, useState } from "react";
 export function TimeRange({
   onDateRangeChange,
   range,
+  disabled,
 }: {
   onDateRangeChange: (startStr: string, endStr: string) => void;
   range: [string, string];
+  disabled?: boolean;
 }) {
   const t = useTranslations("system.announcement");
   const toDate = (input: string) => {
@@ -123,6 +125,7 @@ export function TimeRange({
               "justify-start text-left font-normal w-[360px]",
               !dateRange && "text-muted-foreground",
             )}
+            disabled={disabled}
           >
             <CalendarIcon className="mr-2 h-4 w-4" />
             {dateRange?.from ? (

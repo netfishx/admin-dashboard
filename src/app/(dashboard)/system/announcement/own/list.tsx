@@ -13,7 +13,7 @@ import type { AnnouncementList, WithPagination } from "@/lib/types";
 import { getTranslations } from "next-intl/server";
 import { EditBtn } from "../edit-btn";
 import { formatTimestamp } from "../tools";
-import { AddAnnouncement } from "./add-announcement";
+import { AddBtn } from "./add-btn";
 
 export async function List({
   data,
@@ -24,7 +24,7 @@ export async function List({
 
   return (
     <div className="p-2 mt-2 bg-background flex-1 gap-2">
-      <AddAnnouncement />
+      <AddBtn />
       <ListScrollArea>
         <div className="max-h-[calc(100dvh-220px)] overflow-y-auto border rounded-sm">
           <Table>
@@ -63,7 +63,7 @@ export async function List({
                     {formatTimestamp(item.createTime)}
                   </TableCell>
                   <TableCell className="w-24 text-center">
-                    {item.content}
+                    {item.contentOfLanguage}
                   </TableCell>
                   <TableCell className="w-24 text-center">
                     {item.type}
