@@ -539,7 +539,7 @@ export async function getSupplierReportList() {
   });
 }
 
-export async function getMemberReportList() {
+export async function getMemberReportList(params: any) {
   const user = await getSession();
   return await apiRequest<Res<PageData<MemberReportsRecord>>>({
     url: "/report/agent/baccarat/member",
