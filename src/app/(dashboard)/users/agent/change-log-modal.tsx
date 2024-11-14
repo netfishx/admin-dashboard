@@ -20,16 +20,18 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import type { ChangeLog } from "@/lib/types";
-import { agentIdAtom, changeLogModalAtom } from "@/store";
-import { useAtom, useAtomValue } from "jotai";
+import { changeLogModalAtom } from "@/store";
+import { useAtom } from "jotai";
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 
-export function ChangeLogModal() {
+export function ChangeLogModal({
+  targetUserId,
+  appType,
+}: { targetUserId: string; appType: "AGENT" | "MEMBER" }) {
   const translation = useTranslations();
   const t = useTranslations("users.agents");
   const [open, setOpen] = useAtom(changeLogModalAtom);
-  const targetUserId = useAtomValue(agentIdAtom);
   const [pageNum, setPageNum] = useState<number>(1);
   const [pageSize, setPageSize] = useState<number>(10);
   const [total, setTotal] = useState<number>(0);
@@ -39,7 +41,7 @@ export function ChangeLogModal() {
     if (targetUserId && open) {
       getChangeLog({
         targetUserId,
-        appType: "AGENT",
+        appType,
         pageNum,
         pageSize,
       }).then(({ data }) => {

@@ -30,6 +30,8 @@ export const loginLogModalAtom = atom<boolean>(false);
 export const changeLogModalAtom = atom<boolean>(false);
 // 用户管理-代理管理-代理ID
 export const agentIdAtom = atom<string>("");
+// 用户管理-会员管理-会员ID
+export const memberIdAtom = atom<string>("");
 // 公告弹窗
 export const contentModalAtom = atom<boolean>(false);
 export const contentModalDataAtom = atom<AnnouncementList | null>(null);

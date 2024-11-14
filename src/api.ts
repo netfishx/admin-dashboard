@@ -207,18 +207,32 @@ export async function getMemberList(params: {
   });
 }
 
-export async function getLoginLog(params: {
-  userId: string;
+export async function getAgentLoginLog(params: {
+  agentId: string;
   pageNum?: number;
   pageSize?: number;
 }) {
   const user = await getSession();
-  return await apiRequest<WithPagination & { list: LoginLog[] }>({
+  return await apiRequest<PageData<LoginLog>>({
     url: "/agent/loginLog/get",
     params,
     token: user?.token,
   });
 }
+
+export async function getMemberLoginLog(params: {
+  memberId: string;
+  pageNum?: number;
+  pageSize?: number;
+}) {
+  const user = await getSession();
+  return await apiRequest<PageData<LoginLog>>({
+    url: "/agent/loginLog/get",
+    params,
+    token: user?.token,
+  });
+}
+
 export async function agentBaccaratReport(data: any) {
   return await apiRequest({ url: "/api/agentBaccaratReport", data });
 }
