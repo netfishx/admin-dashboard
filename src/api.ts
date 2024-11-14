@@ -9,6 +9,8 @@ import type {
   AnnouncementListRequest,
   ApplyData,
   ApplyListRequest,
+  AuditList,
+  AuditListRequest,
   ChangeLog,
   GameConfig,
   GameOdds,
@@ -525,6 +527,16 @@ export async function againApply(data: { id: string }) {
     url: "/order/withdraw/retry",
     method: "POST",
     data,
+    token: user?.token,
+  });
+}
+
+// 稽核管理-稽核列表
+export async function getAuditList(params: AuditListRequest) {
+  const user = await getSession();
+  return await apiRequest<WithPagination & { list: AuditList[] }>({
+    url: "/order/audit/page",
+    params,
     token: user?.token,
   });
 }
