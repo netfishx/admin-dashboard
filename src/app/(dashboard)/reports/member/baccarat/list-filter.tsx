@@ -67,7 +67,7 @@ export function ListFilter() {
           />
         </div>
         <div className="flex gap-4 items-center">
-          <Label className="shrink-0">供应商ID</Label>
+          <Label className="shrink-0">{t("memberId")}</Label>
           <Input
             value={supplierId ?? ""}
             onChange={(e) => setSupplierId(e.target.value)}

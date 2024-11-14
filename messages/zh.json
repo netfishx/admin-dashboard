@@ -464,7 +464,8 @@
       "placeholderinput": "请输入",
       "search": "查询",
       "reset": "重置",
-      "gameName": "游戏名称"
+      "gameName": "游戏名称",
+      "memberId": "会员ID"
     }
   },
   "pagination": {
