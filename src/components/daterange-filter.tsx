@@ -1,3 +1,4 @@
+"use client";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
 import {
@@ -28,15 +29,12 @@ import {
 } from "date-fns";
 import { Calendar as CalendarIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { useSearchParams } from "next/navigation";
 import { parseAsInteger, useQueryStates } from "nuqs";
 import { memo, startTransition, useCallback, useEffect, useMemo } from "react";
 import type { DateRange } from "react-day-picker";
 
 export const today = new Date();
-export const times = {
-  startTime: startOfDay(today).getTime(),
-  endTime: endOfDay(today).getTime(),
-};
 
 type rangeType =
   | "today"
@@ -60,6 +58,11 @@ const TIME_OPTIONS = {
     value: i.toString().padStart(2, "0"),
     label: i.toString().padStart(2, "0"),
   })),
+};
+
+export const times = {
+  startTime: startOfDay(today).getTime(),
+  endTime: endOfDay(today).getTime(),
 };
 
 // 提取 TimeSelect 为独立组件
@@ -90,7 +93,6 @@ const TimeSelect = memo(
       [type, onTimeChange],
     );
 
-    // 使用 useMemo 缓存 SelectContent 内容
     const hourOptions = useMemo(
       () => (
         <SelectContent>
@@ -178,47 +180,49 @@ export function DateRangeFilter({
     "month",
     "lastmonth",
   ],
-  enableTimeSelect = true, // 新增的属性
+  enableTimeSelect = true,
   startTimeText = "startTime",
   endTimeText = "endTime",
-  // biome-ignore lint/suspicious/noEmptyBlockStatements: <explanation>
   onChange = () => {},
 }: {
   quickSetBtn?: rangeType[];
   enableTimeSelect?: boolean;
   startTimeText?: string;
   endTimeText?: string;
-  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
   onChange?: (dateRange: any) => void;
 }) {
   const t = useTranslations("report.orderlist");
+  const searchParams = useSearchParams();
+
+  // 从 URL 参数中获取 startTime 和 endTime 值
+  const startTimeFromUrl = searchParams.get(startTimeText);
+  const endTimeFromUrl = searchParams.get(endTimeText);
 
   const [dateRange, setDateRange] = useQueryStates({
     [startTimeText]: parseAsInteger
-      .withDefault(startOfDay(today).getTime())
-      .withOptions({
-        clearOnDefault: false,
-      }),
+      .withDefault(
+        startTimeFromUrl
+          ? Number.parseInt(startTimeFromUrl, 10)
+          : startOfDay(today).getTime(),
+      )
+      .withOptions({ clearOnDefault: false }),
     [endTimeText]: parseAsInteger
-      .withDefault(endOfDay(today).getTime())
-      .withOptions({
-        clearOnDefault: false,
-      }),
+      .withDefault(
+        endTimeFromUrl
+          ? Number.parseInt(endTimeFromUrl, 10)
+          : endOfDay(today).getTime(),
+      )
+      .withOptions({ clearOnDefault: false }),
   });
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     startTransition(async () => {
-      await setDateRange({
-        [startTimeText]: startOfDay(today).getTime(),
-        [endTimeText]: endOfDay(today).getTime(),
-      });
       onChange?.({
-        [startTimeText]: startOfDay(today).getTime(),
-        [endTimeText]: endOfDay(today).getTime(),
+        [startTimeText]: dateRange[startTimeText],
+        [endTimeText]: dateRange[endTimeText],
       });
     });
-  }, []);
+  }, [dateRange[startTimeText], dateRange[endTimeText]]);
 
   const handleQuickSelect = useCallback(
     (type: string) => {
@@ -274,7 +278,6 @@ export function DateRangeFilter({
     [setDateRange, onChange],
   );
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   const handleTimeChange = useCallback(
     (
       type: "start" | "end",
@@ -295,7 +298,7 @@ export function DateRangeFilter({
           ...prev,
           [type === "start" ? startTimeText : endTimeText]: newDate.getTime(),
         };
-        onChange?.(updatedRange); // Pass the updated range to onChange
+        onChange?.(updatedRange);
         return updatedRange;
       });
     },

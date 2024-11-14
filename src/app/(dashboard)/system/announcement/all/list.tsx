@@ -1,5 +1,4 @@
 import Pages from "@/components/custom-pagination";
-import { Empty } from "@/components/empty";
 import {
   Table,
   TableBody,
@@ -8,17 +7,15 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import type { WithPagination } from "@/lib/types";
+import type { PageData } from "@/lib/types";
 import type { AnnouncementList } from "@/lib/types";
 import { getTranslations } from "next-intl/server";
 import { Suspense } from "react";
-import { Actions } from "../actions";
 import { formatTimestamp } from "../tools";
+import { ViewBtn } from "../view-btn";
 import { Form } from "./form";
 
-export async function List({
-  data,
-}: { data?: WithPagination & { list: AnnouncementList[] } }) {
+export async function List({ data }: { data?: PageData<AnnouncementList> }) {
   const t = await getTranslations("system.announcement");
   const user = {
     role: "admin",
@@ -68,43 +65,39 @@ export async function List({
                     </TableRow>
                   </TableHeader>
                   <TableBody className="max-h-96 overflow-y-auto">
-                    {data?.list && data.list.length > 0 ? (
-                      data?.list?.map((item) => (
-                        <TableRow key={Math.random()}>
-                          {/* admin permission */}
-                          <TableCell className="w-24 text-center">
-                            {formatTimestamp(item.startTime)}
-                          </TableCell>
+                    {data?.list?.map((item) => (
+                      <TableRow key={Math.random()}>
+                        {/* admin permission */}
+                        <TableCell className="w-24 text-center">
+                          {formatTimestamp(item.startTime)}
+                        </TableCell>
 
-                          <TableCell className="w-24 text-center">
-                            {formatTimestamp(item.endTime)}
-                          </TableCell>
-                          {/* admin permission */}
-                          <TableCell className="w-24 text-center">
-                            {formatTimestamp(item.createTime)}
-                          </TableCell>
+                        <TableCell className="w-24 text-center">
+                          {formatTimestamp(item.endTime)}
+                        </TableCell>
+                        {/* admin permission */}
+                        <TableCell className="w-24 text-center">
+                          {formatTimestamp(item.createTime)}
+                        </TableCell>
 
-                          {/* admin permission */}
-                          <TableCell className="w-24 min-w-24 text-center">
-                            {item.type}
-                          </TableCell>
+                        {/* admin permission */}
+                        <TableCell className="w-24 min-w-24 text-center">
+                          {item.type}
+                        </TableCell>
 
-                          {/* admin permission */}
-                          <TableCell className="w-24 min-w-24 text-center">
-                            {item.userId}
-                          </TableCell>
+                        {/* admin permission */}
+                        <TableCell className="w-24 min-w-24 text-center">
+                          {item.userId}
+                        </TableCell>
 
-                          <TableCell className="w-24 text-center">
-                            {/* {item.content} */}
-                          </TableCell>
-                          <TableCell className="w-24 text-center">
-                            <Actions data={item} />
-                          </TableCell>
-                        </TableRow>
-                      ))
-                    ) : (
-                      <Empty colSpan={7} />
-                    )}
+                        <TableCell className="w-24 text-center">
+                          {/* {item.content} */}
+                        </TableCell>
+                        <TableCell className="w-24 text-center">
+                          <ViewBtn data={item} />
+                        </TableCell>
+                      </TableRow>
+                    ))}
                   </TableBody>
                 </Table>
               </div>
