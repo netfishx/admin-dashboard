@@ -148,8 +148,8 @@ export type AnnouncementListRequest = {
   pageSize: number;
   pageNum: number;
   userId?: string;
-  startTime?: string;
-  endTime?: string;
+  startTime?: number;
+  endTime?: number;
 };
 // 公告列表请求 本级
 export type AnnouncementAgentListRequest = {
@@ -176,8 +176,8 @@ export type AnnouncementList = {
 export type PeriodReport = {
   pageSize: number;
   pageNum: number;
-  startTime: string;
-  endTime: string;
+  startTime: number;
+  endTime: number;
   issueNumber: string;
   gameTypeName: string;
   gameName: string;
@@ -237,8 +237,8 @@ export type ApplyData = {
 };
 
 export type ApplyListRequest = {
-  startTime: string;
-  endTime: string;
+  startTime: number;
+  endTime: number;
   approverStatus?: number | null;
   pageNum: number;
   pageSize: number;
@@ -257,4 +257,42 @@ export type SupplierReportListItem = {
   totalBetNum: number; // 累计下注笔数
   totalValidAmount: number; // 累计有效金额
   totalShareAmount: number; // 累计比例分成金额
+};
+
+export type AuditList = {
+  id: string;
+  orderNo: string;
+  auditCreateTime: number;
+  businessOrderType: string;
+  businessOrderNo: string;
+  memberId: string;
+  orderAmount: string;
+  auditMultiple: string;
+  validBetAmount: string;
+  remainingAudit: string;
+  auditStatus: string;
+};
+export type AuditListRequest = {
+  startTime: number;
+  endTime: number;
+  memberId?: number | null;
+  pageNum: number;
+  pageSize: number;
+  orderNo?: string | null;
+  businessOrderNo?: string | null;
+  gameTypeName?: string | null;
+  gameName?: string | null;
+};
+export type MemberReportsRecord = {
+  member_id: string; // 会员ID
+  member_type: string; // 会员类别
+  game_category: string; // 游戏种类
+  game_name: string; // 游戏名称
+  bet_count: number; // 下注笔数
+  bet_amount: number; // 下注金额
+  valid_amount: number; // 有效金额
+  win_loss_amount: number; // 输赢金额
+  cashback_amount: number; // 返水金额
+  profit_loss_result: number; // 盈亏结果
+  details: string; // 详情
 };

@@ -103,13 +103,15 @@ export async function List({ data }: { data?: PageData<AnnouncementList> }) {
               </div>
             </Suspense>
           </div>
-          <div className="pt-2">
-            <CustomPagination
-              total={data?.total ?? 0}
-              currentPage={Number(data?.pageNum ?? 1)}
-              pageSize={Number(data?.pageSize ?? 10)}
-            />
-          </div>
+          {Number(data?.total) > 0 && (
+            <div className="pt-2">
+              <CustomPagination
+                total={data?.total ?? 0}
+                currentPage={Number(data?.pageNum ?? 1)}
+                pageSize={Number(data?.pageSize ?? 10)}
+              />
+            </div>
+          )}
         </div>
       </div>
     </>

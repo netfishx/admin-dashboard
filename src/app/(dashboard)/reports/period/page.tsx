@@ -11,6 +11,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { endOfDay, startOfDay } from "date-fns";
 import { getTranslations } from "next-intl/server";
 import { Suspense } from "react";
 import { Actions } from "./actions";
@@ -24,7 +25,6 @@ export default async function Page({
       <Suspense fallback={null}>
         <Form />
       </Suspense>
-      {/* table */}
       <Suspense
         fallback={
           <div className="flex flex-col gap-4 p-4">
@@ -50,11 +50,14 @@ async function PeriodTable({
 }: { searchParams: Promise<{ [key: string]: string | string[] }> }) {
   const t = await getTranslations("report.periodlist");
   const search = await searchParams;
+  const now = Date.now();
+  const start = search.startTime ?? startOfDay(now).getTime();
+  const end = search.endTime ?? endOfDay(now).getTime();
   const { data } = await getPeriodReport({
     pageSize: Number(search.pageSize ?? 10),
     pageNum: Number(search.pageNum ?? 1),
-    startTime: search.startTime?.toString() ?? "",
-    endTime: search.endTime?.toString() ?? "",
+    startTime: Number(start),
+    endTime: Number(end),
     gameTypeName: search.gameTypeName?.toString() ?? "",
     gameName: search.gameName?.toString() ?? "",
     issueNumber: search.issueNumber?.toString() ?? "",
@@ -64,7 +67,13 @@ async function PeriodTable({
       <div className="p-2 bg-background flex-1">
         <div className="h-full border rounded-sm relative">
           <ListScrollArea>
-            <Suspense fallback={<div>loading...</div>}>
+            <Suspense
+              fallback={
+                <div className="bg-background py-2">
+                  <Skeleton className="h-9 w-full opacity-25" />
+                </div>
+              }
+            >
               <Table className="">
                 <TableHeader className="sticky">
                   <TableRow className="bg-muted">
@@ -147,13 +156,15 @@ async function PeriodTable({
             <ScrollBar orientation="horizontal" />
           </ListScrollArea>
         </div>
-        <div className="pt-2">
-          <CustomPagination
-            total={data?.total ?? 0}
-            currentPage={Number(data?.pageNum ?? 1)}
-            pageSize={Number(data?.pageSize ?? 10)}
-          />
-        </div>
+        {Number(data?.total) > 0 && (
+          <div className="pt-2">
+            <CustomPagination
+              total={data?.total ?? 0}
+              currentPage={Number(data?.pageNum ?? 1)}
+              pageSize={Number(data?.pageSize ?? 10)}
+            />
+          </div>
+        )}
       </div>
     </div>
   );

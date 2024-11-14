@@ -141,7 +141,7 @@ function OpenedMenu({
           <MenuItem label={t("reports.period")} href="/reports/period" />
           <MenuItem
             label={t("reports.agent.baccarat")}
-            href={"/reports/agent/baccarat/ratio"}
+            href="/reports/agent/baccarat/ratio"
             subHref={["/reports/agent/baccarat/member"]}
           />
           <MenuItem
