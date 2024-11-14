@@ -17,16 +17,21 @@ import { useQueryState } from "nuqs";
 
 export function ListFilter() {
   const t = useTranslations("report.orderlist");
-  const [gameName, setGameName] = useQueryState("gameName");
+  const [gameName, setGameName] = useQueryState("gameId");
   const [bettingtime, setBettingtime] = useQueryState("bettingtime");
-  const [settlementstatus, setSettlementstatus] =
-    useQueryState("settlementstatus");
-  const [ordernumber, setOrdernumber] = useQueryState("ordernumber");
-  const [issuenumber, setIssuenumber] = useQueryState("issuenumber");
-  const [ministerID, setMinisterID] = useQueryState("ministerID");
-  const [memberID, setMemberID] = useQueryState("memberID");
-  const [roomeownerID, setRoomeownerID] = useQueryState("roomeownerID");
-  const [leastlevelID, setLeastlevelID] = useQueryState("leastlevelID");
+  const [settlementstatus, setSettlementstatus] = useQueryState("orderStatus");
+  // 订单号
+  const [ordernumber, setOrdernumber] = useQueryState("id");
+  // 期号
+  const [issuenumber, setIssuenumber] = useQueryState("issueNumber");
+  // 部长
+  const [ministerID, setMinisterID] = useQueryState("minister");
+  // 会员
+  const [memberID, setMemberID] = useQueryState("memberId");
+  // 房主
+  const [roomeownerID, setRoomeownerID] = useQueryState("roomOwnerId");
+  // 最低等级
+  const [leastlevelID, setLeastlevelID] = useQueryState("lastAgentId");
 
   return (
     <div className="flex flex-col gap-2 bg-background py-2 px-4">
@@ -131,7 +136,9 @@ export function ListFilter() {
               <SelectValue placeholder={t("placeholderselect")} />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="1">百家乐</SelectItem>
+              <SelectItem value="0">未算占成</SelectItem>
+              <SelectItem value="1">未结算</SelectItem>
+              <SelectItem value="2">已结算</SelectItem>
             </SelectContent>
           </Select>
         </div>
