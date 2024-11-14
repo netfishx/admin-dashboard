@@ -9,10 +9,10 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import type { MemberReportsRecord, PageData } from "@/lib/types";
+import type { MemberReportsRecord, PageData, Res } from "@/lib/types";
 import { useTranslations } from "next-intl";
 
-export function List({ data }: { data: PageData<MemberReportsRecord> }) {
+export function List({ data }: { data: Res<PageData<MemberReportsRecord>> }) {
   const t = useTranslations("report.member");
   return (
     <div className="p-2 bg-background flex-1">
@@ -26,9 +26,6 @@ export function List({ data }: { data: PageData<MemberReportsRecord> }) {
                 </TableHead>
                 <TableHead className="min-w-24 text-center">
                   {t("member_type")}
-                </TableHead>
-                <TableHead className="min-w-24 text-center">
-                  {t("game_category")}
                 </TableHead>
                 <TableHead className="min-w-24 text-center">
                   {t("game_name")}
@@ -57,41 +54,36 @@ export function List({ data }: { data: PageData<MemberReportsRecord> }) {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {data?.list?.map((item) => (
-                <TableRow key={item.member_id}>
+              {data?.list?.map((item: MemberReportsRecord) => (
+                <TableRow key={item.memberId}>
                   <TableCell className="w-24 text-center">
-                    {item.member_id}
+                    {item.memberId}
                   </TableCell>
                   <TableCell className="w-24 text-center">
-                    {item.member_type}
+                    {item.memberTypeName}
                   </TableCell>
                   <TableCell className="w-24 text-center">
-                    {item.game_category}
+                    {item.gameId}
                   </TableCell>
                   <TableCell className="w-24 text-center">
-                    {item.game_name}
+                    {item.betNum}
                   </TableCell>
                   <TableCell className="w-24 text-center">
-                    {item.bet_count}
+                    {item.memberBetAmount}
                   </TableCell>
                   <TableCell className="w-24 text-center">
-                    {item.bet_amount}
+                    {item.availableBetAmount}
                   </TableCell>
                   <TableCell className="w-24 text-center">
-                    {item.valid_amount}
+                    {item.winLossAmount}
                   </TableCell>
                   <TableCell className="w-24 text-center">
-                    {item.win_loss_amount}
+                    {item.pureBackAmount}
                   </TableCell>
                   <TableCell className="w-24 text-center">
-                    {item.cashback_amount}
+                    {item.profitLossAmount}
                   </TableCell>
-                  <TableCell className="w-24 text-center">
-                    {item.profit_loss_result}
-                  </TableCell>
-                  <TableCell className="w-24 text-center">
-                    {item.details}
-                  </TableCell>
+                  <TableCell className="w-24 text-center">详情</TableCell>
                 </TableRow>
               ))}
             </TableBody>
@@ -129,22 +121,22 @@ export function List({ data }: { data: PageData<MemberReportsRecord> }) {
           <TableBody>
             <TableRow>
               <TableCell className="w-24 text-center">
-                {data?.list[0].bet_count}
+                {data?.list[0].totalBetNum}
               </TableCell>
               <TableCell className="w-24 text-center">
-                {data?.list[0].bet_amount}
+                {data?.list[0].totalMemberBetAmount}
               </TableCell>
               <TableCell className="w-24 text-center">
-                {data?.list[0].valid_amount}
+                {data?.list[0].totalAvailableBetAmount}
               </TableCell>
               <TableCell className="w-24 text-center">
-                {data?.list[0].win_loss_amount}
+                {data?.list[0].totalWinLossAmount}
               </TableCell>
               <TableCell className="w-24 text-center">
-                {data?.list[0].cashback_amount}
+                {data?.list[0].totalPureBackAmount}
               </TableCell>
               <TableCell className="w-24 text-center">
-                {data?.list[0].profit_loss_result}
+                {data?.list[0].totalProfitLossAmount}
               </TableCell>
             </TableRow>
           </TableBody>
