@@ -1,4 +1,5 @@
 import { AddButton } from "@/app/(dashboard)/system/subaccount/add-button";
+import { CustomPagination } from "@/components/custom-pagination";
 import {
   Table,
   TableBody,
@@ -17,7 +18,7 @@ export default function SubaccountPage() {
         <div className="text-sm font-medium">{t("list")}</div>
         <AddButton />
       </div>
-      <div className="bg-background flex-1 p-4">
+      <div className="bg-background flex-1 p-4 flex flex-col gap-2">
         <div className="border rounded-sm">
           <Table>
             <TableHeader>
@@ -42,6 +43,7 @@ export default function SubaccountPage() {
             </TableBody>
           </Table>
         </div>
+        <CustomPagination total={0} currentPage={1} pageSize={10} />
       </div>
     </div>
   );

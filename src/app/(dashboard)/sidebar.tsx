@@ -43,7 +43,7 @@ export function SideBar({
         </div>
         <Menu permissions={permissions} />
       </div>
-      <ToggleSidebar status={status} />
+      <ToggleSidebar status={status} permissions={permissions} />
     </div>
   );
 }

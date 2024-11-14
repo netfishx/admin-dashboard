@@ -18,7 +18,7 @@ export default function RolePage() {
         <div className="text-sm font-medium">{t("list")}</div>
         <AddButton />
       </div>
-      <div className="bg-background flex-1 p-4">
+      <div className="bg-background flex-1 p-4 flex flex-col gap-2">
         <div className="border rounded-sm">
           <Table>
             <TableHeader>
