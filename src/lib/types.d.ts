@@ -139,7 +139,7 @@ export type ChangeLog = {
 export type Announcement = {
   id?: string | null; // 编辑时传
   type: string;
-  content: { language: string; content: string }[];
+  content: { id?: string; language: string; content: string }[];
   status: string;
   startTime: number | null;
   endTime: number | null;
@@ -155,7 +155,6 @@ export type AnnouncementListRequest = {
 // 公告列表请求 本级
 export type AnnouncementAgentListRequest = {
   level: number | string;
-  language: string;
   pageSize: number;
   pageNum: number;
 };
@@ -168,7 +167,8 @@ export type AnnouncementList = {
   startTime: number;
   endTime: number;
   language: string;
-  content: string;
+  content: { id?: string; language: string; content: string }[];
+  contentOfLanguage: string;
   status: number;
   createTime: number;
   updateTime: number;
