@@ -226,22 +226,38 @@ export async function agentBaccaratReport(data: any) {
 // 系统管理-公告管理-全平台公告
 export async function getAnnouncement(params: AnnouncementListRequest) {
   const user = await getSession();
-  return await apiRequest<PageData<AnnouncementList>>({
+  const res = await apiRequest<PageData<AnnouncementList>>({
     url: "/announcement/getPageListByPlatform",
     params,
     token: user?.token,
   });
+  if (res.data?.list) {
+    res.data.list = res.data.list.map((item) => ({
+      ...item,
+      contentOfLanguage:
+        item.content.find((i) => i.language === "cn")?.content || "",
+    }));
+  }
+  return res;
 }
 // 系统管理-公告管理-本级公告
 export async function getAgentAnnouncement(
   params: AnnouncementAgentListRequest,
 ) {
   const user = await getSession();
-  return await apiRequest<PageData<AnnouncementList>>({
+  const res = await apiRequest<PageData<AnnouncementList>>({
     url: "/announcement/getPageListByUserId",
     params,
     token: user?.token,
   });
+  if (res.data?.list) {
+    res.data.list = res.data.list.map((item) => ({
+      ...item,
+      contentOfLanguage:
+        item.content.find((i) => i.language === "cn")?.content || "",
+    }));
+  }
+  return res;
 }
 // 系统管理-公告管理-添加公告/编辑公告
 export async function saveAnnouncement(data: Announcement) {
