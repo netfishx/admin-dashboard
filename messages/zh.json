@@ -689,7 +689,8 @@
       "auditMultiple": "稽核倍数",
       "validBetAmount": "有效投注",
       "remainingAudit": "剩余稽核",
-      "auditStatus": "稽核状态"  
+      "auditStatus": "稽核状态",
+      "clear": "清除稽核"
     }
   }
 }
