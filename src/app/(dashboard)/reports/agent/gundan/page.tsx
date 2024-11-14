@@ -6,7 +6,7 @@ function CommonWrapper() {
   return (
     <>
       <ListFilter />
-      <List /> 
+      <List />
     </>
   );
 }

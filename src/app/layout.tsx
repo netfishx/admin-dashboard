@@ -37,10 +37,10 @@ export default function RootLayout({
             />
             <JotaiProvider>
               <I18nProvider>
-                <Suspense fallback={null}>
+                <Suspense>
                   <Title />
+                  {children}
                 </Suspense>
-                {children}
               </I18nProvider>
               <ErrorToast />
             </JotaiProvider>

@@ -30,6 +30,7 @@
   "agentReport": "代理报表",
   "memberReport": "会员报表",
   "accountChangeRecord": "账变记录",
+  "noData": "暂无数据",
   "login": {
     "button": "登录",
     "title": "代理后台",
@@ -517,10 +518,25 @@
       "english": "英文",
       "japanese": "日文"
     },
-    "resource": {
-      "title": "资源列表",
-      "name": "资源名称",
-      "code": "资源编码"
+    "role": {
+      "list": "角色列表",
+      "add": "新增角色",
+      "id": "角色ID",
+      "name": "角色名称",
+      "updateTime": "修改时间",
+      "action": "操作",
+      "edit": "编辑",
+      "delete": "删除"
+    },
+    "subaccount": {
+      "list": "子账号列表",
+      "add": "新增子账号",
+      "id": "子账号ID",
+      "name": "子账号名称",
+      "updateTime": "修改时间",
+      "action": "操作",
+      "edit": "编辑",
+      "delete": "删除"
     }
   },
   "fund": {
@@ -625,7 +641,7 @@
       "moneyModalDesc": "请输入资金密码",
       "setMoneyPassword": "设置资金密码",
       "confirmMoneyDesc": "请输入确认资金密码",
-      "confirmMoneyPassword":"确认资金密码",
+      "confirmMoneyPassword": "确认资金密码",
       "editGoogleAuthTitle": "重置谷歌验证",
       "editMoneyPasswordTitle": "修改资金密码"
     }
@@ -662,7 +678,7 @@
       "withdraw": "提款",
       "applyWithdrawMoney": "申请提款金额：",
       "withdrawFee": "手续费：",
-      "withdrawWay": "用户收款方式：", 
+      "withdrawWay": "用户收款方式：",
       "withdrawStatus": "预估实际到账：",
       "withdrawModeNew": "用户收款方式：",
       "withdrawAmount": "资金信息",
@@ -671,6 +687,29 @@
       "approverDesc": "确定通过该申请单吗？",
       "rejectDesc": "确定拒绝该申请单吗？",
       "flowDesc": "确定再次发起该申请单吗？"
+    },
+    "audit": {
+      "gameTypeName": "游戏种类",
+      "gameName": "游戏名称",
+      "issueNumber": "期号",
+      "openTime": "开奖时间",
+      "dateRange": "稽核创建日期",
+      "all": "全部",
+      "enable": "通过",
+      "placeholderselect": "请选择",
+      "placeholder": "请输入",
+      "memberId": "会员ID",
+      "orderNo": "稽核订单号",
+      "businessOrderNo": "业务订单号",
+      "auditOrderNo": "稽核订单号",
+      "auditCreateTime": "稽核创建时间",
+      "businessOrderType": "业务订单类型",
+      "orderAmount": "订单金额",
+      "auditMultiple": "稽核倍数",
+      "validBetAmount": "有效投注",
+      "remainingAudit": "剩余稽核",
+      "auditStatus": "稽核状态",
+      "clear": "清除稽核"
     }
   }
 }

@@ -1,6 +1,5 @@
 import { SidebarWrapper } from "@/app/(dashboard)/sidebar-wrapper";
 import { ToolbarWrapper } from "@/app/(dashboard)/toolbar-wrapper";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import { type ReactNode, Suspense } from "react";
 
 export default async function DashboardLayout({
@@ -13,7 +12,7 @@ export default async function DashboardLayout({
       <Suspense fallback={<div className="w-56 min-[2400px]:w-96" />}>
         <SidebarWrapper />
       </Suspense>
-      <main className="flex-1 flex flex-col">
+      <main className="flex-1 flex flex-col overflow-hidden">
         <Suspense
           fallback={
             <div className="w-full h-10 flex flex-row justify-between border-b px-2" />
@@ -21,10 +20,8 @@ export default async function DashboardLayout({
         >
           <ToolbarWrapper />
         </Suspense>
-        <div className="flex-1 bg-accent">
-          <ScrollArea className="h-[calc(100dvh-2.5rem)]">
-            <div className="flex gap-2 p-2 h-full">{children}</div>
-          </ScrollArea>
+        <div className="flex-1 bg-accent overflow-y-auto">
+          <div className="flex gap-2 p-2 h-full">{children}</div>
         </div>
       </main>
     </div>

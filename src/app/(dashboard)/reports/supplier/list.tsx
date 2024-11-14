@@ -1,4 +1,4 @@
-import Pages from "@/components/custom-pagination";
+import { CustomPagination } from "@/components/custom-pagination";
 import ListScrollArea from "@/components/list-scroll-area";
 import { ScrollBar } from "@/components/ui/scroll-area";
 import {
@@ -76,7 +76,7 @@ export function List({ data }: { data: PageData<SupplierReportListItem> }) {
         </ListScrollArea>
       </div>
       <div className="pt-2">
-        <Pages total={0} currentPage={1} pageSize={10} />
+        <CustomPagination total={0} currentPage={1} pageSize={10} />
       </div>
       <div className="pt-2 w-2/5">
         <Table>

@@ -4,6 +4,7 @@ import { TableBody, TableCell, TableRow } from "@/components/ui/table";
 import type { GameConfig } from "@/lib/types";
 import { holdStatusAtom } from "@/store";
 import { useAtom } from "jotai";
+import { useTranslations } from "next-intl";
 import { useEffect } from "react";
 
 export function FlyOrderTable({ data }: { data: GameConfig[] }) {
@@ -28,21 +29,31 @@ export function FlyOrderTable({ data }: { data: GameConfig[] }) {
     );
   };
 
+  const t = useTranslations();
+
   return (
     <TableBody>
-      {data.map((item) => (
-        <TableRow key={item.gameId}>
-          <TableCell>{item.gameName}</TableCell>
-          <TableCell className="w-32 flex justify-center items-center h-10">
-            <Switch
-              defaultChecked={item.holdStatus === 1}
-              onCheckedChange={(checked) => {
-                handleStatusChange(checked, item.gameId);
-              }}
-            />
+      {data.length > 0 ? (
+        data.map((item) => (
+          <TableRow key={item.gameId}>
+            <TableCell>{item.gameName}</TableCell>
+            <TableCell className="w-32 flex justify-center items-center h-10">
+              <Switch
+                defaultChecked={item.holdStatus === 1}
+                onCheckedChange={(checked) => {
+                  handleStatusChange(checked, item.gameId);
+                }}
+              />
+            </TableCell>
+          </TableRow>
+        ))
+      ) : (
+        <TableRow>
+          <TableCell colSpan={2} className="text-center h-40">
+            {t("noData")}
           </TableCell>
         </TableRow>
-      ))}
+      )}
     </TableBody>
   );
 }

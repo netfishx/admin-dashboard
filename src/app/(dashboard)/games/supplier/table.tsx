@@ -33,23 +33,32 @@ export async function SupplierTable({
 }: { searchParams: Promise<{ [key: string]: string | undefined }> }) {
   const { userId } = await searchParams;
   const res = await getSupplierConfigs(userId);
+  const t = await getTranslations();
   return (
     <Table>
       <SupplierTableHeader />
       <TableBody>
-        {res.data?.map((item) => (
-          <TableRow key={item.id}>
-            <TableCell>{item.gameName}</TableCell>
-            <TableCell>{item.videoLink}</TableCell>
-            <TableCell>{item.userId}</TableCell>
-            <TableCell>{item.userName}</TableCell>
-            <TableCell>{item.distributionAmount}</TableCell>
-            <TableCell>{item.distributionPercent}</TableCell>
-            <TableCell className="w-24 text-center">
-              <EditButton data={item} />
+        {res.data && res.data.length > 0 ? (
+          res.data.map((item) => (
+            <TableRow key={item.id}>
+              <TableCell>{item.gameName}</TableCell>
+              <TableCell>{item.videoLink}</TableCell>
+              <TableCell>{item.userId}</TableCell>
+              <TableCell>{item.userName}</TableCell>
+              <TableCell>{item.distributionAmount}</TableCell>
+              <TableCell>{item.distributionPercent}</TableCell>
+              <TableCell className="w-24 text-center">
+                <EditButton data={item} />
+              </TableCell>
+            </TableRow>
+          ))
+        ) : (
+          <TableRow>
+            <TableCell colSpan={7} className="text-center h-40">
+              {t("noData")}
             </TableCell>
           </TableRow>
-        ))}
+        )}
       </TableBody>
     </Table>
   );

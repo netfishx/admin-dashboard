@@ -9,6 +9,8 @@ import type {
   AnnouncementListRequest,
   ApplyData,
   ApplyListRequest,
+  AuditList,
+  AuditListRequest,
   ChangeLog,
   GameConfig,
   GameOdds,
@@ -205,10 +207,16 @@ export async function getMemberList(params: {
   });
 }
 
-export async function getLoginLog(data: any) {
-  return await apiRequest<WithPagination & { data: LoginLog[] }>({
-    url: "/api/getLoginLog",
-    data,
+export async function getLoginLog(params: {
+  userId: string;
+  pageNum?: number;
+  pageSize?: number;
+}) {
+  const user = await getSession();
+  return await apiRequest<WithPagination & { list: LoginLog[] }>({
+    url: "/agent/loginLog/get",
+    params,
+    token: user?.token,
   });
 }
 export async function agentBaccaratReport(data: any) {
@@ -218,22 +226,38 @@ export async function agentBaccaratReport(data: any) {
 // 系统管理-公告管理-全平台公告
 export async function getAnnouncement(params: AnnouncementListRequest) {
   const user = await getSession();
-  return await apiRequest<PageData<AnnouncementList>>({
+  const res = await apiRequest<PageData<AnnouncementList>>({
     url: "/announcement/getPageListByPlatform",
     params,
     token: user?.token,
   });
+  if (res.data?.list) {
+    res.data.list = res.data.list.map((item) => ({
+      ...item,
+      contentOfLanguage:
+        item.content.find((i) => i.language === "cn")?.content || "",
+    }));
+  }
+  return res;
 }
 // 系统管理-公告管理-本级公告
 export async function getAgentAnnouncement(
   params: AnnouncementAgentListRequest,
 ) {
   const user = await getSession();
-  return await apiRequest<PageData<AnnouncementList>>({
+  const res = await apiRequest<PageData<AnnouncementList>>({
     url: "/announcement/getPageListByUserId",
     params,
     token: user?.token,
   });
+  if (res.data?.list) {
+    res.data.list = res.data.list.map((item) => ({
+      ...item,
+      contentOfLanguage:
+        item.content.find((i) => i.language === "cn")?.content || "",
+    }));
+  }
+  return res;
 }
 // 系统管理-公告管理-添加公告/编辑公告
 export async function saveAnnouncement(data: Announcement) {
@@ -527,6 +551,16 @@ export async function againApply(data: { id: string }) {
     url: "/order/withdraw/retry",
     method: "POST",
     data,
+    token: user?.token,
+  });
+}
+
+// 稽核管理-稽核列表
+export async function getAuditList(params: AuditListRequest) {
+  const user = await getSession();
+  return await apiRequest<WithPagination & { list: AuditList[] }>({
+    url: "/order/audit/page",
+    params,
     token: user?.token,
   });
 }

@@ -17,7 +17,6 @@ export function ContentModal() {
   const t = useTranslations("system.announcement");
   const [open, setOpen] = useAtom(contentModalAtom);
   const data = useAtomValue(contentModalDataAtom);
-
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent className="max-w-5xl">
@@ -25,8 +24,7 @@ export function ContentModal() {
           <DialogTitle>{t("notifyAnnouncement")}</DialogTitle>
           <DialogDescription />
         </DialogHeader>
-        {/* todo content*/}
-        {/* <div>{data?.content[0].content}</div> */}
+        <div>{data?.contentOfLanguage}</div>
         <DialogFooter>
           <Button onClick={() => setOpen(false)}>
             {translations("confirm")}

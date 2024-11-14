@@ -62,7 +62,7 @@ export function GoogleModal({
           <DialogDescription />
         </DialogHeader>
 
-        <div className="space-y-8 py-4">
+        <div className="space-y-8 py-4 max-h-[550px] overflow-y-auto">
           {/* Step 1 */}
           {isEdit ? null : (
             <div className="flex gap-8 justify-between">
@@ -172,8 +172,8 @@ export function GoogleModal({
                 <span>{t("step3Title")}</span>
               </div>
             )}
-            <div className="space-y-2 flex items-center gap-4 justify-center">
-              <Label htmlFor="auth-code" className="text-sm text-destructive">
+            <div className="flex items-center gap-4 justify-center text-center">
+              <Label className="text-sm text-destructive">
                 {t("googleCodeLabel")}
               </Label>
               <Input

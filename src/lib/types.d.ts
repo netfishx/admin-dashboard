@@ -139,7 +139,7 @@ export type ChangeLog = {
 export type Announcement = {
   id?: string | null; // 编辑时传
   type: string;
-  content: { language: string; content: string }[];
+  content: { id?: string; language: string; content: string }[];
   status: string;
   startTime: number | null;
   endTime: number | null;
@@ -149,13 +149,12 @@ export type AnnouncementListRequest = {
   pageSize: number;
   pageNum: number;
   userId?: string;
-  startTime?: string;
-  endTime?: string;
+  startTime?: number;
+  endTime?: number;
 };
 // 公告列表请求 本级
 export type AnnouncementAgentListRequest = {
   level: number | string;
-  language: string;
   pageSize: number;
   pageNum: number;
 };
@@ -168,7 +167,8 @@ export type AnnouncementList = {
   startTime: number;
   endTime: number;
   language: string;
-  content: string;
+  content: { id?: string; language: string; content: string }[];
+  contentOfLanguage: string;
   status: number;
   createTime: number;
   updateTime: number;
@@ -177,8 +177,8 @@ export type AnnouncementList = {
 export type PeriodReport = {
   pageSize: number;
   pageNum: number;
-  startTime: string;
-  endTime: string;
+  startTime: number;
+  endTime: number;
   issueNumber: string;
   gameTypeName: string;
   gameName: string;
@@ -238,8 +238,8 @@ export type ApplyData = {
 };
 
 export type ApplyListRequest = {
-  startTime: string;
-  endTime: string;
+  startTime: number;
+  endTime: number;
   approverStatus?: number | null;
   pageNum: number;
   pageSize: number;
@@ -260,6 +260,30 @@ export type SupplierReportListItem = {
   totalShareAmount: number; // 累计比例分成金额
 };
 
+export type AuditList = {
+  id: string;
+  orderNo: string;
+  auditCreateTime: number;
+  businessOrderType: string;
+  businessOrderNo: string;
+  memberId: string;
+  orderAmount: string;
+  auditMultiple: string;
+  validBetAmount: string;
+  remainingAudit: string;
+  auditStatus: string;
+};
+export type AuditListRequest = {
+  startTime: number;
+  endTime: number;
+  memberId?: number | null;
+  pageNum: number;
+  pageSize: number;
+  orderNo?: string | null;
+  businessOrderNo?: string | null;
+  gameTypeName?: string | null;
+  gameName?: string | null;
+};
 export type MemberReportsRecord = {
   memberId: string;
   memberTypeName: string;
