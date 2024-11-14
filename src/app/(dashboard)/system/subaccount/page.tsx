@@ -26,7 +26,19 @@ export default function SubaccountPage() {
                 <TableHead>{t("id")}</TableHead>
                 <TableHead>{t("name")}</TableHead>
                 <TableHead>{t("updateTime")}</TableHead>
-                <TableHead className="w-24 text-center">
+                <TableHead>{t("id")}</TableHead>
+                <TableHead>{t("name")}</TableHead>
+                <TableHead>{t("updateTime")}</TableHead>
+                <TableHead>{t("id")}</TableHead>
+                <TableHead>{t("name")}</TableHead>
+                <TableHead>{t("updateTime")}</TableHead>
+                <TableHead>{t("id")}</TableHead>
+                <TableHead>{t("name")}</TableHead>
+                <TableHead>{t("updateTime")}</TableHead>
+                <TableHead>{t("id")}</TableHead>
+                <TableHead>{t("name")}</TableHead>
+                <TableHead>{t("updateTime")}</TableHead>
+                <TableHead className="w-24 text-center sticky right-0 bg-muted">
                   {t("action")}
                 </TableHead>
               </TableRow>
@@ -37,7 +49,9 @@ export default function SubaccountPage() {
                   {/* <TableCell>{item.id}</TableCell>
                   <TableCell>{item.name}</TableCell>
                   <TableCell>{item.updateTime}</TableCell> */}
-                  <TableCell className="w-24 text-center">2</TableCell>
+                  <TableCell className="w-24 text-center" colSpan={20}>
+                    2
+                  </TableCell>
                 </TableRow>
               ))}
             </TableBody>
