@@ -9,7 +9,13 @@ import { useAtomValue } from "jotai";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
 
-export function SideBar({ status = false }: { status?: boolean }) {
+export function SideBar({
+  status = false,
+  permissions,
+}: {
+  status?: boolean;
+  permissions: string[];
+}) {
   const t = useTranslations();
   const isOpened = useAtomValue(sidebarAtom);
   return (
@@ -35,7 +41,7 @@ export function SideBar({ status = false }: { status?: boolean }) {
             {t("title")}
           </h1>
         </div>
-        <Menu />
+        <Menu permissions={permissions} />
       </div>
       <ToggleSidebar status={status} />
     </div>

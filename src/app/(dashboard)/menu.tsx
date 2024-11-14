@@ -32,7 +32,7 @@ import { usePathname } from "next/navigation";
 import { parseAsArrayOf, parseAsString, useQueryState } from "nuqs";
 import { Suspense, startTransition } from "react";
 
-export function Menu() {
+export function Menu({ permissions }: { permissions: string[] }) {
   const isOpened = useAtomValue(sidebarAtom);
   const pathname = usePathname();
   return (
@@ -40,17 +40,20 @@ export function Menu() {
       <div className="flex flex-col gap-1 px-2" suppressHydrationWarning={true}>
         {isOpened ? (
           <Suspense fallback={null}>
-            <OpenedMenu pathname={pathname} />
+            <OpenedMenu pathname={pathname} permissions={permissions} />
           </Suspense>
         ) : (
-          <ClosedMenu pathname={pathname} />
+          <ClosedMenu pathname={pathname} permissions={permissions} />
         )}
       </div>
     </ScrollArea>
   );
 }
 
-function OpenedMenu({ pathname }: { pathname: string }) {
+function OpenedMenu({
+  pathname,
+  permissions,
+}: { pathname: string; permissions: string[] }) {
   const t = useTranslations("menu");
   const [openedMenu, setOpenedMenu] = useQueryState<string[]>(
     "openedMenu",
@@ -66,44 +69,55 @@ function OpenedMenu({ pathname }: { pathname: string }) {
   }
   return (
     <>
-      <MenuItem label={t("home")} href="/" icon={<Home className="size-4" />} />
-      <Collapsible
-        open={openedMenu.includes("games")}
-        onOpenChange={(e) => handleOpenChange("games", e)}
-      >
-        <CollapsibleTrigger asChild>
-          <MenuItem
-            label={t("games.title")}
-            icon={<Gamepad2 className="size-4" />}
-            hasChildren
-          />
-        </CollapsibleTrigger>
-        <CollapsibleContent className="flex flex-col gap-1 px-6">
-          <MenuItem label={t("games.flyorder")} href="/games/flyorder" />
-          <MenuItem label={t("games.odds")} href="/games/odds" />
-          <MenuItem label={t("games.ratio")} href="/games/ratio" />
-          <MenuItem label={t("games.rebate")} href="/games/rebate" />
-          <MenuItem label={t("games.supplier")} href="/games/supplier" />
-          <MenuItem label={t("games.maintain")} href="/games/maintain" />
-        </CollapsibleContent>
-      </Collapsible>
-      <Collapsible
-        open={openedMenu.includes("users")}
-        onOpenChange={(e) => handleOpenChange("users", e)}
-      >
-        <CollapsibleTrigger asChild>
-          <MenuItem
-            label={t("users.title")}
-            icon={<Users className="size-4" />}
-            hasChildren
-          />
-        </CollapsibleTrigger>
-        <CollapsibleContent className="flex flex-col gap-1 px-6">
-          <MenuItem label={t("users.agent")} href="/users/agent" />
-          <MenuItem label={t("users.member")} href="/users/member" />
-          <MenuItem label={t("users.supplier")} href="/users/supplier" />
-        </CollapsibleContent>
-      </Collapsible>
+      {permissions.includes("agent_stat") && (
+        <MenuItem
+          label={t("home")}
+          href="/"
+          icon={<Home className="size-4" />}
+        />
+      )}
+      {permissions.includes("agent_stat") && (
+        <Collapsible
+          open={openedMenu.includes("games")}
+          onOpenChange={(e) => handleOpenChange("games", e)}
+        >
+          <CollapsibleTrigger asChild>
+            <MenuItem
+              label={t("games.title")}
+              icon={<Gamepad2 className="size-4" />}
+              hasChildren
+            />
+          </CollapsibleTrigger>
+          <CollapsibleContent className="flex flex-col gap-1 px-6">
+            <MenuItem label={t("games.flyorder")} href="/games/flyorder" />
+            <MenuItem label={t("games.odds")} href="/games/odds" />
+            <MenuItem label={t("games.ratio")} href="/games/ratio" />
+            <MenuItem label={t("games.rebate")} href="/games/rebate" />
+            <MenuItem label={t("games.supplier")} href="/games/supplier" />
+            <MenuItem label={t("games.maintain")} href="/games/maintain" />
+          </CollapsibleContent>
+        </Collapsible>
+      )}
+
+      {permissions.includes("agent_stat") && (
+        <Collapsible
+          open={openedMenu.includes("users")}
+          onOpenChange={(e) => handleOpenChange("users", e)}
+        >
+          <CollapsibleTrigger asChild>
+            <MenuItem
+              label={t("users.title")}
+              icon={<Users className="size-4" />}
+              hasChildren
+            />
+          </CollapsibleTrigger>
+          <CollapsibleContent className="flex flex-col gap-1 px-6">
+            <MenuItem label={t("users.agent")} href="/users/agent" />
+            <MenuItem label={t("users.member")} href="/users/member" />
+            <MenuItem label={t("users.supplier")} href="/users/supplier" />
+          </CollapsibleContent>
+        </Collapsible>
+      )}
       <Collapsible
         open={openedMenu.includes("reports")}
         onOpenChange={(e) => handleOpenChange("reports", e)}
@@ -243,31 +257,36 @@ function OpenedMenu({ pathname }: { pathname: string }) {
   );
 }
 
-function ClosedMenu({ pathname }: { pathname: string }) {
+function ClosedMenu({
+  pathname,
+  permissions,
+}: { pathname: string; permissions: string[] }) {
   const t = useTranslations("menu");
   const baseClass = "flex flex-col items-center justify-center h-9";
   return (
     <>
-      <TooltipProvider>
-        <Tooltip>
-          <TooltipTrigger>
-            <div
-              className={cn([baseClass, pathname === "/" && "text-primary"])}
-            >
-              <MenuItemLink
-                href="/"
-                isActive={pathname === "/"}
-                className="px-0 w-full"
+      {permissions.includes("agent_stat") && (
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger>
+              <div
+                className={cn([baseClass, pathname === "/" && "text-primary"])}
               >
-                <Home className="size-4" />
-              </MenuItemLink>
-            </div>
-          </TooltipTrigger>
-          <TooltipContent side="right">
-            <p>{t("home")}</p>
-          </TooltipContent>
-        </Tooltip>
-      </TooltipProvider>
+                <MenuItemLink
+                  href="/"
+                  isActive={pathname === "/"}
+                  className="px-0 w-full"
+                >
+                  <Home className="size-4" />
+                </MenuItemLink>
+              </div>
+            </TooltipTrigger>
+            <TooltipContent side="right">
+              <p>{t("home")}</p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
+      )}
       <TooltipProvider>
         <Tooltip>
           <TooltipTrigger>
