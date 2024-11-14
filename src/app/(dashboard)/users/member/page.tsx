@@ -17,6 +17,7 @@ import { getTranslations } from "next-intl/server";
 import { Suspense } from "react";
 import Actions from "./action-buttons";
 import Form from "./form";
+import { Modals } from "./modals";
 
 export default function Page({
   searchParams,
@@ -37,6 +38,7 @@ export default function Page({
           <TableWrapper searchParams={searchParams} />
         </Suspense>
       </div>
+      <Modals />
     </div>
   );
 }
@@ -126,7 +128,7 @@ async function TableBodyWrapper({ list }: { list: MemberList[] | undefined }) {
             </div>
           </TableCell>
           <TableCell className="text-center sticky right-0 bg-background">
-            <Actions />
+            <Actions data={item} />
           </TableCell>
         </TableRow>
       ))}
