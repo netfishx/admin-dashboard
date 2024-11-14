@@ -205,10 +205,16 @@ export async function getMemberList(params: {
   });
 }
 
-export async function getLoginLog(data: any) {
-  return await apiRequest<WithPagination & { data: LoginLog[] }>({
-    url: "/api/getLoginLog",
-    data,
+export async function getLoginLog(params: {
+  userId: string;
+  pageNum?: number;
+  pageSize?: number;
+}) {
+  const user = await getSession();
+  return await apiRequest<WithPagination & { list: LoginLog[] }>({
+    url: "/agent/loginLog/get",
+    params,
+    token: user?.token,
   });
 }
 export async function agentBaccaratReport(data: any) {
