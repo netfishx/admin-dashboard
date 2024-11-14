@@ -1,5 +1,7 @@
 import { getAgents } from "@/api";
 import { CustomPagination } from "@/components/custom-pagination";
+import ListScrollArea from "@/components/list-scroll-area";
+import { ScrollBar } from "@/components/ui/scroll-area";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
   Table,
@@ -58,35 +60,38 @@ async function TableWrapper({
   console.info("agent list:", data);
   return (
     <>
-      <div className="border rounded-sm">
-        <Table>
-          <TableHeader>
-            <TableRow className="bg-muted">
-              <TableHead>{t("upUsername")}</TableHead>
-              <TableHead>{t("deptId")}</TableHead>
-              <TableHead>{t("userId")}</TableHead>
-              <TableHead>{t("username")}</TableHead>
-              <TableHead>{t("nickname")}</TableHead>
-              <TableHead>{t("status")}</TableHead>
-              <TableHead className="min-w-[480px] text-center">
-                {t("action")}
-              </TableHead>
-            </TableRow>
-          </TableHeader>
-          <Suspense
-            fallback={
-              <TableBody>
-                <TableRow>
-                  <TableCell colSpan={7} className="h-20">
-                    <Skeleton className="w-full h-6" />
-                  </TableCell>
-                </TableRow>
-              </TableBody>
-            }
-          >
-            <TableBodyWrapper list={data?.list} />
-          </Suspense>
-        </Table>
+      <div className="border rounded-sm relative">
+        <ListScrollArea>
+          <Table>
+            <TableHeader>
+              <TableRow className="bg-muted">
+                <TableHead className="min-w-28">{t("upUsername")}</TableHead>
+                <TableHead className="min-w-28">{t("deptId")}</TableHead>
+                <TableHead className="min-w-60">{t("userId")}</TableHead>
+                <TableHead>{t("username")}</TableHead>
+                <TableHead className="min-w-20">{t("nickname")}</TableHead>
+                <TableHead className="min-w-20">{t("status")}</TableHead>
+                <TableHead className="min-w-[550px] text-center sticky right-0 bg-muted">
+                  {t("action")}
+                </TableHead>
+              </TableRow>
+            </TableHeader>
+            <Suspense
+              fallback={
+                <TableBody>
+                  <TableRow>
+                    <TableCell colSpan={7} className="h-20">
+                      <Skeleton className="w-full h-6" />
+                    </TableCell>
+                  </TableRow>
+                </TableBody>
+              }
+            >
+              <TableBodyWrapper list={data?.list} />
+            </Suspense>
+          </Table>
+          <ScrollBar orientation="horizontal" />
+        </ListScrollArea>
       </div>
       <div className="pt-2">
         <CustomPagination
@@ -122,7 +127,7 @@ async function TableBodyWrapper({ list }: { list: AgentData[] | undefined }) {
               {t(`statusLabel.${item.status}`)}
             </div>
           </TableCell>
-          <TableCell className="text-center">
+          <TableCell className="text-center sticky right-0 bg-background">
             <Action data={item} />
           </TableCell>
         </TableRow>

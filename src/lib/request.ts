@@ -97,6 +97,7 @@ async function request<T>({
     return {
       code: 500,
       message: "Internal Server Error",
+      list: [],
     };
   }
 }

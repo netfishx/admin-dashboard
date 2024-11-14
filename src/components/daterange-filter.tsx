@@ -215,6 +215,19 @@ export function DateRangeFilter({
       .withOptions({ clearOnDefault: false }),
   });
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+  useEffect(() => {
+    setDateRange({
+      [startTimeText]: startTimeFromUrl
+        ? Number.parseInt(startTimeFromUrl, 10)
+        : startOfDay(today).getTime(),
+      [endTimeText]: endTimeFromUrl
+        ? Number.parseInt(endTimeFromUrl, 10)
+        : endOfDay(today).getTime(),
+    });
+  }, []);
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     startTransition(async () => {
       onChange?.({
@@ -224,6 +237,7 @@ export function DateRangeFilter({
     });
   }, [dateRange[startTimeText], dateRange[endTimeText]]);
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   const handleQuickSelect = useCallback(
     (type: string) => {
       let from: Date;
@@ -278,6 +292,7 @@ export function DateRangeFilter({
     [setDateRange, onChange],
   );
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   const handleTimeChange = useCallback(
     (
       type: "start" | "end",
@@ -305,6 +320,7 @@ export function DateRangeFilter({
     [dateRange[startTimeText], dateRange[endTimeText], setDateRange, onChange],
   );
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   const handleDateRangeChange = useCallback(
     (range?: DateRange) => {
       if (range) {
@@ -337,6 +353,7 @@ export function DateRangeFilter({
     [dateRange[startTimeText], dateRange[endTimeText], setDateRange],
   );
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   const formattedDateRange = useMemo(() => {
     if (!dateRange[startTimeText]) {
       return t("choicedate");

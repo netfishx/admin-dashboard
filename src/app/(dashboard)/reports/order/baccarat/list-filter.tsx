@@ -39,10 +39,10 @@ export function ListFilter() {
             defaultValue="1"
           >
             <SelectTrigger className="w-28">
-              <SelectValue placeholder={t("bettingtime")} />
+              <SelectValue placeholder={t("placeholderselect")} />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="1">百家乐</SelectItem>
+              <SelectItem value="1">{t("bettingtime")}</SelectItem>
             </SelectContent>
           </Select>
         </div>
