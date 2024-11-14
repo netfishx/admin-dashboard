@@ -21,11 +21,7 @@ export function ListFilter() {
       <div className="flex gap-4 items-center">
         <div className="flex gap-2 items-center">
           <Label>{t("daterange")}</Label>
-          <DateRangeFilter
-            enableTimeSelect
-            startTimeText="openStartTime"
-            endTimeText="openEndTime"
-          />
+          <DateRangeFilter enableTimeSelect={false} />
         </div>
         <div className="flex gap-4 items-center">
           <Label className="shrink-0">供应商ID</Label>
