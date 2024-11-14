@@ -1,7 +1,6 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { useTranslations } from "next-intl";
-import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { CheckDialog } from "./check-dialog";
 import { LockDialog } from "./lock-dialog";
@@ -24,7 +23,7 @@ export default function DetailButton(props: { id: string }) {
   };
   const { id } = props;
   const t = useTranslations("fund.collection");
-  const router = useRouter();
+
   const [showStatus, setShowStatus] = useState<ShowStatusType>();
   function handleDetail(status: ShowStatusType) {
     setShowStatus(status);

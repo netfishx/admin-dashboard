@@ -25,7 +25,7 @@ export function UserInfoModal() {
   const t = useTranslations("users.agents");
   const open = useAtomValue(userInfoModalAtom);
   const setOpen = useSetAtom(userInfoModalAtom);
-  const [editData, setEditData] = useState<AgentData | null>(null);
+  const [, setEditData] = useState<AgentData | null>(null);
   const [upUsername, setUpUsername] = useState("");
   const [username, setUsername] = useState("");
   const [nickname, setNickname] = useState("");

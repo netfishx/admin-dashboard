@@ -157,8 +157,7 @@ export function CheckDialog(props: Dialogprops) {
   });
   const handleNext = async () => {
     setStep(2);
-    const res = await postUserInfoWithdraw(formData);
-    console.log(res, "res");
+    const _res = await postUserInfoWithdraw(formData);
     // onOpenChange(false);
   };
   const handleChange = (data: WithdrawFormData) => {

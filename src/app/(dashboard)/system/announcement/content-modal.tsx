@@ -8,15 +8,14 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { contentModalAtom, contentModalDataAtom } from "@/store";
-import { useAtom, useAtomValue } from "jotai";
+import { contentModalAtom } from "@/store";
+import { useAtom } from "jotai";
 import { useTranslations } from "next-intl";
 
 export function ContentModal() {
   const translations = useTranslations();
   const t = useTranslations("system.announcement");
   const [open, setOpen] = useAtom(contentModalAtom);
-  const data = useAtomValue(contentModalDataAtom);
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>

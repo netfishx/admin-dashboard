@@ -5,8 +5,6 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import {} from "@/components/ui/tooltip";
-import {} from "lucide-react";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
 
@@ -18,7 +16,6 @@ interface Dialogprops {
 export function AddDialog(props: Dialogprops) {
   const { open = true, onOpenChange } = props;
   const t = useTranslations("personal.info");
-  const translations = useTranslations();
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
