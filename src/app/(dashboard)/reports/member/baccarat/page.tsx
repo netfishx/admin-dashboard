@@ -5,7 +5,7 @@ import { List } from "./list";
 import { ListFilter } from "./list-filter";
 
 interface CommonWrapperProps {
-  searchParams: { [key: string]: string | string[] | undefined };
+  searchParams: Promise<{ [key: string]: string | string[] }>;
 }
 
 async function CommonWrapper({ searchParams }: CommonWrapperProps) {
