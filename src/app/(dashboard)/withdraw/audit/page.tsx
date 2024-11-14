@@ -1,5 +1,5 @@
 import { getAuditList } from "@/api";
-import Pages from "@/components/custom-pagination";
+import { CustomPagination } from "@/components/custom-pagination";
 import ListScrollArea from "@/components/list-scroll-area";
 import { ScrollBar } from "@/components/ui/scroll-area";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -156,7 +156,7 @@ async function TableWrapper({
       </div>
       {Number(data?.total) > 0 && (
         <div className="pt-2">
-          <Pages
+          <CustomPagination
             total={data?.total ?? 0}
             currentPage={Number(data?.pageNum ?? 1)}
             pageSize={Number(data?.pageSize ?? 10)}
