@@ -30,6 +30,7 @@
   "agentReport": "代理报表",
   "memberReport": "会员报表",
   "accountChangeRecord": "账变记录",
+  "noData": "暂无数据",
   "login": {
     "button": "登录",
     "title": "代理后台",
@@ -691,7 +692,7 @@
       "gameTypeName": "游戏种类",
       "gameName": "游戏名称",
       "issueNumber": "期号",
-      "openTime": "开奖时间"  ,
+      "openTime": "开奖时间",
       "dateRange": "稽核创建日期",
       "all": "全部",
       "enable": "通过",

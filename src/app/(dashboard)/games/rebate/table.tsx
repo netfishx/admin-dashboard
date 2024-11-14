@@ -5,6 +5,7 @@ import { TableBody, TableCell, TableRow } from "@/components/ui/table";
 import type { GameConfig } from "@/lib/types";
 import { rebateAtom } from "@/store";
 import { useAtom } from "jotai";
+import { useTranslations } from "next-intl";
 import { useEffect } from "react";
 
 export function RebateTable({ data }: { data: GameConfig[] }) {
@@ -37,26 +38,37 @@ export function RebateTable({ data }: { data: GameConfig[] }) {
       })),
     );
   };
+  const t = useTranslations();
   return (
     <TableBody>
-      {list.map((item) => (
-        <TableRow key={item.gameId}>
-          <TableCell>{item.gameName}</TableCell>
-          <TableCell className="flex items-center gap-2">
-            <Input
-              value={item.backRate}
-              type="number"
-              min={0}
-              max={item.maxBackRate ?? 0}
-              step={0.01}
-              onChange={(e) => handleRebateChange(e.target.value, item.gameId)}
-            />
-            <span className="text-destructive w-16">
-              ({item.maxBackRate ?? 0}%)
-            </span>
+      {list.length > 0 ? (
+        list.map((item) => (
+          <TableRow key={item.gameId}>
+            <TableCell>{item.gameName}</TableCell>
+            <TableCell className="flex items-center gap-2">
+              <Input
+                value={item.backRate}
+                type="number"
+                min={0}
+                max={item.maxBackRate ?? 0}
+                step={0.01}
+                onChange={(e) =>
+                  handleRebateChange(e.target.value, item.gameId)
+                }
+              />
+              <span className="text-destructive w-16">
+                ({item.maxBackRate ?? 0}%)
+              </span>
+            </TableCell>
+          </TableRow>
+        ))
+      ) : (
+        <TableRow>
+          <TableCell colSpan={2} className="text-center h-40">
+            {t("noData")}
           </TableCell>
         </TableRow>
-      ))}
+      )}
     </TableBody>
   );
 }
