@@ -1,5 +1,5 @@
 "use client";
-import { getLoginLog } from "@/api";
+import { getAgentLoginLog, getMemberLoginLog } from "@/api";
 import { ModalPagination } from "@/components/modal-pagination";
 import { Button } from "@/components/ui/button";
 import {
@@ -21,22 +21,37 @@ import {
 } from "@/components/ui/table";
 import type { LoginLog } from "@/lib/types";
 import { cn } from "@/lib/utils";
-import { agentIdAtom, loginLogModalAtom } from "@/store";
-import { useAtom, useAtomValue } from "jotai";
+import { loginLogModalAtom } from "@/store";
+import { useAtom } from "jotai";
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 
-export function LoginLogModal() {
+export function LoginLogModal({
+  id,
+  type,
+}: { id: string; type: "AGENT" | "MEMBER" }) {
   const t = useTranslations("users.agents");
   const [data, setData] = useState<LoginLog[]>([]);
-  const userId = useAtomValue(agentIdAtom);
   const [open, setOpen] = useAtom(loginLogModalAtom);
   const [total, setTotal] = useState<number>(0);
   const [page, setPage] = useState<number>(1);
   const [size, setSize] = useState<number>(10);
   useEffect(() => {
-    if (userId) {
-      getLoginLog({ userId, pageNum: page, pageSize: size }).then(
+    if (id && type === "AGENT") {
+      console.info(id, type);
+      getAgentLoginLog({ agentId: id, pageNum: page, pageSize: size }).then(
+        ({ data }) => {
+          if (data) {
+            setData(data.list);
+            setTotal(data.total);
+            setPage(data.pageNum);
+            setSize(data.pageSize);
+          }
+        },
+      );
+    } else if (id && type === "MEMBER") {
+      console.info(id, type);
+      getMemberLoginLog({ memberId: id, pageNum: page, pageSize: size }).then(
         ({ data }) => {
           if (data) {
             setData(data.list);
@@ -47,7 +62,7 @@ export function LoginLogModal() {
         },
       );
     }
-  }, [userId, page, size]);
+  }, [id, page, size, type]);
   return (
     <Dialog open={open} onOpenChange={(open) => setOpen(open)}>
       <DialogContent
