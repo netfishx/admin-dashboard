@@ -1,4 +1,4 @@
-import Pages from "@/components/custom-pagination";
+import { CustomPagination } from "@/components/custom-pagination";
 import {
   Table,
   TableBody,
@@ -104,7 +104,7 @@ export async function List({ data }: { data?: PageData<AnnouncementList> }) {
             </Suspense>
           </div>
           <div className="pt-2">
-            <Pages
+            <CustomPagination
               total={data?.total ?? 0}
               currentPage={Number(data?.pageNum ?? 1)}
               pageSize={Number(data?.pageSize ?? 10)}

@@ -24,7 +24,7 @@ import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
-export default function Pages({
+export function CustomPagination({
   total,
   currentPage,
   pageSize,

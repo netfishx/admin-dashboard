@@ -513,10 +513,25 @@
       "english": "英文",
       "japanese": "日文"
     },
-    "resource": {
-      "title": "资源列表",
-      "name": "资源名称",
-      "code": "资源编码"
+    "role": {
+      "list": "角色列表",
+      "add": "新增角色",
+      "id": "角色ID",
+      "name": "角色名称",
+      "updateTime": "修改时间",
+      "action": "操作",
+      "edit": "编辑",
+      "delete": "删除"
+    },
+    "subaccount": {
+      "list": "子账号列表",
+      "add": "新增子账号",
+      "id": "子账号ID",
+      "name": "子账号名称",
+      "updateTime": "修改时间",
+      "action": "操作",
+      "edit": "编辑",
+      "delete": "删除"
     }
   },
   "fund": {
@@ -621,7 +636,7 @@
       "moneyModalDesc": "请输入资金密码",
       "setMoneyPassword": "设置资金密码",
       "confirmMoneyDesc": "请输入确认资金密码",
-      "confirmMoneyPassword":"确认资金密码",
+      "confirmMoneyPassword": "确认资金密码",
       "editGoogleAuthTitle": "重置谷歌验证",
       "editMoneyPasswordTitle": "修改资金密码"
     }
@@ -658,7 +673,7 @@
       "withdraw": "提款",
       "applyWithdrawMoney": "申请提款金额：",
       "withdrawFee": "手续费：",
-      "withdrawWay": "用户收款方式：", 
+      "withdrawWay": "用户收款方式：",
       "withdrawStatus": "预估实际到账：",
       "withdrawModeNew": "用户收款方式：",
       "withdrawAmount": "资金信息",

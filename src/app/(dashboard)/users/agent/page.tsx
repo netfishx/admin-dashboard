@@ -1,5 +1,5 @@
 import { getAgents } from "@/api";
-import Pages from "@/components/custom-pagination";
+import { CustomPagination } from "@/components/custom-pagination";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
   Table,
@@ -89,7 +89,7 @@ async function TableWrapper({
         </Table>
       </div>
       <div className="pt-2">
-        <Pages
+        <CustomPagination
           total={data?.total ?? 0}
           currentPage={Number(data?.pageNum ?? 1)}
           pageSize={Number(data?.pageSize ?? 10)}
