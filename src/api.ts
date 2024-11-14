@@ -18,10 +18,12 @@ import type {
   LoginLog,
   MaintainGame,
   MemberList,
+  MemberReportsRecord,
   PageData,
   PeriodReport,
   PeriodReportList,
   RatioReportListTypes,
+  Res,
   SupplierConfig,
   SupplierReportListItem,
   UserBasicInfo,
@@ -551,6 +553,14 @@ export async function getSupplierReportList() {
   const user = await getSession();
   return await apiRequest<PageData<SupplierReportListItem>>({
     url: "/report/agent/baccarat/supply",
+    token: user?.token,
+  });
+}
+
+export async function getMemberReportList(params: any) {
+  const user = await getSession();
+  return await apiRequest<Res<PageData<MemberReportsRecord>>>({
+    url: "/report/agent/baccarat/member",
     token: user?.token,
   });
 }
