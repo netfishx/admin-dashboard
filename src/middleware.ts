@@ -6,12 +6,19 @@ export async function middleware(request: NextRequest) {
   if (!user && request.nextUrl.pathname !== "/login") {
     return Response.redirect(new URL("/login", request.url));
   }
-  if (
-    user &&
-    !user?.permissions?.includes("agent_stat") &&
-    request.nextUrl.pathname !== "/reports/supplier"
-  ) {
-    return Response.redirect(new URL("/reports/supplier", request.url));
+  if (user) {
+    if (
+      !user?.permissions?.includes("agent_stat") &&
+      request.nextUrl.pathname !== "/reports/supplier"
+    ) {
+      return Response.redirect(new URL("/reports/supplier", request.url));
+    }
+    if (
+      !user?.permissions?.includes("supplier_report") &&
+      request.nextUrl.pathname === "/reports/supplier"
+    ) {
+      return Response.redirect(new URL("/", request.url));
+    }
   }
   return NextResponse.next();
 }

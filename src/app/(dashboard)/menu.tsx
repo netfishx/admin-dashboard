@@ -152,7 +152,9 @@ function OpenedMenu({
             label={t("reports.member.baccarat")}
             href="/reports/member/baccarat"
           />
-          <MenuItem label={t("reports.supplier")} href="/reports/supplier" />
+          {permissions.includes("supplier_report") && (
+            <MenuItem label={t("reports.supplier")} href="/reports/supplier" />
+          )}
           <MenuItem label={t("reports.change")} href="/reports/change" />
           <MenuItem label={t("reports.recharge")} href="/reports/recharge" />
           <MenuItem label={t("reports.withdraw")} href="/reports/withdraw" />

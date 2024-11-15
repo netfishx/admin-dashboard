@@ -54,7 +54,7 @@ export async function setSession(user: User) {
 
 export async function hasPermission(permission: string) {
   const session = await getSession();
-  return session?.permissions.includes(permission);
+  return session?.permissions.includes(permission) ?? false;
 }
 
 export async function signOut() {

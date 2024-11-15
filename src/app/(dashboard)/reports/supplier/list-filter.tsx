@@ -3,11 +3,12 @@ import { DateRangeFilter } from "@/components/daterange-filter";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import {} from "@/components/ui/select";
 import { useTranslations } from "next-intl";
 import { useQueryState } from "nuqs";
 
-export function ListFilter() {
+export function ListFilter({
+  hasSearchPermission,
+}: { hasSearchPermission: boolean }) {
   const t = useTranslations("report.supplier");
   const [supplierId, setSupplierId] = useQueryState("supplierId");
 
@@ -23,14 +24,16 @@ export function ListFilter() {
           <Label>{t("daterange")}</Label>
           <DateRangeFilter enableTimeSelect={false} />
         </div>
-        <div className="flex gap-4 items-center">
-          <Label className="shrink-0">供应商ID</Label>
-          <Input
-            value={supplierId ?? ""}
-            onChange={(e) => setSupplierId(e.target.value)}
-            placeholder={t("placeholderinput")}
-          />
-        </div>
+        {hasSearchPermission && (
+          <div className="flex gap-4 items-center">
+            <Label className="shrink-0">供应商ID</Label>
+            <Input
+              value={supplierId ?? ""}
+              onChange={(e) => setSupplierId(e.target.value)}
+              placeholder={t("placeholderinput")}
+            />
+          </div>
+        )}
       </div>
 
       {/* Last row */}

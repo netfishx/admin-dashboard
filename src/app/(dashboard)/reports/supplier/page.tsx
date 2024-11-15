@@ -1,14 +1,16 @@
 import { getSupplierReportList } from "@/api";
 import type { PageData, SupplierReportListItem } from "@/lib/types";
+import { hasPermission } from "@/session";
 import { Suspense, use } from "react";
 import { List } from "./list";
 import { ListFilter } from "./list-filter";
 
 function CommonWrapper() {
   const { data } = use(getSupplierReportList());
+  const hasSearchPermission = use(hasPermission("admin_supplier_report"));
   return (
     <>
-      <ListFilter />
+      <ListFilter hasSearchPermission={hasSearchPermission} />
       <List data={data || ({} as PageData<SupplierReportListItem>)} />
     </>
   );
