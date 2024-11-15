@@ -24,7 +24,7 @@ async function CommonWrapper({ searchParams }: CommonWrapperProps) {
   );
 }
 
-export default async function Page({ searchParams }: { searchParams: any }) {
+export default async function Page({ searchParams }: CommonWrapperProps) {
   return (
     <div className="flex flex-col gap-2 w-full h-full">
       <Suspense fallback={null}>
