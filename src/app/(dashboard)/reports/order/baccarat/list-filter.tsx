@@ -12,10 +12,12 @@ import {
 
 import AmountFilter from "@/components/amount-filter";
 import { DateRangeFilter } from "@/components/daterange-filter";
+import { endOfDay } from "date-fns";
+import { startOfDay } from "date-fns";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useQueryState } from "nuqs";
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 export function ListFilter() {
   const t = useTranslations("report.orderlist");
@@ -37,6 +39,15 @@ export function ListFilter() {
 
   const [resetCounter, setResetCounter] = useState(0);
 
+  const dateRangeFilterReset = useRef<
+    ((start: number, end: number) => void) | null
+  >(null);
+  const handleDateRangeFilterReset = () => {
+    const start = startOfDay(new Date()).getTime();
+    const end = endOfDay(new Date()).getTime();
+    dateRangeFilterReset.current?.(start, end);
+  };
+
   const handleReset = () => {
     setOrdernumber("");
     setIssuenumber("");
@@ -47,7 +58,7 @@ export function ListFilter() {
     setGameName("");
     setBettingtime("");
     setSettlementstatus("");
-    setResetCounter((prev) => prev + 1);
+    handleDateRangeFilterReset();
   };
 
   const router = useRouter();
@@ -73,7 +84,9 @@ export function ListFilter() {
             </SelectContent>
           </Select>
         </div>
-        <DateRangeFilter resetFlag={resetCounter} />
+        <DateRangeFilter // biome-ignore lint/suspicious/noAssignInExpressions: <explanation>
+          reset={(resetFn) => (dateRangeFilterReset.current = resetFn)}
+        />
       </div>
 
       {/* 第二行 */}
