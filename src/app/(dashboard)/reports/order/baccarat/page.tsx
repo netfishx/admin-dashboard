@@ -1,4 +1,5 @@
 import { getOrderReportList } from "@/api";
+import TableSkeleton from "@/components/table-skeleton";
 import type {
   OrderReportsRecord,
   OrderReportsRequestParams,
@@ -22,7 +23,7 @@ async function CommonWrapper({ searchParams }: CommonWrapperProps) {
       <Suspense fallback={null}>
         <ListFilter />
       </Suspense>
-      <Suspense fallback={null}>
+      <Suspense fallback={<TableSkeleton length={10} />}>
         <List data={data as Res<PageData<OrderReportsRecord>>} />
       </Suspense>
     </>
