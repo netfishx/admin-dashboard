@@ -31,6 +31,8 @@ import type {
   PokerReportRequestRecords,
   RatioReportRequestParams,
   RatioReportRequestRecords,
+  RechargeReport,
+  RechargeReportParams,
   SupplierConfig,
   SupplierReportRecords,
   SupplierReportRequestParams,

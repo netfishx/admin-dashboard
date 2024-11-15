@@ -357,7 +357,6 @@ export type OrderReportsRecord = {
   odds: { [key: string]: string }; // 投注赔率, dynamic keys with string values
 };
 
-<<<<<<< HEAD
 // 占成拦货报表请求入参
 export type RatioReportRequestParams = {
   agentId?: string; // 代理ID
@@ -444,7 +443,6 @@ export type PokerReportRequestRecords = {
   backOutcome: number; // 返水支出
   pureBackAmount: number; // 纯返水金额
   totalProfitLossAmount: number; // 总输赢金额
-=======
 // 充值报表
 export type RechargeReport = {
   id: string;
@@ -471,5 +469,4 @@ export type RechargeReportParams = {
   userId?: string | null;
   pageNum: number;
   pageSize: number;
->>>>>>> test
 };
