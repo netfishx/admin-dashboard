@@ -102,7 +102,8 @@ function SaveButton({ onClick }: { onClick: () => void }) {
 export function OddsForm({
   list,
   dict,
-}: { list: GameConfig[]; dict: GameType[] }) {
+  permissions,
+}: { list: GameConfig[]; dict: GameType[]; permissions: string[] }) {
   const t = useTranslations("games.odds");
   const router = useRouter();
 
@@ -272,9 +273,15 @@ export function OddsForm({
         </div>
       </div>
       <div className="flex gap-2">
-        <SyncButton onClick={handleSync} />
-        <RestoreButton onClick={handleRestore} />
-        <SaveButton onClick={handleSave} />
+        {permissions.includes("sync_odds") && (
+          <SyncButton onClick={handleSync} />
+        )}
+        {permissions.includes("restore_odds") && (
+          <RestoreButton onClick={handleRestore} />
+        )}
+        {permissions.includes("edit_odds") && (
+          <SaveButton onClick={handleSave} />
+        )}
       </div>
     </>
   );
