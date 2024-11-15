@@ -83,6 +83,9 @@ export function OddsTable({ list }: { list: GameOdds[] }) {
               onChange={(e) =>
                 handleOddsChange(item.oddsType, item.betType, e.target.value)
               }
+              onBlur={(e) => {
+                e.target.reportValidity();
+              }}
             />
           </TableCell>
           <TableCell>
@@ -100,6 +103,9 @@ export function OddsTable({ list }: { list: GameOdds[] }) {
                   Number(e.target.value),
                 )
               }
+              onBlur={(e) => {
+                e.target.reportValidity();
+              }}
             />
           </TableCell>
           <TableCell>
@@ -119,6 +125,9 @@ export function OddsTable({ list }: { list: GameOdds[] }) {
                     Number(e.target.value),
                   )
                 }
+                onBlur={(e) => {
+                  e.target.reportValidity();
+                }}
               />
               <span className="text-destructive w-20">
                 ({item.maxBetLimit})
@@ -144,6 +153,9 @@ export function OddsTable({ list }: { list: GameOdds[] }) {
                     Number(e.target.value),
                   )
                 }
+                onBlur={(e) => {
+                  e.target.reportValidity();
+                }}
               />
               <span className="text-destructive w-20">
                 ({item.maxBetPeriodLimit})

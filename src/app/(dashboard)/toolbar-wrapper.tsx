@@ -1,4 +1,4 @@
-import { getSession } from "@/session";
+import { getSession, hasPermission } from "@/session";
 import { use } from "react";
 import { Toolbar } from "./toolbar";
 
@@ -8,6 +8,7 @@ export function ToolbarWrapper() {
     <Toolbar
       username={user?.username ?? ""}
       inviteCode={user?.inviteCode ?? ""}
+      hasInviteCode={use(hasPermission("invite_code"))}
     />
   );
 }

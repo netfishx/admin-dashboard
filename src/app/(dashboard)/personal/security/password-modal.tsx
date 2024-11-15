@@ -28,7 +28,7 @@ export function PasswordModal({
   const [confirmPassword, setConfirmPassword] = useState("");
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent>
+      <DialogContent onPointerDownOutside={(e) => e.preventDefault()}>
         <DialogHeader>
           <DialogTitle>{t("changePassword")}</DialogTitle>
           <DialogDescription />

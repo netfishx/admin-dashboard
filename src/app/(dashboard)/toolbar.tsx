@@ -40,9 +40,11 @@ import { useCopyToClipboard } from "react-use";
 export function Toolbar({
   username,
   inviteCode,
+  hasInviteCode,
 }: {
   username: string;
   inviteCode: string;
+  hasInviteCode: boolean;
 }) {
   const [name, _setName] = useState(username);
   const { resolvedTheme: mode, setTheme } = useTheme();
@@ -72,32 +74,34 @@ export function Toolbar({
             <Sun className="size-4" />
           )}
         </Button>
-        <Popover>
-          <PopoverTrigger asChild>
-            <Button
-              variant="ghost"
-              className="size-7 rounded-full border-2 px-1"
-            >
-              <QrCode className="size-4" />
-            </Button>
-          </PopoverTrigger>
-          <PopoverContent className="w-fit">
-            <QRCodeSVG value={inviteCode} />
-            <div className="text-xs pt-2 flex flex-row items-center justify-center">
-              <span>{t("inviteCode")}:</span>
-              <span>{inviteCode}</span>
+        {hasInviteCode && (
+          <Popover>
+            <PopoverTrigger asChild>
               <Button
                 variant="ghost"
-                className="size-4"
-                onClick={() => {
-                  copyToClipboard(inviteCode);
-                }}
+                className="size-7 rounded-full border-2 px-1"
               >
-                <Copy className="size-4" />
+                <QrCode className="size-4" />
               </Button>
-            </div>
-          </PopoverContent>
-        </Popover>
+            </PopoverTrigger>
+            <PopoverContent className="w-fit">
+              <QRCodeSVG value={inviteCode} />
+              <div className="text-xs pt-2 flex flex-row items-center justify-center">
+                <span>{t("inviteCode")}:</span>
+                <span>{inviteCode}</span>
+                <Button
+                  variant="ghost"
+                  className="size-4"
+                  onClick={() => {
+                    copyToClipboard(inviteCode);
+                  }}
+                >
+                  <Copy className="size-4" />
+                </Button>
+              </div>
+            </PopoverContent>
+          </Popover>
+        )}
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="ghost" size="sm">

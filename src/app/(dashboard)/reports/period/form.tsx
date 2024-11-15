@@ -3,6 +3,7 @@ import { DateRangeFilter } from "@/components/daterange-filter";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Loader2 } from "lucide-react";
 
 import {
   Select,
@@ -14,11 +15,13 @@ import {
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useQueryState } from "nuqs";
+import { useTransition } from "react";
 
 export function Form() {
   const t = useTranslations("report.periodlist");
 
   const router = useRouter();
+  const [isPending, startTransition] = useTransition();
   const [gameTypeName, setGameTypeName] = useQueryState("gameTypeName", {
     defaultValue: "1",
   });
@@ -85,7 +88,17 @@ export function Form() {
           <div className="flex gap-2 items-center float-right p-2">
             <Button variant="outline">{t("reset")}</Button>
             <Button onClick={() => router.refresh()}>{t("search")}</Button>
-            <Button variant="outline">{t("download")}</Button>
+            <Button
+              onClick={() => {
+                startTransition(router.refresh);
+              }}
+              disabled={isPending}
+            >
+              {isPending ? (
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              ) : null}
+              {t("download")}
+            </Button>
           </div>
         </div>
       </div>

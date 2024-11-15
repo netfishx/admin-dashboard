@@ -10,15 +10,18 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { getSession } from "@/session";
 import { useTranslations } from "next-intl";
 import { Suspense, use } from "react";
 
 async function FormWrapper() {
   const [list, dict] = await Promise.all([getGameConfig(), getGameList(1)]);
+  const session = await getSession();
   return (
     <OddsForm
       list={list.data?.filter((item) => item.status === 1) ?? []}
       dict={dict.data ?? []}
+      permissions={session?.permissions ?? []}
     />
   );
 }

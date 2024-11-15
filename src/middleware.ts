@@ -1,5 +1,6 @@
 import { getSession } from "@/session";
 import { type NextRequest, NextResponse } from "next/server";
+import { urlPermissions } from "./lib/permissions";
 
 export async function middleware(request: NextRequest) {
   const user = await getSession();
@@ -14,8 +15,12 @@ export async function middleware(request: NextRequest) {
       return Response.redirect(new URL("/reports/supplier", request.url));
     }
     if (
-      !user?.permissions?.includes("supplier_report") &&
-      request.nextUrl.pathname === "/reports/supplier"
+      Object.keys(urlPermissions).some((key) => {
+        return (
+          !user?.permissions?.includes(urlPermissions[key]) &&
+          request.nextUrl.pathname === key
+        );
+      })
     ) {
       return Response.redirect(new URL("/", request.url));
     }
