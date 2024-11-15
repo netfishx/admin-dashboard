@@ -9,6 +9,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import type { OrderReportsRecord, PageData, Res } from "@/lib/types";
+import { format } from "date-fns";
 import { useTranslations } from "next-intl";
 import DetailButton from "./detail-button";
 
@@ -106,11 +107,11 @@ export function List({ data }: { data: Res<PageData<OrderReportsRecord>> }) {
                   <TableCell className="w-24 text-center">
                     {item.winLossAmount}
                   </TableCell>
-                  <TableCell className="w-24 text-center">
-                    {item.betTime}
+                  <TableCell className="text-center">
+                    {format(item.betTime, "yyyy-MM-dd HH:mm:ss")}
                   </TableCell>
-                  <TableCell className="w-24 text-center">
-                    {item.settleTime}
+                  <TableCell className="text-center">
+                    {format(item.settleTime, "yyyy-MM-dd HH:mm:ss")}
                   </TableCell>
                   <TableCell className="w-24 text-center">
                     {item.orderStatus}
