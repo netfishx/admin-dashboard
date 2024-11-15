@@ -263,26 +263,22 @@ export type SupplierReportListItem = {
 export type AuditList = {
   id: string;
   orderNo: string;
-  auditCreateTime: number;
-  businessOrderType: string;
-  businessOrderNo: string;
-  memberId: string;
+  createTime: number;
+  orderType: string;
+  userId: string;
   orderAmount: string;
   auditMultiple: string;
-  validBetAmount: string;
+  availableAudit: string;
   remainingAudit: string;
-  auditStatus: string;
+  status: string;
 };
 export type AuditListRequest = {
   startTime: number;
   endTime: number;
-  memberId?: number | null;
+  id?: string | null;
+  userId?: string | null;
   pageNum: number;
   pageSize: number;
-  orderNo?: string | null;
-  businessOrderNo?: string | null;
-  gameTypeName?: string | null;
-  gameName?: string | null;
 };
 export type MemberReportsRecord = {
   memberId: string;
