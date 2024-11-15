@@ -13,20 +13,47 @@ import {
 import AmountFilter from "@/components/amount-filter";
 import { DateRangeFilter } from "@/components/daterange-filter";
 import { useTranslations } from "next-intl";
+import { useRouter } from "next/navigation";
 import { useQueryState } from "nuqs";
+import { useState } from "react";
 
 export function ListFilter() {
   const t = useTranslations("report.orderlist");
-  const [gameName, setGameName] = useQueryState("gameName");
+  const [gameName, setGameName] = useQueryState("gameId");
   const [bettingtime, setBettingtime] = useQueryState("bettingtime");
-  const [settlementstatus, setSettlementstatus] =
-    useQueryState("settlementstatus");
-  const [ordernumber, setOrdernumber] = useQueryState("ordernumber");
-  const [issuenumber, setIssuenumber] = useQueryState("issuenumber");
-  const [ministerID, setMinisterID] = useQueryState("ministerID");
-  const [memberID, setMemberID] = useQueryState("memberID");
-  const [roomeownerID, setRoomeownerID] = useQueryState("roomeownerID");
-  const [leastlevelID, setLeastlevelID] = useQueryState("leastlevelID");
+  const [settlementstatus, setSettlementstatus] = useQueryState("orderStatus");
+  // 订单号
+  const [ordernumber, setOrdernumber] = useQueryState("id");
+  // 期号
+  const [issuenumber, setIssuenumber] = useQueryState("issueNumber");
+  // 部长
+  const [ministerID, setMinisterID] = useQueryState("minister");
+  // 会员
+  const [memberID, setMemberID] = useQueryState("memberId");
+  // 房主
+  const [roomeownerID, setRoomeownerID] = useQueryState("roomOwnerId");
+  // 末级代理ID
+  const [leastlevelID, setLeastlevelID] = useQueryState("lastAgentId");
+
+  const [resetCounter, setResetCounter] = useState(0);
+
+  const handleReset = () => {
+    setOrdernumber("");
+    setIssuenumber("");
+    setMinisterID("");
+    setMemberID("");
+    setRoomeownerID("");
+    setLeastlevelID("");
+    setGameName("");
+    setBettingtime("");
+    setSettlementstatus("");
+    setResetCounter((prev) => prev + 1);
+  };
+
+  const router = useRouter();
+  const handleSearch = () => {
+    router.refresh();
+  };
 
   return (
     <div className="flex flex-col gap-2 bg-background py-2 px-4">
@@ -46,7 +73,7 @@ export function ListFilter() {
             </SelectContent>
           </Select>
         </div>
-        <DateRangeFilter />
+        <DateRangeFilter resetFlag={resetCounter} />
       </div>
 
       {/* 第二行 */}
@@ -131,7 +158,9 @@ export function ListFilter() {
               <SelectValue placeholder={t("placeholderselect")} />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="1">百家乐</SelectItem>
+              <SelectItem value="0">{t("notCalculated")}</SelectItem>
+              <SelectItem value="1">{t("notSettled")}</SelectItem>
+              <SelectItem value="2">{t("settled")}</SelectItem>
             </SelectContent>
           </Select>
         </div>
@@ -140,10 +169,13 @@ export function ListFilter() {
       {/* 第四行 */}
       <div className="flex gap-4 justify-end items-center">
         <div className="flex gap-2 items-center">
-          <Button className="px-4 py-2 border rounded-md bg-white text-gray-700 border-gray-300 hover:bg-gray-100">
+          <Button
+            className="px-4 py-2 border rounded-md bg-white text-gray-700 border-gray-300 hover:bg-gray-100"
+            onClick={handleReset}
+          >
             {t("reset")}
           </Button>
-          <Button>{t("search")}</Button>
+          <Button onClick={handleSearch}>{t("search")}</Button>
         </div>
       </div>
     </div>

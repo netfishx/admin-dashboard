@@ -299,3 +299,42 @@ export type MemberReportsRecord = {
   totalProfitLossAmount: string;
   total: number;
 };
+
+// 注单报表请求入参
+export type OrderReportsRequestParams = {
+  id?: string; // 订单id
+  memberId?: string; // 会员id
+  gameId?: string; // 游戏id
+  startTime?: number; // 开始时间 as a long integer
+  endTime?: number; // 结束时间 as a long integer
+  issueNumber?: string; // 期号
+  minister?: string; // 部长id
+  roomOwnerId?: string; // 房主
+  lastAgentId?: string; // 末级代理
+  betAmount?: string; // 投注金额
+  orderStatus?: 0 | 1; // 注单状态: 0 = 未结算, 1 = 已结算
+  operators?: "0" | "1"; // 运算符 (operators), e.g., >= or <=
+  pageNum?: number; // 页码, e.g., 1
+  pageSize?: number; // 每页大小, e.g., 10
+  key?: string; // Key (Description not provided)
+};
+
+// 注单报表出参
+export type OrderReportsRecord = {
+  id: string; // 订单号
+  issueNumber: string; // 期号
+  roomOwnerId: string; // 房主id, -1 means no owner
+  lastAgentId: string; // 末级代理
+  minister: string; // 部长id
+  gameId: number; // 游戏id
+  betType: number; // 投注玩法类型
+  betAmount: string; // 下注金额
+  winLossAmount: string; // 输赢钱
+  betTime: number; // 投注时间 as a timestamp
+  orderStatus: 1 | 2; // 注单状态, 1 = 未结算, 2 = 结算
+  settleTime: number; // 计算时间 as a timestamp
+  finalOdds: string; // 最终赔率
+  memberId: string; // 会员id
+  roomId: string; // 房间号, -1 means no room
+  odds: { [key: string]: string }; // 投注赔率, dynamic keys with string values
+};

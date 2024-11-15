@@ -13,15 +13,12 @@ import { useQueryState } from "nuqs";
 export default function AmountFilter() {
   const t = useTranslations("report.orderlist");
 
-  const [filterAmount, setFilterAmount] = useQueryState("filterAmount", {
+  const [filterAmount, setFilterAmount] = useQueryState("betAmount", {
     defaultValue: "",
   });
-  const [FilterAmountType, setFilterAmountType] = useQueryState(
-    "filterAmountType",
-    {
-      defaultValue: "",
-    },
-  );
+  const [FilterAmountType, setFilterAmountType] = useQueryState("operators", {
+    defaultValue: "",
+  });
 
   const handleFilterChange = (filterType: string) => {
     setFilterAmountType(filterType);
@@ -42,8 +39,8 @@ export default function AmountFilter() {
           <SelectValue placeholder={t("placeholderselect")} />
         </SelectTrigger>
         <SelectContent>
-          <SelectItem value="1">&gt;=</SelectItem>
-          <SelectItem value="2">&lt;=</SelectItem>
+          <SelectItem value="0">&gt;=</SelectItem>
+          <SelectItem value="1">&lt;=</SelectItem>
         </SelectContent>
       </Select>
 

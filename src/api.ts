@@ -19,6 +19,8 @@ import type {
   MaintainGame,
   MemberList,
   MemberReportsRecord,
+  OrderReportsRecord,
+  OrderReportsRequestParams,
   PageData,
   PeriodReport,
   PeriodReportList,
@@ -603,5 +605,14 @@ export async function getMemberReportList(params: any) {
   return await apiRequest<Res<PageData<MemberReportsRecord>>>({
     url: "/report/agent/baccarat/member",
     token: user?.token,
+  });
+}
+
+export async function getOrderReportList(params: OrderReportsRequestParams) {
+  const user = await getSession();
+  return await apiRequest<Res<PageData<OrderReportsRecord>>>({
+    url: "/agent/order/baccarat/list",
+    token: user?.token,
+    params,
   });
 }
