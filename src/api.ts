@@ -12,24 +12,32 @@ import type {
   AuditList,
   AuditListRequest,
   ChangeLog,
+  CollectionAddressListRecords,
+  CollectionAddressListRequestParams,
   GameConfig,
   GameOdds,
   GameType,
   LoginLog,
   MaintainGame,
+  MemberBetReportRequestParams,
+  MemberBetReportRequestRecords,
   MemberList,
+  MemberReportRequestParams,
   MemberReportsRecord,
   OrderReportsRecord,
   OrderReportsRequestParams,
   PageData,
   PeriodReport,
   PeriodReportList,
-  RatioReportListTypes,
+  PokerReportRequestParams,
+  PokerReportRequestRecords,
+  RatioReportRequestParams,
+  RatioReportRequestRecords,
   RechargeReport,
   RechargeReportParams,
-  Res,
   SupplierConfig,
-  SupplierReportListItem,
+  SupplierReportRecords,
+  SupplierReportRequestParams,
   UserBasicInfo,
   WithdrawFormData,
 } from "@/lib/types";
@@ -357,22 +365,22 @@ export async function editMaintain(data: {
   });
 }
 
-export async function getDailiReport(data: any) {
+// 代理报表-会员下注报表
+export async function getMemberBetReport(params: MemberBetReportRequestParams) {
   const user = await getSession();
-  return await apiRequest<PageData<RatioReportListTypes>>({
+  return await apiRequest<PageData<MemberBetReportRequestRecords>>({
     url: "/report/agent/baccarat/memberBet",
-    method: "POST",
-    data,
+    params,
     token: user?.token,
   });
 }
 
-export async function getRatioReport(data: any) {
+// 代理报表-拦货占成
+export async function getRatioReport(params: RatioReportRequestParams) {
   const user = await getSession();
-  return await apiRequest<PageData<RatioReportListTypes>>({
+  return await apiRequest<PageData<RatioReportRequestRecords>>({
     url: "/report/agent/baccarat/stack",
-    method: "POST",
-    data,
+    params,
     token: user?.token,
   });
 }
@@ -593,31 +601,45 @@ export async function clearAudit(data: { id: string }) {
   });
 }
 
-export async function getSupplierReportList() {
+// 供应商报表
+export async function getSupplierReportList(
+  params: SupplierReportRequestParams,
+) {
   const user = await getSession();
-  return await apiRequest<PageData<SupplierReportListItem>>({
+  return await apiRequest<PageData<SupplierReportRecords>>({
     url: "/report/agent/baccarat/supply",
     token: user?.token,
+    params,
   });
 }
 
-export async function getMemberReportList(params: any) {
+export async function getMemberReportList(params: MemberReportRequestParams) {
   const user = await getSession();
-  return await apiRequest<Res<PageData<MemberReportsRecord>>>({
+  return await apiRequest<PageData<MemberReportsRecord>>({
     url: "/report/agent/baccarat/member",
     token: user?.token,
+    params,
   });
 }
 
 export async function getOrderReportList(params: OrderReportsRequestParams) {
   const user = await getSession();
-  return await apiRequest<Res<PageData<OrderReportsRecord>>>({
+  return await apiRequest<PageData<OrderReportsRecord>>({
     url: "/agent/order/baccarat/list",
     token: user?.token,
     params,
   });
 }
 
+// 代理报表-棋牌
+export async function getPokerReport(params: PokerReportRequestParams) {
+  const user = await getSession();
+  return await apiRequest<PageData<PokerReportRequestRecords>>({
+    url: "/report/agent/gundan",
+    token: user?.token,
+    params,
+  });
+}
 // 充值报表
 export async function getRechargeReportList(data: RechargeReportParams) {
   const user = await getSession();
@@ -629,4 +651,16 @@ export async function getRechargeReportList(data: RechargeReportParams) {
   });
   console.info("🌸 ~ res:", res);
   return res;
+}
+
+// 归集地址列表
+export async function getCollectionAddressList(
+  params: CollectionAddressListRequestParams,
+) {
+  const user = await getSession();
+  return await apiRequest<PageData<CollectionAddressListRecords>>({
+    url: "/agent/collection/address/list",
+    token: user?.token,
+    params,
+  });
 }

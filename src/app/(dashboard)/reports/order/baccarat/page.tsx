@@ -4,7 +4,6 @@ import type {
   OrderReportsRecord,
   OrderReportsRequestParams,
   PageData,
-  Res,
 } from "@/lib/types";
 import { Suspense } from "react";
 import { List } from "./list";
@@ -23,8 +22,8 @@ async function CommonWrapper({ searchParams }: CommonWrapperProps) {
       <Suspense fallback={null}>
         <ListFilter />
       </Suspense>
-      <Suspense fallback={<TableSkeleton length={10} />}>
-        <List data={data as Res<PageData<OrderReportsRecord>>} />
+      <Suspense fallback={<TableSkeleton length={5} />}>
+        <List data={data as PageData<OrderReportsRecord>} />
       </Suspense>
     </>
   );
@@ -33,9 +32,7 @@ async function CommonWrapper({ searchParams }: CommonWrapperProps) {
 export default function Page({ searchParams }: CommonWrapperProps) {
   return (
     <div className="flex flex-col gap-2 w-full">
-      <Suspense>
-        <CommonWrapper searchParams={searchParams} />
-      </Suspense>
+      <CommonWrapper searchParams={searchParams} />
     </div>
   );
 }

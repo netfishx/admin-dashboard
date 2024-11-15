@@ -4,39 +4,52 @@ import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { startOfDay } from "date-fns";
+import { endOfDay } from "date-fns";
 import { useTranslations } from "next-intl";
 import { useQueryState } from "nuqs";
+import { useRef } from "react";
 
 export function ListFilter() {
   const t = useTranslations("report.agent");
   const [agentId, setAgentId] = useQueryState("agentId");
-  const [gameId, setGameId] = useQueryState<string[]>("gameId", {
+  const [roomId, setRoomId] = useQueryState<string[]>("roomId", {
     defaultValue: [],
     parse: (value) => value.split(",").filter(Boolean),
     serialize: (value) => value.join(","),
   });
 
-  const gameTypeOptions = [
-    { id: "baccarat", label: "百家乐" },
-    { id: "guandan", label: "掼蛋" },
+  const roomTypes = [
+    { id: "baccarat", label: "游戏大厅" },
+    { id: "guandan", label: "俱乐部" },
   ];
 
-  const handleGameTypeChange = (gameType: string, checked: boolean) => {
-    const currentTypes = gameId || [];
+  const handleRoomTypeChange = (roomType: string, checked: boolean) => {
+    const currentTypes = roomId || [];
     if (checked) {
-      setGameId([...currentTypes, gameType].filter(Boolean));
+      setRoomId([...currentTypes, roomType].filter(Boolean));
     } else {
-      setGameId(currentTypes.filter((type) => type !== gameType));
+      setRoomId(currentTypes.filter((type) => type !== roomType));
     }
+  };
+
+  const dateRangeFilterReset = useRef<
+    ((start: number, end: number) => void) | null
+  >(null);
+  const handleDateRangeFilterReset = () => {
+    const start = startOfDay(new Date()).getTime();
+    const end = endOfDay(new Date()).getTime();
+    dateRangeFilterReset.current?.(start, end);
   };
 
   const handleReset = () => {
     setAgentId("");
-    setGameId([]);
+    setRoomId([]);
+    handleDateRangeFilterReset();
   };
 
-  const isGameTypeSelected = (gameType: string) => {
-    return (gameId || []).includes(gameType);
+  const isRoomTypeSelected = (roomType: string) => {
+    return (roomId || []).includes(roomType);
   };
 
   return (
@@ -45,7 +58,11 @@ export function ListFilter() {
       <div className="flex gap-4 items-center">
         <div className="flex gap-2 items-center">
           <Label>{t("pickdate")}</Label>
-          <DateRangeFilter enableTimeSelect />
+          <DateRangeFilter
+            enableTimeSelect
+            // biome-ignore lint/suspicious/noAssignInExpressions: <explanation>
+            reset={(resetFn) => (dateRangeFilterReset.current = resetFn)}
+          />
         </div>
         <div className="flex gap-4 items-center">
           <Label className="shrink-0">{t("agentID")}</Label>
@@ -60,21 +77,21 @@ export function ListFilter() {
       {/* Second row */}
       <div className="flex gap-4 items-center">
         <div className="flex gap-4 items-center">
-          <Label className="shrink-0">{t("gametype")}</Label>
-          {gameTypeOptions.map((game) => (
-            <div key={game.id} className="flex items-center space-x-2">
+          <Label className="shrink-0">{t("roomType")}</Label>
+          {roomTypes.map((room) => (
+            <div key={room.id} className="flex items-center space-x-2">
               <Checkbox
-                id={game.id}
-                checked={isGameTypeSelected(game.id)}
+                id={room.id}
+                checked={isRoomTypeSelected(room.id)}
                 onCheckedChange={(checked) =>
-                  handleGameTypeChange(game.id, checked as boolean)
+                  handleRoomTypeChange(room.id, checked as boolean)
                 }
               />
               <label
-                htmlFor={game.id}
+                htmlFor={room.id}
                 className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
               >
-                {game.label}
+                {room.label}
               </label>
             </div>
           ))}

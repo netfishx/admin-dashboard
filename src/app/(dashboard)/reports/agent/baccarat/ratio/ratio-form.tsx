@@ -10,9 +10,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { endOfDay } from "date-fns";
+import { startOfDay } from "date-fns";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useQueryState } from "nuqs";
+import { useRef } from "react";
 
 export function RatioForm() {
   const t = useTranslations("report.agent");
@@ -21,6 +24,22 @@ export function RatioForm() {
   const [houseOwnerId, setHouseOwnerId] = useQueryState("houseOwnerId");
   const [parentAgentId, setParentAgentId] = useQueryState("parentAgentId");
   const router = useRouter();
+  const dateRangeFilterReset = useRef<
+    ((start: number, end: number) => void) | null
+  >(null);
+  const handleDateRangeFilterReset = () => {
+    const start = startOfDay(new Date()).getTime();
+    const end = endOfDay(new Date()).getTime();
+    dateRangeFilterReset.current?.(start, end);
+  };
+
+  const handleReset = () => {
+    setGameId("");
+    setagentId("");
+    setHouseOwnerId("");
+    setParentAgentId("");
+    handleDateRangeFilterReset();
+  };
 
   return (
     <div className="flex flex-col gap-2 bg-background py-2 px-4">
@@ -44,7 +63,10 @@ export function RatioForm() {
         </div>
         <div className="flex gap-2 items-center">
           <Label className="shrink-0">{t("drawtime")}</Label>
-          <DateRangeFilter />
+          <DateRangeFilter
+            // biome-ignore lint/suspicious/noAssignInExpressions: <explanation>
+            reset={(resetFn) => (dateRangeFilterReset.current = resetFn)}
+          />
         </div>
       </div>
 
@@ -77,7 +99,10 @@ export function RatioForm() {
       </div>
       <div className="flex gap-4 justify-end items-center">
         <div className="flex gap-2 items-center">
-          <Button className="px-4 py-2 border rounded-md bg-white text-gray-700 border-gray-300 hover:bg-gray-100">
+          <Button
+            className="px-4 py-2 border rounded-md bg-white text-gray-700 border-gray-300 hover:bg-gray-100"
+            onClick={handleReset}
+          >
             {t("reset")}
           </Button>
           <Button onClick={() => router.refresh()}>{t("search")}</Button>

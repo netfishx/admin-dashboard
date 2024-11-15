@@ -1,11 +1,15 @@
 import { getMemberReportList } from "@/api";
-import type { MemberReportsRecord, PageData, Res } from "@/lib/types";
+import type {
+  MemberReportRequestParams,
+  MemberReportsRecord,
+  PageData,
+} from "@/lib/types";
 import { Suspense } from "react";
 import { List } from "./list";
 import { ListFilter } from "./list-filter";
 
 interface CommonWrapperProps {
-  searchParams: Promise<{ [key: string]: string | string[] }>;
+  searchParams: Promise<MemberReportRequestParams>;
 }
 
 async function CommonWrapper({ searchParams }: CommonWrapperProps) {
@@ -14,7 +18,7 @@ async function CommonWrapper({ searchParams }: CommonWrapperProps) {
   return (
     <>
       <ListFilter />
-      <List data={data as Res<PageData<MemberReportsRecord>>} />
+      <List data={data as PageData<MemberReportsRecord>} />
     </>
   );
 }

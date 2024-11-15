@@ -9,20 +9,10 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import type { PageData, PokerReportRequestRecords } from "@/lib/types";
 import { useTranslations } from "next-intl";
-import DetailButton from "./detail-button";
 
-const data = [
-  {
-    ordernumber: "123",
-    gameName: "百家乐",
-    roomType: "大厅",
-    issueNumber: "123",
-    playerNumber: "123",
-  },
-];
-
-export function List() {
+export function List({ data }: { data: PageData<PokerReportRequestRecords> }) {
   const t = useTranslations("report.agent");
   return (
     <div className="p-2 bg-background flex-1">
@@ -51,8 +41,8 @@ export function List() {
                 </TableHead>
               </TableRow>
             </TableHeader>
-            <TableBody>
-              {data.map((item) => (
+            {/* <TableBody>
+              {data?.list?.map((item) => (
                 <TableRow key={item.ordernumber}>
                   <TableCell className="w-24 text-center">
                     {item.ordernumber}
@@ -74,7 +64,7 @@ export function List() {
                   </TableCell>
                 </TableRow>
               ))}
-            </TableBody>
+            </TableBody> */}
           </Table>
           <ScrollBar orientation="horizontal" />
         </ListScrollArea>
