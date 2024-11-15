@@ -19,6 +19,8 @@ import type {
   MaintainGame,
   MemberList,
   MemberReportsRecord,
+  OrderReportsRecord,
+  OrderReportsRequestParams,
   PageData,
   PeriodReport,
   PeriodReportList,
@@ -527,11 +529,12 @@ export async function postUserInfoWithdraw(data: WithdrawFormData) {
   });
 }
 // 提款申请
-export async function getWithdrawApplyList(params: ApplyListRequest) {
+export async function getWithdrawApplyList(data: ApplyListRequest) {
   const user = await getSession();
   return await apiRequest<WithPagination & { list: ApplyData[] }>({
     url: "/order/withdraw/page",
-    params,
+    method: "POST",
+    data,
     token: user?.token,
   });
 }
@@ -573,8 +576,18 @@ export async function againApply(data: { id: string }) {
 export async function getAuditList(params: AuditListRequest) {
   const user = await getSession();
   return await apiRequest<WithPagination & { list: AuditList[] }>({
-    url: "/order/audit/page",
+    url: "/agent/audit/page",
     params,
+    token: user?.token,
+  });
+}
+// 清除稽核
+export async function clearAudit(data: { id: string }) {
+  const user = await getSession();
+  return await apiRequest({
+    url: "/agent/audit/cleanAudit",
+    method: "POST",
+    data,
     token: user?.token,
   });
 }
@@ -592,5 +605,14 @@ export async function getMemberReportList(params: any) {
   return await apiRequest<Res<PageData<MemberReportsRecord>>>({
     url: "/report/agent/baccarat/member",
     token: user?.token,
+  });
+}
+
+export async function getOrderReportList(params: OrderReportsRequestParams) {
+  const user = await getSession();
+  return await apiRequest<Res<PageData<OrderReportsRecord>>>({
+    url: "/agent/order/baccarat/list",
+    token: user?.token,
+    params,
   });
 }

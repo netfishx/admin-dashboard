@@ -14,7 +14,7 @@ import {
 import { endOfDay, startOfDay } from "date-fns";
 import { getTranslations } from "next-intl/server";
 import { Suspense } from "react";
-import { Actions } from "./actions";
+import { CleanBtn } from "./clean-btn";
 import { Form } from "./form";
 export default async function Page({
   searchParams,
@@ -48,16 +48,18 @@ async function TableWrapper({
   const { data } = await getAuditList({
     startTime: Number(start),
     endTime: Number(end),
-    memberId: Number(search.memberId),
-    orderNo: search.orderNo as string,
-    businessOrderNo: search.businessOrderNo as string,
-    gameTypeName: search.gameTypeName as string,
-    gameName: search.gameName as string,
+    id: (search.id ?? "") as string,
+    userId: (search.userId ?? "") as string,
     pageNum: Number(search.pageNum ?? 1),
     pageSize: Number(search.pageSize ?? 10),
   });
-
-  console.info("agent list:", data);
+  // temp dict
+  // 稽核状态
+  const auditStatus = [
+    { label: "未完成", value: "0" },
+    { label: "已完成", value: "1" },
+    { label: "手工清除", value: "2" },
+  ];
   return (
     <div className="p-2 bg-background flex-1 w-full ">
       <div className="relative overflow-y-auto overflow-x-auto border rounded-sm">
@@ -73,19 +75,16 @@ async function TableWrapper({
               <TableHeader>
                 <TableRow className="bg-muted">
                   <TableHead className="min-w-32 text-center">
-                    {t("orderNo")}
+                    {t("id")}
                   </TableHead>
                   <TableHead className="min-w-32 text-center">
-                    {t("auditCreateTime")}
+                    {t("createTime")}
                   </TableHead>
                   <TableHead className="min-w-32 text-center">
-                    {t("businessOrderType")}
+                    {t("orderType")}
                   </TableHead>
                   <TableHead className="min-w-32 text-center">
-                    {t("businessOrderNo")}
-                  </TableHead>
-                  <TableHead className="min-w-32 text-center">
-                    {t("memberId")}
+                    {t("userId")}
                   </TableHead>
                   <TableHead className="min-w-32 text-center">
                     {t("orderAmount")}
@@ -94,14 +93,15 @@ async function TableWrapper({
                     {t("auditMultiple")}
                   </TableHead>
                   <TableHead className="min-w-32 text-center">
-                    {t("validBetAmount")}
+                    {t("availableAudit")}
                   </TableHead>
                   <TableHead className="min-w-32 text-center">
                     {t("remainingAudit")}
                   </TableHead>
                   <TableHead className="min-w-32 text-center">
-                    {t("auditStatus")}
+                    {t("status")}
                   </TableHead>
+
                   <TableHead className="min-w-48 text-center sticky right-0 bg-muted z-20 shadow-[-4px_0_8px_-6px_rgba(0,0,0,0.2)]">
                     {translations("action")}
                   </TableHead>
@@ -111,20 +111,17 @@ async function TableWrapper({
                 {data?.list.map((item) => (
                   <TableRow key={item.id}>
                     <TableCell className="min-w-32 text-center">
-                      {item.orderNo}
+                      {item.id}
                     </TableCell>
                     <TableCell className="min-w-32 text-center">
-                      {item.auditCreateTime}
+                      {item.createTime}
                     </TableCell>
 
                     <TableCell className="min-w-32 text-center">
-                      {item.businessOrderType}
+                      {item.orderType}
                     </TableCell>
                     <TableCell className="min-w-32 text-center">
-                      {item.businessOrderNo}
-                    </TableCell>
-                    <TableCell className="min-w-32 text-center">
-                      {item.memberId}
+                      {item.userId}
                     </TableCell>
                     <TableCell className="min-w-32 text-center">
                       {item.orderAmount}
@@ -133,17 +130,17 @@ async function TableWrapper({
                       {item.auditMultiple}
                     </TableCell>
                     <TableCell className="min-w-32 text-center">
-                      {item.validBetAmount}
+                      {item.availableAudit}
                     </TableCell>
                     <TableCell className="min-w-32 text-center">
                       {item.remainingAudit}
                     </TableCell>
                     <TableCell className="min-w-32 text-center">
-                      {item.auditStatus}
+                      {item.status}
                     </TableCell>
 
                     <TableCell className="min-w-48 text-center sticky right-0 bg-background z-20 shadow-[-4px_0_8px_-6px_rgba(0,0,0,0.2)]">
-                      <Actions data={item} />
+                      <CleanBtn data={item} />
                     </TableCell>
                   </TableRow>
                 ))}

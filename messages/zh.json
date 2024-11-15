@@ -364,7 +364,11 @@
       "more": "查看",
       "reset": "重置",
       "startTime": "开始时间",
-      "endTime": "结束时间"
+      "endTime": "结束时间",
+      "orderStatus": "结算状态",
+      "notCalculated": "未算占成",
+      "notSettled": "未结算",
+      "settled": "已结算"
     },
     "periodlist": {
       "today": "今天",
@@ -689,27 +693,24 @@
       "flowDesc": "确定再次发起该申请单吗？"
     },
     "audit": {
-      "gameTypeName": "游戏种类",
-      "gameName": "游戏名称",
-      "issueNumber": "期号",
-      "openTime": "开奖时间",
-      "dateRange": "稽核创建日期",
+      "createTime": "稽核创建日期",
       "all": "全部",
       "enable": "通过",
       "placeholderselect": "请选择",
       "placeholder": "请输入",
-      "memberId": "会员ID",
-      "orderNo": "稽核订单号",
+      "userId": "会员ID",
+      "id": "订单号",
       "businessOrderNo": "业务订单号",
-      "auditOrderNo": "稽核订单号",
       "auditCreateTime": "稽核创建时间",
-      "businessOrderType": "业务订单类型",
+      "orderType": "业务订单类型",
       "orderAmount": "订单金额",
       "auditMultiple": "稽核倍数",
-      "validBetAmount": "有效投注",
+      "availableAudit": "有效投注",
       "remainingAudit": "剩余稽核",
-      "auditStatus": "稽核状态",
-      "clear": "清除稽核"
+      "status": "稽核状态",
+      "clear": "清除稽核",
+      "cleanDesc": "确定清除该稽核吗？",
+      "cancel": "取消"
     }
   }
 }

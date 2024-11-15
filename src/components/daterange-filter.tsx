@@ -44,7 +44,7 @@ type rangeType =
   | "month"
   | "lastmonth";
 
-// 缓存时间选项
+// Cached time options
 const TIME_OPTIONS = {
   hours: Array.from({ length: 24 }, (_, i) => ({
     value: i.toString().padStart(2, "0"),
@@ -65,7 +65,7 @@ export const times = {
   endTime: endOfDay(today).getTime(),
 };
 
-// 提取 TimeSelect 为独立组件
+// Extracted TimeSelect as a separate component
 const TimeSelect = memo(
   ({
     type,
@@ -93,45 +93,6 @@ const TimeSelect = memo(
       [type, onTimeChange],
     );
 
-    const hourOptions = useMemo(
-      () => (
-        <SelectContent>
-          {TIME_OPTIONS.hours.map(({ value, label }) => (
-            <SelectItem key={value} value={value}>
-              {label}
-            </SelectItem>
-          ))}
-        </SelectContent>
-      ),
-      [],
-    );
-
-    const minuteOptions = useMemo(
-      () => (
-        <SelectContent>
-          {TIME_OPTIONS.minutes.map(({ value, label }) => (
-            <SelectItem key={value} value={value}>
-              {label}
-            </SelectItem>
-          ))}
-        </SelectContent>
-      ),
-      [],
-    );
-
-    const secondOptions = useMemo(
-      () => (
-        <SelectContent>
-          {TIME_OPTIONS.seconds.map(({ value, label }) => (
-            <SelectItem key={value} value={value}>
-              {label}
-            </SelectItem>
-          ))}
-        </SelectContent>
-      ),
-      [],
-    );
-
     return (
       <div className="flex items-center gap-2 p-2">
         <span className="text-sm text-gray-500">
@@ -144,7 +105,13 @@ const TimeSelect = memo(
           <SelectTrigger className="w-16">
             <SelectValue />
           </SelectTrigger>
-          {hourOptions}
+          <SelectContent>
+            {TIME_OPTIONS.hours.map(({ value, label }) => (
+              <SelectItem key={value} value={value}>
+                {label}
+              </SelectItem>
+            ))}
+          </SelectContent>
         </Select>
         <Select
           value={currentMinute}
@@ -153,7 +120,13 @@ const TimeSelect = memo(
           <SelectTrigger className="w-16">
             <SelectValue />
           </SelectTrigger>
-          {minuteOptions}
+          <SelectContent>
+            {TIME_OPTIONS.minutes.map(({ value, label }) => (
+              <SelectItem key={value} value={value}>
+                {label}
+              </SelectItem>
+            ))}
+          </SelectContent>
         </Select>
         <Select
           value={currentSecond}
@@ -162,7 +135,13 @@ const TimeSelect = memo(
           <SelectTrigger className="w-16">
             <SelectValue />
           </SelectTrigger>
-          {secondOptions}
+          <SelectContent>
+            {TIME_OPTIONS.seconds.map(({ value, label }) => (
+              <SelectItem key={value} value={value}>
+                {label}
+              </SelectItem>
+            ))}
+          </SelectContent>
         </Select>
       </div>
     );
@@ -184,17 +163,20 @@ export function DateRangeFilter({
   startTimeText = "startTime",
   endTimeText = "endTime",
   onChange = () => {},
+  reset,
 }: {
   quickSetBtn?: rangeType[];
   enableTimeSelect?: boolean;
   startTimeText?: string;
   endTimeText?: string;
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
   onChange?: (dateRange: any) => void;
+  reset?: (resetFn: (start: number, end: number) => void) => void;
 }) {
   const t = useTranslations("report.orderlist");
   const searchParams = useSearchParams();
 
-  // 从 URL 参数中获取 startTime 和 endTime 值
+  // Get startTime and endTime from URL parameters
   const startTimeFromUrl = searchParams.get(startTimeText);
   const endTimeFromUrl = searchParams.get(endTimeText);
 
@@ -215,17 +197,23 @@ export function DateRangeFilter({
       .withOptions({ clearOnDefault: false }),
   });
 
+  const resetDateRange = (start: number, end: number) => {
+    setDateRange({
+      [startTimeText]: start,
+      [endTimeText]: end,
+    });
+    onChange?.({
+      [startTimeText]: start,
+      [endTimeText]: end,
+    });
+  };
+
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
-    setDateRange({
-      [startTimeText]: startTimeFromUrl
-        ? Number.parseInt(startTimeFromUrl, 10)
-        : startOfDay(today).getTime(),
-      [endTimeText]: endTimeFromUrl
-        ? Number.parseInt(endTimeFromUrl, 10)
-        : endOfDay(today).getTime(),
-    });
-  }, []);
+    if (reset) {
+      reset(resetDateRange);
+    }
+  }, [reset]);
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
@@ -280,6 +268,7 @@ export function DateRangeFilter({
         default:
           return;
       }
+
       setDateRange({
         [startTimeText]: from.getTime(),
         [endTimeText]: to.getTime(),

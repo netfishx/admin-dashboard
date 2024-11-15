@@ -8,34 +8,11 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import type { OrderReportsRecord, PageData, Res } from "@/lib/types";
 import { useTranslations } from "next-intl";
 import DetailButton from "./detail-button";
 
-const tempData = "111111111111111111112221";
-const data = [
-  {
-    ordernumber: "123",
-    issuenumber: 123,
-    memberID: 123,
-    roomeownerID: tempData,
-    ministerID: tempData,
-    leastlevelID: tempData,
-    gamename: tempData,
-    smallType: tempData,
-    odds: tempData,
-    betcontent: tempData,
-    result: tempData,
-    betamount: tempData,
-    winamount: tempData,
-    bettime: tempData,
-    drawtime: tempData,
-    membersettlementtime: tempData,
-    proxysettlementtime: tempData,
-    proxystatus: tempData,
-  },
-];
-
-export function List() {
+export function List({ data }: { data: Res<PageData<OrderReportsRecord>> }) {
   const t = useTranslations("report.orderlist");
   return (
     <div className="p-2 bg-background flex-1">
@@ -72,9 +49,6 @@ export function List() {
                   {t("odds")}
                 </TableHead>
                 <TableHead className="min-w-24 text-center">
-                  {t("betcontent")}
-                </TableHead>
-                <TableHead className="min-w-24 text-center">
                   {t("result")}
                 </TableHead>
                 <TableHead className="min-w-24 text-center">
@@ -104,61 +78,60 @@ export function List() {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {data.map((item) => (
-                <TableRow key={item.ordernumber}>
+              {data?.list?.map((item: OrderReportsRecord) => (
+                <TableRow key={item.id}>
+                  <TableCell className="w-24 text-center">{item.id}</TableCell>
                   <TableCell className="w-24 text-center">
-                    {item.ordernumber}
+                    {item.issueNumber}
                   </TableCell>
                   <TableCell className="w-24 text-center">
-                    {item.issuenumber}
+                    {item.memberId}
                   </TableCell>
                   <TableCell className="w-24 text-center">
-                    {item.memberID}
+                    {item.roomOwnerId}
                   </TableCell>
                   <TableCell className="w-24 text-center">
-                    {item.roomeownerID}
+                    {item.minister}
                   </TableCell>
                   <TableCell className="w-24 text-center">
-                    {item.ministerID}
+                    {item.lastAgentId}
                   </TableCell>
                   <TableCell className="w-24 text-center">
-                    {item.leastlevelID}
+                    {item.gameId}
                   </TableCell>
                   <TableCell className="w-24 text-center">
-                    {item.gamename}
+                    {item.betType}
                   </TableCell>
                   <TableCell className="w-24 text-center">
-                    {item.smallType}
+                    {
+                      Object.entries(item.odds || {})[
+                        Object.entries(item.odds || {}).length - 1
+                      ]
+                    }
                   </TableCell>
                   <TableCell className="w-24 text-center">
-                    {item.odds}
+                    缺少开奖记录
                   </TableCell>
                   <TableCell className="w-24 text-center">
-                    {item.betcontent}
+                    {item?.betAmount}
                   </TableCell>
                   <TableCell className="w-24 text-center">
-                    {item.result}
+                    {item.winLossAmount}
                   </TableCell>
                   <TableCell className="w-24 text-center">
-                    {item.winamount}
+                    {item.betTime}
                   </TableCell>
                   <TableCell className="w-24 text-center">
-                    {item.bettime}
+                    缺少开奖时间
                   </TableCell>
                   <TableCell className="w-24 text-center">
-                    {item.drawtime}
+                    {item.settleTime}
                   </TableCell>
                   <TableCell className="w-24 text-center">
-                    {item.membersettlementtime}
+                    缺少代理结算时间
                   </TableCell>
                   <TableCell className="w-24 text-center">
-                    {item.proxysettlementtime}
-                  </TableCell>
-                  <TableCell className="w-24 text-center">
-                    {item.proxysettlementtime}
-                  </TableCell>
-                  <TableCell className="w-24 text-center">
-                    {item.proxystatus}
+                    {item.orderStatus}
                   </TableCell>
                   <TableCell className="w-24 text-center sticky right-0 z-10 bg-background">
                     <DetailButton />

@@ -3,17 +3,32 @@ import { DateRangeFilter } from "@/components/daterange-filter";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import {} from "@/components/ui/select";
+import { endOfDay } from "date-fns";
+import { startOfDay } from "date-fns";
 import { useTranslations } from "next-intl";
 import { useQueryState } from "nuqs";
+import { useRef } from "react";
 
 export function ListFilter({
   hasSearchPermission,
 }: { hasSearchPermission: boolean }) {
   const t = useTranslations("report.supplier");
-  const [supplierId, setSupplierId] = useQueryState("supplierId");
+  const [supplierId, setSupplierId] = useQueryState("supplierId", {
+    defaultValue: "",
+  });
 
+  const dateRangeFilterReset = useRef<
+    ((start: number, end: number) => void) | null
+  >(null);
+  const handleDateRangeFilterReset = () => {
+    const start = startOfDay(new Date()).getTime();
+    const end = endOfDay(new Date()).getTime();
+    dateRangeFilterReset.current?.(start, end);
+  };
   const handleReset = () => {
     setSupplierId("");
+    handleDateRangeFilterReset();
   };
 
   return (
@@ -22,7 +37,11 @@ export function ListFilter({
       <div className="flex gap-4 items-center">
         <div className="flex gap-2 items-center">
           <Label>{t("daterange")}</Label>
-          <DateRangeFilter enableTimeSelect={false} />
+          <DateRangeFilter
+            enableTimeSelect={false}
+            // biome-ignore lint/suspicious/noAssignInExpressions: <explanation>
+            reset={(resetFn) => (dateRangeFilterReset.current = resetFn)}
+          />
         </div>
         {hasSearchPermission && (
           <div className="flex gap-4 items-center">
