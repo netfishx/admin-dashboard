@@ -1,4 +1,4 @@
-import { getDailiReport } from "@/api";
+import { getCollectionAddressList } from "@/api";
 import DetailButton from "@/app/(dashboard)/fund/collection/detail-button";
 import { CustomPagination } from "@/components/custom-pagination";
 import {
@@ -13,29 +13,32 @@ import { getTranslations } from "next-intl/server";
 import { Suspense } from "react";
 
 export async function List({ searchParams }: { searchParams: any }) {
-  const t = await getTranslations("report.agent");
+  const t = await getTranslations("fund.collection");
   const search = await searchParams;
-  const { data } = await getDailiReport({
-    ...search,
-    openStartTime: search?.startTime,
-    openEndTime: search?.endTime,
-    page: Number(search?.page ?? 1),
-    size: Number(search?.size ?? 10),
-  });
+  const { data } = await getCollectionAddressList(search);
 
   return (
     <Suspense fallback={<div>loading...</div>}>
       <div className="p-2 bg-background flex-1">
-        <div className="py-2">{t("title")}</div>
         <div className="border rounded-sm relative">
           <Table>
             <TableHeader>
               <TableRow className="bg-muted">
-                <TableHead className="min-w-24 text-center">地址</TableHead>
-                <TableHead className="min-w-24 text-center">币种</TableHead>
-                <TableHead className="min-w-24 text-center">余额</TableHead>
-                <TableHead className="min-w-24 text-center">状态</TableHead>
-                <TableHead className="min-w-24 text-center">创建</TableHead>
+                <TableHead className="min-w-24 text-center">
+                  {t("address")}
+                </TableHead>
+                <TableHead className="min-w-24 text-center">
+                  {t("currency")}
+                </TableHead>
+                <TableHead className="min-w-24 text-center">
+                  {t("balance")}
+                </TableHead>
+                <TableHead className="min-w-24 text-center">
+                  {t("status")}
+                </TableHead>
+                <TableHead className="min-w-24 text-center">
+                  {t("createTime")}
+                </TableHead>
                 <TableHead className="w-24 text-center sticky right-0 z-10 bg-muted">
                   操作
                 </TableHead>

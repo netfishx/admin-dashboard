@@ -9,10 +9,10 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import type { MemberReportsRecord, PageData, Res } from "@/lib/types";
+import type { MemberReportsRecord, PageData } from "@/lib/types";
 import { useTranslations } from "next-intl";
 
-export function List({ data }: { data: Res<PageData<MemberReportsRecord>> }) {
+export function List({ data }: { data: PageData<MemberReportsRecord> }) {
   const t = useTranslations("report.member");
   return (
     <div className="p-2 bg-background flex-1">
@@ -92,7 +92,11 @@ export function List({ data }: { data: Res<PageData<MemberReportsRecord>> }) {
         </ListScrollArea>
       </div>
       <div className="pt-2">
-        <CustomPagination total={0} currentPage={1} pageSize={10} />
+        <CustomPagination
+          total={data?.total ?? 0}
+          currentPage={Number(data?.pageNum ?? 1)}
+          pageSize={Number(data?.pageSize ?? 10)}
+        />
       </div>
       <div className="pt-2 w-2/5">
         <Table>

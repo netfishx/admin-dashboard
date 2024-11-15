@@ -1,3 +1,4 @@
+import { CustomPagination } from "@/components/custom-pagination";
 import ListScrollArea from "@/components/list-scroll-area";
 import { ScrollBar } from "@/components/ui/scroll-area";
 import {
@@ -8,11 +9,12 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import type { OrderReportsRecord, PageData, Res } from "@/lib/types";
+import type { OrderReportsRecord, PageData } from "@/lib/types";
+import { format } from "date-fns";
 import { useTranslations } from "next-intl";
 import DetailButton from "./detail-button";
 
-export function List({ data }: { data: Res<PageData<OrderReportsRecord>> }) {
+export function List({ data }: { data: PageData<OrderReportsRecord> }) {
   const t = useTranslations("report.orderlist");
   return (
     <div className="p-2 bg-background flex-1">
@@ -49,9 +51,6 @@ export function List({ data }: { data: Res<PageData<OrderReportsRecord>> }) {
                   {t("odds")}
                 </TableHead>
                 <TableHead className="min-w-24 text-center">
-                  {t("result")}
-                </TableHead>
-                <TableHead className="min-w-24 text-center">
                   {t("betamount")}
                 </TableHead>
                 <TableHead className="min-w-24 text-center">
@@ -61,13 +60,7 @@ export function List({ data }: { data: Res<PageData<OrderReportsRecord>> }) {
                   {t("bettime")}
                 </TableHead>
                 <TableHead className="min-w-24 text-center">
-                  {t("drawtime")}
-                </TableHead>
-                <TableHead className="min-w-24 text-center">
                   {t("membersettlementtime")}
-                </TableHead>
-                <TableHead className="min-w-24 text-center">
-                  {t("proxysettlementtime")}
                 </TableHead>
                 <TableHead className="min-w-24 text-center">
                   {t("proxystatus")}
@@ -110,25 +103,16 @@ export function List({ data }: { data: Res<PageData<OrderReportsRecord>> }) {
                     }
                   </TableCell>
                   <TableCell className="w-24 text-center">
-                    缺少开奖记录
-                  </TableCell>
-                  <TableCell className="w-24 text-center">
                     {item?.betAmount}
                   </TableCell>
                   <TableCell className="w-24 text-center">
                     {item.winLossAmount}
                   </TableCell>
-                  <TableCell className="w-24 text-center">
-                    {item.betTime}
+                  <TableCell className="text-center">
+                    {format(item.betTime, "yyyy-MM-dd HH:mm:ss")}
                   </TableCell>
-                  <TableCell className="w-24 text-center">
-                    缺少开奖时间
-                  </TableCell>
-                  <TableCell className="w-24 text-center">
-                    {item.settleTime}
-                  </TableCell>
-                  <TableCell className="w-24 text-center">
-                    缺少代理结算时间
+                  <TableCell className="text-center">
+                    {format(item.settleTime, "yyyy-MM-dd HH:mm:ss")}
                   </TableCell>
                   <TableCell className="w-24 text-center">
                     {item.orderStatus}
@@ -142,6 +126,13 @@ export function List({ data }: { data: Res<PageData<OrderReportsRecord>> }) {
           </Table>
           <ScrollBar orientation="horizontal" />
         </ListScrollArea>
+      </div>
+      <div className="pt-2">
+        <CustomPagination
+          total={data?.total ?? 0}
+          currentPage={Number(data?.pageNum ?? 1)}
+          pageSize={Number(data?.pageSize ?? 10)}
+        />
       </div>
     </div>
   );

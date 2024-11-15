@@ -12,12 +12,11 @@ import {
 
 import AmountFilter from "@/components/amount-filter";
 import { DateRangeFilter } from "@/components/daterange-filter";
-import { endOfDay } from "date-fns";
-import { startOfDay } from "date-fns";
+import { endOfDay, startOfDay } from "date-fns";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useQueryState } from "nuqs";
-import { useRef, useState } from "react";
+import { useRef } from "react";
 
 export function ListFilter() {
   const t = useTranslations("report.orderlist");
@@ -36,8 +35,6 @@ export function ListFilter() {
   const [roomeownerID, setRoomeownerID] = useQueryState("roomOwnerId");
   // 末级代理ID
   const [leastlevelID, setLeastlevelID] = useQueryState("lastAgentId");
-
-  const [resetCounter, setResetCounter] = useState(0);
 
   const dateRangeFilterReset = useRef<
     ((start: number, end: number) => void) | null

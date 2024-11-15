@@ -1,19 +1,13 @@
 import { Skeleton } from "./ui/skeleton";
-import { TableCell, TableRow } from "./ui/table";
-import { TableBody } from "./ui/table";
 
 export default function TableSkeleton(props: { length?: number }) {
   const { length = 5 } = props;
   return (
-    <TableBody>
+    <div className="flex flex-col gap-4 p-4">
       {Array.from({ length }).map((_, i) => (
         // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
-        <TableRow key={i}>
-          <TableCell colSpan={2}>
-            <Skeleton className="w-full h-6" />
-          </TableCell>
-        </TableRow>
+        <Skeleton key={i} className="w-full h-6" />
       ))}
-    </TableBody>
+    </div>
   );
 }
