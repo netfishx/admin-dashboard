@@ -357,6 +357,7 @@ export type OrderReportsRecord = {
   odds: { [key: string]: string }; // 投注赔率, dynamic keys with string values
 };
 
+<<<<<<< HEAD
 // 占成拦货报表请求入参
 export type RatioReportRequestParams = {
   agentId?: string; // 代理ID
@@ -443,4 +444,32 @@ export type PokerReportRequestRecords = {
   backOutcome: number; // 返水支出
   pureBackAmount: number; // 纯返水金额
   totalProfitLossAmount: number; // 总输赢金额
+=======
+// 充值报表
+export type RechargeReport = {
+  id: string;
+  orderNo: string;
+  userId: string;
+  userType: number;
+  account: string;
+  nickname: string;
+  rechargeMoney: string;
+  finishTime: number;
+  rechargeHash: string;
+  currency: string;
+  createTime: number;
+  updateTime: number;
+};
+// 充值报表请求入参
+export type RechargeReportParams = {
+  startTime?: number;
+  endTime?: number;
+  orderNo?: string | null;
+  operatorSymbol?: number | null;
+  rechargeMoney?: number | null;
+  withdrawUserType?: number | null;
+  userId?: string | null;
+  pageNum: number;
+  pageSize: number;
+>>>>>>> test
 };

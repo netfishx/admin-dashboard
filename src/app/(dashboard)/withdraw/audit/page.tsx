@@ -55,11 +55,6 @@ async function TableWrapper({
   });
   // temp dict
   // 稽核状态
-  const auditStatus = [
-    { label: "未完成", value: "0" },
-    { label: "已完成", value: "1" },
-    { label: "手工清除", value: "2" },
-  ];
   return (
     <div className="p-2 bg-background flex-1 w-full ">
       <div className="relative overflow-y-auto overflow-x-auto border rounded-sm">

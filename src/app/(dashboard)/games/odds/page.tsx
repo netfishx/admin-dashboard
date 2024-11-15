@@ -82,7 +82,7 @@ export default function Page({
 }: { searchParams: Promise<{ [key: string]: string | undefined }> }) {
   return (
     <div className="flex flex-col gap-2 w-full">
-      <div className="flex justify-between items-center bg-background py-2 px-4">
+      <div className="flex justify-between items-center bg-background p-4">
         <Suspense fallback={<Skeleton className="w-full h-9 opacity-20" />}>
           <FormWrapper />
         </Suspense>

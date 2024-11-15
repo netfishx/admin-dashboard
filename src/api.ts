@@ -35,7 +35,6 @@ import type {
   SupplierReportRecords,
   SupplierReportRequestParams,
   UserBasicInfo,
-  WithPagination,
   WithdrawFormData,
 } from "@/lib/types";
 
@@ -537,7 +536,7 @@ export async function postUserInfoWithdraw(data: WithdrawFormData) {
 // 提款申请
 export async function getWithdrawApplyList(data: ApplyListRequest) {
   const user = await getSession();
-  return await apiRequest<WithPagination & { list: ApplyData[] }>({
+  return await apiRequest<PageData<ApplyData>>({
     url: "/order/withdraw/page",
     method: "POST",
     data,
@@ -581,7 +580,7 @@ export async function againApply(data: { id: string }) {
 // 稽核管理-稽核列表
 export async function getAuditList(params: AuditListRequest) {
   const user = await getSession();
-  return await apiRequest<WithPagination & { list: AuditList[] }>({
+  return await apiRequest<PageData<AuditList>>({
     url: "/agent/audit/page",
     params,
     token: user?.token,
@@ -636,4 +635,16 @@ export async function getPokerReport(params: PokerReportRequestParams) {
     token: user?.token,
     params,
   });
+}
+// 充值报表
+export async function getRechargeReportList(data: RechargeReportParams) {
+  const user = await getSession();
+  const res = await apiRequest<PageData<RechargeReport>>({
+    url: "/order/recharge/report",
+    method: "POST",
+    token: user?.token,
+    data,
+  });
+  console.info("🌸 ~ res:", res);
+  return res;
 }

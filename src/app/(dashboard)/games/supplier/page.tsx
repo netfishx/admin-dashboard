@@ -17,7 +17,7 @@ export default function Page({
     <div className="flex flex-col gap-2 w-full">
       <Suspense
         fallback={
-          <div className="flex justify-between items-center bg-background py-2 px-4">
+          <div className="flex justify-between items-center bg-background p-4">
             <Skeleton className="w-full h-9 opacity-20" />
           </div>
         }

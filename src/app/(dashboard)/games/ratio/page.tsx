@@ -56,7 +56,7 @@ async function TableWrapper() {
 export default function Page() {
   return (
     <div className="flex flex-col gap-2 w-full">
-      <div className="flex justify-between items-center bg-background py-2 px-4">
+      <div className="flex justify-between items-center bg-background p-4">
         <RatioForm />
       </div>
       <div className="p-2 bg-background flex-1">
