@@ -9,20 +9,17 @@ export async function middleware(request: NextRequest) {
   }
   if (user) {
     if (
-      !user?.permissions?.includes("agent_stat") &&
-      request.nextUrl.pathname !== "/reports/supplier"
-    ) {
-      return Response.redirect(new URL("/reports/supplier", request.url));
-    }
-    if (
       Object.keys(urlPermissions).some((key) => {
         return (
-          !user?.permissions?.includes(urlPermissions[key]) &&
+          !user.permissions.includes(urlPermissions[key]) &&
           request.nextUrl.pathname === key
         );
       })
     ) {
-      return Response.redirect(new URL("/", request.url));
+      if (user.permissions.includes("agent_stat")) {
+        return Response.redirect(new URL("/", request.url));
+      }
+      return Response.redirect(new URL("/reports/supplier", request.url));
     }
   }
   return NextResponse.next();

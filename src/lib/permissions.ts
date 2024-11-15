@@ -8,4 +8,5 @@ export const urlPermissions: {
   "/games/rebate": "edit_rebate",
   "/games/supplier": "supplier_config",
   "/games/maintain": "game_maintain",
+  "/": "agent_stat",
 };
