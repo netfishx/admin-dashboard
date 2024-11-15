@@ -49,9 +49,6 @@ export function List({ data }: { data: Res<PageData<OrderReportsRecord>> }) {
                   {t("odds")}
                 </TableHead>
                 <TableHead className="min-w-24 text-center">
-                  {t("result")}
-                </TableHead>
-                <TableHead className="min-w-24 text-center">
                   {t("betamount")}
                 </TableHead>
                 <TableHead className="min-w-24 text-center">
@@ -61,13 +58,7 @@ export function List({ data }: { data: Res<PageData<OrderReportsRecord>> }) {
                   {t("bettime")}
                 </TableHead>
                 <TableHead className="min-w-24 text-center">
-                  {t("drawtime")}
-                </TableHead>
-                <TableHead className="min-w-24 text-center">
                   {t("membersettlementtime")}
-                </TableHead>
-                <TableHead className="min-w-24 text-center">
-                  {t("proxysettlementtime")}
                 </TableHead>
                 <TableHead className="min-w-24 text-center">
                   {t("proxystatus")}
@@ -110,9 +101,6 @@ export function List({ data }: { data: Res<PageData<OrderReportsRecord>> }) {
                     }
                   </TableCell>
                   <TableCell className="w-24 text-center">
-                    缺少开奖记录
-                  </TableCell>
-                  <TableCell className="w-24 text-center">
                     {item?.betAmount}
                   </TableCell>
                   <TableCell className="w-24 text-center">
@@ -122,13 +110,7 @@ export function List({ data }: { data: Res<PageData<OrderReportsRecord>> }) {
                     {item.betTime}
                   </TableCell>
                   <TableCell className="w-24 text-center">
-                    缺少开奖时间
-                  </TableCell>
-                  <TableCell className="w-24 text-center">
                     {item.settleTime}
-                  </TableCell>
-                  <TableCell className="w-24 text-center">
-                    缺少代理结算时间
                   </TableCell>
                   <TableCell className="w-24 text-center">
                     {item.orderStatus}

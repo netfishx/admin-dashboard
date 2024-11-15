@@ -23,7 +23,7 @@ async function CommonWrapper({ searchParams }: CommonWrapperProps) {
       <Suspense fallback={null}>
         <ListFilter />
       </Suspense>
-      <Suspense fallback={<TableSkeleton length={10} />}>
+      <Suspense fallback={<TableSkeleton length={5} />}>
         <List data={data as Res<PageData<OrderReportsRecord>>} />
       </Suspense>
     </>
@@ -33,9 +33,7 @@ async function CommonWrapper({ searchParams }: CommonWrapperProps) {
 export default function Page({ searchParams }: CommonWrapperProps) {
   return (
     <div className="flex flex-col gap-2 w-full">
-      <Suspense>
-        <CommonWrapper searchParams={searchParams} />
-      </Suspense>
+      <CommonWrapper searchParams={searchParams} />
     </div>
   );
 }
