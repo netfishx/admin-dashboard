@@ -338,3 +338,31 @@ export type OrderReportsRecord = {
   roomId: string; // 房间号, -1 means no room
   odds: { [key: string]: string }; // 投注赔率, dynamic keys with string values
 };
+
+// 充值报表
+export type RechargeReport = {
+  id: string;
+  orderNo: string;
+  userId: string;
+  userType: number;
+  account: string;
+  nickname: string;
+  rechargeMoney: string;
+  finishTime: number;
+  rechargeHash: string;
+  currency: string;
+  createTime: number;
+  updateTime: number;
+};
+// 充值报表请求入参
+export type RechargeReportParams = {
+  startTime?: number;
+  endTime?: number;
+  orderNo?: string | null;
+  operatorSymbol?: number | null;
+  rechargeMoney?: number | null;
+  withdrawUserType?: number | null;
+  userId?: string | null;
+  pageNum: number;
+  pageSize: number;
+};
