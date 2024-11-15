@@ -33,6 +33,7 @@ import type {
   RatioReportRequestRecords,
   SupplierConfig,
   SupplierReportRecords,
+  SupplierReportRequestParams,
   UserBasicInfo,
   WithPagination,
   WithdrawFormData,
@@ -597,11 +598,15 @@ export async function clearAudit(data: { id: string }) {
   });
 }
 
-export async function getSupplierReportList() {
+// 供应商报表
+export async function getSupplierReportList(
+  params: SupplierReportRequestParams,
+) {
   const user = await getSession();
   return await apiRequest<PageData<SupplierReportRecords>>({
     url: "/report/agent/baccarat/supply",
     token: user?.token,
+    params,
   });
 }
 

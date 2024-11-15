@@ -1,6 +1,10 @@
 import { getSupplierReportList } from "@/api";
 import TableSkeleton from "@/components/table-skeleton";
-import type { PageData, SupplierReportRecords } from "@/lib/types";
+import type {
+  PageData,
+  SupplierReportRecords,
+  SupplierReportRequestParams,
+} from "@/lib/types";
 import { hasPermission } from "@/session";
 import { Suspense, use } from "react";
 import { List } from "./list";
@@ -10,8 +14,9 @@ interface CommonWrapperProps {
   searchParams: Promise<SupplierReportRequestParams>;
 }
 
-function CommonWrapper({ searchParams }: CommonWrapperProps) {
-  const { data } = use(getSupplierReportList());
+async function CommonWrapper({ searchParams }: CommonWrapperProps) {
+  const params = await searchParams;
+  const { data } = await getSupplierReportList(params);
   const hasSearchPermission = use(hasPermission("admin_supplier_report"));
   return (
     <>
