@@ -12,6 +12,8 @@ import type {
   AuditList,
   AuditListRequest,
   ChangeLog,
+  CollectionAddressListRecords,
+  CollectionAddressListRequestParams,
   GameConfig,
   GameOdds,
   GameType,
@@ -649,4 +651,16 @@ export async function getRechargeReportList(data: RechargeReportParams) {
   });
   console.info("🌸 ~ res:", res);
   return res;
+}
+
+// 归集地址列表
+export async function getCollectionAddressList(
+  params: CollectionAddressListRequestParams,
+) {
+  const user = await getSession();
+  return await apiRequest<PageData<CollectionAddressListRecords>>({
+    url: "/agent/collection/address/list",
+    token: user?.token,
+    params,
+  });
 }

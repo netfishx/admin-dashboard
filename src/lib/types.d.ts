@@ -443,6 +443,8 @@ export type PokerReportRequestRecords = {
   backOutcome: number; // 返水支出
   pureBackAmount: number; // 纯返水金额
   totalProfitLossAmount: number; // 总输赢金额
+};
+
 // 充值报表
 export type RechargeReport = {
   id: string;
@@ -467,6 +469,18 @@ export type RechargeReportParams = {
   rechargeMoney?: number | null;
   withdrawUserType?: number | null;
   userId?: string | null;
+  pageNum: number;
+  pageSize: number;
+};
+
+// 归集地址列表
+export type CollectionAddressListRe = {
+  address: string;
+  currency: string;
+  balance: string;
+};
+// 归集地址列表请求入参
+export type CollectionAddressListRequestParams = {
   pageNum: number;
   pageSize: number;
 };
