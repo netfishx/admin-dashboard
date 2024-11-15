@@ -117,6 +117,7 @@ export function OddsForm({
   const [field, setField] = useState<
     "odds" | "minBet" | "maxBet" | "maxBetPeriod"
   >("odds");
+  const stepLimit = field === "odds" ? 3 : 0;
   const [step, setStep] = useState(1);
 
   const [odds, setOdds] = useAtom(oddsAtom);
@@ -269,7 +270,12 @@ export function OddsForm({
         </div>
         <div className="flex gap-2 items-center">
           <Label className="shrink-0">{t("column")}</Label>
-          <EditNumber step={step} setStep={setStep} handleEdit={handleEdit} />
+          <EditNumber
+            step={step}
+            setStep={setStep}
+            handleEdit={handleEdit}
+            limit={stepLimit}
+          />
         </div>
       </div>
       <div className="flex gap-2">
