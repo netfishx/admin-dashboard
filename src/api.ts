@@ -26,6 +26,8 @@ import type {
   PageData,
   PeriodReport,
   PeriodReportList,
+  PokerReportRequestParams,
+  PokerReportRequestRecords,
   RatioReportRequestParams,
   RatioReportRequestRecords,
   SupplierConfig,
@@ -614,6 +616,16 @@ export async function getOrderReportList(params: OrderReportsRequestParams) {
   const user = await getSession();
   return await apiRequest<PageData<OrderReportsRecord>>({
     url: "/agent/order/baccarat/list",
+    token: user?.token,
+    params,
+  });
+}
+
+// 代理报表-棋牌
+export async function getPokerReport(params: PokerReportRequestParams) {
+  const user = await getSession();
+  return await apiRequest<PageData<PokerReportRequestRecords>>({
+    url: "/report/agent/gundan",
     token: user?.token,
     params,
   });
