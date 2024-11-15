@@ -12,9 +12,12 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import {} from "@/components/ui/select";
+import { startOfDay } from "date-fns";
+import { endOfDay } from "date-fns";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useQueryState } from "nuqs";
+import { useRef } from "react";
 
 export function ListFilter() {
   const t = useTranslations("report.member");
@@ -42,10 +45,20 @@ export function ListFilter() {
     }
   };
 
+  const dateRangeFilterReset = useRef<
+    ((start: number, end: number) => void) | null
+  >(null);
+  const handleDateRangeFilterReset = () => {
+    const start = startOfDay(new Date()).getTime();
+    const end = endOfDay(new Date()).getTime();
+    dateRangeFilterReset.current?.(start, end);
+  };
+
   const handleReset = () => {
     setParentAgentId("");
     setGameId("");
     setMemberType([]);
+    handleDateRangeFilterReset();
   };
 
   const isMemberTypeSelected = (memberTypeId: string) => {
@@ -81,8 +94,8 @@ export function ListFilter() {
           <Label>{t("openTime")}</Label>
           <DateRangeFilter
             enableTimeSelect={false}
-            startTimeText="openStartTime"
-            endTimeText="openEndTime"
+            // biome-ignore lint/suspicious/noAssignInExpressions: <explanation>
+            reset={(resetFn) => (dateRangeFilterReset.current = resetFn)}
           />
         </div>
         <div className="flex gap-4 items-center">

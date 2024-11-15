@@ -20,6 +20,7 @@ import type {
   MemberBetReportRequestParams,
   MemberBetReportRequestRecords,
   MemberList,
+  MemberReportRequestParams,
   MemberReportsRecord,
   OrderReportsRecord,
   OrderReportsRequestParams,
@@ -31,7 +32,7 @@ import type {
   RatioReportRequestParams,
   RatioReportRequestRecords,
   SupplierConfig,
-  SupplierReportListItem,
+  SupplierReportRecords,
   UserBasicInfo,
   WithPagination,
   WithdrawFormData,
@@ -598,17 +599,18 @@ export async function clearAudit(data: { id: string }) {
 
 export async function getSupplierReportList() {
   const user = await getSession();
-  return await apiRequest<PageData<SupplierReportListItem>>({
+  return await apiRequest<PageData<SupplierReportRecords>>({
     url: "/report/agent/baccarat/supply",
     token: user?.token,
   });
 }
 
-export async function getMemberReportList(params: any) {
+export async function getMemberReportList(params: MemberReportRequestParams) {
   const user = await getSession();
   return await apiRequest<PageData<MemberReportsRecord>>({
     url: "/report/agent/baccarat/member",
     token: user?.token,
+    params,
   });
 }
 

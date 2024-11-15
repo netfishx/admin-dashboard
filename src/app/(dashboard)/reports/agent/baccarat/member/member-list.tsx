@@ -67,7 +67,7 @@ export async function MemberList({
             </TableRow>
           </TableHeader>
           <TableBody>
-            {data?.list?.map((item: any) => (
+            {data?.list?.map((item: MemberBetReportRequestRecords) => (
               <TableRow key={item.agentId}>
                 <TableCell className="w-24 text-center">
                   {item.agentId}

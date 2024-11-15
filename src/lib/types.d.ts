@@ -245,8 +245,8 @@ export type ApplyListRequest = {
   userId?: string | null;
   parentAccount?: string | null;
 };
-// 供应商报表listitem
-export type SupplierReportListItem = {
+// 供应商报表出参
+export type SupplierReportRecords = {
   supplierId: string; // 供应商ID
   analysisTime: number; // 日期（时间戳格式）
   gameName: string; // 游戏名称
@@ -257,6 +257,12 @@ export type SupplierReportListItem = {
   totalBetNum: number; // 累计下注笔数
   totalValidAmount: number; // 累计有效金额
   totalShareAmount: number; // 累计比例分成金额
+};
+
+// 供应商报表请求入参
+export type SupplierReportRequestParams = {
+  startTime: number;
+  endTime: number;
 };
 
 export type AuditList = {
@@ -279,6 +285,19 @@ export type AuditListRequest = {
   pageNum: number;
   pageSize: number;
 };
+
+// 会员报表-真人视讯请求入参
+export type MemberReportRequestParams = {
+  gameId?: number; // 游戏ID（不传时为全部游戏）
+  startTime?: number; // 开奖开始时间（必传）
+  endTime?: number; // 开奖结束时间（必传）
+  pageNum?: number; // 第几页
+  pageSize?: number; // 每页大小
+  parentAgentId?: string | number; // 上级代理ID
+  memberId?: string | number; // 会员ID
+};
+
+// 会员报表-真人视讯出参
 export type MemberReportsRecord = {
   memberId: string;
   memberTypeName: string;
