@@ -5,6 +5,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
 import { Provider as JotaiProvider } from "jotai";
 import { getTranslations } from "next-intl/server";
+import { ViewTransitions } from "next-view-transitions";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
 import { type ReactNode, Suspense } from "react";
 
@@ -19,34 +20,36 @@ export default function RootLayout({
   children: ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body>
-        <NuqsAdapter>
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          >
-            <Toaster
-              position="top-center"
-              richColors
-              expand
-              visibleToasts={1}
-              toastOptions={{ duration: 1000 }}
-            />
-            <JotaiProvider>
-              <I18nProvider>
-                <Suspense>
-                  <Title />
-                  {children}
-                </Suspense>
-              </I18nProvider>
-              <ErrorToast />
-            </JotaiProvider>
-          </ThemeProvider>
-        </NuqsAdapter>
-      </body>
-    </html>
+    <ViewTransitions>
+      <html lang="en">
+        <body>
+          <NuqsAdapter>
+            <ThemeProvider
+              attribute="class"
+              defaultTheme="system"
+              enableSystem
+              disableTransitionOnChange
+            >
+              <Toaster
+                position="top-center"
+                richColors
+                expand
+                visibleToasts={1}
+                toastOptions={{ duration: 1000 }}
+              />
+              <JotaiProvider>
+                <I18nProvider>
+                  <Suspense>
+                    <Title />
+                    {children}
+                  </Suspense>
+                </I18nProvider>
+                <ErrorToast />
+              </JotaiProvider>
+            </ThemeProvider>
+          </NuqsAdapter>
+        </body>
+      </html>
+    </ViewTransitions>
   );
 }
