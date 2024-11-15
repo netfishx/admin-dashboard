@@ -8,12 +8,12 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import type { OrderReportsRecord, PageData, Res } from "@/lib/types";
+import type { OrderReportsRecord, PageData } from "@/lib/types";
 import { format } from "date-fns";
 import { useTranslations } from "next-intl";
 import DetailButton from "./detail-button";
 
-export function List({ data }: { data: Res<PageData<OrderReportsRecord>> }) {
+export function List({ data }: { data: PageData<OrderReportsRecord> }) {
   const t = useTranslations("report.orderlist");
   return (
     <div className="p-2 bg-background flex-1">

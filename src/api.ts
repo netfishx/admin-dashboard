@@ -25,7 +25,6 @@ import type {
   PeriodReport,
   PeriodReportList,
   RatioReportListTypes,
-  Res,
   SupplierConfig,
   SupplierReportListItem,
   UserBasicInfo,
@@ -602,7 +601,7 @@ export async function getSupplierReportList() {
 
 export async function getMemberReportList(params: any) {
   const user = await getSession();
-  return await apiRequest<Res<PageData<MemberReportsRecord>>>({
+  return await apiRequest<PageData<MemberReportsRecord>>({
     url: "/report/agent/baccarat/member",
     token: user?.token,
   });
@@ -610,7 +609,7 @@ export async function getMemberReportList(params: any) {
 
 export async function getOrderReportList(params: OrderReportsRequestParams) {
   const user = await getSession();
-  return await apiRequest<Res<PageData<OrderReportsRecord>>>({
+  return await apiRequest<PageData<OrderReportsRecord>>({
     url: "/agent/order/baccarat/list",
     token: user?.token,
     params,

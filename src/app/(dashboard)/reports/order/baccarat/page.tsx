@@ -4,7 +4,6 @@ import type {
   OrderReportsRecord,
   OrderReportsRequestParams,
   PageData,
-  Res,
 } from "@/lib/types";
 import { Suspense } from "react";
 import { List } from "./list";
@@ -24,7 +23,7 @@ async function CommonWrapper({ searchParams }: CommonWrapperProps) {
         <ListFilter />
       </Suspense>
       <Suspense fallback={<TableSkeleton length={5} />}>
-        <List data={data as Res<PageData<OrderReportsRecord>>} />
+        <List data={data as PageData<OrderReportsRecord>} />
       </Suspense>
     </>
   );
