@@ -364,7 +364,11 @@
       "more": "查看",
       "reset": "重置",
       "startTime": "开始时间",
-      "endTime": "结束时间"
+      "endTime": "结束时间",
+      "orderStatus": "结算状态",
+      "notCalculated": "未算占成",
+      "notSettled": "未结算",
+      "settled": "已结算"
     },
     "periodlist": {
       "today": "今天",

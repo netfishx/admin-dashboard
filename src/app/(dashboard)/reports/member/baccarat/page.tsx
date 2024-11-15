@@ -9,25 +9,12 @@ interface CommonWrapperProps {
 }
 
 async function CommonWrapper({ searchParams }: CommonWrapperProps) {
-  const s = await searchParams;
-  let params = {};
-  let res = {};
-  if (s.startTime && s.endTime) {
-    const { data } = await getMemberReportList(params);
-    res = data || ({} as Res<PageData<MemberReportsRecord>>);
-  } else {
-    params = {
-      openStartTime: Number.parseInt(s.startTime as string, 10),
-      openEndTime: Number.parseInt(s.endTime as string, 10),
-    };
-    const { data } = await getMemberReportList(params);
-    res = data || ({} as Res<PageData<MemberReportsRecord>>);
-  }
-
+  const params = await searchParams;
+  const { data } = await getMemberReportList(params);
   return (
     <>
       <ListFilter />
-      <List data={res as Res<PageData<MemberReportsRecord>>} />
+      <List data={data as Res<PageData<MemberReportsRecord>>} />
     </>
   );
 }

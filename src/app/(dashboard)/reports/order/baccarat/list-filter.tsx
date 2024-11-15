@@ -30,7 +30,7 @@ export function ListFilter() {
   const [memberID, setMemberID] = useQueryState("memberId");
   // 房主
   const [roomeownerID, setRoomeownerID] = useQueryState("roomOwnerId");
-  // 最低等级
+  // 末级代理ID
   const [leastlevelID, setLeastlevelID] = useQueryState("lastAgentId");
 
   return (
@@ -136,9 +136,9 @@ export function ListFilter() {
               <SelectValue placeholder={t("placeholderselect")} />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="0">未算占成</SelectItem>
-              <SelectItem value="1">未结算</SelectItem>
-              <SelectItem value="2">已结算</SelectItem>
+              <SelectItem value="0">{t("notCalculated")}</SelectItem>
+              <SelectItem value="1">{t("notSettled")}</SelectItem>
+              <SelectItem value="2">{t("settled")}</SelectItem>
             </SelectContent>
           </Select>
         </div>
