@@ -1,4 +1,3 @@
-import { getRatioReport } from "@/api";
 import DetailButton from "@/app/(dashboard)/reports/agent/baccarat/ratio/detail-button";
 import { CustomPagination } from "@/components/custom-pagination";
 import {
@@ -9,23 +8,14 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import type { RatioReportListTypes } from "@/lib/types";
+import type { PageData, RatioReportRequestRecords } from "@/lib/types";
 import { getTranslations } from "next-intl/server";
 import { Suspense } from "react";
 
 export async function RatioList({
-  searchParams,
-}: { searchParams: Promise<{ [key: string]: string | string[] }> }) {
+  data,
+}: { data: PageData<RatioReportRequestRecords> }) {
   const t = await getTranslations("report.agent");
-  const search = await searchParams;
-
-  const { data } = await getRatioReport({
-    ...search,
-    openStartTime: search?.startTime,
-    openEndTime: search?.endTime,
-    page: Number(search?.page ?? 1),
-    size: Number(search?.size ?? 10),
-  });
 
   return (
     <Suspense fallback={<div>loading...</div>}>
@@ -70,7 +60,7 @@ export async function RatioList({
               </TableRow>
             </TableHeader>
             <TableBody>
-              {data?.list?.map((item: RatioReportListTypes) => (
+              {data?.list?.map((item: RatioReportRequestRecords) => (
                 <TableRow key={`${item.userId}`}>
                   <TableCell className="w-24 text-center">
                     {item.userId}

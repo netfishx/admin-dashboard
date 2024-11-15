@@ -25,6 +25,8 @@ import type {
   PeriodReport,
   PeriodReportList,
   RatioReportListTypes,
+  RatioReportRequestParams,
+  RatioReportRequestRecords,
   SupplierConfig,
   SupplierReportListItem,
   UserBasicInfo,
@@ -365,9 +367,9 @@ export async function getDailiReport(data: any) {
   });
 }
 
-export async function getRatioReport(data: any) {
+export async function getRatioReport(data: RatioReportRequestParams) {
   const user = await getSession();
-  return await apiRequest<PageData<RatioReportListTypes>>({
+  return await apiRequest<PageData<RatioReportRequestRecords>>({
     url: "/report/agent/baccarat/stack",
     method: "POST",
     data,

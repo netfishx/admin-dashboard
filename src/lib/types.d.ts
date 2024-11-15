@@ -337,3 +337,32 @@ export type OrderReportsRecord = {
   roomId: string; // 房间号, -1 means no room
   odds: { [key: string]: string }; // 投注赔率, dynamic keys with string values
 };
+// 占成报表请求入参
+export type RatioReportRequestParams = {
+  agentId?: string; // 代理ID
+  gameId?: number; // 游戏ID（不传时为全部游戏）
+  houseOwnerId?: string; // 房主ID
+  parentAgentId?: string; // 上级代理ID
+  openStartTime?: number; // 开奖开始时间（必传）
+  openEndTime?: number; // 开奖结束时间（必传）
+  pageNum?: number; // 页码
+  pageSize?: number; // 每页大小
+};
+
+// 占成报表请求出参
+export type RatioReportRequestRecords = {
+  dataLink: string[]; // 数据链接数组
+  userId: string; // 用户 ID
+  userType: number; // 用户类型
+  openTime: number; // 开盘时间（时间戳，毫秒级）
+  gameId: number; // 游戏 ID
+  gameName: string; // 游戏名称
+  expectedShareAmount: number; // 应占成金额
+  interceptAmount: number; // 拦截占成金额
+  throwAmount: number; // 抛货金额
+  actualShareWinLoss: number; // 占成盈亏金额
+  backIncome: number; // 返水收入
+  backOutcome: number; // 返水支出
+  pureBackAmount: number; // 纯返水金额
+  totalProfitLossAmount: number; // 总输赢金额
+};
