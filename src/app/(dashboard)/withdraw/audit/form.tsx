@@ -4,9 +4,12 @@ import { DateRangeFilter } from "@/components/daterange-filter";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useQueryState } from "nuqs";
+import { useTransition } from "react";
+
 export function Form() {
   const t = useTranslations("withdraw.audit");
   const translations = useTranslations();
@@ -17,6 +20,7 @@ export function Form() {
   const [id, setId] = useQueryState("id", {
     defaultValue: "",
   });
+  const [isPending, startTransition] = useTransition();
 
   return (
     <div className="flex flex-col gap-2  bg-background py-2 px-4">
@@ -46,7 +50,13 @@ export function Form() {
       </div>
       <div className="flex gap-2 justify-end items-start">
         <Button variant="outline">{translations("reset")}</Button>
-        <Button onClick={() => router.refresh()}>
+        <Button
+          onClick={() => {
+            startTransition(router.refresh);
+          }}
+          disabled={isPending}
+        >
+          {isPending ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
           {translations("search")}
         </Button>
       </div>
