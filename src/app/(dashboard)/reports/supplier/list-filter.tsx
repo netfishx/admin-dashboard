@@ -3,14 +3,14 @@ import { DateRangeFilter } from "@/components/daterange-filter";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import {} from "@/components/ui/select";
-import { endOfDay } from "date-fns";
-import { startOfDay } from "date-fns";
+import { endOfDay, startOfDay } from "date-fns";
 import { useTranslations } from "next-intl";
 import { useQueryState } from "nuqs";
 import { useRef } from "react";
 
-export function ListFilter() {
+export function ListFilter({
+  hasSearchPermission,
+}: { hasSearchPermission: boolean }) {
   const t = useTranslations("report.supplier");
   const [supplierId, setSupplierId] = useQueryState("supplierId", {
     defaultValue: "",
@@ -41,14 +41,16 @@ export function ListFilter() {
             reset={(resetFn) => (dateRangeFilterReset.current = resetFn)}
           />
         </div>
-        <div className="flex gap-4 items-center">
-          <Label className="shrink-0">供应商ID</Label>
-          <Input
-            value={supplierId ?? ""}
-            onChange={(e) => setSupplierId(e.target.value)}
-            placeholder={t("placeholderinput")}
-          />
-        </div>
+        {hasSearchPermission && (
+          <div className="flex gap-4 items-center">
+            <Label className="shrink-0">供应商ID</Label>
+            <Input
+              value={supplierId ?? ""}
+              onChange={(e) => setSupplierId(e.target.value)}
+              placeholder={t("placeholderinput")}
+            />
+          </div>
+        )}
       </div>
 
       {/* Last row */}
