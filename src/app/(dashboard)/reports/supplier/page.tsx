@@ -6,7 +6,7 @@ import type {
   SupplierReportRequestParams,
 } from "@/lib/types";
 import { hasPermission } from "@/session";
-import { Suspense, use } from "react";
+import { Suspense } from "react";
 import { List } from "./list";
 import { ListFilter } from "./list-filter";
 
@@ -17,7 +17,7 @@ interface CommonWrapperProps {
 async function CommonWrapper({ searchParams }: CommonWrapperProps) {
   const params = await searchParams;
   const { data } = await getSupplierReportList(params);
-  const hasSearchPermission = use(hasPermission("admin_supplier_report"));
+  const hasSearchPermission = await hasPermission("admin_supplier_report");
   return (
     <>
       <Suspense fallback={null}>
