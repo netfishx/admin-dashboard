@@ -55,6 +55,9 @@ export function RebateTable({ data }: { data: GameConfig[] }) {
                 onChange={(e) =>
                   handleRebateChange(e.target.value, item.gameId)
                 }
+                onBlur={(e) => {
+                  e.target.reportValidity();
+                }}
               />
               <span className="text-destructive w-16">
                 ({item.maxBackRate ?? 0}%)

@@ -53,6 +53,9 @@ export function RatioTable({ data }: { data: GameConfig[] }) {
                 max={item.maxPercent ?? 0}
                 step={0.01}
                 onChange={(e) => handleRatioChange(e.target.value, item.gameId)}
+                onBlur={(e) => {
+                  e.target.reportValidity();
+                }}
               />
               <span className="text-destructive w-16">
                 ({item.maxPercent ?? 0}%)

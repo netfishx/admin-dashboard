@@ -102,7 +102,8 @@ function SaveButton({ onClick }: { onClick: () => void }) {
 export function OddsForm({
   list,
   dict,
-}: { list: GameConfig[]; dict: GameType[] }) {
+  permissions,
+}: { list: GameConfig[]; dict: GameType[]; permissions: string[] }) {
   const t = useTranslations("games.odds");
   const router = useRouter();
 
@@ -116,6 +117,7 @@ export function OddsForm({
   const [field, setField] = useState<
     "odds" | "minBet" | "maxBet" | "maxBetPeriod"
   >("odds");
+  const stepLimit = field === "odds" ? 3 : 0;
   const [step, setStep] = useState(1);
 
   const [odds, setOdds] = useAtom(oddsAtom);
@@ -268,13 +270,24 @@ export function OddsForm({
         </div>
         <div className="flex gap-2 items-center">
           <Label className="shrink-0">{t("column")}</Label>
-          <EditNumber step={step} setStep={setStep} handleEdit={handleEdit} />
+          <EditNumber
+            step={step}
+            setStep={setStep}
+            handleEdit={handleEdit}
+            limit={stepLimit}
+          />
         </div>
       </div>
       <div className="flex gap-2">
-        <SyncButton onClick={handleSync} />
-        <RestoreButton onClick={handleRestore} />
-        <SaveButton onClick={handleSave} />
+        {permissions.includes("sync_odds") && (
+          <SyncButton onClick={handleSync} />
+        )}
+        {permissions.includes("restore_odds") && (
+          <RestoreButton onClick={handleRestore} />
+        )}
+        {permissions.includes("edit_odds") && (
+          <SaveButton onClick={handleSave} />
+        )}
       </div>
     </>
   );

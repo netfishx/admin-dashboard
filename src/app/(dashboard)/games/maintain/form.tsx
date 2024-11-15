@@ -79,8 +79,8 @@ function BatchButton({
 export function MaintainForm() {
   const t = useTranslations("games.maintain");
   return (
-    <div className="flex items-center justify-end gap-2 bg-background py-2 px-4">
-      <Suspense fallback={null}>
+    <div className="flex items-center justify-end gap-2 bg-background p-4">
+      <Suspense>
         <BatchButton status={0}>{t("batchOpen")}</BatchButton>
         <BatchButton status={1}>{t("batchClose")}</BatchButton>
       </Suspense>

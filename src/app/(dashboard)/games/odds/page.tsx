@@ -10,15 +10,18 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { getSession } from "@/session";
 import { useTranslations } from "next-intl";
 import { Suspense, use } from "react";
 
 async function FormWrapper() {
   const [list, dict] = await Promise.all([getGameConfig(), getGameList(1)]);
+  const session = await getSession();
   return (
     <OddsForm
       list={list.data?.filter((item) => item.status === 1) ?? []}
       dict={dict.data ?? []}
+      permissions={session?.permissions ?? []}
     />
   );
 }
@@ -79,7 +82,7 @@ export default function Page({
 }: { searchParams: Promise<{ [key: string]: string | undefined }> }) {
   return (
     <div className="flex flex-col gap-2 w-full">
-      <div className="flex justify-between items-center bg-background py-2 px-4">
+      <div className="flex justify-between items-center bg-background p-4">
         <Suspense fallback={<Skeleton className="w-full h-9 opacity-20" />}>
           <FormWrapper />
         </Suspense>

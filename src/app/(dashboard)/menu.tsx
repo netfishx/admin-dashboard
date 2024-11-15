@@ -76,7 +76,7 @@ function OpenedMenu({
           icon={<Home className="size-4" />}
         />
       )}
-      {permissions.includes("agent_stat") && (
+      {permissions.includes("edit_odds") && (
         <Collapsible
           open={openedMenu.includes("games")}
           onOpenChange={(e) => handleOpenChange("games", e)}
@@ -89,12 +89,24 @@ function OpenedMenu({
             />
           </CollapsibleTrigger>
           <CollapsibleContent className="flex flex-col gap-1 px-6">
-            <MenuItem label={t("games.flyorder")} href="/games/flyorder" />
-            <MenuItem label={t("games.odds")} href="/games/odds" />
-            <MenuItem label={t("games.ratio")} href="/games/ratio" />
-            <MenuItem label={t("games.rebate")} href="/games/rebate" />
-            <MenuItem label={t("games.supplier")} href="/games/supplier" />
-            <MenuItem label={t("games.maintain")} href="/games/maintain" />
+            {permissions.includes("fly_config") && (
+              <MenuItem label={t("games.flyorder")} href="/games/flyorder" />
+            )}
+            {permissions.includes("edit_odds") && (
+              <MenuItem label={t("games.odds")} href="/games/odds" />
+            )}
+            {permissions.includes("edit_radio") && (
+              <MenuItem label={t("games.ratio")} href="/games/ratio" />
+            )}
+            {permissions.includes("edit_rebate") && (
+              <MenuItem label={t("games.rebate")} href="/games/rebate" />
+            )}
+            {permissions.includes("supplier_config") && (
+              <MenuItem label={t("games.supplier")} href="/games/supplier" />
+            )}
+            {permissions.includes("game_maintain") && (
+              <MenuItem label={t("games.maintain")} href="/games/maintain" />
+            )}
           </CollapsibleContent>
         </Collapsible>
       )}
