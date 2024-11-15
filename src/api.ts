@@ -529,11 +529,12 @@ export async function postUserInfoWithdraw(data: WithdrawFormData) {
   });
 }
 // 提款申请
-export async function getWithdrawApplyList(params: ApplyListRequest) {
+export async function getWithdrawApplyList(data: ApplyListRequest) {
   const user = await getSession();
   return await apiRequest<WithPagination & { list: ApplyData[] }>({
     url: "/order/withdraw/page",
-    params,
+    method: "POST",
+    data,
     token: user?.token,
   });
 }
@@ -575,8 +576,18 @@ export async function againApply(data: { id: string }) {
 export async function getAuditList(params: AuditListRequest) {
   const user = await getSession();
   return await apiRequest<WithPagination & { list: AuditList[] }>({
-    url: "/order/audit/page",
+    url: "/agent/audit/page",
     params,
+    token: user?.token,
+  });
+}
+// 清除稽核
+export async function clearAudit(data: { id: string }) {
+  const user = await getSession();
+  return await apiRequest({
+    url: "/agent/audit/cleanAudit",
+    method: "POST",
+    data,
     token: user?.token,
   });
 }
