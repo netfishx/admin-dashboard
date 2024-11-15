@@ -11,7 +11,6 @@ interface CommonWrapperProps {
 async function CommonWrapper({ searchParams }: CommonWrapperProps) {
   const params = await searchParams;
   const { data } = await getRatioReport(params);
-
   return (
     <>
       <Suspense fallback={null}>

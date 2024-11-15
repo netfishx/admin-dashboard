@@ -337,7 +337,8 @@ export type OrderReportsRecord = {
   roomId: string; // 房间号, -1 means no room
   odds: { [key: string]: string }; // 投注赔率, dynamic keys with string values
 };
-// 占成报表请求入参
+
+// 占成拦货报表请求入参
 export type RatioReportRequestParams = {
   agentId?: string; // 代理ID
   gameId?: number; // 游戏ID（不传时为全部游戏）
@@ -349,7 +350,7 @@ export type RatioReportRequestParams = {
   pageSize?: number; // 每页大小
 };
 
-// 占成报表请求出参
+// 占成拦货报表请求出参
 export type RatioReportRequestRecords = {
   dataLink: string[]; // 数据链接数组
   userId: string; // 用户 ID
@@ -365,4 +366,34 @@ export type RatioReportRequestRecords = {
   backOutcome: number; // 返水支出
   pureBackAmount: number; // 纯返水金额
   totalProfitLossAmount: number; // 总输赢金额
+};
+
+// 会员下注报表请求入参
+export type MemberBetReportRequestParams = {
+  agentId?: string; // 代理ID
+  gameId?: number; // 游戏ID（不传时为全部游戏）
+  openStartTime?: number; // 开奖开始时间（必传）
+  openEndTime?: number; // 开奖结束时间（必传）
+  pageNum?: number; // 页码
+  pageSize?: number; // 每页条数
+};
+
+// 会员下注报表请求出参
+export type MemberBetReportRequestRecords = {
+  agentId: string; // 代理ID
+  openTime: number; // 开盘时间（时间戳，毫秒级）
+  gameId: number; // 游戏ID
+  gameName: string; // 游戏名称
+  betNum: number; // 投注数量
+  dataLink: number[]; // 数据链接ID数组
+  memberBetAmount: number; // 汇总当天会员的投注金额
+  memberProfitLossAmount: number; // 汇总当天会员输赢金额
+  expectedShareAmount: number; // 汇总应占成金额
+  interceptAmount: number; // 汇总当天拦截占成金额
+  throwAmount: number; // 汇总当天该末级代理抛货金额
+  actualShareWinLoss: number; // 汇总占成盈亏金额
+  backIncome: number; // 汇总当天返水收入
+  backOutcome: number; // 汇总当天返水支出
+  pureBackAmount: number; // 汇总当天返水
+  totalProfitLossAmount: number; // 汇总当天总输赢金额
 };

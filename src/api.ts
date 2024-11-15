@@ -17,6 +17,8 @@ import type {
   GameType,
   LoginLog,
   MaintainGame,
+  MemberBetReportRequestParams,
+  MemberBetReportRequestRecords,
   MemberList,
   MemberReportsRecord,
   OrderReportsRecord,
@@ -24,7 +26,6 @@ import type {
   PageData,
   PeriodReport,
   PeriodReportList,
-  RatioReportListTypes,
   RatioReportRequestParams,
   RatioReportRequestRecords,
   SupplierConfig,
@@ -357,22 +358,22 @@ export async function editMaintain(data: {
   });
 }
 
-export async function getDailiReport(data: any) {
+// 代理报表-会员下注报表
+export async function getMemberBetReport(params: MemberBetReportRequestParams) {
   const user = await getSession();
-  return await apiRequest<PageData<RatioReportListTypes>>({
+  return await apiRequest<PageData<MemberBetReportRequestRecords>>({
     url: "/report/agent/baccarat/memberBet",
-    method: "POST",
-    data,
+    params,
     token: user?.token,
   });
 }
 
-export async function getRatioReport(data: RatioReportRequestParams) {
+// 代理报表-拦货占成
+export async function getRatioReport(params: RatioReportRequestParams) {
   const user = await getSession();
   return await apiRequest<PageData<RatioReportRequestRecords>>({
     url: "/report/agent/baccarat/stack",
-    method: "POST",
-    data,
+    params,
     token: user?.token,
   });
 }
