@@ -474,7 +474,7 @@ export type RechargeReportParams = {
 };
 
 // 归集地址列表
-export type CollectionAddressListRe = {
+export type CollectionAddressListRecords = {
   address: string;
   currency: string;
   balance: string;
