@@ -10,11 +10,12 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import type { MemberReportsRecord, PageData } from "@/lib/types";
-import { useTranslations } from "next-intl";
+import { getTranslations } from "next-intl/server";
 import DetailButton from "./detail-button";
 
-export function List({ data }: { data: PageData<MemberReportsRecord> }) {
-  const t = useTranslations("report.member");
+export async function List({ data }: { data: PageData<MemberReportsRecord> }) {
+  const t = await getTranslations("report.member");
+  const translate = await getTranslations();
   return (
     <div className="p-2 bg-background flex-1">
       <div className="border rounded-sm relative">
@@ -55,40 +56,48 @@ export function List({ data }: { data: PageData<MemberReportsRecord> }) {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {data?.list?.map((item: MemberReportsRecord) => (
-                <TableRow key={item.memberId}>
-                  <TableCell className="w-24 text-center">
-                    {item.memberId}
-                  </TableCell>
-                  <TableCell className="w-24 text-center">
-                    {item.memberTypeName}
-                  </TableCell>
-                  <TableCell className="w-24 text-center">
-                    {item.gameId}
-                  </TableCell>
-                  <TableCell className="w-24 text-center">
-                    {item.betNum}
-                  </TableCell>
-                  <TableCell className="w-24 text-center">
-                    {item.memberBetAmount}
-                  </TableCell>
-                  <TableCell className="w-24 text-center">
-                    {item.availableBetAmount}
-                  </TableCell>
-                  <TableCell className="w-24 text-center">
-                    {item.winLossAmount}
-                  </TableCell>
-                  <TableCell className="w-24 text-center">
-                    {item.pureBackAmount}
-                  </TableCell>
-                  <TableCell className="w-24 text-center">
-                    {item.profitLossAmount}
-                  </TableCell>
-                  <TableCell className="w-24 text-center">
-                    <DetailButton item={item} />
+              {data?.list?.length > 0 ? (
+                data?.list?.map((item: MemberReportsRecord) => (
+                  <TableRow key={item.memberId}>
+                    <TableCell className="w-24 text-center">
+                      {item.memberId}
+                    </TableCell>
+                    <TableCell className="w-24 text-center">
+                      {item.memberTypeName}
+                    </TableCell>
+                    <TableCell className="w-24 text-center">
+                      {item.gameId}
+                    </TableCell>
+                    <TableCell className="w-24 text-center">
+                      {item.betNum}
+                    </TableCell>
+                    <TableCell className="w-24 text-center">
+                      {item.memberBetAmount}
+                    </TableCell>
+                    <TableCell className="w-24 text-center">
+                      {item.availableBetAmount}
+                    </TableCell>
+                    <TableCell className="w-24 text-center">
+                      {item.winLossAmount}
+                    </TableCell>
+                    <TableCell className="w-24 text-center">
+                      {item.pureBackAmount}
+                    </TableCell>
+                    <TableCell className="w-24 text-center">
+                      {item.profitLossAmount}
+                    </TableCell>
+                    <TableCell className="w-24 text-center">
+                      <DetailButton item={item} />
+                    </TableCell>
+                  </TableRow>
+                ))
+              ) : (
+                <TableRow>
+                  <TableCell colSpan={10} className="text-center h-40">
+                    {translate("noData")}
                   </TableCell>
                 </TableRow>
-              ))}
+              )}
             </TableBody>
           </Table>
           <ScrollBar orientation="horizontal" />

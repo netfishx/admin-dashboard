@@ -10,10 +10,13 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import type { PageData, SupplierReportRecords } from "@/lib/types";
-import { useTranslations } from "next-intl";
+import { getTranslations } from "next-intl/server";
 
-export function List({ data }: { data: PageData<SupplierReportRecords> }) {
-  const t = useTranslations("report.supplier");
+export async function List({
+  data,
+}: { data: PageData<SupplierReportRecords> }) {
+  const t = await getTranslations("report.supplier");
+  const translate = await getTranslations();
   return (
     <div className="p-2 bg-background flex-1">
       <div className="border rounded-sm relative">
@@ -45,31 +48,39 @@ export function List({ data }: { data: PageData<SupplierReportRecords> }) {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {data?.list?.map((item) => (
-                <TableRow key={item.supplierId}>
-                  <TableCell className="w-24 text-center">
-                    {item.supplierId}
-                  </TableCell>
-                  <TableCell className="w-24 text-center">
-                    {item.gameName}
-                  </TableCell>
-                  <TableCell className="w-24 text-center">
-                    {item.analysisTime}
-                  </TableCell>
-                  <TableCell className="w-24 text-center">
-                    {item.gameId}
-                  </TableCell>
-                  <TableCell className="w-24 text-center">
-                    {item.betNum}
-                  </TableCell>
-                  <TableCell className="w-24 text-center">
-                    {item.validAmount}
-                  </TableCell>
-                  <TableCell className="w-24 text-center">
-                    {item.shareAmount}
+              {data?.list?.length > 0 ? (
+                data?.list?.map((item) => (
+                  <TableRow key={item.supplierId}>
+                    <TableCell className="w-24 text-center">
+                      {item.supplierId}
+                    </TableCell>
+                    <TableCell className="w-24 text-center">
+                      {item.gameName}
+                    </TableCell>
+                    <TableCell className="w-24 text-center">
+                      {item.analysisTime}
+                    </TableCell>
+                    <TableCell className="w-24 text-center">
+                      {item.gameId}
+                    </TableCell>
+                    <TableCell className="w-24 text-center">
+                      {item.betNum}
+                    </TableCell>
+                    <TableCell className="w-24 text-center">
+                      {item.validAmount}
+                    </TableCell>
+                    <TableCell className="w-24 text-center">
+                      {item.shareAmount}
+                    </TableCell>
+                  </TableRow>
+                ))
+              ) : (
+                <TableRow>
+                  <TableCell colSpan={7} className="text-center h-40">
+                    {translate("noData")}
                   </TableCell>
                 </TableRow>
-              ))}
+              )}
             </TableBody>
           </Table>
           <ScrollBar orientation="horizontal" />

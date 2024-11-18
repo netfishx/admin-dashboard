@@ -32,8 +32,8 @@ export function ListFilter() {
   });
 
   const memberTypeOptions = [
-    { id: "baccarat", label: "百家乐" },
-    { id: "guandan", label: "掼蛋" },
+    { id: "1", label: "直属会员" },
+    { id: "2", label: "非直属会员" },
   ];
 
   const handleMemberTypeChange = (memberTypeId: string, checked: boolean) => {

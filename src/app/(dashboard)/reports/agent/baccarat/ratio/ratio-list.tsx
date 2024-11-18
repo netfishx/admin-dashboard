@@ -15,7 +15,7 @@ export async function RatioList({
   data,
 }: { data: PageData<RatioReportRequestRecords> }) {
   const t = await getTranslations("report.agent");
-
+  const translate = await getTranslations();
   return (
     <div className="p-2 bg-background flex-1">
       <div className="border rounded-sm relative">
@@ -58,43 +58,51 @@ export async function RatioList({
             </TableRow>
           </TableHeader>
           <TableBody>
-            {data?.list?.map((item: RatioReportRequestRecords) => (
-              <TableRow key={`${item.userId}`}>
-                <TableCell className="w-24 text-center">
-                  {item.userId}
-                </TableCell>
-                <TableCell className="w-24 text-center">
-                  {item.gameName}
-                </TableCell>
-                <TableCell className="w-24 text-center">
-                  {item.expectedShareAmount}
-                </TableCell>
-                <TableCell className="w-24 text-center">
-                  {item.interceptAmount}
-                </TableCell>
-                <TableCell className="w-24 text-center">
-                  {item.throwAmount}
-                </TableCell>
-                <TableCell className="w-24 text-center">
-                  {item.actualShareWinLoss}
-                </TableCell>
-                <TableCell className="w-24 text-center">
-                  {item.backIncome}
-                </TableCell>
-                <TableCell className="w-24 text-center">
-                  {item.backOutcome}
-                </TableCell>
-                <TableCell className="w-24 text-center">
-                  {item.pureBackAmount}
-                </TableCell>
-                <TableCell className="w-24 text-center">
-                  {item.totalProfitLossAmount}
-                </TableCell>
-                <TableCell className="w-24 text-center sticky right-0 z-10 bg-background">
-                  <DetailButton item={item} />
+            {data?.list?.length > 0 ? (
+              data?.list?.map((item: RatioReportRequestRecords) => (
+                <TableRow key={`${item.userId}`}>
+                  <TableCell className="w-24 text-center">
+                    {item.userId}
+                  </TableCell>
+                  <TableCell className="w-24 text-center">
+                    {item.gameName}
+                  </TableCell>
+                  <TableCell className="w-24 text-center">
+                    {item.expectedShareAmount}
+                  </TableCell>
+                  <TableCell className="w-24 text-center">
+                    {item.interceptAmount}
+                  </TableCell>
+                  <TableCell className="w-24 text-center">
+                    {item.throwAmount}
+                  </TableCell>
+                  <TableCell className="w-24 text-center">
+                    {item.actualShareWinLoss}
+                  </TableCell>
+                  <TableCell className="w-24 text-center">
+                    {item.backIncome}
+                  </TableCell>
+                  <TableCell className="w-24 text-center">
+                    {item.backOutcome}
+                  </TableCell>
+                  <TableCell className="w-24 text-center">
+                    {item.pureBackAmount}
+                  </TableCell>
+                  <TableCell className="w-24 text-center">
+                    {item.totalProfitLossAmount}
+                  </TableCell>
+                  <TableCell className="w-24 text-center sticky right-0 z-10 bg-background">
+                    <DetailButton item={item} />
+                  </TableCell>
+                </TableRow>
+              ))
+            ) : (
+              <TableRow>
+                <TableCell colSpan={15} className="text-center h-40">
+                  {translate("noData")}
                 </TableCell>
               </TableRow>
-            ))}
+            )}
           </TableBody>
         </Table>
       </div>
