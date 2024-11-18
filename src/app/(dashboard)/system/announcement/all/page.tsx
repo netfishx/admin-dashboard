@@ -16,7 +16,7 @@ export default async function All({
   const { data } = await getAnnouncement({
     pageSize: Number(search.pageSize ?? 10),
     pageNum: Number(search.pageNum ?? 1),
-    userId: (search.userId ?? "") as string,
+    userId: (search.userId ?? "") as string, // 代理传这个
     startTime: Number(start),
     endTime: Number(end),
   });
