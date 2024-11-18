@@ -11,8 +11,7 @@ import type { PageData } from "@/lib/types";
 import type { AnnouncementList } from "@/lib/types";
 import { getTranslations } from "next-intl/server";
 import { formatTimestamp } from "../tools";
-import { ViewBtn } from "../view-btn";
-
+import { TruncatedCell } from "../truncated-cell";
 export async function List({ data }: { data?: PageData<AnnouncementList> }) {
   const t = await getTranslations("system.announcement");
   const translations = await getTranslations();
@@ -47,12 +46,12 @@ export async function List({ data }: { data?: PageData<AnnouncementList> }) {
               {t("userId")}
             </TableHead>
 
-            <TableHead className="w-24 min-w-24 text-center">
+            <TableHead className="w-[450px] min-w-24 text-center">
               {t("content")}
             </TableHead>
-            <TableHead className="w-24 min-w-24 text-center">
+            {/* <TableHead className="w-24 min-w-24 text-center">
               {t("action")}
-            </TableHead>
+            </TableHead> */}
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -82,12 +81,13 @@ export async function List({ data }: { data?: PageData<AnnouncementList> }) {
                   {item.userId}
                 </TableCell>
 
-                <TableCell className="w-24 text-center">
-                  {item.contentOfLanguage}
-                </TableCell>
-                <TableCell className="w-24 text-center">
+                <TruncatedCell
+                  content={item.contentOfLanguage}
+                  maxLength={50}
+                />
+                {/* <TableCell className="w-24 text-center">
                   <ViewBtn data={item} />
-                </TableCell>
+                </TableCell> */}
               </TableRow>
             ))
           ) : (

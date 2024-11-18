@@ -582,7 +582,9 @@
       "search": "查询",
       "chinese": "中文",
       "english": "英文",
-      "japanese": "日文"
+      "japanese": "日文",
+      "viewMore": "查看更多",
+      "collapse": "收起"
     },
     "role": {
       "list": "角色列表",
