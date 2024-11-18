@@ -1,4 +1,4 @@
-import DetailButton from "@/app/(dashboard)/fund/collection/detail-button";
+import { DetailButton } from "@/app/(dashboard)/fund/collection/detail-button";
 import {
   Table,
   TableBody,

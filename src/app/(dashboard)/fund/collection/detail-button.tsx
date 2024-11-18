@@ -8,9 +8,7 @@ import { LockDialog } from "./lock-dialog";
 import { StopDialog } from "./stop-dialog";
 import { UnlockDialog } from "./unlock-dialog";
 
-export default function DetailButton(props: {
-  item: CollectionAddressListRecords;
-}) {
+export function DetailButton({ item }: { item: CollectionAddressListRecords }) {
   type ShowStatusType = "LOCK" | "UNLOCK" | "STOP" | "CHECK" | "ADD";
   const ShowStatus = {
     // 锁定
@@ -24,7 +22,6 @@ export default function DetailButton(props: {
     // 新增
     ADD: "ADD",
   };
-  const { item } = props;
   const t = useTranslations("fund.collection");
 
   const [showStatus, setShowStatus] = useState<ShowStatusType>();

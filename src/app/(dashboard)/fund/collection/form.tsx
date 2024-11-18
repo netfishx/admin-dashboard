@@ -1,6 +1,5 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import {} from "@/components/ui/select";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
