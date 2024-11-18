@@ -1,6 +1,4 @@
-import { getCollectionAddressList } from "@/api";
 import DetailButton from "@/app/(dashboard)/fund/collection/detail-button";
-import { CustomPagination } from "@/components/custom-pagination";
 import {
   Table,
   TableBody,
@@ -9,14 +7,13 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import type { CollectionAddressListRecords } from "@/lib/types";
 import { getTranslations } from "next-intl/server";
 import { Suspense } from "react";
+import CopyButton from "./copy-button";
 
-export async function List({ searchParams }: { searchParams: any }) {
+export async function List({ data }: { data: CollectionAddressListRecords[] }) {
   const t = await getTranslations("fund.collection");
-  const search = await searchParams;
-  const { data } = await getCollectionAddressList(search);
-
   return (
     <Suspense fallback={<div>loading...</div>}>
       <div className="p-2 bg-background flex-1">
@@ -45,37 +42,33 @@ export async function List({ searchParams }: { searchParams: any }) {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {data?.list?.map((item: any) => (
-                <TableRow key={item.agentId}>
+              {data?.map((item: CollectionAddressListRecords) => (
+                <TableRow key={item.address}>
                   <TableCell className="w-32 text-center">
-                    {item.agentId}
+                    <div className="flex items-center justify-center gap-2">
+                      {item.address}
+                      <CopyButton address={item.address} />
+                    </div>
                   </TableCell>
                   <TableCell className="w-32 text-center">
-                    {item.agentId}
+                    {item.coin}
                   </TableCell>
                   <TableCell className="w-36 text-center">
-                    {item.agentId}
+                    {item.coin}
                   </TableCell>
                   <TableCell className="w-36 text-center">
-                    {item.agentId}
+                    {item.status}
                   </TableCell>
                   <TableCell className="w-36 text-center">
-                    {item.agentId}
+                    {item.updateTime}
                   </TableCell>
                   <TableCell className="w-12 text-center sticky right-0 z-10 bg-background">
-                    <DetailButton id={item.agentId} />
+                    <DetailButton id={item.id} />
                   </TableCell>
                 </TableRow>
               ))}
             </TableBody>
           </Table>
-        </div>
-        <div className="pt-2">
-          <CustomPagination
-            total={data?.total ?? 0}
-            currentPage={Number(data?.pageNum ?? 1)}
-            pageSize={Number(data?.pageSize ?? 10)}
-          />
         </div>
       </div>
     </Suspense>

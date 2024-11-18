@@ -658,7 +658,7 @@ export async function getCollectionAddressList(
   params: CollectionAddressListRequestParams,
 ) {
   const user = await getSession();
-  return await apiRequest<PageData<CollectionAddressListRecords>>({
+  return await apiRequest<CollectionAddressListRecords[]>({
     url: "/agent/collection/address/list",
     token: user?.token,
     params,

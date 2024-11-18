@@ -19,7 +19,7 @@ export function Form() {
       <div className="flex gap-4 justify-between items-center">
         归集地址管理
         <div className="flex gap-2 items-center">
-          <Button onClick={() => handleAdd()}>{t("search")}</Button>
+          <Button onClick={() => handleAdd()}>{t("add")}</Button>
         </div>
       </div>
       {showDialog && (
