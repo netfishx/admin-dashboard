@@ -13,7 +13,7 @@ export function TruncatedCell({
   const shouldTruncate = content.length > maxLength;
 
   if (!shouldTruncate) {
-    return <td className="px-4 py-2 border-b">{content}</td>;
+    return <td className="px-4 py-2">{content}</td>;
   }
 
   return (

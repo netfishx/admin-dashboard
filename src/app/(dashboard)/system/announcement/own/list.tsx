@@ -11,7 +11,9 @@ import type { AnnouncementList, WithPagination } from "@/lib/types";
 import { getTranslations } from "next-intl/server";
 import { EditBtn } from "../edit-btn";
 import { formatTimestamp } from "../tools";
+import { TruncatedCell } from "../truncated-cell";
 import { AddBtn } from "./add-btn";
+
 export async function List({
   data,
 }: {
@@ -35,13 +37,13 @@ export async function List({
               <TableHead className="w-24 min-w-24 text-center">
                 {t("createTime")}
               </TableHead>
-              <TableHead className="w-24 min-w-24 text-center">
+              <TableHead className="w-[450px] min-w-24 text-center">
                 {t("content")}
               </TableHead>
               <TableHead className="w-24 min-w-24 text-center">
                 {t("type")}
               </TableHead>
-              <TableHead className="w-24 min-w-24 text-center">
+              <TableHead className="min-w-24 text-center">
                 {t("action")}
               </TableHead>
             </TableRow>
@@ -58,9 +60,10 @@ export async function List({
                 <TableCell className="w-24 text-center">
                   {formatTimestamp(item.createTime)}
                 </TableCell>
-                <TableCell className="w-24 text-center">
-                  {item.contentOfLanguage}
-                </TableCell>
+                <TruncatedCell
+                  content={item.contentOfLanguage}
+                  maxLength={50}
+                />
                 <TableCell className="w-24 text-center">{item.type}</TableCell>
                 <TableCell className="w-24 text-center">
                   <EditBtn data={item} />
