@@ -3,8 +3,7 @@ import { Button } from "@/components/ui/button";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 
-export default function DetailButton(props: { id: string }) {
-  const { id } = props;
+export default function DetailButton({ id }: { id: string }) {
   const t = useTranslations("report.orderlist");
   const router = useRouter();
   function handleDetail() {

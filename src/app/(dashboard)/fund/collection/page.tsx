@@ -1,9 +1,5 @@
-import { getCollectionAddressList } from "@/api";
-import TableSkeleton from "@/components/table-skeleton";
-import type {
-  CollectionAddressListRecords,
-  CollectionAddressListRequestParams,
-} from "@/lib/types";
+import { Skeleton } from "@/components/ui/skeleton";
+import type { CollectionAddressListRequestParams } from "@/lib/types";
 import { Suspense } from "react";
 import { Form } from "./form";
 import { List } from "./list";
@@ -13,16 +9,18 @@ interface CommonWrapperProps {
 }
 
 async function CommonWrapper({ searchParams }: CommonWrapperProps) {
-  const params = await searchParams;
-  const { data } = await getCollectionAddressList(params);
   return (
     <>
-      <Suspense fallback={null}>
+      <Suspense
+        fallback={
+          <div className="flex justify-between items-center bg-background p-4">
+            <Skeleton className="w-full h-9 opacity-20" />
+          </div>
+        }
+      >
         <Form />
       </Suspense>
-      <Suspense fallback={<TableSkeleton length={5} />}>
-        <List data={data as CollectionAddressListRecords[]} />
-      </Suspense>
+      <List searchParams={searchParams} />
     </>
   );
 }

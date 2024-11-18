@@ -13,9 +13,11 @@ export default function TopTabs() {
   const getTabStyle = (tabType: TabsTypes) => {
     return cn(
       // 基础样式
-      "flex items-center justify-center cursor-pointer text-l rounded-sm text-sm font-medium leading-5",
+      "inline-flex items-center justify-center whitespace-nowrap rounded-md px-3 py-1 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 w-full",
       // 条件样式
-      currentTab === tabType ? "bg-card text-foreground" : "hover:bg-secondary",
+      currentTab === tabType
+        ? "bg-card text-foreground shadow"
+        : "hover:bg-secondary",
     );
   };
 

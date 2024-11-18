@@ -1,6 +1,6 @@
+import { getSupplierReportList } from "@/api";
 import { CustomPagination } from "@/components/custom-pagination";
-import ListScrollArea from "@/components/list-scroll-area";
-import { ScrollBar } from "@/components/ui/scroll-area";
+import TableSkeleton from "@/components/table-skeleton";
 import {
   Table,
   TableBody,
@@ -9,77 +9,96 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import type { PageData, SupplierReportRecords } from "@/lib/types";
-import { useTranslations } from "next-intl";
+import type {
+  SupplierReportRecords,
+  SupplierReportRequestParams,
+} from "@/lib/types";
+import { getTranslations } from "next-intl/server";
+import { Suspense } from "react";
 
-export function List({ data }: { data: PageData<SupplierReportRecords> }) {
-  const t = useTranslations("report.supplier");
+async function ListHeader() {
+  "use cache";
+  const t = await getTranslations("report.supplier");
+  const translate = await getTranslations();
+  return (
+    <TableHeader>
+      <TableRow className="bg-muted">
+        <TableHead className="min-w-24 text-center">
+          {t("supplierID")}
+        </TableHead>
+        <TableHead className="min-w-24 text-center">
+          {t("supplierName")}
+        </TableHead>
+        <TableHead className="min-w-24 text-center">{t("date")}</TableHead>
+        <TableHead className="min-w-24 text-center">{t("game")}</TableHead>
+        <TableHead className="min-w-24 text-center">{t("betNum")}</TableHead>
+        <TableHead className="min-w-24 text-center">
+          {t("validAmount")}
+        </TableHead>
+        <TableHead className="min-w-24 text-center">
+          {t("proportionAmount")}
+        </TableHead>
+      </TableRow>
+    </TableHeader>
+  );
+}
+
+async function ListBody({ list }: { list: SupplierReportRecords[] }) {
+  const translate = await getTranslations();
+  return (
+    <TableBody>
+      {list?.length > 0 ? (
+        list?.map((item) => (
+          <TableRow key={item.supplierId}>
+            <TableCell className="w-24 text-center">
+              {item.supplierId}
+            </TableCell>
+            <TableCell className="w-24 text-center">{item.gameName}</TableCell>
+            <TableCell className="w-24 text-center">
+              {item.analysisTime}
+            </TableCell>
+            <TableCell className="w-24 text-center">{item.gameId}</TableCell>
+            <TableCell className="w-24 text-center">{item.betNum}</TableCell>
+            <TableCell className="w-24 text-center">
+              {item.validAmount}
+            </TableCell>
+            <TableCell className="w-24 text-center">
+              {item.shareAmount}
+            </TableCell>
+          </TableRow>
+        ))
+      ) : (
+        <TableRow>
+          <TableCell colSpan={7} className="text-center h-40">
+            {translate("noData")}
+          </TableCell>
+        </TableRow>
+      )}
+    </TableBody>
+  );
+}
+
+export async function List({
+  searchParams,
+}: { searchParams: Promise<SupplierReportRequestParams> }) {
+  const t = await getTranslations("report.supplier");
+  const params = await searchParams;
+  const { data } = await getSupplierReportList(params);
   return (
     <div className="p-2 bg-background flex-1">
       <div className="border rounded-sm relative">
-        <ListScrollArea>
-          <Table>
-            <TableHeader>
-              <TableRow className="bg-muted">
-                <TableHead className="min-w-24 text-center">
-                  {t("supplierID")}
-                </TableHead>
-                <TableHead className="min-w-24 text-center">
-                  {t("supplierName")}
-                </TableHead>
-                <TableHead className="min-w-24 text-center">
-                  {t("date")}
-                </TableHead>
-                <TableHead className="min-w-24 text-center">
-                  {t("game")}
-                </TableHead>
-                <TableHead className="min-w-24 text-center">
-                  {t("betNum")}
-                </TableHead>
-                <TableHead className="min-w-24 text-center">
-                  {t("validAmount")}
-                </TableHead>
-                <TableHead className="min-w-24 text-center">
-                  {t("proportionAmount")}
-                </TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {data?.list?.map((item) => (
-                <TableRow key={item.supplierId}>
-                  <TableCell className="w-24 text-center">
-                    {item.supplierId}
-                  </TableCell>
-                  <TableCell className="w-24 text-center">
-                    {item.gameName}
-                  </TableCell>
-                  <TableCell className="w-24 text-center">
-                    {item.analysisTime}
-                  </TableCell>
-                  <TableCell className="w-24 text-center">
-                    {item.gameId}
-                  </TableCell>
-                  <TableCell className="w-24 text-center">
-                    {item.betNum}
-                  </TableCell>
-                  <TableCell className="w-24 text-center">
-                    {item.validAmount}
-                  </TableCell>
-                  <TableCell className="w-24 text-center">
-                    {item.shareAmount}
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-          <ScrollBar orientation="horizontal" />
-        </ListScrollArea>
+        <Table>
+          <ListHeader />
+          <Suspense fallback={<TableSkeleton length={5} colSpan={10} />}>
+            <ListBody list={data?.list ?? []} />
+          </Suspense>
+        </Table>
       </div>
       <div className="pt-2">
         <CustomPagination
-          total={data?.total}
-          currentPage={data?.pageNum}
-          pageSize={data?.pageSize}
+          total={data?.total ?? 0}
+          currentPage={data?.pageNum ?? 1}
+          pageSize={data?.pageSize ?? 10}
         />
       </div>
       <div className="pt-2 w-2/5">

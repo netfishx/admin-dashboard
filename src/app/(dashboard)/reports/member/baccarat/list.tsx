@@ -1,6 +1,6 @@
+import { getMemberReportList } from "@/api";
 import { CustomPagination } from "@/components/custom-pagination";
-import ListScrollArea from "@/components/list-scroll-area";
-import { ScrollBar } from "@/components/ui/scroll-area";
+import TableSkeleton from "@/components/table-skeleton";
 import {
   Table,
   TableBody,
@@ -9,87 +9,108 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import type { MemberReportsRecord, PageData } from "@/lib/types";
-import { useTranslations } from "next-intl";
+import type {
+  MemberReportRequestParams,
+  MemberReportsRecord,
+} from "@/lib/types";
+import { getTranslations } from "next-intl/server";
+import { Suspense } from "react";
+import DetailButton from "./detail-button";
 
-export function List({ data }: { data: PageData<MemberReportsRecord> }) {
-  const t = useTranslations("report.member");
+async function ListHeader() {
+  "use cache";
+  const t = await getTranslations("report.member");
+  return (
+    <TableHeader>
+      <TableRow className="bg-muted">
+        <TableHead className="min-w-24 text-center">{t("member_id")}</TableHead>
+        <TableHead className="min-w-24 text-center">
+          {t("member_type")}
+        </TableHead>
+        <TableHead className="min-w-24 text-center">{t("game_name")}</TableHead>
+        <TableHead className="min-w-24 text-center">{t("bet_count")}</TableHead>
+        <TableHead className="min-w-24 text-center">
+          {t("bet_amount")}
+        </TableHead>
+        <TableHead className="min-w-24 text-center">
+          {t("valid_amount")}
+        </TableHead>
+        <TableHead className="min-w-24 text-center">
+          {t("win_loss_amount")}
+        </TableHead>
+        <TableHead className="min-w-24 text-center">
+          {t("cashback_amount")}
+        </TableHead>
+        <TableHead className="min-w-24 text-center">
+          {t("profit_loss_result")}
+        </TableHead>
+        <TableHead className="w-24 text-center sticky right-0 z-10 bg-muted">
+          {t("details")}
+        </TableHead>
+      </TableRow>
+    </TableHeader>
+  );
+}
+
+async function ListBody({ list }: { list: MemberReportsRecord[] }) {
+  const translate = await getTranslations();
+  return (
+    <TableBody>
+      {list && list?.length > 0 ? (
+        list?.map((item: MemberReportsRecord) => (
+          <TableRow key={item.memberId}>
+            <TableCell className="w-24 text-center">{item.memberId}</TableCell>
+            <TableCell className="w-24 text-center">
+              {item.memberTypeName}
+            </TableCell>
+            <TableCell className="w-24 text-center">{item.gameId}</TableCell>
+            <TableCell className="w-24 text-center">{item.betNum}</TableCell>
+            <TableCell className="w-24 text-center">
+              {item.memberBetAmount}
+            </TableCell>
+            <TableCell className="w-24 text-center">
+              {item.availableBetAmount}
+            </TableCell>
+            <TableCell className="w-24 text-center">
+              {item.winLossAmount}
+            </TableCell>
+            <TableCell className="w-24 text-center">
+              {item.pureBackAmount}
+            </TableCell>
+            <TableCell className="w-24 text-center">
+              {item.profitLossAmount}
+            </TableCell>
+            <TableCell className="w-24 text-center sticky right-0 z-10 bg-background">
+              <DetailButton item={item} />
+            </TableCell>
+          </TableRow>
+        ))
+      ) : (
+        <TableRow>
+          <TableCell colSpan={10} className="text-center h-40">
+            {translate("noData")}
+          </TableCell>
+        </TableRow>
+      )}
+    </TableBody>
+  );
+}
+
+export async function List({
+  searchParams,
+}: { searchParams: Promise<MemberReportRequestParams> }) {
+  const t = await getTranslations("report.member");
+  const params = await searchParams;
+  const { data } = await getMemberReportList(params);
   return (
     <div className="p-2 bg-background flex-1">
       <div className="border rounded-sm relative">
-        <ListScrollArea>
-          <Table>
-            <TableHeader>
-              <TableRow className="bg-muted">
-                <TableHead className="min-w-24 text-center">
-                  {t("member_id")}
-                </TableHead>
-                <TableHead className="min-w-24 text-center">
-                  {t("member_type")}
-                </TableHead>
-                <TableHead className="min-w-24 text-center">
-                  {t("game_name")}
-                </TableHead>
-                <TableHead className="min-w-24 text-center">
-                  {t("bet_count")}
-                </TableHead>
-                <TableHead className="min-w-24 text-center">
-                  {t("bet_amount")}
-                </TableHead>
-                <TableHead className="min-w-24 text-center">
-                  {t("valid_amount")}
-                </TableHead>
-                <TableHead className="min-w-24 text-center">
-                  {t("win_loss_amount")}
-                </TableHead>
-                <TableHead className="min-w-24 text-center">
-                  {t("cashback_amount")}
-                </TableHead>
-                <TableHead className="min-w-24 text-center">
-                  {t("profit_loss_result")}
-                </TableHead>
-                <TableHead className="min-w-24 text-center">
-                  {t("details")}
-                </TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {data?.list?.map((item: MemberReportsRecord) => (
-                <TableRow key={item.memberId}>
-                  <TableCell className="w-24 text-center">
-                    {item.memberId}
-                  </TableCell>
-                  <TableCell className="w-24 text-center">
-                    {item.memberTypeName}
-                  </TableCell>
-                  <TableCell className="w-24 text-center">
-                    {item.gameId}
-                  </TableCell>
-                  <TableCell className="w-24 text-center">
-                    {item.betNum}
-                  </TableCell>
-                  <TableCell className="w-24 text-center">
-                    {item.memberBetAmount}
-                  </TableCell>
-                  <TableCell className="w-24 text-center">
-                    {item.availableBetAmount}
-                  </TableCell>
-                  <TableCell className="w-24 text-center">
-                    {item.winLossAmount}
-                  </TableCell>
-                  <TableCell className="w-24 text-center">
-                    {item.pureBackAmount}
-                  </TableCell>
-                  <TableCell className="w-24 text-center">
-                    {item.profitLossAmount}
-                  </TableCell>
-                  <TableCell className="w-24 text-center">详情</TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-          <ScrollBar orientation="horizontal" />
-        </ListScrollArea>
+        <Table>
+          <ListHeader />
+          <Suspense fallback={<TableSkeleton length={5} colSpan={10} />}>
+            <ListBody list={data?.list ?? []} />
+          </Suspense>
+        </Table>
       </div>
       <div className="pt-2">
         <CustomPagination
