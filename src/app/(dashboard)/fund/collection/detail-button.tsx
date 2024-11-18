@@ -62,13 +62,16 @@ export default function DetailButton(props: {
         {t("stop")}
       </Button>
       {showStatus === ShowStatus.UNLOCK && (
-        <UnlockDialog onOpenChange={() => setShowStatus(undefined)} />
+        <UnlockDialog
+          onOpenChange={() => setShowStatus(undefined)}
+          item={item}
+        />
       )}
       {showStatus === ShowStatus.LOCK && (
         <LockDialog onOpenChange={() => setShowStatus(undefined)} item={item} />
       )}
       {showStatus === ShowStatus.STOP && (
-        <StopDialog onOpenChange={() => setShowStatus(undefined)} />
+        <StopDialog onOpenChange={() => setShowStatus(undefined)} item={item} />
       )}
       {showStatus === ShowStatus.CHECK && (
         <CheckDialog onOpenChange={() => setShowStatus(undefined)} />

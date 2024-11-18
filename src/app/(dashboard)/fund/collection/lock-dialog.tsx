@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import type { CollectionAddressListRecords } from "@/lib/types";
 import { useTranslations } from "next-intl";
+import { CollectionAddressStatus } from "./defiend";
 
 interface Dialogprops {
   open?: boolean;
@@ -26,7 +27,7 @@ export function LockDialog(props: Dialogprops) {
   const handleConfirm = async () => {
     await lockCollectionAddress({
       address: props.item.address,
-      size: 3,
+      status: CollectionAddressStatus.LOCKED,
     });
     onOpenChange(false);
   };

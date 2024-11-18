@@ -681,7 +681,7 @@ export async function addCollectionAddress(data: {
 // 锁定归集地址
 export async function lockCollectionAddress(data: {
   address: string;
-  size: number;
+  status: number;
 }) {
   const user = await getSession();
   return await apiRequest({
