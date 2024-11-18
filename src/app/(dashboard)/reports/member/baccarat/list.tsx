@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/table";
 import type { MemberReportsRecord, PageData } from "@/lib/types";
 import { useTranslations } from "next-intl";
+import DetailButton from "./detail-button";
 
 export function List({ data }: { data: PageData<MemberReportsRecord> }) {
   const t = useTranslations("report.member");
@@ -83,7 +84,9 @@ export function List({ data }: { data: PageData<MemberReportsRecord> }) {
                   <TableCell className="w-24 text-center">
                     {item.profitLossAmount}
                   </TableCell>
-                  <TableCell className="w-24 text-center">详情</TableCell>
+                  <TableCell className="w-24 text-center">
+                    <DetailButton item={item} />
+                  </TableCell>
                 </TableRow>
               ))}
             </TableBody>

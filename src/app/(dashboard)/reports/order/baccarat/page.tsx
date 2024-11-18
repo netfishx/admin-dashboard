@@ -22,7 +22,7 @@ async function CommonWrapper({ searchParams }: CommonWrapperProps) {
       <Suspense fallback={null}>
         <ListFilter />
       </Suspense>
-      <Suspense fallback={<TableSkeleton length={5} />}>
+      <Suspense fallback={<TableSkeleton length={5} colSpan={6} />}>
         <List data={data as PageData<OrderReportsRecord>} />
       </Suspense>
     </>
