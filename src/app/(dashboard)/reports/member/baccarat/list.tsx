@@ -1,8 +1,6 @@
 import { getMemberReportList } from "@/api";
 import { CustomPagination } from "@/components/custom-pagination";
-import ListScrollArea from "@/components/list-scroll-area";
 import TableSkeleton from "@/components/table-skeleton";
-import { ScrollBar } from "@/components/ui/scroll-area";
 import {
   Table,
   TableBody,
@@ -46,7 +44,9 @@ async function ListHeader() {
         <TableHead className="min-w-24 text-center">
           {t("profit_loss_result")}
         </TableHead>
-        <TableHead className="min-w-24 text-center">{t("details")}</TableHead>
+        <TableHead className="w-24 text-center sticky right-0 z-10 bg-muted">
+          {t("details")}
+        </TableHead>
       </TableRow>
     </TableHeader>
   );
@@ -80,7 +80,7 @@ async function ListBody({ list }: { list: MemberReportsRecord[] }) {
             <TableCell className="w-24 text-center">
               {item.profitLossAmount}
             </TableCell>
-            <TableCell className="w-24 text-center">
+            <TableCell className="w-24 text-center sticky right-0 z-10 bg-background">
               <DetailButton item={item} />
             </TableCell>
           </TableRow>
@@ -105,15 +105,12 @@ export async function List({
   return (
     <div className="p-2 bg-background flex-1">
       <div className="border rounded-sm relative">
-        <ListScrollArea>
-          <Table>
-            <ListHeader />
-            <Suspense fallback={<TableSkeleton length={5} colSpan={10} />}>
-              <ListBody list={data?.list ?? []} />
-            </Suspense>
-          </Table>
-          <ScrollBar orientation="horizontal" />
-        </ListScrollArea>
+        <Table>
+          <ListHeader />
+          <Suspense fallback={<TableSkeleton length={5} colSpan={10} />}>
+            <ListBody list={data?.list ?? []} />
+          </Suspense>
+        </Table>
       </div>
       <div className="pt-2">
         <CustomPagination

@@ -613,7 +613,8 @@
       "status": "状态",
       "createTime": "创建时间",
       "action": "操作",
-      "title": "归集地址管理"
+      "title": "归集地址管理",
+      "caozuo": "操作"
     }
   },
   "personal": {

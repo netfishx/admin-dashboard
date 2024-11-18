@@ -31,7 +31,7 @@ async function ListHeader() {
           {t("createTime")}
         </TableHead>
         <TableHead className="w-24 text-center sticky right-0 z-10 bg-muted">
-          操作
+          {t("caozuo")}
         </TableHead>
       </TableRow>
     </TableHeader>
@@ -39,25 +39,36 @@ async function ListHeader() {
 }
 
 async function ListBody({ list }: { list: CollectionAddressListRecords[] }) {
+  const translate = await getTranslations();
   return (
     <TableBody>
-      {list?.map((item: CollectionAddressListRecords) => (
-        <TableRow key={item.address}>
-          <TableCell className="w-32 text-center">
-            <div className="flex items-center justify-center gap-2">
-              {item.address}
-              <CopyButton address={item.address} />
-            </div>
-          </TableCell>
-          <TableCell className="w-32 text-center">{item.coin}</TableCell>
-          <TableCell className="w-36 text-center">{item.coin}</TableCell>
-          <TableCell className="w-36 text-center">{item.status}</TableCell>
-          <TableCell className="w-36 text-center">{item.updateTime}</TableCell>
-          <TableCell className="w-12 text-center sticky right-0 z-10 bg-background">
-            <DetailButton item={item} />
+      {list && list?.length > 0 ? (
+        list?.map((item: CollectionAddressListRecords) => (
+          <TableRow key={item.address}>
+            <TableCell className="w-32 text-center">
+              <div className="flex items-center justify-center gap-2">
+                {item.address}
+                <CopyButton address={item.address} />
+              </div>
+            </TableCell>
+            <TableCell className="w-32 text-center">{item.coin}</TableCell>
+            <TableCell className="w-36 text-center">{item.coin}</TableCell>
+            <TableCell className="w-36 text-center">{item.status}</TableCell>
+            <TableCell className="w-36 text-center">
+              {item.updateTime}
+            </TableCell>
+            <TableCell className="w-12 text-center sticky right-0 z-10 bg-background">
+              <DetailButton item={item} />
+            </TableCell>
+          </TableRow>
+        ))
+      ) : (
+        <TableRow>
+          <TableCell colSpan={15} className="text-center h-40">
+            {translate("noData")}
           </TableCell>
         </TableRow>
-      ))}
+      )}
     </TableBody>
   );
 }

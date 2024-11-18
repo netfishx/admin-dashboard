@@ -1,8 +1,6 @@
 import { getOrderReportList } from "@/api";
 import { CustomPagination } from "@/components/custom-pagination";
-import ListScrollArea from "@/components/list-scroll-area";
 import TableSkeleton from "@/components/table-skeleton";
-import { ScrollBar } from "@/components/ui/scroll-area";
 import {
   Table,
   TableBody,
@@ -129,15 +127,12 @@ export async function List({
   return (
     <div className="p-2 bg-background flex-1">
       <div className="border rounded-sm relative">
-        <ListScrollArea>
-          <Table>
-            <ListHeader />
-            <Suspense fallback={<TableSkeleton length={5} />}>
-              <ListBody list={data?.list ?? []} />
-            </Suspense>
-          </Table>
-          <ScrollBar orientation="horizontal" />
-        </ListScrollArea>
+        <Table>
+          <ListHeader />
+          <Suspense fallback={<TableSkeleton length={5} />}>
+            <ListBody list={data?.list ?? []} />
+          </Suspense>
+        </Table>
       </div>
       <div className="pt-2">
         <CustomPagination

@@ -1,7 +1,6 @@
 import { getPokerReport } from "@/api";
 import { CustomPagination } from "@/components/custom-pagination";
-import ListScrollArea from "@/components/list-scroll-area";
-import { ScrollBar } from "@/components/ui/scroll-area";
+import TableSkeleton from "@/components/table-skeleton";
 import {
   Table,
   TableBody,
@@ -15,6 +14,7 @@ import type {
   PokerReportRequestRecords,
 } from "@/lib/types";
 import { getTranslations } from "next-intl/server";
+import { Suspense } from "react";
 import DetailButton from "./detail-button";
 
 async function ListHeader() {
@@ -98,19 +98,18 @@ export async function List({
   return (
     <div className="p-2 bg-background flex-1">
       <div className="border rounded-sm relative">
-        <ListScrollArea>
-          <Table>
-            <ListHeader />
+        <Table>
+          <ListHeader />
+          <Suspense fallback={<TableSkeleton length={5} colSpan={10} />}>
             <ListBody list={data?.list ?? []} />
-          </Table>
-          <ScrollBar orientation="horizontal" />
-        </ListScrollArea>
+          </Suspense>
+        </Table>
       </div>
       <div className="pt-2">
         <CustomPagination
           total={data?.total ?? 0}
           currentPage={data?.pageNum ?? 1}
-          pageSize={10}
+          pageSize={data?.pageSize ?? 10}
         />
       </div>
       <div className="pt-2 w-1/3">
