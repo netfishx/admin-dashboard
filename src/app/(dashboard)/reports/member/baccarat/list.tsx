@@ -11,7 +11,10 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import type { MemberReportsRecord } from "@/lib/types";
+import type {
+  MemberReportRequestParams,
+  MemberReportsRecord,
+} from "@/lib/types";
 import { getTranslations } from "next-intl/server";
 import { Suspense } from "react";
 import DetailButton from "./detail-button";
@@ -95,7 +98,7 @@ async function ListBody({ list }: { list: MemberReportsRecord[] }) {
 
 export async function List({
   searchParams,
-}: { searchParams: Promise<MemberReportsRecord> }) {
+}: { searchParams: Promise<MemberReportRequestParams> }) {
   const t = await getTranslations("report.member");
   const params = await searchParams;
   const { data } = await getMemberReportList(params);
