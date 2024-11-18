@@ -14,7 +14,6 @@ import { endOfDay, startOfDay } from "date-fns";
 import { getTranslations } from "next-intl/server";
 
 async function RechargeTableHeader() {
-  "use cache";
   const t = await getTranslations("report.recharge");
   return (
     <TableHeader>
@@ -63,7 +62,7 @@ export async function RechargeTable({
   const { data } = await getRechargeReportList(params);
   const t = await getTranslations();
   return (
-    <div>
+    <div className="border rounded-sm">
       <Table>
         <RechargeTableHeader />
         <TableBody>

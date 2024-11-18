@@ -33,9 +33,9 @@ const chartConfig = {
 export function DayChart({ title }: { title: string }) {
   const t = useTranslations("chart");
   const chartData = [
-    { browser: `${t("bjl01")}`, visitors: 275, fill: "var(--color-bjl01)" },
-    { browser: `${t("bjl02")}`, visitors: 200, fill: "var(--color-bjl02)" },
-    { browser: `${t("bjl03")}`, visitors: 287, fill: "var(--color-bjl03)" },
+    { browser: "百家乐01", visitors: 275, fill: "var(--color-bjl01)" },
+    { browser: "百家乐02", visitors: 200, fill: "var(--color-bjl02)" },
+    { browser: "百家乐03", visitors: 287, fill: "var(--color-bjl03)" },
   ];
   return (
     <div className="flex flex-col p-4 rounded bg-card">
