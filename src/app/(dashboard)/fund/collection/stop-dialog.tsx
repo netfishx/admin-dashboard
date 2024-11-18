@@ -29,7 +29,6 @@ export function StopDialog(props: Dialogprops) {
       address: props.item.address,
       status: CollectionAddressStatus.DISABLE,
     });
-    onOpenChange(false);
   };
   return (
     <AlertDialog open={open} onOpenChange={onOpenChange}>

@@ -29,7 +29,6 @@ export function UnlockDialog(props: Dialogprops) {
       address: props.item.address,
       status: CollectionAddressStatus.ENABLE,
     });
-    onOpenChange(false);
   };
   return (
     <AlertDialog open={open} onOpenChange={onOpenChange}>

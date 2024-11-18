@@ -29,7 +29,6 @@ export function LockDialog(props: Dialogprops) {
       address: props.item.address,
       status: CollectionAddressStatus.LOCKED,
     });
-    onOpenChange(false);
   };
   return (
     <AlertDialog open={open} onOpenChange={onOpenChange}>
