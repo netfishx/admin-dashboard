@@ -113,7 +113,7 @@ export async function RatioList({
       <div className="border rounded-sm relative">
         <Table>
           <ListHeader />
-          <Suspense fallback={<TableSkeleton length={5} />}>
+          <Suspense fallback={<TableSkeleton length={5} colSpan={11} />}>
             <ListBody list={data?.list ?? []} />
           </Suspense>
         </Table>

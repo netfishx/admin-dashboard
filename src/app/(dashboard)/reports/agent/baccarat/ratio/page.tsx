@@ -1,4 +1,3 @@
-import TableSkeleton from "@/components/table-skeleton";
 import { Skeleton } from "@/components/ui/skeleton";
 import type { RatioReportRequestRecords } from "@/lib/types";
 import { Suspense } from "react";
@@ -20,9 +19,7 @@ async function CommonWrapper({ searchParams }: CommonWrapperProps) {
       >
         <RatioForm />
       </Suspense>
-      <Suspense fallback={<TableSkeleton length={5} colSpan={11} />}>
-        <RatioList searchParams={searchParams} />
-      </Suspense>
+      <RatioList searchParams={searchParams} />
     </>
   );
 }
@@ -30,9 +27,7 @@ async function CommonWrapper({ searchParams }: CommonWrapperProps) {
 export default async function Page({ searchParams }: CommonWrapperProps) {
   return (
     <div className="flex flex-col gap-2 w-full h-full">
-      <Suspense fallback={null}>
-        <CommonWrapper searchParams={searchParams} />
-      </Suspense>
+      <CommonWrapper searchParams={searchParams} />
     </div>
   );
 }
