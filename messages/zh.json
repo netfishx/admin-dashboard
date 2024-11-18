@@ -446,7 +446,8 @@
       "issueNumber": "期数",
       "playerNumber": "人数",
       "player": "人次",
-      "pickdate": "结算日期"
+      "pickdate": "结算日期",
+      "add": "新增"
     },
     "supplier": {
       "supplierID": "供应商ID",
@@ -607,7 +608,9 @@
       "currency": "币种",
       "balance": "余额",
       "status": "状态",
-      "createTime": "创建时间"
+      "createTime": "创建时间",
+      "action": "操作",
+      "title": "归集地址管理"
     }
   },
   "personal": {

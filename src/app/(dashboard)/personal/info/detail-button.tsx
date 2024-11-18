@@ -12,11 +12,7 @@ export function DetailButton() {
 
   return (
     <div className="flex gap-2">
-      <Button
-        variant="default"
-        onClick={() => setOpenAdd(true)}
-        className="bg-orange hover:bg-orange/90"
-      >
+      <Button variant="default" onClick={() => setOpenAdd(true)}>
         {t("recharge")}
       </Button>
       <Button variant="default" onClick={() => setOpen(true)}>
