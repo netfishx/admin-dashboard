@@ -11,6 +11,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
+import { Skeleton } from "@/components/ui/skeleton";
 import {
   Table,
   TableBody,
@@ -30,13 +31,15 @@ export function RebateModal({ userId }: { userId: string }) {
   const t = useTranslations("users.agents");
 
   const [open, setOpen] = useAtom(rebateModalAtom);
-
+  const [loading, setLoading] = useState<boolean>(true);
   const [data, setData] = useState<GameConfig[] | undefined>();
   useEffect(() => {
     if (userId && open) {
+      setLoading(true);
       getGameConfig(userId).then(({ data }) => {
         console.info(data);
         setData(data);
+        setLoading(false);
       });
     }
   }, [userId, open]);
@@ -82,34 +85,20 @@ export function RebateModal({ userId }: { userId: string }) {
         </DialogHeader>
         <div className="border rounded-sm">
           <Table>
-            <TableHeader>
+            <TableHeader className="table w-full">
               <TableRow className="bg-muted">
-                <TableHead>{t("name")}</TableHead>
-                <TableHead className="min-w-32 w-1/2">{t("rebate")}</TableHead>
+                <TableHead className="w-44">{t("name")}</TableHead>
+                <TableHead className="flex-1">{t("rebate")}</TableHead>
               </TableRow>
             </TableHeader>
-            <TableBody>
-              {data
-                ?.filter((item) => item.gameType === 61)
-                .map((item) => (
-                  <TableRow key={item.gameId}>
-                    <TableCell>{item.gameName}</TableCell>
-                    <TableCell className="flex items-center gap-2">
-                      <Input
-                        value={item.backRate}
-                        type="number"
-                        step={0.01}
-                        min={0}
-                        max={item.maxBackRate ?? 0}
-                        onChange={(e) => {
-                          handleChange(item.gameId, e.target.value);
-                        }}
-                      />
-                      <span className="text-destructive">{`${item.maxBackRate}%`}</span>
-                    </TableCell>
-                  </TableRow>
-                ))}
-            </TableBody>
+            {loading ? (
+              <RebateSkeleton />
+            ) : (
+              <TableBodyWrapper
+                data={data ?? []}
+                handleChange={(gameId, value) => handleChange(gameId, value)}
+              />
+            )}
           </Table>
         </div>
         <DialogFooter>
@@ -120,5 +109,63 @@ export function RebateModal({ userId }: { userId: string }) {
         </DialogFooter>
       </DialogContent>
     </Dialog>
+  );
+}
+
+function RebateSkeleton() {
+  return (
+    <TableBody>
+      {Array.from({ length: 5 }).map((_, index) => (
+        // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
+        <TableRow key={index}>
+          <TableCell colSpan={2}>
+            <Skeleton className="w-full h-6" />
+          </TableCell>
+        </TableRow>
+      ))}
+    </TableBody>
+  );
+}
+
+function TableBodyWrapper({
+  data,
+  handleChange,
+}: {
+  data: GameConfig[] | [];
+  handleChange: (gameId: number, value: string) => void;
+}) {
+  const translations = useTranslations();
+  return (
+    <TableBody className="w-full max-h-[370px] overflow-auto block">
+      {data?.length > 0 ? (
+        data
+          ?.filter((item) => item.gameType === 61)
+          .map((item) => (
+            <TableRow key={item.gameId}>
+              <TableCell className="w-44">{item.gameName}</TableCell>
+              <TableCell className="flex-1 flex items-center gap-2">
+                <Input
+                  className="w-32"
+                  value={item.backRate}
+                  type="number"
+                  step={0.01}
+                  min={0}
+                  max={item.maxBackRate ?? 0}
+                  onChange={(e) => {
+                    handleChange(item.gameId, e.target.value);
+                  }}
+                />
+                <span className="text-destructive">{`${item.maxBackRate}%`}</span>
+              </TableCell>
+            </TableRow>
+          ))
+      ) : (
+        <TableRow>
+          <TableCell colSpan={2} className="text-center h-20">
+            {translations("noData")}
+          </TableCell>
+        </TableRow>
+      )}
+    </TableBody>
   );
 }

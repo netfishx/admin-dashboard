@@ -11,6 +11,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
+import { Skeleton } from "@/components/ui/skeleton";
 import { Switch } from "@/components/ui/switch";
 import {
   Table,
@@ -30,13 +31,16 @@ export function GameSettingModal() {
   const translations = useTranslations();
   const t = useTranslations("users.agents");
   const userId = useAtomValue(agentIdAtom);
+  const [loading, setLoading] = useState(true);
   const [open, setOpen] = useAtom(gameSettingModalAtom);
   const [data, setData] = useState<GameConfig[] | undefined>();
   useEffect(() => {
     if (userId && open) {
+      setLoading(true);
       getGameConfig(userId).then(({ data }) => {
         console.info("game config", data);
         setData(data);
+        setLoading(false);
       });
     }
   }, [userId, open]);
@@ -94,46 +98,64 @@ export function GameSettingModal() {
           <span className="text-md font-medium">{t("baccarat")}</span>
           <div className="border rounded-sm">
             <Table>
-              <TableHeader>
+              <TableHeader className="table w-full">
                 <TableRow className="bg-muted">
-                  <TableHead>{t("name")}</TableHead>
-                  <TableHead>{t("switch")}</TableHead>
-                  <TableHead className="min-w-32 w-1/2">{t("ratio")}</TableHead>
+                  <TableHead className="w-[100px]">{t("name")}</TableHead>
+                  <TableHead className="w-[100px]">{t("switch")}</TableHead>
+                  <TableHead className="w-[200px]">{t("ratio")}</TableHead>
                 </TableRow>
               </TableHeader>
-              <TableBody>
-                {data
-                  ?.filter((item) => item.gameType === 61)
-                  .map((item) => (
-                    <TableRow key={item.gameId}>
-                      <TableCell>{item.gameName}</TableCell>
-                      <TableCell>
-                        <Switch
-                          checked={item.status === 1}
-                          onCheckedChange={(checked) => {
-                            handleChangeStatus(item.gameId, checked ? 1 : 0);
-                          }}
-                        />
-                      </TableCell>
-                      <TableCell className="flex items-center gap-2">
-                        <Input
-                          value={item.percent}
-                          type="number"
-                          max={item.maxPercent}
-                          onChange={(e) => {
-                            handleChangePercent(
-                              item.gameId,
-                              Number(e.target.value),
-                            );
-                          }}
-                        />
-                        <span className="text-destructive">
-                          {`(${item.maxPercent}%)`}
-                        </span>
+              {loading ? (
+                <GameSettingSkeleton length={5} colSpan={3} />
+              ) : (
+                <TableBody className="max-h-[370px] overflow-auto w-full block">
+                  {data &&
+                  data?.filter((item) => item.gameType === 61).length > 0 ? (
+                    data
+                      ?.filter((item) => item.gameType === 61)
+                      .map((item) => (
+                        <TableRow key={item.gameId}>
+                          <TableCell className="w-[100px]">
+                            {item.gameName}
+                          </TableCell>
+                          <TableCell className="w-[100px]">
+                            <Switch
+                              checked={item.status === 1}
+                              onCheckedChange={(checked) => {
+                                handleChangeStatus(
+                                  item.gameId,
+                                  checked ? 1 : 0,
+                                );
+                              }}
+                            />
+                          </TableCell>
+                          <TableCell className="flex items-center gap-2 w-[200px]">
+                            <Input
+                              value={item.percent}
+                              type="number"
+                              max={item.maxPercent}
+                              onChange={(e) => {
+                                handleChangePercent(
+                                  item.gameId,
+                                  Number(e.target.value),
+                                );
+                              }}
+                            />
+                            <span className="text-destructive">
+                              {`(${item.maxPercent}%)`}
+                            </span>
+                          </TableCell>
+                        </TableRow>
+                      ))
+                  ) : (
+                    <TableRow>
+                      <TableCell colSpan={3} className="text-center h-20">
+                        {translations("noData")}
                       </TableCell>
                     </TableRow>
-                  ))}
-              </TableBody>
+                  )}
+                </TableBody>
+              )}
             </Table>
           </div>
         </div>
@@ -147,23 +169,39 @@ export function GameSettingModal() {
                   <TableHead>{t("switch")}</TableHead>
                 </TableRow>
               </TableHeader>
-              <TableBody>
-                {data
-                  ?.filter((item) => item.gameType === 20)
-                  .map((item) => (
-                    <TableRow key={item.gameId}>
-                      <TableCell>{item.gameId}</TableCell>
-                      <TableCell>
-                        <Switch
-                          checked={item.status === 1}
-                          onCheckedChange={(checked) => {
-                            handleChangeStatus(item.gameId, checked ? 1 : 0);
-                          }}
-                        />
+              {loading ? (
+                <GameSettingSkeleton length={1} colSpan={2} />
+              ) : (
+                <TableBody>
+                  {data &&
+                  data?.filter((item) => item.gameType === 20).length > 0 ? (
+                    data
+                      ?.filter((item) => item.gameType === 20)
+                      .map((item) => (
+                        <TableRow key={item.gameId}>
+                          <TableCell>{item.gameId}</TableCell>
+                          <TableCell>
+                            <Switch
+                              checked={item.status === 1}
+                              onCheckedChange={(checked) => {
+                                handleChangeStatus(
+                                  item.gameId,
+                                  checked ? 1 : 0,
+                                );
+                              }}
+                            />
+                          </TableCell>
+                        </TableRow>
+                      ))
+                  ) : (
+                    <TableRow>
+                      <TableCell colSpan={2} className="text-center h-6">
+                        {translations("noData")}
                       </TableCell>
                     </TableRow>
-                  ))}
-              </TableBody>
+                  )}
+                </TableBody>
+              )}
             </Table>
           </div>
         </div>
@@ -175,5 +213,23 @@ export function GameSettingModal() {
         </DialogFooter>
       </DialogContent>
     </Dialog>
+  );
+}
+
+function GameSettingSkeleton({
+  length,
+  colSpan,
+}: { length: number; colSpan: number }) {
+  return (
+    <TableBody>
+      {Array.from({ length }).map((_, index) => (
+        // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
+        <TableRow key={index}>
+          <TableCell colSpan={colSpan}>
+            <Skeleton className="w-full h-6" />
+          </TableCell>
+        </TableRow>
+      ))}
+    </TableBody>
   );
 }

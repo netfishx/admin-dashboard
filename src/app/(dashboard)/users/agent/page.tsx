@@ -68,7 +68,7 @@ async function TableWrapper({
               <TableHead>{t("username")}</TableHead>
               <TableHead className="min-w-20">{t("nickname")}</TableHead>
               <TableHead className="min-w-20">{t("status")}</TableHead>
-              <TableHead className="min-w-[550px] text-center sticky right-0 bg-muted">
+              <TableHead className="min-w-[480px] text-center sticky right-0 bg-muted">
                 {t("action")}
               </TableHead>
             </TableRow>
