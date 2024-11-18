@@ -382,7 +382,8 @@
       "orderStatus": "结算状态",
       "notCalculated": "未算占成",
       "notSettled": "未结算",
-      "settled": "已结算"
+      "settled": "已结算",
+      "download": "生成下载任务"
     },
     "periodlist": {
       "today": "今天",
@@ -447,7 +448,8 @@
       "playerNumber": "人数",
       "player": "人次",
       "pickdate": "结算日期",
-      "add": "新增"
+      "add": "新增",
+      "download": "生成下载任务"
     },
     "supplier": {
       "supplierID": "供应商ID",
@@ -488,7 +490,8 @@
       "memberId": "会员ID",
       "memberType": "会员类别",
       "superAgentId": "上级代理ID",
-      "openTime": "开奖日期"
+      "openTime": "开奖日期",
+      "download": "生成下载任务"
     },
     "recharge": {
       "id": "ID",
@@ -610,7 +613,8 @@
       "status": "状态",
       "createTime": "创建时间",
       "action": "操作",
-      "title": "归集地址管理"
+      "title": "归集地址管理",
+      "caozuo": "操作"
     }
   },
   "personal": {
