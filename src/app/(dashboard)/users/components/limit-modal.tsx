@@ -29,15 +29,14 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import type { GameConfig, GameOdds } from "@/lib/types";
-import { agentIdAtom, limitModalAtom } from "@/store";
-import { useAtom, useAtomValue } from "jotai";
+import { limitModalAtom } from "@/store";
+import { useAtom } from "jotai";
 import { useTranslations } from "next-intl";
 import { Suspense, useEffect, useState } from "react";
 
-export function LimitModal() {
+export function LimitModal({ userId }: { userId: string }) {
   const translations = useTranslations();
   const [open, setOpen] = useAtom(limitModalAtom);
-  const userId = useAtomValue(agentIdAtom);
   const t = useTranslations("users.agents");
   const [list, setList] = useState<GameConfig[]>([]);
   const [gameId, setGameId] = useState<number>();

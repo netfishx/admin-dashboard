@@ -2,7 +2,19 @@
 
 import { Button } from "@/components/ui/button";
 import type { MemberList } from "@/lib/types";
-import { changeLogModalAtom, loginLogModalAtom, memberIdAtom } from "@/store";
+import {
+  changeLogModalAtom,
+  decreaseCreditModalAtom,
+  deleteCreditModalAtom,
+  increaseCreditModalAtom,
+  limitModalAtom,
+  loginLogModalAtom,
+  memberIdAtom,
+  memberInfoDataAtom,
+  memberInfoModalAtom,
+  ratioModalAtom,
+  rebateModalAtom,
+} from "@/store";
 import { useSetAtom } from "jotai";
 import { useTranslations } from "next-intl";
 
@@ -10,16 +22,37 @@ export default function Action({ data }: { data: MemberList }) {
   const t = useTranslations("users.members");
   // 会员ID
   const setMemberId = useSetAtom(memberIdAtom);
+  // 会员信息数据
+  const setMemberInfoData = useSetAtom(memberInfoDataAtom);
+  // 会员信息 弹窗
+  const setMemberInfoModal = useSetAtom(memberInfoModalAtom);
+  // 占成 弹窗
+  const setRatioModal = useSetAtom(ratioModalAtom);
+  // 增加授信 弹窗
+  const setIncreaseCreditModal = useSetAtom(increaseCreditModalAtom);
+  // 减少授信 弹窗
+  const setDecreaseCreditModal = useSetAtom(decreaseCreditModalAtom);
+  // 销账 弹窗
+  const setDeleteCreditModal = useSetAtom(deleteCreditModalAtom);
+  // 限额 弹窗
+  const setLimitModal = useSetAtom(limitModalAtom);
+  // 退水 弹窗
+  const setRebateModal = useSetAtom(rebateModalAtom);
   // 登录日志 弹窗
   const setLoginLogModal = useSetAtom(loginLogModalAtom);
   // 变更日志 弹窗
   const setChangeLogModal = useSetAtom(changeLogModalAtom);
+
   return (
     <>
       <Button
         variant="ghost"
         size="sm"
         className="text-primary hover:text-primary/80 text-sm"
+        onClick={() => {
+          setMemberInfoData(data);
+          setMemberInfoModal(true);
+        }}
       >
         {t("userInfo")}
       </Button>
@@ -28,6 +61,10 @@ export default function Action({ data }: { data: MemberList }) {
         variant="ghost"
         size="sm"
         className="text-primary hover:text-primary/80 text-sm"
+        onClick={() => {
+          setMemberId(data.id);
+          setRatioModal(true);
+        }}
       >
         {t("ratio")}
       </Button>
@@ -36,6 +73,10 @@ export default function Action({ data }: { data: MemberList }) {
         variant="ghost"
         size="sm"
         className="text-primary hover:text-primary/80 text-sm"
+        onClick={() => {
+          setMemberId(data.id);
+          setIncreaseCreditModal(true);
+        }}
       >
         {t("increaseCredit")}
       </Button>
@@ -44,6 +85,10 @@ export default function Action({ data }: { data: MemberList }) {
         variant="ghost"
         size="sm"
         className="text-primary hover:text-primary/80 text-sm"
+        onClick={() => {
+          setMemberId(data.id);
+          setDecreaseCreditModal(true);
+        }}
       >
         {t("decreaseCredit")}
       </Button>
@@ -52,6 +97,10 @@ export default function Action({ data }: { data: MemberList }) {
         variant="ghost"
         size="sm"
         className="text-primary hover:text-primary/80 text-sm"
+        onClick={() => {
+          setMemberId(data.id);
+          setDeleteCreditModal(true);
+        }}
       >
         {t("deleteCredit")}
       </Button>
@@ -60,6 +109,10 @@ export default function Action({ data }: { data: MemberList }) {
         variant="ghost"
         size="sm"
         className="text-primary hover:text-primary/80 text-sm"
+        onClick={() => {
+          setMemberId(data.id);
+          setLimitModal(true);
+        }}
       >
         {t("limitSetting")}
       </Button>
@@ -68,6 +121,10 @@ export default function Action({ data }: { data: MemberList }) {
         variant="ghost"
         size="sm"
         className="text-primary hover:text-primary/80 text-sm"
+        onClick={() => {
+          setMemberId(data.id);
+          setRebateModal(true);
+        }}
       >
         {t("rebate")}
       </Button>
@@ -89,7 +146,6 @@ export default function Action({ data }: { data: MemberList }) {
         size="sm"
         className="text-primary hover:text-primary/80 text-sm"
         onClick={() => {
-          console.info(data);
           setMemberId(data.id);
           setChangeLogModal(true);
         }}
