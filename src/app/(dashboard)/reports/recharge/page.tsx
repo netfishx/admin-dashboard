@@ -11,6 +11,7 @@ export default function Page({
         fallback={
           <div className="flex justify-between items-center bg-background py-2 px-4">
             <Skeleton className="w-full h-9 opacity-20" />
+            <Skeleton className="w-full h-9 opacity-20" />
           </div>
         }
       >

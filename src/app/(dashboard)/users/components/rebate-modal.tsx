@@ -20,17 +20,16 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import type { GameConfig } from "@/lib/types";
-import { agentIdAtom, rebateModalAtom } from "@/store";
-import { useAtom, useAtomValue } from "jotai";
+import { rebateModalAtom } from "@/store";
+import { useAtom } from "jotai";
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 
-export function RebateModal() {
+export function RebateModal({ userId }: { userId: string }) {
   const translations = useTranslations();
   const t = useTranslations("users.agents");
 
   const [open, setOpen] = useAtom(rebateModalAtom);
-  const userId = useAtomValue(agentIdAtom);
 
   const [data, setData] = useState<GameConfig[] | undefined>();
   useEffect(() => {
