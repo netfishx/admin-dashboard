@@ -1,5 +1,7 @@
+import { getOrderReportList } from "@/api";
 import { CustomPagination } from "@/components/custom-pagination";
 import ListScrollArea from "@/components/list-scroll-area";
+import TableSkeleton from "@/components/table-skeleton";
 import { ScrollBar } from "@/components/ui/scroll-area";
 import {
   Table,
@@ -9,131 +11,130 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import type { OrderReportsRecord, PageData } from "@/lib/types";
+import type {
+  OrderReportsRecord,
+  OrderReportsRequestParams,
+} from "@/lib/types";
 import { format } from "date-fns";
-import { useTranslations } from "next-intl";
+import { getTranslations } from "next-intl/server";
+import { Suspense } from "react";
 import DetailButton from "./detail-button";
 
-export function List({ data }: { data: PageData<OrderReportsRecord> }) {
-  const t = useTranslations("report.orderlist");
-  const translate = useTranslations();
+async function ListHeader() {
+  "use cache";
+  const t = await getTranslations("report.orderlist");
+  return (
+    <TableHeader>
+      <TableRow className="bg-muted">
+        <TableHead className="min-w-24 text-center">
+          {t("ordernumber")}
+        </TableHead>
+        <TableHead className="min-w-24 text-center">
+          {t("issuenumber")}
+        </TableHead>
+        <TableHead className="min-w-24 text-center">{t("memberID")}</TableHead>
+        <TableHead className="min-w-24 text-center">
+          {t("roomeownerID")}
+        </TableHead>
+        <TableHead className="min-w-24 text-center">
+          {t("ministerID")}
+        </TableHead>
+        <TableHead className="min-w-24 text-center">
+          {t("leastlevelID")}
+        </TableHead>
+        <TableHead className="min-w-24 text-center">{t("gamename")}</TableHead>
+        <TableHead className="min-w-24 text-center">{t("smallType")}</TableHead>
+        <TableHead className="min-w-24 text-center">{t("odds")}</TableHead>
+        <TableHead className="min-w-24 text-center">{t("betamount")}</TableHead>
+        <TableHead className="min-w-24 text-center">{t("winamount")}</TableHead>
+        <TableHead className="min-w-24 text-center">{t("bettime")}</TableHead>
+        <TableHead className="min-w-24 text-center">
+          {t("membersettlementtime")}
+        </TableHead>
+        <TableHead className="min-w-24 text-center">
+          {t("proxystatus")}
+        </TableHead>
+        <TableHead className="w-24 text-center sticky right-0 z-10 bg-muted">
+          {t("action")}
+        </TableHead>
+      </TableRow>
+    </TableHeader>
+  );
+}
+
+async function ListBody({ list }: { list: OrderReportsRecord[] }) {
+  const translate = await getTranslations();
+  return (
+    <TableBody>
+      {list && list?.length > 0 ? (
+        list?.map((item: OrderReportsRecord) => (
+          <TableRow key={item.id}>
+            <TableCell className="w-24 text-center">{item.id}</TableCell>
+            <TableCell className="w-24 text-center">
+              {item.issueNumber}
+            </TableCell>
+            <TableCell className="w-24 text-center">{item.memberId}</TableCell>
+            <TableCell className="w-24 text-center">
+              {item.roomOwnerId}
+            </TableCell>
+            <TableCell className="w-24 text-center">{item.minister}</TableCell>
+            <TableCell className="w-24 text-center">
+              {item.lastAgentId}
+            </TableCell>
+            <TableCell className="w-24 text-center">{item.gameId}</TableCell>
+            <TableCell className="w-24 text-center">{item.betType}</TableCell>
+            <TableCell className="w-24 text-center">
+              {
+                Object.entries(item.odds || {})[
+                  Object.entries(item.odds || {}).length - 1
+                ]
+              }
+            </TableCell>
+            <TableCell className="w-24 text-center">
+              {item?.betAmount}
+            </TableCell>
+            <TableCell className="w-24 text-center">
+              {item.winLossAmount}
+            </TableCell>
+            <TableCell className="text-center">
+              {format(item.betTime, "yyyy-MM-dd HH:mm:ss")}
+            </TableCell>
+            <TableCell className="text-center">
+              {format(item.settleTime, "yyyy-MM-dd HH:mm:ss")}
+            </TableCell>
+            <TableCell className="w-24 text-center">
+              {item.orderStatus}
+            </TableCell>
+            <TableCell className="w-24 text-center sticky right-0 z-10 bg-background">
+              <DetailButton />
+            </TableCell>
+          </TableRow>
+        ))
+      ) : (
+        <TableRow>
+          <TableCell colSpan={15} className="text-center h-40">
+            {translate("noData")}
+          </TableCell>
+        </TableRow>
+      )}
+    </TableBody>
+  );
+}
+
+export async function List({
+  searchParams,
+}: { searchParams: Promise<OrderReportsRequestParams> }) {
+  const params = await searchParams;
+  const { data } = await getOrderReportList(params);
   return (
     <div className="p-2 bg-background flex-1">
       <div className="border rounded-sm relative">
         <ListScrollArea>
           <Table>
-            <TableHeader>
-              <TableRow className="bg-muted">
-                <TableHead className="min-w-24 text-center">
-                  {t("ordernumber")}
-                </TableHead>
-                <TableHead className="min-w-24 text-center">
-                  {t("issuenumber")}
-                </TableHead>
-                <TableHead className="min-w-24 text-center">
-                  {t("memberID")}
-                </TableHead>
-                <TableHead className="min-w-24 text-center">
-                  {t("roomeownerID")}
-                </TableHead>
-                <TableHead className="min-w-24 text-center">
-                  {t("ministerID")}
-                </TableHead>
-                <TableHead className="min-w-24 text-center">
-                  {t("leastlevelID")}
-                </TableHead>
-                <TableHead className="min-w-24 text-center">
-                  {t("gamename")}
-                </TableHead>
-                <TableHead className="min-w-24 text-center">
-                  {t("smallType")}
-                </TableHead>
-                <TableHead className="min-w-24 text-center">
-                  {t("odds")}
-                </TableHead>
-                <TableHead className="min-w-24 text-center">
-                  {t("betamount")}
-                </TableHead>
-                <TableHead className="min-w-24 text-center">
-                  {t("winamount")}
-                </TableHead>
-                <TableHead className="min-w-24 text-center">
-                  {t("bettime")}
-                </TableHead>
-                <TableHead className="min-w-24 text-center">
-                  {t("membersettlementtime")}
-                </TableHead>
-                <TableHead className="min-w-24 text-center">
-                  {t("proxystatus")}
-                </TableHead>
-                <TableHead className="w-24 text-center sticky right-0 z-10 bg-muted">
-                  {t("action")}
-                </TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {data?.list?.length > 0 ? (
-                data?.list?.map((item: OrderReportsRecord) => (
-                  <TableRow key={item.id}>
-                    <TableCell className="w-24 text-center">
-                      {item.id}
-                    </TableCell>
-                    <TableCell className="w-24 text-center">
-                      {item.issueNumber}
-                    </TableCell>
-                    <TableCell className="w-24 text-center">
-                      {item.memberId}
-                    </TableCell>
-                    <TableCell className="w-24 text-center">
-                      {item.roomOwnerId}
-                    </TableCell>
-                    <TableCell className="w-24 text-center">
-                      {item.minister}
-                    </TableCell>
-                    <TableCell className="w-24 text-center">
-                      {item.lastAgentId}
-                    </TableCell>
-                    <TableCell className="w-24 text-center">
-                      {item.gameId}
-                    </TableCell>
-                    <TableCell className="w-24 text-center">
-                      {item.betType}
-                    </TableCell>
-                    <TableCell className="w-24 text-center">
-                      {
-                        Object.entries(item.odds || {})[
-                          Object.entries(item.odds || {}).length - 1
-                        ]
-                      }
-                    </TableCell>
-                    <TableCell className="w-24 text-center">
-                      {item?.betAmount}
-                    </TableCell>
-                    <TableCell className="w-24 text-center">
-                      {item.winLossAmount}
-                    </TableCell>
-                    <TableCell className="text-center">
-                      {format(item.betTime, "yyyy-MM-dd HH:mm:ss")}
-                    </TableCell>
-                    <TableCell className="text-center">
-                      {format(item.settleTime, "yyyy-MM-dd HH:mm:ss")}
-                    </TableCell>
-                    <TableCell className="w-24 text-center">
-                      {item.orderStatus}
-                    </TableCell>
-                    <TableCell className="w-24 text-center sticky right-0 z-10 bg-background">
-                      <DetailButton />
-                    </TableCell>
-                  </TableRow>
-                ))
-              ) : (
-                <TableRow>
-                  <TableCell colSpan={15} className="text-center h-40">
-                    {translate("noData")}
-                  </TableCell>
-                </TableRow>
-              )}
-            </TableBody>
+            <ListHeader />
+            <Suspense fallback={<TableSkeleton length={5} />}>
+              <ListBody list={data?.list ?? []} />
+            </Suspense>
           </Table>
           <ScrollBar orientation="horizontal" />
         </ListScrollArea>
