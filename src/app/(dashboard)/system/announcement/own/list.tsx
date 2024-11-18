@@ -20,11 +20,11 @@ export async function List({
   const t = await getTranslations("system.announcement");
 
   return (
-    <div className="p-2 mt-2 bg-background gap-2 flex flex-col">
+    <div className="p-2 mt-2 bg-background gap-2 flex flex-col h-full">
       <AddBtn />
-      <div className="max-h-[calc(100dvh-220px)] overflow-y-auto border rounded-sm">
+      <div className="border rounded-sm">
         <Table>
-          <TableHeader className="sticky top-0">
+          <TableHeader>
             <TableRow className="bg-muted">
               <TableHead className="w-24 min-w-24 text-center">
                 {t("startTime")}

@@ -18,8 +18,7 @@ import { useQueryState } from "nuqs";
 import { useTransition } from "react";
 
 export function Form() {
-  const t = useTranslations("report.recharge");
-  const [userId, setUserId] = useQueryState("userId");
+  const t = useTranslations("report.withdraw");
   const [orderNo, setOrderNo] = useQueryState("orderNo");
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
@@ -56,17 +55,27 @@ export function Form() {
           />
         </div>
         <div className="flex gap-2 items-center">
-          <Label className="shrink-0">{t("userId")}</Label>
-          <Input
-            placeholder={t("placeholder")}
-            value={userId ?? ""}
-            onChange={(e) => setUserId(e.target.value)}
-          />
+          <Label className="shrink-0">{t("status")}</Label>
+          <Select
+            value={userType ?? ""}
+            onValueChange={(value) => setUserType(value)}
+          >
+            <SelectTrigger className="w-28">
+              <SelectValue placeholder={t("placeholderselect")} />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="0">审核中</SelectItem>
+              <SelectItem value="1">提现中</SelectItem>
+              <SelectItem value="2">审核失败</SelectItem>
+              <SelectItem value="3">提现成功</SelectItem>
+            </SelectContent>
+          </Select>
         </div>
       </div>
+
       <div className="flex gap-4 items-center">
         <div className="flex gap-2 items-center">
-          <Label className="shrink-0">{t("rechargeMoneyFilter")}</Label>
+          <Label className="shrink-0">{t("withdrawMoneyFilter")}</Label>
           <Select
             onValueChange={(value) => handleFilterChange(value)}
             defaultValue={operatorSymbol}
@@ -87,21 +96,6 @@ export function Form() {
             onChange={(e) => handleAmountChange(e.target.value)}
             placeholder={t("placeholder")}
           />
-        </div>
-        <div className="flex gap-2 items-center">
-          <Label className="shrink-0">{t("userType")}</Label>
-          <Select
-            value={userType ?? ""}
-            onValueChange={(value) => setUserType(value)}
-          >
-            <SelectTrigger className="w-28">
-              <SelectValue placeholder={t("placeholderselect")} />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="1">代理</SelectItem>
-              <SelectItem value="2">会员</SelectItem>
-            </SelectContent>
-          </Select>
         </div>
       </div>
       <div className="flex gap-2 justify-end items-start">

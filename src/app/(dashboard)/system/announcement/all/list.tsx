@@ -1,5 +1,4 @@
 import { CustomPagination } from "@/components/custom-pagination";
-import { Skeleton } from "@/components/ui/skeleton";
 import {
   Table,
   TableBody,
@@ -11,112 +10,95 @@ import {
 import type { PageData } from "@/lib/types";
 import type { AnnouncementList } from "@/lib/types";
 import { getTranslations } from "next-intl/server";
-import { Suspense } from "react";
 import { formatTimestamp } from "../tools";
 import { ViewBtn } from "../view-btn";
+
 export async function List({ data }: { data?: PageData<AnnouncementList> }) {
   const t = await getTranslations("system.announcement");
   const translations = await getTranslations();
 
   console.info("data", data);
   return (
-    <div>
-      <div className="border rounded-sm">
-        <Table>
-          <TableHeader className="sticky top-0">
-            <TableRow className="bg-muted">
-              {/* admin permission */}
-              <TableHead className="w-24 min-w-24 text-center">
-                {t("startTime")}
-              </TableHead>
+    <div className="border rounded-sm relative overflow-y-auto overflow-x-auto">
+      <Table>
+        <TableHeader>
+          <TableRow className="bg-muted">
+            {/* admin permission */}
+            <TableHead className="w-24 min-w-24 text-center">
+              {t("startTime")}
+            </TableHead>
 
-              <TableHead className="w-24 min-w-24 text-center">
-                {t("endTime")}
-              </TableHead>
+            <TableHead className="w-24 min-w-24 text-center">
+              {t("endTime")}
+            </TableHead>
 
-              {/* admin permission */}
-              <TableHead className="w-24 min-w-24 text-center">
-                {t("createTime")}
-              </TableHead>
+            {/* admin permission */}
+            <TableHead className="w-24 min-w-24 text-center">
+              {t("createTime")}
+            </TableHead>
 
-              {/* admin permission */}
-              <TableHead className="w-24 min-w-24 text-center">
-                {t("type")}
-              </TableHead>
+            {/* admin permission */}
+            <TableHead className="w-24 min-w-24 text-center">
+              {t("type")}
+            </TableHead>
 
-              {/* admin permission */}
-              <TableHead className="w-24 min-w-24 text-center">
-                {t("userId")}
-              </TableHead>
+            {/* admin permission */}
+            <TableHead className="w-24 min-w-24 text-center">
+              {t("userId")}
+            </TableHead>
 
-              <TableHead className="w-24 min-w-24 text-center">
-                {t("content")}
-              </TableHead>
-              <TableHead className="w-24 min-w-24 text-center">
-                {t("action")}
-              </TableHead>
+            <TableHead className="w-24 min-w-24 text-center">
+              {t("content")}
+            </TableHead>
+            <TableHead className="w-24 min-w-24 text-center">
+              {t("action")}
+            </TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {data && data.list.length > 0 ? (
+            data.list.map((item) => (
+              <TableRow key={item.id}>
+                {/* admin permission */}
+                <TableCell className="w-24 text-center">
+                  {formatTimestamp(item.startTime)}
+                </TableCell>
+
+                <TableCell className="w-24 text-center">
+                  {formatTimestamp(item.endTime)}
+                </TableCell>
+                {/* admin permission */}
+                <TableCell className="w-24 text-center">
+                  {formatTimestamp(item.createTime)}
+                </TableCell>
+
+                {/* admin permission */}
+                <TableCell className="w-24 min-w-24 text-center">
+                  {item.type}
+                </TableCell>
+
+                {/* admin permission */}
+                <TableCell className="w-24 min-w-24 text-center">
+                  {item.userId}
+                </TableCell>
+
+                <TableCell className="w-24 text-center">
+                  {item.contentOfLanguage}
+                </TableCell>
+                <TableCell className="w-24 text-center">
+                  <ViewBtn data={item} />
+                </TableCell>
+              </TableRow>
+            ))
+          ) : (
+            <TableRow>
+              <TableCell colSpan={10} className="text-center h-40">
+                {translations("noData")}
+              </TableCell>
             </TableRow>
-          </TableHeader>
-          <Suspense
-            fallback={
-              <TableBody>
-                {Array.from({ length: 5 }).map((_, i) => (
-                  // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
-                  <TableRow key={i}>
-                    <TableCell colSpan={2}>
-                      <Skeleton className="w-full h-6" />
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            }
-          >
-            <TableBody className="max-h-96 overflow-y-auto">
-              {data && data.list.length > 0 ? (
-                data.list.map((item) => (
-                  <TableRow key={Math.random()}>
-                    {/* admin permission */}
-                    <TableCell className="w-24 text-center">
-                      {formatTimestamp(item.startTime)}
-                    </TableCell>
-
-                    <TableCell className="w-24 text-center">
-                      {formatTimestamp(item.endTime)}
-                    </TableCell>
-                    {/* admin permission */}
-                    <TableCell className="w-24 text-center">
-                      {formatTimestamp(item.createTime)}
-                    </TableCell>
-
-                    {/* admin permission */}
-                    <TableCell className="w-24 min-w-24 text-center">
-                      {item.type}
-                    </TableCell>
-
-                    {/* admin permission */}
-                    <TableCell className="w-24 min-w-24 text-center">
-                      {item.userId}
-                    </TableCell>
-
-                    <TableCell className="w-24 text-center">
-                      {item.contentOfLanguage}
-                    </TableCell>
-                    <TableCell className="w-24 text-center">
-                      <ViewBtn data={item} />
-                    </TableCell>
-                  </TableRow>
-                ))
-              ) : (
-                <TableRow>
-                  <TableCell colSpan={10} className="text-center h-40">
-                    {translations("noData")}
-                  </TableCell>
-                </TableRow>
-              )}
-            </TableBody>
-          </Suspense>
-        </Table>
-      </div>
+          )}
+        </TableBody>
+      </Table>
       {Number(data?.total) > 0 && (
         <div className="pt-2">
           <CustomPagination

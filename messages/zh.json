@@ -511,6 +511,30 @@
       "placeholderselect": "请选择",
       "search": "查询",
       "reset": "重置"
+    },
+    "withdraw": {
+      "status": "状态",
+      "id": "ID",
+      "orderNo": "订单号",
+      "userId": "用户ID",
+      "userType": "用户类型",
+      "account": "账号",
+      "nickname": "昵称",
+      "withdrawFee": "提现手续费",
+      "withdrawMoney": "提现金额",
+      "withdrawMoneyFilter": "提现金额筛选",
+      "finishTime": "提现完成时间", 
+      "withdrawHash": "哈希",
+      "currency": "币种",
+      "applyTime": "发起时间",
+      "approverTime": "审核完成时间",
+      "actualMoney": "实际到账",
+      "withdrawMode": "提现方式",
+      "updateTime": "更新时间",
+      "placeholder": "请输入",
+      "placeholderselect": "请选择",
+      "search": "查询",
+      "reset": "重置"
     }
   },
   "pagination": {
@@ -537,6 +561,7 @@
       "addModal": "新增公告",
       "editModal": "编辑公告",
       "announcementType": "公告类型：",
+      "title": "公告标题",
       "announcementContent": "公告内容：",
       "announcementTime": "公告时间：",
       "language": "语言：",
