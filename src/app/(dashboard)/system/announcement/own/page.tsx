@@ -14,17 +14,19 @@ export default async function Own({
   });
 
   return (
-    <Suspense
-      fallback={
-        <div className="bg-background py-2">
-          <Skeleton className="h-9 w-full opacity-25" />
-          <Skeleton className="h-9 w-full opacity-25" />
-          <Skeleton className="h-9 w-full opacity-25" />
-          <Skeleton className="h-9 w-full opacity-25" />
-        </div>
-      }
-    >
-      <List data={data} />
-    </Suspense>
+    <div className="flex flex-col gap-2 w-full h-full">
+      <Suspense
+        fallback={
+          <div className="bg-background py-2">
+            <Skeleton className="h-9 w-full opacity-25" />
+            <Skeleton className="h-9 w-full opacity-25" />
+            <Skeleton className="h-9 w-full opacity-25" />
+            <Skeleton className="h-9 w-full opacity-25" />
+          </div>
+        }
+      >
+        <List data={data} />
+      </Suspense>
+    </div>
   );
 }

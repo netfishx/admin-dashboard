@@ -150,7 +150,7 @@ export function TimeRange({
               }
               numberOfMonths={1}
             />
-            <div className="mt-4 pl-10">
+            <div className="mt-4 pl-4">
               <div className="mb-4">
                 <p className="mb-2 text-sm font-medium">{t("startTime")}</p>
                 <div className="flex gap-2">

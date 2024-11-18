@@ -72,7 +72,7 @@ async function PeriodTable({
       <div className="bg-background flex-1">
         <div className="h-full border rounded-sm relative">
           <Table>
-            <TableHeader className="sticky">
+            <TableHeader>
               <TableRow className="bg-muted">
                 <TableHead className="min-w-32 text-center">
                   {t("issueNumber")}

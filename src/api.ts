@@ -40,6 +40,8 @@ import type {
   SupplierReportRequestParams,
   UserBasicInfo,
   WithdrawFormData,
+  WithdrawReport,
+  WithdrawReportParams,
 } from "@/lib/types";
 
 import { getSession } from "@/session";
@@ -261,6 +263,8 @@ export async function getAnnouncement(params: AnnouncementListRequest) {
       ...item,
       contentOfLanguage:
         item.content.find((i) => i.language === "cn")?.content || "",
+      titleOfLanguage:
+        item.content.find((i) => i.language === "cn")?.title || "",
     }));
   }
   return res;
@@ -280,6 +284,8 @@ export async function getAgentAnnouncement(
       ...item,
       contentOfLanguage:
         item.content.find((i) => i.language === "cn")?.content || "",
+      titleOfLanguage:
+        item.content.find((i) => i.language === "cn")?.title || "",
     }));
   }
   return res;
@@ -649,7 +655,36 @@ export async function getRechargeReportList(data: RechargeReportParams) {
     token: user?.token,
     data,
   });
-  console.info("🌸 ~ res:", res);
+  return res;
+}
+// 提现报表
+export async function getWithdrawReportList(data: WithdrawReportParams) {
+  const user = await getSession();
+  const res = await apiRequest<PageData<WithdrawReport>>({
+    url: "/order/withdraw/report",
+    method: "POST",
+    token: user?.token,
+    data,
+  });
+  if (res.data?.list) {
+    let status: number;
+    res.data.list = res.data.list.map((item: WithdrawReport) => {
+      if (item.approverStatus === 0 || item.approverStatus === 1) {
+        status = 0;
+      } else if (item.approverStatus === 3 || item.moneyStatus === 2) {
+        status = 1;
+      } else if (item.approverStatus === 2) {
+        status = 2;
+      } else if (item.moneyStatus === 1) {
+        status = 3;
+      }
+
+      return {
+        ...item,
+        status,
+      };
+    });
+  }
   return res;
 }
 

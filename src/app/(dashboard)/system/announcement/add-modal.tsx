@@ -8,6 +8,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import {
   Select,
@@ -37,6 +38,7 @@ export function AddModal() {
   const t = useTranslations("system.announcement");
   const [type, setType] = useState("0");
   const [language, setLanguage] = useState("cn");
+  const [titleOfLanguage, setTitleOfLanguage] = useState("");
   const [contentOfLanguage, setContentOfLanguage] = useState("");
   const [status, setStatus] = useState("0");
   const [open, setOpen] = useAtom(contentEditModalAtom);
@@ -45,7 +47,12 @@ export function AddModal() {
   const editModalTitle = useAtomValue(editModalTitleAtom);
   const data = useAtomValue(contentModalDataAtom);
   const [contentData, setContentData] = useState<
-    { id?: string; language: string; content: string }[]
+    {
+      id?: string;
+      language: string;
+      title?: string;
+      content: string;
+    }[]
   >([]); // 用于存储每个语言的内容
   const handleClickAdd = async () => {
     const addParams = {
@@ -78,6 +85,7 @@ export function AddModal() {
     setLanguage(data?.content?.[0]?.language || "cn");
     setContentData([]);
     setContentOfLanguage("");
+    setTitleOfLanguage("");
     setStatus("0");
     setStartTime("");
     setEndTime("");
@@ -88,6 +96,7 @@ export function AddModal() {
       console.info("contentData", data.content);
       setContentData(data.content || []);
       setContentOfLanguage(data.contentOfLanguage || "");
+      setTitleOfLanguage(data.titleOfLanguage || "");
       setType(data.type.toString() || "0");
       setLanguage(data.content?.[0]?.language || "cn");
       setStatus(data.status.toString() || "0");
@@ -103,9 +112,39 @@ export function AddModal() {
     const currentContent = contentData.find((item) => item.language === value);
     if (currentContent) {
       setContentOfLanguage(currentContent.content);
+      setTitleOfLanguage(currentContent.title || "");
     } else {
       setContentOfLanguage(""); // 如果没有找到对应语言，清空内容框
+      setTitleOfLanguage("");
     }
+  };
+
+  // 处理标题输入
+  const handleTitleChange = (value: string) => {
+    setTitleOfLanguage(value);
+    // 更新当前语言对应的内容
+    setContentData((prevData) => {
+      const existingIndex = prevData.findIndex(
+        (item) => item.language === language,
+      );
+      if (existingIndex !== -1) {
+        const updatedData = [...prevData];
+        updatedData[existingIndex] = {
+          id: updatedData[existingIndex].id,
+          language,
+          title: value,
+          content: contentOfLanguage,
+        };
+        return updatedData;
+        // biome-ignore lint/style/noUselessElse: <explanation>
+      } else {
+        // 如果该语言的内容不存在，则添加新数据
+        return [
+          ...prevData,
+          { language, titleOfLanguage, content: contentOfLanguage },
+        ];
+      }
+    });
   };
 
   // 处理内容输入
@@ -122,13 +161,14 @@ export function AddModal() {
         updatedData[existingIndex] = {
           id: updatedData[existingIndex].id,
           language,
+          title: titleOfLanguage,
           content: value,
         };
         return updatedData;
         // biome-ignore lint/style/noUselessElse: <explanation>
       } else {
         // 如果该语言的内容不存在，则添加新数据
-        return [...prevData, { language, content: value }];
+        return [...prevData, { language, titleOfLanguage, content: value }];
       }
     });
   };
@@ -152,8 +192,10 @@ export function AddModal() {
         <div className="flex flex-col gap-4 w-full px-4">
           <div className="flex gap-4 items-center">
             <Label className="shrink-0 w-24 text-right text-muted-foreground">
+              <span className="text-destructive">*</span>
               {t("announcementType")}
             </Label>
+            {/* 公告类型 根据管理员和代理角色 展示的也不一样 */}
             <Select
               defaultValue="0"
               value={type}
@@ -175,6 +217,7 @@ export function AddModal() {
           </div>
           <div className="flex gap-4 items-center">
             <Label className="shrink-0 w-24 text-right text-muted-foreground">
+              <span className="text-destructive">*</span>
               {t("announcementTime")}
             </Label>
             <TimeRange
@@ -185,6 +228,7 @@ export function AddModal() {
           </div>
           <div className="flex gap-4 items-center">
             <Label className="shrink-0 w-24 text-right text-muted-foreground">
+              <span className="text-destructive">*</span>
               {t("language")}
             </Label>
             <ToggleGroup
@@ -196,8 +240,23 @@ export function AddModal() {
               <ToggleGroupItem value="en">{t("english")}</ToggleGroupItem>
             </ToggleGroup>
           </div>
+          {/* 标题 : 平台代理公告 下级代理公告时 不显示 */}
           <div className="flex gap-4 items-center">
             <Label className="shrink-0 w-24 text-right text-muted-foreground">
+              <span className="text-destructive">*</span>
+              {t("title")}
+            </Label>
+            <Input
+              placeholder={t("placeholder")}
+              className="w-2/3 resize-none"
+              value={titleOfLanguage}
+              maxLength={20}
+              onChange={(e) => handleTitleChange(e.target.value)}
+            />
+          </div>
+          <div className="flex gap-4 items-center">
+            <Label className="shrink-0 w-24 text-right text-muted-foreground">
+              <span className="text-destructive">*</span>
               {t("announcementContent")}
             </Label>
             <Textarea
@@ -210,6 +269,7 @@ export function AddModal() {
           </div>
           <div className="flex gap-4 items-center">
             <Label className="shrink-0 w-24 text-right text-muted-foreground">
+              <span className="text-destructive">*</span>
               {t("status")}
             </Label>
             <RadioGroup

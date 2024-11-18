@@ -8,12 +8,12 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import type { RechargeReport } from "@/lib/types";
+import type { WithdrawReport } from "@/lib/types";
 import type { PageData } from "@/lib/types";
 import { getTranslations } from "next-intl/server";
 
-async function RechargeTableHeader() {
-  const t = await getTranslations("report.recharge");
+async function WithdrawTableHeader() {
+  const t = await getTranslations("report.withdraw");
   return (
     <TableHeader>
       <TableRow className="bg-muted">
@@ -27,26 +27,38 @@ async function RechargeTableHeader() {
           {t("currency")}
         </TableHead>
         <TableHead className="w-24 min-w-24 text-center">
-          {t("rechargeMoney")}
+          {t("withdrawMoney")}
+        </TableHead>
+        <TableHead className="w-24 min-w-24 text-center">
+          {t("withdrawFee")}
+        </TableHead>
+        <TableHead className="w-24 min-w-24 text-center">
+          {t("status")}
+        </TableHead>
+        <TableHead className="w-24 min-w-24 text-center">
+          {t("applyTime")}
+        </TableHead>
+        <TableHead className="w-24 min-w-24 text-center">
+          {t("approverTime")}
         </TableHead>
         <TableHead className="w-24 min-w-24 text-center">
           {t("finishTime")}
         </TableHead>
         <TableHead className="w-24 min-w-24 text-center">
-          {t("rechargeHash")}
+          {t("withdrawHash")}
         </TableHead>
       </TableRow>
     </TableHeader>
   );
 }
-export async function RechargeTable({
+export async function WithdrawTable({
   data,
-}: { data?: PageData<RechargeReport> }) {
+}: { data?: PageData<WithdrawReport> }) {
   const t = await getTranslations();
   return (
     <div className="border rounded-sm">
       <Table>
-        <RechargeTableHeader />
+        <WithdrawTableHeader />
         <TableBody>
           {data && data.list.length > 0 ? (
             data.list.map((item) => (
@@ -61,21 +73,33 @@ export async function RechargeTable({
                   {item.currency}
                 </TableCell>
                 <TableCell className="w-24 min-w-24 text-center">
-                  {item.rechargeMoney}
+                  {item.withdrawMoney}
+                </TableCell>
+                <TableCell className="w-24 min-w-24 text-center">
+                  {item.withdrawFee}
+                </TableCell>
+                <TableCell className="w-24 min-w-24 text-center">
+                  {item.status}
+                </TableCell>
+                <TableCell className="w-24 min-w-24 text-center">
+                  {item.applyTime}
+                </TableCell>
+                <TableCell className="w-24 min-w-24 text-center">
+                  {item.approverTime}
                 </TableCell>
                 <TableCell className="w-24 min-w-24 text-center">
                   {item.finishTime}
                 </TableCell>
                 <TableCell className="w-24 min-w-24 text-center">
                   <Button variant="link" size="icon">
-                    {item.rechargeHash}
+                    {item.withdrawHash}
                   </Button>
                 </TableCell>
               </TableRow>
             ))
           ) : (
             <TableRow>
-              <TableCell colSpan={7} className="text-center h-40">
+              <TableCell colSpan={10} className="text-center h-40">
                 {t("noData")}
               </TableCell>
             </TableRow>
