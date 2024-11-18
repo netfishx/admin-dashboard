@@ -594,7 +594,9 @@
       "currency": "币种",
       "balance": "余额",
       "status": "状态",
-      "createTime": "创建时间"
+      "createTime": "创建时间",
+      "action": "操作",
+      "title": "归集地址管理"
     }
   },
   "personal": {
