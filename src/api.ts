@@ -677,3 +677,17 @@ export async function addCollectionAddress(data: {
     token: user?.token,
   });
 }
+
+// 锁定归集地址
+export async function lockCollectionAddress(data: {
+  address: string;
+  size: number;
+}) {
+  const user = await getSession();
+  return await apiRequest({
+    url: "/collection/address/enable",
+    method: "POST",
+    data,
+    token: user?.token,
+  });
+}

@@ -63,7 +63,7 @@ export async function List({ data }: { data: CollectionAddressListRecords[] }) {
                     {item.updateTime}
                   </TableCell>
                   <TableCell className="w-12 text-center sticky right-0 z-10 bg-background">
-                    <DetailButton id={item.id} />
+                    <DetailButton item={item} />
                   </TableCell>
                 </TableRow>
               ))}

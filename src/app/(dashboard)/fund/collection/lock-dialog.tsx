@@ -1,4 +1,5 @@
 "use client";
+import { lockCollectionAddress } from "@/api";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -9,17 +10,26 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
+import type { CollectionAddressListRecords } from "@/lib/types";
 import { useTranslations } from "next-intl";
 
 interface Dialogprops {
   open?: boolean;
   onOpenChange: (open: boolean) => void;
+  item: CollectionAddressListRecords;
 }
 
 export function LockDialog(props: Dialogprops) {
   const { open = true, onOpenChange } = props;
   const t = useTranslations("fund.collection");
   const translations = useTranslations();
+  const handleConfirm = async () => {
+    await lockCollectionAddress({
+      address: props.item.address,
+      size: 3,
+    });
+    onOpenChange(false);
+  };
   return (
     <AlertDialog open={open} onOpenChange={onOpenChange}>
       <AlertDialogContent>
@@ -29,7 +39,9 @@ export function LockDialog(props: Dialogprops) {
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>{translations("cancel")}</AlertDialogCancel>
-          <AlertDialogAction>{translations("confirm")}</AlertDialogAction>
+          <AlertDialogAction onClick={handleConfirm}>
+            {translations("confirm")}
+          </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
