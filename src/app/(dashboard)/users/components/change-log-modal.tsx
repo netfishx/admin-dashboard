@@ -11,6 +11,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import { Skeleton } from "@/components/ui/skeleton";
 import {
   Table,
   TableBody,
@@ -32,6 +33,7 @@ export function ChangeLogModal({
   const translation = useTranslations();
   const t = useTranslations("users.agents");
   const [open, setOpen] = useAtom(changeLogModalAtom);
+  const [loading, setLoading] = useState(true);
   const [pageNum, setPageNum] = useState<number>(1);
   const [pageSize, setPageSize] = useState<number>(10);
   const [total, setTotal] = useState<number>(0);
@@ -39,12 +41,14 @@ export function ChangeLogModal({
 
   useEffect(() => {
     if (targetUserId && open) {
+      setLoading(true);
       getChangeLog({
         targetUserId,
         appType,
         pageNum,
         pageSize,
       }).then(({ data }) => {
+        setLoading(false);
         console.info(data);
         if (data) {
           setData(data);
@@ -67,30 +71,52 @@ export function ChangeLogModal({
         </DialogHeader>
         <div className="border rounded-sm">
           <Table>
-            <TableHeader>
+            <TableHeader className="table w-full">
               <TableRow className="bg-muted">
-                <TableHead>{t("operateTime")}</TableHead>
-                <TableHead>{t("operater")}</TableHead>
-                <TableHead>{t("username")}</TableHead>
-                <TableHead>{t("ip")}</TableHead>
-                <TableHead>{t("address")}</TableHead>
-                <TableHead>{t("operateType")}</TableHead>
-                <TableHead>{t("operateDesc")}</TableHead>
+                <TableHead className="w-[150px]">{t("operateTime")}</TableHead>
+                <TableHead className="w-[100px]">{t("operater")}</TableHead>
+                <TableHead className="w-[100px]">{t("username")}</TableHead>
+                <TableHead className="w-[150px]">{t("ip")}</TableHead>
+                <TableHead className="w-[150px]">{t("address")}</TableHead>
+                <TableHead className="w-[100px]">{t("operateType")}</TableHead>
+                <TableHead className="flex-1">{t("operateDesc")}</TableHead>
               </TableRow>
             </TableHeader>
-            <TableBody>
-              {data?.list?.map((item) => (
-                <TableRow key={item.id}>
-                  <TableCell>{item.operateTime}</TableCell>
-                  <TableCell>{item.userNickName}</TableCell>
-                  <TableCell>{item.userName}</TableCell>
-                  <TableCell>{item.remoteIp}</TableCell>
-                  <TableCell>{item.region}</TableCell>
-                  <TableCell>{item.bizType}</TableCell>
-                  <TableCell>{item.msg}</TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
+            {loading ? (
+              <ChangeLogSkeleton />
+            ) : (
+              <TableBody className="w-full max-h-[370px] overflow-auto block">
+                {data?.list?.length > 0 ? (
+                  data?.list?.map((item) => (
+                    <TableRow key={item.id}>
+                      <TableCell className="w-[150px]">
+                        {item.operateTime}
+                      </TableCell>
+                      <TableCell className="w-[100px]">
+                        {item.userNickName}
+                      </TableCell>
+                      <TableCell className="w-[100px]">
+                        {item.userName}
+                      </TableCell>
+                      <TableCell className="w-[150px]">
+                        {item.remoteIp}
+                      </TableCell>
+                      <TableCell className="w-[150px]">{item.region}</TableCell>
+                      <TableCell className="w-[100px]">
+                        {item.bizType}
+                      </TableCell>
+                      <TableCell className="flex-1">{item.msg}</TableCell>
+                    </TableRow>
+                  ))
+                ) : (
+                  <TableRow>
+                    <TableCell colSpan={7} className="text-center h-40">
+                      {translation("noData")}
+                    </TableCell>
+                  </TableRow>
+                )}
+              </TableBody>
+            )}
           </Table>
         </div>
         <ModalPagination
@@ -108,5 +134,20 @@ export function ChangeLogModal({
         </DialogFooter>
       </DialogContent>
     </Dialog>
+  );
+}
+
+function ChangeLogSkeleton() {
+  return (
+    <TableBody>
+      {Array.from({ length: 5 }).map((_, i) => (
+        // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
+        <TableRow key={i}>
+          <TableCell colSpan={7}>
+            <Skeleton className="w-full h-6" />
+          </TableCell>
+        </TableRow>
+      ))}
+    </TableBody>
   );
 }

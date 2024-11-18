@@ -48,7 +48,7 @@ export default function Action({ data }: { data: MemberList }) {
       <Button
         variant="ghost"
         size="sm"
-        className="text-primary hover:text-primary/80 text-sm"
+        className="text-primary hover:text-primary/80 text-sm px-2"
         onClick={() => {
           setMemberInfoData(data);
           setMemberInfoModal(true);
@@ -60,7 +60,7 @@ export default function Action({ data }: { data: MemberList }) {
       <Button
         variant="ghost"
         size="sm"
-        className="text-primary hover:text-primary/80 text-sm"
+        className="text-primary hover:text-primary/80 text-sm px-2"
         onClick={() => {
           setMemberId(data.id);
           setRatioModal(true);
@@ -72,7 +72,7 @@ export default function Action({ data }: { data: MemberList }) {
       <Button
         variant="ghost"
         size="sm"
-        className="text-primary hover:text-primary/80 text-sm"
+        className="text-primary hover:text-primary/80 text-sm px-2"
         onClick={() => {
           setMemberId(data.id);
           setIncreaseCreditModal(true);
@@ -84,7 +84,7 @@ export default function Action({ data }: { data: MemberList }) {
       <Button
         variant="ghost"
         size="sm"
-        className="text-primary hover:text-primary/80 text-sm"
+        className="text-primary hover:text-primary/80 text-sm px-2"
         onClick={() => {
           setMemberId(data.id);
           setDecreaseCreditModal(true);
@@ -96,7 +96,7 @@ export default function Action({ data }: { data: MemberList }) {
       <Button
         variant="ghost"
         size="sm"
-        className="text-primary hover:text-primary/80 text-sm"
+        className="text-primary hover:text-primary/80 text-sm px-2"
         onClick={() => {
           setMemberId(data.id);
           setDeleteCreditModal(true);
@@ -108,7 +108,7 @@ export default function Action({ data }: { data: MemberList }) {
       <Button
         variant="ghost"
         size="sm"
-        className="text-primary hover:text-primary/80 text-sm"
+        className="text-primary hover:text-primary/80 text-sm px-2"
         onClick={() => {
           setMemberId(data.id);
           setLimitModal(true);
@@ -120,7 +120,7 @@ export default function Action({ data }: { data: MemberList }) {
       <Button
         variant="ghost"
         size="sm"
-        className="text-primary hover:text-primary/80 text-sm"
+        className="text-primary hover:text-primary/80 text-sm px-2"
         onClick={() => {
           setMemberId(data.id);
           setRebateModal(true);
@@ -132,7 +132,7 @@ export default function Action({ data }: { data: MemberList }) {
       <Button
         variant="ghost"
         size="sm"
-        className="text-primary hover:text-primary/80 text-sm"
+        className="text-primary hover:text-primary/80 text-sm px-2"
         onClick={() => {
           setMemberId(data.id);
           setLoginLogModal(true);
@@ -144,7 +144,7 @@ export default function Action({ data }: { data: MemberList }) {
       <Button
         variant="ghost"
         size="sm"
-        className="text-primary hover:text-primary/80 text-sm"
+        className="text-primary hover:text-primary/80 text-sm px-2"
         onClick={() => {
           setMemberId(data.id);
           setChangeLogModal(true);
