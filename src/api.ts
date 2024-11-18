@@ -658,9 +658,36 @@ export async function getCollectionAddressList(
   params: CollectionAddressListRequestParams,
 ) {
   const user = await getSession();
-  return await apiRequest<PageData<CollectionAddressListRecords>>({
-    url: "/agent/collection/address/list",
+  return await apiRequest<CollectionAddressListRecords[]>({
+    url: "/collection/address/list",
     token: user?.token,
     params,
+  });
+}
+
+// 新增归集地址
+export async function addCollectionAddress(data: {
+  size: number;
+}) {
+  const user = await getSession();
+  return await apiRequest({
+    url: "/collection/address/add",
+    method: "POST",
+    data,
+    token: user?.token,
+  });
+}
+
+// 锁定归集地址
+export async function lockCollectionAddress(data: {
+  address: string;
+  status: number;
+}) {
+  const user = await getSession();
+  return await apiRequest({
+    url: "/collection/address/enable",
+    method: "POST",
+    data,
+    token: user?.token,
   });
 }

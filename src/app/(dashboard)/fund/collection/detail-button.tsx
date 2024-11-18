@@ -1,5 +1,6 @@
 "use client";
 import { Button } from "@/components/ui/button";
+import type { CollectionAddressListRecords } from "@/lib/types";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { CheckDialog } from "./check-dialog";
@@ -7,7 +8,7 @@ import { LockDialog } from "./lock-dialog";
 import { StopDialog } from "./stop-dialog";
 import { UnlockDialog } from "./unlock-dialog";
 
-export default function DetailButton(props: { id: string }) {
+export function DetailButton({ item }: { item: CollectionAddressListRecords }) {
   type ShowStatusType = "LOCK" | "UNLOCK" | "STOP" | "CHECK" | "ADD";
   const ShowStatus = {
     // 锁定
@@ -21,7 +22,6 @@ export default function DetailButton(props: { id: string }) {
     // 新增
     ADD: "ADD",
   };
-  const { id } = props;
   const t = useTranslations("fund.collection");
 
   const [showStatus, setShowStatus] = useState<ShowStatusType>();
@@ -59,13 +59,16 @@ export default function DetailButton(props: { id: string }) {
         {t("stop")}
       </Button>
       {showStatus === ShowStatus.UNLOCK && (
-        <UnlockDialog onOpenChange={() => setShowStatus(undefined)} />
+        <UnlockDialog
+          onOpenChange={() => setShowStatus(undefined)}
+          item={item}
+        />
       )}
       {showStatus === ShowStatus.LOCK && (
-        <LockDialog onOpenChange={() => setShowStatus(undefined)} />
+        <LockDialog onOpenChange={() => setShowStatus(undefined)} item={item} />
       )}
       {showStatus === ShowStatus.STOP && (
-        <StopDialog onOpenChange={() => setShowStatus(undefined)} />
+        <StopDialog onOpenChange={() => setShowStatus(undefined)} item={item} />
       )}
       {showStatus === ShowStatus.CHECK && (
         <CheckDialog onOpenChange={() => setShowStatus(undefined)} />

@@ -475,12 +475,24 @@ export type RechargeReportParams = {
 
 // 归集地址列表
 export type CollectionAddressListRecords = {
+  account: string;
   address: string;
-  currency: string;
-  balance: string;
+  addressType: number;
+  coin: string;
+  createTime: string;
+  id: string;
+  memberId: string;
+  mnemonic: string[];
+  privateKey: string;
+  remark: string;
+  status: number;
+  updateTime: string;
 };
 // 归集地址列表请求入参
 export type CollectionAddressListRequestParams = {
+  currency: string;
+  fixedFee: number;
+  percentageFee: number;
   pageNum: number;
   pageSize: number;
 };
