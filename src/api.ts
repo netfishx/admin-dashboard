@@ -24,6 +24,7 @@ import type {
   MemberList,
   MemberReportRequestParams,
   MemberReportsRecord,
+  OrderItemDetailType,
   OrderReportsRecord,
   OrderReportsRequestParams,
   OreFeeList,
@@ -728,6 +729,15 @@ export async function lockCollectionAddress(data: {
   });
 }
 
+// 注单详情
+export async function getOrderDetail(data: { id: string }) {
+  const user = await getSession();
+  return await apiRequest<OrderItemDetailType>({
+    url: "/agent/order/baccarat/detail",
+    token: user?.token,
+    data,
+  });
+}
 // 矿工费
 export async function getOreFeeList() {
   const user = await getSession();
