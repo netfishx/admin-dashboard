@@ -124,7 +124,7 @@ async function TableHeaderWrapper() {
         <TableHead className="min-w-32 text-center">
           {t("moneyStatus")}
         </TableHead>
-        <TableHead className="min-w-48 text-center sticky right-0 bg-muted z-20 shadow-[-4px_0_8px_-6px_rgba(0,0,0,0.2)]">
+        <TableHead className="min-w-48 text-center sticky right-0 bg-muted">
           {t("action")}
         </TableHead>
       </TableRow>
