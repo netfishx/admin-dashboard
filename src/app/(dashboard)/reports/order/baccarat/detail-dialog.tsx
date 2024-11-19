@@ -30,7 +30,6 @@ export function Detaildialog(props: Dialogprops) {
     if (open) {
       getOrderDetail({ id: "1731907697706" }).then((res) => {
         setData(res?.data);
-        console.log(res?.data, "123");
       });
     }
   }, [open]);
