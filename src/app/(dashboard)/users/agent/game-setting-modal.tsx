@@ -24,14 +24,16 @@ import {
 import type { GameConfig } from "@/lib/types";
 import { agentIdAtom, gameSettingModalAtom } from "@/store";
 import { useAtom, useAtomValue } from "jotai";
+import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useTransition } from "react";
 
 export function GameSettingModal() {
   const translations = useTranslations();
   const t = useTranslations("users.agents");
   const userId = useAtomValue(agentIdAtom);
   const [loading, setLoading] = useState(true);
+  const [isPeding, startTransition] = useTransition();
   const [open, setOpen] = useAtom(gameSettingModalAtom);
   const [data, setData] = useState<GameConfig[] | undefined>();
   useEffect(() => {
@@ -209,7 +211,13 @@ export function GameSettingModal() {
           <Button variant="outline" onClick={() => setOpen(false)}>
             {translations("cancel")}
           </Button>
-          <Button onClick={handleClickUpdate}>{translations("confirm")}</Button>
+          <Button
+            disabled={isPeding}
+            onClick={() => startTransition(handleClickUpdate)}
+          >
+            {isPeding && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+            {translations("confirm")}
+          </Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

@@ -23,8 +23,9 @@ import {
 import type { ChangeLog } from "@/lib/types";
 import { changeLogModalAtom } from "@/store";
 import { useAtom } from "jotai";
+import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useTransition } from "react";
 
 export function ChangeLogModal({
   targetUserId,
@@ -34,6 +35,7 @@ export function ChangeLogModal({
   const t = useTranslations("users.agents");
   const [open, setOpen] = useAtom(changeLogModalAtom);
   const [loading, setLoading] = useState(true);
+  const [isPending, startTransition] = useTransition();
   const [pageNum, setPageNum] = useState<number>(1);
   const [pageSize, setPageSize] = useState<number>(10);
   const [total, setTotal] = useState<number>(0);
@@ -130,7 +132,13 @@ export function ChangeLogModal({
           <Button variant="outline" onClick={() => setOpen(false)}>
             {translation("cancel")}
           </Button>
-          <Button>{translation("confirm")}</Button>
+          <Button
+            disabled={isPending}
+            onClick={() => startTransition(() => setOpen(false))}
+          >
+            {isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+            {translation("confirm")}
+          </Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

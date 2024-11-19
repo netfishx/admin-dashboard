@@ -13,12 +13,15 @@ import {
 import { Label } from "@/components/ui/label";
 import { increaseCreditModalAtom } from "@/store";
 import { useAtom } from "jotai";
+import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { useTransition } from "react";
 
 export function IncreaseCreditModal() {
   const translation = useTranslations();
   const t = useTranslations("users.members");
   const [open, setOpen] = useAtom(increaseCreditModalAtom);
+  const [isPending, startTransition] = useTransition();
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -66,7 +69,13 @@ export function IncreaseCreditModal() {
           <Button variant="outline" onClick={() => setOpen(false)}>
             {translation("cancel")}
           </Button>
-          <Button>{translation("confirm")}</Button>
+          <Button
+            disabled={isPending}
+            onClick={() => startTransition(() => setOpen(false))}
+          >
+            {isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+            {translation("confirm")}
+          </Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

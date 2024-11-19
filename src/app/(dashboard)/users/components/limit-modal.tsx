@@ -31,17 +31,21 @@ import {
 import type { GameConfig, GameOdds } from "@/lib/types";
 import { limitModalAtom } from "@/store";
 import { useAtom } from "jotai";
+import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { Suspense, useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { Suspense, useEffect, useState, useTransition } from "react";
 
 export function LimitModal({ userId }: { userId: string }) {
   const translations = useTranslations();
   const [open, setOpen] = useAtom(limitModalAtom);
   const t = useTranslations("users.agents");
   const [loading, setLoading] = useState(true);
+  const [isPending, startTransition] = useTransition();
   const [list, setList] = useState<GameConfig[]>([]);
   const [gameId, setGameId] = useState<number>();
   const [data, setData] = useState<GameOdds[]>([]);
+  const router = useRouter();
   useEffect(() => {
     if (open && userId) {
       setLoading(true);
@@ -82,6 +86,8 @@ export function LimitModal({ userId }: { userId: string }) {
 
   const handleSave = () => {
     console.info(data);
+    setOpen(false);
+    router.refresh();
   };
 
   return (
@@ -198,7 +204,13 @@ export function LimitModal({ userId }: { userId: string }) {
           <Button variant="outline" onClick={() => setOpen(false)}>
             {translations("cancel")}
           </Button>
-          <Button onClick={handleSave}>{translations("confirm")}</Button>
+          <Button
+            disabled={isPending}
+            onClick={() => startTransition(handleSave)}
+          >
+            {isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+            {translations("confirm")}
+          </Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

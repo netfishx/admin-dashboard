@@ -23,16 +23,19 @@ import {
 import type { GameConfig } from "@/lib/types";
 import { rebateModalAtom } from "@/store";
 import { useAtom } from "jotai";
+import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { useEffect, useState } from "react";
-
+import { useRouter } from "next/navigation";
+import { useEffect, useState, useTransition } from "react";
 export function RebateModal({ userId }: { userId: string }) {
   const translations = useTranslations();
   const t = useTranslations("users.agents");
 
   const [open, setOpen] = useAtom(rebateModalAtom);
   const [loading, setLoading] = useState<boolean>(true);
+  const [isPending, startTransition] = useTransition();
   const [data, setData] = useState<GameConfig[] | undefined>();
+  const router = useRouter();
   useEffect(() => {
     if (userId && open) {
       setLoading(true);
@@ -70,6 +73,7 @@ export function RebateModal({ userId }: { userId: string }) {
       }).then(({ data, message, code }) => {
         console.info(data, message, code);
         setOpen(false);
+        router.refresh();
       });
     }
   };
@@ -105,7 +109,13 @@ export function RebateModal({ userId }: { userId: string }) {
           <Button variant="outline" onClick={() => setOpen(false)}>
             {translations("cancel")}
           </Button>
-          <Button onClick={handleConfirm}>{translations("confirm")}</Button>
+          <Button
+            disabled={isPending}
+            onClick={() => startTransition(handleConfirm)}
+          >
+            {isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+            {translations("confirm")}
+          </Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

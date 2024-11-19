@@ -23,8 +23,9 @@ import type { LoginLog } from "@/lib/types";
 import { cn } from "@/lib/utils";
 import { loginLogModalAtom } from "@/store";
 import { useAtom } from "jotai";
+import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useTransition } from "react";
 
 export function LoginLogModal({
   id,
@@ -34,6 +35,7 @@ export function LoginLogModal({
   const t = useTranslations("users.agents");
   const [data, setData] = useState<LoginLog[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
+  const [isPending, startTransition] = useTransition();
   const [open, setOpen] = useAtom(loginLogModalAtom);
   const [total, setTotal] = useState<number>(0);
   const [page, setPage] = useState<number>(1);
@@ -139,7 +141,13 @@ export function LoginLogModal({
           <Button variant="outline" onClick={() => setOpen(false)}>
             {translations("cancel")}
           </Button>
-          <Button>{translations("confirm")}</Button>
+          <Button
+            disabled={isPending}
+            onClick={() => startTransition(() => setOpen(false))}
+          >
+            {isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+            {translations("confirm")}
+          </Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>
