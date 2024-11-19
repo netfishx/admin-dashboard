@@ -13,12 +13,15 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { deleteCreditModalAtom } from "@/store";
 import { useAtom } from "jotai";
+import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { useTransition } from "react";
 
 export function DeleteCreditModal() {
   const translation = useTranslations();
   const t = useTranslations("users.members");
   const [open, setOpen] = useAtom(deleteCreditModalAtom);
+  const [isPending, startTransition] = useTransition();
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent onPointerDownOutside={(e) => e.preventDefault()}>
@@ -53,7 +56,13 @@ export function DeleteCreditModal() {
           <Button variant="outline" onClick={() => setOpen(false)}>
             {translation("cancel")}
           </Button>
-          <Button>{translation("confirm")}</Button>
+          <Button
+            disabled={isPending}
+            onClick={() => startTransition(() => setOpen(false))}
+          >
+            {isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+            {translation("confirm")}
+          </Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

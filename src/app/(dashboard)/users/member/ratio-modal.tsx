@@ -22,8 +22,9 @@ import {
 import type { GameConfig } from "@/lib/types";
 import { memberIdAtom, ratioModalAtom } from "@/store";
 import { useAtom, useAtomValue } from "jotai";
+import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useTransition } from "react";
 
 export function RatioModal() {
   const translations = useTranslations();
@@ -31,6 +32,7 @@ export function RatioModal() {
   const userId = useAtomValue(memberIdAtom);
   const [open, setOpen] = useAtom(ratioModalAtom);
   const [loading, setLoading] = useState<boolean>(true);
+  const [isPending, startTransition] = useTransition();
   const [data, setData] = useState<GameConfig[] | undefined>();
   useEffect(() => {
     if (userId && open) {
@@ -97,7 +99,11 @@ export function RatioModal() {
           <Button variant="outline" onClick={() => setOpen(false)}>
             {translations("cancel")}
           </Button>
-          <Button onClick={() => setOpen(false)}>
+          <Button
+            disabled={isPending}
+            onClick={() => startTransition(() => setOpen(false))}
+          >
+            {isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
             {translations("confirm")}
           </Button>
         </DialogFooter>
