@@ -76,7 +76,8 @@ function LockButton({ data }: { data: ApplyData }) {
     <AlertDialog>
       <AlertDialogTrigger asChild>
         <Button variant="link" disabled={isPending} className="px-2">
-          {isPending ? <Loader2 className="w-4 h-4 animate-spin" /> : t("lock")}
+          {isPending && <Loader2 className="w-4 h-4 animate-spin" />}
+          {t("lock")}
         </Button>
       </AlertDialogTrigger>
       <AlertDialogContent>
@@ -120,7 +121,8 @@ function PassButton({ data }: { data: ApplyData }) {
     <AlertDialog>
       <AlertDialogTrigger asChild>
         <Button variant="link" disabled={isPending} className="px-2">
-          {isPending ? <Loader2 className="w-4 h-4 animate-spin" /> : t("pass")}
+          {isPending && <Loader2 className="w-4 h-4 animate-spin" />}
+          {t("pass")}
         </Button>
       </AlertDialogTrigger>
       <AlertDialogContent>

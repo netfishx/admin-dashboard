@@ -48,7 +48,36 @@ export default async function Page({
     </div>
   );
 }
-
+async function PeriodTableHeader() {
+  const t = await getTranslations("report.periodlist");
+  return (
+    <TableHeader>
+      <TableRow className="bg-muted">
+        <TableHead className="min-w-32 text-center">
+          {t("issueNumber")}
+        </TableHead>
+        <TableHead className="min-w-32 text-center">{t("openTime")}</TableHead>
+        <TableHead className="min-w-32 text-center">
+          {t("gameTypeName")}
+        </TableHead>
+        <TableHead className="min-w-32 text-center">{t("gameName")}</TableHead>
+        <TableHead className="min-w-32 text-center">{t("betNum")}</TableHead>
+        <TableHead className="min-w-32 text-center">{t("betAmount")}</TableHead>
+        <TableHead className="min-w-32 text-center">{t("tieAmount")}</TableHead>
+        <TableHead className="min-w-32 text-center">
+          {t("pairBetAmount")}
+        </TableHead>
+        <TableHead className="min-w-32 text-center">
+          {t("validBetAmount")}
+        </TableHead>
+        <TableHead className="text-center">{t("memberBackAmount")}</TableHead>
+        <TableHead className="w-24 text-center sticky right-0 bg-muted">
+          {t("action")}
+        </TableHead>
+      </TableRow>
+    </TableHeader>
+  );
+}
 async function PeriodTable({
   searchParams,
 }: { searchParams: Promise<{ [key: string]: string | string[] }> }) {
@@ -72,43 +101,7 @@ async function PeriodTable({
       <div className="bg-background flex-1">
         <div className="h-full border rounded-sm relative">
           <Table>
-            <TableHeader>
-              <TableRow className="bg-muted">
-                <TableHead className="min-w-32 text-center">
-                  {t("issueNumber")}
-                </TableHead>
-                <TableHead className="min-w-32 text-center">
-                  {t("openTime")}
-                </TableHead>
-                <TableHead className="min-w-32 text-center">
-                  {t("gameTypeName")}
-                </TableHead>
-                <TableHead className="min-w-32 text-center">
-                  {t("gameName")}
-                </TableHead>
-                <TableHead className="min-w-32 text-center">
-                  {t("betNum")}
-                </TableHead>
-                <TableHead className="min-w-32 text-center">
-                  {t("betAmount")}
-                </TableHead>
-                <TableHead className="min-w-32 text-center">
-                  {t("tieAmount")}
-                </TableHead>
-                <TableHead className="min-w-32 text-center">
-                  {t("pairBetAmount")}
-                </TableHead>
-                <TableHead className="min-w-32 text-center">
-                  {t("validBetAmount")}
-                </TableHead>
-                <TableHead className="min-w-32 text-center">
-                  {t("memberBackAmount")}
-                </TableHead>
-                <TableHead className="w-24 text-center sticky right-0 bg-muted">
-                  {t("action")}
-                </TableHead>
-              </TableRow>
-            </TableHeader>
+            <PeriodTableHeader />
             <Suspense
               fallback={
                 <TableBody>
@@ -154,7 +147,7 @@ async function PeriodTable({
                       <TableCell className="w-24 text-center">
                         {item.validBetAmount}
                       </TableCell>
-                      <TableCell className="w-24 text-center">
+                      <TableCell className="text-center">
                         {item.memberBackAmount}
                       </TableCell>
                       <TableCell className="sticky right-0 bg-background w-24 text-center">

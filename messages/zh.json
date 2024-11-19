@@ -642,6 +642,19 @@
       "action": "操作",
       "title": "归集地址管理",
       "caozuo": "操作"
+    },
+    "orefee": {
+      "add": "新增",
+      "remove": "移除",
+      "address": "地址",
+      "coin": "币种",
+      "usdtBalance": "余额",
+      "actions": "操作",
+      "feeManagement": "矿工费管理",
+      "addDesc": "请确定是否新增矿工费地址？",
+      "removeDesc": "请确定是否移除矿工费地址？",
+      "confirm": "确定",
+      "cancel": "取消"
     }
   },
   "personal": {
@@ -784,5 +797,6 @@
       "cleanDesc": "确定清除该稽核吗？",
       "cancel": "取消"
     }
+   
   }
 }

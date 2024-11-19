@@ -10,11 +10,13 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
+import type { AuditList } from "@/lib/types";
 import { endOfDay, startOfDay } from "date-fns";
 import { getTranslations } from "next-intl/server";
 import { Suspense } from "react";
 import { CleanBtn } from "./clean-btn";
 import { Form } from "./form";
+
 export default async function Page({
   searchParams,
 }: { searchParams: Promise<{ [key: string]: string | string[] }> }) {
@@ -32,16 +34,7 @@ export default async function Page({
         <Form />
       </Suspense>
       <div className="bg-background flex-1">
-        <Suspense
-          fallback={
-            <div className="bg-background py-2">
-              <Skeleton className="h-9 w-full opacity-25" />
-              <Skeleton className="h-9 w-full opacity-25" />
-              <Skeleton className="h-9 w-full opacity-25" />
-              <Skeleton className="h-9 w-full opacity-25" />
-            </div>
-          }
-        >
+        <Suspense>
           <TableWrapper searchParams={searchParams} />
         </Suspense>
       </div>
@@ -52,9 +45,6 @@ export default async function Page({
 async function TableWrapper({
   searchParams,
 }: { searchParams: Promise<{ [key: string]: string | string[] }> }) {
-  const t = await getTranslations("withdraw.audit");
-  const translations = await getTranslations();
-
   const search = await searchParams;
   const now = Date.now();
   const start = search.startTime ?? startOfDay(now).getTime();
@@ -73,85 +63,23 @@ async function TableWrapper({
     <div className="p-2 bg-background flex-1 w-full ">
       <div className="relative overflow-y-auto overflow-x-auto border rounded-sm">
         <Table>
-          <TableHeader>
-            <TableRow className="bg-muted">
-              <TableHead className="min-w-32 text-center">{t("id")}</TableHead>
-              <TableHead className="min-w-32 text-center">
-                {t("createTime")}
-              </TableHead>
-              <TableHead className="min-w-32 text-center">
-                {t("orderType")}
-              </TableHead>
-              <TableHead className="min-w-32 text-center">
-                {t("userId")}
-              </TableHead>
-              <TableHead className="min-w-32 text-center">
-                {t("orderAmount")}
-              </TableHead>
-              <TableHead className="min-w-32 text-center">
-                {t("auditMultiple")}
-              </TableHead>
-              <TableHead className="min-w-32 text-center">
-                {t("availableAudit")}
-              </TableHead>
-              <TableHead className="min-w-32 text-center">
-                {t("remainingAudit")}
-              </TableHead>
-              <TableHead className="min-w-32 text-center">
-                {t("status")}
-              </TableHead>
-
-              <TableHead className="min-w-48 text-center sticky right-0 bg-muted z-20 shadow-[-4px_0_8px_-6px_rgba(0,0,0,0.2)]">
-                {translations("action")}
-              </TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {data && data.list.length > 0 ? (
-              data.list.map((item) => (
-                <TableRow key={item.id}>
-                  <TableCell className="min-w-32 text-center">
-                    {item.id}
-                  </TableCell>
-                  <TableCell className="min-w-32 text-center">
-                    {item.createTime}
-                  </TableCell>
-
-                  <TableCell className="min-w-32 text-center">
-                    {item.orderType}
-                  </TableCell>
-                  <TableCell className="min-w-32 text-center">
-                    {item.userId}
-                  </TableCell>
-                  <TableCell className="min-w-32 text-center">
-                    {item.orderAmount}
-                  </TableCell>
-                  <TableCell className="min-w-32 text-center">
-                    {item.auditMultiple}
-                  </TableCell>
-                  <TableCell className="min-w-32 text-center">
-                    {item.availableAudit}
-                  </TableCell>
-                  <TableCell className="min-w-32 text-center">
-                    {item.remainingAudit}
-                  </TableCell>
-                  <TableCell className="min-w-32 text-center">
-                    {item.status}
-                  </TableCell>
-
-                  <TableCell className="min-w-48 text-center sticky right-0 bg-background z-20 shadow-[-4px_0_8px_-6px_rgba(0,0,0,0.2)]">
-                    <CleanBtn data={item} />
-                  </TableCell>
-                </TableRow>
-              ))
-            ) : (
-              <TableRow>
-                <TableCell colSpan={10} className="text-center h-40">
-                  {translations("noData")}
-                </TableCell>
-              </TableRow>
-            )}
-          </TableBody>
+          <TableHeaderWrapper />
+          <Suspense
+            fallback={
+              <TableBody>
+                {Array.from({ length: 5 }).map((_, i) => (
+                  // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
+                  <TableRow key={i}>
+                    <TableCell colSpan={10} className="h-40">
+                      <Skeleton className="w-full h-full" />
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            }
+          >
+            <TableBodyWrapper list={data?.list ?? []} />
+          </Suspense>
         </Table>
       </div>
       {Number(data?.total) > 0 && (
@@ -164,5 +92,83 @@ async function TableWrapper({
         </div>
       )}
     </div>
+  );
+}
+async function TableHeaderWrapper() {
+  const t = await getTranslations("withdraw.audit");
+  const translations = await getTranslations();
+  return (
+    <TableHeader>
+      <TableRow className="bg-muted">
+        <TableHead className="min-w-32 text-center">{t("id")}</TableHead>
+        <TableHead className="min-w-32 text-center">
+          {t("createTime")}
+        </TableHead>
+        <TableHead className="min-w-32 text-center">{t("orderType")}</TableHead>
+        <TableHead className="min-w-32 text-center">{t("userId")}</TableHead>
+        <TableHead className="min-w-32 text-center">
+          {t("orderAmount")}
+        </TableHead>
+        <TableHead className="min-w-32 text-center">
+          {t("auditMultiple")}
+        </TableHead>
+        <TableHead className="min-w-32 text-center">
+          {t("availableAudit")}
+        </TableHead>
+        <TableHead className="text-center">{t("remainingAudit")}</TableHead>
+        <TableHead className="min-w-32 text-center">{t("status")}</TableHead>
+
+        <TableHead className="min-w-48 text-center sticky right-0 bg-muted">
+          {translations("action")}
+        </TableHead>
+      </TableRow>
+    </TableHeader>
+  );
+}
+async function TableBodyWrapper({ list }: { list: AuditList[] }) {
+  const translations = await getTranslations();
+  return (
+    <TableBody>
+      {list && list.length > 0 ? (
+        list.map((item) => (
+          <TableRow key={item.id}>
+            <TableCell className="min-w-32 text-center">{item.id}</TableCell>
+            <TableCell className="min-w-32 text-center">
+              {item.createTime}
+            </TableCell>
+
+            <TableCell className="min-w-32 text-center">
+              {item.orderType}
+            </TableCell>
+            <TableCell className="min-w-32 text-center">
+              {item.userId}
+            </TableCell>
+            <TableCell className="min-w-32 text-center">
+              {item.orderAmount}
+            </TableCell>
+            <TableCell className="min-w-32 text-center">
+              {item.auditMultiple}
+            </TableCell>
+            <TableCell className="min-w-32 text-center">
+              {item.availableAudit}
+            </TableCell>
+            <TableCell className="text-center">{item.remainingAudit}</TableCell>
+            <TableCell className="min-w-32 text-center">
+              {item.status}
+            </TableCell>
+
+            <TableCell className="min-w-48 text-center sticky right-0 bg-background z-20 shadow-[-4px_0_8px_-6px_rgba(0,0,0,0.2)]">
+              <CleanBtn data={item} />
+            </TableCell>
+          </TableRow>
+        ))
+      ) : (
+        <TableRow>
+          <TableCell colSpan={10} className="text-center h-40">
+            {translations("noData")}
+          </TableCell>
+        </TableRow>
+      )}
+    </TableBody>
   );
 }

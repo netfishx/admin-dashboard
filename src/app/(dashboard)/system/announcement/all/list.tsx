@@ -1,4 +1,5 @@
 import { CustomPagination } from "@/components/custom-pagination";
+import { Skeleton } from "@/components/ui/skeleton";
 import {
   Table,
   TableBody,
@@ -10,8 +11,10 @@ import {
 import type { PageData } from "@/lib/types";
 import type { AnnouncementList } from "@/lib/types";
 import { getTranslations } from "next-intl/server";
+import { Suspense } from "react";
 import { formatTimestamp } from "../tools";
 import { TruncatedCell } from "../truncated-cell";
+
 export async function List({ data }: { data?: PageData<AnnouncementList> }) {
   const t = await getTranslations("system.announcement");
   const translations = await getTranslations();
@@ -38,14 +41,10 @@ export async function List({ data }: { data?: PageData<AnnouncementList> }) {
               </TableHead>
 
               {/* admin permission */}
-              <TableHead className="w-24 min-w-24 text-center">
-                {t("type")}
-              </TableHead>
+              <TableHead className="text-center">{t("type")}</TableHead>
 
               {/* admin permission */}
-              <TableHead className="w-24 min-w-24 text-center">
-                {t("userId")}
-              </TableHead>
+              <TableHead className="text-center">{t("userId")}</TableHead>
 
               <TableHead className="w-[450px] min-w-24 text-center">
                 {t("content")}
@@ -55,50 +54,61 @@ export async function List({ data }: { data?: PageData<AnnouncementList> }) {
             </TableHead> */}
             </TableRow>
           </TableHeader>
-          <TableBody>
-            {data && data.list.length > 0 ? (
-              data.list.map((item) => (
-                <TableRow key={item.id}>
-                  {/* admin permission */}
-                  <TableCell className="w-24 text-center">
-                    {formatTimestamp(item.startTime)}
-                  </TableCell>
+          <Suspense
+            fallback={
+              <TableBody>
+                {Array.from({ length: 5 }).map((_, i) => (
+                  // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
+                  <TableRow key={i}>
+                    <TableCell colSpan={10} className="h-40">
+                      <Skeleton className="w-full h-full" />
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            }
+          >
+            <TableBody>
+              {data && data.list.length > 0 ? (
+                data.list.map((item) => (
+                  <TableRow key={item.id}>
+                    {/* admin permission */}
+                    <TableCell className="w-24 text-center">
+                      {formatTimestamp(item.startTime)}
+                    </TableCell>
 
-                  <TableCell className="w-24 text-center">
-                    {formatTimestamp(item.endTime)}
-                  </TableCell>
-                  {/* admin permission */}
-                  <TableCell className="w-24 text-center">
-                    {formatTimestamp(item.createTime)}
-                  </TableCell>
+                    <TableCell className="w-24 text-center">
+                      {formatTimestamp(item.endTime)}
+                    </TableCell>
+                    {/* admin permission */}
+                    <TableCell className="w-24 text-center">
+                      {formatTimestamp(item.createTime)}
+                    </TableCell>
 
-                  {/* admin permission */}
-                  <TableCell className="w-24 min-w-24 text-center">
-                    {item.type}
-                  </TableCell>
+                    {/* admin permission */}
+                    <TableCell className="text-center">{item.type}</TableCell>
 
-                  {/* admin permission */}
-                  <TableCell className="w-24 min-w-24 text-center">
-                    {item.userId}
-                  </TableCell>
+                    {/* admin permission */}
+                    <TableCell className="text-center">{item.userId}</TableCell>
 
-                  <TruncatedCell
-                    content={item.contentOfLanguage}
-                    maxLength={50}
-                  />
-                  {/* <TableCell className="w-24 text-center">
+                    <TruncatedCell
+                      content={item.contentOfLanguage}
+                      maxLength={50}
+                    />
+                    {/* <TableCell className="w-24 text-center">
                   <ViewBtn data={item} />
                 </TableCell> */}
+                  </TableRow>
+                ))
+              ) : (
+                <TableRow>
+                  <TableCell colSpan={10} className="text-center h-40">
+                    {translations("noData")}
+                  </TableCell>
                 </TableRow>
-              ))
-            ) : (
-              <TableRow>
-                <TableCell colSpan={10} className="text-center h-40">
-                  {translations("noData")}
-                </TableCell>
-              </TableRow>
-            )}
-          </TableBody>
+              )}
+            </TableBody>
+          </Suspense>
         </Table>
       </div>
       {Number(data?.total) > 0 && (

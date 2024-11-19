@@ -536,3 +536,21 @@ export type CollectionAddressListRequestParams = {
   pageNum: number;
   pageSize: number;
 };
+
+// 矿工费
+export type OreFeeList = {
+  account: string;
+  address: string;
+  addressType: number;
+  coin: string;
+  createTime: string;
+  id: string;
+  memberId: string;
+  mnemonic: string[];
+  privateKey: string;
+  remark: string;
+  status: number;
+  trxBalance: string;
+  updateTime: string;
+  usdtBalance: string;
+};

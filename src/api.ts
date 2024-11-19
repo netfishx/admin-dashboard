@@ -26,6 +26,7 @@ import type {
   MemberReportsRecord,
   OrderReportsRecord,
   OrderReportsRequestParams,
+  OreFeeList,
   PageData,
   PeriodReport,
   PeriodReportList,
@@ -723,6 +724,39 @@ export async function lockCollectionAddress(data: {
     url: "/collection/address/enable",
     method: "POST",
     data,
+    token: user?.token,
+  });
+}
+
+// 矿工费
+export async function getOreFeeList() {
+  const user = await getSession();
+  return await apiRequest<{ list: OreFeeList[] }>({
+    url: "/orefee/address/list",
+    token: user?.token,
+  });
+}
+// 添加矿工费
+export async function addOreFee(data: {
+  size: number;
+}) {
+  const user = await getSession();
+  return await apiRequest({
+    url: "/orefee/address/add",
+    method: "POST",
+    params: data,
+    token: user?.token,
+  });
+}
+// 移除矿工费
+export async function removeOreFee(data: {
+  address: string;
+}) {
+  const user = await getSession();
+  return await apiRequest({
+    url: "/orefee/address/remove",
+    method: "POST",
+    params: data,
     token: user?.token,
   });
 }
