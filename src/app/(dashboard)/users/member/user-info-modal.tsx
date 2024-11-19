@@ -16,14 +16,16 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import type { MemberList } from "@/lib/types";
 import { memberInfoDataAtom, memberInfoModalAtom } from "@/store";
 import { useAtomValue, useSetAtom } from "jotai";
+import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useTransition } from "react";
 
 export function UserInfoModal() {
   const translation = useTranslations();
   const t = useTranslations("users.members");
   const open = useAtomValue(memberInfoModalAtom);
+  const [isPending, startTransition] = useTransition();
   const setOpen = useSetAtom(memberInfoModalAtom);
   const memberInfoData = useAtomValue(memberInfoDataAtom);
   const [, setEditData] = useState<MemberList | null>(null);
@@ -135,7 +137,11 @@ export function UserInfoModal() {
           <Button variant="outline" onClick={() => setOpen(false)}>
             {translation("cancel")}
           </Button>
-          <Button onClick={handleClickUpdateUserInfo}>
+          <Button
+            disabled={isPending}
+            onClick={() => startTransition(handleClickUpdateUserInfo)}
+          >
+            {isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
             {translation("confirm")}
           </Button>
         </DialogFooter>

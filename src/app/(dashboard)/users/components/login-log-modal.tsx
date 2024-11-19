@@ -10,7 +10,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { ScrollArea } from "@/components/ui/scroll-area";
+import { Skeleton } from "@/components/ui/skeleton";
 import {
   Table,
   TableBody,
@@ -23,15 +23,19 @@ import type { LoginLog } from "@/lib/types";
 import { cn } from "@/lib/utils";
 import { loginLogModalAtom } from "@/store";
 import { useAtom } from "jotai";
+import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useTransition } from "react";
 
 export function LoginLogModal({
   id,
   type,
 }: { id: string; type: "AGENT" | "MEMBER" }) {
+  const translations = useTranslations();
   const t = useTranslations("users.agents");
   const [data, setData] = useState<LoginLog[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [isPending, startTransition] = useTransition();
   const [open, setOpen] = useAtom(loginLogModalAtom);
   const [total, setTotal] = useState<number>(0);
   const [page, setPage] = useState<number>(1);
@@ -39,6 +43,7 @@ export function LoginLogModal({
   useEffect(() => {
     if (id && type === "AGENT") {
       console.info(id, type);
+      setLoading(true);
       getAgentLoginLog({ agentId: id, pageNum: page, pageSize: size }).then(
         ({ data }) => {
           if (data) {
@@ -46,11 +51,13 @@ export function LoginLogModal({
             setTotal(data.total);
             setPage(data.pageNum);
             setSize(data.pageSize);
+            setLoading(false);
           }
         },
       );
     } else if (id && type === "MEMBER") {
       console.info(id, type);
+      setLoading(true);
       getMemberLoginLog({ memberId: id, pageNum: page, pageSize: size }).then(
         ({ data }) => {
           if (data) {
@@ -58,6 +65,7 @@ export function LoginLogModal({
             setTotal(data.total);
             setPage(data.pageNum);
             setSize(data.pageSize);
+            setLoading(false);
           }
         },
       );
@@ -74,39 +82,53 @@ export function LoginLogModal({
           <DialogDescription />
         </DialogHeader>
         <div className="border rounded-sm">
-          <ScrollArea className="h-[40vh] overflow-y-auto">
-            <Table>
-              <TableHeader>
-                <TableRow className="bg-muted">
-                  <TableHead>{t("loginTime")}</TableHead>
-                  <TableHead>{t("ip")}</TableHead>
-                  <TableHead>{t("address")}</TableHead>
-                  <TableHead>{t("status")}</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {data?.map((item: LoginLog) => (
-                  <TableRow key={item.userId + Math.random()}>
-                    <TableCell>{item.loginTime}</TableCell>
-                    <TableCell>{item.ip}</TableCell>
-                    <TableCell>{item.address}</TableCell>
-                    <TableCell>
-                      <div
-                        className={cn(
-                          "px-2 rounded-sm w-fit",
-                          item.status === 1 && "text-primary bg-primary/10",
-                          item.status === 2 &&
-                            "text-destructive bg-destructive/10",
-                        )}
-                      >
-                        {t(`statusLabel.${item.status}`)}
-                      </div>
+          <Table>
+            <TableHeader className="table w-full">
+              <TableRow className="bg-muted">
+                <TableHead className="w-[150px]">{t("loginTime")}</TableHead>
+                <TableHead className="w-[150px]">{t("ip")}</TableHead>
+                <TableHead className="w-[120px]">{t("address")}</TableHead>
+                <TableHead className="w-[100px]">{t("status")}</TableHead>
+              </TableRow>
+            </TableHeader>
+            {loading ? (
+              <LoginLogSkeleton />
+            ) : (
+              <TableBody className="w-full max-h-[370px] overflow-auto block">
+                {data?.length > 0 ? (
+                  data?.map((item: LoginLog) => (
+                    <TableRow key={item.userId + Math.random()}>
+                      <TableCell className="w-[150px]">
+                        {item.loginTime}
+                      </TableCell>
+                      <TableCell className="w-[150px]">{item.ip}</TableCell>
+                      <TableCell className="w-[120px]">
+                        {item.address}
+                      </TableCell>
+                      <TableCell className="w-[100px]">
+                        <div
+                          className={cn(
+                            "px-2 rounded-sm w-fit",
+                            item.status === 1 && "text-primary bg-primary/10",
+                            item.status === 2 &&
+                              "text-destructive bg-destructive/10",
+                          )}
+                        >
+                          {t(`statusLabel.${item.status}`)}
+                        </div>
+                      </TableCell>
+                    </TableRow>
+                  ))
+                ) : (
+                  <TableRow>
+                    <TableCell colSpan={4} className="text-center h-40">
+                      {translations("noData")}
                     </TableCell>
                   </TableRow>
-                ))}
+                )}
               </TableBody>
-            </Table>
-          </ScrollArea>
+            )}
+          </Table>
         </div>
         <ModalPagination
           total={total}
@@ -117,11 +139,32 @@ export function LoginLogModal({
         />
         <DialogFooter>
           <Button variant="outline" onClick={() => setOpen(false)}>
-            {t("close")}
+            {translations("cancel")}
           </Button>
-          <Button>{t("save")}</Button>
+          <Button
+            disabled={isPending}
+            onClick={() => startTransition(() => setOpen(false))}
+          >
+            {isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+            {translations("confirm")}
+          </Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>
+  );
+}
+
+function LoginLogSkeleton() {
+  return (
+    <TableBody>
+      {Array.from({ length: 5 }).map((_, index) => (
+        // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
+        <TableRow key={index}>
+          <TableCell colSpan={4}>
+            <Skeleton className="w-full h-6" />
+          </TableCell>
+        </TableRow>
+      ))}
+    </TableBody>
   );
 }

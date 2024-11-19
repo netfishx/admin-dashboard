@@ -1,4 +1,5 @@
 import { CustomPagination } from "@/components/custom-pagination";
+import { Skeleton } from "@/components/ui/skeleton";
 import {
   Table,
   TableBody,
@@ -9,9 +10,12 @@ import {
 } from "@/components/ui/table";
 import type { AnnouncementList, WithPagination } from "@/lib/types";
 import { getTranslations } from "next-intl/server";
+import { Suspense } from "react";
 import { EditBtn } from "../edit-btn";
 import { formatTimestamp } from "../tools";
+import { TruncatedCell } from "../truncated-cell";
 import { AddBtn } from "./add-btn";
+
 export async function List({
   data,
 }: {
@@ -20,11 +24,11 @@ export async function List({
   const t = await getTranslations("system.announcement");
 
   return (
-    <div className="p-2 mt-2 bg-background gap-2 flex flex-col">
+    <div className="p-2 mt-2 bg-background gap-2 flex flex-col h-full">
       <AddBtn />
-      <div className="max-h-[calc(100dvh-220px)] overflow-y-auto border rounded-sm">
+      <div className="border rounded-sm">
         <Table>
-          <TableHeader className="sticky top-0">
+          <TableHeader>
             <TableRow className="bg-muted">
               <TableHead className="w-24 min-w-24 text-center">
                 {t("startTime")}
@@ -35,39 +39,53 @@ export async function List({
               <TableHead className="w-24 min-w-24 text-center">
                 {t("createTime")}
               </TableHead>
-              <TableHead className="w-24 min-w-24 text-center">
+              <TableHead className="w-[450px] min-w-24 text-center">
                 {t("content")}
               </TableHead>
-              <TableHead className="w-24 min-w-24 text-center">
-                {t("type")}
-              </TableHead>
-              <TableHead className="w-24 min-w-24 text-center">
+              <TableHead className="text-center">{t("type")}</TableHead>
+              <TableHead className="min-w-24 text-center">
                 {t("action")}
               </TableHead>
             </TableRow>
           </TableHeader>
-          <TableBody>
-            {data?.list?.map((item) => (
-              <TableRow key={Math.random()}>
-                <TableCell className="w-24 text-center">
-                  {formatTimestamp(item.startTime)}
-                </TableCell>
-                <TableCell className="w-24 text-center">
-                  {formatTimestamp(item.endTime)}
-                </TableCell>
-                <TableCell className="w-24 text-center">
-                  {formatTimestamp(item.createTime)}
-                </TableCell>
-                <TableCell className="w-24 text-center">
-                  {item.contentOfLanguage}
-                </TableCell>
-                <TableCell className="w-24 text-center">{item.type}</TableCell>
-                <TableCell className="w-24 text-center">
-                  <EditBtn data={item} />
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
+          <Suspense
+            fallback={
+              <TableBody>
+                {Array.from({ length: 5 }).map((_, i) => (
+                  // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
+                  <TableRow key={i}>
+                    <TableCell colSpan={10} className="h-40">
+                      <Skeleton className="w-full h-full" />
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            }
+          >
+            <TableBody>
+              {data?.list?.map((item) => (
+                <TableRow key={Math.random()}>
+                  <TableCell className="w-24 text-center">
+                    {formatTimestamp(item.startTime)}
+                  </TableCell>
+                  <TableCell className="w-24 text-center">
+                    {formatTimestamp(item.endTime)}
+                  </TableCell>
+                  <TableCell className="w-24 text-center">
+                    {formatTimestamp(item.createTime)}
+                  </TableCell>
+                  <TruncatedCell
+                    content={item.contentOfLanguage}
+                    maxLength={50}
+                  />
+                  <TableCell className="text-center">{item.type}</TableCell>
+                  <TableCell className="w-24 text-center">
+                    <EditBtn data={item} />
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Suspense>
         </Table>
       </div>
       {Number(data?.total) > 0 && (

@@ -16,13 +16,15 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import type { AgentData } from "@/lib/types";
 import { agentIdAtom, userInfoModalAtom } from "@/store";
 import { useAtomValue, useSetAtom } from "jotai";
+import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useTransition } from "react";
 
 export function UserInfoModal() {
   const translation = useTranslations();
   const t = useTranslations("users.agents");
+  const [isPending, startTransition] = useTransition();
   const open = useAtomValue(userInfoModalAtom);
   const setOpen = useSetAtom(userInfoModalAtom);
   const [, setEditData] = useState<AgentData | null>(null);
@@ -138,7 +140,13 @@ export function UserInfoModal() {
           <Button variant="outline" onClick={() => setOpen(false)}>
             {translation("cancel")}
           </Button>
-          <Button onClick={handleClickUpdateUserInfo}>
+          <Button
+            disabled={isPending}
+            onClick={() => {
+              startTransition(handleClickUpdateUserInfo);
+            }}
+          >
+            {isPending && <Loader2 className="w-4 h-4 animate-spin" />}
             {translation("confirm")}
           </Button>
         </DialogFooter>

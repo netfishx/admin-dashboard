@@ -138,7 +138,7 @@ export type ChangeLog = {
 export type Announcement = {
   id?: string | null; // 编辑时传
   type: string;
-  content: { id?: string; language: string; content: string }[];
+  content: { id?: string; language: string; title?: string; content: string }[];
   status: string;
   startTime: number | null;
   endTime: number | null;
@@ -166,8 +166,9 @@ export type AnnouncementList = {
   startTime: number;
   endTime: number;
   language: string;
-  content: { id?: string; language: string; content: string }[];
+  content: { id?: string; language: string; content: string; title?: string }[];
   contentOfLanguage: string;
+  titleOfLanguage: string;
   status: number;
   createTime: number;
   updateTime: number;
@@ -462,15 +463,54 @@ export type RechargeReport = {
 };
 // 充值报表请求入参
 export type RechargeReportParams = {
+  userId?: string | null;
+  startTime?: number;
+  endTime?: number;
+  orderNo?: string | null;
+  withdrawUserType?: number | null;
+  operatorSymbol?: number | null;
+  rechargeMoney?: number | null;
+  requestStatus?: number | null;
+  pageNum: number;
+  pageSize: number;
+};
+// 提现报表
+export type WithdrawReport = {
+  id: string;
+  orderNo: string;
+  userId: string;
+  userType: number;
+  account: string;
+  nickname: string;
+  parentAccount: string;
+  withdrawMoney: string;
+  withdrawFee: string;
+  withdrawWay: string;
+  actualMoney: string;
+  applyTime: number;
+  approverId: string;
+  approverName: string;
+  approverTime: number;
+  approverStatus: number;
+  moneyStatus: number;
+  finishTime: number;
+  withdrawHash: string;
+  currency: string;
+  withdrawMode: number;
+  createTime: number;
+  updateTime: number;
+  status: number;
+};
+// 提现报表请求入参
+export type WithdrawReportParams = {
   startTime?: number;
   endTime?: number;
   orderNo?: string | null;
   operatorSymbol?: number | null;
-  rechargeMoney?: number | null;
-  withdrawUserType?: number | null;
-  userId?: string | null;
+  withdrawMoney?: number | null;
   pageNum: number;
   pageSize: number;
+  requestStatus?: number | null;
 };
 
 // 归集地址列表
@@ -517,4 +557,22 @@ export type OrderItemDetailType = {
   gameId: number; // 游戏ID
   result: string; // 游戏结果数据，可能是某种序列化的字符串
   status: string | null; // 状态信息，可以为空
+};
+
+// 矿工费
+export type OreFeeList = {
+  account: string;
+  address: string;
+  addressType: number;
+  coin: string;
+  createTime: string;
+  id: string;
+  memberId: string;
+  mnemonic: string[];
+  privateKey: string;
+  remark: string;
+  status: number;
+  trxBalance: string;
+  updateTime: string;
+  usdtBalance: string;
 };

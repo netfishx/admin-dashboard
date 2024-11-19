@@ -13,7 +13,8 @@ import type { AnnouncementList } from "@/lib/types";
 import { getTranslations } from "next-intl/server";
 import { Suspense } from "react";
 import { formatTimestamp } from "../tools";
-import { ViewBtn } from "../view-btn";
+import { TruncatedCell } from "../truncated-cell";
+
 export async function List({ data }: { data?: PageData<AnnouncementList> }) {
   const t = await getTranslations("system.announcement");
   const translations = await getTranslations();
@@ -23,7 +24,7 @@ export async function List({ data }: { data?: PageData<AnnouncementList> }) {
     <div>
       <div className="border rounded-sm">
         <Table>
-          <TableHeader className="sticky top-0">
+          <TableHeader>
             <TableRow className="bg-muted">
               {/* admin permission */}
               <TableHead className="w-24 min-w-24 text-center">
@@ -40,21 +41,17 @@ export async function List({ data }: { data?: PageData<AnnouncementList> }) {
               </TableHead>
 
               {/* admin permission */}
-              <TableHead className="w-24 min-w-24 text-center">
-                {t("type")}
-              </TableHead>
+              <TableHead className="text-center">{t("type")}</TableHead>
 
               {/* admin permission */}
-              <TableHead className="w-24 min-w-24 text-center">
-                {t("userId")}
-              </TableHead>
+              <TableHead className="text-center">{t("userId")}</TableHead>
 
-              <TableHead className="w-24 min-w-24 text-center">
+              <TableHead className="w-[450px] min-w-24 text-center">
                 {t("content")}
               </TableHead>
-              <TableHead className="w-24 min-w-24 text-center">
-                {t("action")}
-              </TableHead>
+              {/* <TableHead className="w-24 min-w-24 text-center">
+              {t("action")}
+            </TableHead> */}
             </TableRow>
           </TableHeader>
           <Suspense
@@ -63,18 +60,18 @@ export async function List({ data }: { data?: PageData<AnnouncementList> }) {
                 {Array.from({ length: 5 }).map((_, i) => (
                   // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
                   <TableRow key={i}>
-                    <TableCell colSpan={2}>
-                      <Skeleton className="w-full h-6" />
+                    <TableCell colSpan={10} className="h-40">
+                      <Skeleton className="w-full h-full" />
                     </TableCell>
                   </TableRow>
                 ))}
               </TableBody>
             }
           >
-            <TableBody className="max-h-96 overflow-y-auto">
+            <TableBody>
               {data && data.list.length > 0 ? (
                 data.list.map((item) => (
-                  <TableRow key={Math.random()}>
+                  <TableRow key={item.id}>
                     {/* admin permission */}
                     <TableCell className="w-24 text-center">
                       {formatTimestamp(item.startTime)}
@@ -89,21 +86,18 @@ export async function List({ data }: { data?: PageData<AnnouncementList> }) {
                     </TableCell>
 
                     {/* admin permission */}
-                    <TableCell className="w-24 min-w-24 text-center">
-                      {item.type}
-                    </TableCell>
+                    <TableCell className="text-center">{item.type}</TableCell>
 
                     {/* admin permission */}
-                    <TableCell className="w-24 min-w-24 text-center">
-                      {item.userId}
-                    </TableCell>
+                    <TableCell className="text-center">{item.userId}</TableCell>
 
-                    <TableCell className="w-24 text-center">
-                      {item.contentOfLanguage}
-                    </TableCell>
-                    <TableCell className="w-24 text-center">
-                      <ViewBtn data={item} />
-                    </TableCell>
+                    <TruncatedCell
+                      content={item.contentOfLanguage}
+                      maxLength={50}
+                    />
+                    {/* <TableCell className="w-24 text-center">
+                  <ViewBtn data={item} />
+                </TableCell> */}
                   </TableRow>
                 ))
               ) : (

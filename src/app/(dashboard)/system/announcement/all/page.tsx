@@ -16,12 +16,12 @@ export default async function All({
   const { data } = await getAnnouncement({
     pageSize: Number(search.pageSize ?? 10),
     pageNum: Number(search.pageNum ?? 1),
-    userId: (search.userId ?? "") as string,
+    userId: (search.userId ?? "") as string, // 代理传这个
     startTime: Number(start),
     endTime: Number(end),
   });
   return (
-    <div className="flex flex-col gap-2 w-full">
+    <div className="flex flex-col gap-2 w-full h-full">
       {/* form: admin permission */}
       <Suspense
         fallback={
@@ -35,16 +35,7 @@ export default async function All({
         <Form />
       </Suspense>
       <div className="p-2 bg-background flex-1 flex flex-col gap-2">
-        <Suspense
-          fallback={
-            <div className="flex flex-col gap-4 p-4">
-              <Skeleton className="w-full h-6" />
-              <Skeleton className="w-full h-6" />
-              <Skeleton className="w-full h-6" />
-              <Skeleton className="w-2/3 h-6" />
-            </div>
-          }
-        >
+        <Suspense>
           <List data={data} />
         </Suspense>
       </div>

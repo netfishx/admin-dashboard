@@ -31,31 +31,40 @@ import {
 import type { GameConfig, GameOdds } from "@/lib/types";
 import { limitModalAtom } from "@/store";
 import { useAtom } from "jotai";
+import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { Suspense, useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { Suspense, useEffect, useState, useTransition } from "react";
 
 export function LimitModal({ userId }: { userId: string }) {
   const translations = useTranslations();
   const [open, setOpen] = useAtom(limitModalAtom);
   const t = useTranslations("users.agents");
+  const [loading, setLoading] = useState(true);
+  const [isPending, startTransition] = useTransition();
   const [list, setList] = useState<GameConfig[]>([]);
   const [gameId, setGameId] = useState<number>();
   const [data, setData] = useState<GameOdds[]>([]);
+  const router = useRouter();
   useEffect(() => {
     if (open && userId) {
+      setLoading(true);
       getGameConfig().then(({ data }) => {
         console.info(data);
         const list = data?.filter((item) => item.status === 1) ?? [];
         setList(list);
         setGameId(list[0]?.gameId ?? 0);
+        setLoading(false);
       });
     }
   }, [open, userId]);
   useEffect(() => {
     if (gameId) {
+      setLoading(true);
       getGameOdds({ gameId }).then(({ data }) => {
         console.info(data);
         setData(data ?? []);
+        setLoading(false);
       });
     }
   }, [gameId]);
@@ -77,6 +86,8 @@ export function LimitModal({ userId }: { userId: string }) {
 
   const handleSave = () => {
     console.info(data);
+    setOpen(false);
+    router.refresh();
   };
 
   return (
@@ -96,90 +107,110 @@ export function LimitModal({ userId }: { userId: string }) {
         </div>
         <div className="border rounded-sm">
           <Table>
-            <TableHeader>
+            <TableHeader className="w-full table">
               <TableRow className="bg-muted">
-                <TableHead className="">{t("name")}</TableHead>
-                <TableHead className="">{t("min")}</TableHead>
-                <TableHead className="">{t("max")}</TableHead>
-                <TableHead className="">{t("total")}</TableHead>
+                <TableHead className="w-[160px]">{t("name")}</TableHead>
+                <TableHead className="w-[240px]">{t("min")}</TableHead>
+                <TableHead className="w-[280px]">{t("max")}</TableHead>
+                <TableHead className="w-[300px]">{t("total")}</TableHead>
               </TableRow>
             </TableHeader>
-            <TableBody>
-              {data.map((item) => (
-                <TableRow key={`${item.oddsType}-${item.betType}`}>
-                  <TableCell>{item.oddsLabel}</TableCell>
-                  <TableCell>
-                    <Input
-                      value={item.minBet}
-                      className="inline-block max-w-32 min-w-28"
-                      type="number"
-                      disabled={!item.canEdit}
-                      min={1}
-                      onChange={(e) =>
-                        handleLimitChange(
-                          item.oddsType,
-                          item.betType,
-                          item.groupId ?? 0,
-                          "minBet",
-                          Number(e.target.value),
-                        )
-                      }
-                    />
-                  </TableCell>
-                  <TableCell>
-                    <Input
-                      value={item.maxBet}
-                      className="inline-block max-w-32 min-w-28"
-                      type="number"
-                      min={1}
-                      max={item.maxBetLimit ?? 1}
-                      disabled={!item.canEdit}
-                      onChange={(e) =>
-                        handleLimitChange(
-                          item.oddsType,
-                          item.betType,
-                          item.groupId ?? 0,
-                          "maxBet",
-                          Number(e.target.value),
-                        )
-                      }
-                    />
-                    <span className="text-destructive">
-                      ({item.maxBetLimit})
-                    </span>
-                  </TableCell>
-                  <TableCell>
-                    <Input
-                      value={item.maxBetPeriod}
-                      className="inline-block max-w-32 min-w-28"
-                      type="number"
-                      min={1}
-                      max={item.maxBetPeriodLimit ?? 1}
-                      disabled={!item.canEdit}
-                      onChange={(e) =>
-                        handleLimitChange(
-                          item.oddsType,
-                          item.betType,
-                          item.groupId ?? 0,
-                          "maxBetPeriod",
-                          Number(e.target.value),
-                        )
-                      }
-                    />
-                    <span className="text-destructive">
-                      ({item.maxBetPeriodLimit})
-                    </span>
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
+            {loading ? (
+              <LimitSkeleton />
+            ) : (
+              <TableBody className="max-h-[370px] overflow-auto w-full block">
+                {data.length > 0 ? (
+                  data.map((item) => (
+                    <TableRow key={`${item.oddsType}-${item.betType}`}>
+                      <TableCell className="w-[160px]">
+                        {item.oddsLabel}
+                      </TableCell>
+                      <TableCell className="w-[240px]">
+                        <Input
+                          value={item.minBet}
+                          className="inline-block max-w-32 min-w-28"
+                          type="number"
+                          disabled={!item.canEdit}
+                          min={1}
+                          onChange={(e) =>
+                            handleLimitChange(
+                              item.oddsType,
+                              item.betType,
+                              item.groupId ?? 0,
+                              "minBet",
+                              Number(e.target.value),
+                            )
+                          }
+                        />
+                      </TableCell>
+                      <TableCell className="w-[280px]">
+                        <Input
+                          value={item.maxBet}
+                          className="inline-block max-w-32 min-w-28"
+                          type="number"
+                          min={1}
+                          max={item.maxBetLimit ?? 1}
+                          disabled={!item.canEdit}
+                          onChange={(e) =>
+                            handleLimitChange(
+                              item.oddsType,
+                              item.betType,
+                              item.groupId ?? 0,
+                              "maxBet",
+                              Number(e.target.value),
+                            )
+                          }
+                        />
+                        <span className="text-destructive">
+                          ({item.maxBetLimit})
+                        </span>
+                      </TableCell>
+                      <TableCell className="w-[300px]">
+                        <Input
+                          value={item.maxBetPeriod}
+                          className="inline-block max-w-32 min-w-28"
+                          type="number"
+                          min={1}
+                          max={item.maxBetPeriodLimit ?? 1}
+                          disabled={!item.canEdit}
+                          onChange={(e) =>
+                            handleLimitChange(
+                              item.oddsType,
+                              item.betType,
+                              item.groupId ?? 0,
+                              "maxBetPeriod",
+                              Number(e.target.value),
+                            )
+                          }
+                        />
+                        <span className="text-destructive">
+                          ({item.maxBetPeriodLimit})
+                        </span>
+                      </TableCell>
+                    </TableRow>
+                  ))
+                ) : (
+                  <TableRow>
+                    <TableCell colSpan={4} className="text-center h-40">
+                      {translations("noData")}
+                    </TableCell>
+                  </TableRow>
+                )}
+              </TableBody>
+            )}
           </Table>
         </div>
         <DialogFooter>
           <Button variant="outline" onClick={() => setOpen(false)}>
             {translations("cancel")}
           </Button>
-          <Button onClick={handleSave}>{translations("confirm")}</Button>
+          <Button
+            disabled={isPending}
+            onClick={() => startTransition(handleSave)}
+          >
+            {isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+            {translations("confirm")}
+          </Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>
@@ -217,5 +248,20 @@ function Form({
         </Select>
       </div>
     </>
+  );
+}
+
+function LimitSkeleton() {
+  return (
+    <TableBody>
+      {Array.from({ length: 5 }).map((_, index) => (
+        // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
+        <TableRow key={index}>
+          <TableCell colSpan={4}>
+            <Skeleton className="w-full h-6" />
+          </TableCell>
+        </TableRow>
+      ))}
+    </TableBody>
   );
 }
