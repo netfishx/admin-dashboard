@@ -496,3 +496,25 @@ export type CollectionAddressListRequestParams = {
   pageNum: number;
   pageSize: number;
 };
+
+// 注单详情-
+export type OrderDetailType = {
+  accountId: string; // 账户ID
+  expectedShareAmount: string; // 预期分成金额，字符串类型，用于高精度计算
+  expectedSharePercent: string; // 预期分成百分比，字符串类型
+  actualShareAmount: string; // 实际分成金额，字符串类型
+  percent: number; // 实际分成百分比，字符串类型
+};
+
+// 注单详情-
+export type OrderItemDetailType = {
+  id: string; // 唯一标识符
+  shoeId: number; // 鞋子ID（可能是某种记录或分组ID）
+  playId: number; // 播放ID（可能是某场游戏的ID）
+  revenueShare: OrderDetailType[]; // 分成数据数组
+  roomOwnerId: string; // 房间所有者ID（可能是 -1 表示默认值或未分配）
+  lastAgentId: string; // 最近的代理ID
+  gameId: number; // 游戏ID
+  result: string; // 游戏结果数据，可能是某种序列化的字符串
+  status: string | null; // 状态信息，可以为空
+};

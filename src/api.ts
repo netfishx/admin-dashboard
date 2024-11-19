@@ -24,6 +24,7 @@ import type {
   MemberList,
   MemberReportRequestParams,
   MemberReportsRecord,
+  OrderItemDetailType,
   OrderReportsRecord,
   OrderReportsRequestParams,
   PageData,
@@ -689,5 +690,15 @@ export async function lockCollectionAddress(data: {
     method: "POST",
     data,
     token: user?.token,
+  });
+}
+
+// 注单详情
+export async function getOrderDetail(data: { id: string }) {
+  const user = await getSession();
+  return await apiRequest<OrderItemDetailType>({
+    url: "/agent/order/baccarat/detail",
+    token: user?.token,
+    data,
   });
 }
