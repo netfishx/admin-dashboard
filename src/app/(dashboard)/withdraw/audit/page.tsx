@@ -157,7 +157,7 @@ async function TableBodyWrapper({ list }: { list: AuditList[] }) {
               {item.status}
             </TableCell>
 
-            <TableCell className="min-w-48 text-center sticky right-0 bg-background z-20 shadow-[-4px_0_8px_-6px_rgba(0,0,0,0.2)]">
+            <TableCell className="min-w-48 text-center sticky right-0 bg-background">
               <CleanBtn data={item} />
             </TableCell>
           </TableRow>
