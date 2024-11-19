@@ -49,6 +49,17 @@ export type SupplierConfig = {
   distributionPercent: number;
 };
 
+// 供应商列表
+export type SupplierList = {
+  id: string;
+  username: string;
+  nickname: string;
+  remark: string;
+  status: number;
+  createTime: number;
+  updateTime: number;
+};
+
 export type MaintainGame = {
   id: string;
   gameType: number;
