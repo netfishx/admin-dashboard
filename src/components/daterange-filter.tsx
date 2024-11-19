@@ -34,8 +34,6 @@ import { parseAsInteger, useQueryStates } from "nuqs";
 import { memo, startTransition, useCallback, useEffect, useMemo } from "react";
 import type { DateRange } from "react-day-picker";
 
-export const today = new Date();
-
 type rangeType =
   | "today"
   | "yesterday"
@@ -58,11 +56,6 @@ const TIME_OPTIONS = {
     value: i.toString().padStart(2, "0"),
     label: i.toString().padStart(2, "0"),
   })),
-};
-
-export const times = {
-  startTime: startOfDay(today).getTime(),
-  endTime: endOfDay(today).getTime(),
 };
 
 // Extracted TimeSelect as a separate component
@@ -173,29 +166,34 @@ export function DateRangeFilter({
   onChange?: (dateRange: any) => void;
   reset?: (resetFn: (start: number, end: number) => void) => void;
 }) {
+  const today = new Date();
   const t = useTranslations("report.orderlist");
   const searchParams = useSearchParams();
 
-  // Get startTime and endTime from URL parameters
-  const startTimeFromUrl = searchParams.get(startTimeText);
-  const endTimeFromUrl = searchParams.get(endTimeText);
-
   const [dateRange, setDateRange] = useQueryStates({
-    [startTimeText]: parseAsInteger
-      .withDefault(
-        startTimeFromUrl
-          ? Number.parseInt(startTimeFromUrl, 10)
-          : startOfDay(today).getTime(),
-      )
-      .withOptions({ clearOnDefault: false }),
-    [endTimeText]: parseAsInteger
-      .withDefault(
-        endTimeFromUrl
-          ? Number.parseInt(endTimeFromUrl, 10)
-          : endOfDay(today).getTime(),
-      )
-      .withOptions({ clearOnDefault: false }),
+    [startTimeText]: parseAsInteger.withDefault(0),
+    [endTimeText]: parseAsInteger.withDefault(0),
   });
+
+  // Move the initialization logic to useEffect
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+  useEffect(() => {
+    const startTimeFromUrl = searchParams.get(startTimeText);
+    const endTimeFromUrl = searchParams.get(endTimeText);
+
+    const initialStartTime = startTimeFromUrl
+      ? Number.parseInt(startTimeFromUrl, 10)
+      : startOfDay(today).getTime();
+
+    const initialEndTime = endTimeFromUrl
+      ? Number.parseInt(endTimeFromUrl, 10)
+      : endOfDay(today).getTime();
+
+    setDateRange({
+      [startTimeText]: initialStartTime,
+      [endTimeText]: initialEndTime,
+    });
+  }, []);
 
   const resetDateRange = (start: number, end: number) => {
     setDateRange({
@@ -224,6 +222,11 @@ export function DateRangeFilter({
       });
     });
   }, [dateRange[startTimeText], dateRange[endTimeText]]);
+
+  const handleClear = () => {
+    setDateRange(null);
+    onChange?.(null);
+  };
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   const handleQuickSelect = useCallback(
@@ -313,8 +316,14 @@ export function DateRangeFilter({
   const handleDateRangeChange = useCallback(
     (range?: DateRange) => {
       if (range) {
-        const startDate = range.from
-          ? set(range.from, {
+        let from = range.from;
+
+        if (from?.getTime() === 0) {
+          from = today;
+        }
+
+        const startDate = from
+          ? set(from, {
               hours: new Date(dateRange[startTimeText]).getHours(),
               minutes: new Date(dateRange[startTimeText]).getMinutes(),
               seconds: new Date(dateRange[startTimeText]).getSeconds(),
@@ -322,7 +331,7 @@ export function DateRangeFilter({
           : undefined;
 
         const endDate = range.to
-          ? set(endOfDay(range.to), {
+          ? set(range.to, {
               hours: new Date(dateRange[endTimeText]).getHours(),
               minutes: new Date(dateRange[endTimeText]).getMinutes(),
               seconds: new Date(dateRange[endTimeText]).getSeconds(),
@@ -337,6 +346,8 @@ export function DateRangeFilter({
           [startTimeText]: startDate?.getTime(),
           [endTimeText]: endDate?.getTime(),
         });
+      } else {
+        handleClear();
       }
     },
     [dateRange[startTimeText], dateRange[endTimeText], setDateRange],
@@ -344,6 +355,10 @@ export function DateRangeFilter({
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   const formattedDateRange = useMemo(() => {
+    if (!dateRange) {
+      return t("choicedate");
+    }
+
     if (!dateRange[startTimeText]) {
       return t("choicedate");
     }
@@ -361,7 +376,7 @@ export function DateRangeFilter({
           dateRange[endTimeText],
           "yyyy-MM-dd",
         )}`;
-  }, [dateRange[startTimeText], dateRange[endTimeText], t, enableTimeSelect]);
+  }, [dateRange]);
 
   return (
     <div className="flex items-center gap-2">
@@ -375,7 +390,7 @@ export function DateRangeFilter({
             )}
           >
             <CalendarIcon className="mr-2 h-4 w-4" />
-            <span>{formattedDateRange}</span>
+            {formattedDateRange}
           </Button>
         </PopoverTrigger>
         <PopoverContent className="w-auto p-0" align="start">
@@ -383,24 +398,28 @@ export function DateRangeFilter({
             <Calendar
               autoFocus
               mode="range"
-              selected={{
-                from: new Date(dateRange[startTimeText]),
-                to: new Date(dateRange[endTimeText]),
-              }}
+              selected={
+                dateRange
+                  ? {
+                      from: new Date(dateRange[startTimeText]),
+                      to: new Date(dateRange[endTimeText]),
+                    }
+                  : undefined
+              }
               onSelect={handleDateRangeChange}
               numberOfMonths={1}
             />
-            {enableTimeSelect && dateRange[startTimeText] && (
+            {enableTimeSelect && (
               <TimeSelect
                 type="start"
-                date={dateRange[startTimeText]}
+                date={dateRange[startTimeText] || startOfDay(today).getTime()}
                 onTimeChange={handleTimeChange}
               />
             )}
-            {enableTimeSelect && dateRange[endTimeText] && (
+            {enableTimeSelect && (
               <TimeSelect
                 type="end"
-                date={dateRange[endTimeText]}
+                date={dateRange[endTimeText] || endOfDay(today).getTime()}
                 onTimeChange={handleTimeChange}
               />
             )}
