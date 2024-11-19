@@ -38,6 +38,7 @@ import type {
   RechargeReport,
   RechargeReportParams,
   SupplierConfig,
+  SupplierList,
   SupplierReportRecords,
   SupplierReportRequestParams,
   UserBasicInfo,
@@ -244,6 +245,60 @@ export async function getMemberLoginLog(params: {
   return await apiRequest<PageData<LoginLog>>({
     url: "/agent/loginLog/get",
     params,
+    token: user?.token,
+  });
+}
+
+export async function getSupplierList(params: {
+  pageNum: number;
+  pageSize: number;
+}) {
+  const user = await getSession();
+  return await apiRequest<PageData<SupplierList>>({
+    url: "/vendor/user/getVendorPage",
+    token: user?.token,
+    params,
+  });
+}
+
+export async function addSupplier(data: {
+  username: string;
+  nickname: string;
+  newPassword: string;
+  remark: string;
+}) {
+  const user = await getSession();
+  return await apiRequest({
+    url: "/vendor/user/createAccount",
+    method: "POST",
+    data,
+    token: user?.token,
+  });
+}
+
+export async function editSupplier(data: {
+  id: string;
+  username: string;
+  nickname: string;
+  remark: string;
+  newPassword: string;
+  status: number;
+}) {
+  const user = await getSession();
+  return await apiRequest({
+    url: "/vendor/user/update",
+    method: "POST",
+    data,
+    token: user?.token,
+  });
+}
+
+export async function cleanSupplierLoginError(data: { id: string }) {
+  const user = await getSession();
+  return await apiRequest({
+    url: "/vendor/user/main/cleanLoginError",
+    method: "POST",
+    data,
     token: user?.token,
   });
 }
