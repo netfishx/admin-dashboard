@@ -84,7 +84,7 @@ export function List({ data }: { data?: WithdrawFeeList[] }) {
                   {Array.from({ length: 5 }).map((_, i) => (
                     // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
                     <TableRow key={i}>
-                      <TableCell colSpan={10} className="h-40">
+                      <TableCell colSpan={3} className="h-40">
                         <Skeleton className="w-full h-full" />
                       </TableCell>
                     </TableRow>

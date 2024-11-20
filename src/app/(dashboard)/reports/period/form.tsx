@@ -33,75 +33,73 @@ export function Form() {
   });
 
   return (
-    <>
-      <div className="flex flex-col gap-2 w-full">
-        <div className="bg-background">
-          <div className="flex justify-between items-center  py-2 px-4">
+    <div className="flex flex-col gap-2 w-full">
+      <div className="bg-background">
+        <div className="flex justify-between items-center  py-2 px-4">
+          <div className="flex gap-2 items-center">
             <div className="flex gap-2 items-center">
-              <div className="flex gap-2 items-center">
-                <Label className="shrink-0">{t("gameTypeName")}</Label>
-                <Select
-                  value={gameTypeName ?? ""}
-                  onValueChange={(value) => setGameTypeName(value)}
-                >
-                  <SelectTrigger className="w-28">
-                    <SelectValue placeholder={t("placeholderselect")} />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="1">百家乐</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-              <div className="flex gap-2 items-center">
-                <Label className="shrink-0">{t("gameName")}</Label>
-                <Select
-                  value={gameName ?? ""}
-                  onValueChange={(value) => setGameName(value)}
-                >
-                  <SelectTrigger className="w-28">
-                    <SelectValue placeholder={t("placeholderselect")} />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="0">百家乐01</SelectItem>
-                    <SelectItem value="1">百家乐02</SelectItem>
-                    <SelectItem value="2">百家乐03</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-              <div className="flex gap-2 items-center">
-                <Label className="shrink-0">{t("issueNumber")}</Label>
-                <Input
-                  placeholder={t("placeholderinput")}
-                  value={issueNumber ?? ""}
-                  onChange={(e) => setIssueNumber(e.target.value)}
-                />
-              </div>
-              <div className="flex gap-2 items-center">
-                <Label className="shrink-0">{t("openTime")}</Label>
-                <DateRangeFilter
-                  quickSetBtn={["today", "yesterday"]}
-                  enableTimeSelect={false}
-                />
-              </div>
+              <Label className="shrink-0">{t("gameTypeName")}</Label>
+              <Select
+                value={gameTypeName ?? ""}
+                onValueChange={(value) => setGameTypeName(value)}
+              >
+                <SelectTrigger className="w-28">
+                  <SelectValue placeholder={t("placeholderselect")} />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="1">百家乐</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="flex gap-2 items-center">
+              <Label className="shrink-0">{t("gameName")}</Label>
+              <Select
+                value={gameName ?? ""}
+                onValueChange={(value) => setGameName(value)}
+              >
+                <SelectTrigger className="w-28">
+                  <SelectValue placeholder={t("placeholderselect")} />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="0">百家乐01</SelectItem>
+                  <SelectItem value="1">百家乐02</SelectItem>
+                  <SelectItem value="2">百家乐03</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="flex gap-2 items-center">
+              <Label className="shrink-0">{t("issueNumber")}</Label>
+              <Input
+                placeholder={t("placeholderinput")}
+                value={issueNumber ?? ""}
+                onChange={(e) => setIssueNumber(e.target.value)}
+              />
+            </div>
+            <div className="flex gap-2 items-center">
+              <Label className="shrink-0">{t("openTime")}</Label>
+              <DateRangeFilter
+                quickSetBtn={["today", "yesterday"]}
+                enableTimeSelect={false}
+              />
             </div>
           </div>
-          <div className="flex gap-2 items-center float-right p-2">
-            <Button variant="outline">{t("reset")}</Button>
-            <Button onClick={() => router.refresh()}>{t("search")}</Button>
-            <Button
-              onClick={() => {
-                startTransition(router.refresh);
-              }}
-              disabled={isPending}
-            >
-              {isPending ? (
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-              ) : null}
-              {t("download")}
-            </Button>
-          </div>
+        </div>
+        <div className="flex gap-2 items-center float-right p-2">
+          <Button variant="outline">{t("reset")}</Button>
+          <Button onClick={() => router.refresh()}>{t("search")}</Button>
+          <Button
+            onClick={() => {
+              startTransition(router.refresh);
+            }}
+            disabled={isPending}
+          >
+            {isPending ? (
+              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+            ) : null}
+            {t("download")}
+          </Button>
         </div>
       </div>
-    </>
+    </div>
   );
 }

@@ -32,18 +32,7 @@ export default async function Page({
       </Suspense>
 
       <div className="p-2 bg-background flex-1 gap-2">
-        <Suspense
-          fallback={
-            <div className="flex flex-col gap-4 p-4">
-              <Skeleton className="w-full h-6" />
-              <Skeleton className="w-full h-6" />
-              <Skeleton className="w-full h-6" />
-              <Skeleton className="w-2/3 h-6" />
-            </div>
-          }
-        >
-          <PeriodTable searchParams={searchParams} />
-        </Suspense>
+        <PeriodTable searchParams={searchParams} />
       </div>
     </div>
   );
@@ -81,7 +70,6 @@ async function PeriodTableHeader() {
 async function PeriodTable({
   searchParams,
 }: { searchParams: Promise<{ [key: string]: string | string[] }> }) {
-  const t = await getTranslations("report.periodlist");
   const translations = await getTranslations();
   const search = await searchParams;
   const now = Date.now();
@@ -105,11 +93,11 @@ async function PeriodTable({
             <Suspense
               fallback={
                 <TableBody>
-                  {Array.from({ length: 5 }).map((_, i) => (
+                  {Array.from({ length: 5 }).map((_, index) => (
                     // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
-                    <TableRow key={i}>
-                      <TableCell colSpan={2}>
-                        <Skeleton className="w-full h-6" />
+                    <TableRow key={index}>
+                      <TableCell colSpan={12}>
+                        <Skeleton className="w-full h-4" />
                       </TableCell>
                     </TableRow>
                   ))}
@@ -157,7 +145,7 @@ async function PeriodTable({
                   ))
                 ) : (
                   <TableRow>
-                    <TableCell colSpan={10} className="text-center h-40">
+                    <TableCell colSpan={12} className="text-center h-40">
                       {translations("noData")}
                     </TableCell>
                   </TableRow>
