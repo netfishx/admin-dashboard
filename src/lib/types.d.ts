@@ -580,3 +580,9 @@ export type OreFeeList = {
   updateTime: string;
   usdtBalance: string;
 };
+// 提现手续费
+export type WithdrawFeeList = {
+  currency: string;
+  fixedFee: number;
+  percentageFee: number;
+};

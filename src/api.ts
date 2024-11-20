@@ -42,6 +42,7 @@ import type {
   SupplierReportRecords,
   SupplierReportRequestParams,
   UserBasicInfo,
+  WithdrawFeeList,
   WithdrawFormData,
   WithdrawReport,
   WithdrawReportParams,
@@ -822,6 +823,24 @@ export async function removeOreFee(data: {
     url: "/orefee/address/remove",
     method: "POST",
     params: data,
+    token: user?.token,
+  });
+}
+// 提现手续费
+export async function getWithdrawFeeList() {
+  const user = await getSession();
+  return await apiRequest<WithdrawFeeList[]>({
+    url: "/config/withdraw/fee/list",
+    token: user?.token,
+  });
+}
+// 编辑提现手续费
+export async function saveWithdrawFee(data: WithdrawFeeList) {
+  const user = await getSession();
+  return await apiRequest({
+    url: "/config/withdraw/fee/edit",
+    method: "POST",
+    data,
     token: user?.token,
   });
 }
