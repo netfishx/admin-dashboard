@@ -484,3 +484,25 @@ export type CollectionAddressListRequestParams = {
   pageNum: number;
   pageSize: number;
 };
+
+export type Role = {
+  id?: string;
+  roleName: string;
+  updateTime?: number;
+  createBy?: string;
+  roleType?: number;
+  permsIds: number[];
+};
+
+export type Permission = {
+  id: number;
+  permsName: string;
+  parentId?: number;
+  permsType: number;
+};
+
+export type TreeNode = {
+  id: string;
+  label: string;
+  children?: TreeNode[];
+};

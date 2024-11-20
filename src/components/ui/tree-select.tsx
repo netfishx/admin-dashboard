@@ -3,12 +3,7 @@
 import { Checkbox } from "@/components/ui/checkbox";
 import * as React from "react";
 import { ChevronDown, ChevronRight } from "lucide-react";
-
-export interface TreeNode {
-  id: string;
-  label: string;
-  children?: TreeNode[];
-}
+import type { TreeNode } from "@/lib/types";
 
 function TreeNode({
   node,
@@ -21,7 +16,7 @@ function TreeNode({
   onCheck: (id: string, checked: boolean | "indeterminate") => void;
   checkedState: Map<string, boolean | "indeterminate">;
 }) {
-  const [isOpen, setIsOpen] = React.useState(false);
+  const [isOpen, setIsOpen] = React.useState(true);
   const hasChildren = node.children && node.children.length > 0;
   const checked = checkedState.get(node.id);
 
@@ -35,7 +30,10 @@ function TreeNode({
         <div className="flex items-center">
           {hasChildren && (
             <button
-              onClick={() => setIsOpen(!isOpen)}
+              onClick={(e) => {
+                e.preventDefault();
+                setIsOpen(!isOpen);
+              }}
               className="mr-1 focus:outline-none text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
               aria-label={isOpen ? "Collapse" : "Expand"}
             >
@@ -117,10 +115,18 @@ function findNode(id: string, nodes: TreeNode[]): TreeNode | null {
   return null;
 }
 
-export function TreeSelect({ data }: { data: TreeNode[] }) {
+export function TreeSelect({
+  data,
+  checkedState: state,
+  handleChangeAction,
+}: {
+  data: TreeNode[];
+  checkedState: Map<string, boolean | "indeterminate">;
+  handleChangeAction: (checkedState: Map<string, boolean | "indeterminate">) => void;
+}) {
   const [checkedState, setCheckedState] = React.useState<
     Map<string, boolean | "indeterminate">
-  >(new Map());
+  >(state);
 
   const updateCheckedState = (
     id: string,
@@ -174,6 +180,7 @@ export function TreeSelect({ data }: { data: TreeNode[] }) {
     updateAncestors(id);
 
     setCheckedState(newCheckedState);
+    handleChangeAction(newCheckedState);
   };
 
   const handleCheck = (id: string, checked: boolean | "indeterminate") => {
@@ -181,7 +188,7 @@ export function TreeSelect({ data }: { data: TreeNode[] }) {
   };
 
   return (
-    <div className="w-[300px] border border-gray-200 rounded-md p-4 bg-white dark:bg-gray-800 dark:border-gray-700">
+    <div className="w-full max-h-[400px] overflow-y-auto border border-gray-200 rounded-md p-4 bg-white dark:bg-gray-800 dark:border-gray-700">
       {data.map((node) => (
         <TreeNode
           key={node.id}

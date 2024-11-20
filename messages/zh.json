@@ -484,7 +484,7 @@
       "nickname": "昵称",
       "rechargeMoney": "充值金额",
       "rechargeMoneyFilter": "充值金额筛选",
-      "finishTime": "到账日期", 
+      "finishTime": "到账日期",
       "rechargeHash": "哈希",
       "currency": "币种",
       "createTime": "创建时间",
@@ -542,14 +542,23 @@
       "japanese": "日文"
     },
     "role": {
+      "title": "角色",
       "list": "角色列表",
-      "add": "新增角色",
+      "add": "新增",
       "id": "角色ID",
       "name": "角色名称",
       "updateTime": "修改时间",
+      "createBy": "创建人",
+      "type": "分类",
       "action": "操作",
       "edit": "编辑",
-      "delete": "删除"
+      "delete": "删除",
+      "deleteModal": "删除角色",
+      "deleteModalDescription": "确定删除该角色吗？",
+      "deleteModalDescriptionWarning": "存在关联用户的角色无法删除",
+      "systemDefault": "系统默认",
+      "personalCreate": "个人创建",
+      "permissions": "角色权限"
     },
     "subaccount": {
       "list": "子账号列表",

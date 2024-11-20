@@ -29,12 +29,14 @@ import type {
   PageData,
   PeriodReport,
   PeriodReportList,
+  Permission,
   PokerReportRequestParams,
   PokerReportRequestRecords,
   RatioReportRequestParams,
   RatioReportRequestRecords,
   RechargeReport,
   RechargeReportParams,
+  Role,
   SupplierConfig,
   SupplierReportRecords,
   SupplierReportRequestParams,
@@ -662,5 +664,48 @@ export async function getCollectionAddressList(
     url: "/agent/collection/address/list",
     token: user?.token,
     params,
+  });
+}
+
+export async function getRoleList({
+  pageNum = 1,
+  pageSize = 10,
+}: {
+  pageNum: number;
+  pageSize: number;
+}) {
+  const user = await getSession();
+  return await apiRequest<PageData<Role>>({
+    url: "/role/pageList",
+    token: user?.token,
+    params: { pageNum, pageSize },
+  });
+}
+
+export async function getPermissionList() {
+  const user = await getSession();
+  return await apiRequest<Permission[]>({
+    url: "/perms/listAll",
+    token: user?.token,
+  });
+}
+
+export async function editRole(data: Role) {
+  const user = await getSession();
+  return await apiRequest({
+    url: "/role/saveOrUpdate",
+    method: "POST",
+    data,
+    token: user?.token,
+  });
+}
+
+export async function deleteRole(data: { id: number }) {
+  const user = await getSession();
+  return await apiRequest({
+    url: "/role/deleteById",
+    method: "DELETE",
+    data,
+    token: user?.token,
   });
 }

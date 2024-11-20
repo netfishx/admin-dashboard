@@ -1,4 +1,4 @@
-import type { AnnouncementList, SupplierConfig } from "@/lib/types";
+import type { AnnouncementList, Role, SupplierConfig } from "@/lib/types";
 import { atom } from "jotai";
 
 export const lastErrorTimeAtom = atom<number>(0);
@@ -74,3 +74,8 @@ export const limitAtom = atom<{
   };
 }>({});
 export const changedOddsLimitAtom = atom<string[]>([]);
+
+export const roleAtom = atom<Role | null>(null);
+export const roleDialogAtom = atom<boolean>(false);
+export const roleDeleteAtom = atom<number | null>(null);
+export const roleDeleteDialogAtom = atom<boolean>(false);
