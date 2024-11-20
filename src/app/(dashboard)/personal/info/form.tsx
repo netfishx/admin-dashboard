@@ -13,13 +13,13 @@ export function Form({ data }: { data: UserBasicInfo }) {
         <div className="text-muted-foreground text-sm w-[100px] text-right">
           {t("account")}:
         </div>
-        <div className="w-[300px]">{data?.userAccount}</div>
+        <div className="w-[300px] text-sm">{data?.userAccount}</div>
       </div>
       <div className="flex items-center justify-center gap-2 pl-20 w-[300px]">
         <div className="text-muted-foreground text-sm w-[100px] text-right">
           {t("inviteCode")}:
         </div>
-        <div className="w-[300px]">{data?.inviteCode}</div>
+        <div className="w-[300px] text-sm">{data?.inviteCode}</div>
       </div>
     </div>
   );

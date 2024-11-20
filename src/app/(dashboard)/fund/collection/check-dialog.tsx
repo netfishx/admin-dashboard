@@ -10,15 +10,11 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
-import { AlertTriangle, Check, Copy } from "lucide-react";
+import {} from "@/components/ui/tooltip";
+import { AlertTriangle } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
+import CopyButton from "./copy-button";
 
 interface Dialogprops {
   open?: boolean;
@@ -35,21 +31,16 @@ export function CheckDialog(props: Dialogprops) {
     // onOpenChange(false);
   };
   const [password, setPassword] = useState("");
-  const [copied, setCopied] = useState(false);
   const secretText = "dsf9sdfkj12dsf9sdfkj1";
 
-  const handleCopy = async () => {
-    try {
-      await navigator.clipboard.writeText(secretText);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    } catch (err) {
-      console.error("Failed to copy text:", err);
-    }
-  };
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="w-[500px]">
+      <DialogContent
+        className="w-[500px]"
+        onInteractOutside={(event) => {
+          event.preventDefault(); // 阻止关闭弹框
+        }}
+      >
         {step === 1 && (
           <div className="flex flex-col gap-4">
             <DialogHeader>
@@ -89,26 +80,7 @@ export function CheckDialog(props: Dialogprops) {
                     <span className="text-gray-800 font-mono text-sm">
                       {secretText}...
                     </span>
-                    <TooltipProvider>
-                      <Tooltip>
-                        <TooltipTrigger asChild>
-                          {/* biome-ignore lint/a11y/useButtonType: <explanation> */}
-                          <button
-                            onClick={handleCopy}
-                            className="text-gray-400 hover:text-gray-600 p-1 rounded-md hover:bg-gray-100 transition-colors"
-                          >
-                            {copied ? (
-                              <Check className="h-4 w-4" />
-                            ) : (
-                              <Copy className="h-4 w-4" />
-                            )}
-                          </button>
-                        </TooltipTrigger>
-                        <TooltipContent>
-                          <p>{copied ? t("copied") : t("copy")}</p>
-                        </TooltipContent>
-                      </Tooltip>
-                    </TooltipProvider>
+                    <CopyButton address={secretText} />
                   </div>
                 </div>
 

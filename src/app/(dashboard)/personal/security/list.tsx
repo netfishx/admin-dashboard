@@ -12,7 +12,7 @@ export async function List() {
 
   return (
     <div className="flex justify-between  bg-background py-2 px-4">
-      <div className="space-y-6 w-full">
+      <div className="space-y-4 w-full">
         <div className="flex items-center justify-between">
           <div className="flex-1">
             <div className="flex items-center gap-24">

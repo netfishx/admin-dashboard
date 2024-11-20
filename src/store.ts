@@ -1,4 +1,10 @@
-import type { AnnouncementList, Role, SupplierConfig } from "@/lib/types";
+import type {
+  AnnouncementList,
+  MemberList,
+  Role,
+  SupplierConfig,
+  SupplierList,
+} from "@/lib/types";
 import { atom } from "jotai";
 
 export const lastErrorTimeAtom = atom<number>(0);
@@ -32,6 +38,22 @@ export const changeLogModalAtom = atom<boolean>(false);
 export const agentIdAtom = atom<string>("");
 // 用户管理-会员管理-会员ID
 export const memberIdAtom = atom<string>("");
+// 用户管理-会员管理-会员信息数据
+export const memberInfoDataAtom = atom<MemberList | null>(null);
+// 用户管理-会员管理-会员信息弹窗
+export const memberInfoModalAtom = atom<boolean>(false);
+// 用户管理-会员管理-占成弹窗
+export const ratioModalAtom = atom<boolean>(false);
+// 用户管理-会员管理-增加授信弹窗
+export const increaseCreditModalAtom = atom<boolean>(false);
+// 用户管理-会员管理-减少授信弹窗
+export const decreaseCreditModalAtom = atom<boolean>(false);
+// 用户管理-会员管理-销账弹窗
+export const deleteCreditModalAtom = atom<boolean>(false);
+// 用户管理-供应商管理-编辑弹窗
+export const supplierEditModalAtom = atom<boolean>(false);
+// 用户管理-供应商管理-编辑数据
+export const supplierEditDataAtom = atom<SupplierList | null>(null);
 // 公告弹窗
 export const contentModalAtom = atom<boolean>(false);
 export const contentModalDataAtom = atom<AnnouncementList | null>(null);

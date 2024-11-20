@@ -39,7 +39,7 @@ export default function Action({ data }: { data: AgentData }) {
       <Button
         variant="ghost"
         size="sm"
-        className="text-primary hover:text-primary/80 text-sm"
+        className="text-primary hover:text-primary/80 text-sm px-2"
         onClick={() => {
           setAgentId(data.id);
           setUserInfoModal(true);
@@ -50,7 +50,7 @@ export default function Action({ data }: { data: AgentData }) {
       <Button
         variant="ghost"
         size="sm"
-        className="text-primary hover:text-primary/80 text-sm"
+        className="text-primary hover:text-primary/80 text-sm px-2"
         onClick={() => {
           setTransferMoneyModal(true);
         }}
@@ -60,7 +60,7 @@ export default function Action({ data }: { data: AgentData }) {
       <Button
         variant="ghost"
         size="sm"
-        className="text-primary hover:text-primary/80 text-sm"
+        className="text-primary hover:text-primary/80 text-sm px-2"
         onClick={() => {
           setAgentId(data.id);
           setGameSettingModal(true);
@@ -71,7 +71,7 @@ export default function Action({ data }: { data: AgentData }) {
       <Button
         variant="ghost"
         size="sm"
-        className="text-primary hover:text-primary/80 text-sm"
+        className="text-primary hover:text-primary/80 text-sm px-2"
         onClick={() => {
           setAgentId(data.id);
           setLimitModal(true);
@@ -82,7 +82,7 @@ export default function Action({ data }: { data: AgentData }) {
       <Button
         variant="ghost"
         size="sm"
-        className="text-primary hover:text-primary/80 text-sm"
+        className="text-primary hover:text-primary/80 text-sm px-2"
         onClick={() => {
           setAgentId(data.id);
           setRebateModal(true);
@@ -93,7 +93,7 @@ export default function Action({ data }: { data: AgentData }) {
       <Button
         variant="ghost"
         size="sm"
-        className="text-primary hover:text-primary/80 text-sm"
+        className="text-primary hover:text-primary/80 text-sm px-2"
         onClick={() => {
           setAgentId(data.id);
           setLoginLogModal(true);
@@ -104,7 +104,7 @@ export default function Action({ data }: { data: AgentData }) {
       <Button
         variant="ghost"
         size="sm"
-        className="text-primary hover:text-primary/80 text-sm"
+        className="text-primary hover:text-primary/80 text-sm px-2"
         onClick={() => {
           setAgentId(data.id);
           setChangeLogModal(true);

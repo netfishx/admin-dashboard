@@ -288,14 +288,54 @@
         "2": "冻结"
       },
       "userInfo": "用户信息",
-      "ratio": "占成信息",
+      "agentUserId": "代理账号",
+      "agentUsername": "代理名称",
+      "memberId": "会员账号",
+      "memberUsername": "会员昵称",
+      "createTime": "加入时间",
+      "ratioInfo": "占成信息",
+      "name": "游戏名称",
+      "ratio": "占成比例",
+      "baccarat": "真人视讯",
       "increaseCredit": "增加授信",
+      "usedCreditAmount": "已授信金额",
+      "usedBorrowAmount": "已借金额",
+      "increaseCreditAmount": "增加授信金额",
+      "creditAmountAfter": "增加后授信金额",
       "decreaseCredit": "减少授信",
+      "recoverableAmount": "可回收金额",
+      "recoverAmount": "收回授信金额",
       "deleteCredit": "销账",
+      "membershipArrears": "会员欠款",
+      "availableBalance": "可用余额",
+      "writeOffAmount": "销账金额",
       "limitSetting": "限额设置",
       "rebate": "退水",
       "loginLog": "登录日志",
       "changeLog": "变更日志"
+    },
+    "supplier": {
+      "add": "新增",
+      "username": "账号",
+      "supplierId": "供应商ID",
+      "placeholder": "请输入",
+      "reset": "重置",
+      "search": "查询",
+      "supplierUsername": "供应商账号",
+      "supplierName": "供应商名称",
+      "remark": "备注",
+      "status": "状态",
+      "action": "操作",
+      "edit": "修改",
+      "statusLabel": {
+        "0": "启用",
+        "1": "停用"
+      },
+      "password": "登录密码",
+      "confirmPassword": "再次输入登录密码",
+      "resetCount": "剩余尝试次数",
+      "enable": "启用",
+      "disable": "停用"
     }
   },
   "chart": {
@@ -317,9 +357,6 @@
     "guandan": "掼蛋",
     "video": "视讯类",
     "danzhu": "弹珠类",
-    "bjl01": "百家乐01",
-    "bjl02": "百家乐02",
-    "bjl03": "百家乐03",
     "bjlDataTrending": "百家乐数据趋势",
     "gdDataTrending": "掼蛋数据趋势",
     "memberDataTrending": "会员趋势",
@@ -368,7 +405,8 @@
       "orderStatus": "结算状态",
       "notCalculated": "未算占成",
       "notSettled": "未结算",
-      "settled": "已结算"
+      "settled": "已结算",
+      "download": "生成下载任务"
     },
     "periodlist": {
       "today": "今天",
@@ -432,7 +470,12 @@
       "issueNumber": "期数",
       "playerNumber": "人数",
       "player": "人次",
-      "pickdate": "结算日期"
+      "pickdate": "结算日期",
+      "add": "新增",
+      "download": "生成下载任务",
+      "settledAmount": "结算金额",
+      "totaSettledAmount": "总结算金额",
+      "totalIssueAmount": "总期数"
     },
     "supplier": {
       "supplierID": "供应商ID",
@@ -473,7 +516,8 @@
       "memberId": "会员ID",
       "memberType": "会员类别",
       "superAgentId": "上级代理ID",
-      "openTime": "开奖日期"
+      "openTime": "开奖日期",
+      "download": "生成下载任务"
     },
     "recharge": {
       "id": "ID",
@@ -488,6 +532,30 @@
       "rechargeHash": "哈希",
       "currency": "币种",
       "createTime": "创建时间",
+      "updateTime": "更新时间",
+      "placeholder": "请输入",
+      "placeholderselect": "请选择",
+      "search": "查询",
+      "reset": "重置"
+    },
+    "withdraw": {
+      "status": "状态",
+      "id": "ID",
+      "orderNo": "订单号",
+      "userId": "用户ID",
+      "userType": "用户类型",
+      "account": "账号",
+      "nickname": "昵称",
+      "withdrawFee": "提现手续费",
+      "withdrawMoney": "提现金额",
+      "withdrawMoneyFilter": "提现金额筛选",
+      "finishTime": "提现完成时间", 
+      "withdrawHash": "哈希",
+      "currency": "币种",
+      "applyTime": "发起时间",
+      "approverTime": "审核完成时间",
+      "actualMoney": "实际到账",
+      "withdrawMode": "提现方式",
       "updateTime": "更新时间",
       "placeholder": "请输入",
       "placeholderselect": "请选择",
@@ -519,6 +587,7 @@
       "addModal": "新增公告",
       "editModal": "编辑公告",
       "announcementType": "公告类型：",
+      "title": "公告标题",
       "announcementContent": "公告内容：",
       "announcementTime": "公告时间：",
       "language": "语言：",
@@ -539,7 +608,9 @@
       "search": "查询",
       "chinese": "中文",
       "english": "英文",
-      "japanese": "日文"
+      "japanese": "日文",
+      "viewMore": "查看更多",
+      "collapse": "收起"
     },
     "role": {
       "title": "角色",
@@ -602,7 +673,30 @@
       "currency": "币种",
       "balance": "余额",
       "status": "状态",
-      "createTime": "创建时间"
+      "createTime": "创建时间",
+      "action": "操作",
+      "title": "归集地址管理",
+      "caozuo": "操作"
+    },
+    "orefee": {
+      "add": "新增",
+      "remove": "移除",
+      "address": "地址",
+      "coin": "币种",
+      "usdtBalance": "余额",
+      "actions": "操作",
+      "feeManagement": "矿工费管理",
+      "addDesc": "请确定是否新增矿工费地址？",
+      "removeDesc": "请确定是否移除矿工费地址？",
+      "confirm": "确定",
+      "cancel": "取消"
+    },
+    "withdrawfee": {
+      "title": "提现手续费管理",
+      "save": "保存",
+      "currency": "币种",
+      "fixedFee": "固定手续费（本币）",
+      "percentageFee": "比例手续费（%）"
     }
   },
   "personal": {
@@ -745,5 +839,6 @@
       "cleanDesc": "确定清除该稽核吗？",
       "cancel": "取消"
     }
+   
   }
 }

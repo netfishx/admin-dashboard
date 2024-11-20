@@ -1,9 +1,5 @@
-import { getMemberReportList } from "@/api";
-import type {
-  MemberReportRequestParams,
-  MemberReportsRecord,
-  PageData,
-} from "@/lib/types";
+import { Skeleton } from "@/components/ui/skeleton";
+import type { MemberReportRequestParams } from "@/lib/types";
 import { Suspense } from "react";
 import { List } from "./list";
 import { ListFilter } from "./list-filter";
@@ -13,22 +9,26 @@ interface CommonWrapperProps {
 }
 
 async function CommonWrapper({ searchParams }: CommonWrapperProps) {
-  const params = await searchParams;
-  const { data } = await getMemberReportList(params);
   return (
     <>
-      <ListFilter />
-      <List data={data as PageData<MemberReportsRecord>} />
+      <Suspense
+        fallback={
+          <div className="flex justify-between items-center bg-background p-4">
+            <Skeleton className="w-full h-9 opacity-20" />
+          </div>
+        }
+      >
+        <ListFilter />
+      </Suspense>
+      <List searchParams={searchParams} />
     </>
   );
 }
 
 export default function Page({ searchParams }: CommonWrapperProps) {
   return (
-    <div className="flex flex-col gap-2 w-full">
-      <Suspense fallback={<div>loading...</div>}>
-        <CommonWrapper searchParams={searchParams} />
-      </Suspense>
+    <div className="flex flex-col gap-2 w-full h-full">
+      <CommonWrapper searchParams={searchParams} />
     </div>
   );
 }

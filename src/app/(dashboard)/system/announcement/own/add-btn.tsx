@@ -15,7 +15,7 @@ export function AddBtn() {
   return (
     <>
       <Button
-        className="float-right mb-2"
+        className="self-end"
         onClick={() => {
           setOpen(true);
           setEditModalTitle(t("addModal"));

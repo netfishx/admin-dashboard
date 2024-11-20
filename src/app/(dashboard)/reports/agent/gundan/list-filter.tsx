@@ -108,6 +108,7 @@ export function ListFilter() {
             {t("reset")}
           </Button>
           <Button>{t("search")}</Button>
+          <Button>{t("download")}</Button>
         </div>
       </div>
     </div>

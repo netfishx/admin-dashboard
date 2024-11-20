@@ -2,6 +2,7 @@ import { getAnnouncement } from "@/api";
 import { Skeleton } from "@/components/ui/skeleton";
 import { endOfDay, startOfDay } from "date-fns";
 import { Suspense } from "react";
+import { Form } from "./form";
 import { List } from "./list";
 
 export default async function All({
@@ -15,19 +16,29 @@ export default async function All({
   const { data } = await getAnnouncement({
     pageSize: Number(search.pageSize ?? 10),
     pageNum: Number(search.pageNum ?? 1),
-    userId: (search.userId ?? "") as string,
+    userId: (search.userId ?? "") as string, // 代理传这个
     startTime: Number(start),
     endTime: Number(end),
   });
   return (
-    <Suspense
-      fallback={
-        <div className="bg-background py-2">
-          <Skeleton className="h-9 w-full opacity-25" />
-        </div>
-      }
-    >
-      <List data={data} />
-    </Suspense>
+    <div className="flex flex-col gap-2 w-full h-full">
+      {/* form: admin permission */}
+      <Suspense
+        fallback={
+          <div className="flex justify-between items-center bg-background py-2 px-4">
+            <Skeleton className="w-full h-9 opacity-20" />
+            <Skeleton className="w-full h-9 opacity-20" />
+            <Skeleton className="w-full h-9 opacity-20" />
+          </div>
+        }
+      >
+        <Form />
+      </Suspense>
+      <div className="p-2 bg-background flex-1 flex flex-col gap-2">
+        <Suspense>
+          <List data={data} />
+        </Suspense>
+      </div>
+    </div>
   );
 }

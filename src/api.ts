@@ -24,8 +24,10 @@ import type {
   MemberList,
   MemberReportRequestParams,
   MemberReportsRecord,
+  OrderItemDetailType,
   OrderReportsRecord,
   OrderReportsRequestParams,
+  OreFeeList,
   PageData,
   PeriodReport,
   PeriodReportList,
@@ -38,10 +40,14 @@ import type {
   RechargeReportParams,
   Role,
   SupplierConfig,
+  SupplierList,
   SupplierReportRecords,
   SupplierReportRequestParams,
   UserBasicInfo,
+  WithdrawFeeList,
   WithdrawFormData,
+  WithdrawReport,
+  WithdrawReportParams,
 } from "@/lib/types";
 
 import { getSession } from "@/session";
@@ -246,6 +252,60 @@ export async function getMemberLoginLog(params: {
   });
 }
 
+export async function getSupplierList(params: {
+  pageNum: number;
+  pageSize: number;
+}) {
+  const user = await getSession();
+  return await apiRequest<PageData<SupplierList>>({
+    url: "/vendor/user/getVendorPage",
+    token: user?.token,
+    params,
+  });
+}
+
+export async function addSupplier(data: {
+  username: string;
+  nickname: string;
+  newPassword: string;
+  remark: string;
+}) {
+  const user = await getSession();
+  return await apiRequest({
+    url: "/vendor/user/createAccount",
+    method: "POST",
+    data,
+    token: user?.token,
+  });
+}
+
+export async function editSupplier(data: {
+  id: string;
+  username: string;
+  nickname: string;
+  remark: string;
+  newPassword: string;
+  status: number;
+}) {
+  const user = await getSession();
+  return await apiRequest({
+    url: "/vendor/user/update",
+    method: "POST",
+    data,
+    token: user?.token,
+  });
+}
+
+export async function cleanSupplierLoginError(data: { id: string }) {
+  const user = await getSession();
+  return await apiRequest({
+    url: "/vendor/user/main/cleanLoginError",
+    method: "POST",
+    data,
+    token: user?.token,
+  });
+}
+
 export async function agentBaccaratReport(data: any) {
   return await apiRequest({ url: "/api/agentBaccaratReport", data });
 }
@@ -263,6 +323,8 @@ export async function getAnnouncement(params: AnnouncementListRequest) {
       ...item,
       contentOfLanguage:
         item.content.find((i) => i.language === "cn")?.content || "",
+      titleOfLanguage:
+        item.content.find((i) => i.language === "cn")?.title || "",
     }));
   }
   return res;
@@ -282,6 +344,8 @@ export async function getAgentAnnouncement(
       ...item,
       contentOfLanguage:
         item.content.find((i) => i.language === "cn")?.content || "",
+      titleOfLanguage:
+        item.content.find((i) => i.language === "cn")?.title || "",
     }));
   }
   return res;
@@ -637,7 +701,7 @@ export async function getOrderReportList(params: OrderReportsRequestParams) {
 export async function getPokerReport(params: PokerReportRequestParams) {
   const user = await getSession();
   return await apiRequest<PageData<PokerReportRequestRecords>>({
-    url: "/report/agent/gundan",
+    url: "/report/agent/poker",
     token: user?.token,
     params,
   });
@@ -651,7 +715,36 @@ export async function getRechargeReportList(data: RechargeReportParams) {
     token: user?.token,
     data,
   });
-  console.info("🌸 ~ res:", res);
+  return res;
+}
+// 提现报表
+export async function getWithdrawReportList(data: WithdrawReportParams) {
+  const user = await getSession();
+  const res = await apiRequest<PageData<WithdrawReport>>({
+    url: "/order/withdraw/report",
+    method: "POST",
+    token: user?.token,
+    data,
+  });
+  if (res.data?.list) {
+    let status: number;
+    res.data.list = res.data.list.map((item: WithdrawReport) => {
+      if (item.approverStatus === 0 || item.approverStatus === 1) {
+        status = 0;
+      } else if (item.approverStatus === 3 || item.moneyStatus === 2) {
+        status = 1;
+      } else if (item.approverStatus === 2) {
+        status = 2;
+      } else if (item.moneyStatus === 1) {
+        status = 3;
+      }
+
+      return {
+        ...item,
+        status,
+      };
+    });
+  }
   return res;
 }
 
@@ -660,8 +753,8 @@ export async function getCollectionAddressList(
   params: CollectionAddressListRequestParams,
 ) {
   const user = await getSession();
-  return await apiRequest<PageData<CollectionAddressListRecords>>({
-    url: "/agent/collection/address/list",
+  return await apiRequest<CollectionAddressListRecords[]>({
+    url: "/collection/address/list",
     token: user?.token,
     params,
   });
@@ -705,6 +798,93 @@ export async function deleteRole(data: { id: number }) {
   return await apiRequest({
     url: "/role/deleteById",
     method: "DELETE",
+    data,
+    token: user?.token,
+  });
+}
+
+// 新增归集地址
+export async function addCollectionAddress(data: {
+  size: number;
+}) {
+  const user = await getSession();
+  return await apiRequest({
+    url: "/collection/address/add",
+    method: "POST",
+    data,
+    token: user?.token,
+  });
+}
+
+// 锁定归集地址
+export async function lockCollectionAddress(data: {
+  address: string;
+  status: number;
+}) {
+  const user = await getSession();
+  return await apiRequest({
+    url: "/collection/address/enable",
+    method: "POST",
+    data,
+    token: user?.token,
+  });
+}
+
+// 注单详情
+export async function getOrderDetail(data: { id: string }) {
+  const user = await getSession();
+  return await apiRequest<OrderItemDetailType>({
+    url: "/agent/order/baccarat/detail",
+    token: user?.token,
+    data,
+  });
+}
+// 矿工费
+export async function getOreFeeList() {
+  const user = await getSession();
+  return await apiRequest<{ list: OreFeeList[] }>({
+    url: "/orefee/address/list",
+    token: user?.token,
+  });
+}
+// 添加矿工费
+export async function addOreFee(data: {
+  size: number;
+}) {
+  const user = await getSession();
+  return await apiRequest({
+    url: "/orefee/address/add",
+    method: "POST",
+    params: data,
+    token: user?.token,
+  });
+}
+// 移除矿工费
+export async function removeOreFee(data: {
+  address: string;
+}) {
+  const user = await getSession();
+  return await apiRequest({
+    url: "/orefee/address/remove",
+    method: "POST",
+    params: data,
+    token: user?.token,
+  });
+}
+// 提现手续费
+export async function getWithdrawFeeList() {
+  const user = await getSession();
+  return await apiRequest<WithdrawFeeList[]>({
+    url: "/config/withdraw/fee/list",
+    token: user?.token,
+  });
+}
+// 编辑提现手续费
+export async function saveWithdrawFee(data: WithdrawFeeList) {
+  const user = await getSession();
+  return await apiRequest({
+    url: "/config/withdraw/fee/edit",
+    method: "POST",
     data,
     token: user?.token,
   });

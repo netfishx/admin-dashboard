@@ -1,3 +1,4 @@
+import { Skeleton } from "@/components/ui/skeleton";
 import type { CollectionAddressListRequestParams } from "@/lib/types";
 import { Suspense } from "react";
 import { Form } from "./form";
@@ -8,15 +9,18 @@ interface CommonWrapperProps {
 }
 
 async function CommonWrapper({ searchParams }: CommonWrapperProps) {
-  const search = await searchParams;
   return (
     <>
-      <Suspense fallback={null}>
+      <Suspense
+        fallback={
+          <div className="flex justify-between items-center bg-background p-4">
+            <Skeleton className="w-full h-9 opacity-20" />
+          </div>
+        }
+      >
         <Form />
       </Suspense>
-      <Suspense fallback={<div>loading...</div>}>
-        <List searchParams={search} />
-      </Suspense>
+      <List searchParams={searchParams} />
     </>
   );
 }

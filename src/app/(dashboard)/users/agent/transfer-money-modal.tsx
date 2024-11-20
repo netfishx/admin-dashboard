@@ -11,9 +11,10 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Password } from "@/components/ui/password";
 import type { AgentData } from "@/lib/types";
+import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { useState } from "react";
-
+import { useRouter } from "next/navigation";
+import { useState, useTransition } from "react";
 export function TransferMoneyModal({
   open,
   onOpenChange,
@@ -23,11 +24,16 @@ export function TransferMoneyModal({
   onOpenChange: (open: boolean) => void;
   editData: AgentData | null;
 }) {
+  const router = useRouter();
+  const translation = useTranslations();
   const t = useTranslations("users.agents");
   const [amount, setAmount] = useState(0);
   const [moneyPassword, setMoneyPassword] = useState("");
+  const [isPeding, startTransition] = useTransition();
   const handleClickTransferMoney = () => {
     console.info(amount, moneyPassword);
+    onOpenChange(false);
+    router.refresh();
   };
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -69,9 +75,15 @@ export function TransferMoneyModal({
         </div>
         <DialogFooter>
           <Button variant="outline" onClick={() => onOpenChange(false)}>
-            {t("close")}
+            {translation("cancel")}
           </Button>
-          <Button onClick={handleClickTransferMoney}>{t("save")}</Button>
+          <Button
+            disabled={isPeding}
+            onClick={() => startTransition(handleClickTransferMoney)}
+          >
+            {isPeding && <Loader2 className="w-4 h-4 animate-spin" />}
+            {translation("confirm")}
+          </Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

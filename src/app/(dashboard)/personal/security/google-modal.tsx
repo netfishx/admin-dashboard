@@ -14,8 +14,11 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Copy } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
+import { useCopyToClipboard } from "react-use";
+import { toast } from "sonner";
 
 import Image from "next/image";
 import { QRCodeSVG } from "qrcode.react";
@@ -34,6 +37,7 @@ export function GoogleModal({
   const translations = useTranslations("");
   const [authCode, setAuthCode] = useState("");
   const isEdit = false;
+  const [, copyToClipboard] = useCopyToClipboard();
 
   const submit = async () => {
     if (isEdit) {
@@ -158,8 +162,15 @@ export function GoogleModal({
                     {t("secretLabel")}
                   </span>
                   <span className="text-sm text-primary">{secret}</span>
-                  <Button variant="link" className="h-auto p-0 pl-2 text-sm">
-                    {t("copy")}
+                  <Button
+                    variant="ghost"
+                    className="size-4"
+                    onClick={() => {
+                      copyToClipboard(secret);
+                      toast.success("复制成功");
+                    }}
+                  >
+                    <Copy className="size-4" />
                   </Button>
                 </div>
               </div>

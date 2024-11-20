@@ -2,7 +2,6 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import {} from "@/components/ui/select";
 import { Loader2 } from "lucide-react";
 
 import { DateRangeFilter } from "@/components/daterange-filter";
@@ -20,8 +19,8 @@ import { useTransition } from "react";
 
 export function Form() {
   const t = useTranslations("report.recharge");
-  const [id, setId] = useQueryState("userId");
   const [userId, setUserId] = useQueryState("userId");
+  const [orderNo, setOrderNo] = useQueryState("orderNo");
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
   const [userType, setUserType] = useQueryState("userType");
@@ -52,8 +51,8 @@ export function Form() {
           <Label className="shrink-0">{t("orderNo")}</Label>
           <Input
             placeholder={t("placeholder")}
-            value={id ?? ""}
-            onChange={(e) => setId(e.target.value)}
+            value={orderNo ?? ""}
+            onChange={(e) => setOrderNo(e.target.value)}
           />
         </div>
         <div className="flex gap-2 items-center">

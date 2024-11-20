@@ -1,10 +1,5 @@
-import { getOrderReportList } from "@/api";
-import TableSkeleton from "@/components/table-skeleton";
-import type {
-  OrderReportsRecord,
-  OrderReportsRequestParams,
-  PageData,
-} from "@/lib/types";
+import { Skeleton } from "@/components/ui/skeleton";
+import type { OrderReportsRequestParams } from "@/lib/types";
 import { Suspense } from "react";
 import { List } from "./list";
 import { ListFilter } from "./list-filter";
@@ -14,17 +9,18 @@ interface CommonWrapperProps {
 }
 
 async function CommonWrapper({ searchParams }: CommonWrapperProps) {
-  const params = await searchParams;
-  const { data } = await getOrderReportList(params);
-
   return (
     <>
-      <Suspense fallback={null}>
+      <Suspense
+        fallback={
+          <div className="flex justify-between items-center bg-background p-4">
+            <Skeleton className="w-full h-9 opacity-20" />
+          </div>
+        }
+      >
         <ListFilter />
       </Suspense>
-      <Suspense fallback={<TableSkeleton length={5} />}>
-        <List data={data as PageData<OrderReportsRecord>} />
-      </Suspense>
+      <List searchParams={searchParams} />
     </>
   );
 }

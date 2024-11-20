@@ -86,6 +86,7 @@ export function MemberForm() {
             {t("reset")}
           </Button>
           <Button onClick={() => router.refresh()}>{t("search")}</Button>
+          <Button>{t("download")}</Button>
         </div>
       </div>
     </div>

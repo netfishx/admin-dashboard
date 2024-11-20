@@ -49,6 +49,17 @@ export type SupplierConfig = {
   distributionPercent: number;
 };
 
+// 供应商列表
+export type SupplierList = {
+  id: string;
+  username: string;
+  nickname: string;
+  remark: string;
+  status: number;
+  createTime: number;
+  updateTime: number;
+};
+
 export type MaintainGame = {
   id: string;
   gameType: number;
@@ -138,7 +149,7 @@ export type ChangeLog = {
 export type Announcement = {
   id?: string | null; // 编辑时传
   type: string;
-  content: { id?: string; language: string; content: string }[];
+  content: { id?: string; language: string; title?: string; content: string }[];
   status: string;
   startTime: number | null;
   endTime: number | null;
@@ -166,8 +177,9 @@ export type AnnouncementList = {
   startTime: number;
   endTime: number;
   language: string;
-  content: { id?: string; language: string; content: string }[];
+  content: { id?: string; language: string; content: string; title?: string }[];
   contentOfLanguage: string;
+  titleOfLanguage: string;
   status: number;
   createTime: number;
   updateTime: number;
@@ -419,30 +431,23 @@ export type MemberBetReportRequestRecords = {
 
 // 代理报表-棋牌-请求入参
 export type PokerReportRequestParams = {
-  agentId?: string; // 代理ID
-  gameId?: number; // 游戏ID（不传时为全部游戏）
-  houseOwnerId?: string; // 房主ID
-  parentAgentId?: string; // 上级代理ID
-  startTime?: number; // 开奖开始时间（必传）
-  endTime?: number; // 开奖结束时间（必传）
+  agentId: string; // 代理ID
+  romeType: number; // 房间类型 (不传的时候为全部游戏)
+  startTime: number; // 开奖开始时间 (必须传) - timestamp
+  endTime: number; // 开奖结束时间 (必须传) - timestamp
+  pageNum: number; // 页码
+  pageSize: number; // 每页条数
 };
 
 // 代理报表-棋牌-出参
 export type PokerReportRequestRecords = {
-  dataLink: string[]; // 数据链接数组
-  userId: string; // 用户ID
-  userType: number; // 用户类型
-  openTime: number; // 开盘时间（时间戳，毫秒级）
-  gameId: number; // 游戏ID
-  gameName: string; // 游戏名称
-  expectedShareAmount: number; // 应占成金额
-  interceptAmount: number; // 拦截占成金额
-  throwAmount: number; // 抛货金额
-  actualShareWinLoss: number; // 占成盈亏金额
-  backIncome: number; // 返水收入
-  backOutcome: number; // 返水支出
-  pureBackAmount: number; // 纯返水金额
-  totalProfitLossAmount: number; // 总输赢金额
+  agentId: string; // 代理ID
+  gameType: number; // 游戏类型
+  roomType: number; // 房间类型
+  issueAmount: number; // 期数
+  settledAmount: string; // 结算金额
+  totaSettledAmount: string; // 累计总结算金额
+  totalIssueAmount: number; // 累计总期数
 };
 
 // 充值报表
@@ -462,25 +467,76 @@ export type RechargeReport = {
 };
 // 充值报表请求入参
 export type RechargeReportParams = {
+  userId?: string | null;
+  startTime?: number;
+  endTime?: number;
+  orderNo?: string | null;
+  withdrawUserType?: number | null;
+  operatorSymbol?: number | null;
+  rechargeMoney?: number | null;
+  requestStatus?: number | null;
+  pageNum: number;
+  pageSize: number;
+};
+// 提现报表
+export type WithdrawReport = {
+  id: string;
+  orderNo: string;
+  userId: string;
+  userType: number;
+  account: string;
+  nickname: string;
+  parentAccount: string;
+  withdrawMoney: string;
+  withdrawFee: string;
+  withdrawWay: string;
+  actualMoney: string;
+  applyTime: number;
+  approverId: string;
+  approverName: string;
+  approverTime: number;
+  approverStatus: number;
+  moneyStatus: number;
+  finishTime: number;
+  withdrawHash: string;
+  currency: string;
+  withdrawMode: number;
+  createTime: number;
+  updateTime: number;
+  status: number;
+};
+// 提现报表请求入参
+export type WithdrawReportParams = {
   startTime?: number;
   endTime?: number;
   orderNo?: string | null;
   operatorSymbol?: number | null;
-  rechargeMoney?: number | null;
-  withdrawUserType?: number | null;
-  userId?: string | null;
+  withdrawMoney?: number | null;
   pageNum: number;
   pageSize: number;
+  requestStatus?: number | null;
 };
 
 // 归集地址列表
 export type CollectionAddressListRecords = {
+  account: string;
   address: string;
-  currency: string;
-  balance: string;
+  addressType: number;
+  coin: string;
+  createTime: string;
+  id: string;
+  memberId: string;
+  mnemonic: string[];
+  privateKey: string;
+  remark: string;
+  status: number;
+  updateTime: string;
 };
 // 归集地址列表请求入参
 export type CollectionAddressListRequestParams = {
+  currency: string;
+  fixedFee: number;
+  percentageFee: number;
   pageNum: number;
   pageSize: number;
 };
@@ -505,4 +561,50 @@ export type TreeNode = {
   id: string;
   label: string;
   children?: TreeNode[];
+};
+
+// 注单详情-
+export type OrderDetailType = {
+  accountId: string; // 账户ID
+  expectedShareAmount: string; // 预期分成金额，字符串类型，用于高精度计算
+  expectedSharePercent: string; // 预期分成百分比，字符串类型
+  actualShareAmount: string; // 实际分成金额，字符串类型
+  percent: number; // 实际分成百分比，字符串类型
+};
+
+// 注单详情-
+export type OrderItemDetailType = {
+  id: string; // 唯一标识符
+  shoeId: number; // 鞋子ID（可能是某种记录或分组ID）
+  playId: number; // 播放ID（可能是某场游戏的ID）
+  revenueShare: OrderDetailType[]; // 分成数据数组
+  roomOwnerId: string; // 房间所有者ID（可能是 -1 表示默认值或未分配）
+  lastAgentId: string; // 最近的代理ID
+  gameId: number; // 游戏ID
+  result: string; // 游戏结果数据，可能是某种序列化的字符串
+  status: string | null; // 状态信息，可以为空
+};
+
+// 矿工费
+export type OreFeeList = {
+  account: string;
+  address: string;
+  addressType: number;
+  coin: string;
+  createTime: string;
+  id: string;
+  memberId: string;
+  mnemonic: string[];
+  privateKey: string;
+  remark: string;
+  status: number;
+  trxBalance: string;
+  updateTime: string;
+  usdtBalance: string;
+};
+// 提现手续费
+export type WithdrawFeeList = {
+  currency: string;
+  fixedFee: number;
+  percentageFee: number;
 };

@@ -1,4 +1,5 @@
 "use client";
+import { getOrderDetail } from "@/api";
 import {
   Dialog,
   DialogContent,
@@ -14,6 +15,8 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import type { OrderItemDetailType } from "@/lib/types";
+import { useEffect, useState } from "react";
 
 interface Dialogprops {
   open: boolean;
@@ -22,6 +25,50 @@ interface Dialogprops {
 
 export function Detaildialog(props: Dialogprops) {
   const { open, onOpenChange } = props;
+  const [data, setData] = useState<OrderItemDetailType>();
+  useEffect(() => {
+    if (open) {
+      getOrderDetail({ id: "1731907697706" }).then((res) => {
+        setData(res?.data);
+      });
+    }
+  }, [open]);
+
+  function formatResult(result = ""): string {
+    // 定义花色映射
+    const suitMap: Record<string, string> = {
+      H: "♥", // 红心
+      D: "♦", // 方块
+      C: "♣", // 梅花
+      S: "♠", // 黑桃
+    };
+
+    // 拆分闲和庄的数据
+    const [player, banker] = result.split(",");
+
+    // 替换花色并格式化每组牌
+    const formatCards = (cards = ""): string =>
+      cards
+        .split("-")
+        .filter((card) => card !== "XX")
+        .map((card) => suitMap[card[0]] + card.slice(1))
+        .join(" ");
+
+    const formattedPlayer = `闲 ${formatCards(player)}`;
+    const formattedBanker = `庄 ${formatCards(banker)}`;
+
+    // 如果闲或庄没有结果，则不显示
+    const outputParts: string[] = [];
+    if (formattedBanker !== "庄 ") {
+      outputParts.push(formattedBanker);
+    }
+    if (formattedPlayer !== "闲 ") {
+      outputParts.push(formattedPlayer);
+    }
+
+    return outputParts.join(" ; ");
+  }
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="w-[500px]">
@@ -31,9 +78,9 @@ export function Detaildialog(props: Dialogprops) {
         <div className="flex justify-center">占成明细</div>
         <ScrollArea className="w-[450px]">
           <div className="whitespace-nowrap mb-1">
-            DL123123 30% - DL213445 10% - DL29123 10% - HY29123(房主) 5%DL123123
-            30% - DL213445 10% - DL29123 10% - HY29123(房主) 5%DL123123 30% -
-            DL213445 10% - DL29123 10% - HY29123(房主) 5%
+            {data?.revenueShare.map(
+              (item) => `${item.accountId} - ${item.percent * 100}%；`,
+            )}
           </div>
           <ScrollBar orientation="horizontal" />
         </ScrollArea>
@@ -49,10 +96,11 @@ export function Detaildialog(props: Dialogprops) {
           </TableHeader>
           <TableBody>
             <TableRow>
-              <TableCell className="w-20 text-center">8</TableCell>
-              <TableCell className="w-20 text-center">32</TableCell>
+              <TableCell className="w-20 text-center">{data?.shoeId}</TableCell>
+              <TableCell className="w-20 text-center">{data?.playId}</TableCell>
               <TableCell className="w-40 text-center">
-                庄:♣3 ♣7; 闲:♦2 ♠6
+                {formatResult(data?.result || "")}
+                {/* {data?.result?.split(",")} */}
               </TableCell>
             </TableRow>
           </TableBody>

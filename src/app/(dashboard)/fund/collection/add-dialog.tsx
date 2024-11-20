@@ -1,4 +1,5 @@
 "use client";
+import { addCollectionAddress } from "@/api";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -20,6 +21,10 @@ export function AddDialog(props: Dialogprops) {
   const { open = true, onOpenChange } = props;
   const t = useTranslations("fund.collection");
   const translations = useTranslations();
+  const handleConfirm = async () => {
+    await addCollectionAddress({ size: 1 });
+    onOpenChange(false);
+  };
   return (
     <AlertDialog open={open} onOpenChange={onOpenChange}>
       <AlertDialogContent>
@@ -29,7 +34,9 @@ export function AddDialog(props: Dialogprops) {
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>{translations("cancel")}</AlertDialogCancel>
-          <AlertDialogAction>{translations("confirm")}</AlertDialogAction>
+          <AlertDialogAction onClick={handleConfirm}>
+            {translations("confirm")}
+          </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

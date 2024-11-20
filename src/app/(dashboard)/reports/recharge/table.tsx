@@ -1,4 +1,3 @@
-import { getRechargeReportList } from "@/api";
 import { CustomPagination } from "@/components/custom-pagination";
 import { Button } from "@/components/ui/button";
 import {
@@ -9,73 +8,65 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import type { RechargeReportParams } from "@/lib/types";
-import { endOfDay, startOfDay } from "date-fns";
+import type { RechargeReport } from "@/lib/types";
+import type { PageData } from "@/lib/types";
 import { getTranslations } from "next-intl/server";
 
 async function RechargeTableHeader() {
-  "use cache";
   const t = await getTranslations("report.recharge");
   return (
     <TableHeader>
       <TableRow className="bg-muted">
-        <TableHead>{t("orderNo")}</TableHead>
-        <TableHead>{t("userId")}</TableHead>
-        <TableHead>{t("currency")}</TableHead>
-        <TableHead>{t("rechargeMoney")}</TableHead>
-        <TableHead>{t("finishTime")}</TableHead>
-        <TableHead>{t("rechargeHash")}</TableHead>
+        <TableHead className="w-24 min-w-24 text-center">
+          {t("orderNo")}
+        </TableHead>
+        <TableHead className="w-24 min-w-24 text-center">
+          {t("userId")}
+        </TableHead>
+        <TableHead className="w-24 min-w-24 text-center">
+          {t("currency")}
+        </TableHead>
+        <TableHead className="w-24 min-w-24 text-center">
+          {t("rechargeMoney")}
+        </TableHead>
+        <TableHead className="w-24 min-w-24 text-center">
+          {t("finishTime")}
+        </TableHead>
+        <TableHead className="w-24 min-w-24 text-center">
+          {t("rechargeHash")}
+        </TableHead>
       </TableRow>
     </TableHeader>
   );
 }
-
 export async function RechargeTable({
-  searchParams,
-}: { searchParams: Promise<{ [key: string]: string | undefined }> }) {
-  const {
-    userId,
-    orderNo,
-    operatorSymbol,
-    rechargeMoney,
-    withdrawUserType,
-    startTime,
-    endTime,
-    pageNum,
-    pageSize,
-  } = await searchParams;
-  const now = Date.now();
-  const start = startTime ?? startOfDay(now).getTime();
-  const end = endTime ?? endOfDay(now).getTime();
-  const params: RechargeReportParams = {
-    userId: (userId ?? null) as string,
-    orderNo: orderNo ?? null,
-    operatorSymbol:
-      operatorSymbol !== undefined ? Number(operatorSymbol) : null,
-    rechargeMoney: rechargeMoney !== undefined ? Number(rechargeMoney) : null,
-    withdrawUserType:
-      withdrawUserType !== undefined ? Number(withdrawUserType) : null,
-    pageNum: Number(pageNum ?? 1),
-    pageSize: Number(pageSize ?? 10),
-    startTime: Number(start),
-    endTime: Number(end),
-  };
-  const { data } = await getRechargeReportList(params);
+  data,
+}: { data?: PageData<RechargeReport> }) {
   const t = await getTranslations();
   return (
-    <div>
+    <div className="border rounded-sm">
       <Table>
         <RechargeTableHeader />
         <TableBody>
           {data && data.list.length > 0 ? (
             data.list.map((item) => (
               <TableRow key={item.id}>
-                <TableCell>{item.orderNo}</TableCell>
-                <TableCell>{item.userId}</TableCell>
-                <TableCell>{item.currency}</TableCell>
-                <TableCell>{item.rechargeMoney}</TableCell>
-                <TableCell>{item.finishTime}</TableCell>
-                <TableCell>
+                <TableCell className="w-24 min-w-24 text-center">
+                  {item.orderNo}
+                </TableCell>
+                <TableCell className="w-24 min-w-24 text-center">
+                  {item.userId}
+                </TableCell>
+                <TableCell className="w-24 min-w-24 text-center">
+                  {item.currency}
+                </TableCell>
+                <TableCell className="w-24 min-w-24 text-center">
+                  {item.rechargeMoney}
+                </TableCell>
+                <TableCell className="w-24 min-w-24 text-center">
+                  {item.finishTime}
+                </TableCell>
+                <TableCell className="w-24 min-w-24 text-center">
                   <Button variant="link" size="icon">
                     {item.rechargeHash}
                   </Button>

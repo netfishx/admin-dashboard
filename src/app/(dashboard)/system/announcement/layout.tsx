@@ -8,7 +8,7 @@ export default async function DashboardLayout({
   children,
 }: { children: ReactNode }) {
   return (
-    <div className="w-full overflow-hidden">
+    <div className="w-full">
       <TabsItem />
       <Suspense fallback={null}>{children}</Suspense>
       <ContentModal />
