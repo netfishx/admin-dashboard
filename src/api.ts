@@ -11,6 +11,8 @@ import type {
   ApplyListRequest,
   AuditList,
   AuditListRequest,
+  BorrowRecordRequestParams,
+  BorrowRecordRequestRecords,
   ChangeLog,
   CollectionAddressListRecords,
   CollectionAddressListRequestParams,
@@ -872,6 +874,18 @@ export async function removeOreFee(data: {
     token: user?.token,
   });
 }
+
+// 借还记录list
+export async function postGetCreditLogList(data: BorrowRecordRequestParams) {
+  const user = await getSession();
+  return await apiRequest<PageData<BorrowRecordRequestRecords>>({
+    url: "/wallet/getCreditLogList",
+    method: "POST",
+    data,
+    token: user?.token,
+  });
+}
+
 // 提现手续费
 export async function getWithdrawFeeList() {
   const user = await getSession();

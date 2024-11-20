@@ -20,21 +20,39 @@ import { useRef } from "react";
 
 export function ListFilter() {
   const t = useTranslations("report.orderlist");
-  const [gameName, setGameName] = useQueryState("gameId");
-  const [bettingtime, setBettingtime] = useQueryState("bettingtime");
-  const [settlementstatus, setSettlementstatus] = useQueryState("orderStatus");
+  const [gameName, setGameName] = useQueryState("gameId", {
+    defaultValue: "",
+  });
+  const [bettingtime, setBettingtime] = useQueryState("bettingtime", {
+    defaultValue: "",
+  });
+  const [settlementstatus, setSettlementstatus] = useQueryState("orderStatus", {
+    defaultValue: "",
+  });
   // 订单号
-  const [ordernumber, setOrdernumber] = useQueryState("id");
+  const [ordernumber, setOrdernumber] = useQueryState("id", {
+    defaultValue: "",
+  });
   // 期号
-  const [issuenumber, setIssuenumber] = useQueryState("issueNumber");
+  const [issuenumber, setIssuenumber] = useQueryState("issueNumber", {
+    defaultValue: "",
+  });
   // 部长
-  const [ministerID, setMinisterID] = useQueryState("minister");
+  const [ministerID, setMinisterID] = useQueryState("minister", {
+    defaultValue: "",
+  });
   // 会员
-  const [memberID, setMemberID] = useQueryState("memberId");
+  const [memberID, setMemberID] = useQueryState("memberId", {
+    defaultValue: "",
+  });
   // 房主
-  const [roomeownerID, setRoomeownerID] = useQueryState("roomOwnerId");
+  const [roomeownerID, setRoomeownerID] = useQueryState("roomOwnerId", {
+    defaultValue: "",
+  });
   // 末级代理ID
-  const [leastlevelID, setLeastlevelID] = useQueryState("lastAgentId");
+  const [leastlevelID, setLeastlevelID] = useQueryState("lastAgentId", {
+    defaultValue: "",
+  });
 
   const dateRangeFilterReset = useRef<
     ((start: number, end: number) => void) | null

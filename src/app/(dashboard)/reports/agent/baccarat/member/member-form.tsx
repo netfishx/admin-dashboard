@@ -20,8 +20,12 @@ import { useRef } from "react";
 export function MemberForm() {
   const t = useTranslations("report.agent");
   const router = useRouter();
-  const [gameName, setGameName] = useQueryState("gameId");
-  const [leastlevelID, setLeastlevelID] = useQueryState("agentId");
+  const [gameName, setGameName] = useQueryState("gameId", {
+    defaultValue: "",
+  });
+  const [leastlevelID, setLeastlevelID] = useQueryState("agentId", {
+    defaultValue: "",
+  });
 
   const dateRangeFilterReset = useRef<
     ((start: number, end: number) => void) | null

@@ -1,9 +1,15 @@
 "use client";
 import { DateRangeFilter } from "@/components/daterange-filter";
 import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { startOfDay } from "date-fns";
 import { endOfDay } from "date-fns";
 import { useTranslations } from "next-intl";
@@ -12,26 +18,12 @@ import { useRef } from "react";
 
 export function ListFilter() {
   const t = useTranslations("report.agent");
-  const [agentId, setAgentId] = useQueryState("agentId");
-  const [roomId, setRoomId] = useQueryState<string[]>("roomId", {
-    defaultValue: [],
-    parse: (value) => value.split(",").filter(Boolean),
-    serialize: (value) => value.join(","),
+  const [agentId, setAgentId] = useQueryState("agentId", {
+    defaultValue: "",
   });
-
-  const roomTypes = [
-    { id: "baccarat", label: "游戏大厅" },
-    { id: "guandan", label: "俱乐部" },
-  ];
-
-  const handleRoomTypeChange = (roomType: string, checked: boolean) => {
-    const currentTypes = roomId || [];
-    if (checked) {
-      setRoomId([...currentTypes, roomType].filter(Boolean));
-    } else {
-      setRoomId(currentTypes.filter((type) => type !== roomType));
-    }
-  };
+  const [roomId, setRoomId] = useQueryState("roomId", {
+    defaultValue: "all",
+  });
 
   const dateRangeFilterReset = useRef<
     ((start: number, end: number) => void) | null
@@ -44,12 +36,8 @@ export function ListFilter() {
 
   const handleReset = () => {
     setAgentId("");
-    setRoomId([]);
+    setRoomId("all");
     handleDateRangeFilterReset();
-  };
-
-  const isRoomTypeSelected = (roomType: string) => {
-    return (roomId || []).includes(roomType);
   };
 
   return (
@@ -76,25 +64,22 @@ export function ListFilter() {
 
       {/* Second row */}
       <div className="flex gap-4 items-center">
-        <div className="flex gap-4 items-center">
+        <div className="flex gap-2 items-center">
           <Label className="shrink-0">{t("roomType")}</Label>
-          {roomTypes.map((room) => (
-            <div key={room.id} className="flex items-center space-x-2">
-              <Checkbox
-                id={room.id}
-                checked={isRoomTypeSelected(room.id)}
-                onCheckedChange={(checked) =>
-                  handleRoomTypeChange(room.id, checked as boolean)
-                }
-              />
-              <label
-                htmlFor={room.id}
-                className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-              >
-                {room.label}
-              </label>
-            </div>
-          ))}
+          <Select
+            value={roomId ?? ""}
+            onValueChange={(value) => setRoomId(value)}
+            defaultValue="all"
+          >
+            <SelectTrigger className="w-28">
+              <SelectValue placeholder={t("placeholderselect")} />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">{t("all")}</SelectItem>
+              <SelectItem value="1">{t("gameHall")}</SelectItem>
+              <SelectItem value="2">{t("club")}</SelectItem>
+            </SelectContent>
+          </Select>
         </div>
       </div>
 
