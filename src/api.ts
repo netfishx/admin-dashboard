@@ -698,7 +698,7 @@ export async function getOrderReportList(params: OrderReportsRequestParams) {
 export async function getPokerReport(params: PokerReportRequestParams) {
   const user = await getSession();
   return await apiRequest<PageData<PokerReportRequestRecords>>({
-    url: "/report/agent/gundan",
+    url: "/report/agent/poker",
     token: user?.token,
     params,
   });

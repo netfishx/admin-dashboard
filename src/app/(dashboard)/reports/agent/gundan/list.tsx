@@ -30,7 +30,7 @@ async function ListHeader() {
           {t("issueNumber")}
         </TableHead>
         <TableHead className="min-w-24 text-center">
-          {t("playerNumber")}
+          {t("settledAmount")}
         </TableHead>
         <TableHead className="w-24 text-center sticky right-0 z-10 bg-muted">
           {t("more")}
@@ -46,32 +46,15 @@ async function ListBody({ list }: { list: PokerReportRequestRecords[] }) {
     <TableBody>
       {list?.length > 0 ? (
         list?.map((item: PokerReportRequestRecords) => (
-          <TableRow key={`${item.userId}`}>
-            <TableCell className="w-24 text-center">{item.userId}</TableCell>
-            <TableCell className="w-24 text-center">{item.gameName}</TableCell>
+          <TableRow key={`${item.agentId}`}>
+            <TableCell className="w-24 text-center">{item.agentId}</TableCell>
+            <TableCell className="w-24 text-center">{item.gameType}</TableCell>
+            <TableCell className="w-24 text-center">{item.roomType}</TableCell>
             <TableCell className="w-24 text-center">
-              {item.expectedShareAmount}
+              {item.issueAmount}
             </TableCell>
             <TableCell className="w-24 text-center">
-              {item.interceptAmount}
-            </TableCell>
-            <TableCell className="w-24 text-center">
-              {item.throwAmount}
-            </TableCell>
-            <TableCell className="w-24 text-center">
-              {item.actualShareWinLoss}
-            </TableCell>
-            <TableCell className="w-24 text-center">
-              {item.backIncome}
-            </TableCell>
-            <TableCell className="w-24 text-center">
-              {item.backOutcome}
-            </TableCell>
-            <TableCell className="w-24 text-center">
-              {item.pureBackAmount}
-            </TableCell>
-            <TableCell className="w-24 text-center">
-              {item.totalProfitLossAmount}
+              {item.settledAmount}
             </TableCell>
             <TableCell className="w-24 text-center sticky right-0 z-10 bg-background">
               <DetailButton />
@@ -117,17 +100,21 @@ export async function List({
           <TableHeader>
             <TableRow className="bg-muted">
               <TableHead className="min-w-24 text-center">
-                {t("issueNumber")}
+                {t("totalIssueAmount")}
               </TableHead>
               <TableHead className="min-w-24 text-center">
-                {t("player")}
+                {t("totaSettledAmount")}
               </TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             <TableRow>
-              <TableCell className="w-24 text-center">123</TableCell>
-              <TableCell className="w-24 text-center">4456</TableCell>
+              <TableCell className="w-24 text-center">
+                {data?.list[0]?.totalIssueAmount}
+              </TableCell>
+              <TableCell className="w-24 text-center">
+                {data?.list[0]?.totaSettledAmount}
+              </TableCell>
             </TableRow>
           </TableBody>
         </Table>

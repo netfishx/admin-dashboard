@@ -30,12 +30,11 @@ export function Detaildialog(props: Dialogprops) {
     if (open) {
       getOrderDetail({ id: "1731907697706" }).then((res) => {
         setData(res?.data);
-        console.log(res?.data, "123");
       });
     }
   }, [open]);
 
-  function formatResult(result: string): string {
+  function formatResult(result = ""): string {
     // 定义花色映射
     const suitMap: Record<string, string> = {
       H: "♥", // 红心
@@ -48,7 +47,7 @@ export function Detaildialog(props: Dialogprops) {
     const [player, banker] = result.split(",");
 
     // 替换花色并格式化每组牌
-    const formatCards = (cards: string): string =>
+    const formatCards = (cards = ""): string =>
       cards
         .split("-")
         .filter((card) => card !== "XX")
