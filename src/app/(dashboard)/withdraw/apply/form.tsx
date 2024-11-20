@@ -29,13 +29,9 @@ export function Form() {
   const [parentAccount, setParentAccount] = useQueryState("parentAccount", {
     defaultValue: "",
   });
-  const [approverStatus, setApproverStatus] = useQueryState<string | null>(
-    "approverStatus",
-    {
-      defaultValue: null,
-      parse: (value) => value as string | null,
-    },
-  );
+  const [approverStatus, setApproverStatus] = useQueryState("approverStatus", {
+    defaultValue: "all",
+  });
   const approverStatusOptions = [
     ...approverStatusDict.map((item) => ({
       value: item.value.toString(),
@@ -54,17 +50,15 @@ export function Form() {
           <Label className="shrink-0">{t("auditStatus")}</Label>
           <Select
             defaultValue={approverStatusOptions[0]?.value}
-            onValueChange={(value) =>
-              setApproverStatus(value === "null" ? null : value)
-            }
+            onValueChange={(value) => setApproverStatus(value)}
             value={approverStatus}
           >
             <SelectTrigger className="w-36">
               <SelectValue placeholder={t("placeholder")} />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem key="all" value="null">
-                全部
+              <SelectItem key="all" value="all">
+                {t("all")}
               </SelectItem>
               {approverStatusOptions.map((item) => (
                 <SelectItem key={item.value} value={item.value}>

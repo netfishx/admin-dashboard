@@ -75,7 +75,7 @@ async function TableWrapper({
                 {Array.from({ length: 5 }).map((_, i) => (
                   // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
                   <TableRow key={i}>
-                    <TableCell colSpan={10} className="h-40">
+                    <TableCell colSpan={12} className="h-40">
                       <Skeleton className="w-full h-full" />
                     </TableCell>
                   </TableRow>
@@ -203,7 +203,7 @@ async function TableBodyWrapper({ list }: { list: ApplyData[] }) {
         ))
       ) : (
         <TableRow>
-          <TableCell colSpan={10} className="text-center h-40">
+          <TableCell colSpan={12} className="text-center h-40">
             {translations("noData")}
           </TableCell>
         </TableRow>
