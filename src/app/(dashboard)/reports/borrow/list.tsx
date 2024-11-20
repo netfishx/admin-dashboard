@@ -1,4 +1,4 @@
-import { getSupplierReportList } from "@/api";
+import { postGetCreditLogList } from "@/api";
 import { CustomPagination } from "@/components/custom-pagination";
 import TableSkeleton from "@/components/table-skeleton";
 import {
@@ -10,9 +10,10 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import type {
-  SupplierReportRecords,
-  SupplierReportRequestParams,
+  BorrowRecordRequestParams,
+  BorrowRecordRequestRecords,
 } from "@/lib/types";
+import { format } from "date-fns";
 import { getTranslations } from "next-intl/server";
 import { Suspense } from "react";
 
@@ -35,24 +36,24 @@ async function ListHeader() {
   );
 }
 
-async function ListBody({ list }: { list: SupplierReportRecords[] }) {
+async function ListBody({ list }: { list: BorrowRecordRequestRecords[] }) {
   const translate = await getTranslations();
   return (
     <TableBody>
       {list?.length > 0 ? (
         list?.map((item) => (
-          <TableRow key={item.supplierId}>
+          <TableRow key={item.transactionID}>
             <TableCell className="w-24 text-center">
-              {item.supplierId}
+              {item.transactionID}
             </TableCell>
-            <TableCell className="w-24 text-center">{item.gameName}</TableCell>
+            <TableCell className="w-24 text-center">{item.agentId}</TableCell>
+            <TableCell className="w-24 text-center">{item.memberId}</TableCell>
+            <TableCell className="w-24 text-center">{item.amount}</TableCell>
             <TableCell className="w-24 text-center">
-              {item.analysisTime}
+              {item.operateCode}
             </TableCell>
-            <TableCell className="w-24 text-center">{item.gameId}</TableCell>
-            <TableCell className="w-24 text-center">{item.betNum}</TableCell>
             <TableCell className="w-24 text-center">
-              {item.validAmount}
+              {format(item.createTime, "yyyy-MM-dd HH:mm:ss")}
             </TableCell>
           </TableRow>
         ))
@@ -69,10 +70,10 @@ async function ListBody({ list }: { list: SupplierReportRecords[] }) {
 
 export async function List({
   searchParams,
-}: { searchParams: Promise<SupplierReportRequestParams> }) {
+}: { searchParams: Promise<BorrowRecordRequestParams> }) {
   const t = await getTranslations("report.borrow");
   const params = await searchParams;
-  const { data } = await getSupplierReportList(params);
+  const { data } = await postGetCreditLogList(params);
   return (
     <div className="p-2 bg-background flex-1">
       <div className="border rounded-sm relative">

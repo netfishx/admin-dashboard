@@ -1,12 +1,12 @@
 import { Skeleton } from "@/components/ui/skeleton";
-import type { SupplierReportRequestParams } from "@/lib/types";
+import type { BorrowRecordRequestParams } from "@/lib/types";
 import { hasPermission } from "@/session";
 import { Suspense } from "react";
 import { List } from "./list";
 import { ListFilter } from "./list-filter";
 
 interface CommonWrapperProps {
-  searchParams: Promise<SupplierReportRequestParams>;
+  searchParams: Promise<BorrowRecordRequestParams>;
 }
 
 async function CommonWrapper({ searchParams }: CommonWrapperProps) {

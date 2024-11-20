@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/select";
 import { endOfDay, startOfDay } from "date-fns";
 import { useTranslations } from "next-intl";
+import { useRouter } from "next/navigation";
 import { useQueryState } from "nuqs";
 import { useRef } from "react";
 
@@ -19,6 +20,7 @@ export function ListFilter({
   hasSearchPermission,
 }: { hasSearchPermission: boolean }) {
   const t = useTranslations("report.borrow");
+  const router = useRouter();
   const [orderNumber, setOrderNumber] = useQueryState("orderNumber", {
     defaultValue: "",
   });
@@ -49,7 +51,7 @@ export function ListFilter({
     handleDateRangeFilterReset();
   };
   const handleSearch = () => {
-    console.log("search");
+    router.refresh();
   };
 
   return (
