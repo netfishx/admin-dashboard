@@ -21,9 +21,15 @@ import { useRef } from "react";
 
 export function ListFilter() {
   const t = useTranslations("report.member");
-  const [parentAgentId, setParentAgentId] = useQueryState("parentAgentId");
-  const [gameId, setGameId] = useQueryState("gameId");
-  const [memberId, setMemberId] = useQueryState("memberId");
+  const [parentAgentId, setParentAgentId] = useQueryState("parentAgentId", {
+    defaultValue: "",
+  });
+  const [gameId, setGameId] = useQueryState("gameId", {
+    defaultValue: "",
+  });
+  const [memberId, setMemberId] = useQueryState("memberId", {
+    defaultValue: "",
+  });
 
   const [memberType, setMemberType] = useQueryState<string[]>("memberType", {
     defaultValue: [],

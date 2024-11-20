@@ -12,7 +12,9 @@ import { useRef } from "react";
 
 export function ListFilter() {
   const t = useTranslations("report.agent");
-  const [agentId, setAgentId] = useQueryState("agentId");
+  const [agentId, setAgentId] = useQueryState("agentId", {
+    defaultValue: "",
+  });
   const [roomId, setRoomId] = useQueryState<string[]>("roomId", {
     defaultValue: [],
     parse: (value) => value.split(",").filter(Boolean),
