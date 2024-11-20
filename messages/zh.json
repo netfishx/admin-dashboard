@@ -681,6 +681,13 @@
       "removeDesc": "请确定是否移除矿工费地址？",
       "confirm": "确定",
       "cancel": "取消"
+    },
+    "withdrawfee": {
+      "title": "提现手续费管理",
+      "save": "保存",
+      "currency": "币种",
+      "fixedFee": "固定手续费（本币）",
+      "percentageFee": "比例手续费（%）"
     }
   },
   "personal": {
