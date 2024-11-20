@@ -14,16 +14,18 @@ export function AddBtn() {
   const setContentModalData = useSetAtom(contentModalDataAtom);
   return (
     <>
-      <Button
-        className="self-end"
-        onClick={() => {
-          setOpen(true);
-          setEditModalTitle(t("addModal"));
-          setContentModalData(null);
-        }}
-      >
-        {t("add")}
-      </Button>
+      <div className="flex justify-end bg-background">
+        <Button
+          className="self-end"
+          onClick={() => {
+            setOpen(true);
+            setEditModalTitle(t("addModal"));
+            setContentModalData(null);
+          }}
+        >
+          {t("add")}
+        </Button>
+      </div>
     </>
   );
 }

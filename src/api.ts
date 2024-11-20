@@ -33,17 +33,20 @@ import type {
   PageData,
   PeriodReport,
   PeriodReportList,
+  Permission,
   PokerReportRequestParams,
   PokerReportRequestRecords,
   RatioReportRequestParams,
   RatioReportRequestRecords,
   RechargeReport,
   RechargeReportParams,
+  Role,
   SupplierConfig,
   SupplierList,
   SupplierReportRecords,
   SupplierReportRequestParams,
   UserBasicInfo,
+  WithdrawFeeList,
   WithdrawFormData,
   WithdrawReport,
   WithdrawReportParams,
@@ -759,6 +762,49 @@ export async function getCollectionAddressList(
   });
 }
 
+export async function getRoleList({
+  pageNum = 1,
+  pageSize = 10,
+}: {
+  pageNum: number;
+  pageSize: number;
+}) {
+  const user = await getSession();
+  return await apiRequest<PageData<Role>>({
+    url: "/role/pageList",
+    token: user?.token,
+    params: { pageNum, pageSize },
+  });
+}
+
+export async function getPermissionList() {
+  const user = await getSession();
+  return await apiRequest<Permission[]>({
+    url: "/perms/listAll",
+    token: user?.token,
+  });
+}
+
+export async function editRole(data: Role) {
+  const user = await getSession();
+  return await apiRequest({
+    url: "/role/saveOrUpdate",
+    method: "POST",
+    data,
+    token: user?.token,
+  });
+}
+
+export async function deleteRole(data: { id: number }) {
+  const user = await getSession();
+  return await apiRequest({
+    url: "/role/deleteById",
+    method: "DELETE",
+    data,
+    token: user?.token,
+  });
+}
+
 // 新增归集地址
 export async function addCollectionAddress(data: {
   size: number;
@@ -833,6 +879,25 @@ export async function postGetCreditLogList(data: BorrowRecordRequestParams) {
   const user = await getSession();
   return await apiRequest<PageData<BorrowRecordRequestRecords>>({
     url: "/wallet/getCreditLogList",
+    method: "POST",
+    data,
+    token: user?.token,
+  });
+}
+
+// 提现手续费
+export async function getWithdrawFeeList() {
+  const user = await getSession();
+  return await apiRequest<WithdrawFeeList[]>({
+    url: "/config/withdraw/fee/list",
+    token: user?.token,
+  });
+}
+// 编辑提现手续费
+export async function saveWithdrawFee(data: WithdrawFeeList) {
+  const user = await getSession();
+  return await apiRequest({
+    url: "/config/withdraw/fee/edit",
     method: "POST",
     data,
     token: user?.token,

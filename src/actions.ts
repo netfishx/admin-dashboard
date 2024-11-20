@@ -1,5 +1,5 @@
 "use server";
-import { editSupplierConfig, login, logout } from "@/api";
+import { editRole, editSupplierConfig, login, logout } from "@/api";
 // import { z } from "zod";
 // import { zfd } from "zod-form-data";
 import { setSession, signOut } from "@/session";
@@ -94,4 +94,14 @@ export async function editSupplierConfigAction(formData: FormData) {
     distributionPercent: Number(formData.get("distributionPercent")),
   });
   return res;
+}
+
+export async function editRoleAction(formData: FormData) {
+  return await editRole({
+    id: formData.get("id") ? formData.get("id")?.toString() : undefined,
+    roleName: formData.get("roleName")?.toString() ?? "",
+    permsIds: (formData.get("permsIds")?.toString() ?? "")
+      .split(",")
+      .map((item) => Number(item)),
+  });
 }

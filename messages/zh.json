@@ -532,7 +532,7 @@
       "nickname": "昵称",
       "rechargeMoney": "充值金额",
       "rechargeMoneyFilter": "充值金额筛选",
-      "finishTime": "到账日期", 
+      "finishTime": "到账日期",
       "rechargeHash": "哈希",
       "currency": "币种",
       "createTime": "创建时间",
@@ -631,14 +631,23 @@
       "collapse": "收起"
     },
     "role": {
+      "title": "角色",
       "list": "角色列表",
-      "add": "新增角色",
+      "add": "新增",
       "id": "角色ID",
       "name": "角色名称",
       "updateTime": "修改时间",
+      "createBy": "创建人",
+      "type": "分类",
       "action": "操作",
       "edit": "编辑",
-      "delete": "删除"
+      "delete": "删除",
+      "deleteModal": "删除角色",
+      "deleteModalDescription": "确定删除该角色吗？",
+      "deleteModalDescriptionWarning": "存在关联用户的角色无法删除",
+      "systemDefault": "系统默认",
+      "personalCreate": "个人创建",
+      "permissions": "角色权限"
     },
     "subaccount": {
       "list": "子账号列表",
@@ -699,6 +708,13 @@
       "removeDesc": "请确定是否移除矿工费地址？",
       "confirm": "确定",
       "cancel": "取消"
+    },
+    "withdrawfee": {
+      "title": "提现手续费管理",
+      "save": "保存",
+      "currency": "币种",
+      "fixedFee": "固定手续费（本币）",
+      "percentageFee": "比例手续费（%）"
     }
   },
   "personal": {

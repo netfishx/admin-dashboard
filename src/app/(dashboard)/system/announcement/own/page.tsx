@@ -1,6 +1,7 @@
 import { getAgentAnnouncement } from "@/api";
 import { Suspense } from "react";
 import { List } from "./list";
+
 export default async function Own({
   searchParams,
 }: { searchParams: Promise<{ [key: string]: string | string[] }> }) {
@@ -12,10 +13,12 @@ export default async function Own({
   });
 
   return (
-    <div className="flex flex-col gap-2 w-full h-full">
-      <Suspense>
-        <List data={data} />
-      </Suspense>
+    <div className="flex flex-col w-full h-full">
+      <div className=" flex-1 flex flex-col">
+        <Suspense>
+          <List data={data} />
+        </Suspense>
+      </div>
     </div>
   );
 }

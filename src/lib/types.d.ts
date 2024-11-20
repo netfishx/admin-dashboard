@@ -541,6 +541,28 @@ export type CollectionAddressListRequestParams = {
   pageSize: number;
 };
 
+export type Role = {
+  id?: string;
+  roleName: string;
+  updateTime?: number;
+  createBy?: string;
+  roleType?: number;
+  permsIds: number[];
+};
+
+export type Permission = {
+  id: number;
+  permsName: string;
+  parentId?: number;
+  permsType: number;
+};
+
+export type TreeNode = {
+  id: string;
+  label: string;
+  children?: TreeNode[];
+};
+
 // 注单详情-
 export type OrderDetailType = {
   accountId: string; // 账户ID
@@ -636,4 +658,11 @@ export type BorrowRecordRequestRecords = {
    * Unix时间戳(毫秒)
    */
   createTime: number;
+};
+
+// 提现手续费
+export type WithdrawFeeList = {
+  currency: string;
+  fixedFee: number;
+  percentageFee: number;
 };

@@ -24,9 +24,9 @@ export async function List({
   const t = await getTranslations("system.announcement");
 
   return (
-    <div className="p-2 mt-2 bg-background gap-2 flex flex-col h-full">
+    <div className="p-2 mt-2 gap-2 flex flex-col h-full bg-background">
       <AddBtn />
-      <div className="border rounded-sm">
+      <div className="border rounded-sm bg-background">
         <Table>
           <TableHeader>
             <TableRow className="bg-muted">
