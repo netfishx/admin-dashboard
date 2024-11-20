@@ -1,7 +1,6 @@
 "use client";
 import { DateRangeFilter } from "@/components/daterange-filter";
 import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
@@ -31,25 +30,9 @@ export function ListFilter() {
     defaultValue: "",
   });
 
-  const [memberType, setMemberType] = useQueryState<string[]>("memberType", {
-    defaultValue: [],
-    parse: (value) => value.split(",").filter(Boolean),
-    serialize: (value) => value.join(","),
+  const [memberType, setMemberType] = useQueryState("memberType", {
+    defaultValue: "all",
   });
-
-  const memberTypeOptions = [
-    { id: "1", label: "直属会员" },
-    { id: "2", label: "非直属会员" },
-  ];
-
-  const handleMemberTypeChange = (memberTypeId: string, checked: boolean) => {
-    const currentTypes = memberType || [];
-    if (checked) {
-      setMemberType([...currentTypes, memberTypeId].filter(Boolean));
-    } else {
-      setMemberType(currentTypes.filter((type) => type !== memberTypeId));
-    }
-  };
 
   const dateRangeFilterReset = useRef<
     ((start: number, end: number) => void) | null
@@ -63,12 +46,9 @@ export function ListFilter() {
   const handleReset = () => {
     setParentAgentId("");
     setGameId("");
-    setMemberType([]);
+    setMemberId("");
+    setMemberType("all");
     handleDateRangeFilterReset();
-  };
-
-  const isMemberTypeSelected = (memberTypeId: string) => {
-    return (memberType || []).includes(memberTypeId);
   };
 
   const router = useRouter();
@@ -118,23 +98,20 @@ export function ListFilter() {
       <div className="flex gap-4 items-center">
         <div className="flex gap-4 items-center">
           <Label className="shrink-0">{t("memberType")}</Label>
-          {memberTypeOptions.map((memberType) => (
-            <div key={memberType.id} className="flex items-center space-x-2">
-              <Checkbox
-                id={memberType.id}
-                checked={isMemberTypeSelected(memberType.id)}
-                onCheckedChange={(checked) =>
-                  handleMemberTypeChange(memberType.id, checked as boolean)
-                }
-              />
-              <label
-                htmlFor={memberType.id}
-                className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-              >
-                {memberType.label}
-              </label>
-            </div>
-          ))}
+          <Select
+            value={memberType ?? ""}
+            onValueChange={(value) => setMemberType(value)}
+            defaultValue="all"
+          >
+            <SelectTrigger className="w-28">
+              <SelectValue placeholder={t("placeholderselect")} />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">{t("all")}</SelectItem>
+              <SelectItem value="1">直属会员</SelectItem>
+              <SelectItem value="2">非直属会员</SelectItem>
+            </SelectContent>
+          </Select>
         </div>
         <div className="flex gap-4 items-center">
           <Label className="shrink-0">{t("superAgentId")}</Label>
