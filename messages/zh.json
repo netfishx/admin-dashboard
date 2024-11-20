@@ -549,7 +549,7 @@
       "withdrawFee": "提现手续费",
       "withdrawMoney": "提现金额",
       "withdrawMoneyFilter": "提现金额筛选",
-      "finishTime": "提现完成时间", 
+      "finishTime": "提现完成时间",
       "withdrawHash": "哈希",
       "currency": "币种",
       "applyTime": "发起时间",
@@ -635,11 +635,20 @@
       "list": "子账号列表",
       "add": "新增子账号",
       "id": "子账号ID",
-      "name": "子账号名称",
+      "name": "子账号",
       "updateTime": "修改时间",
       "action": "操作",
       "edit": "编辑",
-      "delete": "删除"
+      "delete": "删除",
+      "role": "角色",
+      "createTime": "新增日期",
+      "status": "状态",
+      "lastLoginTime": "最后登录时间",
+      "lastLoginIp": "最后登录IP",
+      "update": "修改子账号",
+      "loginLog": "登录日志",
+      "enable": "启用",
+      "disable": "停用"
     }
   },
   "fund": {
@@ -839,6 +848,5 @@
       "cleanDesc": "确定清除该稽核吗？",
       "cancel": "取消"
     }
-   
   }
 }

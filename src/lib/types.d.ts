@@ -542,7 +542,7 @@ export type CollectionAddressListRequestParams = {
 };
 
 export type Role = {
-  id?: string;
+  id?: number;
   roleName: string;
   updateTime?: number;
   createBy?: string;
@@ -607,4 +607,14 @@ export type WithdrawFeeList = {
   currency: string;
   fixedFee: number;
   percentageFee: number;
+};
+
+export type Subaccount = {
+  id: string;
+  username: string;
+  createTime: number;
+  status: number;
+  lastLoginTime: number;
+  lastLoginIp: string;
+  roleList: number[];
 };

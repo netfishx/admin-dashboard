@@ -39,6 +39,7 @@ import type {
   RechargeReport,
   RechargeReportParams,
   Role,
+  Subaccount,
   SupplierConfig,
   SupplierList,
   SupplierReportRecords,
@@ -887,5 +888,20 @@ export async function saveWithdrawFee(data: WithdrawFeeList) {
     method: "POST",
     data,
     token: user?.token,
+  });
+}
+
+export async function getSubaccountList({
+  pageNum = 1,
+  pageSize = 10,
+}: {
+  pageNum: number;
+  pageSize: number;
+}) {
+  const user = await getSession();
+  return await apiRequest<PageData<Subaccount>>({
+    url: "/agent/user/sub/getUnderAgent",
+    token: user?.token,
+    params: { pageNum, pageSize },
   });
 }

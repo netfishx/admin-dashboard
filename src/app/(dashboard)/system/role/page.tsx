@@ -125,7 +125,7 @@ export default function RolePage({
                 {Array.from({ length: 5 }).map((_, index) => (
                   // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
                   <TableRow key={index}>
-                    <TableCell>
+                    <TableCell colSpan={6}>
                       <Skeleton className="w-full h-6" />
                     </TableCell>
                   </TableRow>
