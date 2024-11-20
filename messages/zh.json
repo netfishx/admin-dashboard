@@ -561,6 +561,20 @@
       "placeholderselect": "请选择",
       "search": "查询",
       "reset": "重置"
+    },
+    "borrow": {
+      "agentID": "代理ID",
+      "dateRange": "日期范围",
+      "orderNumber": "订单号",
+      "memberID": "会员ID",
+      "type": "类型",
+      "amount": "金额",
+      "applyTime": "发起时间",
+      "placeholderinput": "请输入",
+      "placeholderselect": "请选择",
+      "search": "查询",
+      "reset": "重置",
+      "download": "生成下载任务"
     }
   },
   "pagination": {
