@@ -66,7 +66,7 @@ async function SupplierTableHeader() {
   );
 }
 
-export async function SupplierTable({
+async function SupplierTable({
   searchParams,
 }: { searchParams: Promise<{ [key: string]: string | undefined }> }) {
   const translation = await getTranslations();
