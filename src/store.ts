@@ -60,6 +60,20 @@ export const supplierEditDataAtom = atom<SupplierList | null>(null);
 export const editDictionaryDialogAtom = atom<boolean>(false);
 // 维护-字典管理-编辑数据
 export const dictionaryDataAtom = atom<DictionaryList | null>(null);
+// 维护-字典管理-字典项弹窗
+export const dictionaryItemDialogAtom = atom<boolean>(false);
+// 维护-字典管理-新增字典项弹窗
+export const addDictionaryItemDialogAtom = atom<boolean>(false);
+// 维护-字典管理-新增字典项数据
+export const addDictionaryItemDataAtom = atom<{
+  id: string;
+  dictCode: string;
+  label?: string;
+  value?: string;
+  remark?: string;
+}>();
+// 维护-字典管理-字典项操作
+export const dictionaryItemOperationAtom = atom<"add" | "edit">();
 // 公告弹窗
 export const contentModalAtom = atom<boolean>(false);
 export const contentModalDataAtom = atom<AnnouncementList | null>(null);
@@ -112,3 +126,4 @@ export const subaccountAtom = atom<Subaccount | null>(null);
 export const subaccountDialogAtom = atom<boolean>(false);
 export const subaccountDeleteAtom = atom<string | null>(null);
 export const subaccountDeleteDialogAtom = atom<boolean>(false);
+export const subaccountIdAtom = atom<string>("");

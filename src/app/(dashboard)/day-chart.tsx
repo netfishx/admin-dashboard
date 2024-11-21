@@ -1,5 +1,4 @@
 "use client";
-
 import {
   type ChartConfig,
   ChartContainer,
@@ -7,36 +6,28 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart";
 import { useTranslations } from "next-intl";
-
 import { Label, Legend, Pie, PieChart } from "recharts";
 
 export const description = "A stacked area chart";
 
-const chartConfig = {
-  visitors: {
-    label: "Visitors",
-  },
-  bjl01: {
-    label: "Chrome",
-    color: "hsl(var(--chart-sky))",
-  },
-  bjl02: {
-    label: "Safari",
-    color: "hsl(var(--chart-blue))",
-  },
-  bjl03: {
-    label: "Firefox",
-    color: "hsl(var(--chart-cyan))",
-  },
-} satisfies ChartConfig;
-
-export function DayChart({ title }: { title: string }) {
+export function DayChart({
+  title,
+  subTitle,
+  data,
+  chartConfig,
+}: {
+  title: string;
+  subTitle: string;
+  data: { game: string; data: number }[];
+  chartConfig: ChartConfig;
+}) {
   const t = useTranslations("chart");
-  const chartData = [
-    { browser: "百家乐01", visitors: 275, fill: "var(--color-bjl01)" },
-    { browser: "百家乐02", visitors: 200, fill: "var(--color-bjl02)" },
-    { browser: "百家乐03", visitors: 287, fill: "var(--color-bjl03)" },
-  ];
+
+  const chartData = data.map(({ game, data }) => ({
+    game,
+    data,
+  }));
+
   return (
     <div className="flex flex-col p-4 rounded bg-card">
       <div>{title}</div>
@@ -48,9 +39,9 @@ export function DayChart({ title }: { title: string }) {
               content={<ChartTooltipContent hideLabel />}
             />
             <Pie
-              data={chartData}
-              dataKey="visitors"
-              nameKey="browser"
+              data={data}
+              dataKey="data"
+              nameKey="game"
               innerRadius="60%"
               outerRadius="80%"
               strokeWidth={1}
@@ -71,17 +62,14 @@ export function DayChart({ title }: { title: string }) {
                           y={(viewBox.cy || 0) - 10}
                           className="fill-muted-foreground text-base"
                         >
-                          {t("bettingAmount")}
+                          {subTitle}
                         </tspan>
                         <tspan
                           x={viewBox.cx}
                           y={(viewBox.cy || 0) + 10}
                           className="fill-foreground text-base"
                         >
-                          {chartData.reduce(
-                            (acc, curr) => acc + curr.visitors,
-                            0,
-                          )}
+                          {chartData.reduce((acc, curr) => acc + curr.data, 0)}
                         </tspan>
                       </text>
                     );

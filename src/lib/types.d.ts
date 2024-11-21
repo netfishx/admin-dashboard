@@ -610,6 +610,14 @@ export type DictionaryList = {
   dictCode: string;
   remark: string;
 };
+// 字典项
+export type DictionaryItemList = {
+  id: string;
+  dictCode: string;
+  label: string;
+  value: string;
+  remark: string;
+};
 
 // 借还记录请求入参
 export type BorrowRecordRequestParams = {
@@ -675,6 +683,42 @@ export type WithdrawFeeList = {
   percentageFee: number;
 };
 
+// 今日盈亏
+export type TodayWinLoss = {
+  baccaratShareAmount: string;
+  backAmount: string;
+  supplierCost: string;
+  grossProfitLoss: string;
+};
+
+// 百家乐报表
+export type TodayGameReport = {
+  agentBaccaratIssueReport: {
+    gameId: number | string;
+    gameName: string;
+    gameType: number;
+    betNum: number;
+    memberBetAmount: string | number;
+  }[];
+  dailyBaccaratReport: {
+    day: number;
+    betNum: number | string;
+    memberBetAmount: string | number;
+  }[];
+  dailyPokerReport: {
+    day: number;
+    totaSettledAmount: string | number;
+    issueAmount: number | string;
+  }[];
+};
+// 充提
+export type FundList = {
+  fundList: {
+    day: number;
+    rechargeAmount: number;
+    withdrawAmount: number;
+  }[];
+};
 // 转账记录请求入参
 export type TransferRecordRequestParams = {
   senderAgentId: string; // 转出代理id

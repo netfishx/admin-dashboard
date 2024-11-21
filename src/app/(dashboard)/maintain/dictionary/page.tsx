@@ -14,6 +14,7 @@ import { getTranslations } from "next-intl/server";
 import { Suspense } from "react";
 import { Actions } from "./actions";
 import { Add } from "./add";
+import { DictSettingModal } from "./dict-setting-modal";
 import { Form } from "./form";
 
 export default async function Page({
@@ -45,6 +46,7 @@ export default async function Page({
           <TableWrapper searchParams={searchParams} />
         </Suspense>
       </div>
+      <DictSettingModal />
     </div>
   );
 }

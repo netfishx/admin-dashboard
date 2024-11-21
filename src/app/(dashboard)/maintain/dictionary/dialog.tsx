@@ -22,6 +22,7 @@ import { useEffect, useState, useTransition } from "react";
 import { toast } from "sonner";
 
 export function AddEditDialog() {
+  const router = useRouter();
   const translation = useTranslations();
   const t = useTranslations("maintain.dictionary");
   const [isPending, startTransition] = useTransition();
@@ -31,7 +32,6 @@ export function AddEditDialog() {
   const [dictName, setDictName] = useState("");
   const [dictCode, setDictCode] = useState("");
   const [remark, setRemark] = useState("");
-  const router = useRouter();
   useEffect(() => {
     if (open && data) {
       setId(data.id);
@@ -61,7 +61,8 @@ export function AddEditDialog() {
         setDictName("");
         setDictCode("");
         setRemark("");
-        window.location.reload();
+        // window.location.reload();
+        router.refresh();
       } else {
         toast.error(message);
       }

@@ -16,7 +16,9 @@ import type {
   ChangeLog,
   CollectionAddressListRecords,
   CollectionAddressListRequestParams,
+  DictionaryItemList,
   DictionaryList,
+  FundList,
   GameConfig,
   GameOdds,
   GameType,
@@ -47,6 +49,8 @@ import type {
   SupplierList,
   SupplierReportRecords,
   SupplierReportRequestParams,
+  TodayGameReport,
+  TodayWinLoss,
   TransferRecordRequestParams,
   TransferRecordRequestRecords,
   UserBasicInfo,
@@ -932,6 +936,62 @@ export async function deleteDictionary(data: { id: string }) {
   });
 }
 
+// 字典项列表
+export async function getDictionaryItemList(params: {
+  dictCode: string;
+}) {
+  const user = await getSession();
+  return await apiRequest<DictionaryItemList[]>({
+    url: "/dict/item/selectList",
+    token: user?.token,
+    params,
+  });
+}
+
+// 添加字典项
+export async function addDictionaryItem(data: {
+  dictCode: string;
+  label: string;
+  value: string;
+  remark: string;
+}) {
+  const user = await getSession();
+  return await apiRequest({
+    url: "/dict/item/save",
+    method: "POST",
+    data,
+    token: user?.token,
+  });
+}
+
+// 编辑字典项
+export async function editDictionaryItem(data: {
+  id: string;
+  dictCode: string;
+  label: string;
+  value: string;
+  remark: string;
+}) {
+  const user = await getSession();
+  return await apiRequest({
+    url: "/dict/item/update",
+    method: "PUT",
+    data,
+    token: user?.token,
+  });
+}
+
+// 删除字典项
+export async function deleteDictionaryItem(data: { id: string }) {
+  const user = await getSession();
+  return await apiRequest({
+    url: "/dict/item/deleteById",
+    method: "DELETE",
+    data,
+    token: user?.token,
+  });
+}
+
 // 借还记录list
 export async function postGetCreditLogList(data: BorrowRecordRequestParams) {
   const user = await getSession();
@@ -959,6 +1019,59 @@ export async function saveWithdrawFee(data: WithdrawFeeList) {
     method: "POST",
     data,
     token: user?.token,
+  });
+}
+// 首页 今日盈亏
+export async function getTodayWinLoss(params: {
+  startTime: number;
+  endTime: number;
+}) {
+  const user = await getSession();
+  return await apiRequest<TodayWinLoss>({
+    url: "/report/agent/todayWinLoss",
+    token: user?.token,
+    params,
+  });
+}
+// 首页 图表 饼图+百家乐掼蛋数据趋势
+export async function getTodayWinLossChart(params: {
+  startTime: number;
+  endTime: number;
+}) {
+  const user = await getSession();
+  const [res, res2] = await Promise.all([
+    getGameList(1),
+    apiRequest<TodayGameReport>({
+      url: "/report/agent/todayGameReport",
+      token: user?.token,
+      params,
+    }),
+  ]);
+  // 格式化 agentBaccaratIssueReport 的 gameName
+  const formattedAgentBaccaratIssueReport =
+    res2.data?.agentBaccaratIssueReport.map((report) => ({
+      ...report,
+      gameName: res.data
+        ?.find((i) => i.gameType === report.gameType)
+        ?.list.find((i) => i.gameId === report.gameId)?.gameIdLabel,
+    }));
+  return {
+    ...res2,
+    data: {
+      ...res2.data,
+      agentBaccaratIssueReport: formattedAgentBaccaratIssueReport,
+    },
+  };
+}
+export async function getFundList(params: {
+  startTime: number;
+  endTime: number;
+}) {
+  const user = await getSession();
+  return await apiRequest<FundList>({
+    url: "/index/fundList",
+    token: user?.token,
+    params,
   });
 }
 
