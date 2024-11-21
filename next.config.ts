@@ -43,12 +43,12 @@ const nextConfig: NextConfig = {
         port: "4000",
         protocol: "http",
       },
-      // {
-      //   hostname: "localhost",
-      //   pathname: "/security/**",
-      //   port: "4000",
-      //   protocol: "http",
-      // },
+      {
+        hostname: "localhost",
+        pathname: "/security/**",
+        port: "4000",
+        protocol: "http",
+      },
     ],
   },
   output: "standalone",
