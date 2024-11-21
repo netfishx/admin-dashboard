@@ -276,8 +276,9 @@ function OpenedMenu({
             {permissions.includes("own_announcement") && (
               <MenuItem
                 label={t("system.announcement.title")}
-                href="/system/announcement/platform"
+                href="/system/announcement/own"
                 subHref={[
+                  "/system/announcement/platform",
                   "/system/announcement/all",
                   "/system/announcement/own",
                 ]}
