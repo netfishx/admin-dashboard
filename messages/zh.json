@@ -901,8 +901,29 @@
       "itemName": "名称",
       "itemValue": "数据值"
     },
-    "source": {
-      "add": "新增"
+    "resource": {
+      "title": "背景图列表",
+      "add": "新增",
+      "id": "背景图ID",
+      "pictureName": "名称",
+      "pictureUri": "缩略图",
+      "port": "端口",
+      "position": "位置",
+      "language": "语言",
+      "sort": "排序值",
+      "updateTime": "修改时间",
+      "status": "状态",
+      "action": "操作",
+      "edit": "编辑",
+      "delete": "删除",
+      "deleteDesc": "确定删除该背景图吗？",
+      "photo": "图片",
+      "enable": "启用",
+      "disable": "停用",
+      "chinese": "中文",
+      "placeholder": "请选择",
+      "home": "首页",
+      "game": "游戏端"
     }
   }
 }

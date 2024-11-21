@@ -85,10 +85,18 @@ export function LoginLogModal({
           <Table>
             <TableHeader className="table w-full">
               <TableRow className="bg-muted">
-                <TableHead className="w-[150px]">{t("loginTime")}</TableHead>
-                <TableHead className="w-[150px]">{t("ip")}</TableHead>
-                <TableHead className="w-[120px]">{t("address")}</TableHead>
-                <TableHead className="w-[100px]">{t("status")}</TableHead>
+                <TableHead className="w-[150px] 2xl:w-[200px]">
+                  {t("loginTime")}
+                </TableHead>
+                <TableHead className="w-[150px] 2xl:w-[200px]">
+                  {t("ip")}
+                </TableHead>
+                <TableHead className="w-[120px] 2xl:w-[150px]">
+                  {t("address")}
+                </TableHead>
+                <TableHead className="w-[100px] 2xl:w-[120px]">
+                  {t("status")}
+                </TableHead>
               </TableRow>
             </TableHeader>
             {loading ? (
@@ -98,14 +106,16 @@ export function LoginLogModal({
                 {data?.length > 0 ? (
                   data?.map((item: LoginLog) => (
                     <TableRow key={item.userId + Math.random()}>
-                      <TableCell className="w-[150px]">
+                      <TableCell className="w-[150px] 2xl:w-[200px]">
                         {item.loginTime}
                       </TableCell>
-                      <TableCell className="w-[150px]">{item.ip}</TableCell>
-                      <TableCell className="w-[120px]">
+                      <TableCell className="w-[150px] 2xl:w-[200px]">
+                        {item.ip}
+                      </TableCell>
+                      <TableCell className="w-[120px] 2xl:w-[150px]">
                         {item.address}
                       </TableCell>
-                      <TableCell className="w-[100px]">
+                      <TableCell className="w-[100px] 2xl:w-[120px]">
                         <div
                           className={cn(
                             "px-2 rounded-sm w-fit",
