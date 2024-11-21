@@ -5,19 +5,18 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 export default function TabsItem() {
   const t = useTranslations("system.announcement");
-
   const pathname = usePathname();
 
   return (
     <div className="flex flex-col gap-2 w-full">
       <div className="p-2 bg-background gap-2">
-        <Tabs defaultValue="all" value={pathname.split("/").pop()}>
+        <Tabs defaultValue="platform" value={pathname.split("/").pop()}>
           <TabsList>
-            {/* <TabsTrigger value="all">
-              <Link href="/system/announcement/all">
+            <TabsTrigger value="platform">
+              <Link href="/system/announcement/platform">
                 {t("allAgentAnnouncement")}
               </Link>
-            </TabsTrigger> */}
+            </TabsTrigger>
             <TabsTrigger value="all">
               <Link href="/system/announcement/all">
                 {t("notifyAnnouncement")}
