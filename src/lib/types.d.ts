@@ -603,6 +603,14 @@ export type OreFeeList = {
   usdtBalance: string;
 };
 
+// 字典列表
+export type DictionaryList = {
+  id: string;
+  dictName: string;
+  dictCode: string;
+  remark: string;
+};
+
 // 借还记录请求入参
 export type BorrowRecordRequestParams = {
   /** 代理ID */

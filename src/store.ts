@@ -1,5 +1,6 @@
 import type {
   AnnouncementList,
+  DictionaryList,
   MemberList,
   Role,
   Subaccount,
@@ -55,6 +56,10 @@ export const deleteCreditModalAtom = atom<boolean>(false);
 export const supplierEditModalAtom = atom<boolean>(false);
 // 用户管理-供应商管理-编辑数据
 export const supplierEditDataAtom = atom<SupplierList | null>(null);
+// 维护-字典管理-编辑弹窗
+export const editDictionaryDialogAtom = atom<boolean>(false);
+// 维护-字典管理-编辑数据
+export const dictionaryDataAtom = atom<DictionaryList | null>(null);
 // 公告弹窗
 export const contentModalAtom = atom<boolean>(false);
 export const contentModalDataAtom = atom<AnnouncementList | null>(null);
