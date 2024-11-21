@@ -714,3 +714,18 @@ export type Subaccount = {
   lastLoginIp?: string;
   roleList?: number[];
 };
+
+// 背景图
+export type BackgroundImageList = {
+  id: string;
+  pictureName: string;
+  pictureUri: string;
+  port: number;
+  position: number;
+  language: string;
+  sort: number;
+  status: number;
+  remark: string;
+  createTime: number;
+  updateTime: number;
+};
