@@ -22,6 +22,7 @@ import { format } from "date-fns";
 import { useTranslations } from "next-intl";
 import { getTranslations } from "next-intl/server";
 import { Suspense } from "react";
+import { LoginLogModalWrapper } from "./login-log-modal";
 
 function SubaccountTableHeader() {
   const t = useTranslations("system.subaccount");
@@ -170,6 +171,7 @@ export default function SubaccountPage({
           <SubaccountTableWrapper searchParams={searchParams} />
         </Suspense>
       </div>
+      <LoginLogModalWrapper />
     </div>
   );
 }

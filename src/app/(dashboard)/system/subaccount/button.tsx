@@ -3,10 +3,12 @@
 import { Button } from "@/components/ui/button";
 import type { Subaccount } from "@/lib/types";
 import {
+  loginLogModalAtom,
   subaccountAtom,
   subaccountDeleteAtom,
   subaccountDeleteDialogAtom,
   subaccountDialogAtom,
+  subaccountIdAtom,
 } from "@/store";
 import { useSetAtom } from "jotai";
 import { useTranslations } from "next-intl";
@@ -66,13 +68,16 @@ export function EditButton({ data }: { data: Subaccount }) {
 
 export function LoginLogButton({ id }: { id: string }) {
   const t = useTranslations("system.subaccount");
+  const setOpen = useSetAtom(loginLogModalAtom);
+  const setId = useSetAtom(subaccountIdAtom);
   return (
     <Button
       variant="ghost"
       size="sm"
       className="text-primary hover:text-primary/80 text-sm"
       onClick={() => {
-        console.info(id);
+        setId(id);
+        setOpen(true);
       }}
     >
       {t("loginLog")}

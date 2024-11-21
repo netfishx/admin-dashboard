@@ -126,3 +126,4 @@ export const subaccountAtom = atom<Subaccount | null>(null);
 export const subaccountDialogAtom = atom<boolean>(false);
 export const subaccountDeleteAtom = atom<string | null>(null);
 export const subaccountDeleteDialogAtom = atom<boolean>(false);
+export const subaccountIdAtom = atom<string>("");
