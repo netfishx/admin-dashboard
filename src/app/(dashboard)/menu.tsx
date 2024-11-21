@@ -50,6 +50,7 @@ export function Menu({ permissions }: { permissions: string[] }) {
   );
 }
 
+// biome-ignore lint/complexity/noExcessiveCognitiveComplexity: <explanation>
 function OpenedMenu({
   pathname,
   permissions,
@@ -227,46 +228,70 @@ function OpenedMenu({
           <MenuItem label={t("personal.security")} href="/personal/security" />
         </CollapsibleContent>
       </Collapsible>
-      <Collapsible
-        open={openedMenu.includes("system")}
-        onOpenChange={(e) => handleOpenChange("system", e)}
-      >
-        <CollapsibleTrigger asChild>
-          <MenuItem
-            label={t("system.title")}
-            icon={<Tv2 className="size-4" />}
-            hasChildren
-          />
-        </CollapsibleTrigger>
-        <CollapsibleContent className="flex flex-col gap-1 px-6">
-          <MenuItem label={t("system.role")} href="/system/role" />
-          <MenuItem label={t("system.subaccount")} href="/system/subaccount" />
-          <MenuItem
-            label={t("system.announcement.title")}
-            href="/system/announcement/all"
-            subHref={["/system/announcement/own"]}
-          />
-        </CollapsibleContent>
-      </Collapsible>
-      <Collapsible
-        open={openedMenu.includes("maintain")}
-        onOpenChange={(e) => handleOpenChange("maintain", e)}
-      >
-        <CollapsibleTrigger asChild>
-          <MenuItem
-            label={t("maintain.title")}
-            icon={<Cog className="size-4" />}
-            hasChildren
-          />
-        </CollapsibleTrigger>
-        <CollapsibleContent className="flex flex-col gap-1 px-6">
-          <MenuItem
-            label={t("maintain.dictionary")}
-            href="/maintain/dictionary"
-          />
-          <MenuItem label={t("maintain.resource")} href="/maintain/resource" />
-        </CollapsibleContent>
-      </Collapsible>
+      {permissions.some((v) =>
+        ["system_role", "sub_account", "own_announcement"].includes(v),
+      ) && (
+        <Collapsible
+          open={openedMenu.includes("system")}
+          onOpenChange={(e) => handleOpenChange("system", e)}
+        >
+          <CollapsibleTrigger asChild>
+            <MenuItem
+              label={t("system.title")}
+              icon={<Tv2 className="size-4" />}
+              hasChildren
+            />
+          </CollapsibleTrigger>
+          <CollapsibleContent className="flex flex-col gap-1 px-6">
+            {permissions.includes("system_role") && (
+              <MenuItem label={t("system.role")} href="/system/role" />
+            )}
+            {permissions.includes("sub_account") && (
+              <MenuItem
+                label={t("system.subaccount")}
+                href="/system/subaccount"
+              />
+            )}
+            {permissions.includes("own_announcement") && (
+              <MenuItem
+                label={t("system.announcement.title")}
+                href="/system/announcement/all"
+                subHref={["/system/announcement/own"]}
+              />
+            )}
+          </CollapsibleContent>
+        </Collapsible>
+      )}
+      {permissions.some((v) =>
+        ["dictionary", "resource_config"].includes(v),
+      ) && (
+        <Collapsible
+          open={openedMenu.includes("maintain")}
+          onOpenChange={(e) => handleOpenChange("maintain", e)}
+        >
+          <CollapsibleTrigger asChild>
+            <MenuItem
+              label={t("maintain.title")}
+              icon={<Cog className="size-4" />}
+              hasChildren
+            />
+          </CollapsibleTrigger>
+          <CollapsibleContent className="flex flex-col gap-1 px-6">
+            {permissions.includes("dictionary") && (
+              <MenuItem
+                label={t("maintain.dictionary")}
+                href="/maintain/dictionary"
+              />
+            )}
+            {permissions.includes("resource_config") && (
+              <MenuItem
+                label={t("maintain.resource")}
+                href="/maintain/resource"
+              />
+            )}
+          </CollapsibleContent>
+        </Collapsible>
+      )}
     </>
   );
 }
