@@ -71,7 +71,9 @@ export function LoginLogButton({ id }: { id: string }) {
       variant="ghost"
       size="sm"
       className="text-primary hover:text-primary/80 text-sm"
-      onClick={() => {}}
+      onClick={() => {
+        console.info(id);
+      }}
     >
       {t("loginLog")}
     </Button>

@@ -119,19 +119,21 @@ export default function RolePage({
       <div className="bg-background flex-1 p-2 flex flex-col gap-2">
         <Suspense
           fallback={
-            <Table>
-              <RoleTableHeader />
-              <TableBody>
-                {Array.from({ length: 5 }).map((_, index) => (
-                  // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
-                  <TableRow key={index}>
-                    <TableCell colSpan={6}>
-                      <Skeleton className="w-full h-6" />
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
+            <div className="border rounded-sm">
+              <Table>
+                <RoleTableHeader />
+                <TableBody>
+                  {Array.from({ length: 5 }).map((_, index) => (
+                    // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
+                    <TableRow key={index}>
+                      <TableCell colSpan={6}>
+                        <Skeleton className="w-full h-6" />
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </div>
           }
         >
           <RoleTableWrapper searchParams={searchParams} />
