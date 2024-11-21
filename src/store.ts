@@ -2,6 +2,7 @@ import type {
   AnnouncementList,
   MemberList,
   Role,
+  Subaccount,
   SupplierConfig,
   SupplierList,
 } from "@/lib/types";
@@ -98,6 +99,12 @@ export const limitAtom = atom<{
 export const changedOddsLimitAtom = atom<string[]>([]);
 
 export const roleAtom = atom<Role | null>(null);
+export const roleListAtom = atom<Role[]>([]);
 export const roleDialogAtom = atom<boolean>(false);
 export const roleDeleteAtom = atom<number | null>(null);
 export const roleDeleteDialogAtom = atom<boolean>(false);
+
+export const subaccountAtom = atom<Subaccount | null>(null);
+export const subaccountDialogAtom = atom<boolean>(false);
+export const subaccountDeleteAtom = atom<string | null>(null);
+export const subaccountDeleteDialogAtom = atom<boolean>(false);

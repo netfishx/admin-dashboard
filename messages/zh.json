@@ -632,8 +632,9 @@
       "permissions": "角色权限"
     },
     "subaccount": {
+      "title": "子账号",
       "list": "子账号列表",
-      "add": "新增子账号",
+      "add": "新增",
       "id": "子账号ID",
       "name": "子账号",
       "updateTime": "修改时间",
@@ -648,7 +649,10 @@
       "update": "修改子账号",
       "loginLog": "登录日志",
       "enable": "启用",
-      "disable": "停用"
+      "disable": "停用",
+      "password": "密码",
+      "confirmPassword": "确认密码",
+      "chooseRole": "角色选择"
     }
   },
   "fund": {

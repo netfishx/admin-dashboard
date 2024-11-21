@@ -1,5 +1,5 @@
 import { getRoleList, getSubaccountList } from "@/api";
-import { AddButton } from "@/app/(dashboard)/system/subaccount/add-button";
+import { AddButton } from "@/app/(dashboard)/system/subaccount/button";
 import { CustomPagination } from "@/components/custom-pagination";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
@@ -15,6 +15,7 @@ import { format } from "date-fns";
 import { useTranslations } from "next-intl";
 import { getTranslations } from "next-intl/server";
 import { Suspense } from "react";
+import { SubaccountDialog } from "./dialog";
 
 function SubaccountTableHeader() {
   const t = useTranslations("system.subaccount");
@@ -133,6 +134,7 @@ export default function SubaccountPage({
       <div className="flex justify-between items-center bg-background p-4">
         <div className="text-sm font-medium">{t("list")}</div>
         <AddButton />
+        <SubaccountDialog />
       </div>
       <div className="bg-background flex-1 p-2 flex flex-col gap-2">
         <Suspense
