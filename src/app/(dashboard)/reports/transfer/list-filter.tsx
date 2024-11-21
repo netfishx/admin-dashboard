@@ -24,10 +24,10 @@ export function ListFilter({
   const [orderNumber, setOrderNumber] = useQueryState("transactionID", {
     defaultValue: "",
   });
-  const [agentId, setAgentId] = useQueryState("agentId", {
+  const [agentId, setAgentId] = useQueryState("senderAgentId", {
     defaultValue: "",
   });
-  const [memberId, setMemberId] = useQueryState("memberId", {
+  const [memberId, setMemberId] = useQueryState("recipientAgentId", {
     defaultValue: "",
   });
   const [typeId, setTypeId] = useQueryState("operateCode", {
@@ -79,7 +79,7 @@ export function ListFilter({
           />
         </div>
         <div className="flex gap-4 items-center">
-          <Label className="shrink-0">{t("agentID")}</Label>
+          <Label className="shrink-0">{t("senderAgentId")}</Label>
           <Input
             value={agentId ?? ""}
             onChange={(e) => setAgentId(e.target.value)}
@@ -87,7 +87,7 @@ export function ListFilter({
           />
         </div>
         <div className="flex gap-4 items-center">
-          <Label className="shrink-0">{t("memberID")}</Label>
+          <Label className="shrink-0">{t("recipientAgentId")}</Label>
           <Input
             value={memberId ?? ""}
             onChange={(e) => setMemberId(e.target.value)}
