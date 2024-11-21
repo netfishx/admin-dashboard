@@ -666,3 +666,25 @@ export type WithdrawFeeList = {
   fixedFee: number;
   percentageFee: number;
 };
+
+// 转账记录请求入参
+export type TransferRecordRequestParams = {
+  senderAgentId: string; // 转出代理id
+  recipientAgentId: string; // 转入代理id
+  startTime: string; // 开始时间
+  endTime: string; // 结束时间
+  transactionID: string; // 订单号
+  operateCode: number; // 类型
+  pageNum: number; // 页数从1开始
+  pageSize: number; // 页面大小
+};
+
+// 转账记录请求出参
+export type TransferRecordRequestRecords = {
+  transactionID: string; // 订单号
+  senderAgentId: string; // 转出代理ID
+  recipientAgentId: string; // 转入代理ID
+  amount: string; // 金额（字符串形式）
+  operateCode: number; // 操作代码
+  createTime: number; // 创建时间（Unix 时间戳，毫秒）
+};
