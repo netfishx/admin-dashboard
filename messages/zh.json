@@ -120,7 +120,8 @@
       "announcement": {
         "title": "公告管理",
         "all": "上级公告",
-        "own": "本级公告"
+        "own": "本级公告",
+        "platform": "全平台公告"
       }
     },
     "maintain": {
