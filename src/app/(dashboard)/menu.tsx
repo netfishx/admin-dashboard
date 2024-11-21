@@ -276,8 +276,11 @@ function OpenedMenu({
             {permissions.includes("own_announcement") && (
               <MenuItem
                 label={t("system.announcement.title")}
-                href="/system/announcement/all"
-                subHref={["/system/announcement/own"]}
+                href="/system/announcement/platform"
+                subHref={[
+                  "/system/announcement/all",
+                  "/system/announcement/own",
+                ]}
               />
             )}
           </CollapsibleContent>

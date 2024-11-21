@@ -30,13 +30,13 @@ export async function List({
         <Table>
           <TableHeader>
             <TableRow className="bg-muted">
-              <TableHead className="w-24 min-w-24 text-center">
+              <TableHead className="w-32 min-w-32 text-center">
                 {t("startTime")}
               </TableHead>
-              <TableHead className="w-24 min-w-24 text-center">
+              <TableHead className="w-32 min-w-32 text-center">
                 {t("endTime")}
               </TableHead>
-              <TableHead className="w-24 min-w-24 text-center">
+              <TableHead className="w-32 min-w-32 text-center">
                 {t("createTime")}
               </TableHead>
               <TableHead className="w-[450px] min-w-24 text-center">

@@ -27,16 +27,16 @@ export async function List({ data }: { data?: PageData<AnnouncementList> }) {
           <TableHeader>
             <TableRow className="bg-muted">
               {/* admin permission */}
-              <TableHead className="w-24 min-w-24 text-center">
+              <TableHead className="w-32 min-w-32 text-center">
                 {t("startTime")}
               </TableHead>
 
-              <TableHead className="w-24 min-w-24 text-center">
+              <TableHead className="w-32 min-w-32 text-center">
                 {t("endTime")}
               </TableHead>
 
               {/* admin permission */}
-              <TableHead className="w-24 min-w-24 text-center">
+              <TableHead className="w-32 min-w-32 text-center">
                 {t("createTime")}
               </TableHead>
 
