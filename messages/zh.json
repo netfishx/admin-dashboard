@@ -891,7 +891,9 @@
       "edit": "编辑",
       "dictSetting": "字典配置",
       "delete": "删除",
-      "deleteDesc": "确定删除该字典吗？"
+      "deleteDesc": "确定删除该字典吗？",
+      "itemName": "名称",
+      "itemValue": "数据值"
     },
     "source": {
       "add": "新增"

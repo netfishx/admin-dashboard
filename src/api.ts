@@ -16,6 +16,7 @@ import type {
   ChangeLog,
   CollectionAddressListRecords,
   CollectionAddressListRequestParams,
+  DictionaryItemList,
   DictionaryList,
   GameConfig,
   GameOdds,
@@ -926,6 +927,62 @@ export async function deleteDictionary(data: { id: string }) {
   const user = await getSession();
   return await apiRequest({
     url: "/dict/deleteById",
+    method: "DELETE",
+    data,
+    token: user?.token,
+  });
+}
+
+// 字典项列表
+export async function getDictionaryItemList(params: {
+  dictCode: string;
+}) {
+  const user = await getSession();
+  return await apiRequest<DictionaryItemList[]>({
+    url: "/dict/item/selectList",
+    token: user?.token,
+    params,
+  });
+}
+
+// 添加字典项
+export async function addDictionaryItem(data: {
+  dictCode: string;
+  label: string;
+  value: string;
+  remark: string;
+}) {
+  const user = await getSession();
+  return await apiRequest({
+    url: "/dict/item/save",
+    method: "POST",
+    data,
+    token: user?.token,
+  });
+}
+
+// 编辑字典项
+export async function editDictionaryItem(data: {
+  id: string;
+  dictCode: string;
+  label: string;
+  value: string;
+  remark: string;
+}) {
+  const user = await getSession();
+  return await apiRequest({
+    url: "/dict/item/update",
+    method: "PUT",
+    data,
+    token: user?.token,
+  });
+}
+
+// 删除字典项
+export async function deleteDictionaryItem(data: { id: string }) {
+  const user = await getSession();
+  return await apiRequest({
+    url: "/dict/item/deleteById",
     method: "DELETE",
     data,
     token: user?.token,
