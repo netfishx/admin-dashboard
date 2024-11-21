@@ -16,6 +16,7 @@ import type {
   ChangeLog,
   CollectionAddressListRecords,
   CollectionAddressListRequestParams,
+  DictionaryList,
   GameConfig,
   GameOdds,
   GameType,
@@ -871,6 +872,60 @@ export async function removeOreFee(data: {
     url: "/orefee/address/remove",
     method: "POST",
     params: data,
+    token: user?.token,
+  });
+}
+
+// 字典列表
+export async function getDictionaryList(params: {
+  pageNum: number;
+  pageSize: number;
+}) {
+  const user = await getSession();
+  return await apiRequest<PageData<DictionaryList>>({
+    url: "/dict/pageList",
+    token: user?.token,
+    params,
+  });
+}
+// 添加字典
+export async function addDictionary(data: {
+  dictName: string;
+  dictCode: string;
+  remark: string;
+}) {
+  const user = await getSession();
+  return await apiRequest<{ code: number; message: string }>({
+    url: "/dict/save",
+    method: "PUT",
+    data,
+    token: user?.token,
+  });
+}
+
+// 编辑字典
+export async function editDictionary(data: {
+  id: string;
+  dictName: string;
+  dictCode: string;
+  remark: string;
+}) {
+  const user = await getSession();
+  return await apiRequest<{ code: number; message: string }>({
+    url: "/dict/update",
+    method: "POST",
+    data,
+    token: user?.token,
+  });
+}
+
+// 删除字典
+export async function deleteDictionary(data: { id: string }) {
+  const user = await getSession();
+  return await apiRequest({
+    url: "/dict/deleteById",
+    method: "DELETE",
+    data,
     token: user?.token,
   });
 }

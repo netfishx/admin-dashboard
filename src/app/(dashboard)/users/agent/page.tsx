@@ -15,7 +15,7 @@ import { getTranslations } from "next-intl/server";
 import { Suspense } from "react";
 import Action from "./action-buttons";
 import { AddAgent } from "./add-agent";
-import Form from "./form";
+import { Form } from "./form";
 import { Modals } from "./modals";
 
 export default async function Page({
@@ -36,7 +36,14 @@ export default async function Page({
         <div className="pb-2 flex justify-end">
           <AddAgent />
         </div>
-        <Suspense fallback={null}>
+        <Suspense
+          fallback={
+            <Table className="border rounded-sm">
+              <TableHeaderWrapper />
+              <TableBodySkeleton />
+            </Table>
+          }
+        >
           <TableWrapper searchParams={searchParams} />
         </Suspense>
       </div>
@@ -48,7 +55,6 @@ export default async function Page({
 async function TableWrapper({
   searchParams,
 }: { searchParams: Promise<{ [key: string]: string | string[] }> }) {
-  const t = await getTranslations("users.agents");
   const search = await searchParams;
   const { data } = await getAgents({
     ...search,
@@ -60,30 +66,8 @@ async function TableWrapper({
     <>
       <div className="border rounded-sm">
         <Table>
-          <TableHeader>
-            <TableRow className="bg-muted">
-              <TableHead className="min-w-28">{t("upUsername")}</TableHead>
-              <TableHead className="min-w-28">{t("deptId")}</TableHead>
-              <TableHead className="min-w-60">{t("userId")}</TableHead>
-              <TableHead>{t("username")}</TableHead>
-              <TableHead className="min-w-20">{t("nickname")}</TableHead>
-              <TableHead className="min-w-20">{t("status")}</TableHead>
-              <TableHead className="min-w-[480px] text-center sticky right-0 bg-muted">
-                {t("action")}
-              </TableHead>
-            </TableRow>
-          </TableHeader>
-          <Suspense
-            fallback={
-              <TableBody>
-                <TableRow>
-                  <TableCell colSpan={7} className="h-20">
-                    <Skeleton className="w-full h-6" />
-                  </TableCell>
-                </TableRow>
-              </TableBody>
-            }
-          >
+          <TableHeaderWrapper />
+          <Suspense fallback={<TableBodySkeleton />}>
             <TableBodyWrapper list={data?.list} />
           </Suspense>
         </Table>
@@ -96,6 +80,24 @@ async function TableWrapper({
         />
       </div>
     </>
+  );
+}
+async function TableHeaderWrapper() {
+  const t = await getTranslations("users.agents");
+  return (
+    <TableHeader>
+      <TableRow className="bg-muted">
+        <TableHead className="min-w-28">{t("upUsername")}</TableHead>
+        <TableHead className="min-w-28">{t("deptId")}</TableHead>
+        <TableHead className="min-w-60">{t("userId")}</TableHead>
+        <TableHead>{t("username")}</TableHead>
+        <TableHead className="min-w-20">{t("nickname")}</TableHead>
+        <TableHead className="min-w-20">{t("status")}</TableHead>
+        <TableHead className="min-w-[480px] text-center sticky right-0 bg-muted">
+          {t("action")}
+        </TableHead>
+      </TableRow>
+    </TableHeader>
   );
 }
 
@@ -124,6 +126,21 @@ async function TableBodyWrapper({ list }: { list: AgentData[] | undefined }) {
           </TableCell>
           <TableCell className="text-center sticky right-0 bg-background">
             <Action data={item} />
+          </TableCell>
+        </TableRow>
+      ))}
+    </TableBody>
+  );
+}
+
+async function TableBodySkeleton() {
+  return (
+    <TableBody>
+      {Array.from({ length: 5 }).map((_, index) => (
+        // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
+        <TableRow key={index}>
+          <TableCell colSpan={7}>
+            <Skeleton className="w-full h-4" />
           </TableCell>
         </TableRow>
       ))}

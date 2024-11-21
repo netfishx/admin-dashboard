@@ -13,6 +13,7 @@ import type {
   SupplierReportRecords,
   SupplierReportRequestParams,
 } from "@/lib/types";
+import { format } from "date-fns";
 import { getTranslations } from "next-intl/server";
 import { Suspense } from "react";
 
@@ -55,7 +56,7 @@ async function ListBody({ list }: { list: SupplierReportRecords[] }) {
             </TableCell>
             <TableCell className="w-24 text-center">{item.gameName}</TableCell>
             <TableCell className="w-24 text-center">
-              {item.analysisTime}
+              {format(item.analysisTime, "yyyy-MM-dd HH:mm:ss")}
             </TableCell>
             <TableCell className="w-24 text-center">{item.gameId}</TableCell>
             <TableCell className="w-24 text-center">{item.betNum}</TableCell>
