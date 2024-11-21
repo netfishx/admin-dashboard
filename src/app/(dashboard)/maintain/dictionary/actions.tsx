@@ -14,7 +14,11 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import type { DictionaryList } from "@/lib/types";
-import { dictionaryDataAtom, editDictionaryDialogAtom } from "@/store";
+import {
+  dictionaryDataAtom,
+  dictionaryItemDialogAtom,
+  editDictionaryDialogAtom,
+} from "@/store";
 import { useSetAtom } from "jotai";
 import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
@@ -26,6 +30,7 @@ export function Actions({ data }: { data: DictionaryList }) {
   const t = useTranslations("maintain.dictionary");
   const setData = useSetAtom(dictionaryDataAtom);
   const setOpen = useSetAtom(editDictionaryDialogAtom);
+  const setOpenItem = useSetAtom(dictionaryItemDialogAtom);
   return (
     <>
       <Button
@@ -45,7 +50,7 @@ export function Actions({ data }: { data: DictionaryList }) {
         className="text-primary hover:text-primary/80 text-sm px-2"
         onClick={() => {
           setData(data);
-          setOpen(true);
+          setOpenItem(true);
         }}
       >
         {t("dictSetting")}

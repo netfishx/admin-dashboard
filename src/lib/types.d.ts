@@ -610,6 +610,14 @@ export type DictionaryList = {
   dictCode: string;
   remark: string;
 };
+// 字典项
+export type DictionaryItemList = {
+  id: string;
+  dictCode: string;
+  label: string;
+  value: string;
+  remark: string;
+};
 
 // 借还记录请求入参
 export type BorrowRecordRequestParams = {
