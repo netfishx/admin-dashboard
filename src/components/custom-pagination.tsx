@@ -1,5 +1,6 @@
 "use client";
 
+import { buttonVariants } from "@/components/ui/button";
 import {
   Pagination,
   PaginationContent,
@@ -14,6 +15,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { cn } from "@/lib/utils";
 import {
   ChevronFirst,
   ChevronLast,
@@ -49,19 +51,38 @@ export function CustomPagination({
             </span>
           </PaginationItem>
           <PaginationItem>
-            <Link
-              href={{
-                pathname,
-                query: { ...Object.fromEntries(query.entries()), pageNum: 1 },
-              }}
-              className={`w-6 h-4 rounded-full flex items-center justify-center px-1 ${currentPage === 1 ? "cursor-not-allowed text-muted-foreground" : ""}`}
-            >
-              <ChevronFirst className="size-4" />
-            </Link>
+            {currentPage === 1 ? (
+              <div
+                className={cn(
+                  buttonVariants({ variant: "ghost", size: "icon" }),
+                  "w-6 flex items-center justify-center px-1 cursor-not-allowed text-muted-foreground",
+                )}
+              >
+                <ChevronFirst className="size-4" />
+              </div>
+            ) : (
+              <Link
+                href={{
+                  pathname,
+                  query: { ...Object.fromEntries(query.entries()), pageNum: 1 },
+                }}
+                className={cn(
+                  buttonVariants({ variant: "ghost", size: "icon" }),
+                  "w-6 flex items-center justify-center px-1",
+                )}
+              >
+                <ChevronFirst className="size-4" />
+              </Link>
+            )}
           </PaginationItem>
           <PaginationItem>
             {currentPage === 1 ? (
-              <div className="w-6 h-4 rounded-full flex items-center justify-center px-1 cursor-not-allowed text-muted-foreground">
+              <div
+                className={cn(
+                  buttonVariants({ variant: "ghost", size: "icon" }),
+                  "w-6 flex items-center justify-center px-1 cursor-not-allowed text-muted-foreground",
+                )}
+              >
                 <ChevronLeftIcon className="size-4" />
               </div>
             ) : (
@@ -84,7 +105,12 @@ export function CustomPagination({
           </PaginationItem>
           <PaginationItem>
             {currentPage === totalPage ? (
-              <div className="w-6 h-4 rounded-full flex items-center justify-center px-1 cursor-not-allowed text-muted-foreground">
+              <div
+                className={cn(
+                  buttonVariants({ variant: "ghost", size: "icon" }),
+                  "w-6 flex items-center justify-center px-1 cursor-not-allowed text-muted-foreground",
+                )}
+              >
                 <ChevronRightIcon className="size-4" />
               </div>
             ) : (
@@ -101,18 +127,32 @@ export function CustomPagination({
             )}
           </PaginationItem>
           <PaginationItem>
-            <Link
-              href={{
-                pathname,
-                query: {
-                  ...Object.fromEntries(query.entries()),
-                  pageNum: totalPage,
-                },
-              }}
-              className={`w-6 h-4 rounded-full flex items-center justify-center px-1 ${currentPage === totalPage ? "cursor-not-allowed text-muted-foreground" : ""}`}
-            >
-              <ChevronLast className="size-4" />
-            </Link>
+            {currentPage === totalPage ? (
+              <div
+                className={cn(
+                  buttonVariants({ variant: "ghost", size: "icon" }),
+                  "w-6 flex items-center justify-center px-1 cursor-not-allowed text-muted-foreground",
+                )}
+              >
+                <ChevronLast className="size-4" />
+              </div>
+            ) : (
+              <Link
+                href={{
+                  pathname,
+                  query: {
+                    ...Object.fromEntries(query.entries()),
+                    pageNum: totalPage,
+                  },
+                }}
+                className={cn(
+                  buttonVariants({ variant: "ghost", size: "icon" }),
+                  "w-6 flex items-center justify-center px-1",
+                )}
+              >
+                <ChevronLast className="size-4" />
+              </Link>
+            )}
           </PaginationItem>
           <PaginationItem>
             <Select
