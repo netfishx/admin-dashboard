@@ -1,5 +1,12 @@
 import { getRoleList, getSubaccountList } from "@/api";
-import { AddButton } from "@/app/(dashboard)/system/subaccount/button";
+import {
+  AddButton,
+  DeleteButton,
+  EditButton,
+  LoginLogButton,
+} from "@/app/(dashboard)/system/subaccount/button";
+import { SubaccountDelete } from "@/app/(dashboard)/system/subaccount/delete";
+import { SubaccountDialog } from "@/app/(dashboard)/system/subaccount/dialog";
 import { CustomPagination } from "@/components/custom-pagination";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
@@ -15,7 +22,6 @@ import { format } from "date-fns";
 import { useTranslations } from "next-intl";
 import { getTranslations } from "next-intl/server";
 import { Suspense } from "react";
-import { SubaccountDialog } from "./dialog";
 
 function SubaccountTableHeader() {
   const t = useTranslations("system.subaccount");
@@ -59,6 +65,8 @@ async function SubaccountTableWrapper({
 
   return (
     <>
+      <SubaccountDialog roles={roles} />
+      <SubaccountDelete />
       <div className="border rounded-sm">
         <Table>
           <SubaccountTableHeader />
@@ -75,7 +83,7 @@ async function SubaccountTableWrapper({
                   <TableCell className="text-center">{item.username}</TableCell>
                   <TableCell className="text-center max-w-32">
                     {item.roleList
-                      .map(
+                      ?.map(
                         (id) => roles.find((role) => role.id === id)?.roleName,
                       )
                       .join("，")}
@@ -88,7 +96,7 @@ async function SubaccountTableWrapper({
                     {item.lastLoginIp}
                   </TableCell>
                   <TableCell className="text-center">
-                    {item.lastLoginTime &&
+                    {!!item.lastLoginTime &&
                       format(item.lastLoginTime, "yyyy-MM-dd HH:mm:ss")}
                   </TableCell>
                   <TableCell className="text-center">
@@ -106,7 +114,11 @@ async function SubaccountTableWrapper({
                     </span>
                   </TableCell>
                   <TableCell className="w-24 text-center sticky right-0 bg-background">
-                    <div className="flex justify-center">132</div>
+                    <div className="flex justify-center">
+                      <EditButton data={item} />
+                      <LoginLogButton id={item.id ?? ""} />
+                      <DeleteButton id={item.id ?? ""} />
+                    </div>
                   </TableCell>
                 </TableRow>
               ))
@@ -134,7 +146,6 @@ export default function SubaccountPage({
       <div className="flex justify-between items-center bg-background p-4">
         <div className="text-sm font-medium">{t("list")}</div>
         <AddButton />
-        <SubaccountDialog />
       </div>
       <div className="bg-background flex-1 p-2 flex flex-col gap-2">
         <Suspense

@@ -19,7 +19,6 @@ import { useAtom, useAtomValue } from "jotai";
 import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Form from "next/form";
-import { useRouter } from "next/navigation";
 import { use, useEffect, useRef, useState, useTransition } from "react";
 import { toast } from "sonner";
 
@@ -31,7 +30,6 @@ export function RoleDialog({
   const [open, setOpen] = useAtom(roleDialogAtom);
   const data = useAtomValue(roleAtom);
   const ref = useRef<HTMLFormElement>(null);
-  const router = useRouter();
   const [isPending, startTransition] = useTransition();
   const permissionsRes = use(permissions);
   const [permsIds, setPermsIds] = useState<number[]>(data?.permsIds ?? []);

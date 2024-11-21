@@ -668,11 +668,11 @@ export type WithdrawFeeList = {
 };
 
 export type Subaccount = {
-  id: string;
-  username: string;
-  createTime: number;
-  status: number;
-  lastLoginTime: number;
-  lastLoginIp: string;
-  roleList: number[];
+  id?: string;
+  username?: string;
+  createTime?: number;
+  status?: number;
+  lastLoginTime?: number;
+  lastLoginIp?: string;
+  roleList?: number[];
 };

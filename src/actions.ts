@@ -98,7 +98,7 @@ export async function editSupplierConfigAction(formData: FormData) {
 
 export async function editRoleAction(formData: FormData) {
   return await editRole({
-    id: formData.get("id") ? formData.get("id")?.toString() : undefined,
+    id: formData.get("id") ? Number(formData.get("id")) : undefined,
     roleName: formData.get("roleName")?.toString() ?? "",
     permsIds: (formData.get("permsIds")?.toString() ?? "")
       .split(",")

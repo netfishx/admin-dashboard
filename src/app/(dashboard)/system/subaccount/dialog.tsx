@@ -1,6 +1,8 @@
 "use client";
-import { editRoleAction } from "@/actions";
+import { updateSubaccount } from "@/api";
+import { validateFormData } from "@/app/(dashboard)/system/subaccount/validate";
 import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 import {
   Dialog,
   DialogContent,
@@ -11,25 +13,31 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import type {} from "@/lib/types";
+import { Password } from "@/components/ui/password";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import type { Role, Subaccount } from "@/lib/types";
 import { subaccountAtom, subaccountDialogAtom } from "@/store";
 import { Root as VisuallyHiddenRoot } from "@radix-ui/react-visually-hidden";
 import { useAtom, useAtomValue } from "jotai";
 import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Form from "next/form";
-import { useRouter } from "next/navigation";
-import { useRef, useTransition } from "react";
+import { useEffect, useRef, useState, useTransition } from "react";
 import { toast } from "sonner";
 
-export function SubaccountDialog() {
+export function SubaccountDialog({ roles }: { roles: Role[] }) {
   const translations = useTranslations();
   const t = useTranslations("system.subaccount");
   const [open, setOpen] = useAtom(subaccountDialogAtom);
   const data = useAtomValue(subaccountAtom);
   const ref = useRef<HTMLFormElement>(null);
-  const router = useRouter();
   const [isPending, startTransition] = useTransition();
+  const [checkedRoles, setCheckedRoles] = useState<number[]>([]);
+  const [status, setStatus] = useState<number>(0);
+  useEffect(() => {
+    setCheckedRoles(data?.roleList ?? []);
+    setStatus(data?.status ?? 0);
+  }, [data]);
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -50,15 +58,27 @@ export function SubaccountDialog() {
           action=""
           onSubmit={(e) => {
             e.preventDefault();
+
             startTransition(async () => {
               const formData = new FormData(e.currentTarget);
-
-              const res = await editRoleAction(formData);
-              if (res.code === 0) {
-                setOpen(false);
-                router.refresh();
+              checkedRoles.forEach((id) => {
+                formData.append("roleList", id.toString());
+              });
+              formData.append("status", status.toString());
+              const result = await validateFormData(
+                formData,
+                data ? "edit" : "create",
+              );
+              if (result.success) {
+                const res = await updateSubaccount(result.data as Subaccount);
+                if (res.code === 0) {
+                  setOpen(false);
+                  window.location.reload();
+                } else {
+                  toast.error(res.message);
+                }
               } else {
-                toast.error(res.message);
+                toast.error(result.errors?.[0]?.message);
               }
             });
           }}
@@ -81,43 +101,83 @@ export function SubaccountDialog() {
               <div className="flex gap-2 items-center">
                 <Label className="w-20 text-end shrink-0" />
                 <div className="flex-1 text-xs text-destructive">
-                  以小写字母开头，长度6到16位，且只能包含数字和小写字母的组合，不能包含“admin”的字样
+                  {t("usernameWarning")}
                 </div>
               </div>
             </div>
             <div className="flex gap-2 items-center">
               <Label className="w-20 text-end shrink-0">{t("password")}</Label>
-              <Input
+              <Password
                 className="flex-1"
                 placeholder={t("password")}
-                required
-                disabled={!!data}
-                name="password"
+                name="newPassword"
+                type="password"
               />
             </div>
             <div className="flex gap-2 items-center">
               <Label className="w-20 text-end shrink-0">
                 {t("confirmPassword")}
               </Label>
-              <Input
+              <Password
                 className="flex-1"
                 placeholder={t("confirmPassword")}
-                required
-                disabled={!!data}
                 name="confirmPassword"
+                type="password"
               />
             </div>
-            <div className="flex gap-2 items-center">
+            {data && (
+              <div className="flex gap-2 items-center">
+                <Label className="w-20 text-end shrink-0">{t("status")}</Label>
+                <div className="flex-1 flex gap-2">
+                  <div>
+                    <RadioGroup
+                      className="flex gap-2"
+                      value={status.toString() ?? "0"}
+                      onValueChange={(value) => {
+                        setStatus(Number(value));
+                      }}
+                    >
+                      <div className="flex items-center gap-2">
+                        <RadioGroupItem value="0" id="enable" />
+                        <Label htmlFor="enable" className="text-sm leading-4">
+                          {t("enable")}
+                        </Label>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <RadioGroupItem value="1" id="disable" />
+                        <Label htmlFor="disable" className="text-sm leading-4">
+                          {t("disable")}
+                        </Label>
+                      </div>
+                    </RadioGroup>
+                  </div>
+                </div>
+              </div>
+            )}
+            <div className="flex gap-2">
               <Label className="w-20 text-end shrink-0">
                 {t("chooseRole")}
               </Label>
-              <Input
-                className="flex-1"
-                placeholder={t("chooseRole")}
-                required
-                disabled={!!data}
-                name="roleId"
-              />
+              <div className="flex-1 flex gap-2 flex-wrap">
+                {roles.map((role) => (
+                  <div key={role.id} className="flex gap-1">
+                    <Checkbox
+                      key={role.id}
+                      checked={checkedRoles.includes(role.id ?? -1)}
+                      onCheckedChange={(checked) => {
+                        if (checked) {
+                          setCheckedRoles([...checkedRoles, role.id ?? -1]);
+                        } else {
+                          setCheckedRoles(
+                            checkedRoles.filter((id) => id !== role.id),
+                          );
+                        }
+                      }}
+                    />
+                    <span className="text-sm leading-4">{role.roleName}</span>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </Form>

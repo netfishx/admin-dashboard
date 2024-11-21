@@ -26,7 +26,6 @@ import { useAtom, useAtomValue } from "jotai";
 import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Form from "next/form";
-import { useRouter } from "next/navigation";
 import { useRef, useState, useTransition } from "react";
 import { toast } from "sonner";
 
@@ -59,7 +58,6 @@ export function SupplierDialog({ games }: { games: GameType[] }) {
   const [supplierId, setSupplierId] = useState(data?.userId);
   const supplierName = suppliers.find((item) => item.id === supplierId)?.name;
   const ref = useRef<HTMLFormElement>(null);
-  const router = useRouter();
   const [isPending, startTransition] = useTransition();
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -84,7 +82,7 @@ export function SupplierDialog({ games }: { games: GameType[] }) {
               );
               if (res.code === 0) {
                 setOpen(false);
-                router.refresh();
+                window.location.reload();
               } else {
                 toast.error(res.message);
               }

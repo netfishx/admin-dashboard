@@ -1,5 +1,5 @@
 "use client";
-import { deleteRole } from "@/api";
+import { deleteSubaccount } from "@/api";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -10,32 +10,28 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import { roleDeleteAtom, roleDeleteDialogAtom } from "@/store";
+import { subaccountDeleteAtom, subaccountDeleteDialogAtom } from "@/store";
 import { useAtom, useAtomValue } from "jotai";
 import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useTransition } from "react";
 import { toast } from "sonner";
 
-export function RoleDelete() {
+export function SubaccountDelete() {
   const [isPending, startTransition] = useTransition();
   const t = useTranslations();
-  const translations = useTranslations("system.role");
-  const id = useAtomValue(roleDeleteAtom);
-  const [open, setOpen] = useAtom(roleDeleteDialogAtom);
+  const translations = useTranslations("system.subaccount");
+  const id = useAtomValue(subaccountDeleteAtom);
+  const [open, setOpen] = useAtom(subaccountDeleteDialogAtom);
   return (
     <AlertDialog open={open} onOpenChange={setOpen}>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>{translations("deleteModal")}</AlertDialogTitle>
-          <AlertDialogDescription className="flex flex-col items-center">
-            <span className="text-base">
-              {translations("deleteModalDescription")}
-            </span>
-            <span className="text-destructive text-xs">
-              {translations("deleteModalDescriptionWarning")}
-            </span>
-          </AlertDialogDescription>
+          <AlertDialogTitle>
+            {translations("delete")}
+            {translations("title")}
+          </AlertDialogTitle>
+          <AlertDialogDescription />
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>{t("cancel")}</AlertDialogCancel>
@@ -46,7 +42,7 @@ export function RoleDelete() {
                 if (!id) {
                   return;
                 }
-                const res = await deleteRole({
+                const res = await deleteSubaccount({
                   id,
                 });
                 if (res.code === 0) {

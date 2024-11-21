@@ -919,3 +919,23 @@ export async function getSubaccountList({
     params: { pageNum, pageSize },
   });
 }
+
+export async function updateSubaccount(data: Subaccount) {
+  const user = await getSession();
+  return await apiRequest({
+    url: "/agent/user/sub/account",
+    method: "POST",
+    data,
+    token: user?.token,
+  });
+}
+
+export async function deleteSubaccount(data: { id: string }) {
+  const user = await getSession();
+  return await apiRequest({
+    url: "/agent/user/sub/delete",
+    method: "DELETE",
+    data,
+    token: user?.token,
+  });
+}
