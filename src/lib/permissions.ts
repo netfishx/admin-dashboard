@@ -14,4 +14,10 @@ export const urlPermissions: {
   "/system/announcement/all": "own_announcement",
   "/maintain/dictionary": "dictionary",
   "/maintain/resource": "resource_config",
+  "/fund/withdrawfee": "withdrawfee",
+  "/fund/minerfee": "minerfee",
+  "/fund/collection": "collection",
+  "/withdraw/apply": "withdraw_apply",
+  "/withdraw/audit": "audit",
+  "/users/supplier": "users_supplier",
 };

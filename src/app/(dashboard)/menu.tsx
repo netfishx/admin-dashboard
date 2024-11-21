@@ -127,7 +127,9 @@ function OpenedMenu({
           <CollapsibleContent className="flex flex-col gap-1 px-6">
             <MenuItem label={t("users.agent")} href="/users/agent" />
             <MenuItem label={t("users.member")} href="/users/member" />
-            <MenuItem label={t("users.supplier")} href="/users/supplier" />
+            {permissions.includes("users_supplier") && (
+              <MenuItem label={t("users.supplier")} href="/users/supplier" />
+            )}
           </CollapsibleContent>
         </Collapsible>
       )}
@@ -178,39 +180,58 @@ function OpenedMenu({
           <MenuItem label={t("reports.download")} href="/reports/download" />
         </CollapsibleContent>
       </Collapsible>
-      <Collapsible
-        open={openedMenu.includes("withdraw")}
-        onOpenChange={(e) => handleOpenChange("withdraw", e)}
-      >
-        <CollapsibleTrigger asChild>
-          <MenuItem
-            label={t("withdraw.title")}
-            icon={<ClipboardCheck className="size-4" />}
-            hasChildren
-          />
-        </CollapsibleTrigger>
-        <CollapsibleContent className="flex flex-col gap-1 px-6">
-          <MenuItem label={t("withdraw.apply")} href="/withdraw/apply" />
-          <MenuItem label={t("withdraw.audit")} href="/withdraw/audit" />
-        </CollapsibleContent>
-      </Collapsible>
-      <Collapsible
-        open={openedMenu.includes("fund")}
-        onOpenChange={(e) => handleOpenChange("fund", e)}
-      >
-        <CollapsibleTrigger asChild>
-          <MenuItem
-            label={t("fund.title")}
-            icon={<Scale className="size-4" />}
-            hasChildren
-          />
-        </CollapsibleTrigger>
-        <CollapsibleContent className="flex flex-col gap-1 px-6">
-          <MenuItem label={t("fund.minerfee")} href="/fund/minerfee" />
-          <MenuItem label={t("fund.collection")} href="/fund/collection" />
-          <MenuItem label={t("fund.withdrawfee")} href="/fund/withdrawfee" />
-        </CollapsibleContent>
-      </Collapsible>
+      {permissions.some((v) => ["withdraw_apply", "audit"].includes(v)) && (
+        <Collapsible
+          open={openedMenu.includes("withdraw")}
+          onOpenChange={(e) => handleOpenChange("withdraw", e)}
+        >
+          <CollapsibleTrigger asChild>
+            <MenuItem
+              label={t("withdraw.title")}
+              icon={<ClipboardCheck className="size-4" />}
+              hasChildren
+            />
+          </CollapsibleTrigger>
+          <CollapsibleContent className="flex flex-col gap-1 px-6">
+            {permissions.includes("withdraw_apply") && (
+              <MenuItem label={t("withdraw.apply")} href="/withdraw/apply" />
+            )}
+            {permissions.includes("audit") && (
+              <MenuItem label={t("withdraw.audit")} href="/withdraw/audit" />
+            )}
+          </CollapsibleContent>
+        </Collapsible>
+      )}
+      {permissions.some((v) =>
+        ["withdrawfee", "minerfee", "collection"].includes(v),
+      ) && (
+        <Collapsible
+          open={openedMenu.includes("fund")}
+          onOpenChange={(e) => handleOpenChange("fund", e)}
+        >
+          <CollapsibleTrigger asChild>
+            <MenuItem
+              label={t("fund.title")}
+              icon={<Scale className="size-4" />}
+              hasChildren
+            />
+          </CollapsibleTrigger>
+          <CollapsibleContent className="flex flex-col gap-1 px-6">
+            {permissions.includes("minerfee") && (
+              <MenuItem label={t("fund.minerfee")} href="/fund/minerfee" />
+            )}
+            {permissions.includes("collection") && (
+              <MenuItem label={t("fund.collection")} href="/fund/collection" />
+            )}
+            {permissions.includes("withdrawfee") && (
+              <MenuItem
+                label={t("fund.withdrawfee")}
+                href="/fund/withdrawfee"
+              />
+            )}
+          </CollapsibleContent>
+        </Collapsible>
+      )}
       <Collapsible
         open={openedMenu.includes("personal")}
         onOpenChange={(e) => handleOpenChange("personal", e)}
