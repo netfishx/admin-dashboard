@@ -542,7 +542,7 @@ export type CollectionAddressListRequestParams = {
 };
 
 export type Role = {
-  id?: string;
+  id?: number;
   roleName: string;
   updateTime?: number;
   createBy?: string;
@@ -601,6 +601,14 @@ export type OreFeeList = {
   trxBalance: string;
   updateTime: string;
   usdtBalance: string;
+};
+
+// 字典列表
+export type DictionaryList = {
+  id: string;
+  dictName: string;
+  dictCode: string;
+  remark: string;
 };
 
 // 借还记录请求入参
@@ -687,4 +695,14 @@ export type TransferRecordRequestRecords = {
   amount: string; // 金额（字符串形式）
   operateCode: number; // 操作代码
   createTime: number; // 创建时间（Unix 时间戳，毫秒）
+};
+
+export type Subaccount = {
+  id: string;
+  username: string;
+  createTime: number;
+  status: number;
+  lastLoginTime: number;
+  lastLoginIp: string;
+  roleList: number[];
 };

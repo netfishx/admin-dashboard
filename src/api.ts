@@ -16,6 +16,7 @@ import type {
   ChangeLog,
   CollectionAddressListRecords,
   CollectionAddressListRequestParams,
+  DictionaryList,
   GameConfig,
   GameOdds,
   GameType,
@@ -41,6 +42,7 @@ import type {
   RechargeReport,
   RechargeReportParams,
   Role,
+  Subaccount,
   SupplierConfig,
   SupplierList,
   SupplierReportRecords,
@@ -876,6 +878,60 @@ export async function removeOreFee(data: {
   });
 }
 
+// 字典列表
+export async function getDictionaryList(params: {
+  pageNum: number;
+  pageSize: number;
+}) {
+  const user = await getSession();
+  return await apiRequest<PageData<DictionaryList>>({
+    url: "/dict/pageList",
+    token: user?.token,
+    params,
+  });
+}
+// 添加字典
+export async function addDictionary(data: {
+  dictName: string;
+  dictCode: string;
+  remark: string;
+}) {
+  const user = await getSession();
+  return await apiRequest<{ code: number; message: string }>({
+    url: "/dict/save",
+    method: "PUT",
+    data,
+    token: user?.token,
+  });
+}
+
+// 编辑字典
+export async function editDictionary(data: {
+  id: string;
+  dictName: string;
+  dictCode: string;
+  remark: string;
+}) {
+  const user = await getSession();
+  return await apiRequest<{ code: number; message: string }>({
+    url: "/dict/update",
+    method: "POST",
+    data,
+    token: user?.token,
+  });
+}
+
+// 删除字典
+export async function deleteDictionary(data: { id: string }) {
+  const user = await getSession();
+  return await apiRequest({
+    url: "/dict/deleteById",
+    method: "DELETE",
+    data,
+    token: user?.token,
+  });
+}
+
 // 借还记录list
 export async function postGetCreditLogList(data: BorrowRecordRequestParams) {
   const user = await getSession();
@@ -916,5 +972,20 @@ export async function postGetTransferLogList(
     method: "POST",
     data,
     token: user?.token,
+  });
+}
+
+export async function getSubaccountList({
+  pageNum = 1,
+  pageSize = 10,
+}: {
+  pageNum: number;
+  pageSize: number;
+}) {
+  const user = await getSession();
+  return await apiRequest<PageData<Subaccount>>({
+    url: "/agent/user/sub/getUnderAgent",
+    token: user?.token,
+    params: { pageNum, pageSize },
   });
 }
