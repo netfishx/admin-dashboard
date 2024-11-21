@@ -47,6 +47,8 @@ import type {
   SupplierList,
   SupplierReportRecords,
   SupplierReportRequestParams,
+  TransferRecordRequestParams,
+  TransferRecordRequestRecords,
   UserBasicInfo,
   WithdrawFeeList,
   WithdrawFormData,
@@ -954,6 +956,19 @@ export async function saveWithdrawFee(data: WithdrawFeeList) {
   const user = await getSession();
   return await apiRequest({
     url: "/config/withdraw/fee/edit",
+    method: "POST",
+    data,
+    token: user?.token,
+  });
+}
+
+// 转账记录list
+export async function postGetTransferLogList(
+  data: TransferRecordRequestParams,
+) {
+  const user = await getSession();
+  return await apiRequest<PageData<TransferRecordRequestRecords>>({
+    url: "/wallet/getTransferLog",
     method: "POST",
     data,
     token: user?.token,
