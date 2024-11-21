@@ -32,7 +32,14 @@ export default function Page({
         <Form />
       </Suspense>
       <div className="p-2 bg-background flex-1 gap-2">
-        <Suspense fallback={null}>
+        <Suspense
+          fallback={
+            <Table>
+              <TableHeaderWrapper />
+              <TableBodySkeleton />
+            </Table>
+          }
+        >
           <TableWrapper searchParams={searchParams} />
         </Suspense>
       </div>
@@ -44,7 +51,6 @@ export default function Page({
 async function TableWrapper({
   searchParams,
 }: { searchParams: Promise<{ [key: string]: string | string[] }> }) {
-  const t = await getTranslations("users.members");
   const params = await searchParams;
   const { data } = await getMemberList({
     ...params,
@@ -55,33 +61,8 @@ async function TableWrapper({
     <>
       <div className="border rounded-sm relative">
         <Table>
-          <TableHeader>
-            <TableRow className="bg-muted">
-              <TableHead>{t("upUsername")}</TableHead>
-              <TableHead className="min-w-28">{t("deptId")}</TableHead>
-              <TableHead className="min-w-60">{t("userId")}</TableHead>
-              <TableHead>{t("username")}</TableHead>
-              <TableHead>{t("nickname")}</TableHead>
-              <TableHead className="min-w-28">{t("walletAddress")}</TableHead>
-              <TableHead className="min-w-28">{t("debtAmount")}</TableHead>
-              <TableHead className="min-w-28">{t("creditAmount")}</TableHead>
-              <TableHead className="min-w-20">{t("status")}</TableHead>
-              <TableHead className="min-w-[630px] text-center sticky right-0 bg-muted">
-                {t("action")}
-              </TableHead>
-            </TableRow>
-          </TableHeader>
-          <Suspense
-            fallback={
-              <TableBody>
-                <TableRow>
-                  <TableCell colSpan={7} className="h-20">
-                    <Skeleton className="w-full h-6" />
-                  </TableCell>
-                </TableRow>
-              </TableBody>
-            }
-          >
+          <TableHeaderWrapper />
+          <Suspense fallback={<TableBodySkeleton />}>
             <TableBodyWrapper list={data?.list} />
           </Suspense>
         </Table>
@@ -96,7 +77,27 @@ async function TableWrapper({
     </>
   );
 }
-
+async function TableHeaderWrapper() {
+  const t = await getTranslations("users.members");
+  return (
+    <TableHeader>
+      <TableRow className="bg-muted">
+        <TableHead>{t("upUsername")}</TableHead>
+        <TableHead className="min-w-28">{t("deptId")}</TableHead>
+        <TableHead className="min-w-60">{t("userId")}</TableHead>
+        <TableHead>{t("username")}</TableHead>
+        <TableHead>{t("nickname")}</TableHead>
+        <TableHead className="min-w-28">{t("walletAddress")}</TableHead>
+        <TableHead className="min-w-28">{t("debtAmount")}</TableHead>
+        <TableHead className="min-w-28">{t("creditAmount")}</TableHead>
+        <TableHead className="min-w-20">{t("status")}</TableHead>
+        <TableHead className="min-w-[630px] text-center sticky right-0 bg-muted">
+          {t("action")}
+        </TableHead>
+      </TableRow>
+    </TableHeader>
+  );
+}
 async function TableBodyWrapper({ list }: { list: MemberList[] | undefined }) {
   const t = await getTranslations("users.members");
   return (
@@ -124,6 +125,21 @@ async function TableBodyWrapper({ list }: { list: MemberList[] | undefined }) {
           </TableCell>
           <TableCell className="text-center sticky right-0 bg-background">
             <Actions data={item} />
+          </TableCell>
+        </TableRow>
+      ))}
+    </TableBody>
+  );
+}
+
+async function TableBodySkeleton() {
+  return (
+    <TableBody>
+      {Array.from({ length: 5 }).map((_, index) => (
+        // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
+        <TableRow key={index}>
+          <TableCell colSpan={10}>
+            <Skeleton className="w-full h-4" />
           </TableCell>
         </TableRow>
       ))}
