@@ -475,7 +475,10 @@
       "download": "生成下载任务",
       "settledAmount": "结算金额",
       "totaSettledAmount": "总结算金额",
-      "totalIssueAmount": "总期数"
+      "totalIssueAmount": "总期数",
+      "gameHall": "游戏大厅",
+      "club": "俱乐部",
+      "all": "全部"
     },
     "supplier": {
       "supplierID": "供应商ID",
@@ -517,7 +520,8 @@
       "memberType": "会员类别",
       "superAgentId": "上级代理ID",
       "openTime": "开奖日期",
-      "download": "生成下载任务"
+      "download": "生成下载任务",
+      "all": "全部"
     },
     "recharge": {
       "id": "ID",
@@ -561,6 +565,20 @@
       "placeholderselect": "请选择",
       "search": "查询",
       "reset": "重置"
+    },
+    "borrow": {
+      "agentID": "代理ID",
+      "dateRange": "日期范围",
+      "orderNumber": "订单号",
+      "memberID": "会员ID",
+      "type": "类型",
+      "amount": "金额",
+      "applyTime": "发起时间",
+      "placeholderinput": "请输入",
+      "placeholderselect": "请选择",
+      "search": "查询",
+      "reset": "重置",
+      "download": "生成下载任务"
     }
   },
   "pagination": {

@@ -602,6 +602,64 @@ export type OreFeeList = {
   updateTime: string;
   usdtBalance: string;
 };
+
+// 借还记录请求入参
+export type BorrowRecordRequestParams = {
+  /** 代理ID */
+  agentId: string;
+
+  /** 会员ID */
+  memberId: string;
+
+  /** 开始时间戳 */
+  startTime: string;
+
+  /** 结束时间戳 */
+  endTime: string;
+
+  /** 交易ID */
+  transactionID: string;
+
+  /**
+   * 操作代码
+   * 使用数字枚举可以更好地定义具体的操作类型
+   */
+  operateCode: number;
+
+  /** 页码 */
+  pageNum: number;
+
+  /** 每页条数 */
+  pageSize: number;
+};
+
+// 借还记录请求出参
+export type BorrowRecordRequestRecords = {
+  /** 交易ID - UUID格式 */
+  transactionID: string;
+
+  /** 代理ID */
+  agentId: string;
+
+  /** 会员ID */
+  memberId: string;
+
+  /**
+   * 金额
+   * 使用string类型避免浮点数精度问题
+   */
+  amount: string;
+
+  /** 操作代码 */
+  operateCode: number;
+
+  /**
+   * 创建时间
+   * Unix时间戳(毫秒)
+   */
+  createTime: number;
+};
+
 // 提现手续费
 export type WithdrawFeeList = {
   currency: string;

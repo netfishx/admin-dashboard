@@ -19,10 +19,18 @@ import { useRef } from "react";
 
 export function RatioForm() {
   const t = useTranslations("report.agent");
-  const [gameId, setGameId] = useQueryState("gameId");
-  const [agentId, setagentId] = useQueryState("agentId");
-  const [houseOwnerId, setHouseOwnerId] = useQueryState("houseOwnerId");
-  const [parentAgentId, setParentAgentId] = useQueryState("parentAgentId");
+  const [gameId, setGameId] = useQueryState("gameId", {
+    defaultValue: "",
+  });
+  const [agentId, setagentId] = useQueryState("agentId", {
+    defaultValue: "",
+  });
+  const [houseOwnerId, setHouseOwnerId] = useQueryState("houseOwnerId", {
+    defaultValue: "",
+  });
+  const [parentAgentId, setParentAgentId] = useQueryState("parentAgentId", {
+    defaultValue: "",
+  });
   const router = useRouter();
   const dateRangeFilterReset = useRef<
     ((start: number, end: number) => void) | null

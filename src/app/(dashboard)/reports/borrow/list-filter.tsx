@@ -10,28 +10,28 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import {} from "@/components/ui/select";
-import { startOfDay } from "date-fns";
-import { endOfDay } from "date-fns";
+import { endOfDay, startOfDay } from "date-fns";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useQueryState } from "nuqs";
 import { useRef } from "react";
 
-export function ListFilter() {
-  const t = useTranslations("report.member");
-  const [parentAgentId, setParentAgentId] = useQueryState("parentAgentId", {
+export function ListFilter({
+  hasSearchPermission,
+}: { hasSearchPermission: boolean }) {
+  const t = useTranslations("report.borrow");
+  const router = useRouter();
+  const [orderNumber, setOrderNumber] = useQueryState("orderNumber", {
     defaultValue: "",
   });
-  const [gameId, setGameId] = useQueryState("gameId", {
+  const [agentId, setAgentId] = useQueryState("agentId", {
     defaultValue: "",
   });
   const [memberId, setMemberId] = useQueryState("memberId", {
     defaultValue: "",
   });
-
-  const [memberType, setMemberType] = useQueryState("memberType", {
-    defaultValue: "all",
+  const [typeId, setTypeId] = useQueryState("typeId", {
+    defaultValue: "",
   });
 
   const dateRangeFilterReset = useRef<
@@ -44,14 +44,12 @@ export function ListFilter() {
   };
 
   const handleReset = () => {
-    setParentAgentId("");
-    setGameId("");
+    setOrderNumber("");
+    setAgentId("");
     setMemberId("");
-    setMemberType("all");
+    setTypeId("");
     handleDateRangeFilterReset();
   };
-
-  const router = useRouter();
   const handleSearch = () => {
     router.refresh();
   };
@@ -61,10 +59,46 @@ export function ListFilter() {
       {/* First row */}
       <div className="flex gap-4 items-center">
         <div className="flex gap-2 items-center">
-          <Label className="shrink-0">{t("gameName")}</Label>
+          <Label>{t("dateRange")}</Label>
+          <DateRangeFilter
+            enableTimeSelect={false}
+            // biome-ignore lint/suspicious/noAssignInExpressions: <explanation>
+            reset={(resetFn) => (dateRangeFilterReset.current = resetFn)}
+          />
+        </div>
+      </div>
+
+      {/* Last row */}
+      <div className="flex gap-4 items-center">
+        <div className="flex gap-4 items-center">
+          <Label className="shrink-0">{t("orderNumber")}</Label>
+          <Input
+            value={orderNumber ?? ""}
+            onChange={(e) => setOrderNumber(e.target.value)}
+            placeholder={t("placeholderinput")}
+          />
+        </div>
+        <div className="flex gap-4 items-center">
+          <Label className="shrink-0">{t("agentID")}</Label>
+          <Input
+            value={agentId ?? ""}
+            onChange={(e) => setAgentId(e.target.value)}
+            placeholder={t("placeholderinput")}
+          />
+        </div>
+        <div className="flex gap-4 items-center">
+          <Label className="shrink-0">{t("memberID")}</Label>
+          <Input
+            value={memberId ?? ""}
+            onChange={(e) => setMemberId(e.target.value)}
+            placeholder={t("placeholderinput")}
+          />
+        </div>
+        <div className="flex gap-4 items-center">
+          <Label className="shrink-0">{t("type")}</Label>
           <Select
-            value={gameId ?? ""}
-            onValueChange={(value) => setGameId(value)}
+            value={typeId ?? ""}
+            onValueChange={(value) => setTypeId(value)}
             defaultValue="1"
           >
             <SelectTrigger className="w-28">
@@ -76,56 +110,10 @@ export function ListFilter() {
             </SelectContent>
           </Select>
         </div>
-        <div className="flex gap-2 items-center">
-          <Label>{t("openTime")}</Label>
-          <DateRangeFilter
-            enableTimeSelect={false}
-            // biome-ignore lint/suspicious/noAssignInExpressions: <explanation>
-            reset={(resetFn) => (dateRangeFilterReset.current = resetFn)}
-          />
-        </div>
-        <div className="flex gap-4 items-center">
-          <Label className="shrink-0">{t("memberId")}</Label>
-          <Input
-            value={memberId ?? ""}
-            onChange={(e) => setMemberId(e.target.value)}
-            placeholder={t("placeholderinput")}
-          />
-        </div>
       </div>
-
-      {/* Second row */}
-      <div className="flex gap-4 items-center">
-        <div className="flex gap-4 items-center">
-          <Label className="shrink-0">{t("memberType")}</Label>
-          <Select
-            value={memberType ?? ""}
-            onValueChange={(value) => setMemberType(value)}
-            defaultValue="all"
-          >
-            <SelectTrigger className="w-28">
-              <SelectValue placeholder={t("placeholderselect")} />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">{t("all")}</SelectItem>
-              <SelectItem value="1">直属会员</SelectItem>
-              <SelectItem value="2">非直属会员</SelectItem>
-            </SelectContent>
-          </Select>
-        </div>
-        <div className="flex gap-4 items-center">
-          <Label className="shrink-0">{t("superAgentId")}</Label>
-          <Input
-            value={parentAgentId ?? ""}
-            onChange={(e) => setParentAgentId(e.target.value)}
-            placeholder={t("placeholderinput")}
-          />
-        </div>
-      </div>
-
       {/* Last row */}
       <div className="flex gap-4 justify-end items-center">
-        <div className="flex gap-2 items-center">
+        <div className="flex gap-2 items-center ">
           <Button
             className="px-4 py-2 border rounded-md bg-white text-gray-700 border-gray-300 hover:bg-gray-100"
             onClick={handleReset}
