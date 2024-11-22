@@ -38,12 +38,18 @@ export function ListFilter({
     dateRangeFilterReset.current?.(start, end);
   };
 
+  const amountFilterReset = useRef<(() => void) | null>(null);
+  const handleAmountFilterReset = () => {
+    amountFilterReset.current?.();
+  };
+
   const handleReset = () => {
     setOrderNumber("");
     setMemberId("");
     setHouseOwnerId("");
     setMinisterId("");
     handleDateRangeFilterReset();
+    handleAmountFilterReset();
   };
   const handleSearch = () => {
     router.refresh();
@@ -99,7 +105,11 @@ export function ListFilter({
         </div>
         <div className="flex gap-4 items-center">
           <Label className="shrink-0">{t("amountfilter")}</Label>
-          <AmountFilter />
+          <AmountFilter
+            amountText="amount"
+            // biome-ignore lint/suspicious/noAssignInExpressions: <explanation>
+            onReset={(resetFn) => (amountFilterReset.current = resetFn)}
+          />
         </div>
       </div>
       {/* Last row */}
