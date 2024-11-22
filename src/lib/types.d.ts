@@ -765,3 +765,29 @@ export type BackgroundImageList = {
   createTime: number;
   updateTime: number;
 };
+
+// 打赏记录请求入参
+export type RewardRecordRequestParams = {
+  memberId: string; // 转出代理id
+  houseOwnerId: string; // 转入代理id
+  ministerId: string; // 部长ID
+  startTime: string; // 开始时间，时间戳格式
+  endTime: string; // 结束时间，时间戳格式
+  transactionID: string; // 订单号
+  operateCode: number; // 类型
+  pageNum: number; // 页数，从1开始
+  pageSize: number; // 页面大小
+  operators: number; // 操作符，0 >=，1 <=
+  amount: number; // 金额
+};
+
+// 打赏记录请求出参
+export type RewardRecordRequestRecords = {
+  memberId: string; // 转出代理ID
+  houseOwnerId: string; // 转入代理ID
+  ministerId: string; // 部长ID
+  amount: string; // 金额，字符串格式
+  createTime: number; // 创建时间，时间戳（毫秒）
+  transactionID: string; // 交易订单号
+  operateCode: number; // 操作类型代码
+};

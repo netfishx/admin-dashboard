@@ -587,7 +587,11 @@
       "download": "生成下载任务",
       "all": "全部",
       "senderAgentId": "转出代理ID",
-      "recipientAgentId": "转入代理ID"
+      "recipientAgentId": "转入代理ID",
+      "amountfilter": "打赏金额筛选",
+      "memberId": "会员ID",
+      "roomOwnerId": "房主ID",
+      "ministerId": "部长ID"
     }
   },
   "pagination": {

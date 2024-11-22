@@ -9,11 +9,15 @@ import {
 } from "@/components/ui/select";
 import { useTranslations } from "next-intl";
 import { useQueryState } from "nuqs";
+import { useEffect } from "react";
 
-export default function AmountFilter() {
+export default function AmountFilter({
+  amountText = "betAmount",
+  onReset = () => {},
+}: { amountText?: string; onReset?: (resetFn: () => void) => void }) {
   const t = useTranslations("report.orderlist");
 
-  const [filterAmount, setFilterAmount] = useQueryState("betAmount", {
+  const [filterAmount, setFilterAmount] = useQueryState(amountText, {
     defaultValue: "",
   });
   const [FilterAmountType, setFilterAmountType] = useQueryState("operators", {
@@ -29,11 +33,22 @@ export default function AmountFilter() {
     setFilterAmount(value);
   };
 
+  const handleReset = () => {
+    setFilterAmount("");
+    setFilterAmountType("");
+  };
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+  useEffect(() => {
+    onReset(() => handleReset());
+  }, [onReset]);
+
   return (
     <div className="flex items-center space-x-2">
       <Select
         onValueChange={(value) => handleFilterChange(value)}
         defaultValue={FilterAmountType}
+        value={FilterAmountType}
       >
         <SelectTrigger>
           <SelectValue placeholder={t("placeholderselect")} />
