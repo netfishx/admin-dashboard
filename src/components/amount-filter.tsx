@@ -14,7 +14,7 @@ import { useEffect } from "react";
 export default function AmountFilter({
   amountText = "betAmount",
   onReset = () => {},
-}: { amountText: string; onReset?: (resetFn: () => void) => void }) {
+}: { amountText?: string; onReset?: (resetFn: () => void) => void }) {
   const t = useTranslations("report.orderlist");
 
   const [filterAmount, setFilterAmount] = useQueryState(amountText, {
