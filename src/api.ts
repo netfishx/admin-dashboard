@@ -65,6 +65,7 @@ import type {
   WithdrawReport,
   WithdrawReportParams,
 } from "@/lib/types";
+import { cookies } from "next/headers";
 
 import { getSession } from "@/session";
 import axios from "axios";
@@ -1099,18 +1100,28 @@ export async function getTodayWinLossChart(params: {
     }),
   ]);
   // 格式化 agentBaccaratIssueReport 的 gameName
-  const formattedAgentBaccaratIssueReport =
-    res2.data?.agentBaccaratIssueReport.map((report) => ({
+  const formattedAgentBaccaratAmountReport =
+    res2.data?.agentBaccaratAmountReport.map((report) => ({
       ...report,
-      gameName: res.data
-        ?.find((i) => i.gameType === report.gameType)
-        ?.list.find((i) => i.gameId === report.gameId)?.gameIdLabel,
+      gameName:
+        res.data
+          ?.find((i) => i.gameType === report.gameType)
+          ?.list.find((i) => i.gameId === report.gameId)?.gameIdLabel ?? "其他",
+    }));
+  const formattedAgentBaccaratBetNumReport =
+    res2.data?.agentBaccaratBetNumReport.map((report) => ({
+      ...report,
+      gameName:
+        res.data
+          ?.find((i) => i.gameType === report.gameType)
+          ?.list.find((i) => i.gameId === report.gameId)?.gameIdLabel ?? "其他",
     }));
   return {
     ...res2,
     data: {
       ...res2.data,
-      agentBaccaratIssueReport: formattedAgentBaccaratIssueReport,
+      agentBaccaratAmountReport: formattedAgentBaccaratAmountReport,
+      agentBaccaratBetNumReport: formattedAgentBaccaratBetNumReport,
     },
   };
 }
@@ -1224,6 +1235,11 @@ export async function postCheckMoneySecret(data: {
     data,
     token: user?.token,
   });
+}
+// 设置cookie
+export async function setIsFirstLogin() {
+  const cookie = await cookies();
+  cookie.set("isFirstLogin", "false");
 }
 
 export async function uploadImage(data: {
