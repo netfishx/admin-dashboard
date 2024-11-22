@@ -82,7 +82,7 @@ async function SubaccountTableWrapper({
               res.data?.list.map((item) => (
                 <TableRow key={item.id}>
                   <TableCell className="text-center">{item.username}</TableCell>
-                  <TableCell className="text-center max-w-32">
+                  <TableCell className="text-start max-w-32 break-all">
                     {item.roleList
                       ?.map(
                         (id) => roles.find((role) => role.id === id)?.roleName,

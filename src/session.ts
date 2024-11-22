@@ -5,7 +5,7 @@ import { cookies } from "next/headers";
 const key = new TextEncoder().encode(process.env.AUTH_SECRET);
 const expiresTime = 24 * 60 * 60;
 
-type SessionData = User & {
+export type SessionData = User & {
   expires: string;
 };
 

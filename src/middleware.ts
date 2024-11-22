@@ -3,6 +3,9 @@ import { type NextRequest, NextResponse } from "next/server";
 import { urlPermissions } from "./lib/permissions";
 
 export async function middleware(request: NextRequest) {
+  if (request.nextUrl.pathname === "/landing") {
+    return NextResponse.next();
+  }
   const user = await getSession();
   if (!user && request.nextUrl.pathname !== "/login") {
     return Response.redirect(new URL("/login", request.url));
