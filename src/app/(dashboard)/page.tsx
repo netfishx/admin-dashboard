@@ -5,6 +5,7 @@ import { Announcement } from "@/app/(dashboard)/announcement";
 import { DataOverview } from "@/app/(dashboard)/data-overview";
 import { QuickAccess } from "@/app/(dashboard)/quick-access";
 import type { ChartConfig } from "@/components/ui/chart";
+import { getSession } from "@/session";
 import { endOfDay, format, fromUnixTime, startOfDay, sub } from "date-fns";
 import { connection } from "next/server";
 import { Suspense } from "react";
@@ -13,6 +14,8 @@ import { Salutations } from "./salutations";
 import { WeekChart } from "./week-chart";
 
 export default async function DashboardPage() {
+  const session = await getSession();
+  const permissions = session?.permissions;
   const t = await getTranslations();
 
   await connection();
@@ -165,9 +168,11 @@ export default async function DashboardPage() {
   return (
     <>
       <div className="flex-1 flex flex-col gap-2">
-        <Suspense fallback={null}>
-          <Salutations data={todayWinLossData} />
-        </Suspense>
+        {permissions?.includes("admin_stat") && (
+          <Suspense>
+            <Salutations data={todayWinLossData} />
+          </Suspense>
+        )}
         <div className="grid grid-cols-2 gap-2">
           <DayChart
             title={t("chart.todayCashflow")}
@@ -188,12 +193,16 @@ export default async function DashboardPage() {
         <div className="grid gap-2 rounded bg-card p-4">
           <WeekChart textConfig={weekChart2Text} />
         </div>
-        <div className="grid gap-2 rounded bg-card p-4">
-          <WeekChart textConfig={weekChart4Text} />
-        </div>
-        <div className="grid gap-2 rounded bg-card p-4">
-          <WeekChart textConfig={weekChart4Text} />
-        </div>
+        {permissions?.includes("admin_stat") && (
+          <>
+            <div className="grid gap-2 rounded bg-card p-4">
+              <WeekChart textConfig={weekChart4Text} />
+            </div>
+            <div className="grid gap-2 rounded bg-card p-4">
+              <WeekChart textConfig={weekChart4Text} />
+            </div>
+          </>
+        )}
       </div>
       <div className="flex flex-col gap-2 w-[280px] min-[2400px]:w-[560px]">
         <DataOverview />
