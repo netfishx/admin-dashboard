@@ -44,6 +44,8 @@ import type {
   RatioReportRequestRecords,
   RechargeReport,
   RechargeReportParams,
+  RewardRecordRequestParams,
+  RewardRecordRequestRecords,
   Role,
   Subaccount,
   SupplierConfig,
@@ -1161,6 +1163,31 @@ export async function deleteSubaccount(data: { id: string }) {
   return await apiRequest({
     url: "/agent/user/sub/delete",
     method: "DELETE",
+    data,
+    token: user?.token,
+  });
+}
+
+// 打赏记录list
+export async function postGetRewardRecordList(data: RewardRecordRequestParams) {
+  const user = await getSession();
+  return await apiRequest<PageData<RewardRecordRequestRecords>>({
+    url: "/wallet/getTipList",
+    method: "POST",
+    data,
+    token: user?.token,
+  });
+}
+
+// 验证资金密码
+export async function postCheckMoneySecret(data: {
+  userId: string;
+  secret: string;
+}) {
+  const user = await getSession();
+  return await apiRequest({
+    url: "/agent/center/fund/check",
+    method: "POST",
     data,
     token: user?.token,
   });

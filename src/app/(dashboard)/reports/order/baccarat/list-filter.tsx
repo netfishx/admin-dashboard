@@ -24,7 +24,7 @@ export function ListFilter() {
     defaultValue: "",
   });
   const [bettingtime, setBettingtime] = useQueryState("bettingtime", {
-    defaultValue: "",
+    defaultValue: "1",
   });
   const [settlementstatus, setSettlementstatus] = useQueryState("orderStatus", {
     defaultValue: "",
@@ -63,6 +63,11 @@ export function ListFilter() {
     dateRangeFilterReset.current?.(start, end);
   };
 
+  const amountFilterReset = useRef<(() => void) | null>(null);
+  const handleAmountFilterReset = () => {
+    amountFilterReset.current?.();
+  };
+
   const handleReset = () => {
     setOrdernumber("");
     setIssuenumber("");
@@ -71,8 +76,9 @@ export function ListFilter() {
     setRoomeownerID("");
     setLeastlevelID("");
     setGameName("");
-    setBettingtime("");
+    setBettingtime("1");
     setSettlementstatus("");
+    handleAmountFilterReset();
     handleDateRangeFilterReset();
   };
 
@@ -173,7 +179,9 @@ export function ListFilter() {
         </div>
         <div className="flex gap-2 items-center">
           <Label className="shrink-0">{t("amountfilter")}</Label>
-          <AmountFilter />
+          <AmountFilter
+            onReset={(resetFn) => (amountFilterReset.current = resetFn)}
+          />
         </div>
         <div className="flex gap-2 items-center">
           <Label className="shrink-0">{t("settlementstatus")}</Label>

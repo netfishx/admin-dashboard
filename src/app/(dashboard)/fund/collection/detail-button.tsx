@@ -71,7 +71,10 @@ export function DetailButton({ item }: { item: CollectionAddressListRecords }) {
         <StopDialog onOpenChange={() => setShowStatus(undefined)} item={item} />
       )}
       {showStatus === ShowStatus.CHECK && (
-        <CheckDialog onOpenChange={() => setShowStatus(undefined)} />
+        <CheckDialog
+          onOpenChange={() => setShowStatus(undefined)}
+          item={item}
+        />
       )}
     </div>
   );
