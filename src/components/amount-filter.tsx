@@ -10,14 +10,16 @@ import {
 import { useTranslations } from "next-intl";
 import { useQueryState } from "nuqs";
 
-export default function AmountFilter() {
+export default function AmountFilter({
+  amountText = "betAmount",
+}: { amountText: string }) {
   const t = useTranslations("report.orderlist");
 
-  const [filterAmount, setFilterAmount] = useQueryState("betAmount", {
+  const [filterAmount, setFilterAmount] = useQueryState(amountText, {
     defaultValue: "",
   });
   const [FilterAmountType, setFilterAmountType] = useQueryState("operators", {
-    defaultValue: "",
+    defaultValue: "0",
   });
 
   const handleFilterChange = (filterType: string) => {
