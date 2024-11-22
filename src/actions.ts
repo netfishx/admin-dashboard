@@ -3,6 +3,7 @@ import { editRole, editSupplierConfig, login, logout } from "@/api";
 // import { z } from "zod";
 // import { zfd } from "zod-form-data";
 import { setSession, signOut } from "@/session";
+import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
 // const lowercaseRegex = /[a-z]/;
@@ -72,6 +73,8 @@ export async function loginAction(formData: FormData) {
   });
   if (res.code === 0 && res.data) {
     await setSession(res.data);
+    const cookie = await cookies();
+    cookie.set("isFirstLogin", "true");
     return redirect("/");
   }
   return { message: res.message || "登录失败" };

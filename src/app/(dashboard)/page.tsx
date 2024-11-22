@@ -41,22 +41,22 @@ export default async function DashboardPage() {
   });
   const chartConfig = {
     bjl01: {
-      color: "hsl(var(--chart-sky))",
+      color: "hsl(var(--chart-1))",
     },
     bjl02: {
-      color: "hsl(var(--chart-blue))",
+      color: "hsl(var(--chart-2))",
     },
     bjl03: {
-      color: "hsl(var(--chart-cyan))",
+      color: "hsl(var(--chart-3))",
     },
     bjl04: {
-      color: "hsl(var(--chart-lake))",
+      color: "hsl(var(--chart-4))",
     },
     bjl05: {
-      color: "hsl(var(--chart-turquoise))",
+      color: "hsl(var(--chart-5))",
     },
     bjl06: {
-      color: "hsl(var(--chart-indigo))",
+      color: "hsl(var(--chart-6))",
     },
   } satisfies ChartConfig;
 
