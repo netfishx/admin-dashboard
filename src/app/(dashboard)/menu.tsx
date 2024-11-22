@@ -232,23 +232,39 @@ function OpenedMenu({
           </CollapsibleContent>
         </Collapsible>
       )}
-      <Collapsible
-        open={openedMenu.includes("personal")}
-        onOpenChange={(e) => handleOpenChange("personal", e)}
-      >
-        <CollapsibleTrigger asChild>
-          <MenuItem
-            label={t("personal.title")}
-            icon={<UserSquare className="size-4" />}
-            hasChildren
-          />
-        </CollapsibleTrigger>
-        <CollapsibleContent className="flex flex-col gap-1 px-6">
-          <MenuItem label={t("personal.info")} href="/personal/info" />
-          <MenuItem label={t("personal.loginlog")} href="/personal/loginlog" />
-          <MenuItem label={t("personal.security")} href="/personal/security" />
-        </CollapsibleContent>
-      </Collapsible>
+      {permissions.some((v) =>
+        ["personal_info", "login_log", "edit_password"].includes(v),
+      ) && (
+        <Collapsible
+          open={openedMenu.includes("personal")}
+          onOpenChange={(e) => handleOpenChange("personal", e)}
+        >
+          <CollapsibleTrigger asChild>
+            <MenuItem
+              label={t("personal.title")}
+              icon={<UserSquare className="size-4" />}
+              hasChildren
+            />
+          </CollapsibleTrigger>
+          <CollapsibleContent className="flex flex-col gap-1 px-6">
+            {permissions.includes("personal_info") && (
+              <MenuItem label={t("personal.info")} href="/personal/info" />
+            )}
+            {permissions.includes("login_log") && (
+              <MenuItem
+                label={t("personal.loginlog")}
+                href="/personal/loginlog"
+              />
+            )}
+            {permissions.includes("edit_password") && (
+              <MenuItem
+                label={t("personal.security")}
+                href="/personal/security"
+              />
+            )}
+          </CollapsibleContent>
+        </Collapsible>
+      )}
       {permissions.some((v) =>
         ["system_role", "sub_account", "own_announcement"].includes(v),
       ) && (
@@ -466,75 +482,87 @@ function ClosedMenu({
           </TooltipContent>
         </Tooltip>
       </TooltipProvider>
-      <TooltipProvider>
-        <Tooltip>
-          <TooltipTrigger>
-            <div
-              className={cn([
-                baseClass,
-                pathname.startsWith("/personal") && "text-primary",
-              ])}
-            >
-              <MenuItemLink
-                href="/personal/info"
-                isActive={pathname.startsWith("/personal")}
-                className="px-0 w-full"
+      {permissions.some((v) =>
+        ["personal_info", "login_log", "edit_password"].includes(v),
+      ) && (
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger>
+              <div
+                className={cn([
+                  baseClass,
+                  pathname.startsWith("/personal") && "text-primary",
+                ])}
               >
-                <UserSquare className="size-4" />
-              </MenuItemLink>
-            </div>
-          </TooltipTrigger>
-          <TooltipContent side="right">
-            <p>{t("personal.title")}</p>
-          </TooltipContent>
-        </Tooltip>
-      </TooltipProvider>
-      <TooltipProvider>
-        <Tooltip>
-          <TooltipTrigger>
-            <div
-              className={cn([
-                baseClass,
-                pathname.startsWith("/system") && "text-primary",
-              ])}
-            >
-              <MenuItemLink
-                href="/system/role"
-                isActive={pathname.startsWith("/system")}
-                className="px-0 w-full"
+                <MenuItemLink
+                  href="/personal/info"
+                  isActive={pathname.startsWith("/personal")}
+                  className="px-0 w-full"
+                >
+                  <UserSquare className="size-4" />
+                </MenuItemLink>
+              </div>
+            </TooltipTrigger>
+            <TooltipContent side="right">
+              <p>{t("personal.title")}</p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
+      )}
+      {permissions.some((v) =>
+        ["system_role", "sub_account", "own_announcement"].includes(v),
+      ) && (
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger>
+              <div
+                className={cn([
+                  baseClass,
+                  pathname.startsWith("/system") && "text-primary",
+                ])}
               >
-                <Tv2 className="size-4" />
-              </MenuItemLink>
-            </div>
-          </TooltipTrigger>
-          <TooltipContent side="right">
-            <p>{t("system.title")}</p>
-          </TooltipContent>
-        </Tooltip>
-      </TooltipProvider>
-      <TooltipProvider>
-        <Tooltip>
-          <TooltipTrigger>
-            <div
-              className={cn([
-                baseClass,
-                pathname.startsWith("/maintain") && "text-primary",
-              ])}
-            >
-              <MenuItemLink
-                href="/maintain/dictionary"
-                isActive={pathname.startsWith("/maintain")}
-                className="px-0 w-full"
+                <MenuItemLink
+                  href="/system/role"
+                  isActive={pathname.startsWith("/system")}
+                  className="px-0 w-full"
+                >
+                  <Tv2 className="size-4" />
+                </MenuItemLink>
+              </div>
+            </TooltipTrigger>
+            <TooltipContent side="right">
+              <p>{t("system.title")}</p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
+      )}
+      {permissions.some((v) =>
+        ["dictionary", "resource_config"].includes(v),
+      ) && (
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger>
+              <div
+                className={cn([
+                  baseClass,
+                  pathname.startsWith("/maintain") && "text-primary",
+                ])}
               >
-                <Cog className="size-4" />
-              </MenuItemLink>
-            </div>
-          </TooltipTrigger>
-          <TooltipContent side="right">
-            <p>{t("maintain.title")}</p>
-          </TooltipContent>
-        </Tooltip>
-      </TooltipProvider>
+                <MenuItemLink
+                  href="/maintain/dictionary"
+                  isActive={pathname.startsWith("/maintain")}
+                  className="px-0 w-full"
+                >
+                  <Cog className="size-4" />
+                </MenuItemLink>
+              </div>
+            </TooltipTrigger>
+            <TooltipContent side="right">
+              <p>{t("maintain.title")}</p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
+      )}
     </>
   );
 }

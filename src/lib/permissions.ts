@@ -11,7 +11,9 @@ export const urlPermissions: {
   "/games/maintain": "game_maintain",
   "/system/subaccount": "sub_account",
   "/system/role": "system_role",
-  "/system/announcement/all": "own_announcement",
+  "/system/announcement/own": "own_announcement",
+  "/system/announcement/all": "super_announcement",
+  "/system/announcement/platform": "platform_announcement",
   "/maintain/dictionary": "dictionary",
   "/maintain/resource": "resource_config",
   "/fund/withdrawfee": "withdrawfee",
@@ -20,4 +22,7 @@ export const urlPermissions: {
   "/withdraw/apply": "withdraw_apply",
   "/withdraw/audit": "audit",
   "/users/supplier": "users_supplier",
+  "/personal/security": "edit_password",
+  "/personal/info": "personal_info",
+  "/personal/loginlog": "login_log",
 };
