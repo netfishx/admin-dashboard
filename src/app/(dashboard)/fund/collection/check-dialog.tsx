@@ -1,4 +1,5 @@
 "use client";
+import { postCheckMoneySecret } from "@/api";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import {
@@ -11,12 +12,11 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {} from "@/components/ui/tooltip";
+import type { CollectionAddressListRecords } from "@/lib/types";
 import { AlertTriangle } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import CopyButton from "./copy-button";
-import { CollectionAddressListRecords } from "@/lib/types";
-import { postCheckMoneySecret } from "@/api";
 
 interface Dialogprops {
   open?: boolean;
@@ -29,7 +29,7 @@ export function CheckDialog(props: Dialogprops) {
   const t = useTranslations("fund.collection");
   const translations = useTranslations();
   const [step, setStep] = useState(1);
-  const handleNext = async() => {
+  const handleNext = async () => {
     const res = await postCheckMoneySecret({
       userId: item.id,
       secret: password,
@@ -37,7 +37,6 @@ export function CheckDialog(props: Dialogprops) {
     setStep(2);
   };
   const [password, setPassword] = useState("");
-  const secretText = "dsf9sdfkj12dsf9sdfkj1";
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent
@@ -83,9 +82,9 @@ export function CheckDialog(props: Dialogprops) {
                   </div>
                   <div className="py-2.5 px-4 flex-1 flex justify-between items-center bg-card">
                     <span className="text-gray-800 font-mono text-sm">
-                      {secretText}...
+                      {item?.privateKey}
                     </span>
-                    <CopyButton address={secretText} />
+                    <CopyButton address={item?.privateKey} />
                   </div>
                 </div>
 
