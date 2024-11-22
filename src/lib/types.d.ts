@@ -80,6 +80,7 @@ export interface AgentData {
   id: string;
   username: string;
   nickname: string;
+  remainLoginTime: number;
   status: number;
 }
 export type MemberList = {

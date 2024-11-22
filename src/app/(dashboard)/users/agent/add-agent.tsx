@@ -13,9 +13,12 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Password } from "@/components/ui/password";
+import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useState, useTransition } from "react";
+import { toast } from "sonner";
+import { validateFormData } from "./validata";
 
 export function AddAgent() {
   const t = useTranslations("users.agents");
@@ -40,20 +43,33 @@ function AddAgentModal({
   const translation = useTranslations();
   const t = useTranslations("users.agents");
   const router = useRouter();
-  const [upUsername, setUpUsername] = useState("");
   const [username, setUsername] = useState("");
   const [nickname, setNickname] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [isPending, startTransition] = useTransition();
   const handleClickAddAgent = async () => {
-    const { data, code, message } = await addAgent({
-      username,
-      nickname,
-      password,
+    startTransition(async () => {
+      const result = await validateFormData({
+        username,
+        password,
+        confirmPassword,
+      });
+      if (result.success) {
+        const { data, code, message } = await addAgent({
+          username,
+          nickname,
+          password,
+        });
+        console.info(data, code, message);
+        onOpenChange(false);
+        router.refresh();
+        closeDialog();
+      } else {
+        console.info(result.errors);
+        toast.error(result.errors?.[0]?.message);
+      }
     });
-    console.info(data, code, message);
-    onOpenChange(false);
-    router.refresh();
   };
   const closeDialog = () => {
     setUsername("");
@@ -75,24 +91,17 @@ function AddAgentModal({
         <div className="flex flex-col gap-4 w-full px-4">
           <div className="flex gap-4 items-center">
             <Label className="shrink-0 w-[120px] text-right text-muted-foreground">
-              {t("upUsername")}
-            </Label>
-            <Input
-              placeholder={t("placeholder")}
-              className="w-1/2 max-w-[200px]"
-              value={upUsername}
-              onChange={(e) => setUpUsername(e.target.value)}
-            />
-          </div>
-          <div className="flex gap-4 items-center">
-            <Label className="shrink-0 w-[120px] text-right text-muted-foreground">
               {t("username")}
             </Label>
             <Input
               placeholder={t("placeholder")}
-              className="w-1/2 max-w-[200px]"
+              className="flex-1"
               value={username}
+              required
               onChange={(e) => setUsername(e.target.value)}
+              onBlur={(e) => {
+                e.target.reportValidity();
+              }}
             />
           </div>
           <div className="flex gap-4 items-center">
@@ -101,7 +110,7 @@ function AddAgentModal({
             </Label>
             <Input
               placeholder={t("placeholder")}
-              className="w-1/2 max-w-[200px]"
+              className="flex-1"
               value={nickname}
               onChange={(e) => setNickname(e.target.value)}
             />
@@ -112,10 +121,14 @@ function AddAgentModal({
             </Label>
             <Password
               type="password"
-              className="w-1/2 max-w-[200px] min-w-[200px]"
+              required
+              className="flex-1"
               placeholder={t("placeholder")}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              onBlur={(e) => {
+                e.target.reportValidity();
+              }}
             />
           </div>
           <div className="flex gap-4 items-center">
@@ -124,17 +137,22 @@ function AddAgentModal({
             </Label>
             <Password
               type="password"
-              className="w-1/2 max-w-[200px] min-w-[200px]"
+              required
+              className="flex-1"
               placeholder={t("placeholder")}
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
+              onBlur={(e) => {
+                e.target.reportValidity();
+              }}
             />
           </div>
           <DialogFooter>
             <Button variant="outline" onClick={closeDialog}>
               {translation("cancel")}
             </Button>
-            <Button onClick={handleClickAddAgent}>
+            <Button disabled={isPending} onClick={handleClickAddAgent}>
+              {isPending && <Loader2 className="w-4 h-4 animate-spin" />}
               {translation("confirm")}
             </Button>
           </DialogFooter>
