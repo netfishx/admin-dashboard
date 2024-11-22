@@ -15,24 +15,29 @@ import { AlertTriangle } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import CopyButton from "./copy-button";
+import { CollectionAddressListRecords } from "@/lib/types";
+import { postCheckMoneySecret } from "@/api";
 
 interface Dialogprops {
   open?: boolean;
   onOpenChange: (open: boolean) => void;
+  item: CollectionAddressListRecords;
 }
 
 export function CheckDialog(props: Dialogprops) {
-  const { open = true, onOpenChange } = props;
+  const { open = true, onOpenChange, item } = props;
   const t = useTranslations("fund.collection");
   const translations = useTranslations();
   const [step, setStep] = useState(1);
-  const handleNext = () => {
+  const handleNext = async() => {
+    const res = await postCheckMoneySecret({
+      userId: item.id,
+      secret: password,
+    });
     setStep(2);
-    // onOpenChange(false);
   };
   const [password, setPassword] = useState("");
   const secretText = "dsf9sdfkj12dsf9sdfkj1";
-
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent

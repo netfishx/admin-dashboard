@@ -1178,3 +1178,17 @@ export async function postGetRewardRecordList(data: RewardRecordRequestParams) {
     token: user?.token,
   });
 }
+
+// 验证资金密码
+export async function postCheckMoneySecret(data: {
+  userId: string;
+  secret: string;
+}) {
+  const user = await getSession();
+  return await apiRequest({
+    url: "/agent/center/fund/check",
+    method: "POST",
+    data,
+    token: user?.token,
+  });
+}
