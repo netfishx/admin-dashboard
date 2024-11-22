@@ -1,5 +1,6 @@
 import type {
   AnnouncementList,
+  BackgroundImageList,
   DictionaryList,
   MemberList,
   Role,
@@ -56,6 +57,7 @@ export const deleteCreditModalAtom = atom<boolean>(false);
 export const supplierEditModalAtom = atom<boolean>(false);
 // 用户管理-供应商管理-编辑数据
 export const supplierEditDataAtom = atom<SupplierList | null>(null);
+
 // 维护-字典管理-编辑弹窗
 export const editDictionaryDialogAtom = atom<boolean>(false);
 // 维护-字典管理-编辑数据
@@ -74,6 +76,12 @@ export const addDictionaryItemDataAtom = atom<{
 }>();
 // 维护-字典管理-字典项操作
 export const dictionaryItemOperationAtom = atom<"add" | "edit">();
+
+// 维护-资源管理-背景图弹窗
+export const backgroundImageDialogAtom = atom<boolean>(false);
+// 维护-资源管理-背景图数据
+export const backgroundImageDataAtom = atom<BackgroundImageList | null>(null);
+
 // 公告弹窗
 export const contentModalAtom = atom<boolean>(false);
 export const contentModalDataAtom = atom<AnnouncementList | null>(null);

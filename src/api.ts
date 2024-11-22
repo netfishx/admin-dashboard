@@ -11,6 +11,7 @@ import type {
   ApplyListRequest,
   AuditList,
   AuditListRequest,
+  BackgroundImageList,
   BorrowRecordRequestParams,
   BorrowRecordRequestRecords,
   ChangeLog,
@@ -986,6 +987,48 @@ export async function deleteDictionaryItem(data: { id: string }) {
   const user = await getSession();
   return await apiRequest({
     url: "/dict/item/deleteById",
+    method: "DELETE",
+    data,
+    token: user?.token,
+  });
+}
+
+// 背景图列表
+export async function getBackgroundImageList(params: {
+  pageNum: number;
+  pageSize: number;
+}) {
+  const user = await getSession();
+  return await apiRequest<PageData<BackgroundImageList>>({
+    url: "/backgroundPicture/getPage",
+    token: user?.token,
+    params,
+  });
+}
+// 背景图添加或修改
+export async function addBackgroundImage(data: {
+  id?: string;
+  pictureUri: string;
+  pictureName: string;
+  port: number;
+  position: number;
+  language: string;
+  status: number;
+  sort: number;
+}) {
+  const user = await getSession();
+  return await apiRequest({
+    url: "/backgroundPicture/addOrModify",
+    method: "POST",
+    data,
+    token: user?.token,
+  });
+}
+// 删除背景图
+export async function deleteBackgroundImage(data: { id: string }) {
+  const user = await getSession();
+  return await apiRequest({
+    url: "/backgroundPicture/delete",
     method: "DELETE",
     data,
     token: user?.token,
