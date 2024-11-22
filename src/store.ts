@@ -1,4 +1,5 @@
 import type {
+  AgentData,
   AnnouncementList,
   BackgroundImageList,
   DictionaryList,
@@ -39,6 +40,9 @@ export const loginLogModalAtom = atom<boolean>(false);
 export const changeLogModalAtom = atom<boolean>(false);
 // 用户管理-代理管理-代理ID
 export const agentIdAtom = atom<string>("");
+// 用户管理-代理管理-代理数据
+export const agentDataAtom = atom<AgentData | null>(null);
+
 // 用户管理-会员管理-会员ID
 export const memberIdAtom = atom<string>("");
 // 用户管理-会员管理-会员信息数据

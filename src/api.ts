@@ -67,6 +67,7 @@ import type {
 } from "@/lib/types";
 
 import { getSession } from "@/session";
+import axios from "axios";
 
 export async function getGameList(type: number) {
   const user = await getSession();
@@ -106,7 +107,7 @@ export async function login(data: {
       captchaUuid: data.randomStr,
     },
     header: {
-      Authorization: "234234234",
+      Authorization: "f56e2910e849dc73a3588e5a4605a0eb",
     },
   });
   return {
@@ -136,7 +137,7 @@ export async function logout() {
 }
 
 // 用户管理-代理管理-获取代理列表
-export async function getAgents(params: { page: number; size: number }) {
+export async function getAgents(params: { pageNum: number; pageSize: number }) {
   const user = await getSession();
   return await apiRequest<PageData<AgentData>>({
     url: "/agent/user/main/getUnderAgent",
@@ -1223,4 +1224,20 @@ export async function postCheckMoneySecret(data: {
     data,
     token: user?.token,
   });
+}
+
+export async function uploadImage(data: {
+  file: File;
+}) {
+  const user = await getSession();
+  return await axios.postForm(
+    `${process.env.NEXT_PUBLIC_BASE_URL}/upload`,
+    data,
+    {
+      headers: {
+        "Content-Type": "multipart/form-data",
+        Authorization: `Bearer ${user?.token}`,
+      },
+    },
+  );
 }

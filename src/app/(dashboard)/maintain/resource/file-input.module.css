@@ -1,0 +1,53 @@
+.file {
+    --muted-foreground: hsl(215.4 16.3% 46.9%);
+    --muted: hsl(210 40% 96.1%);
+    --color-base-content: var(--muted-foreground);
+    border: 1px solid var(--input-color);
+    width: 100%;
+    max-width: calc(0.25rem * 80);
+    cursor: pointer;
+    appearance: none;
+    vertical-align: middle;
+    webkit-user-select: none;
+    user-select: none;
+    height: 2rem;
+    padding-inline-end: 0.75rem;
+    font-size: 0.875rem;
+    line-height: 2;
+    border-radius: 0.5rem;
+    border-color: var(--input-color);
+    box-shadow: 0 1px color-mix(in oklab, var(--input-color) 10%, transparent) inset, 0 -1px oklch(100% 0 0 / 0.1) inset;
+
+    --input-color: color-mix(in oklab, var(--color-base-content) 20%, transparent);
+    &:where(::file-selector-button) {
+      color: var(--color-base-content);
+    }
+    &::file-selector-button {
+      margin-inline-end: 1rem;
+      height: 100%;
+      cursor: pointer;
+      padding-inline: 1rem;
+      webkit-user-select: none;
+      user-select: none;
+      color: var(--color-base-content);
+      border-width: 0;
+      font-weight: 600;
+      background-color: var(--muted);
+    }
+
+    &:has(> input[disabled]), &:is(:disabled, [disabled]) {
+      cursor: not-allowed;
+      border-color: var(--color-base-200);
+      background-color: var(--color-base-200);
+      color: color-mix(in oklch, var(--color-base-content) 40%, transparent);
+      &::placeholder {
+        color: color-mix(in oklch, var(--color-base-content) 20%, transparent);
+      }
+      box-shadow: none;
+      &::file-selector-button {
+        cursor: not-allowed;
+        border-color: var(--color-base-200);
+        background-color: var(--color-base-200);
+      }
+    }
+  }
