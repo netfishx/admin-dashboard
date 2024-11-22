@@ -34,39 +34,49 @@ export function Detaildialog(props: Dialogprops) {
     }
   }, [open]);
 
-  function formatResult(result = ""): string {
-    // 定义花色映射
-    const suitMap: Record<string, string> = {
-      H: "♥", // 红心
-      D: "♦", // 方块
-      C: "♣", // 梅花
-      S: "♠", // 黑桃
+  function formatResult(result = "") {
+    // Define suit mapping with colors for Tailwind
+    const suitMap: Record<string, { symbol: string; color: string }> = {
+      H: { symbol: "♥", color: "text-red-500" }, // Hearts
+      D: { symbol: "♦", color: "text-red-500" }, // Diamonds
+      C: { symbol: "♣", color: "text-black" }, // Clubs
+      S: { symbol: "♠", color: "text-black" }, // Spades
     };
 
-    // 拆分闲和庄的数据
+    // Split player and banker data
     const [player, banker] = result.split(",");
 
-    // 替换花色并格式化每组牌
-    const formatCards = (cards = ""): string =>
+    // Helper function to format cards
+    const formatCards = (cards = "") =>
       cards
         .split("-")
-        .filter((card) => card !== "XX")
-        .map((card) => suitMap[card[0]] + card.slice(1))
-        .join(" ");
+        .filter((card) => card !== "XX" && card.length > 1)
+        .map((card, index) => {
+          const suit = suitMap[card[0]];
+          if (!suit) {
+            // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
+            return <span key={index}>{card}</span>; // Fallback for invalid cards
+          }
+          const value = card.slice(1);
+          return (
+            // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
+            <span key={index} className="inline-block mr-1">
+              <span className={suit.color}>{suit.symbol}</span>
+              {value}
+            </span>
+          );
+        });
 
-    const formattedPlayer = `闲 ${formatCards(player)}`;
-    const formattedBanker = `庄 ${formatCards(banker)}`;
+    // Generate formatted JSX
+    const formattedPlayer = player ? <div>闲 {formatCards(player)}</div> : null;
 
-    // 如果闲或庄没有结果，则不显示
-    const outputParts: string[] = [];
-    if (formattedBanker !== "庄 ") {
-      outputParts.push(formattedBanker);
-    }
-    if (formattedPlayer !== "闲 ") {
-      outputParts.push(formattedPlayer);
-    }
+    const formattedBanker = banker ? <div>庄 {formatCards(banker)}</div> : null;
 
-    return outputParts.join(" ; ");
+    return (
+      <div className="flex gap-2">
+        {formattedBanker};{formattedPlayer}
+      </div>
+    );
   }
 
   return (
