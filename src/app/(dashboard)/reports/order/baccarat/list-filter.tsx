@@ -24,7 +24,7 @@ export function ListFilter() {
     defaultValue: "",
   });
   const [bettingtime, setBettingtime] = useQueryState("bettingtime", {
-    defaultValue: "",
+    defaultValue: "1",
   });
   const [settlementstatus, setSettlementstatus] = useQueryState("orderStatus", {
     defaultValue: "",
@@ -71,7 +71,7 @@ export function ListFilter() {
     setRoomeownerID("");
     setLeastlevelID("");
     setGameName("");
-    setBettingtime("");
+    setBettingtime("1");
     setSettlementstatus("");
     handleDateRangeFilterReset();
   };
