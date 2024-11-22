@@ -1,6 +1,7 @@
 import { getTranslations } from "next-intl/server";
 
 import { getFundList, getTodayWinLoss, getTodayWinLossChart } from "@/api";
+import { getAgentAnnouncement, getAnnouncement } from "@/api";
 import { Announcement } from "@/app/(dashboard)/announcement";
 import { DataOverview } from "@/app/(dashboard)/data-overview";
 import { QuickAccess } from "@/app/(dashboard)/quick-access";
@@ -9,6 +10,9 @@ import { getSession } from "@/session";
 import { endOfDay, format, fromUnixTime, startOfDay, sub } from "date-fns";
 import { connection } from "next/server";
 import { Suspense } from "react";
+
+import { AnnouncementDialog } from "./announcement-dialog";
+import { DataOverviewFlow } from "./data-overview-flow";
 import { DayChart } from "./day-chart";
 import { Salutations } from "./salutations";
 import { WeekChart } from "./week-chart";
@@ -17,20 +21,23 @@ export default async function DashboardPage() {
   const session = await getSession();
   const permissions = session?.permissions;
   const t = await getTranslations();
-
   await connection();
   const now = Date.now();
   const start = startOfDay(now).getTime();
   const end = endOfDay(now).getTime();
   const oneWeekAgo = sub(start, { weeks: 1 }).getTime();
+  // const isFirstLogin = session?.isFirstLogin as boolean;
+  const isFirstLogin = false;
 
   const { data: todayWinLossData } = await getTodayWinLoss({
     startTime: start,
     endTime: end,
   });
   const { data: gameChartData } = await getTodayWinLossChart({
-    startTime: oneWeekAgo,
+    startTime: start,
     endTime: end,
+    beforeEndTime: oneWeekAgo,
+    size: 6,
   });
   const chartConfig = {
     bjl01: {
@@ -41,6 +48,15 @@ export default async function DashboardPage() {
     },
     bjl03: {
       color: "hsl(var(--chart-cyan))",
+    },
+    bjl04: {
+      color: "hsl(var(--chart-lake))",
+    },
+    bjl05: {
+      color: "hsl(var(--chart-turquoise))",
+    },
+    bjl06: {
+      color: "hsl(var(--chart-indigo))",
     },
   } satisfies ChartConfig;
 
@@ -63,7 +79,7 @@ export default async function DashboardPage() {
   const gdTrendingBetNumData: Array<{ name: string; data: number }> = [];
   gameChartData?.agentBaccaratIssueReport?.forEach(
     ({ gameName, memberBetAmount, betNum }, index) => {
-      const color = Object.values(chartConfig)[index].color;
+      const color = Object.values(chartConfig)[index]?.color;
       bjlBetAmountData.push({
         game: gameName || "",
         data: Number(memberBetAmount),
@@ -165,6 +181,16 @@ export default async function DashboardPage() {
       withdrawData: withdrawData || [],
     },
   };
+  const { data: announcementOwnData } = await getAgentAnnouncement({
+    pageSize: 5,
+    pageNum: 1,
+    level: 0,
+  });
+  const { data: announcementData } = await getAnnouncement({
+    pageSize: 5,
+    pageNum: 1,
+  });
+
   return (
     <>
       <div className="flex-1 flex flex-col gap-2">
@@ -205,10 +231,17 @@ export default async function DashboardPage() {
         )}
       </div>
       <div className="flex flex-col gap-2 w-[280px] min-[2400px]:w-[560px]">
-        <DataOverview />
+        {/* 代理 */}
+        {!permissions?.includes("admin_stat") && <DataOverview />}
+        {/* admin */}
+        {permissions?.includes("admin_stat") && <DataOverviewFlow />}
         <QuickAccess />
-        <Announcement />
+        <Announcement data={announcementOwnData || { list: [] }} />
       </div>
+      <AnnouncementDialog
+        data={announcementData || { list: [] }}
+        isFirstLogin={isFirstLogin}
+      />
     </>
   );
 }

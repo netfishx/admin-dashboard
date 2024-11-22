@@ -52,11 +52,14 @@ import type {
   SupplierList,
   SupplierReportRecords,
   SupplierReportRequestParams,
+  TodayFundList,
   TodayGameReport,
   TodayWinLoss,
   TransferRecordRequestParams,
   TransferRecordRequestRecords,
   UserBasicInfo,
+  WalletLogRecords,
+  WalletLogRequestParams,
   WithdrawFeeList,
   WithdrawFormData,
   WithdrawReport,
@@ -1082,6 +1085,8 @@ export async function getTodayWinLoss(params: {
 export async function getTodayWinLossChart(params: {
   startTime: number;
   endTime: number;
+  beforeEndTime: number;
+  size: number;
 }) {
   const user = await getSession();
   const [res, res2] = await Promise.all([
@@ -1163,6 +1168,33 @@ export async function deleteSubaccount(data: { id: string }) {
   return await apiRequest({
     url: "/agent/user/sub/delete",
     method: "DELETE",
+    data,
+    token: user?.token,
+  });
+}
+
+// 首页今日平台金流
+export async function getTodayFundList({
+  startTime,
+  endTime,
+}: {
+  startTime: number;
+  endTime: number;
+}) {
+  const user = await getSession();
+  return await apiRequest<TodayFundList>({
+    url: "/index/todayFund",
+    token: user?.token,
+    params: { startTime, endTime },
+  });
+}
+
+// 帐变记录
+export async function getWalletLog(data: WalletLogRequestParams) {
+  const user = await getSession();
+  return await apiRequest<PageData<WalletLogRecords>>({
+    url: "/wallet/getWalletLog",
+    method: "POST",
     data,
     token: user?.token,
   });
