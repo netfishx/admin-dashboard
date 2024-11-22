@@ -23,7 +23,9 @@ export function Form() {
   const [orderNo, setOrderNo] = useQueryState("orderNo");
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
-  const [userType, setUserType] = useQueryState("userType");
+  const [userType, setUserType] = useQueryState("userType", {
+    defaultValue: "all",
+  });
   const [rechargeMoney, setRechargeMoney] = useQueryState("rechargeMoney", {
     defaultValue: "",
   });
@@ -98,8 +100,9 @@ export function Form() {
               <SelectValue placeholder={t("placeholderselect")} />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="1">代理</SelectItem>
-              <SelectItem value="2">会员</SelectItem>
+              <SelectItem value="all">{t("all")}</SelectItem>
+              <SelectItem value="0">代理</SelectItem>
+              <SelectItem value="1">会员</SelectItem>
             </SelectContent>
           </Select>
         </div>

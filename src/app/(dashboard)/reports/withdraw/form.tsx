@@ -22,7 +22,9 @@ export function Form() {
   const [orderNo, setOrderNo] = useQueryState("orderNo");
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
-  const [userType, setUserType] = useQueryState("userType");
+  const [requestStatus, setRequestStatus] = useQueryState("requestStatus", {
+    defaultValue: "all",
+  });
   const [rechargeMoney, setRechargeMoney] = useQueryState("rechargeMoney", {
     defaultValue: "",
   });
@@ -57,13 +59,14 @@ export function Form() {
         <div className="flex gap-2 items-center">
           <Label className="shrink-0">{t("status")}</Label>
           <Select
-            value={userType ?? ""}
-            onValueChange={(value) => setUserType(value)}
+            value={requestStatus ?? ""}
+            onValueChange={(value) => setRequestStatus(value)}
           >
             <SelectTrigger className="w-28">
               <SelectValue placeholder={t("placeholderselect")} />
             </SelectTrigger>
             <SelectContent>
+              <SelectItem value="all">{t("all")}</SelectItem>
               <SelectItem value="0">审核中</SelectItem>
               <SelectItem value="1">提现中</SelectItem>
               <SelectItem value="2">审核失败</SelectItem>

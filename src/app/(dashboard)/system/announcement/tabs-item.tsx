@@ -16,7 +16,7 @@ export default function TabsItem({
   return (
     <div className="flex flex-col gap-2 w-full">
       <div className="p-2 bg-background gap-2">
-        <Tabs defaultValue="platform" value={pathname.split("/").pop()}>
+        <Tabs defaultValue="own" value={pathname.split("/").pop()}>
           <TabsList>
             {permissions?.includes("platform_announcement") && (
               <TabsTrigger value="platform">
