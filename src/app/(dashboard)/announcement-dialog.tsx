@@ -1,4 +1,5 @@
 "use client";
+import { setIsFirstLogin } from "@/api";
 import {
   Dialog,
   DialogContent,
@@ -15,15 +16,20 @@ export function AnnouncementDialog({
   isFirstLogin,
 }: {
   data: { list: AnnouncementList[] };
-  isFirstLogin: boolean;
+  isFirstLogin: string;
 }) {
   const t = useTranslations("");
   const [open, setOpen] = useState(true);
   async function handleOpenChange(open: boolean) {
+    setIsFirstLogin();
     setOpen(open);
   }
+
   return (
-    <Dialog open={open && isFirstLogin} onOpenChange={handleOpenChange}>
+    <Dialog
+      open={open && isFirstLogin === "true"}
+      onOpenChange={handleOpenChange}
+    >
       <DialogContent>
         <DialogHeader>
           <DialogTitle>{t("announcement")}</DialogTitle>

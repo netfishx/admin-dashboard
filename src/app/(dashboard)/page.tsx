@@ -8,6 +8,7 @@ import { QuickAccess } from "@/app/(dashboard)/quick-access";
 import type { ChartConfig } from "@/components/ui/chart";
 import { getSession } from "@/session";
 import { endOfDay, format, fromUnixTime, startOfDay, sub } from "date-fns";
+import { cookies } from "next/headers";
 import { connection } from "next/server";
 import { Suspense } from "react";
 
@@ -26,8 +27,8 @@ export default async function DashboardPage() {
   const start = startOfDay(now).getTime();
   const end = endOfDay(now).getTime();
   const oneWeekAgo = sub(start, { weeks: 1 }).getTime();
-  // const isFirstLogin = session?.isFirstLogin as boolean;
-  const isFirstLogin = false;
+  const cookie = await cookies();
+  const isFirstLogin = cookie?.get("isFirstLogin")?.value;
 
   const { data: todayWinLossData } = await getTodayWinLoss({
     startTime: start,
@@ -77,15 +78,19 @@ export default async function DashboardPage() {
   const gdTrendingBetAmountData: Array<{ name: string; data: number }> = [];
   // 掼蛋人次
   const gdTrendingBetNumData: Array<{ name: string; data: number }> = [];
-  gameChartData?.agentBaccaratIssueReport?.forEach(
-    ({ gameName, memberBetAmount, betNum }, index) => {
+  gameChartData?.agentBaccaratAmountReport?.forEach(
+    ({ gameName, memberBetAmount }, index) => {
       const color = Object.values(chartConfig)[index]?.color;
       bjlBetAmountData.push({
         game: gameName || "",
         data: Number(memberBetAmount),
         fill: color,
       });
-
+    },
+  );
+  gameChartData?.agentBaccaratBetNumReport?.forEach(
+    ({ gameName, betNum }, index) => {
+      const color = Object.values(chartConfig)[index]?.color;
       bjlActiveUsersData.push({
         game: gameName || "",
         data: Number(betNum),
@@ -240,7 +245,7 @@ export default async function DashboardPage() {
       </div>
       <AnnouncementDialog
         data={announcementData || { list: [] }}
-        isFirstLogin={isFirstLogin}
+        isFirstLogin={isFirstLogin || "false"}
       />
     </>
   );

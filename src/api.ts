@@ -65,8 +65,10 @@ import type {
   WithdrawReport,
   WithdrawReportParams,
 } from "@/lib/types";
+import { cookies } from "next/headers";
 
 import { getSession } from "@/session";
+import axios from "axios";
 
 export async function getGameList(type: number) {
   const user = await getSession();
@@ -106,7 +108,7 @@ export async function login(data: {
       captchaUuid: data.randomStr,
     },
     header: {
-      Authorization: "234234234",
+      Authorization: "f56e2910e849dc73a3588e5a4605a0eb",
     },
   });
   return {
@@ -136,7 +138,7 @@ export async function logout() {
 }
 
 // 用户管理-代理管理-获取代理列表
-export async function getAgents(params: { page: number; size: number }) {
+export async function getAgents(params: { pageNum: number; pageSize: number }) {
   const user = await getSession();
   return await apiRequest<PageData<AgentData>>({
     url: "/agent/user/main/getUnderAgent",
@@ -1098,18 +1100,28 @@ export async function getTodayWinLossChart(params: {
     }),
   ]);
   // 格式化 agentBaccaratIssueReport 的 gameName
-  const formattedAgentBaccaratIssueReport =
-    res2.data?.agentBaccaratIssueReport.map((report) => ({
+  const formattedAgentBaccaratAmountReport =
+    res2.data?.agentBaccaratAmountReport.map((report) => ({
       ...report,
-      gameName: res.data
-        ?.find((i) => i.gameType === report.gameType)
-        ?.list.find((i) => i.gameId === report.gameId)?.gameIdLabel,
+      gameName:
+        res.data
+          ?.find((i) => i.gameType === report.gameType)
+          ?.list.find((i) => i.gameId === report.gameId)?.gameIdLabel ?? "其他",
+    }));
+  const formattedAgentBaccaratBetNumReport =
+    res2.data?.agentBaccaratBetNumReport.map((report) => ({
+      ...report,
+      gameName:
+        res.data
+          ?.find((i) => i.gameType === report.gameType)
+          ?.list.find((i) => i.gameId === report.gameId)?.gameIdLabel ?? "其他",
     }));
   return {
     ...res2,
     data: {
       ...res2.data,
-      agentBaccaratIssueReport: formattedAgentBaccaratIssueReport,
+      agentBaccaratAmountReport: formattedAgentBaccaratAmountReport,
+      agentBaccaratBetNumReport: formattedAgentBaccaratBetNumReport,
     },
   };
 }
@@ -1223,4 +1235,25 @@ export async function postCheckMoneySecret(data: {
     data,
     token: user?.token,
   });
+}
+// 设置cookie
+export async function setIsFirstLogin() {
+  const cookie = await cookies();
+  cookie.set("isFirstLogin", "false");
+}
+
+export async function uploadImage(data: {
+  file: File;
+}) {
+  const user = await getSession();
+  return await axios.postForm(
+    `${process.env.NEXT_PUBLIC_BASE_URL}/upload`,
+    data,
+    {
+      headers: {
+        "Content-Type": "multipart/form-data",
+        Authorization: `Bearer ${user?.token}`,
+      },
+    },
+  );
 }

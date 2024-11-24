@@ -1,6 +1,6 @@
 "use client";
 
-import { addBackgroundImage } from "@/api";
+import { addBackgroundImage, uploadImage } from "@/api";
 import { Button } from "@/components/ui/button";
 import {
   DialogContent,
@@ -24,9 +24,11 @@ import { Dialog, DialogClose } from "@radix-ui/react-dialog";
 import { useAtom, useAtomValue } from "jotai";
 import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
+import Form from "next/form";
 import { useRouter } from "next/navigation";
-import { useEffect, useState, useTransition } from "react";
+import { type FormEvent, useEffect, useState, useTransition } from "react";
 import { toast } from "sonner";
+import fileInput from "./file-input.module.css";
 
 export function AddOrEditDialog() {
   const t = useTranslations("maintain.resource");
@@ -35,7 +37,7 @@ export function AddOrEditDialog() {
   const data = useAtomValue(backgroundImageDataAtom);
   const [isPending, startTransition] = useTransition();
   const router = useRouter();
-  const [pictureUri, setPictureUri] = useState<string>("");
+  const [pictureUri] = useState<string>("");
   const [pictureName, setPictureName] = useState<string>("");
   const [port, setPort] = useState<string>("0");
   const [position, setPosition] = useState<string>("0");
@@ -72,6 +74,16 @@ export function AddOrEditDialog() {
     });
   };
 
+  const handleUpload = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    const file = formData.get("file");
+    if (file) {
+      const res = await uploadImage({ file: file as File });
+      console.info(res);
+    }
+  };
+
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent onPointerDownOutside={(e) => e.preventDefault()}>
@@ -86,22 +98,24 @@ export function AddOrEditDialog() {
               <span>{data.id}</span>
             </div>
           ) : null}
-          <div className="flex items-center gap-2">
-            <Label className="w-20 text-right">{t("photo")}</Label>
-            <Input
-              type="file"
-              accept="image/*"
-              value={pictureUri}
-              onChange={(e) => setPictureUri(e.target.value)}
-              className="flex-1"
-            />
-          </div>
+          <Form action="" onSubmit={handleUpload}>
+            <div className="flex items-center gap-2">
+              <Label className="w-20 text-right">{t("photo")}</Label>
+              <input
+                type="file"
+                className={fileInput.file}
+                name="file"
+                multiple={false}
+              />
+              <button type="submit">上传</button>
+            </div>
+          </Form>
           <div className="flex items-center gap-2">
             <Label className="w-20 text-right">{t("pictureName")}</Label>
             <Input
               value={pictureName}
               onChange={(e) => setPictureName(e.target.value)}
-              className="flex-1"
+              className="w-[320px]"
             />
           </div>
           <div className="flex items-center gap-2">
@@ -154,7 +168,7 @@ export function AddOrEditDialog() {
           </div>
           <div className="flex items-center gap-2">
             <Label className="w-20 text-right">{t("sort")}</Label>
-            <Input className="flex-1" />
+            <Input className="w-[320px]" />
           </div>
           <div className="flex items-center gap-2">
             <Label className="w-20 text-right">{t("status")}</Label>

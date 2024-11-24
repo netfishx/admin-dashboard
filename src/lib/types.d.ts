@@ -80,6 +80,7 @@ export interface AgentData {
   id: string;
   username: string;
   nickname: string;
+  remainLoginTime: number;
   status: number;
 }
 export type MemberList = {
@@ -693,7 +694,14 @@ export type TodayWinLoss = {
 
 // 百家乐报表
 export type TodayGameReport = {
-  agentBaccaratIssueReport: {
+  agentBaccaratAmountReport: {
+    gameId: number | string;
+    gameName: string;
+    gameType: number;
+    betNum: number;
+    memberBetAmount: string | number;
+  }[];
+  agentBaccaratBetNumReport: {
     gameId: number | string;
     gameName: string;
     gameType: number;
