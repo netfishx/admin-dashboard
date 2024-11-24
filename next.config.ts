@@ -24,6 +24,7 @@ const nextConfig: NextConfig = {
     ppr: true,
     reactCompiler: true,
     dynamicIO: true,
+    inlineCss: true,
     serverActions: {
       bodySizeLimit: "5mb",
     },
