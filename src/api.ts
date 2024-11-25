@@ -1242,18 +1242,17 @@ export async function setIsFirstLogin() {
   cookie.set("isFirstLogin", "false");
 }
 
-export async function uploadImage(data: {
-  file: File;
-}) {
+export async function uploadImage(data: FormData) {
   const user = await getSession();
-  return await axios.postForm(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/upload`,
+  const res = await axios({
+    url: `${process.env.NEXT_PUBLIC_BASE_URL}/upload`,
+    method: "POST",
     data,
-    {
-      headers: {
-        "Content-Type": "multipart/form-data",
-        Authorization: `Bearer ${user?.token}`,
-      },
+    headers: {
+      "Content-Type": "multipart/form-data",
+      Authorization: `Bearer ${user?.token}`,
     },
-  );
+    maxBodyLength: 10 * 1024 * 1024,
+  });
+  return res.data;
 }
