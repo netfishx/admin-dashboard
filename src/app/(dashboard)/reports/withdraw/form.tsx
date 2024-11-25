@@ -41,6 +41,10 @@ export function Form() {
       setRechargeMoney(value);
     }
   };
+  const [userId, setUserId] = useQueryState("userId");
+  const [userType, setUserType] = useQueryState("userType", {
+    defaultValue: "all",
+  });
   return (
     <div className="flex flex-col bg-background py-4 px-4 gap-4">
       <div className="flex gap-4 items-center">
@@ -98,6 +102,30 @@ export function Form() {
             value={rechargeMoney}
             onChange={(e) => handleAmountChange(e.target.value)}
             placeholder={t("placeholder")}
+          />
+        </div>
+        <div className="flex gap-2 items-center">
+          <Label className="shrink-0">{t("userType")}</Label>
+          <Select
+            value={userType ?? ""}
+            onValueChange={(value) => setUserType(value)}
+          >
+            <SelectTrigger className="w-28">
+              <SelectValue placeholder={t("placeholderselect")} />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">{t("all")}</SelectItem>
+              <SelectItem value="0">代理</SelectItem>
+              <SelectItem value="1">会员</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+        <div className="flex gap-2 items-center">
+          <Label className="shrink-0">{t("userId")}</Label>
+          <Input
+            placeholder={t("placeholder")}
+            value={userId ?? ""}
+            onChange={(e) => setUserId(e.target.value)}
           />
         </div>
       </div>
