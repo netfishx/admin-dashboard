@@ -236,10 +236,11 @@ export default async function DashboardPage() {
         )}
       </div>
       <div className="flex flex-col gap-2 w-[280px] min-[2400px]:w-[560px]">
-        {/* 代理 */}
-        {!permissions?.includes("admin_stat") && <DataOverview />}
-        {/* admin */}
-        {permissions?.includes("admin_stat") && <DataOverviewFlow />}
+        {permissions?.includes("admin_stat") ? (
+          <DataOverviewFlow />
+        ) : (
+          <DataOverview />
+        )}
         <QuickAccess />
         <Announcement data={announcementOwnData || { list: [] }} />
       </div>
