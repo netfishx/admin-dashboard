@@ -251,6 +251,7 @@ export async function getAgentLoginLog(params: {
   pageSize?: number;
   startTime?: Date;
   endTime?: Date;
+  ip?: string;
 }) {
   const user = await getSession();
   return await apiRequest<PageData<LoginLog>>({
