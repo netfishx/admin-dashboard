@@ -622,6 +622,21 @@
       "memberId": "会员ID",
       "roomOwnerId": "房主ID",
       "ministerId": "部长ID"
+    },
+    "download": {
+      "list": "仅保留近7天内下载数据",
+      "name": "报表名称",
+      "applyTime": "申请时间",
+      "exportTime": "导出完成时间",
+      "downloadTime": "最近下载时间",
+      "status": "生成状态",
+      "failReason": "失败原因",
+      "action": "操作",
+      "download": "下载",
+      "initializing": "初始化",
+      "exporting": "生成中",
+      "exported": "生成完成",
+      "failed": "生成失败"
     }
   },
   "pagination": {

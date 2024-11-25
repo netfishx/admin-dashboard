@@ -19,6 +19,7 @@ import type {
   CollectionAddressListRequestParams,
   DictionaryItemList,
   DictionaryList,
+  DownloadListRecords,
   FundList,
   GameConfig,
   GameOdds,
@@ -1255,4 +1256,25 @@ export async function uploadImage(data: FormData) {
     maxBodyLength: 10 * 1024 * 1024,
   });
   return res.data;
+}
+
+export async function getDownloadList(params: {
+  pageNum: number;
+  pageSize: number;
+}) {
+  const user = await getSession();
+  return await apiRequest<PageData<DownloadListRecords>>({
+    url: "/exportHistory",
+    token: user?.token,
+    params,
+  });
+}
+
+export async function getDownloadUrl(params: { id: string }) {
+  const user = await getSession();
+  return await apiRequest<{ url: string }>({
+    url: "/getExportFileUrl",
+    params,
+    token: user?.token,
+  });
 }
