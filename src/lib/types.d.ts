@@ -719,6 +719,11 @@ export type TodayGameReport = {
     issueAmount: number | string;
   }[];
 };
+export type GameChartConfig = {
+  game: string;
+  data: number;
+  fill: string;
+};
 // 充提
 export type FundList = {
   fundList: {
