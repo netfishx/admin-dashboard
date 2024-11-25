@@ -7,6 +7,7 @@ const expiresTime = 24 * 60 * 60;
 
 export type SessionData = User & {
   expires: string;
+  isFirstLogin: boolean;
 };
 
 export async function signToken(payload: SessionData) {
@@ -42,6 +43,7 @@ export async function setSession(user: User) {
   const session: SessionData = {
     ...user,
     expires: expires.toISOString(),
+    isFirstLogin: true,
   };
   const encryptedSession = await signToken(session);
   (await cookies()).set("session", encryptedSession, {

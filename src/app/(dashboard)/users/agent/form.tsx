@@ -10,13 +10,16 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useQueryState } from "nuqs";
+import { useTransition } from "react";
 
 export function Form() {
   const t = useTranslations("users.agents");
   const router = useRouter();
+  const [isPending, startTransition] = useTransition();
   const [username, setUsername] = useQueryState("username", {
     defaultValue: "",
   });
@@ -77,7 +80,17 @@ export function Form() {
       </div>
       <div className="flex gap-2 items-center">
         <Button variant="outline">{t("reset")}</Button>
-        <Button onClick={() => router.refresh()}>{t("search")}</Button>
+        <Button
+          disabled={isPending}
+          onClick={() => {
+            startTransition(() => {
+              router.refresh();
+            });
+          }}
+        >
+          {isPending && <Loader2 className="w-4 h-4 animate-spin" />}
+          {t("search")}
+        </Button>
       </div>
     </div>
   );

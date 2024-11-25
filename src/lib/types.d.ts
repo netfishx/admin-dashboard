@@ -80,6 +80,7 @@ export interface AgentData {
   id: string;
   username: string;
   nickname: string;
+  remainLoginTime: number;
   status: number;
 }
 export type MemberList = {
@@ -173,7 +174,7 @@ export type AnnouncementAgentListRequest = {
 export type AnnouncementList = {
   id: string;
   userId: string;
-  type: number;
+  type: string;
   startTime: number;
   endTime: number;
   language: string;
@@ -693,7 +694,14 @@ export type TodayWinLoss = {
 
 // 百家乐报表
 export type TodayGameReport = {
-  agentBaccaratIssueReport: {
+  agentBaccaratAmountReport: {
+    gameId: number | string;
+    gameName: string;
+    gameType: number;
+    betNum: number;
+    memberBetAmount: string | number;
+  }[];
+  agentBaccaratBetNumReport: {
     gameId: number | string;
     gameName: string;
     gameType: number;
@@ -718,6 +726,12 @@ export type FundList = {
     rechargeAmount: number;
     withdrawAmount: number;
   }[];
+};
+export type TodayFundList = {
+  rechargeAmount: number;
+  withdrawAmount: number;
+  creditAmount: number;
+  lendAmount: number;
 };
 // 转账记录请求入参
 export type TransferRecordRequestParams = {
@@ -766,6 +780,28 @@ export type BackgroundImageList = {
   updateTime: number;
 };
 
+export type WalletLogRequestParams = {
+  startTime: number;
+  endTime: number;
+  pageNum: number;
+  pageSize: number;
+  userType: number; //用户类型
+  userId: string; //用户id
+  transactionID: string; //订单号
+  operateCode: number; //类型
+  pageNum: number; // 页数从1开始
+  pageSize: number; // 页面大小
+};
+
+export type WalletLogRecords = {
+  transactionId: string; //账变id
+  operateType: number; //账变类型
+  transactionAmount: string; //变更余额
+  createdTime: number; //账变时间
+  oldBalance: string; //原余额
+  newBalance: string; //新余额
+  userId: string; //用户id
+};
 // 打赏记录请求入参
 export type RewardRecordRequestParams = {
   memberId: string; // 转出代理id

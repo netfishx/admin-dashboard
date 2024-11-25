@@ -3,6 +3,7 @@
 import { Button } from "@/components/ui/button";
 import type { AgentData } from "@/lib/types";
 import {
+  agentDataAtom,
   agentIdAtom,
   changeLogModalAtom,
   gameSettingModalAtom,
@@ -34,6 +35,8 @@ export default function Action({ data }: { data: AgentData }) {
   const setChangeLogModal = useSetAtom(changeLogModalAtom);
   // 代理ID
   const setAgentId = useSetAtom(agentIdAtom);
+  // 代理 数据
+  const setAgentData = useSetAtom(agentDataAtom);
   return (
     <>
       <Button
@@ -41,6 +44,7 @@ export default function Action({ data }: { data: AgentData }) {
         size="sm"
         className="text-primary hover:text-primary/80 text-sm px-2"
         onClick={() => {
+          setAgentData(data);
           setAgentId(data.id);
           setUserInfoModal(true);
         }}

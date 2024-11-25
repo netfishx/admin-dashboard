@@ -12,7 +12,7 @@ import { CartesianGrid, Line, LineChart, XAxis, YAxis } from "recharts";
 const chartConfig = {
   value: {
     label: "Value",
-    color: "hsl(var(--chart-primary))",
+    color: "hsl(var(--chart-2))",
   },
 } satisfies ChartConfig;
 

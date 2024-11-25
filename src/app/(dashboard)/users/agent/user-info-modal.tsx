@@ -1,6 +1,6 @@
 "use client";
 
-import { getAgentInfo, resetRestCount, updateAgent } from "@/api";
+import { resetRestCount, updateAgent } from "@/api";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -13,13 +13,13 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import type { AgentData } from "@/lib/types";
-import { agentIdAtom, userInfoModalAtom } from "@/store";
+import { agentDataAtom, agentIdAtom, userInfoModalAtom } from "@/store";
 import { useAtomValue, useSetAtom } from "jotai";
 import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useEffect, useState, useTransition } from "react";
+import { toast } from "sonner";
 
 export function UserInfoModal() {
   const translation = useTranslations();
@@ -27,41 +27,38 @@ export function UserInfoModal() {
   const [isPending, startTransition] = useTransition();
   const open = useAtomValue(userInfoModalAtom);
   const setOpen = useSetAtom(userInfoModalAtom);
-  const [, setEditData] = useState<AgentData | null>(null);
   const [upUsername, setUpUsername] = useState("");
   const [username, setUsername] = useState("");
   const [nickname, setNickname] = useState("");
-  const [status, setStatus] = useState(1);
+  const [remainLoginTime, setRemainLoginTime] = useState(0);
+  const [status, setStatus] = useState(0);
   const router = useRouter();
   const userId = useAtomValue(agentIdAtom);
+
+  const agentData = useAtomValue(agentDataAtom);
+
   useEffect(() => {
-    if (open) {
-      getAgentInfo({ id: userId }).then(({ data }) => {
-        console.info("getAgentInfo:", data);
-        if (data) {
-          setEditData(data);
-          setUpUsername(data.upUsername);
-          setUsername(data.username);
-          setNickname(data.nickname);
-          setStatus(data.status);
-        }
-      });
+    if (agentData) {
+      setUpUsername(agentData.upUsername);
+      setUsername(agentData.username);
+      setNickname(agentData.nickname);
+      setRemainLoginTime(agentData.remainLoginTime);
+      setStatus(agentData.status);
     }
     return () => {
-      setEditData(null);
       setUpUsername("");
       setUsername("");
       setNickname("");
-      setStatus(1);
+      setRemainLoginTime(0);
+      setStatus(0);
     };
-  }, [open, userId]);
+  }, [agentData]);
 
   const handleClickUpdateUserInfo = async () => {
     const requestBody = {
       id: userId,
       status,
     };
-    console.info("requestBody:", requestBody);
     const { code, message } = await updateAgent(requestBody);
     console.info("updateAgent:", code, message);
     setOpen(false);
@@ -69,8 +66,11 @@ export function UserInfoModal() {
   };
 
   const handleClickResetRestCount = async () => {
-    const { code, message } = await resetRestCount({ id: userId });
-    console.info("resetRestCount:", code, message);
+    const { code, data, message } = await resetRestCount({ id: userId });
+    if (code === 0) {
+      setRemainLoginTime(Number(data));
+      toast.success(message);
+    }
   };
 
   return (
@@ -84,13 +84,14 @@ export function UserInfoModal() {
           <DialogDescription />
         </DialogHeader>
         <div className="flex flex-col gap-4 w-full px-4">
-          <div className="flex gap-4 items-center">
-            <Label className="shrink-0 w-1/4 text-right text-muted-foreground">
-              {t("upUsername")}
-            </Label>
-            {/* <span>{editData?.upUsername}</span> */}
-            <Input className="w-1/2" value={upUsername} disabled />
-          </div>
+          {upUsername && (
+            <div className="flex gap-4 items-center">
+              <Label className="shrink-0 w-1/4 text-right text-muted-foreground">
+                {t("upUsername")}
+              </Label>
+              <span>{upUsername}</span>
+            </div>
+          )}
           <div className="flex gap-4 items-center">
             <Label className="shrink-0 w-1/4 text-right text-muted-foreground">
               {t("username")}
@@ -107,7 +108,7 @@ export function UserInfoModal() {
             <Label className="shrink-0 w-1/4 text-right text-muted-foreground">
               {t("restCount")}
             </Label>
-            <div>{3}</div>
+            <div>{remainLoginTime}</div>
             <Button size="sm" onClick={handleClickResetRestCount}>
               {t("reset")}
             </Button>

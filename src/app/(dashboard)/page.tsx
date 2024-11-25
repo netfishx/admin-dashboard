@@ -1,43 +1,63 @@
 import { getTranslations } from "next-intl/server";
 
 import { getFundList, getTodayWinLoss, getTodayWinLossChart } from "@/api";
+import { getAgentAnnouncement, getAnnouncement } from "@/api";
 import { Announcement } from "@/app/(dashboard)/announcement";
 import { DataOverview } from "@/app/(dashboard)/data-overview";
 import { QuickAccess } from "@/app/(dashboard)/quick-access";
 import type { ChartConfig } from "@/components/ui/chart";
+import { getSession } from "@/session";
 import { endOfDay, format, fromUnixTime, startOfDay, sub } from "date-fns";
+import { cookies } from "next/headers";
 import { connection } from "next/server";
 import { Suspense } from "react";
+
+import { AnnouncementDialog } from "./announcement-dialog";
+import { DataOverviewFlow } from "./data-overview-flow";
 import { DayChart } from "./day-chart";
 import { Salutations } from "./salutations";
 import { WeekChart } from "./week-chart";
 
 export default async function DashboardPage() {
+  const session = await getSession();
+  const permissions = session?.permissions;
   const t = await getTranslations();
-
   await connection();
   const now = Date.now();
   const start = startOfDay(now).getTime();
   const end = endOfDay(now).getTime();
   const oneWeekAgo = sub(start, { weeks: 1 }).getTime();
+  const cookie = await cookies();
+  const isFirstLogin = cookie?.get("isFirstLogin")?.value;
 
   const { data: todayWinLossData } = await getTodayWinLoss({
     startTime: start,
     endTime: end,
   });
   const { data: gameChartData } = await getTodayWinLossChart({
-    startTime: oneWeekAgo,
+    startTime: start,
     endTime: end,
+    beforeEndTime: oneWeekAgo,
+    size: 6,
   });
   const chartConfig = {
     bjl01: {
-      color: "hsl(var(--chart-sky))",
+      color: "hsl(var(--chart-1))",
     },
     bjl02: {
-      color: "hsl(var(--chart-blue))",
+      color: "hsl(var(--chart-2))",
     },
     bjl03: {
-      color: "hsl(var(--chart-cyan))",
+      color: "hsl(var(--chart-3))",
+    },
+    bjl04: {
+      color: "hsl(var(--chart-4))",
+    },
+    bjl05: {
+      color: "hsl(var(--chart-5))",
+    },
+    bjl06: {
+      color: "hsl(var(--chart-6))",
     },
   } satisfies ChartConfig;
 
@@ -58,15 +78,19 @@ export default async function DashboardPage() {
   const gdTrendingBetAmountData: Array<{ name: string; data: number }> = [];
   // 掼蛋人次
   const gdTrendingBetNumData: Array<{ name: string; data: number }> = [];
-  gameChartData?.agentBaccaratIssueReport?.forEach(
-    ({ gameName, memberBetAmount, betNum }, index) => {
-      const color = Object.values(chartConfig)[index].color;
+  gameChartData?.agentBaccaratAmountReport?.forEach(
+    ({ gameName, memberBetAmount }, index) => {
+      const color = Object.values(chartConfig)[index]?.color;
       bjlBetAmountData.push({
         game: gameName || "",
         data: Number(memberBetAmount),
         fill: color,
       });
-
+    },
+  );
+  gameChartData?.agentBaccaratBetNumReport?.forEach(
+    ({ gameName, betNum }, index) => {
+      const color = Object.values(chartConfig)[index]?.color;
       bjlActiveUsersData.push({
         game: gameName || "",
         data: Number(betNum),
@@ -162,12 +186,24 @@ export default async function DashboardPage() {
       withdrawData: withdrawData || [],
     },
   };
+  const { data: announcementOwnData } = await getAgentAnnouncement({
+    pageSize: 5,
+    pageNum: 1,
+    level: 0,
+  });
+  const { data: announcementData } = await getAnnouncement({
+    pageSize: 5,
+    pageNum: 1,
+  });
+
   return (
     <>
       <div className="flex-1 flex flex-col gap-2">
-        <Suspense fallback={null}>
-          <Salutations data={todayWinLossData} />
-        </Suspense>
+        {permissions?.includes("admin_stat") && (
+          <Suspense>
+            <Salutations data={todayWinLossData} />
+          </Suspense>
+        )}
         <div className="grid grid-cols-2 gap-2">
           <DayChart
             title={t("chart.todayCashflow")}
@@ -188,18 +224,29 @@ export default async function DashboardPage() {
         <div className="grid gap-2 rounded bg-card p-4">
           <WeekChart textConfig={weekChart2Text} />
         </div>
-        <div className="grid gap-2 rounded bg-card p-4">
-          <WeekChart textConfig={weekChart4Text} />
-        </div>
-        <div className="grid gap-2 rounded bg-card p-4">
-          <WeekChart textConfig={weekChart4Text} />
-        </div>
+        {permissions?.includes("admin_stat") && (
+          <>
+            <div className="grid gap-2 rounded bg-card p-4">
+              <WeekChart textConfig={weekChart4Text} />
+            </div>
+            <div className="grid gap-2 rounded bg-card p-4">
+              <WeekChart textConfig={weekChart4Text} />
+            </div>
+          </>
+        )}
       </div>
       <div className="flex flex-col gap-2 w-[280px] min-[2400px]:w-[560px]">
-        <DataOverview />
+        {/* 代理 */}
+        {!permissions?.includes("admin_stat") && <DataOverview />}
+        {/* admin */}
+        {permissions?.includes("admin_stat") && <DataOverviewFlow />}
         <QuickAccess />
-        <Announcement />
+        <Announcement data={announcementOwnData || { list: [] }} />
       </div>
+      <AnnouncementDialog
+        data={announcementData || { list: [] }}
+        isFirstLogin={isFirstLogin || "false"}
+      />
     </>
   );
 }

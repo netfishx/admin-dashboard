@@ -16,8 +16,15 @@ export default function TabsItem({
   return (
     <div className="flex flex-col gap-2 w-full">
       <div className="p-2 bg-background gap-2">
-        <Tabs defaultValue="platform" value={pathname.split("/").pop()}>
+        <Tabs defaultValue="own" value={pathname.split("/").pop()}>
           <TabsList>
+            {permissions?.includes("own_announcement") && (
+              <TabsTrigger value="own">
+                <Link href="/system/announcement/own">
+                  {t("myAnnouncement")}
+                </Link>
+              </TabsTrigger>
+            )}
             {permissions?.includes("platform_announcement") && (
               <TabsTrigger value="platform">
                 <Link href="/system/announcement/platform">
@@ -29,13 +36,6 @@ export default function TabsItem({
               <TabsTrigger value="all">
                 <Link href="/system/announcement/all">
                   {t("notifyAnnouncement")}
-                </Link>
-              </TabsTrigger>
-            )}
-            {permissions?.includes("own_announcement") && (
-              <TabsTrigger value="own">
-                <Link href="/system/announcement/own">
-                  {t("myAnnouncement")}
                 </Link>
               </TabsTrigger>
             )}
