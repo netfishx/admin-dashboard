@@ -231,8 +231,17 @@ function OpenedMenu({
                 href="/reports/withdraw"
               />
             )}
-            {permissions.includes("borrow_report") && (
-              <MenuItem label={t("reports.borrow")} href="/reports/borrow" />
+            {permissions.includes("credit_report") && (
+              <MenuItem label={t("reports.credit")} href="/reports/credit" />
+            )}
+            {permissions.includes("transfer_report") && (
+              <MenuItem
+                label={t("reports.transfer")}
+                href="/reports/transfer"
+              />
+            )}
+            {permissions.includes("reward_report") && (
+              <MenuItem label={t("reports.reward")} href="/reports/reward" />
             )}
             {permissions.includes("report_download") && (
               <MenuItem
