@@ -1,6 +1,5 @@
 "use client";
 
-import {} from "@/api";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -21,7 +20,9 @@ import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useEffect, useState, useTransition } from "react";
 
-export function UserInfoModal() {
+export function UserInfoModal({
+  permissions,
+}: { permissions: string[] | undefined }) {
   const translation = useTranslations();
   const t = useTranslations("users.members");
   const open = useAtomValue(memberInfoModalAtom);
@@ -79,18 +80,22 @@ export function UserInfoModal() {
           <DialogDescription />
         </DialogHeader>
         <div className="flex flex-col gap-4 w-full px-4">
-          <div className="flex gap-4 items-center">
-            <Label className="shrink-0 w-1/4 text-right text-muted-foreground">
-              {t("agentUserId")}
-            </Label>
-            <Input className="w-1/2" value={agentUserId} disabled />
-          </div>
-          <div className="flex gap-4 items-center">
-            <Label className="shrink-0 w-1/4 text-right text-muted-foreground">
-              {t("agentUsername")}
-            </Label>
-            <Input className="w-1/2" value={agentUsername} disabled />
-          </div>
+          {permissions?.includes("member_search") && (
+            <>
+              <div className="flex gap-4 items-center">
+                <Label className="shrink-0 w-1/4 text-right text-muted-foreground">
+                  {t("agentUserId")}
+                </Label>
+                <Input className="w-1/2" value={agentUserId} disabled />
+              </div>
+              <div className="flex gap-4 items-center">
+                <Label className="shrink-0 w-1/4 text-right text-muted-foreground">
+                  {t("agentUsername")}
+                </Label>
+                <Input className="w-1/2" value={agentUsername} disabled />
+              </div>
+            </>
+          )}
           <div className="flex gap-4 items-center">
             <Label className="shrink-0 w-1/4 text-right text-muted-foreground">
               {t("memberId")}

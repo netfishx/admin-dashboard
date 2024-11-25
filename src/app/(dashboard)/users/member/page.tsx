@@ -17,6 +17,7 @@ import { Suspense } from "react";
 import Actions from "./action-buttons";
 import Form from "./form";
 import { Modals } from "./modals";
+import { UserInfoModal } from "./user-info-modal";
 
 async function FormWrapper() {
   const session = await getSession();
@@ -70,6 +71,7 @@ async function TableWrapper({
   const permissions = session?.permissions;
   return (
     <>
+      <UserInfoModal permissions={permissions} />
       <div className="border rounded-sm relative">
         <Table>
           <TableHeaderWrapper />

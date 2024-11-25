@@ -10,14 +10,12 @@ import { DecreaseCreditModal } from "./decrease-credit-modal";
 import { DeleteCreditModal } from "./delete-credit-modal";
 import { IncreaseCreditModal } from "./increase-credit-modal";
 import { RatioModal } from "./ratio-modal";
-import { UserInfoModal } from "./user-info-modal";
 
 export function Modals() {
   const memberId = useAtomValue(memberIdAtom);
 
   return (
     <>
-      <UserInfoModal />
       <RatioModal />
       <LimitModal userId={memberId} />
       <RebateModal userId={memberId} />
