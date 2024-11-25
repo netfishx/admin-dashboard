@@ -24,9 +24,8 @@ import { Dialog, DialogClose } from "@radix-ui/react-dialog";
 import { useAtom, useAtomValue } from "jotai";
 import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
-import Form from "next/form";
 import { useRouter } from "next/navigation";
-import { type FormEvent, useEffect, useState, useTransition } from "react";
+import { useEffect, useRef, useState, useTransition } from "react";
 import { toast } from "sonner";
 import fileInput from "./file-input.module.css";
 
@@ -37,12 +36,13 @@ export function AddOrEditDialog() {
   const data = useAtomValue(backgroundImageDataAtom);
   const [isPending, startTransition] = useTransition();
   const router = useRouter();
-  const [pictureUri] = useState<string>("");
+  const [pictureUri, setPictureUri] = useState<string>("");
   const [pictureName, setPictureName] = useState<string>("");
   const [port, setPort] = useState<string>("0");
   const [position, setPosition] = useState<string>("0");
   const [language, setLanguage] = useState<string>("cn");
   const [status, setStatus] = useState<number>(0);
+  const fileRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     if (data) {
@@ -56,6 +56,12 @@ export function AddOrEditDialog() {
 
   const handleSubmit = () => {
     startTransition(async () => {
+      const formData = new FormData();
+      formData.append("file", fileRef.current?.files?.[0] as File);
+      const { data } = await uploadImage(formData);
+      if (data) {
+        setPictureUri(data.uri);
+      }
       const { code, message } = await addBackgroundImage({
         id: data?.id,
         pictureUri,
@@ -74,16 +80,6 @@ export function AddOrEditDialog() {
     });
   };
 
-  const handleUpload = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const formData = new FormData(e.currentTarget);
-    const file = formData.get("file");
-    if (file) {
-      const res = await uploadImage({ file: file as File });
-      console.info(res);
-    }
-  };
-
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent onPointerDownOutside={(e) => e.preventDefault()}>
@@ -98,18 +94,19 @@ export function AddOrEditDialog() {
               <span>{data.id}</span>
             </div>
           ) : null}
-          <Form action="" onSubmit={handleUpload}>
-            <div className="flex items-center gap-2">
-              <Label className="w-20 text-right">{t("photo")}</Label>
-              <input
-                type="file"
-                className={fileInput.file}
-                name="file"
-                multiple={false}
-              />
-              <button type="submit">上传</button>
-            </div>
-          </Form>
+          <div className="flex items-center gap-2">
+            <Label className="w-20 text-right" htmlFor="file">
+              {t("photo")}
+            </Label>
+            <input
+              type="file"
+              className={fileInput.file}
+              multiple={false}
+              id="file"
+              name="file"
+              ref={fileRef}
+            />
+          </div>
           <div className="flex items-center gap-2">
             <Label className="w-20 text-right">{t("pictureName")}</Label>
             <Input
