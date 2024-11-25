@@ -77,7 +77,16 @@ function OpenedMenu({
           icon={<Home className="size-4" />}
         />
       )}
-      {permissions.includes("edit_odds") && (
+      {permissions.some((v) =>
+        [
+          "fly_config",
+          "edit_odds",
+          "edit_radio",
+          "edit_rebate",
+          "supplier_config",
+          "game_maintain",
+        ].includes(v),
+      ) && (
         <Collapsible
           open={openedMenu.includes("games")}
           onOpenChange={(e) => handleOpenChange("games", e)}
@@ -139,53 +148,101 @@ function OpenedMenu({
           </CollapsibleContent>
         </Collapsible>
       )}
-      <Collapsible
-        open={openedMenu.includes("reports")}
-        onOpenChange={(e) => handleOpenChange("reports", e)}
-      >
-        <CollapsibleTrigger asChild>
-          <MenuItem
-            label={t("reports.title")}
-            icon={<FileText className="size-4" />}
-            hasChildren
-          />
-        </CollapsibleTrigger>
-        <CollapsibleContent className="flex flex-col gap-1 px-6">
-          <MenuItem
-            label={t("reports.order.baccarat")}
-            href="/reports/order/baccarat"
-          />
-          <MenuItem
-            label={t("reports.order.gundan")}
-            href="/reports/order/gundan"
-          />
-          <MenuItem label={t("reports.period")} href="/reports/period" />
-          <MenuItem
-            label={t("reports.agent.baccarat")}
-            href="/reports/agent/baccarat/ratio"
-            subHref={["/reports/agent/baccarat/member"]}
-          />
-          <MenuItem
-            label={t("reports.agent.gundan")}
-            href="/reports/agent/gundan"
-          />
-          <MenuItem
-            label={t("reports.member.baccarat")}
-            href="/reports/member/baccarat"
-          />
-          {permissions.includes("supplier_report") && (
-            <MenuItem label={t("reports.supplier")} href="/reports/supplier" />
-          )}
-          <MenuItem label={t("reports.change")} href="/reports/change" />
-          <MenuItem label={t("reports.recharge")} href="/reports/recharge" />
-          <MenuItem label={t("reports.withdraw")} href="/reports/withdraw" />
-          <MenuItem label={t("reports.borrow")} href="/reports/borrow" />
-          <MenuItem label={t("reports.reward")} href="/reports/reward" />
-          <MenuItem label={t("reports.credit")} href="/reports/credit" />
-          <MenuItem label={t("reports.transfer")} href="/reports/transfer" />
-          <MenuItem label={t("reports.download")} href="/reports/download" />
-        </CollapsibleContent>
-      </Collapsible>
+      {permissions.some((v) =>
+        [
+          "detail_baccarat",
+          "detail_guandan",
+          "period_report",
+          "agent_report_baccarat",
+          "agent_report_guandan",
+          "member_report_baccarat",
+          "supplier_report",
+          "change_report",
+          "recharge_report",
+          "withdraw_report",
+          "borrow_report",
+          "report_download",
+        ].includes(v),
+      ) && (
+        <Collapsible
+          open={openedMenu.includes("reports")}
+          onOpenChange={(e) => handleOpenChange("reports", e)}
+        >
+          <CollapsibleTrigger asChild>
+            <MenuItem
+              label={t("reports.title")}
+              icon={<FileText className="size-4" />}
+              hasChildren
+            />
+          </CollapsibleTrigger>
+          <CollapsibleContent className="flex flex-col gap-1 px-6">
+            {permissions.includes("detail_baccarat") && (
+              <MenuItem
+                label={t("reports.order.baccarat")}
+                href="/reports/order/baccarat"
+              />
+            )}
+            {permissions.includes("detail_guandan") && (
+              <MenuItem
+                label={t("reports.order.guandan")}
+                href="/reports/order/guandan"
+              />
+            )}
+            {permissions.includes("period_report") && (
+              <MenuItem label={t("reports.period")} href="/reports/period" />
+            )}
+            {permissions.includes("agent_report_baccarat") && (
+              <MenuItem
+                label={t("reports.agent.baccarat")}
+                href="/reports/agent/baccarat/ratio"
+                subHref={["/reports/agent/baccarat/member"]}
+              />
+            )}
+            {permissions.includes("agent_report_guandan") && (
+              <MenuItem
+                label={t("reports.agent.guandan")}
+                href="/reports/agent/guandan"
+              />
+            )}
+            {permissions.includes("member_report_baccarat") && (
+              <MenuItem
+                label={t("reports.member.baccarat")}
+                href="/reports/member/baccarat"
+              />
+            )}
+            {permissions.includes("supplier_report") && (
+              <MenuItem
+                label={t("reports.supplier")}
+                href="/reports/supplier"
+              />
+            )}
+            {permissions.includes("change_report") && (
+              <MenuItem label={t("reports.change")} href="/reports/change" />
+            )}
+            {permissions.includes("recharge_report") && (
+              <MenuItem
+                label={t("reports.recharge")}
+                href="/reports/recharge"
+              />
+            )}
+            {permissions.includes("withdraw_report") && (
+              <MenuItem
+                label={t("reports.withdraw")}
+                href="/reports/withdraw"
+              />
+            )}
+            {permissions.includes("borrow_report") && (
+              <MenuItem label={t("reports.borrow")} href="/reports/borrow" />
+            )}
+            {permissions.includes("report_download") && (
+              <MenuItem
+                label={t("reports.download")}
+                href="/reports/download"
+              />
+            )}
+          </CollapsibleContent>
+        </Collapsible>
+      )}
       {permissions.some((v) => ["withdraw_apply", "audit"].includes(v)) && (
         <Collapsible
           open={openedMenu.includes("withdraw")}
@@ -373,29 +430,40 @@ function ClosedMenu({
           </Tooltip>
         </TooltipProvider>
       )}
-      <TooltipProvider>
-        <Tooltip>
-          <TooltipTrigger>
-            <div
-              className={cn([
-                baseClass,
-                pathname.startsWith("/games") && "text-primary",
-              ])}
-            >
-              <MenuItemLink
-                href="/games/flyorder"
-                isActive={pathname.startsWith("/games")}
-                className="px-0 w-full"
+      {permissions.some((v) =>
+        [
+          "fly_config",
+          "edit_odds",
+          "edit_radio",
+          "edit_rebate",
+          "supplier_config",
+          "game_maintain",
+        ].includes(v),
+      ) && (
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger>
+              <div
+                className={cn([
+                  baseClass,
+                  pathname.startsWith("/games") && "text-primary",
+                ])}
               >
-                <Gamepad2 className="size-4" />
-              </MenuItemLink>
-            </div>
-          </TooltipTrigger>
-          <TooltipContent side="right">
-            <p>{t("games.title")}</p>
-          </TooltipContent>
-        </Tooltip>
-      </TooltipProvider>
+                <MenuItemLink
+                  href="/games/flyorder"
+                  isActive={pathname.startsWith("/games")}
+                  className="px-0 w-full"
+                >
+                  <Gamepad2 className="size-4" />
+                </MenuItemLink>
+              </div>
+            </TooltipTrigger>
+            <TooltipContent side="right">
+              <p>{t("games.title")}</p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
+      )}
       {permissions.some((v) =>
         ["agent_config", "member_config", "users_supplier"].includes(v),
       ) && (
@@ -423,75 +491,98 @@ function ClosedMenu({
           </Tooltip>
         </TooltipProvider>
       )}
-      <TooltipProvider>
-        <Tooltip>
-          <TooltipTrigger>
-            <div
-              className={cn([
-                baseClass,
-                pathname.startsWith("/reports") && "text-primary",
-              ])}
-            >
-              <MenuItemLink
-                href="/reports/order/baccarat"
-                isActive={pathname.startsWith("/reports")}
-                className="px-0 w-full"
+      {permissions.some((v) =>
+        [
+          "detail_baccarat",
+          "detail_guandan",
+          "period_report",
+          "agent_report_baccarat",
+          "agent_report_guandan",
+          "member_report_baccarat",
+          "supplier_report",
+          "change_report",
+          "recharge_report",
+          "withdraw_report",
+          "borrow_report",
+          "report_download",
+        ].includes(v),
+      ) && (
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger>
+              <div
+                className={cn([
+                  baseClass,
+                  pathname.startsWith("/reports") && "text-primary",
+                ])}
               >
-                <FileText className="size-4" />
-              </MenuItemLink>
-            </div>
-          </TooltipTrigger>
-          <TooltipContent side="right">
-            <p>{t("reports.title")}</p>
-          </TooltipContent>
-        </Tooltip>
-      </TooltipProvider>
-      <TooltipProvider>
-        <Tooltip>
-          <TooltipTrigger>
-            <div
-              className={cn([
-                baseClass,
-                pathname.startsWith("/withdraw") && "text-primary",
-              ])}
-            >
-              <MenuItemLink
-                href="/withdraw/apply"
-                isActive={pathname.startsWith("/withdraw")}
-                className="px-0 w-full"
+                <MenuItemLink
+                  href="/reports/order/baccarat"
+                  isActive={pathname.startsWith("/reports")}
+                  className="px-0 w-full"
+                >
+                  <FileText className="size-4" />
+                </MenuItemLink>
+              </div>
+            </TooltipTrigger>
+            <TooltipContent side="right">
+              <p>{t("reports.title")}</p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
+      )}
+      {permissions.some((v) => ["withdraw_apply", "audit"].includes(v)) && (
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger>
+              <div
+                className={cn([
+                  baseClass,
+                  pathname.startsWith("/withdraw") && "text-primary",
+                ])}
               >
-                <ClipboardCheck className="size-4" />
-              </MenuItemLink>
-            </div>
-          </TooltipTrigger>
-          <TooltipContent side="right">
-            <p>{t("withdraw.title")}</p>
-          </TooltipContent>
-        </Tooltip>
-      </TooltipProvider>
-      <TooltipProvider>
-        <Tooltip>
-          <TooltipTrigger>
-            <div
-              className={cn([
-                baseClass,
-                pathname.startsWith("/fund") && "text-primary",
-              ])}
-            >
-              <MenuItemLink
-                href="/fund/minerfee"
-                isActive={pathname.startsWith("/fund")}
-                className="px-0 w-full"
+                <MenuItemLink
+                  href="/withdraw/apply"
+                  isActive={pathname.startsWith("/withdraw")}
+                  className="px-0 w-full"
+                >
+                  <ClipboardCheck className="size-4" />
+                </MenuItemLink>
+              </div>
+            </TooltipTrigger>
+            <TooltipContent side="right">
+              <p>{t("withdraw.title")}</p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
+      )}
+      {permissions.some((v) =>
+        ["minerfee", "collection", "withdrawfee"].includes(v),
+      ) && (
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger>
+              <div
+                className={cn([
+                  baseClass,
+                  pathname.startsWith("/fund") && "text-primary",
+                ])}
               >
-                <Scale className="size-4" />
-              </MenuItemLink>
-            </div>
-          </TooltipTrigger>
-          <TooltipContent side="right">
-            <p>{t("fund.title")}</p>
-          </TooltipContent>
-        </Tooltip>
-      </TooltipProvider>
+                <MenuItemLink
+                  href="/fund/minerfee"
+                  isActive={pathname.startsWith("/fund")}
+                  className="px-0 w-full"
+                >
+                  <Scale className="size-4" />
+                </MenuItemLink>
+              </div>
+            </TooltipTrigger>
+            <TooltipContent side="right">
+              <p>{t("fund.title")}</p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
+      )}
       {permissions.some((v) =>
         ["personal_info", "login_log", "edit_password"].includes(v),
       ) && (

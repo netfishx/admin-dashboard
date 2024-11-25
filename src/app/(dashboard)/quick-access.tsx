@@ -58,7 +58,7 @@ export function QuickAccess() {
           <p className="text-xs">{t("agentReportBaccarat")}</p>
         </Link>
         <Link
-          href="/reports/agent/gundan"
+          href="/reports/agent/guandan"
           className="flex flex-col items-center justify-center gap-2"
         >
           <div className="size-9 bg-accent flex items-center justify-center rounded">
