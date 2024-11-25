@@ -7,7 +7,7 @@ import {
 } from "@/components/ui/chart";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useTranslations } from "next-intl";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { CartesianGrid, Line, LineChart, XAxis, YAxis } from "recharts";
 const chartConfig = {
   value: {
@@ -44,42 +44,46 @@ export function WeekChart({
   };
 }) {
   const t = useTranslations("chart");
-  const [data, setData] = useState<
-    {
+  const [activeTab, setActiveTab] = useState("0");
+  function getData() {
+    let initialData: {
       name: string;
       data: number;
-    }[]
-  >([]);
-  function formatTooltipLabel(label: string) {
-    return `${label} ${t("totalDeposits")}`;
-  }
-  function formatTooltipValue(value: number) {
-    return [`${value}`];
-  }
-  const [activeTab, setActiveTab] = useState("0");
-
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
-  useEffect(() => {
-    // biome-ignore lint/style/useDefaultSwitchClause: <explanation>
+    }[] = [];
     switch (textConfig.type) {
       case "game":
         if (activeTab === "0") {
-          setData(textConfig.data.betAmountData || []);
+          initialData = textConfig.data.betAmountData || [];
         } else {
-          setData(textConfig.data.betNumData || []);
+          initialData = textConfig.data.betNumData || [];
         }
         break;
       case "member":
         break;
       case "fund":
         if (activeTab === "0") {
-          setData(textConfig.data.rechargeData || []);
+          initialData = textConfig.data.rechargeData || [];
         } else {
-          setData(textConfig.data.withdrawData || []);
+          initialData = textConfig.data.withdrawData || [];
         }
         break;
+      default:
+        break;
     }
-  }, [activeTab]);
+    return initialData;
+  }
+  const [data, setData] = useState<
+    {
+      name: string;
+      data: number;
+    }[]
+  >(getData());
+  function formatTooltipLabel(label: string) {
+    return `${label} ${t("totalDeposits")}`;
+  }
+  function formatTooltipValue(value: number) {
+    return [`${value}`];
+  }
 
   return (
     <div className="flex-1 flex flex-col pt-2">
