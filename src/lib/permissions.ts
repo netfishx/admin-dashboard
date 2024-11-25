@@ -25,4 +25,6 @@ export const urlPermissions: {
   "/personal/security": "edit_password",
   "/personal/info": "personal_info",
   "/personal/loginlog": "login_log",
+  "/users/agent": "agent_config",
+  "/users/member": "member_config",
 };

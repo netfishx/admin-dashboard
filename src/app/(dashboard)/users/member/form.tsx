@@ -14,7 +14,9 @@ import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useQueryState } from "nuqs";
 
-export default function Form() {
+export default function Form({
+  permissions,
+}: { permissions: string[] | undefined }) {
   const t = useTranslations("users.members");
   const router = useRouter();
   const [username, setUsername] = useQueryState("username", {
@@ -48,14 +50,16 @@ export default function Form() {
             onChange={(e) => setUserId(e.target.value)}
           />
         </div>
-        <div className="flex gap-2 items-center">
-          <Label className="shrink-0">{t("upUsername")}</Label>
-          <Input
-            placeholder={t("placeholder")}
-            value={upUsername ?? ""}
-            onChange={(e) => setUpUsername(e.target.value)}
-          />
-        </div>
+        {permissions?.includes("member_search") && (
+          <div className="flex gap-2 items-center">
+            <Label className="shrink-0">{t("upUsername")}</Label>
+            <Input
+              placeholder={t("placeholder")}
+              value={upUsername ?? ""}
+              onChange={(e) => setUpUsername(e.target.value)}
+            />
+          </div>
+        )}
         <div className="flex gap-2 items-center">
           <Label className="shrink-0">{t("status")}</Label>
           <Select

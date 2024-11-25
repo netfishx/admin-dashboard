@@ -112,7 +112,9 @@ function OpenedMenu({
         </Collapsible>
       )}
 
-      {permissions.includes("agent_stat") && (
+      {permissions.some((v) =>
+        ["agent_config", "member_config", "users_supplier"].includes(v),
+      ) && (
         <Collapsible
           open={openedMenu.includes("users")}
           onOpenChange={(e) => handleOpenChange("users", e)}
@@ -125,8 +127,12 @@ function OpenedMenu({
             />
           </CollapsibleTrigger>
           <CollapsibleContent className="flex flex-col gap-1 px-6">
-            <MenuItem label={t("users.agent")} href="/users/agent" />
-            <MenuItem label={t("users.member")} href="/users/member" />
+            {permissions.includes("agent_config") && (
+              <MenuItem label={t("users.agent")} href="/users/agent" />
+            )}
+            {permissions.includes("member_config") && (
+              <MenuItem label={t("users.member")} href="/users/member" />
+            )}
             {permissions.includes("users_supplier") && (
               <MenuItem label={t("users.supplier")} href="/users/supplier" />
             )}
@@ -390,29 +396,33 @@ function ClosedMenu({
           </TooltipContent>
         </Tooltip>
       </TooltipProvider>
-      <TooltipProvider>
-        <Tooltip>
-          <TooltipTrigger>
-            <div
-              className={cn([
-                baseClass,
-                pathname.startsWith("/users") && "text-primary",
-              ])}
-            >
-              <MenuItemLink
-                href="/users/agent"
-                isActive={pathname.startsWith("/users")}
-                className="px-0 w-full"
+      {permissions.some((v) =>
+        ["agent_config", "member_config", "users_supplier"].includes(v),
+      ) && (
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger>
+              <div
+                className={cn([
+                  baseClass,
+                  pathname.startsWith("/users") && "text-primary",
+                ])}
               >
-                <Users className="size-4" />
-              </MenuItemLink>
-            </div>
-          </TooltipTrigger>
-          <TooltipContent side="right">
-            <p>{t("users.title")}</p>
-          </TooltipContent>
-        </Tooltip>
-      </TooltipProvider>
+                <MenuItemLink
+                  href="/users/agent"
+                  isActive={pathname.startsWith("/users")}
+                  className="px-0 w-full"
+                >
+                  <Users className="size-4" />
+                </MenuItemLink>
+              </div>
+            </TooltipTrigger>
+            <TooltipContent side="right">
+              <p>{t("users.title")}</p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
+      )}
       <TooltipProvider>
         <Tooltip>
           <TooltipTrigger>
