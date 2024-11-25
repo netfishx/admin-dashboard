@@ -81,7 +81,6 @@ async function TableBodyWrapper({
   list,
 }: { list: DownloadListRecords[] | undefined }) {
   const translation = await getTranslations();
-  const t = await getTranslations("report.download");
   return (
     <TableBody>
       {list && list?.length > 0 ? (
