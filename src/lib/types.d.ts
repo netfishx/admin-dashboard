@@ -302,10 +302,10 @@ export type AuditListRequest = {
 // 会员报表-真人视讯请求入参
 export type MemberReportRequestParams = {
   gameId?: number; // 游戏ID（不传时为全部游戏）
-  startTime?: number; // 开奖开始时间（必传）
-  endTime?: number; // 开奖结束时间（必传）
-  pageNum?: number; // 第几页
-  pageSize?: number; // 每页大小
+  startTime: number; // 开奖开始时间（必传）
+  endTime: number; // 开奖结束时间（必传）
+  pageNum: number; // 第几页
+  pageSize: number; // 每页大小
   parentAgentId?: string | number; // 上级代理ID
   memberId?: string | number; // 会员ID
 };
@@ -336,8 +336,8 @@ export type OrderReportsRequestParams = {
   id?: string; // 订单id
   memberId?: string; // 会员id
   gameId?: string; // 游戏id
-  startTime?: number; // 开始时间 as a long integer
-  endTime?: number; // 结束时间 as a long integer
+  startTime: number; // 开始时间 as a long integer
+  endTime: number; // 结束时间 as a long integer
   issueNumber?: string; // 期号
   minister?: string; // 部长id
   roomOwnerId?: string; // 房主
@@ -345,8 +345,8 @@ export type OrderReportsRequestParams = {
   betAmount?: string; // 投注金额
   orderStatus?: 0 | 1; // 注单状态: 0 = 未结算, 1 = 已结算
   operators?: "0" | "1"; // 运算符 (operators), e.g., >= or <=
-  pageNum?: number; // 页码, e.g., 1
-  pageSize?: number; // 每页大小, e.g., 10
+  pageNum: number; // 页码, e.g., 1
+  pageSize: number; // 每页大小, e.g., 10
   key?: string; // Key (Description not provided)
 };
 
@@ -376,10 +376,10 @@ export type RatioReportRequestParams = {
   gameId?: number; // 游戏ID（不传时为全部游戏）
   houseOwnerId?: string; // 房主ID
   parentAgentId?: string; // 上级代理ID
-  openStartTime?: number; // 开奖开始时间（必传）
-  openEndTime?: number; // 开奖结束时间（必传）
-  pageNum?: number; // 页码
-  pageSize?: number; // 每页大小
+  startTime: number; // 开奖开始时间（必传）
+  endTime: number; // 开奖结束时间（必传）
+  pageNum: number; // 页码
+  pageSize: number; // 每页大小
 };
 
 // 占成拦货报表请求出参
@@ -404,10 +404,10 @@ export type RatioReportRequestRecords = {
 export type MemberBetReportRequestParams = {
   agentId?: string; // 代理ID
   gameId?: number; // 游戏ID（不传时为全部游戏）
-  openStartTime?: number; // 开奖开始时间（必传）
-  openEndTime?: number; // 开奖结束时间（必传）
-  pageNum?: number; // 页码
-  pageSize?: number; // 每页条数
+  startTime: number; // 开奖开始时间（必传）
+  endTime: number; // 开奖结束时间（必传）
+  pageNum: number; // 页码
+  pageSize: number; // 每页条数
 };
 
 // 会员下注报表请求出参
@@ -839,8 +839,8 @@ export type GameRecordRequestParams = {
   issueNumber?: string; // 投注期号 (Issue Number)
   startTime: string; // 开始时间 必须 (Required)
   endTime: string; // 结束时间 必须 (Required)
-  pageNum?: number; // 页码
-  pageSize?: number; // 条数
+  pageNum: number; // 页码
+  pageSize: number; // 条数
   agentId?: string; // 代理ID (Agent ID)
   minister?: string; // 部长Id (Minister ID)
 };
@@ -894,4 +894,26 @@ export type DownloadListRecords = {
   endTime: number; //结束时间
   status: number; //状态(0: 初始化，1：生成中 ，2：生成成功，99：生成失败)
   failReason: string; //错误原因
+};
+
+// 注单列表-掼蛋-炸弹详情数据
+export type BombDetailRecords = {
+  id: string;
+  gameId: string;
+  roundNumber: number;
+  bombCount: number;
+  details: BombDetailPlayerDetails[];
+  createdAt: number;
+  updatedAt: number;
+  version: number;
+};
+
+// 注单列表-掼蛋-炸弹详情玩家详情
+export type BombDetailPlayerDetails = {
+  memberId: string;
+  bombs: number;
+  score: number;
+  rank: number | null;
+  tribute: string | null;
+  hand: string[];
 };

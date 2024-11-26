@@ -12,6 +12,7 @@ import type {
   AuditList,
   AuditListRequest,
   BackgroundImageList,
+  BombDetailRecords,
   BorrowRecordRequestParams,
   BorrowRecordRequestRecords,
   ChangeLog,
@@ -732,6 +733,18 @@ export async function getGuandanReportList(params: GameRecordRequestParams) {
   });
 }
 
+// 注单列表-掼蛋-详情
+export async function getGuandanReportListDetail(
+  params: GameRecordRequestParams,
+) {
+  const user = await getSession();
+  return await apiRequest<PageData<BombDetailRecords>>({
+    url: "/agent/order/guandan/detail",
+    token: user?.token,
+    params,
+  });
+}
+
 // 代理报表-棋牌
 export async function getPokerReport(params: PokerReportRequestParams) {
   const user = await getSession();
@@ -741,6 +754,7 @@ export async function getPokerReport(params: PokerReportRequestParams) {
     params,
   });
 }
+
 // 充值报表
 export async function getRechargeReportList(data: RechargeReportParams) {
   const user = await getSession();

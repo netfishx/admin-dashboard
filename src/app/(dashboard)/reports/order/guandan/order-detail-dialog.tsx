@@ -1,6 +1,6 @@
 "use client";
 
-import { getChangeLog } from "@/api";
+import { getGuandanReportListDetail } from "@/api";
 import { ModalPagination } from "@/components/modal-pagination";
 import { Button } from "@/components/ui/button";
 import {
@@ -20,68 +20,60 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import type { BombDetailRecords, GameRecordRequestParams } from "@/lib/types";
 import {
+  orderListBombDetailRecordAtom,
   orderListGuandanBombDetailDialogAtom,
   orderListGuandanDetailDialogAtom,
+  orderListGuandanDetailItemAtom,
 } from "@/store";
-import { useAtom } from "jotai";
+import { format } from "date-fns";
+import { useAtom, useAtomValue } from "jotai";
 import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useEffect, useState, useTransition } from "react";
 
-const tempData = {
-  list: [
-    {
-      id: "123",
-      serialNumber: "123",
-      issueNumber: "123",
-      bombNumber: "123",
-      startTime: "123",
-      settlementTime: "123",
-      detail: "123",
-    },
-  ],
-  total: 10,
-  pageNum: 1,
-  pageSize: 10,
-};
-
-export function OrderDetailDialog({
-  targetUserId,
-  appType,
-}: { targetUserId: string; appType: "AGENT" | "MEMBER" }) {
+export function OrderDetailDialog() {
   const translation = useTranslations();
   const t = useTranslations("report.orderlist");
   const [open, setOpen] = useAtom(orderListGuandanDetailDialogAtom);
+  const item = useAtomValue(orderListGuandanDetailItemAtom);
   const [, setOpenBomb] = useAtom(orderListGuandanBombDetailDialogAtom);
+  const [, setOrderListBombDetailRecord] = useAtom(
+    orderListBombDetailRecordAtom,
+  );
   const [loading, setLoading] = useState(false);
   const [isPending, startTransition] = useTransition();
   const [pageNum, setPageNum] = useState<number>(1);
   const [pageSize, setPageSize] = useState<number>(10);
   const [total, setTotal] = useState<number>(0);
-  const [data, setData] = useState(tempData);
+  const [data, setData] = useState<BombDetailRecords[]>([]);
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
-    if (targetUserId && open) {
+    if (open) {
       setLoading(true);
-      getChangeLog({
-        targetUserId,
-        appType,
+      getGuandanReportListDetail({
+        issueNumber: item?.id,
         pageNum,
         pageSize,
-      }).then(() => {
+      } as GameRecordRequestParams).then(({ data }) => {
         setLoading(false);
-
-        if (tempData) {
-          setData(tempData);
-          setTotal(tempData.total);
-          setPageNum(tempData.pageNum);
-          setPageSize(tempData.pageSize);
+        if (data?.list) {
+          setData(data?.list || []);
+          setTotal(data.total);
+          setPageNum(data.pageNum);
+          setPageSize(data.pageSize);
         }
       });
     }
-  }, [targetUserId, open, pageNum, pageSize]);
+  }, [open, pageNum, pageSize]);
+
+  function handleBombDetail(item: BombDetailRecords) {
+    setOpenBomb(true);
+    setOrderListBombDetailRecord(item.details);
+  }
+
   return (
     <Dialog open={open} onOpenChange={(open) => setOpen(open)}>
       <DialogContent
@@ -97,12 +89,9 @@ export function OrderDetailDialog({
             <TableHeader className="table w-full">
               <TableRow className="bg-muted">
                 <TableHead className="w-[150px]">{t("serialNumber")}</TableHead>
-                <TableHead className="w-[150px]">{t("issueNumber")}</TableHead>
+                <TableHead className="w-[200px]">{t("issueNumber")}</TableHead>
                 <TableHead className="w-[150px]">{t("bombNumber")}</TableHead>
                 <TableHead className="w-[150px]">{t("startTime")}</TableHead>
-                <TableHead className="w-[150px]">
-                  {t("settlementTime")}
-                </TableHead>
                 <TableHead className="w-[150px]">{t("detail")}</TableHead>
               </TableRow>
             </TableHeader>
@@ -110,20 +99,23 @@ export function OrderDetailDialog({
               <ChangeLogSkeleton />
             ) : (
               <TableBody className="table w-full">
-                {data?.list?.length > 0 ? (
-                  data?.list?.map((item) => (
+                {data?.length > 0 ? (
+                  data?.map((item, index) => (
                     <TableRow key={item.id}>
-                      <TableCell className="w-[150px]">123</TableCell>
-                      <TableCell className="w-[150px]">123</TableCell>
-                      <TableCell className="w-[150px]">123</TableCell>
-                      <TableCell className="w-[150px]">123</TableCell>
-                      <TableCell className="w-[150px]">123</TableCell>
+                      <TableCell className="w-[150px]">{index}</TableCell>
+                      <TableCell className="w-[200px]">{item.id}</TableCell>
+                      <TableCell className="w-[150px]">
+                        {item.bombCount}
+                      </TableCell>
+                      <TableCell className="w-[150px]">
+                        {format(item.createdAt, "yyyy-MM-dd HH:mm:ss")}
+                      </TableCell>
                       <TableCell className="w-[150px]">
                         <Button
                           variant="ghost"
                           size="sm"
                           className="text-primary hover:text-primary/80 text-sm px-2"
-                          onClick={() => setOpenBomb(true)}
+                          onClick={() => handleBombDetail(item)}
                         >
                           {t("more")}
                         </Button>
