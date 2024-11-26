@@ -97,7 +97,7 @@ async function PeriodTable({
                     // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
                     <TableRow key={index}>
                       <TableCell colSpan={12}>
-                        <Skeleton className="w-full h-4" />
+                        <Skeleton className="w-full h-6" />
                       </TableCell>
                     </TableRow>
                   ))}
