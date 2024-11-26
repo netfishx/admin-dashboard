@@ -11,7 +11,6 @@ import {
 } from "@/components/ui/table";
 import type { ApplyData } from "@/lib/types";
 import { cn } from "@/lib/utils";
-import { endOfDay, startOfDay } from "date-fns";
 import { getTranslations } from "next-intl/server";
 import { Suspense } from "react";
 import { translateValue } from "../tools";
@@ -51,16 +50,18 @@ export default async function Page({
 async function TableWrapper({
   searchParams,
 }: { searchParams: Promise<{ [key: string]: string | string[] }> }) {
-  const search = await searchParams;
-  const now = Date.now();
-  const start = search.startTime ?? startOfDay(now).getTime();
-  const end = search.endTime ?? endOfDay(now).getTime();
+  const { startTime, endTime, approverStatus, pageNum, pageSize } =
+    await searchParams;
+  console.info("startTime:", startTime, "endTime:", endTime);
+  if (!startTime || !endTime) {
+    return null;
+  }
   const { data } = await getWithdrawApplyList({
-    startTime: Number(start),
-    endTime: Number(end),
-    approverStatus: Number(search.approverStatus),
-    pageNum: Number(search.pageNum ?? 1),
-    pageSize: Number(search.pageSize ?? 10),
+    startTime: Number(startTime),
+    endTime: Number(endTime),
+    approverStatus: Number(approverStatus),
+    pageNum: Number(pageNum ?? 1),
+    pageSize: Number(pageSize ?? 10),
   });
 
   console.info("agent list:", data);
