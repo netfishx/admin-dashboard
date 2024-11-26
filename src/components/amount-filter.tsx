@@ -8,7 +8,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useTranslations } from "next-intl";
-import { useQueryState } from "nuqs";
+import { parseAsString, useQueryState } from "nuqs";
 import { useEffect } from "react";
 
 export default function AmountFilter({
@@ -17,26 +17,34 @@ export default function AmountFilter({
 }: { amountText?: string; onReset?: (resetFn: () => void) => void }) {
   const t = useTranslations("report.orderlist");
 
-  const [filterAmount, setFilterAmount] = useQueryState(amountText, {
-    defaultValue: "",
-  });
-  const [FilterAmountType, setFilterAmountType] = useQueryState("operators", {
-    defaultValue: "",
-  });
+  const [filterAmount, setFilterAmount] = useQueryState(
+    amountText,
+    parseAsString.withDefault("0").withOptions({ clearOnDefault: false }),
+  );
+  const [FilterAmountType, setFilterAmountType] = useQueryState(
+    "operators",
+    parseAsString.withDefault("0").withOptions({ clearOnDefault: false }),
+  );
 
   const handleFilterChange = (filterType: string) => {
     setFilterAmountType(filterType);
   };
 
+  // biome-ignore lint/correctness/noUndeclaredVariables: <explanation>
   const handleAmountChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
     setFilterAmount(value);
   };
 
   const handleReset = () => {
-    setFilterAmount("");
-    setFilterAmountType("");
+    setFilterAmount("0");
+    setFilterAmountType("0");
   };
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+  useEffect(() => {
+    handleReset();
+  }, []);
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {

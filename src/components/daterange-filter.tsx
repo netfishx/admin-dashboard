@@ -30,10 +30,10 @@ import {
 import { Calendar as CalendarIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { parseAsInteger, useQueryStates } from "nuqs";
 import { memo, startTransition, useCallback, useEffect, useMemo } from "react";
 import type { DateRange } from "react-day-picker";
-
 type rangeType =
   | "today"
   | "yesterday"
@@ -169,7 +169,7 @@ export function DateRangeFilter({
   const today = new Date();
   const t = useTranslations("report.orderlist");
   const searchParams = useSearchParams();
-
+  const router = useRouter();
   const [dateRange, setDateRange] = useQueryStates({
     [startTimeText]: parseAsInteger.withDefault(0),
     [endTimeText]: parseAsInteger.withDefault(0),
@@ -193,6 +193,9 @@ export function DateRangeFilter({
       [startTimeText]: initialStartTime,
       [endTimeText]: initialEndTime,
     });
+    if (!startTimeFromUrl || !endTimeFromUrl) {
+      router.refresh();
+    }
   }, []);
 
   const resetDateRange = (start: number, end: number) => {

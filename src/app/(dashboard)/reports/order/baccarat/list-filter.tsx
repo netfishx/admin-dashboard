@@ -180,6 +180,7 @@ export function ListFilter() {
         <div className="flex gap-2 items-center">
           <Label className="shrink-0">{t("amountfilter")}</Label>
           <AmountFilter
+            // biome-ignore lint/suspicious/noAssignInExpressions: <explanation>
             onReset={(resetFn) => (amountFilterReset.current = resetFn)}
           />
         </div>
