@@ -19,6 +19,7 @@ import type {
   CollectionAddressListRequestParams,
   DictionaryItemList,
   DictionaryList,
+  DownloadListRecords,
   FundList,
   GameConfig,
   GameOdds,
@@ -250,6 +251,9 @@ export async function getAgentLoginLog(params: {
   agentId: string;
   pageNum?: number;
   pageSize?: number;
+  startTime?: Date;
+  endTime?: Date;
+  ip?: string;
 }) {
   const user = await getSession();
   return await apiRequest<PageData<LoginLog>>({
@@ -1255,18 +1259,38 @@ export async function setIsFirstLogin() {
   cookie.set("isFirstLogin", "false");
 }
 
-export async function uploadImage(data: {
-  file: File;
+export async function uploadImage(data: FormData) {
+  const user = await getSession();
+  const res = await axios({
+    url: `${process.env.NEXT_PUBLIC_BASE_URL}/upload`,
+    method: "POST",
+    data,
+    headers: {
+      "Content-Type": "multipart/form-data",
+      Authorization: `Bearer ${user?.token}`,
+    },
+    maxBodyLength: 10 * 1024 * 1024,
+  });
+  return res.data;
+}
+
+export async function getDownloadList(params: {
+  pageNum: number;
+  pageSize: number;
 }) {
   const user = await getSession();
-  return await axios.postForm(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/upload`,
-    data,
-    {
-      headers: {
-        "Content-Type": "multipart/form-data",
-        Authorization: `Bearer ${user?.token}`,
-      },
-    },
-  );
+  return await apiRequest<PageData<DownloadListRecords>>({
+    url: "/exportHistory",
+    token: user?.token,
+    params,
+  });
+}
+
+export async function getDownloadUrl(params: { id: string }) {
+  const user = await getSession();
+  return await apiRequest<{ url: string }>({
+    url: "/getExportFileUrl",
+    params,
+    token: user?.token,
+  });
 }

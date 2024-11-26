@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/table";
 import type { AgentData } from "@/lib/types";
 import { cn } from "@/lib/utils";
+import { getSession } from "@/session";
 import { getTranslations } from "next-intl/server";
 import { Suspense } from "react";
 import Action from "./action-buttons";
@@ -21,6 +22,7 @@ import { Modals } from "./modals";
 export default async function Page({
   searchParams,
 }: { searchParams: Promise<{ [key: string]: string | string[] }> }) {
+  const session = getSession();
   return (
     <div className="flex flex-col gap-2 w-full">
       <Suspense
@@ -30,7 +32,7 @@ export default async function Page({
           </div>
         }
       >
-        <Form />
+        <Form session={session} />
       </Suspense>
       <div className="p-2 bg-background flex-1 gap-2">
         <div className="pb-2 flex justify-end">
@@ -83,11 +85,17 @@ async function TableWrapper({
 }
 async function TableHeaderWrapper() {
   const t = await getTranslations("users.agents");
+  const session = await getSession();
+  const permissions = session?.permissions;
   return (
     <TableHeader>
       <TableRow className="bg-muted">
-        <TableHead className="min-w-28">{t("upUsername")}</TableHead>
-        <TableHead className="min-w-28">{t("deptId")}</TableHead>
+        {permissions?.includes("agent_search") && (
+          <>
+            <TableHead className="min-w-28">{t("upUsername")}</TableHead>
+            <TableHead className="min-w-28">{t("deptId")}</TableHead>
+          </>
+        )}
         <TableHead className="min-w-60">{t("userId")}</TableHead>
         <TableHead>{t("username")}</TableHead>
         <TableHead className="min-w-20">{t("nickname")}</TableHead>
@@ -102,12 +110,18 @@ async function TableHeaderWrapper() {
 
 async function TableBodyWrapper({ list }: { list: AgentData[] | undefined }) {
   const t = await getTranslations("users.agents");
+  const session = await getSession();
+  const permissions = session?.permissions;
   return (
     <TableBody>
       {list?.map((item) => (
         <TableRow key={item.id}>
-          <TableCell>{item.upUsername}</TableCell>
-          <TableCell>{item.deptId}</TableCell>
+          {permissions?.includes("agent_search") && (
+            <>
+              <TableCell>{item.upUsername}</TableCell>
+              <TableCell>{item.deptId}</TableCell>
+            </>
+          )}
           <TableCell>{item.id}</TableCell>
           <TableCell>{item.username}</TableCell>
           <TableCell>{item.nickname}</TableCell>
@@ -124,7 +138,7 @@ async function TableBodyWrapper({ list }: { list: AgentData[] | undefined }) {
             </div>
           </TableCell>
           <TableCell className="text-center sticky right-0 bg-background">
-            <Action data={item} />
+            <Action data={item} permissions={permissions ?? []} />
           </TableCell>
         </TableRow>
       ))}

@@ -57,14 +57,6 @@ export function Form() {
             onChange={(e) => setOrderNo(e.target.value)}
           />
         </div>
-        <div className="flex gap-2 items-center">
-          <Label className="shrink-0">{t("userId")}</Label>
-          <Input
-            placeholder={t("placeholder")}
-            value={userId ?? ""}
-            onChange={(e) => setUserId(e.target.value)}
-          />
-        </div>
       </div>
       <div className="flex gap-4 items-center">
         <div className="flex gap-2 items-center">
@@ -105,6 +97,14 @@ export function Form() {
               <SelectItem value="1">会员</SelectItem>
             </SelectContent>
           </Select>
+        </div>
+        <div className="flex gap-2 items-center">
+          <Label className="shrink-0">{t("userId")}</Label>
+          <Input
+            placeholder={t("placeholder")}
+            value={userId ?? ""}
+            onChange={(e) => setUserId(e.target.value)}
+          />
         </div>
       </div>
       <div className="flex gap-2 justify-end items-start">

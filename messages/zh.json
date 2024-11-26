@@ -86,12 +86,12 @@
       "title": "报表管理",
       "order": {
         "baccarat": "注单列表-真人视讯",
-        "gundan": "注单列表-棋牌"
+        "guandan": "注单列表-棋牌"
       },
       "period": "按期汇总报表",
       "agent": {
         "baccarat": "代理报表-真人视讯",
-        "gundan": "代理报表-棋牌"
+        "guandan": "代理报表-棋牌"
       },
       "member": {
         "baccarat": "会员报表-真人视讯"
@@ -100,9 +100,9 @@
       "change": "账变记录",
       "recharge": "充值记录",
       "withdraw": "提现记录",
-      "borrow": "借还记录",
+      "borrow": "借款记录",
       "reward": "打赏记录",
-      "credit": "授信转账记录",
+      "credit": "授信借还记录",
       "transfer": "转账记录",
       "download": "报表下载"
     },
@@ -631,6 +631,21 @@
       "memberId": "会员ID",
       "roomOwnerId": "房主ID",
       "ministerId": "部长ID"
+    },
+    "download": {
+      "list": "仅保留近7天内下载数据",
+      "name": "报表名称",
+      "applyTime": "申请时间",
+      "exportTime": "导出完成时间",
+      "downloadTime": "最近下载时间",
+      "status": "生成状态",
+      "failReason": "失败原因",
+      "action": "操作",
+      "download": "下载",
+      "initializing": "初始化",
+      "exporting": "生成中",
+      "exported": "生成完成",
+      "failed": "生成失败"
     }
   },
   "pagination": {
@@ -923,7 +938,6 @@
       "cleanDesc": "确定清除该稽核吗？",
       "cancel": "取消"
     }
-   
   },
   "maintain": {
     "dictionary": {

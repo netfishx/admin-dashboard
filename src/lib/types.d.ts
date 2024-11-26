@@ -719,6 +719,11 @@ export type TodayGameReport = {
     issueAmount: number | string;
   }[];
 };
+export type GameChartConfig = {
+  game: string;
+  data: number;
+  fill: string;
+};
 // 充提
 export type FundList = {
   fundList: {
@@ -877,4 +882,16 @@ export type GameRecordRequestRecords = {
   createdAt: number; // 创建时间 (时间戳)
   updatedAt: number; // 更新时间 (时间戳)
   version: number; // 版本号
+};
+
+export type DownloadListRecords = {
+  id: string;
+  exportButtonCode: string; //操作编码
+  exportFileName: string; //文件名
+  operatorName: string; //操作人姓名
+  operateTime: number; //操作时间
+  downloadTime: number; //最近下载时间
+  endTime: number; //结束时间
+  status: number; //状态(0: 初始化，1：生成中 ，2：生成成功，99：生成失败)
+  failReason: string; //错误原因
 };

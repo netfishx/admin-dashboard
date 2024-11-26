@@ -11,11 +11,19 @@ import {
 } from "@/components/ui/table";
 import type { MemberList } from "@/lib/types";
 import { cn } from "@/lib/utils";
+import { getSession } from "@/session";
 import { getTranslations } from "next-intl/server";
 import { Suspense } from "react";
 import Actions from "./action-buttons";
 import Form from "./form";
 import { Modals } from "./modals";
+import { UserInfoModal } from "./user-info-modal";
+
+async function FormWrapper() {
+  const session = await getSession();
+  const permissions = session?.permissions;
+  return <Form permissions={permissions} />;
+}
 
 export default function Page({
   searchParams,
@@ -29,15 +37,17 @@ export default function Page({
           </div>
         }
       >
-        <Form />
+        <FormWrapper />
       </Suspense>
       <div className="p-2 bg-background flex-1 gap-2">
         <Suspense
           fallback={
-            <Table>
-              <TableHeaderWrapper />
-              <TableBodySkeleton />
-            </Table>
+            <Suspense>
+              <Table>
+                <TableHeaderWrapper />
+                <TableBodySkeleton />
+              </Table>
+            </Suspense>
           }
         >
           <TableWrapper searchParams={searchParams} />
@@ -57,13 +67,16 @@ async function TableWrapper({
     pageNum: Number(params.pageNum ?? 1),
     pageSize: Number(params.pageSize ?? 10),
   });
+  const session = await getSession();
+  const permissions = session?.permissions;
   return (
     <>
+      <UserInfoModal permissions={permissions} />
       <div className="border rounded-sm relative">
         <Table>
           <TableHeaderWrapper />
           <Suspense fallback={<TableBodySkeleton />}>
-            <TableBodyWrapper list={data?.list} />
+            <TableBodyWrapper list={data?.list} permissions={permissions} />
           </Suspense>
         </Table>
       </div>
@@ -79,11 +92,17 @@ async function TableWrapper({
 }
 async function TableHeaderWrapper() {
   const t = await getTranslations("users.members");
+  const session = await getSession();
+  const permissions = session?.permissions;
   return (
     <TableHeader>
       <TableRow className="bg-muted">
-        <TableHead>{t("upUsername")}</TableHead>
-        <TableHead className="min-w-28">{t("deptId")}</TableHead>
+        {permissions?.includes("member_search") && (
+          <>
+            <TableHead>{t("upUsername")}</TableHead>
+            <TableHead className="min-w-28">{t("deptId")}</TableHead>
+          </>
+        )}
         <TableHead className="min-w-60">{t("userId")}</TableHead>
         <TableHead>{t("username")}</TableHead>
         <TableHead>{t("nickname")}</TableHead>
@@ -98,14 +117,21 @@ async function TableHeaderWrapper() {
     </TableHeader>
   );
 }
-async function TableBodyWrapper({ list }: { list: MemberList[] | undefined }) {
+async function TableBodyWrapper({
+  list,
+  permissions,
+}: { list: MemberList[] | undefined; permissions: string[] | undefined }) {
   const t = await getTranslations("users.members");
   return (
     <TableBody>
       {list?.map((item) => (
         <TableRow key={item.id}>
-          <TableCell>{item.upUsername}</TableCell>
-          <TableCell>{item.level}</TableCell>
+          {permissions?.includes("member_search") && (
+            <>
+              <TableCell>{item.upUsername}</TableCell>
+              <TableCell>{item.level}</TableCell>
+            </>
+          )}
           <TableCell>{item.id}</TableCell>
           <TableCell>{item.username}</TableCell>
           <TableCell>{item.nickname}</TableCell>
@@ -124,7 +150,7 @@ async function TableBodyWrapper({ list }: { list: MemberList[] | undefined }) {
             </div>
           </TableCell>
           <TableCell className="text-center sticky right-0 bg-background">
-            <Actions data={item} />
+            <Actions data={item} permissions={permissions} />
           </TableCell>
         </TableRow>
       ))}

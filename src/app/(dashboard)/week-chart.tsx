@@ -1,39 +1,43 @@
 "use client";
+import { getFundList, getTodayWinLossChart } from "@/api";
 import {
-  type ChartConfig,
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import type {} from "@/lib/types";
+import { endOfDay, format, fromUnixTime, startOfDay, sub } from "date-fns";
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
+
 import { CartesianGrid, Line, LineChart, XAxis, YAxis } from "recharts";
-const chartConfig = {
-  value: {
-    label: "Value",
-    color: "hsl(var(--chart-2))",
+// 定义配置对象
+const chartConfigs = {
+  "0": {
+    value: {
+      label: "Value",
+      color: "hsl(var(--chart-1))",
+    },
   },
-} satisfies ChartConfig;
+  "1": {
+    value: {
+      label: "Value",
+      color: "hsl(var(--chart-4))",
+    },
+  },
+} as const;
 
 export function WeekChart({
   textConfig,
 }: {
   textConfig: {
-    data: {
-      betAmountData?: {
+    data?: {
+      mainData?: {
         name: string;
         data: number;
       }[];
-      betNumData?: {
-        name: string;
-        data: number;
-      }[];
-      rechargeData?: {
-        name: string;
-        data: number;
-      }[];
-      withdrawData?: {
+      subData?: {
         name: string;
         data: number;
       }[];
@@ -44,43 +48,159 @@ export function WeekChart({
   };
 }) {
   const t = useTranslations("chart");
-  const [data, setData] = useState<
-    {
+  const [activeTab, setActiveTab] = useState("0");
+  const [data, setData] = useState<Array<{ name: string; data: number }>>([]);
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+  useEffect(() => {
+    const fetchData = async () => {
+      await arrangeConfigData();
+      setData(getData(activeTab));
+    };
+    fetchData();
+  }, []);
+
+  async function arrangeConfigData() {
+    const now = Date.now();
+    const start = startOfDay(now).getTime();
+    const end = endOfDay(now).getTime();
+    const oneWeekAgo = sub(start, { weeks: 1 }).getTime();
+    switch (textConfig.type) {
+      case "bjl":
+      case "gd": {
+        const { data: gameChartData } = await getTodayWinLossChart({
+          startTime: start,
+          endTime: end,
+          beforeEndTime: oneWeekAgo,
+          size: 6,
+        });
+        if (textConfig.type === "bjl") {
+          // 百家乐流水
+          const bjlTrendingBetAmountData: Array<{
+            name: string;
+            data: number;
+          }> = [];
+          // 百家乐人次
+          const bjlTrendingBetNumData: Array<{ name: string; data: number }> =
+            [];
+
+          gameChartData?.dailyBaccaratReport?.forEach(
+            ({ day, memberBetAmount, betNum }) => {
+              const formattedDay = format(
+                fromUnixTime(day / 1000),
+                "yyyy-MM-dd",
+              );
+
+              bjlTrendingBetAmountData.push({
+                name: formattedDay,
+                data: Number(memberBetAmount),
+              });
+
+              bjlTrendingBetNumData.push({
+                name: formattedDay,
+                data: Number(betNum),
+              });
+            },
+          );
+          textConfig.data = {
+            mainData: bjlTrendingBetAmountData,
+            subData: bjlTrendingBetNumData,
+          };
+        } else {
+          // 掼蛋流水
+          const gdTrendingBetAmountData: Array<{ name: string; data: number }> =
+            [];
+          // 掼蛋人次
+          const gdTrendingBetNumData: Array<{ name: string; data: number }> =
+            [];
+          gameChartData?.dailyPokerReport?.forEach(
+            ({ day, totaSettledAmount, issueAmount }) => {
+              const formattedDay = format(
+                fromUnixTime(day / 1000),
+                "yyyy-MM-dd",
+              );
+
+              gdTrendingBetAmountData.push({
+                name: formattedDay,
+                data: Number(totaSettledAmount),
+              });
+
+              gdTrendingBetNumData.push({
+                name: formattedDay,
+                data: Number(issueAmount),
+              });
+            },
+          );
+          textConfig.data = {
+            mainData: gdTrendingBetAmountData,
+            subData: gdTrendingBetNumData,
+          };
+        }
+        break;
+      }
+      case "member": {
+        break;
+      }
+      case "fund": {
+        // 充提
+        const { data: fundListData } = await getFundList({
+          startTime: oneWeekAgo,
+          endTime: end,
+        });
+        const rechargeData: Array<{ name: string; data: number }> = [];
+        const withdrawData: Array<{ name: string; data: number }> = [];
+        fundListData?.fundList?.forEach(
+          ({ day, rechargeAmount, withdrawAmount }) => {
+            const formattedDay = format(fromUnixTime(day / 1000), "yyyy-MM-dd");
+            rechargeData.push({
+              name: formattedDay,
+              data: Number(rechargeAmount),
+            });
+
+            withdrawData.push({
+              name: formattedDay,
+              data: Number(withdrawAmount),
+            });
+          },
+        );
+        textConfig.data = {
+          mainData: rechargeData,
+          subData: withdrawData,
+        };
+        break;
+      }
+      default:
+        break;
+    }
+  }
+  function getData(tab: string) {
+    if (!textConfig.data) {
+      return [];
+    }
+    console.info("=========", textConfig.data);
+    let initialData: {
       name: string;
       data: number;
-    }[]
-  >([]);
+    }[] = [];
+    if (tab === "0") {
+      initialData = textConfig.data?.mainData || [];
+    } else {
+      initialData = textConfig.data?.subData || [];
+    }
+    return initialData;
+  }
+
   function formatTooltipLabel(label: string) {
     return `${label} ${t("totalDeposits")}`;
   }
   function formatTooltipValue(value: number) {
     return [`${value}`];
   }
-  const [activeTab, setActiveTab] = useState("0");
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
-  useEffect(() => {
-    // biome-ignore lint/style/useDefaultSwitchClause: <explanation>
-    switch (textConfig.type) {
-      case "game":
-        if (activeTab === "0") {
-          setData(textConfig.data.betAmountData || []);
-        } else {
-          setData(textConfig.data.betNumData || []);
-        }
-        break;
-      case "member":
-        break;
-      case "fund":
-        if (activeTab === "0") {
-          setData(textConfig.data.rechargeData || []);
-        } else {
-          setData(textConfig.data.withdrawData || []);
-        }
-        break;
-    }
-  }, [activeTab]);
-
+  const onTabChange = (value: string) => {
+    setActiveTab(value);
+    setData(getData(value));
+  };
   return (
     <div className="flex-1 flex flex-col pt-2">
       <div className="flex items-center justify-between">
@@ -95,7 +215,7 @@ export function WeekChart({
             defaultValue="0"
             className="px-2"
             value={activeTab}
-            onValueChange={(value) => setActiveTab(value)}
+            onValueChange={(value) => onTabChange(value)}
           >
             <TabsList>
               <TabsTrigger value="0">{textConfig.tab[0]}</TabsTrigger>
@@ -106,7 +226,7 @@ export function WeekChart({
       </div>
       <div className="flex-1 flex items-center justify-center">
         <ChartContainer
-          config={chartConfig}
+          config={chartConfigs[activeTab as keyof typeof chartConfigs]}
           className="w-[40dvw] lg:w-[50dvw] xl:w-[55dvw] 2xl:w-[60dvw] mx-auto h-60"
         >
           <LineChart

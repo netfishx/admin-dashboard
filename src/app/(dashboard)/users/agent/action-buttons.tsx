@@ -17,7 +17,10 @@ import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { TransferMoneyModal } from "./transfer-money-modal";
 
-export default function Action({ data }: { data: AgentData }) {
+export default function Action({
+  data,
+  permissions,
+}: { data: AgentData; permissions: string[] }) {
   const t = useTranslations("users.agents");
   const [transferMoneyModal, setTransferMoneyModal] = useState(false);
 
@@ -51,16 +54,18 @@ export default function Action({ data }: { data: AgentData }) {
       >
         {t("userInfo")}
       </Button>
-      <Button
-        variant="ghost"
-        size="sm"
-        className="text-primary hover:text-primary/80 text-sm px-2"
-        onClick={() => {
-          setTransferMoneyModal(true);
-        }}
-      >
-        {t("transferMoney")}
-      </Button>
+      {permissions.includes("agent_transfer") && (
+        <Button
+          variant="ghost"
+          size="sm"
+          className="text-primary hover:text-primary/80 text-sm px-2"
+          onClick={() => {
+            setTransferMoneyModal(true);
+          }}
+        >
+          {t("transferMoney")}
+        </Button>
+      )}
       <Button
         variant="ghost"
         size="sm"

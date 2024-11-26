@@ -69,8 +69,8 @@ async function request<T>({
   }
   tags && cacheTag(...tags);
   const headers = {
-    ...header,
     "Content-Type": "application/json",
+    ...header,
     "Accept-Language": locale ?? "zh-CN",
   } as Record<string, string>;
   if (ip) {

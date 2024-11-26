@@ -1,15 +1,34 @@
+"use client";
+import { getTodayWinLoss } from "@/api";
 import welcome01 from "@/assets/images/welcome/welcome01.svg";
 import welcome02 from "@/assets/images/welcome/welcome02.svg";
 import welcome03 from "@/assets/images/welcome/welcome03.svg";
 import welcome04 from "@/assets/images/welcome/welcome04.svg";
 import type { TodayWinLoss } from "@/lib/types";
-import { getTranslations } from "next-intl/server";
+import { endOfDay, startOfDay } from "date-fns";
+import { useTranslations } from "next-intl";
 import Image from "next/image";
+import { useEffect, useState } from "react";
 
-export async function Salutations({
-  data,
-}: { data: TodayWinLoss | undefined }) {
-  const t = await getTranslations();
+export function Salutations() {
+  const t = useTranslations();
+  const [data, setData] = useState<TodayWinLoss>();
+  const now = Date.now();
+  const start = startOfDay(now).getTime();
+  const end = endOfDay(now).getTime();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const { data } = await getTodayWinLoss({
+        startTime: start,
+        endTime: end,
+      });
+      setData(data);
+    };
+
+    fetchData();
+  }, [start, end]);
+
   return (
     <div className="flex flex-col p-4 rounded bg-card">
       <div className="pb-2 flex items-center justify-around">

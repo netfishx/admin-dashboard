@@ -10,13 +10,14 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import type { SessionData } from "@/session";
 import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useQueryState } from "nuqs";
-import { useTransition } from "react";
+import { use, useTransition } from "react";
 
-export function Form() {
+export function Form({ session }: { session: Promise<SessionData | null> }) {
   const t = useTranslations("users.agents");
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
@@ -33,6 +34,7 @@ export function Form() {
   const [status, setStatus] = useQueryState("status", {
     defaultValue: "all",
   });
+  const permissions = use(session)?.permissions;
   return (
     <div className="flex justify-between items-center bg-background py-2 px-4">
       <div className="flex gap-2 items-center">
@@ -52,14 +54,16 @@ export function Form() {
             onChange={(e) => setUserId(e.target.value)}
           />
         </div>
-        <div className="flex gap-2 items-center">
-          <Label className="shrink-0">{t("upUsername")}</Label>
-          <Input
-            placeholder={t("placeholder")}
-            value={upUsername ?? ""}
-            onChange={(e) => setUpUsername(e.target.value)}
-          />
-        </div>
+        {permissions?.includes("agent_search") && (
+          <div className="flex gap-2 items-center">
+            <Label className="shrink-0">{t("upUsername")}</Label>
+            <Input
+              placeholder={t("placeholder")}
+              value={upUsername ?? ""}
+              onChange={(e) => setUpUsername(e.target.value)}
+            />
+          </div>
+        )}
         <div className="flex gap-2 items-center">
           <Label className="shrink-0">{t("status")}</Label>
           <Select

@@ -18,7 +18,10 @@ import {
 import { useSetAtom } from "jotai";
 import { useTranslations } from "next-intl";
 
-export default function Action({ data }: { data: MemberList }) {
+export default function Action({
+  data,
+  permissions,
+}: { data: MemberList; permissions: string[] | undefined }) {
   const t = useTranslations("users.members");
   // 会员ID
   const setMemberId = useSetAtom(memberIdAtom);
@@ -69,41 +72,45 @@ export default function Action({ data }: { data: MemberList }) {
         {t("ratio")}
       </Button>
 
-      <Button
-        variant="ghost"
-        size="sm"
-        className="text-primary hover:text-primary/80 text-sm px-2"
-        onClick={() => {
-          setMemberId(data.id);
-          setIncreaseCreditModal(true);
-        }}
-      >
-        {t("increaseCredit")}
-      </Button>
+      {permissions?.includes("edit_credit") && (
+        <>
+          <Button
+            variant="ghost"
+            size="sm"
+            className="text-primary hover:text-primary/80 text-sm px-2"
+            onClick={() => {
+              setMemberId(data.id);
+              setIncreaseCreditModal(true);
+            }}
+          >
+            {t("increaseCredit")}
+          </Button>
 
-      <Button
-        variant="ghost"
-        size="sm"
-        className="text-primary hover:text-primary/80 text-sm px-2"
-        onClick={() => {
-          setMemberId(data.id);
-          setDecreaseCreditModal(true);
-        }}
-      >
-        {t("decreaseCredit")}
-      </Button>
+          <Button
+            variant="ghost"
+            size="sm"
+            className="text-primary hover:text-primary/80 text-sm px-2"
+            onClick={() => {
+              setMemberId(data.id);
+              setDecreaseCreditModal(true);
+            }}
+          >
+            {t("decreaseCredit")}
+          </Button>
 
-      <Button
-        variant="ghost"
-        size="sm"
-        className="text-primary hover:text-primary/80 text-sm px-2"
-        onClick={() => {
-          setMemberId(data.id);
-          setDeleteCreditModal(true);
-        }}
-      >
-        {t("deleteCredit")}
-      </Button>
+          <Button
+            variant="ghost"
+            size="sm"
+            className="text-primary hover:text-primary/80 text-sm px-2"
+            onClick={() => {
+              setMemberId(data.id);
+              setDeleteCreditModal(true);
+            }}
+          >
+            {t("deleteCredit")}
+          </Button>
+        </>
+      )}
 
       <Button
         variant="ghost"
