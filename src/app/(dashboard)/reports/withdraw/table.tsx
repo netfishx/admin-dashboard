@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/table";
 import type { WithdrawReport } from "@/lib/types";
 import type { PageData } from "@/lib/types";
+import { format } from "date-fns";
 import { getTranslations } from "next-intl/server";
 
 async function WithdrawTableHeader() {
@@ -82,13 +83,13 @@ export async function WithdrawTable({
                   {item.status}
                 </TableCell>
                 <TableCell className="w-24 min-w-24 text-center">
-                  {item.applyTime}
+                  {format(item.applyTime, "yyyy-MM-dd HH:mm:ss")}
                 </TableCell>
                 <TableCell className="w-24 min-w-24 text-center">
-                  {item.approverTime}
+                  {format(item.approverTime, "yyyy-MM-dd HH:mm:ss")}
                 </TableCell>
                 <TableCell className="w-24 min-w-24 text-center">
-                  {item.finishTime}
+                  {format(item.finishTime, "yyyy-MM-dd HH:mm:ss")}
                 </TableCell>
                 <TableCell className="w-24 min-w-24 text-center">
                   <Button variant="link" size="icon">

@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/table";
 import type { ApplyData } from "@/lib/types";
 import { cn } from "@/lib/utils";
+import { format } from "date-fns";
 import { getTranslations } from "next-intl/server";
 import { Suspense } from "react";
 import { translateValue } from "../tools";
@@ -23,6 +24,7 @@ import {
 import { Actions } from "./actions";
 import { Form } from "./form";
 import { MoneyBtn } from "./money-btn";
+
 export default async function Page({
   searchParams,
 }: { searchParams: Promise<{ [key: string]: string | string[] }> }) {
@@ -155,7 +157,7 @@ async function TableBodyWrapper({ list }: { list: ApplyData[] }) {
               <MoneyBtn data={item} />
             </TableCell>
             <TableCell className="min-w-32 text-center">
-              {item.applyTime}
+              {format(item.applyTime, "yyyy-MM-dd HH:mm:ss")}
             </TableCell>
             <TableCell className="text-center">{item.approverName}</TableCell>
             <TableCell className="min-w-32 text-center">

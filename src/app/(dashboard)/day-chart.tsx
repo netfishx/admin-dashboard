@@ -1,108 +1,40 @@
 "use client";
-import { getTodayWinLossChart } from "@/api";
 import {
   type ChartConfig,
   ChartContainer,
   ChartTooltip,
-  ChartTooltipContent,
 } from "@/components/ui/chart";
-import type { GameChartConfig, TodayGameReport } from "@/lib/types";
-import { endOfDay, startOfDay, sub } from "date-fns";
-import { useEffect, useState } from "react";
+import { useTranslations } from "next-intl";
+import type { ReactNode } from "react";
 import { Label, Legend, Pie, PieChart } from "recharts";
 
-const chartConfig = {
-  bjl01: {
-    color: "hsl(var(--chart-1))",
-  },
-  bjl02: {
-    color: "hsl(var(--chart-2))",
-  },
-  bjl03: {
-    color: "hsl(var(--chart-3))",
-  },
-  bjl04: {
-    color: "hsl(var(--chart-4))",
-  },
-  bjl05: {
-    color: "hsl(var(--chart-5))",
-  },
-  bjl06: {
-    color: "hsl(var(--chart-6))",
-  },
-} satisfies ChartConfig;
+export const description = "A stacked area chart";
 
 export function DayChart({
   title,
   subTitle,
-  type,
+  data,
+  chartConfig,
 }: {
   title: string;
   subTitle: string;
-  type: number;
+  data: { game: string; data: number }[];
+  chartConfig: ChartConfig;
 }) {
-  const [data, setData] = useState<GameChartConfig[]>([]);
-  const now = Date.now();
-  const start = startOfDay(now).getTime();
-  const end = endOfDay(now).getTime();
-  const oneWeekAgo = sub(start, { weeks: 1 }).getTime();
+  const t = useTranslations("chart");
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
-  useEffect(() => {
-    const fetchData = async () => {
-      const { data: gameChartData } = await getTodayWinLossChart({
-        startTime: start,
-        endTime: end,
-        beforeEndTime: oneWeekAgo,
-        size: 6,
-      });
-      getData(gameChartData as TodayGameReport);
-    };
+  const chartData = data.map(({ game, data }) => ({
+    game,
+    data,
+  }));
 
-    fetchData();
-  }, []);
-
-  const getData = (gameChartData: TodayGameReport) => {
-    if (type) {
-      // 今日百家乐人次
-      const bjlActiveUsersData: GameChartConfig[] = [];
-      gameChartData?.agentBaccaratBetNumReport?.forEach(
-        ({ gameName, betNum }, index) => {
-          const color = Object.values(chartConfig)[index]?.color;
-          bjlActiveUsersData.push({
-            game: gameName || "",
-            data: Number(betNum),
-            fill: color,
-          });
-        },
-      );
-      setData(bjlActiveUsersData || []);
-    } else {
-      // 今日百家乐流水
-      const bjlBetAmountData: GameChartConfig[] = [];
-      gameChartData?.agentBaccaratAmountReport?.forEach(
-        ({ gameName, memberBetAmount }, index) => {
-          const color = Object.values(chartConfig)[index]?.color;
-          bjlBetAmountData.push({
-            game: gameName || "",
-            data: Number(memberBetAmount),
-            fill: color,
-          });
-        },
-      );
-      setData(bjlBetAmountData || []);
-    }
-  };
   return (
     <div className="flex flex-col p-4 rounded bg-card">
       <div>{title}</div>
       <div className="flex items-center justify-center">
         <ChartContainer config={chartConfig} className="h-40 lg:h-48 xl:h-72">
           <PieChart>
-            <ChartTooltip
-              cursor={true}
-              content={<ChartTooltipContent hideLabel />}
-            />
+            <ChartTooltip cursor={true} content={<CustomTooltip />} />
             <Pie
               data={data}
               dataKey="data"
@@ -134,7 +66,7 @@ export function DayChart({
                           y={(viewBox.cy || 0) + 10}
                           className="fill-foreground text-base"
                         >
-                          {data.reduce((acc, curr) => acc + curr.data, 0)}
+                          {chartData.reduce((acc, curr) => acc + curr.data, 0)}
                         </tspan>
                       </text>
                     );
@@ -149,3 +81,23 @@ export function DayChart({
     </div>
   );
 }
+const CustomTooltip = ({
+  active,
+  payload,
+}: {
+  active?: boolean;
+  payload?: {
+    name: ReactNode;
+    value: ReactNode;
+  }[];
+}) => {
+  if (!active || !payload?.length) return null;
+  return (
+    <div className="bg-card p-2 rounded shadow-lg border">
+      <p className="text-sm">
+        <span className="text-muted-foreground pr-2"> {payload[0].name}:</span>
+        <span className="font-medium">{payload[0].value}</span>
+      </p>
+    </div>
+  );
+};

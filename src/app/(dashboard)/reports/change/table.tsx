@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/table";
 import type { PageData } from "@/lib/types";
 import type { WalletLogRecords } from "@/lib/types";
+import { format } from "date-fns";
 import { getTranslations } from "next-intl/server";
 
 async function ChangeTableHeader() {
@@ -60,7 +61,7 @@ export async function ChangeTable({
                   {item.transactionId}
                 </TableCell>
                 <TableCell className="w-24 min-w-24 text-center">
-                  {item.createdTime}
+                  {format(item.createdTime, "yyyy-MM-dd HH:mm:ss")}
                 </TableCell>
                 <TableCell className="w-24 min-w-24 text-center">
                   {item.oldBalance}

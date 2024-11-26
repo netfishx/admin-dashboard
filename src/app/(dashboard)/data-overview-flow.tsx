@@ -19,8 +19,6 @@ export function DataOverviewFlow() {
         startTime: start,
         endTime: end,
       });
-      console.log("🌸 ~ data:", data);
-
       setInfo(data);
     };
     fetchData();

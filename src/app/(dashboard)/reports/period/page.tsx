@@ -10,6 +10,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { endOfDay, startOfDay } from "date-fns";
+import { format } from "date-fns";
 import { getTranslations } from "next-intl/server";
 import { Suspense } from "react";
 import { Actions } from "./actions";
@@ -112,7 +113,7 @@ async function PeriodTable({
                         {item.issueNumber}
                       </TableCell>
                       <TableCell className="w-24 text-center">
-                        {item.openTime}
+                        {format(item.openTime, "yyyy-MM-dd HH:mm:ss")}
                       </TableCell>
                       <TableCell className="w-24 text-center">
                         {item.gameTypeName}
