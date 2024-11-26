@@ -250,10 +250,10 @@ export async function getMemberList(params: {
 
 export async function getAgentLoginLog(params: {
   agentId: string;
-  pageNum?: number;
-  pageSize?: number;
-  startTime?: Date;
-  endTime?: Date;
+  pageNum: number;
+  pageSize: number;
+  startTime?: number;
+  endTime?: number;
   ip?: string;
 }) {
   const user = await getSession();
