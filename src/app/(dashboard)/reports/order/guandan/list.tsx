@@ -31,20 +31,50 @@ export async function ListHeader() {
           {t("ministerID")}
         </TableHead>
         <TableHead className="min-w-24 text-center">{t("agentID")}</TableHead>
-        <TableHead className="min-w-24 text-center">底注</TableHead>
-        <TableHead className="min-w-24 text-center">封顶</TableHead>
-        <TableHead className="min-w-24 text-center">级数</TableHead>
-        <TableHead className="min-w-24 text-center">结算金额</TableHead>
-        <TableHead className="min-w-24 text-center">炸数</TableHead>
-        <TableHead className="min-w-24 text-center">倍数</TableHead>
-        <TableHead className="min-w-24 text-center">输赢玩家</TableHead>
-        <TableHead className="min-w-24 text-center">游戏开始时间</TableHead>
-        <TableHead className="min-w-24 text-center">结算完成时间</TableHead>
+        <TableHead className="min-w-24 text-center">{t("bottomBet")}</TableHead>
+        <TableHead className="min-w-24 text-center">{t("topBet")}</TableHead>
+        <TableHead className="min-w-24 text-center">{t("level")}</TableHead>
+        <TableHead className="min-w-24 text-center">
+          {t("settlementAmount")}
+        </TableHead>
+        <TableHead className="min-w-24 text-center">
+          {t("bombNumber")}
+        </TableHead>
+        <TableHead className="min-w-24 text-center">
+          {t("multiplier")}
+        </TableHead>
+        <TableHead className="min-w-24 text-center">{t("winPlayer")}</TableHead>
+        <TableHead className="min-w-24 text-center">
+          {t("gameStartTime")}
+        </TableHead>
+        <TableHead className="min-w-24 text-center">
+          {t("settlementFinishTime")}
+        </TableHead>
         <TableHead className="w-24 text-center sticky right-0 z-10 bg-muted">
           {t("action")}
         </TableHead>
       </TableRow>
     </TableHeader>
+  );
+}
+
+function generateResultString(players: GameRecordRequestRecords["result"]) {
+  // 分组赢和输的玩家
+  const winners = players.filter(
+    (player) => Number.parseInt(player.result) > 0,
+  );
+  const losers = players.filter((player) => Number.parseInt(player.result) < 0);
+
+  // 格式化输出字符串
+  const winString = `赢: ${winners.map((player) => `HY${player.memberId}`).join(", ")}`;
+  const loseString = `输: ${losers.map((player) => `HY${player.memberId}`).join(", ")}`;
+
+  // 返回拼接后的结果
+  return (
+    <div className="flex flex-col gap-2">
+      <div className="whitespace-nowrap text-gray-800">{winString}</div>
+      <div className="whitespace-nowrap text-gray-800">{loseString}</div>
+    </div>
   );
 }
 
@@ -55,19 +85,37 @@ async function ListBody({ list }: { list: GameRecordRequestRecords[] }) {
       {list && list?.length > 0 ? (
         list?.map((item: GameRecordRequestRecords) => (
           <TableRow key={item.id}>
-            <TableCell className="w-24 text-center">123</TableCell>
-            <TableCell className="w-24 text-center">123</TableCell>
-            <TableCell className="w-24 text-center">123</TableCell>
-            <TableCell className="w-24 text-center">123</TableCell>
-            <TableCell className="w-24 text-center">123</TableCell>
-            <TableCell className="w-24 text-center">123</TableCell>
-            <TableCell className="w-24 text-center">123</TableCell>
-            <TableCell className="w-24 text-center">123</TableCell>
-            <TableCell className="w-24 text-center">123</TableCell>
-            <TableCell className="w-24 text-center">123</TableCell>
-            <TableCell className="w-24 text-center">123</TableCell>
-            <TableCell className="w-24 text-center">123</TableCell>
-            <TableCell className="w-24 text-center">123</TableCell>
+            <TableCell className="w-24 text-center">{item.id}</TableCell>
+            <TableCell className="w-24 text-center">
+              {item.roomOwnerId}
+            </TableCell>
+            <TableCell className="w-24 text-center">
+              {item.clubOwnerId}
+            </TableCell>
+            <TableCell className="w-24 text-center">
+              {item.parentClubOwnerAgentId}
+            </TableCell>
+            <TableCell className="w-24 text-center">{item.bet}</TableCell>
+            <TableCell className="w-24 text-center">{item.settleCap}</TableCell>
+            <TableCell className="w-24 text-center">
+              {item.upgradeMode}
+            </TableCell>
+            <TableCell className="w-24 text-center">
+              {item.result?.[0]?.result}
+            </TableCell>
+            <TableCell className="w-24 text-center">{item.bombCount}</TableCell>
+            <TableCell className="w-24 text-center">
+              {item.multiplierCount}
+            </TableCell>
+            <TableCell className="w-24 text-center">
+              {generateResultString(item?.result)}
+            </TableCell>
+            <TableCell className="w-24 text-center">
+              {item.gameStartTime}
+            </TableCell>
+            <TableCell className="w-24 text-center">
+              {item.gameEndTime}
+            </TableCell>
             <TableCell className="w-24 text-center sticky right-0 z-10 bg-background">
               <DetailButton />
             </TableCell>

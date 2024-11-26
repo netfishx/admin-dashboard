@@ -302,8 +302,8 @@ export type AuditListRequest = {
 // 会员报表-真人视讯请求入参
 export type MemberReportRequestParams = {
   gameId?: number; // 游戏ID（不传时为全部游戏）
-  startTime?: number; // 开奖开始时间（必传）
-  endTime?: number; // 开奖结束时间（必传）
+  startTime: number; // 开奖开始时间（必传）
+  endTime: number; // 开奖结束时间（必传）
   pageNum?: number; // 第几页
   pageSize?: number; // 每页大小
   parentAgentId?: string | number; // 上级代理ID
@@ -336,8 +336,8 @@ export type OrderReportsRequestParams = {
   id?: string; // 订单id
   memberId?: string; // 会员id
   gameId?: string; // 游戏id
-  startTime?: number; // 开始时间 as a long integer
-  endTime?: number; // 结束时间 as a long integer
+  startTime: number; // 开始时间 as a long integer
+  endTime: number; // 结束时间 as a long integer
   issueNumber?: string; // 期号
   minister?: string; // 部长id
   roomOwnerId?: string; // 房主
@@ -376,8 +376,8 @@ export type RatioReportRequestParams = {
   gameId?: number; // 游戏ID（不传时为全部游戏）
   houseOwnerId?: string; // 房主ID
   parentAgentId?: string; // 上级代理ID
-  openStartTime?: number; // 开奖开始时间（必传）
-  openEndTime?: number; // 开奖结束时间（必传）
+  startTime: number; // 开奖开始时间（必传）
+  endTime: number; // 开奖结束时间（必传）
   pageNum?: number; // 页码
   pageSize?: number; // 每页大小
 };
@@ -404,8 +404,8 @@ export type RatioReportRequestRecords = {
 export type MemberBetReportRequestParams = {
   agentId?: string; // 代理ID
   gameId?: number; // 游戏ID（不传时为全部游戏）
-  openStartTime?: number; // 开奖开始时间（必传）
-  openEndTime?: number; // 开奖结束时间（必传）
+  startTime: number; // 开奖开始时间（必传）
+  endTime: number; // 开奖结束时间（必传）
   pageNum?: number; // 页码
   pageSize?: number; // 每页条数
 };
