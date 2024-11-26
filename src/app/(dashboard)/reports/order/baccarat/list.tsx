@@ -1,6 +1,5 @@
 import { getOrderReportList } from "@/api";
 import { CustomPagination } from "@/components/custom-pagination";
-import TableSkeleton from "@/components/table-skeleton";
 import {
   Table,
   TableBody,
@@ -15,10 +14,9 @@ import type {
 } from "@/lib/types";
 import { format } from "date-fns";
 import { getTranslations } from "next-intl/server";
-import { Suspense } from "react";
 import DetailButton from "./detail-button";
 
-async function ListHeader() {
+export async function ListHeader() {
   "use cache";
   const t = await getTranslations("report.orderlist");
   return (
@@ -129,9 +127,7 @@ export async function List({
       <div className="border rounded-sm relative">
         <Table>
           <ListHeader />
-          <Suspense fallback={<TableSkeleton length={5} />}>
-            <ListBody list={data?.list ?? []} />
-          </Suspense>
+          <ListBody list={data?.list ?? []} />
         </Table>
       </div>
       <div className="pt-2">

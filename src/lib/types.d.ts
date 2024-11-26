@@ -807,6 +807,7 @@ export type WalletLogRecords = {
   newBalance: string; //新余额
   userId: string; //用户id
 };
+
 // 打赏记录请求入参
 export type RewardRecordRequestParams = {
   memberId: string; // 转出代理id
@@ -831,6 +832,56 @@ export type RewardRecordRequestRecords = {
   createTime: number; // 创建时间，时间戳（毫秒）
   transactionID: string; // 交易订单号
   operateCode: number; // 操作类型代码
+};
+
+// 注单列表-掼蛋-入参
+export type GameRecordRequestParams = {
+  issueNumber?: string; // 投注期号 (Issue Number)
+  startTime: string; // 开始时间 必须 (Required)
+  endTime: string; // 结束时间 必须 (Required)
+  pageNum?: number; // 页码
+  pageSize?: number; // 条数
+  agentId?: string; // 代理ID (Agent ID)
+  minister?: string; // 部长Id (Minister ID)
+};
+
+type Participant = {
+  memberId: string; // 成员 ID
+  agentId: string; // 代理 ID
+};
+
+type GameResult = {
+  memberId: string; // 成员 ID
+  result: string; // 结果
+};
+
+// 注单列表-掼蛋-出参
+export type GameRecordRequestRecords = {
+  id: string; // 游戏 ID
+  roomId: number; // 房间 ID
+  roomType: number; // 房间类型
+  roomOwnerId: string; // 房主 ID
+  clubId: string | null; // 俱乐部 ID
+  clubOwnerId: string | null; // 俱乐部所有者 ID
+  parentClubOwnerAgentId: string | null; // 父级俱乐部代理 ID
+  tableFee: number; // 桌费
+  bet: number; // 下注金额
+  roundsMode: number; // 回合模式
+  upgradeMode: number; // 升级模式
+  enterMode: number; // 进入模式
+  multiplierMode: number; // 倍数模式
+  trusteeTime: number; // 托管时间
+  settleCap: number; // 结算上限
+  participants: Participant[]; // 参与者列表
+  gameStatus: number; // 游戏状态
+  bombCount: number; // 炸弹数量
+  multiplierCount: number; // 倍数计数
+  gameStartTime: number; // 游戏开始时间 (时间戳)
+  gameEndTime: number; // 游戏结束时间 (时间戳)
+  result: GameResult[]; // 游戏结果列表
+  createdAt: number; // 创建时间 (时间戳)
+  updatedAt: number; // 更新时间 (时间戳)
+  version: number; // 版本号
 };
 
 export type DownloadListRecords = {
