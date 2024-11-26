@@ -30,8 +30,8 @@ export default function Page({ searchParams }: CommonWrapperProps) {
       >
         <List searchParams={searchParams} />
       </Suspense>
-      <OrderDetailDialog targetUserId={""} appType={"AGENT"} />
-      <BombDetailDialog targetUserId={""} appType={"AGENT"} />
+      <OrderDetailDialog />
+      <BombDetailDialog />
     </div>
   );
 }

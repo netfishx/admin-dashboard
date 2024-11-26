@@ -118,7 +118,7 @@ async function ListBody({ list }: { list: GameRecordRequestRecords[] }) {
               {format(item.gameEndTime, "yyyy-MM-dd HH:mm:ss")}
             </TableCell>
             <TableCell className="w-24 text-center sticky right-0 z-10 bg-background">
-              <DetailButton />
+              <DetailButton item={item} />
             </TableCell>
           </TableRow>
         ))

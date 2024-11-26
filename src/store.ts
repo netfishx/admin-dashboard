@@ -2,7 +2,9 @@ import type {
   AgentData,
   AnnouncementList,
   BackgroundImageList,
+  BombDetailPlayerDetails,
   DictionaryList,
+  GameRecordRequestRecords,
   MemberList,
   Role,
   Subaccount,
@@ -144,3 +146,11 @@ export const subaccountIdAtom = atom<string>("");
 export const orderListGuandanDetailDialogAtom = atom<boolean>(false);
 // 报表管理-注单列表-棋牌-炸弹详情弹窗
 export const orderListGuandanBombDetailDialogAtom = atom<boolean>(false);
+// 报表管理-注单列表-冠单-注单详情行数据
+export const orderListGuandanDetailItemAtom =
+  atom<GameRecordRequestRecords | null>(null);
+
+// 报表管理-注单列表-冠单-炸弹详情数据
+export const orderListBombDetailRecordAtom = atom<
+  BombDetailPlayerDetails[] | null
+>(null);

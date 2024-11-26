@@ -895,3 +895,25 @@ export type DownloadListRecords = {
   status: number; //状态(0: 初始化，1：生成中 ，2：生成成功，99：生成失败)
   failReason: string; //错误原因
 };
+
+// 注单列表-掼蛋-炸弹详情数据
+export type BombDetailRecords = {
+  id: string;
+  gameId: string;
+  roundNumber: number;
+  bombCount: number;
+  details: BombDetailPlayerDetails[];
+  createdAt: number;
+  updatedAt: number;
+  version: number;
+};
+
+// 注单列表-掼蛋-炸弹详情玩家详情
+export type BombDetailPlayerDetails = {
+  memberId: string;
+  bombs: number;
+  score: number;
+  rank: number | null;
+  tribute: string | null;
+  hand: string[];
+};
