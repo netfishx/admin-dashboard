@@ -170,16 +170,8 @@
       "restoreTitle": "请确认是否恢复默认赔率？"
     },
     "ratio": {
-      "type": "游戏类别",
       "name": "游戏名称",
-      "column": "修改值",
-      "placeholder": "请选择",
-      "reset": "恢复默认",
-      "save": "保存",
-      "ratio": "占成比例",
-      "tip": "（*不要超过最高比例）",
-      "success": "保存成功",
-      "failed": "保存失败"
+      "ratio": "默认占成"
     },
     "rebate": {
       "type": "游戏类别",

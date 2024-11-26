@@ -1,5 +1,4 @@
 import { getGameConfig } from "@/api";
-import { RatioForm } from "@/app/(dashboard)/games/ratio/form";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
   Table,
@@ -11,12 +10,30 @@ import {
 } from "@/components/ui/table";
 import { getTranslations } from "next-intl/server";
 import { Suspense } from "react";
-import { RatioTable } from "./table";
 
 async function TableBodyWrapper() {
   const res = await getGameConfig();
+  const list = res.data?.filter((item) => item.status === 1) ?? [];
+  const t = await getTranslations();
   return (
-    <RatioTable data={res.data?.filter((item) => item.status === 1) ?? []} />
+    <TableBody>
+      {list.length > 0 ? (
+        list.map((item) => (
+          <TableRow key={item.gameId}>
+            <TableCell>{item.gameName}</TableCell>
+            <TableCell className="flex items-center gap-2">
+              {item.maxPercent ?? 0}%
+            </TableCell>
+          </TableRow>
+        ))
+      ) : (
+        <TableRow>
+          <TableCell colSpan={2} className="text-center h-40">
+            {t("noData")}
+          </TableCell>
+        </TableRow>
+      )}
+    </TableBody>
   );
 }
 
@@ -27,10 +44,7 @@ async function TableWrapper() {
       <TableHeader>
         <TableRow className="bg-muted">
           <TableHead>{t("name")}</TableHead>
-          <TableHead className="min-w-32 w-1/2">
-            {t("ratio")}
-            <span className="text-destructive">{t("tip")}</span>
-          </TableHead>
+          <TableHead className="min-w-32 w-1/2">{t("ratio")}</TableHead>
         </TableRow>
       </TableHeader>
       <Suspense
@@ -56,12 +70,9 @@ async function TableWrapper() {
 export default function Page() {
   return (
     <div className="flex flex-col gap-2 w-full">
-      <div className="flex justify-between items-center bg-background p-4">
-        <RatioForm />
-      </div>
       <div className="p-2 bg-background flex-1">
         <div className="border rounded-sm">
-          <Suspense fallback={null}>
+          <Suspense>
             <TableWrapper />
           </Suspense>
         </div>
