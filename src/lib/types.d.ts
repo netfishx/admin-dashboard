@@ -304,8 +304,8 @@ export type MemberReportRequestParams = {
   gameId?: number; // 游戏ID（不传时为全部游戏）
   startTime: number; // 开奖开始时间（必传）
   endTime: number; // 开奖结束时间（必传）
-  pageNum?: number; // 第几页
-  pageSize?: number; // 每页大小
+  pageNum: number; // 第几页
+  pageSize: number; // 每页大小
   parentAgentId?: string | number; // 上级代理ID
   memberId?: string | number; // 会员ID
 };
@@ -345,8 +345,8 @@ export type OrderReportsRequestParams = {
   betAmount?: string; // 投注金额
   orderStatus?: 0 | 1; // 注单状态: 0 = 未结算, 1 = 已结算
   operators?: "0" | "1"; // 运算符 (operators), e.g., >= or <=
-  pageNum?: number; // 页码, e.g., 1
-  pageSize?: number; // 每页大小, e.g., 10
+  pageNum: number; // 页码, e.g., 1
+  pageSize: number; // 每页大小, e.g., 10
   key?: string; // Key (Description not provided)
 };
 
@@ -378,8 +378,8 @@ export type RatioReportRequestParams = {
   parentAgentId?: string; // 上级代理ID
   startTime: number; // 开奖开始时间（必传）
   endTime: number; // 开奖结束时间（必传）
-  pageNum?: number; // 页码
-  pageSize?: number; // 每页大小
+  pageNum: number; // 页码
+  pageSize: number; // 每页大小
 };
 
 // 占成拦货报表请求出参
@@ -406,8 +406,8 @@ export type MemberBetReportRequestParams = {
   gameId?: number; // 游戏ID（不传时为全部游戏）
   startTime: number; // 开奖开始时间（必传）
   endTime: number; // 开奖结束时间（必传）
-  pageNum?: number; // 页码
-  pageSize?: number; // 每页条数
+  pageNum: number; // 页码
+  pageSize: number; // 每页条数
 };
 
 // 会员下注报表请求出参
@@ -839,8 +839,8 @@ export type GameRecordRequestParams = {
   issueNumber?: string; // 投注期号 (Issue Number)
   startTime: string; // 开始时间 必须 (Required)
   endTime: string; // 结束时间 必须 (Required)
-  pageNum?: number; // 页码
-  pageSize?: number; // 条数
+  pageNum: number; // 页码
+  pageSize: number; // 条数
   agentId?: string; // 代理ID (Agent ID)
   minister?: string; // 部长Id (Minister ID)
 };
