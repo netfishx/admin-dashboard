@@ -1,0 +1,49 @@
+.progress {
+  @apply rounded-2xl bg-primary/20 h-2 w-1/2;
+  &::-moz-progress-bar {
+    @apply bg-primary rounded-2xl;
+  }
+
+  &:indeterminate {
+    --progress-color: theme(colors.primary.DEFAULT);
+  }
+
+  &::-webkit-progress-bar {
+    @apply rounded-2xl bg-transparent;
+  }
+  &::-webkit-progress-value {
+    @apply bg-primary rounded-2xl;
+  }
+}
+
+.progress:indeterminate {
+  background-image: repeating-linear-gradient(
+    90deg,
+    var(--progress-color) -1%,
+    var(--progress-color) 10%,
+    transparent 10%,
+    transparent 90%
+  );
+  background-size: 200%;
+  background-position-x: 15%;
+  animation: progress-loading 5s ease-in-out infinite;
+}
+.progress:indeterminate::-moz-progress-bar {
+  @apply bg-transparent;
+  background-image: repeating-linear-gradient(
+    90deg,
+    var(--progress-color) -1%,
+    var(--progress-color) 10%,
+    transparent 10%,
+    transparent 90%
+  );
+  background-size: 200%;
+  background-position-x: 15%;
+  animation: progress-loading 5s ease-in-out infinite;
+}
+
+@keyframes progress-loading {
+  50% {
+    background-position-x: -115%;
+  }
+}

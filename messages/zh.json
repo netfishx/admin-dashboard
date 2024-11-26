@@ -823,6 +823,8 @@
     },
     "security": {
       "title": "安全设置",
+      "progress": "安全进度",
+      "progressWarning": "你的账号安全进度一般，建议完成以下操作进行全面保护",
       "loginPassword": "登录密码",
       "loginPasswordDes": "登录时使用",
       "loginPasswordBtnText": "修改",
