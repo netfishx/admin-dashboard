@@ -139,3 +139,8 @@ export const subaccountDialogAtom = atom<boolean>(false);
 export const subaccountDeleteAtom = atom<string | null>(null);
 export const subaccountDeleteDialogAtom = atom<boolean>(false);
 export const subaccountIdAtom = atom<string>("");
+
+// 报表管理-注单列表-棋牌-注单详情弹窗
+export const orderListGuandanDetailDialogAtom = atom<boolean>(false);
+// 报表管理-注单列表-棋牌-炸弹详情弹窗
+export const orderListGuandanBombDetailDialogAtom = atom<boolean>(false);

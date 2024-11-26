@@ -22,6 +22,8 @@ import type {
   FundList,
   GameConfig,
   GameOdds,
+  GameRecordRequestParams,
+  GameRecordRequestRecords,
   GameType,
   LoginLog,
   MaintainGame,
@@ -706,10 +708,21 @@ export async function getMemberReportList(params: MemberReportRequestParams) {
   });
 }
 
+// 注单列表-棋牌
 export async function getOrderReportList(params: OrderReportsRequestParams) {
   const user = await getSession();
   return await apiRequest<PageData<OrderReportsRecord>>({
     url: "/agent/order/baccarat/list",
+    token: user?.token,
+    params,
+  });
+}
+
+// 注单列表-掼蛋
+export async function getGuandanReportList(params: GameRecordRequestParams) {
+  const user = await getSession();
+  return await apiRequest<PageData<GameRecordRequestRecords>>({
+    url: "/agent/order/guandan/list",
     token: user?.token,
     params,
   });
