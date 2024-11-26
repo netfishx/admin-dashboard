@@ -2,6 +2,7 @@ import { getAgentAnnouncement } from "@/api";
 import { Suspense } from "react";
 import { List } from "./list";
 
+// 本级公告
 export default async function Own({
   searchParams,
 }: { searchParams: Promise<{ [key: string]: string | string[] }> }) {
@@ -9,7 +10,7 @@ export default async function Own({
   const { data } = await getAgentAnnouncement({
     pageSize: Number(search.pageSize ?? 10),
     pageNum: Number(search.pageNum ?? 1),
-    level: 0,
+    level: 0, // 本级
   });
 
   return (

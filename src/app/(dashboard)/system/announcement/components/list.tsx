@@ -10,9 +10,9 @@ import {
 } from "@/components/ui/table";
 import type { PageData } from "@/lib/types";
 import type { AnnouncementList } from "@/lib/types";
+import { format } from "date-fns";
 import { getTranslations } from "next-intl/server";
 import { Suspense } from "react";
-import { formatTimestamp } from "../tools";
 import { TruncatedCell } from "../truncated-cell";
 
 export async function List({ data }: { data?: PageData<AnnouncementList> }) {
@@ -74,15 +74,15 @@ export async function List({ data }: { data?: PageData<AnnouncementList> }) {
                   <TableRow key={item.id}>
                     {/* admin permission */}
                     <TableCell className="w-24 text-center">
-                      {formatTimestamp(item.startTime)}
+                      {format(Number(item.startTime), "yyyy-MM-dd HH:mm:ss")}
                     </TableCell>
 
                     <TableCell className="w-24 text-center">
-                      {formatTimestamp(item.endTime)}
+                      {format(Number(item.endTime), "yyyy-MM-dd HH:mm:ss")}
                     </TableCell>
                     {/* admin permission */}
                     <TableCell className="w-24 text-center">
-                      {formatTimestamp(item.createTime)}
+                      {format(Number(item.createTime), "yyyy-MM-dd HH:mm:ss")}
                     </TableCell>
 
                     {/* admin permission */}

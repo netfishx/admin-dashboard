@@ -160,8 +160,8 @@ export type AnnouncementListRequest = {
   pageSize: number;
   pageNum: number;
   userId?: string;
-  startTime?: number;
-  endTime?: number;
+  startLastTime?: number;
+  endLastTime?: number;
 };
 // 公告列表请求 本级
 export type AnnouncementAgentListRequest = {
@@ -718,11 +718,6 @@ export type TodayGameReport = {
     totaSettledAmount: string | number;
     issueAmount: number | string;
   }[];
-};
-export type GameChartConfig = {
-  game: string;
-  data: number;
-  fill: string;
 };
 // 充提
 export type FundList = {

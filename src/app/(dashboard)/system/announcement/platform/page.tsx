@@ -5,7 +5,7 @@ import { Suspense } from "react";
 import { List } from "../components/list";
 import { Form } from "./form";
 
-export default async function All({
+export default async function Platform({
   searchParams,
 }: { searchParams: Promise<{ [key: string]: string | string[] }> }) {
   const search = await searchParams;
@@ -16,8 +16,9 @@ export default async function All({
   const { data } = await getAnnouncement({
     pageSize: Number(search.pageSize ?? 10),
     pageNum: Number(search.pageNum ?? 1),
-    startTime: Number(start),
-    endTime: Number(end),
+    startLastTime: Number(start),
+    endLastTime: Number(end),
+    userId: (search.userId ?? "") as string,
   });
   return (
     <div className="flex flex-col gap-2 w-full h-full">
