@@ -189,13 +189,15 @@ export function DateRangeFilter({
       ? Number.parseInt(endTimeFromUrl, 10)
       : endOfDay(today).getTime();
 
-    setDateRange({
-      [startTimeText]: initialStartTime,
-      [endTimeText]: initialEndTime,
+    startTransition(async () => {
+      await setDateRange({
+        [startTimeText]: initialStartTime,
+        [endTimeText]: initialEndTime,
+      });
+      if (!(startTimeFromUrl && endTimeFromUrl)) {
+        router.refresh();
+      }
     });
-    if (!startTimeFromUrl || !endTimeFromUrl) {
-      router.refresh();
-    }
   }, []);
 
   const resetDateRange = (start: number, end: number) => {

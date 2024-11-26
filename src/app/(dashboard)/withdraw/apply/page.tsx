@@ -50,13 +50,15 @@ export default async function Page({
 async function TableWrapper({
   searchParams,
 }: { searchParams: Promise<{ [key: string]: string | string[] }> }) {
-  const { start, end, approverStatus, pageNum, pageSize } = await searchParams;
-  if (!start || !end) {
+  const { startTime, endTime, approverStatus, pageNum, pageSize } =
+    await searchParams;
+  console.info("startTime:", startTime, "endTime:", endTime);
+  if (!startTime || !endTime) {
     return null;
   }
   const { data } = await getWithdrawApplyList({
-    startTime: Number(start),
-    endTime: Number(end),
+    startTime: Number(startTime),
+    endTime: Number(endTime),
     approverStatus: Number(approverStatus),
     pageNum: Number(pageNum ?? 1),
     pageSize: Number(pageSize ?? 10),
