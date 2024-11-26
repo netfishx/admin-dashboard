@@ -10,7 +10,10 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import type { RatioReportRequestRecords } from "@/lib/types";
+import type {
+  RatioReportRequestParams,
+  RatioReportRequestRecords,
+} from "@/lib/types";
 import { getTranslations } from "next-intl/server";
 import { Suspense } from "react";
 
@@ -105,7 +108,7 @@ async function ListBody({ list }: { list: RatioReportRequestRecords[] }) {
 
 export async function RatioList({
   searchParams,
-}: { searchParams: Promise<RatioReportRequestRecords> }) {
+}: { searchParams: Promise<RatioReportRequestParams> }) {
   const params = await searchParams;
   const { data } = await getRatioReport(params);
   return (

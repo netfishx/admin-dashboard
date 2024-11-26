@@ -30,7 +30,11 @@ export function AnnouncementDialog({
       open={open && isFirstLogin === "true"}
       onOpenChange={handleOpenChange}
     >
-      <DialogContent>
+      <DialogContent
+        onInteractOutside={(e) => {
+          e.preventDefault();
+        }}
+      >
         <DialogHeader>
           <DialogTitle>{t("announcement")}</DialogTitle>
         </DialogHeader>

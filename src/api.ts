@@ -250,10 +250,10 @@ export async function getMemberList(params: {
 
 export async function getAgentLoginLog(params: {
   agentId: string;
-  pageNum?: number;
-  pageSize?: number;
-  startTime?: Date;
-  endTime?: Date;
+  pageNum: number;
+  pageSize: number;
+  startTime?: number;
+  endTime?: number;
   ip?: string;
 }) {
   const user = await getSession();
@@ -354,7 +354,7 @@ export async function getAnnouncement(params: AnnouncementListRequest) {
   }
   return res;
 }
-// 系统管理-公告管理-本级公告
+// 系统管理-公告管理-本级公告（上级公告）
 export async function getAgentAnnouncement(
   params: AnnouncementAgentListRequest,
 ) {
@@ -1109,7 +1109,7 @@ export async function getTodayWinLoss(params: {
 }) {
   const user = await getSession();
   return await apiRequest<TodayWinLoss>({
-    url: "/report/agent/todayWinLoss",
+    url: "/index/todayWinLoss",
     token: user?.token,
     params,
   });
@@ -1125,7 +1125,7 @@ export async function getTodayWinLossChart(params: {
   const [res, res2] = await Promise.all([
     getGameList(1),
     apiRequest<TodayGameReport>({
-      url: "/report/agent/todayGameReport",
+      url: "/index/todayGameReport",
       token: user?.token,
       params,
     }),

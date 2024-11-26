@@ -1,16 +1,12 @@
 "use client";
-import { getFundList, getTodayWinLossChart } from "@/api";
 import {
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import type {} from "@/lib/types";
-import { endOfDay, format, fromUnixTime, startOfDay, sub } from "date-fns";
 import { useTranslations } from "next-intl";
-import { useEffect, useState } from "react";
-
+import { useState } from "react";
 import { CartesianGrid, Line, LineChart, XAxis, YAxis } from "recharts";
 // 定义配置对象
 const chartConfigs = {
@@ -32,7 +28,7 @@ export function WeekChart({
   textConfig,
 }: {
   textConfig: {
-    data?: {
+    data: {
       mainData?: {
         name: string;
         data: number;
@@ -49,149 +45,28 @@ export function WeekChart({
 }) {
   const t = useTranslations("chart");
   const [activeTab, setActiveTab] = useState("0");
-  const [data, setData] = useState<Array<{ name: string; data: number }>>([]);
-
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
-  useEffect(() => {
-    const fetchData = async () => {
-      await arrangeConfigData();
-      setData(getData(activeTab));
-    };
-    fetchData();
-  }, []);
-
-  async function arrangeConfigData() {
-    const now = Date.now();
-    const start = startOfDay(now).getTime();
-    const end = endOfDay(now).getTime();
-    const oneWeekAgo = sub(start, { weeks: 1 }).getTime();
-    switch (textConfig.type) {
-      case "bjl":
-      case "gd": {
-        const { data: gameChartData } = await getTodayWinLossChart({
-          startTime: start,
-          endTime: end,
-          beforeEndTime: oneWeekAgo,
-          size: 6,
-        });
-        if (textConfig.type === "bjl") {
-          // 百家乐流水
-          const bjlTrendingBetAmountData: Array<{
-            name: string;
-            data: number;
-          }> = [];
-          // 百家乐人次
-          const bjlTrendingBetNumData: Array<{ name: string; data: number }> =
-            [];
-
-          gameChartData?.dailyBaccaratReport?.forEach(
-            ({ day, memberBetAmount, betNum }) => {
-              const formattedDay = format(
-                fromUnixTime(day / 1000),
-                "yyyy-MM-dd",
-              );
-
-              bjlTrendingBetAmountData.push({
-                name: formattedDay,
-                data: Number(memberBetAmount),
-              });
-
-              bjlTrendingBetNumData.push({
-                name: formattedDay,
-                data: Number(betNum),
-              });
-            },
-          );
-          textConfig.data = {
-            mainData: bjlTrendingBetAmountData,
-            subData: bjlTrendingBetNumData,
-          };
-        } else {
-          // 掼蛋流水
-          const gdTrendingBetAmountData: Array<{ name: string; data: number }> =
-            [];
-          // 掼蛋人次
-          const gdTrendingBetNumData: Array<{ name: string; data: number }> =
-            [];
-          gameChartData?.dailyPokerReport?.forEach(
-            ({ day, totaSettledAmount, issueAmount }) => {
-              const formattedDay = format(
-                fromUnixTime(day / 1000),
-                "yyyy-MM-dd",
-              );
-
-              gdTrendingBetAmountData.push({
-                name: formattedDay,
-                data: Number(totaSettledAmount),
-              });
-
-              gdTrendingBetNumData.push({
-                name: formattedDay,
-                data: Number(issueAmount),
-              });
-            },
-          );
-          textConfig.data = {
-            mainData: gdTrendingBetAmountData,
-            subData: gdTrendingBetNumData,
-          };
-        }
-        break;
-      }
-      case "member": {
-        break;
-      }
-      case "fund": {
-        // 充提
-        const { data: fundListData } = await getFundList({
-          startTime: oneWeekAgo,
-          endTime: end,
-        });
-        const rechargeData: Array<{ name: string; data: number }> = [];
-        const withdrawData: Array<{ name: string; data: number }> = [];
-        fundListData?.fundList?.forEach(
-          ({ day, rechargeAmount, withdrawAmount }) => {
-            const formattedDay = format(fromUnixTime(day / 1000), "yyyy-MM-dd");
-            rechargeData.push({
-              name: formattedDay,
-              data: Number(rechargeAmount),
-            });
-
-            withdrawData.push({
-              name: formattedDay,
-              data: Number(withdrawAmount),
-            });
-          },
-        );
-        textConfig.data = {
-          mainData: rechargeData,
-          subData: withdrawData,
-        };
-        break;
-      }
-      default:
-        break;
-    }
-  }
   function getData(tab: string) {
-    if (!textConfig.data) {
-      return [];
-    }
-    console.info("=========", textConfig.data);
     let initialData: {
       name: string;
       data: number;
     }[] = [];
+
     if (tab === "0") {
-      initialData = textConfig.data?.mainData || [];
+      initialData = textConfig.data.mainData || [];
     } else {
-      initialData = textConfig.data?.subData || [];
+      initialData = textConfig.data.subData || [];
     }
     return initialData;
   }
-
+  const [data, setData] = useState<
+    {
+      name: string;
+      data: number;
+    }[]
+  >(getData(activeTab));
   function formatTooltipLabel(label: string) {
-    return `${label} ${t("totalDeposits")}`;
+    const labelText = textConfig.tab[Number(activeTab)];
+    return `${label} ${labelText}`;
   }
   function formatTooltipValue(value: number) {
     return [`${value}`];
