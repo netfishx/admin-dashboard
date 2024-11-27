@@ -6,11 +6,11 @@ import type { GameConfig } from "@/lib/types";
 import { rebateAtom } from "@/store";
 import { useAtom } from "jotai";
 import { useTranslations } from "next-intl";
-import { useEffect } from "react";
+import { useLayoutEffect } from "react";
 
 export function RebateTable({ data }: { data: GameConfig[] }) {
   const [list, setRebate] = useAtom(rebateAtom);
-  useEffect(() => {
+  useLayoutEffect(() => {
     setRebate(
       data.map(({ gameId, gameName, backRate, maxBackRate }) => ({
         gameId,

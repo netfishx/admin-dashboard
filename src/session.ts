@@ -1,33 +1,33 @@
 import type { User } from "@/lib/types";
-import { SignJWT, jwtVerify } from "jose";
+import { CborDecoderBase } from "@jsonjoy.com/json-pack/lib/cbor/CborDecoderBase";
+import { CborEncoder } from "@jsonjoy.com/json-pack/lib/cbor/CborEncoder";
+import LZString from "lz-string";
 import { cookies } from "next/headers";
 
-const key = new TextEncoder().encode(process.env.AUTH_SECRET);
+const encoder = new CborEncoder();
+const decoder = new CborDecoderBase();
+
 const expiresTime = 24 * 60 * 60;
 
 export type SessionData = User & {
   expires: string;
-  isFirstLogin: boolean;
 };
 
-export async function signToken(payload: SessionData) {
-  return await new SignJWT(payload)
-    .setProtectedHeader({ alg: "HS256" })
-    .setIssuedAt()
-    .setExpirationTime(`${expiresTime} seconds`)
-    .sign(key);
+export function signToken(payload: SessionData) {
+  const encoded = encoder.encode(payload);
+  return LZString.compressToEncodedURIComponent(
+    String.fromCharCode.apply(null, [...encoded]),
+  );
 }
 
-export async function verifyToken(input: string) {
-  try {
-    const { payload } = await jwtVerify(input, key, {
-      algorithms: ["HS256"],
-    });
-    return payload as SessionData;
-  } catch (error) {
-    console.error(error);
-    return null;
-  }
+export function verifyToken(input: string) {
+  return decoder.decode(
+    new Uint8Array(
+      LZString.decompressFromEncodedURIComponent(input)
+        .split("")
+        .map((c) => c.charCodeAt(0)),
+    ),
+  ) as SessionData;
 }
 
 export async function getSession() {
@@ -35,7 +35,7 @@ export async function getSession() {
   if (!session) {
     return null;
   }
-  return await verifyToken(session);
+  return verifyToken(session);
 }
 
 export async function setSession(user: User) {
@@ -43,9 +43,8 @@ export async function setSession(user: User) {
   const session: SessionData = {
     ...user,
     expires: expires.toISOString(),
-    isFirstLogin: true,
   };
-  const encryptedSession = await signToken(session);
+  const encryptedSession = signToken(session);
   (await cookies()).set("session", encryptedSession, {
     expires,
     httpOnly: true,

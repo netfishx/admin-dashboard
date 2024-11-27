@@ -5,11 +5,11 @@ import type { GameConfig } from "@/lib/types";
 import { holdStatusAtom } from "@/store";
 import { useAtom } from "jotai";
 import { useTranslations } from "next-intl";
-import { useEffect } from "react";
+import { useLayoutEffect } from "react";
 
 export function FlyOrderTable({ data }: { data: GameConfig[] }) {
   const [list, setHoldStatus] = useAtom(holdStatusAtom);
-  useEffect(() => {
+  useLayoutEffect(() => {
     setHoldStatus(
       data.map(({ gameId, gameName, holdStatus }) => ({
         gameId,

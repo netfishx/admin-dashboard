@@ -6,14 +6,14 @@ import type { GameOdds } from "@/lib/types";
 import { changedOddsLimitAtom, limitAtom, oddsAtom } from "@/store";
 import { uniq } from "es-toolkit";
 import { useAtom } from "jotai";
-import { useEffect } from "react";
+import { useLayoutEffect } from "react";
 
 export function OddsTable({ list }: { list: GameOdds[] }) {
   const [odds, setOdds] = useAtom(oddsAtom);
   const [changedList, setChangedList] = useAtom(changedOddsLimitAtom);
   const [limit, setLimit] = useAtom(limitAtom);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     setOdds(
       Object.fromEntries(
         list.map((item) => [

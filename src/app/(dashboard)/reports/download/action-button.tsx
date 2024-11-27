@@ -1,12 +1,10 @@
 "use client";
-
-import { getDownloadUrl } from "@/api";
 import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useTransition } from "react";
 
-export function ActionButton({ id }: { id: string }) {
+export function ActionButton({ fileUrl }: { fileUrl: string }) {
   const t = useTranslations("report.download");
   const [isPending, startTransition] = useTransition();
   return (
@@ -16,8 +14,7 @@ export function ActionButton({ id }: { id: string }) {
       disabled={isPending}
       onClick={() => {
         startTransition(async () => {
-          const { data } = await getDownloadUrl({ id });
-          window.open(data?.url);
+          window.open(fileUrl);
         });
       }}
     >

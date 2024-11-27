@@ -19,7 +19,7 @@ import { useAtom, useAtomValue } from "jotai";
 import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Form from "next/form";
-import { use, useEffect, useRef, useState, useTransition } from "react";
+import { use, useLayoutEffect, useRef, useState, useTransition } from "react";
 import { toast } from "sonner";
 
 export function RoleDialog({
@@ -33,7 +33,7 @@ export function RoleDialog({
   const [isPending, startTransition] = useTransition();
   const permissionsRes = use(permissions);
   const [permsIds, setPermsIds] = useState<number[]>(data?.permsIds ?? []);
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (open) {
       setPermsIds(data?.permsIds ?? []);
     }

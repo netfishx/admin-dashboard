@@ -884,11 +884,11 @@ export type DownloadListRecords = {
   exportButtonCode: string; //操作编码
   exportFileName: string; //文件名
   operatorName: string; //操作人姓名
-  operateTime: number; //操作时间
   downloadTime: number; //最近下载时间
   endTime: number; //结束时间
   status: number; //状态(0: 初始化，1：生成中 ，2：生成成功，99：生成失败)
   failReason: string; //错误原因
+  exportFileUrl: string; //文件地址
 };
 
 // 注单列表-掼蛋-炸弹详情数据
