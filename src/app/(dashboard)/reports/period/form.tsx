@@ -22,11 +22,11 @@ export function Form() {
 
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
-  const [gameTypeName, setGameTypeName] = useQueryState("gameTypeName", {
-    defaultValue: "1",
+  const [gameType, setGameType] = useQueryState("gameType", {
+    defaultValue: "0",
   });
-  const [gameName, setGameName] = useQueryState("gameName", {
-    defaultValue: "",
+  const [gameId, setGameId] = useQueryState("gameId", {
+    defaultValue: "all",
   });
   const [issueNumber, setIssueNumber] = useQueryState("issueNumber", {
     defaultValue: "",
@@ -38,29 +38,31 @@ export function Form() {
         <div className="flex justify-between items-center  py-2 px-4">
           <div className="flex gap-2 items-center">
             <div className="flex gap-2 items-center">
-              <Label className="shrink-0">{t("gameTypeName")}</Label>
+              <Label className="shrink-0">{t("gameType")}</Label>
               <Select
-                value={gameTypeName ?? ""}
-                onValueChange={(value) => setGameTypeName(value)}
+                value={gameType}
+                onValueChange={(value) => setGameType(value)}
               >
                 <SelectTrigger className="w-28">
                   <SelectValue placeholder={t("placeholderselect")} />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="1">百家乐</SelectItem>
+                  <SelectItem value="0">百家乐</SelectItem>
                 </SelectContent>
               </Select>
             </div>
             <div className="flex gap-2 items-center">
-              <Label className="shrink-0">{t("gameName")}</Label>
+              <Label className="shrink-0">{t("gameId")}</Label>
               <Select
-                value={gameName ?? ""}
-                onValueChange={(value) => setGameName(value)}
+                value={gameId}
+                onValueChange={(value) => setGameId(value)}
+                defaultValue="all"
               >
                 <SelectTrigger className="w-28">
                   <SelectValue placeholder={t("placeholderselect")} />
                 </SelectTrigger>
                 <SelectContent>
+                  <SelectItem value="all">{t("all")}</SelectItem>
                   <SelectItem value="0">百家乐01</SelectItem>
                   <SelectItem value="1">百家乐02</SelectItem>
                   <SelectItem value="2">百家乐03</SelectItem>

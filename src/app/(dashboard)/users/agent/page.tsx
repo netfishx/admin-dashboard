@@ -1,23 +1,14 @@
 import { getAgents } from "@/api";
 import { CustomPagination } from "@/components/custom-pagination";
 import { Skeleton } from "@/components/ui/skeleton";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
-import type { AgentData } from "@/lib/types";
-import { cn } from "@/lib/utils";
+import { Table, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { getSession } from "@/session";
 import { getTranslations } from "next-intl/server";
 import { Suspense } from "react";
-import Action from "./action-buttons";
 import { AddAgent } from "./add-agent";
 import { Form } from "./form";
 import { Modals } from "./modals";
+import { TableBodySkeleton, TableBodyWrapper } from "./table-wrapper";
 
 export default async function Page({
   searchParams,
@@ -62,6 +53,8 @@ async function TableWrapper({
     pageNum: Number(pageNum),
     pageSize: Number(pageSize),
   });
+  const session = await getSession();
+  const permissions = session?.permissions;
   console.info("agent list:", data);
   return (
     <>
@@ -69,7 +62,7 @@ async function TableWrapper({
         <Table>
           <TableHeaderWrapper />
           <Suspense fallback={<TableBodySkeleton />}>
-            <TableBodyWrapper list={data?.list} />
+            <TableBodyWrapper list={data?.list} permissions={permissions} />
           </Suspense>
         </Table>
       </div>
@@ -105,58 +98,5 @@ async function TableHeaderWrapper() {
         </TableHead>
       </TableRow>
     </TableHeader>
-  );
-}
-
-async function TableBodyWrapper({ list }: { list: AgentData[] | undefined }) {
-  const t = await getTranslations("users.agents");
-  const session = await getSession();
-  const permissions = session?.permissions;
-  return (
-    <TableBody>
-      {list?.map((item) => (
-        <TableRow key={item.id}>
-          {permissions?.includes("agent_search") && (
-            <>
-              <TableCell>{item.upUsername}</TableCell>
-              <TableCell>{item.deptId}</TableCell>
-            </>
-          )}
-          <TableCell>{item.id}</TableCell>
-          <TableCell>{item.username}</TableCell>
-          <TableCell>{item.nickname}</TableCell>
-          <TableCell className="">
-            <div
-              className={cn(
-                "px-2 rounded-sm w-fit",
-                item.status === 0 && "text-green bg-green/10",
-                item.status === 1 && "text-destructive bg-destructive/10",
-                item.status === 2 && "text-orange bg-orange/10",
-              )}
-            >
-              {t(`statusLabel.${item.status}`)}
-            </div>
-          </TableCell>
-          <TableCell className="text-center sticky right-0 bg-background">
-            <Action data={item} permissions={permissions ?? []} />
-          </TableCell>
-        </TableRow>
-      ))}
-    </TableBody>
-  );
-}
-
-async function TableBodySkeleton() {
-  return (
-    <TableBody>
-      {Array.from({ length: 5 }).map((_, index) => (
-        // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
-        <TableRow key={index}>
-          <TableCell colSpan={7}>
-            <Skeleton className="w-full h-6" />
-          </TableCell>
-        </TableRow>
-      ))}
-    </TableBody>
   );
 }

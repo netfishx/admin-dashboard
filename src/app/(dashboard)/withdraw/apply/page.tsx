@@ -41,7 +41,14 @@ export default async function Page({
         <Form />
       </Suspense>
       <div className="p-2 bg-background flex-1 flex flex-col gap-2">
-        <Suspense>
+        <Suspense
+          fallback={
+            <Table>
+              <TableHeaderWrapper />
+              <TableBodySkeleton />
+            </Table>
+          }
+        >
           <TableWrapper searchParams={searchParams} />
         </Suspense>
       </div>
@@ -66,26 +73,13 @@ async function TableWrapper({
     pageSize: Number(pageSize ?? 10),
   });
 
-  console.info("agent list:", data);
+  console.info("apply list:", data);
   return (
     <div className="bg-background flex-1 w-full ">
       <div className="relative overflow-y-auto overflow-x-auto border rounded-sm">
         <Table>
           <TableHeaderWrapper />
-          <Suspense
-            fallback={
-              <TableBody>
-                {Array.from({ length: 5 }).map((_, i) => (
-                  // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
-                  <TableRow key={i}>
-                    <TableCell colSpan={12} className="h-40">
-                      <Skeleton className="w-full h-full" />
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            }
-          >
+          <Suspense fallback={<TableBodySkeleton />}>
             <TableBodyWrapper list={data?.list ?? []} />
           </Suspense>
         </Table>
@@ -157,7 +151,7 @@ async function TableBodyWrapper({ list }: { list: ApplyData[] }) {
               <MoneyBtn data={item} />
             </TableCell>
             <TableCell className="min-w-32 text-center">
-              {format(item.applyTime, "yyyy-MM-dd HH:mm:ss")}
+              {format(Number(item.applyTime), "yyyy-MM-dd HH:mm:ss")}
             </TableCell>
             <TableCell className="text-center">{item.approverName}</TableCell>
             <TableCell className="min-w-32 text-center">
@@ -211,6 +205,20 @@ async function TableBodyWrapper({ list }: { list: ApplyData[] }) {
           </TableCell>
         </TableRow>
       )}
+    </TableBody>
+  );
+}
+function TableBodySkeleton() {
+  return (
+    <TableBody>
+      {Array.from({ length: 5 }).map((_, index) => (
+        // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
+        <TableRow key={index}>
+          <TableCell colSpan={12}>
+            <Skeleton className="w-full h-6" />
+          </TableCell>
+        </TableRow>
+      ))}
     </TableBody>
   );
 }

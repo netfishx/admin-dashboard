@@ -4,7 +4,6 @@ import { apiRequest } from "@/lib/request";
 import type {
   AgentData,
   Announcement,
-  AnnouncementAgentListRequest,
   AnnouncementList,
   AnnouncementListRequest,
   ApplyData,
@@ -31,6 +30,7 @@ import type {
   MaintainGame,
   MemberBetReportRequestParams,
   MemberBetReportRequestRecords,
+  MemberChartList,
   MemberList,
   MemberReportRequestParams,
   MemberReportsRecord,
@@ -39,8 +39,8 @@ import type {
   OrderReportsRequestParams,
   OreFeeList,
   PageData,
-  PeriodReport,
   PeriodReportList,
+  PeriodReportParams,
   Permission,
   PokerReportRequestParams,
   PokerReportRequestRecords,
@@ -51,6 +51,7 @@ import type {
   RewardRecordRequestParams,
   RewardRecordRequestRecords,
   Role,
+  SameOrSeniorAnnoListRequest,
   Subaccount,
   SupplierConfig,
   SupplierList,
@@ -151,10 +152,19 @@ export async function getAgents(params: { pageNum: number; pageSize: number }) {
   });
 }
 // 用户管理-代理管理-获取单个代理信息
-export async function getAgentInfo(params: { id: string }) {
+export async function getAgentInfoById(params: { id: string }) {
   const user = await getSession();
   return await apiRequest<AgentData>({
     url: "/agent/user/main/getById",
+    params,
+    token: user?.token,
+  });
+}
+// 用户管理-代理管理-获取单个代理信息
+export async function getAgentInfoByUsername(params: { username: string }) {
+  const user = await getSession();
+  return await apiRequest<AgentData>({
+    url: "/agent/user/main/getByusername",
     params,
     token: user?.token,
   });
@@ -247,7 +257,19 @@ export async function getMemberList(params: {
     token: user?.token,
   });
 }
-
+export async function updateMember(data: {
+  id: string;
+  status: number;
+  agentId?: string;
+}) {
+  const user = await getSession();
+  return await apiRequest({
+    url: "/member/user/main/update",
+    method: "POST",
+    data,
+    token: user?.token,
+  });
+}
 export async function getAgentLoginLog(params: {
   agentId: string;
   pageNum: number;
@@ -355,9 +377,7 @@ export async function getAnnouncement(params: AnnouncementListRequest) {
   return res;
 }
 // 系统管理-公告管理-本级公告（上级公告）
-export async function getAgentAnnouncement(
-  params: AnnouncementAgentListRequest,
-) {
+export async function getSameOrSeniorAnno(params: SameOrSeniorAnnoListRequest) {
   const user = await getSession();
   const res = await apiRequest<PageData<AnnouncementList>>({
     url: "/announcement/getPageListByUserId",
@@ -476,10 +496,11 @@ export async function getRatioReport(params: RatioReportRequestParams) {
   });
 }
 
-export async function getPeriodReport(params: PeriodReport) {
+// 按期汇总报表
+export async function getPeriodReport(params: PeriodReportParams) {
   const user = await getSession();
   return await apiRequest<PageData<PeriodReportList>>({
-    url: "/getReports",
+    url: "/report/agent/baccarat/issue",
     params,
     token: user?.token,
   });
@@ -1167,6 +1188,17 @@ export async function getFundList(params: {
     params,
   });
 }
+export async function getMemberChartList(params: {
+  startTime: number;
+  endTime: number;
+}) {
+  const user = await getSession();
+  return await apiRequest<MemberChartList>({
+    url: "/index/todayLogReport",
+    token: user?.token,
+    params,
+  });
+}
 
 // 转账记录list
 export async function postGetTransferLogList(
@@ -1262,6 +1294,20 @@ export async function postCheckMoneySecret(data: {
   const user = await getSession();
   return await apiRequest({
     url: "/agent/center/fund/check",
+    method: "POST",
+    data,
+    token: user?.token,
+  });
+}
+// 修改登录密码
+export async function updateSelfPassword(data: {
+  id: string;
+  oldPassword: string;
+  newPassword: string;
+}) {
+  const user = await getSession();
+  return await apiRequest({
+    url: "/agent/account/updateSelfPassword",
     method: "POST",
     data,
     token: user?.token,
