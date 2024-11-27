@@ -17,7 +17,7 @@ import { getTranslations } from "next-intl/server";
 import { Suspense } from "react";
 import DetailButton from "./detail-button";
 
-async function ListHeader() {
+export async function ListHeader() {
   "use cache";
   const t = await getTranslations("report.agent");
   return (

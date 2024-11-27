@@ -1,18 +1,21 @@
+import TableSkeleton from "@/components/table-skeleton";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Table } from "@/components/ui/table";
 import type { TransferRecordRequestParams } from "@/lib/types";
 import { hasPermission } from "@/session";
 import { Suspense } from "react";
-import { List } from "./list";
+import { List, ListHeader } from "./list";
 import { ListFilter } from "./list-filter";
 
 interface CommonWrapperProps {
   searchParams: Promise<TransferRecordRequestParams>;
 }
 
-async function CommonWrapper({ searchParams }: CommonWrapperProps) {
+export default async function Page({ searchParams }: CommonWrapperProps) {
   const hasSearchPermission = await hasPermission("admin_supplier_report");
+
   return (
-    <>
+    <div className="flex flex-col gap-2 w-full">
       <Suspense
         fallback={
           <div className="flex justify-between items-center bg-background p-4">
@@ -22,16 +25,15 @@ async function CommonWrapper({ searchParams }: CommonWrapperProps) {
       >
         <ListFilter hasSearchPermission={hasSearchPermission} />
       </Suspense>
-      <List searchParams={searchParams} />
-    </>
-  );
-}
-
-export default function Page({ searchParams }: CommonWrapperProps) {
-  return (
-    <div className="flex flex-col gap-2 w-full">
-      <Suspense>
-        <CommonWrapper searchParams={searchParams} />
+      <Suspense
+        fallback={
+          <Table>
+            <ListHeader />
+            <TableSkeleton length={5} colSpan={15} />
+          </Table>
+        }
+      >
+        <List searchParams={searchParams} />
       </Suspense>
     </div>
   );

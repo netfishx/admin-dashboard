@@ -13,8 +13,8 @@ export default function DetailButton({ item }: { item: MemberReportsRecord }) {
   return (
     <div>
       <Button
-        variant="link"
-        className="hover:no-underline hover:text-primary/80"
+        variant="ghost"
+        className="hover:no-underline hover:text-primary/80 text-primary"
         onClick={() =>
           router.push(
             `/reports/order/baccarat?memberId=${item?.memberId}${

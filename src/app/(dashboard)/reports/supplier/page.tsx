@@ -1,8 +1,10 @@
+import TableSkeleton from "@/components/table-skeleton";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Table } from "@/components/ui/table";
 import type { SupplierReportRequestParams } from "@/lib/types";
 import { hasPermission } from "@/session";
 import { Suspense } from "react";
-import { List } from "./list";
+import { List, ListHeader } from "./list";
 import { ListFilter } from "./list-filter";
 
 interface CommonWrapperProps {
@@ -22,7 +24,20 @@ async function CommonWrapper({ searchParams }: CommonWrapperProps) {
       >
         <ListFilter hasSearchPermission={hasSearchPermission} />
       </Suspense>
-      <List searchParams={searchParams} />
+      <Suspense
+        fallback={
+          <div className="p-2 bg-background flex-1">
+            <div className="border rounded-sm relative">
+              <Table>
+                <ListHeader />
+                <TableSkeleton length={5} colSpan={15} />
+              </Table>
+            </div>
+          </div>
+        }
+      >
+        <List searchParams={searchParams} />
+      </Suspense>
     </>
   );
 }
