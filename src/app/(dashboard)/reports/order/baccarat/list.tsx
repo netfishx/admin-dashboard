@@ -121,7 +121,12 @@ export async function List({
   searchParams,
 }: { searchParams: Promise<OrderReportsRequestParams> }) {
   const params = await searchParams;
-  const { data } = await getOrderReportList(params);
+  const p = {
+    ...params,
+    pageNum: Number(params?.pageNum) || 1,
+    pageSize: Number(params?.pageSize) || 10,
+  };
+  const { data } = await getOrderReportList(p);
   return (
     <div className="p-2 bg-background flex-1">
       <div className="border rounded-sm relative">
