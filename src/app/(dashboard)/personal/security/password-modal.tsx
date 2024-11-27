@@ -1,5 +1,6 @@
 "use client";
 
+import { updateSelfPassword } from "@/api";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -26,6 +27,20 @@ export function PasswordModal({
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  // todo: 判断二次确认密码和新密码是否一致
+  const submit = async () => {
+    setLoading(true);
+
+    const { code, message } = await updateSelfPassword({
+      id: "-1",
+      oldPassword,
+      newPassword,
+    });
+
+    setLoading(false);
+  };
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent onPointerDownOutside={(e) => e.preventDefault()}>
@@ -83,7 +98,9 @@ export function PasswordModal({
           <Button variant="outline" onClick={() => onOpenChange(false)}>
             {translations("cancel")}
           </Button>
-          <Button>{translations("confirm")}</Button>
+          <Button onClick={submit} disabled={loading}>
+            {translations("confirm")}
+          </Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

@@ -1,20 +1,27 @@
 import { getTranslations } from "next-intl/server";
 
-import { getFundList, getTodayWinLoss, getTodayWinLossChart } from "@/api";
-import { getAgentAnnouncement, getAnnouncement } from "@/api";
+import {
+  getAnnouncement,
+  getFundList,
+  getMemberChartList,
+  getSameOrSeniorAnno,
+  getTodayFundList,
+  getTodayWinLoss,
+  getTodayWinLossChart,
+  getUserBasicInfo,
+} from "@/api";
 import { Announcement } from "@/app/(dashboard)/announcement";
-import { DataOverview } from "@/app/(dashboard)/data-overview";
 import { QuickAccess } from "@/app/(dashboard)/quick-access";
 import type { ChartConfig } from "@/components/ui/chart";
 import { getSession } from "@/session";
 import { TZDate } from "@date-fns/tz";
-import { format, fromUnixTime } from "date-fns";
+import { format } from "date-fns";
 import { cookies } from "next/headers";
-import { connection } from "next/server";
 import { Suspense } from "react";
 
 import { add, startOfDay, sub } from "date-fns";
 import { AnnouncementDialog } from "./announcement-dialog";
+import { DataOverview } from "./data-overview";
 import { DataOverviewFlow } from "./data-overview-flow";
 import { DayChart } from "./day-chart";
 import { Salutations } from "./salutations";
@@ -50,31 +57,93 @@ export default async function DashboardPage({
 }) {
   const session = await getSession();
   const permissions = session?.permissions;
-  const t = await getTranslations();
-  await connection();
   const params = await searchParams;
-
   const now = new TZDate().withTimeZone(
     timezoneOffsetToString(Number(params?.tz)),
   );
-  console.info("now-====", now);
   const start = startOfDay(now).getTime();
   const end = startOfDay(add(now, { days: 1 })).getTime();
   const oneWeekAgo = sub(start, { days: 7 }).getTime();
 
-  const cookie = await cookies();
-  const isFirstLogin = cookie?.get("isFirstLogin")?.value;
+  return (
+    <>
+      <TimeWrapper />
+      <div className="flex-1 flex flex-col gap-2">
+        {permissions?.includes("admin_stat") && (
+          <div className="grid gap-2">
+            <Suspense fallback={<div className="p-4 rounded bg-card h-24" />}>
+              <SalutationsWrapper start={start} end={end} />
+            </Suspense>
+          </div>
+        )}
+        <Suspense
+          fallback={
+            <div className="grid grid-cols-2 gap-2">
+              <div className="rounded bg-card h-40 lg:h-48 xl:h-72" />
+              <div className="rounded bg-card h-40 lg:h-48 xl:h-72" />
+            </div>
+          }
+        >
+          <div className="grid grid-cols-2 gap-2">
+            <DayChartWrapper start={start} end={end} oneWeekAgo={oneWeekAgo} />
+          </div>
+        </Suspense>
 
+        <div>
+          <Suspense
+            fallback={
+              <div className="grid gap-2">
+                <div className="p-4 rounded bg-card h-40 lg:h-48 xl:h-72" />
+                <div className="p-4 rounded bg-card h-40 lg:h-48 xl:h-72" />
+              </div>
+            }
+          >
+            <WeekChartWrapper start={start} end={end} oneWeekAgo={oneWeekAgo} />
+          </Suspense>
+        </div>
+      </div>
+      <div className="flex flex-col gap-2 w-[280px] min-[2400px]:w-[560px]">
+        {permissions?.includes("admin_stat") ? (
+          <Suspense>
+            <DataOverviewFlowWrapper start={start} end={end} />
+          </Suspense>
+        ) : (
+          <Suspense>
+            <DataOverviewWrapper />
+          </Suspense>
+        )}
+        <QuickAccess />
+        <Suspense>
+          {/* 普通代理：上级公告， admin：本级公告  */}
+          <AnnouncementWrapper />
+        </Suspense>
+      </div>
+      <Suspense>
+        {/* 普通代理：上级公告， admin：全平台 */}
+        <AnnouncementDialogWrapper />
+      </Suspense>
+    </>
+  );
+}
+
+async function SalutationsWrapper({
+  start,
+  end,
+}: { start: number; end: number }) {
   const { data: todayWinLossData } = await getTodayWinLoss({
     startTime: start,
     endTime: end,
   });
-  const { data: gameChartData } = await getTodayWinLossChart({
-    startTime: start,
-    endTime: end,
-    beforeEndTime: oneWeekAgo,
-    size: 6,
-  });
+  return <Salutations data={todayWinLossData} />;
+}
+
+async function DayChartWrapper({
+  start,
+  end,
+  oneWeekAgo,
+}: { start: number; end: number; oneWeekAgo: number }) {
+  const t = await getTranslations();
+
   const chartConfig = {
     bjl01: {
       color: "hsl(var(--chart-1))",
@@ -95,24 +164,20 @@ export default async function DashboardPage({
       color: "hsl(var(--chart-6))",
     },
   } satisfies ChartConfig;
-
   // 今日百家乐流水
-  const bjlBetAmountData: Array<{ game: string; data: number; fill: string }> =
-    [];
+  const bjlBetAmountData: { game: string; data: number; fill: string }[] = [];
   // 今日百家乐人次
-  const bjlActiveUsersData: Array<{
+  const bjlActiveUsersData: {
     game: string;
     data: number;
     fill: string;
-  }> = [];
-  // 百家乐流水
-  const bjlTrendingBetAmountData: Array<{ name: string; data: number }> = [];
-  // 百家乐人次
-  const bjlTrendingBetNumData: Array<{ name: string; data: number }> = [];
-  // 掼蛋流水
-  const gdTrendingBetAmountData: Array<{ name: string; data: number }> = [];
-  // 掼蛋人次
-  const gdTrendingBetNumData: Array<{ name: string; data: number }> = [];
+  }[] = [];
+  const { data: gameChartData } = await getTodayWinLossChart({
+    startTime: start,
+    endTime: end,
+    beforeEndTime: oneWeekAgo,
+    size: 6,
+  });
   gameChartData?.agentBaccaratAmountReport?.forEach(
     ({ gameName, memberBetAmount }, index) => {
       const color = Object.values(chartConfig)[index]?.color;
@@ -133,10 +198,49 @@ export default async function DashboardPage({
       });
     },
   );
+  return (
+    <>
+      <DayChart
+        title={t("chart.todayCashflow")}
+        subTitle={t("chart.bettingAmount")}
+        data={bjlBetAmountData || []}
+        chartConfig={chartConfig}
+      />
+      <DayChart
+        title={t("chart.todayActiveUsers")}
+        subTitle={t("chart.bettingTimes")}
+        data={bjlActiveUsersData || []}
+        chartConfig={chartConfig}
+      />
+    </>
+  );
+}
+async function WeekChartWrapper({
+  start,
+  end,
+  oneWeekAgo,
+}: { start: number; end: number; oneWeekAgo: number }) {
+  const t = await getTranslations();
+  const session = await getSession();
+  const permissions = session?.permissions;
 
+  const { data: gameChartData } = await getTodayWinLossChart({
+    startTime: start,
+    endTime: end,
+    beforeEndTime: oneWeekAgo,
+    size: 6,
+  });
+  // 百家乐流水
+  const bjlTrendingBetAmountData: { name: string; data: number }[] = [];
+  // 百家乐人次
+  const bjlTrendingBetNumData: { name: string; data: number }[] = [];
+  // 掼蛋流水
+  const gdTrendingBetAmountData: { name: string; data: number }[] = [];
+  // 掼蛋人次
+  const gdTrendingBetNumData: { name: string; data: number }[] = [];
   gameChartData?.dailyBaccaratReport?.forEach(
     ({ day, memberBetAmount, betNum }) => {
-      const formattedDay = format(fromUnixTime(day / 1000), "yyyy-MM-dd");
+      const formattedDay = format(day, "yyyy-MM-dd");
 
       bjlTrendingBetAmountData.push({
         name: formattedDay,
@@ -152,7 +256,7 @@ export default async function DashboardPage({
 
   gameChartData?.dailyPokerReport?.forEach(
     ({ day, totaSettledAmount, issueAmount }) => {
-      const formattedDay = format(fromUnixTime(day / 1000), "yyyy-MM-dd");
+      const formattedDay = format(day, "yyyy-MM-dd");
 
       gdTrendingBetAmountData.push({
         name: formattedDay,
@@ -165,16 +269,34 @@ export default async function DashboardPage({
       });
     },
   );
+  // member
+  const { data: memberChartData } = await getMemberChartList({
+    startTime: oneWeekAgo,
+    endTime: end,
+  });
+  const registerData: { name: string; data: number }[] = [];
+  const loginData: { name: string; data: number }[] = [];
+  memberChartData?.forEach(({ day, registerCount, loginCount }) => {
+    const formattedDay = format(day, "yyyy-MM-dd");
+    registerData.push({
+      name: formattedDay,
+      data: Number(registerCount),
+    });
 
+    loginData.push({
+      name: formattedDay,
+      data: Number(loginCount),
+    });
+  });
   // 充提
   const { data: fundListData } = await getFundList({
     startTime: oneWeekAgo,
     endTime: end,
   });
-  const rechargeData: Array<{ name: string; data: number }> = [];
-  const withdrawData: Array<{ name: string; data: number }> = [];
+  const rechargeData: { name: string; data: number }[] = [];
+  const withdrawData: { name: string; data: number }[] = [];
   fundListData?.fundList?.forEach(({ day, rechargeAmount, withdrawAmount }) => {
-    const formattedDay = format(fromUnixTime(day / 1000), "yyyy-MM-dd");
+    const formattedDay = format(day, "yyyy-MM-dd");
 
     rechargeData.push({
       name: formattedDay,
@@ -186,8 +308,7 @@ export default async function DashboardPage({
       data: Number(withdrawAmount),
     });
   });
-
-  const weekChart1Text = {
+  const weekChart1Config = {
     title: t("chart.bjlDataTrending"),
     tab: [t("chart.cashflow"), t("chart.headcount")],
     type: "game",
@@ -196,7 +317,7 @@ export default async function DashboardPage({
       subData: bjlTrendingBetNumData || [],
     },
   };
-  const weekChart2Text = {
+  const weekChart2Config = {
     title: t("chart.gdDataTrending"),
     tab: [t("chart.cashflow"), t("chart.headcount")],
     type: "game",
@@ -206,13 +327,16 @@ export default async function DashboardPage({
     },
   };
 
-  const weekChart3Text = {
+  const weekChart3Config = {
     title: t("chart.memberDataTrending"),
     tab: [t("chart.addMember"), t("chart.memberLoginTimes")],
     type: "member",
-    data: [],
+    data: {
+      mainData: registerData || [],
+      subData: loginData || [],
+    },
   };
-  const weekChart4Text = {
+  const weekChart4Config = {
     title: t("chart.moneyDataTrending"),
     tab: [t("chart.topup"), t("chart.withdraw")],
     type: "fund",
@@ -221,85 +345,121 @@ export default async function DashboardPage({
       subData: withdrawData || [],
     },
   };
-  const { data: announcementOwnData } = await getAgentAnnouncement({
-    pageSize: 5,
-    pageNum: 1,
-    level: 0,
-  });
-  const { data: announcementData } = await getAnnouncement({
-    pageSize: 5,
-    pageNum: 1,
-  });
 
   return (
     <>
-      <TimeWrapper />
       <div className="flex-1 flex flex-col gap-2">
-        {permissions?.includes("admin_stat") && (
-          <Suspense>
-            <Salutations data={todayWinLossData} />
-          </Suspense>
-        )}
-        <div className="grid grid-cols-2 gap-2">
-          <DayChart
-            title={t("chart.todayCashflow")}
-            subTitle={t("chart.bettingAmount")}
-            data={bjlBetAmountData || []}
-            chartConfig={chartConfig}
-          />
-          <DayChart
-            title={t("chart.todayActiveUsers")}
-            subTitle={t("chart.bettingTimes")}
-            data={bjlActiveUsersData || []}
-            chartConfig={chartConfig}
-          />
-        </div>
         <div className="grid gap-2 rounded bg-card p-4">
           <Suspense>
-            <WeekChart textConfig={weekChart1Text} />
+            <WeekChart chartConfig={weekChart1Config} />
           </Suspense>
         </div>
         <div className="grid gap-2 rounded bg-card p-4">
           <Suspense>
-            <WeekChart textConfig={weekChart2Text} />
+            <WeekChart chartConfig={weekChart2Config} />
           </Suspense>
         </div>
         {permissions?.includes("admin_stat") && (
           <>
             <div className="grid gap-2 rounded bg-card p-4">
               <Suspense>
-                <WeekChart textConfig={weekChart4Text} />
+                <WeekChart chartConfig={weekChart3Config} />
               </Suspense>
             </div>
             <div className="grid gap-2 rounded bg-card p-4">
               <Suspense>
-                <WeekChart textConfig={weekChart4Text} />
+                <WeekChart chartConfig={weekChart4Config} />
               </Suspense>
             </div>
           </>
         )}
       </div>
-      <div className="flex flex-col gap-2 w-[280px] min-[2400px]:w-[560px]">
-        {permissions?.includes("admin_stat") ? (
-          <Suspense>
-            <DataOverviewFlow />
-          </Suspense>
-        ) : (
-          <Suspense>
-            <DataOverview />
-          </Suspense>
-        )}
-        <QuickAccess />
-        <Suspense>
-          <Announcement data={announcementOwnData || { list: [] }} />
-        </Suspense>
-      </div>
-      <Suspense>
-        <AnnouncementDialog
-          data={announcementData || { list: [] }}
-          isFirstLogin={isFirstLogin || "false"}
-        />
-      </Suspense>
     </>
+  );
+}
+
+async function DataOverviewFlowWrapper({
+  start,
+  end,
+}: { start: number; end: number }) {
+  const { data } = await getTodayFundList({
+    startTime: start,
+    endTime: end,
+  });
+  return (
+    <DataOverviewFlow
+      data={
+        data || {
+          rechargeAmount: 0,
+          withdrawAmount: 0,
+          creditAmount: 0,
+          lendAmount: 0,
+        }
+      }
+    />
+  );
+}
+
+async function DataOverviewWrapper() {
+  const { data } = await getUserBasicInfo();
+  return (
+    <DataOverview
+      data={
+        data || {
+          totalBalanceMoney: 0,
+          usableBalanceMoney: 0,
+          gameFreezeMoney: 0,
+          withdrawFreezeMoney: 0,
+          totalCreditMoney: 0,
+          memberToBeRepaidMoney: 0,
+        }
+      }
+    />
+  );
+}
+
+async function AnnouncementWrapper() {
+  const session = await getSession();
+  const permissions = session?.permissions;
+  //  // 右下角：
+  // 普通代理：上级公告， admin：本级公告
+  const { data: announcementSubData } = permissions?.includes("admin_stat")
+    ? await getSameOrSeniorAnno({
+        pageSize: 5,
+        pageNum: 1,
+        level: 0,
+      })
+    : await getSameOrSeniorAnno({
+        pageSize: 5,
+        pageNum: 1,
+        level: 1,
+      });
+  return <Announcement data={announcementSubData || { list: [] }} />;
+}
+
+async function AnnouncementDialogWrapper() {
+  const session = await getSession();
+  const permissions = session?.permissions;
+  const cookie = await cookies();
+  const isFirstLogin = cookie?.get("isFirstLogin")?.value;
+
+  // 弹窗：
+  // 普通代理：上级公告， admin：全平台
+  const { data: announcementData } = permissions?.includes("admin_stat")
+    ? await getAnnouncement({
+        pageSize: 5,
+        pageNum: 1,
+      })
+    : await getSameOrSeniorAnno({
+        pageSize: 5,
+        pageNum: 1,
+        level: 1,
+      });
+
+  return (
+    <AnnouncementDialog
+      data={announcementData || { list: [] }}
+      isFirstLogin={isFirstLogin || "false"}
+    />
   );
 }

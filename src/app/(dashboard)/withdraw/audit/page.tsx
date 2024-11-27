@@ -12,7 +12,6 @@ import {
 import { format } from "date-fns";
 
 import type { AuditList } from "@/lib/types";
-import { endOfDay, startOfDay } from "date-fns";
 import { getTranslations } from "next-intl/server";
 import { Suspense } from "react";
 import { CleanBtn } from "./clean-btn";
@@ -35,7 +34,14 @@ export default async function Page({
         <Form />
       </Suspense>
       <div className="bg-background flex-1">
-        <Suspense>
+        <Suspense
+          fallback={
+            <Table>
+              <TableHeaderWrapper />
+              <TableBodySkeleton />
+            </Table>
+          }
+        >
           <TableWrapper searchParams={searchParams} />
         </Suspense>
       </div>
@@ -46,17 +52,19 @@ export default async function Page({
 async function TableWrapper({
   searchParams,
 }: { searchParams: Promise<{ [key: string]: string | string[] }> }) {
-  const search = await searchParams;
-  const now = Date.now();
-  const start = search.startTime ?? startOfDay(now).getTime();
-  const end = search.endTime ?? endOfDay(now).getTime();
+  const { startTime, endTime, id, userId, pageNum, pageSize } =
+    await searchParams;
+  if (!startTime || !endTime) {
+    return null;
+  }
+
   const { data } = await getAuditList({
-    startTime: Number(start),
-    endTime: Number(end),
-    id: (search.id ?? "") as string,
-    userId: (search.userId ?? "") as string,
-    pageNum: Number(search.pageNum ?? 1),
-    pageSize: Number(search.pageSize ?? 10),
+    startTime: Number(startTime),
+    endTime: Number(endTime),
+    id: (id ?? "") as string,
+    userId: (userId ?? "") as string,
+    pageNum: Number(pageNum ?? 1),
+    pageSize: Number(pageSize ?? 10),
   });
   // temp dict
   // 稽核状态
@@ -65,20 +73,7 @@ async function TableWrapper({
       <div className="relative overflow-y-auto overflow-x-auto border rounded-sm">
         <Table>
           <TableHeaderWrapper />
-          <Suspense
-            fallback={
-              <TableBody>
-                {Array.from({ length: 5 }).map((_, i) => (
-                  // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
-                  <TableRow key={i}>
-                    <TableCell colSpan={10} className="h-40">
-                      <Skeleton className="w-full h-full" />
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            }
-          >
+          <Suspense fallback={<TableBodySkeleton />}>
             <TableBodyWrapper list={data?.list ?? []} />
           </Suspense>
         </Table>
@@ -170,6 +165,20 @@ async function TableBodyWrapper({ list }: { list: AuditList[] }) {
           </TableCell>
         </TableRow>
       )}
+    </TableBody>
+  );
+}
+function TableBodySkeleton() {
+  return (
+    <TableBody>
+      {Array.from({ length: 5 }).map((_, index) => (
+        // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
+        <TableRow key={index}>
+          <TableCell colSpan={10}>
+            <Skeleton className="w-full h-6" />
+          </TableCell>
+        </TableRow>
+      ))}
     </TableBody>
   );
 }
