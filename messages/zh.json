@@ -274,7 +274,8 @@
       "back": "返回",
       "loginUsername": "登录账号",
       "success": "成功",
-      "failed": "失败"
+      "failed": "失败",
+      "usernameWarning": "以小写字母开头,长度6到16位,且只能包含数字和小写字母的组合,不能包含“admin”的字样"
     },
     "members": {
       "placeholder": "请输入",
@@ -300,8 +301,8 @@
         "2": "冻结"
       },
       "userInfo": "用户信息",
-      "agentUserId": "代理账号",
-      "agentUsername": "代理名称",
+      "agentUsername": "代理账号",
+      "agentNickname": "代理名称",
       "memberId": "会员账号",
       "memberUsername": "会员昵称",
       "createTime": "加入时间",
@@ -324,7 +325,8 @@
       "limitSetting": "限额设置",
       "rebate": "退水",
       "loginLog": "登录日志",
-      "changeLog": "变更日志"
+      "changeLog": "变更日志",
+      "check": "查询"
     },
     "supplier": {
       "add": "新增",

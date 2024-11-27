@@ -44,6 +44,8 @@ export const changeLogModalAtom = atom<boolean>(false);
 export const agentIdAtom = atom<string>("");
 // 用户管理-代理管理-代理数据
 export const agentDataAtom = atom<AgentData | null>(null);
+// 用户管理-代理管理-新增代理loading
+export const addAgentLoadingAtom = atom<boolean>(false);
 
 // 用户管理-会员管理-会员ID
 export const memberIdAtom = atom<string>("");
