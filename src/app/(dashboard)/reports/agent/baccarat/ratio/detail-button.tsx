@@ -17,8 +17,8 @@ export default function DetailButton(props: { item: RatioReportListTypes }) {
   return (
     <div>
       <Button
-        variant="link"
-        className="hover:no-underline hover:text-primary/80"
+        variant="ghost"
+        className="hover:no-underline hover:text-primary/80 text-primary"
         onClick={() => handleDetail()}
       >
         {t("more")}
