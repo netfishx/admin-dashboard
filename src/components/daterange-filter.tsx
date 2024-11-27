@@ -319,12 +319,20 @@ export function DateRangeFilter({
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   const handleDateRangeChange = useCallback(
+    // biome-ignore lint/complexity/noExcessiveCognitiveComplexity: <explanation>
     (range?: DateRange) => {
       if (range) {
         let from = range.from;
+        let to = range.to;
 
         if (from?.getTime() === 0) {
           from = today;
+        }
+
+        if (from && to && from.getTime() > to.getTime()) {
+          const temp = from;
+          from = to;
+          to = temp;
         }
 
         const startDate = from
@@ -335,8 +343,8 @@ export function DateRangeFilter({
             })
           : undefined;
 
-        const endDate = range.to
-          ? set(range.to, {
+        const endDate = to
+          ? set(to, {
               hours: new Date(dateRange[endTimeText]).getHours(),
               minutes: new Date(dateRange[endTimeText]).getMinutes(),
               seconds: new Date(dateRange[endTimeText]).getSeconds(),

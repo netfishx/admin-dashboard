@@ -66,7 +66,6 @@ async function TableHeaderWrapper() {
     <TableHeader className="bg-muted">
       <TableRow>
         <TableHead>{t("name")}</TableHead>
-        <TableHead>{t("applyTime")}</TableHead>
         <TableHead>{t("exportTime")}</TableHead>
         <TableHead>{t("downloadTime")}</TableHead>
         <TableHead>{t("status")}</TableHead>
@@ -87,9 +86,6 @@ async function TableBodyWrapper({
         list?.map((item) => (
           <TableRow key={item.id}>
             <TableCell>{item.exportFileName}</TableCell>
-            <TableCell>
-              {format(item.operateTime, "yyyy-MM-dd HH:mm:ss")}
-            </TableCell>
             <TableCell>{format(item.endTime, "yyyy-MM-dd HH:mm:ss")}</TableCell>
             <TableCell>
               {format(item.downloadTime, "yyyy-MM-dd HH:mm:ss")}
@@ -99,7 +95,7 @@ async function TableBodyWrapper({
             </TableCell>
             <TableCell>{item.failReason}</TableCell>
             <TableCell className="text-center">
-              <ActionButton id={item.id} />
+              <ActionButton fileUrl={item.exportFileUrl} />
             </TableCell>
           </TableRow>
         ))
