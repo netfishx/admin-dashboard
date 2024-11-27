@@ -1,14 +1,16 @@
+import TableSkeleton from "@/components/table-skeleton";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Table } from "@/components/ui/table";
 import type { MemberBetReportRequestParams } from "@/lib/types";
 import { Suspense } from "react";
 import { MemberForm } from "./member-form";
-import { MemberList } from "./member-list";
+import { ListHeader, MemberList } from "./member-list";
 
 interface CommonWrapperProps {
   searchParams: Promise<MemberBetReportRequestParams>;
 }
 
-async function CommonWrapper({ searchParams }: CommonWrapperProps) {
+export default async function Page({ searchParams }: CommonWrapperProps) {
   return (
     <>
       <Suspense
@@ -20,15 +22,20 @@ async function CommonWrapper({ searchParams }: CommonWrapperProps) {
       >
         <MemberForm />
       </Suspense>
-      <MemberList searchParams={searchParams} />
+      <Suspense
+        fallback={
+          <div className="p-2 bg-background flex-1">
+            <div className="border rounded-sm relative">
+              <Table>
+                <ListHeader />
+                <TableSkeleton length={5} colSpan={15} />
+              </Table>
+            </div>
+          </div>
+        }
+      >
+        <MemberList searchParams={searchParams} />
+      </Suspense>
     </>
-  );
-}
-
-export default async function Page({ searchParams }: CommonWrapperProps) {
-  return (
-    <Suspense fallback={null}>
-      <CommonWrapper searchParams={searchParams} />
-    </Suspense>
   );
 }
