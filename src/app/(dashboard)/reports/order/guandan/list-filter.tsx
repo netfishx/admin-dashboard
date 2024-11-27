@@ -16,7 +16,11 @@ import { useRouter } from "next/navigation";
 import { useQueryState } from "nuqs";
 import { useRef } from "react";
 
-export function ListFilter() {
+export function ListFilter({
+  hasSearchPermission,
+}: {
+  hasSearchPermission: boolean;
+}) {
   const t = useTranslations("report.orderlist");
   // 期号
   const [issuenumber, setIssuenumber] = useQueryState("issueNumber", {
@@ -102,14 +106,16 @@ export function ListFilter() {
           />
         </div>
 
-        <div className="flex gap-2 items-center">
-          <Label className="shrink-0">{t("agentID")}</Label>
-          <Input
-            value={agentID ?? ""}
-            onChange={(e) => setAgentID(e.target.value)}
-            placeholder={t("placeholderinput")}
-          />
-        </div>
+        {hasSearchPermission && (
+          <div className="flex gap-2 items-center">
+            <Label className="shrink-0">{t("agentID")}</Label>
+            <Input
+              value={agentID ?? ""}
+              onChange={(e) => setAgentID(e.target.value)}
+              placeholder={t("placeholderinput")}
+            />
+          </div>
+        )}
         <div className="flex gap-2 items-center">
           <Label className="shrink-0">{t("ministerID")}</Label>
           <Input

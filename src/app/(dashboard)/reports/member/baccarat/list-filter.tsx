@@ -10,7 +10,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import {} from "@/components/ui/select";
+
 import { startOfDay } from "date-fns";
 import { endOfDay } from "date-fns";
 import { useTranslations } from "next-intl";
@@ -18,7 +18,9 @@ import { useRouter } from "next/navigation";
 import { useQueryState } from "nuqs";
 import { useRef } from "react";
 
-export function ListFilter() {
+export function ListFilter({
+  hasSearchPermission,
+}: { hasSearchPermission: boolean }) {
   const t = useTranslations("report.member");
   const [parentAgentId, setParentAgentId] = useQueryState("parentAgentId", {
     defaultValue: "",
@@ -113,14 +115,16 @@ export function ListFilter() {
             </SelectContent>
           </Select>
         </div>
-        <div className="flex gap-4 items-center">
-          <Label className="shrink-0">{t("superAgentId")}</Label>
-          <Input
-            value={parentAgentId ?? ""}
-            onChange={(e) => setParentAgentId(e.target.value)}
-            placeholder={t("placeholderinput")}
-          />
-        </div>
+        {hasSearchPermission && (
+          <div className="flex gap-4 items-center">
+            <Label className="shrink-0">{t("superAgentId")}</Label>
+            <Input
+              value={parentAgentId ?? ""}
+              onChange={(e) => setParentAgentId(e.target.value)}
+              placeholder={t("placeholderinput")}
+            />
+          </div>
+        )}
       </div>
 
       {/* Last row */}

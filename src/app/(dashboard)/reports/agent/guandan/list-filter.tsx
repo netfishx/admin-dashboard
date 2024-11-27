@@ -16,7 +16,9 @@ import { useTranslations } from "next-intl";
 import { useQueryState } from "nuqs";
 import { useRef } from "react";
 
-export function ListFilter() {
+export function ListFilter({
+  hasSearchPermission,
+}: { hasSearchPermission: boolean }) {
   const t = useTranslations("report.agent");
   const [agentId, setAgentId] = useQueryState("agentId", {
     defaultValue: "",
@@ -52,14 +54,16 @@ export function ListFilter() {
             reset={(resetFn) => (dateRangeFilterReset.current = resetFn)}
           />
         </div>
-        <div className="flex gap-4 items-center">
-          <Label className="shrink-0">{t("agentID")}</Label>
-          <Input
-            value={agentId ?? ""}
-            onChange={(e) => setAgentId(e.target.value)}
-            placeholder={t("placeholderinput")}
-          />
-        </div>
+        {hasSearchPermission && (
+          <div className="flex gap-4 items-center">
+            <Label className="shrink-0">{t("agentID")}</Label>
+            <Input
+              value={agentId ?? ""}
+              onChange={(e) => setAgentId(e.target.value)}
+              placeholder={t("placeholderinput")}
+            />
+          </div>
+        )}
       </div>
 
       {/* Second row */}
