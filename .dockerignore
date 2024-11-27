@@ -7,3 +7,6 @@ README.md
 docker
 .git
 .vscode
+test-results
+playwright-report
+tests

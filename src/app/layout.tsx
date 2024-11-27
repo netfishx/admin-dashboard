@@ -34,8 +34,8 @@ export default function RootLayout({
                 position="top-center"
                 richColors
                 expand
-                visibleToasts={1}
-                toastOptions={{ duration: 1000 }}
+                visibleToasts={3}
+                toastOptions={{ duration: 2000 }}
               />
               <JotaiProvider>
                 <I18nProvider>

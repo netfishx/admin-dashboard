@@ -72,6 +72,7 @@
   },
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
+    "@playwright/test": "^1.49.0",
     "@tailwindcss/typography": "^0.5.15",
     "@types/big.js": "^6.2.2",
     "@types/negotiator": "^0.6.3",
