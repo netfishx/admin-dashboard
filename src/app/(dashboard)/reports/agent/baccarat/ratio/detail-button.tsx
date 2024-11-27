@@ -3,15 +3,19 @@ import { Button } from "@/components/ui/button";
 import type { RatioReportListTypes } from "@/lib/types";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 
 export default function DetailButton(props: { item: RatioReportListTypes }) {
   const { item } = props;
+  const searchParams = useSearchParams();
+  const startTime = searchParams.get("startTime");
+  const endTime = searchParams.get("endTime");
   const t = useTranslations("report.orderlist");
   const router = useRouter();
   const ut = item?.userType === 1 ? "agentId" : "houseOwnerId";
   function handleDetail() {
     router.push(
-      `/reports/agent/baccarat/ratio?${ut}=${item?.userId}&page=1&size=10`,
+      `/reports/agent/baccarat/ratio?${ut}=${item?.userId}&page=1&size=10&startTime=${startTime}&endTime=${endTime}`,
     );
   }
   return (
