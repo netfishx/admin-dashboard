@@ -11,8 +11,8 @@ export default function DetailButton() {
   return (
     <div>
       <Button
-        variant="link"
-        className="hover:no-underline hover:text-primary/80"
+        variant="ghost"
+        className="hover:no-underline hover:text-primary/80 text-primary"
         onClick={() => {
           const startTime = searchParams.get("startTime");
           const endTime = searchParams.get("endTime");

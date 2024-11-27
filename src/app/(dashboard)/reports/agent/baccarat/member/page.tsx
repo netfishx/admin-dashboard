@@ -1,4 +1,5 @@
 import TableSkeleton from "@/components/table-skeleton";
+import { Skeleton } from "@/components/ui/skeleton";
 import { Table } from "@/components/ui/table";
 import type { MemberBetReportRequestParams } from "@/lib/types";
 import { Suspense } from "react";
@@ -12,7 +13,13 @@ interface CommonWrapperProps {
 export default async function Page({ searchParams }: CommonWrapperProps) {
   return (
     <>
-      <Suspense>
+      <Suspense
+        fallback={
+          <div className="flex justify-between items-center bg-background p-4">
+            <Skeleton className="w-full h-9 opacity-20" />
+          </div>
+        }
+      >
         <MemberForm />
       </Suspense>
       <Suspense

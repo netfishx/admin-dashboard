@@ -31,22 +31,22 @@ export function DetailButton({ item }: { item: CollectionAddressListRecords }) {
   return (
     <div className="flex gap-2 justify-around">
       <Button
-        variant="link"
-        className="hover:no-underline hover:text-primary/80"
+        variant="ghost"
+        className="hover:no-underline hover:text-primary/80 text-primary"
         onClick={() => handleDetail("UNLOCK")}
       >
         {t("unlock")}
       </Button>
       <Button
-        variant="link"
-        className="hover:no-underline hover:text-primary/80"
+        variant="ghost"
+        className="hover:no-underline hover:text-primary/80 text-primary"
         onClick={() => handleDetail("CHECK")}
       >
         {t("check")}
       </Button>
       <Button
-        variant="link"
-        className="hover:no-underline hover:text-primary/80 text-red-500"
+        variant="ghost"
+        className="hover:no-underline hover:text-primary/80 text-primary"
         onClick={() => handleDetail("LOCK")}
       >
         {t("lock")}

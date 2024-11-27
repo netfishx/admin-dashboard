@@ -17,7 +17,7 @@ import { getTranslations } from "next-intl/server";
 import { Suspense } from "react";
 import CopyButton from "./copy-button";
 
-async function ListHeader() {
+export async function ListHeader() {
   "use cache";
   const t = await getTranslations("fund.collection");
   return (

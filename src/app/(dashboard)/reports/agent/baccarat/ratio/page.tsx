@@ -1,4 +1,5 @@
 import TableSkeleton from "@/components/table-skeleton";
+import { Skeleton } from "@/components/ui/skeleton";
 import { Table } from "@/components/ui/table";
 import type { RatioReportRequestParams } from "@/lib/types";
 import { Suspense } from "react";
@@ -11,7 +12,13 @@ interface CommonWrapperProps {
 export default async function Page({ searchParams }: CommonWrapperProps) {
   return (
     <div className="flex flex-col gap-2 w-full h-full">
-      <Suspense>
+      <Suspense
+        fallback={
+          <div className="flex justify-between items-center bg-background p-4">
+            <Skeleton className="w-full h-9 opacity-20" />
+          </div>
+        }
+      >
         <RatioForm />
       </Suspense>
       <Suspense
