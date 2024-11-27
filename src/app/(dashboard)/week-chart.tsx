@@ -25,9 +25,9 @@ const chartConfigs = {
 } as const;
 
 export function WeekChart({
-  textConfig,
+  chartConfig,
 }: {
-  textConfig: {
+  chartConfig: {
     data: {
       mainData?: {
         name: string;
@@ -52,9 +52,9 @@ export function WeekChart({
     }[] = [];
 
     if (tab === "0") {
-      initialData = textConfig.data.mainData || [];
+      initialData = chartConfig.data.mainData || [];
     } else {
-      initialData = textConfig.data.subData || [];
+      initialData = chartConfig.data.subData || [];
     }
     return initialData;
   }
@@ -65,7 +65,7 @@ export function WeekChart({
     }[]
   >(getData(activeTab));
   function formatTooltipLabel(label: string) {
-    const labelText = textConfig.tab[Number(activeTab)];
+    const labelText = chartConfig.tab[Number(activeTab)];
     return `${label} ${labelText}`;
   }
   function formatTooltipValue(value: number) {
@@ -80,7 +80,7 @@ export function WeekChart({
     <div className="flex-1 flex flex-col pt-2">
       <div className="flex items-center justify-between">
         <div className="pb-2">
-          {textConfig.title}
+          {chartConfig.title}
           <span className="text-sm text-muted-foreground">
             {t("lastSevenDays")}
           </span>
@@ -93,8 +93,8 @@ export function WeekChart({
             onValueChange={(value) => onTabChange(value)}
           >
             <TabsList>
-              <TabsTrigger value="0">{textConfig.tab[0]}</TabsTrigger>
-              <TabsTrigger value="1">{textConfig.tab[1]}</TabsTrigger>
+              <TabsTrigger value="0">{chartConfig.tab[0]}</TabsTrigger>
+              <TabsTrigger value="1">{chartConfig.tab[1]}</TabsTrigger>
             </TabsList>
           </Tabs>
         </div>

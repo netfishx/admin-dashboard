@@ -10,10 +10,11 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Password } from "@/components/ui/password";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
+
 export function MoneyModal({
   open,
   onOpenChange,
@@ -58,9 +59,11 @@ export function MoneyModal({
                 <span className="text-destructive">*</span>
                 {t("oldPassword")}
               </Label>
-              <Input
+
+              <Password
                 type="password"
                 placeholder={t("placeholderOld")}
+                name="password"
                 value={oldPassword}
                 onChange={(e) => setOldPassword(e.target.value)}
               />
@@ -74,9 +77,11 @@ export function MoneyModal({
               <span className="text-destructive">*</span>
               {isEdit ? t("newPassword") : t("fundPassword")}
             </Label>
-            <Input
+
+            <Password
               type="password"
               placeholder={t("placeholderNew")}
+              name="password"
               value={newPassword}
               onChange={(e) => setNewPassword(e.target.value)}
             />
@@ -89,9 +94,11 @@ export function MoneyModal({
               <span className="text-destructive">*</span>
               {t("confirmMoneyPassword")}
             </Label>
-            <Input
+
+            <Password
               type="password"
               placeholder={t("confirmMoneyDesc")}
+              name="password"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
             />

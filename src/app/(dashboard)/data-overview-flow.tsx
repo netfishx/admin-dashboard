@@ -1,28 +1,10 @@
 "use client";
-import { getTodayFundList } from "@/api";
 import type { TodayFundList } from "@/lib/types";
-import { endOfDay, startOfDay } from "date-fns";
 import { useFormatter, useTranslations } from "next-intl";
-import { useEffect, useState } from "react";
 
-export function DataOverviewFlow() {
+export function DataOverviewFlow({ data }: { data: TodayFundList }) {
   const t = useTranslations();
   const format = useFormatter();
-  const now = Date.now();
-  const start = startOfDay(now).getTime();
-  const end = endOfDay(now).getTime();
-  const [info, setInfo] = useState<TodayFundList>();
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
-  useEffect(() => {
-    const fetchData = async () => {
-      const { data } = await getTodayFundList({
-        startTime: start,
-        endTime: end,
-      });
-      setInfo(data);
-    };
-    fetchData();
-  }, []);
   return (
     <div className="p-4 rounded bg-card">
       <div className="text-base mb-4">{t("dataOverview")}</div>
@@ -32,7 +14,7 @@ export function DataOverviewFlow() {
             {t("chargeAmount")}
           </p>
           <p className="text-xs font-semibold">
-            {format.number(info?.rechargeAmount ?? 0)}
+            {format.number(data?.rechargeAmount ?? 0)}
           </p>
         </div>
         <div className="flex flex-col items-center justify-center p-2">
@@ -40,7 +22,7 @@ export function DataOverviewFlow() {
             {t("withdrawAmount")}
           </p>
           <p className="text-xs font-semibold">
-            {format.number(info?.withdrawAmount ?? 0)}
+            {format.number(data?.withdrawAmount ?? 0)}
           </p>
         </div>
         <div className="flex flex-col items-center justify-center p-2">
@@ -48,7 +30,7 @@ export function DataOverviewFlow() {
             {t("creditAmount")}
           </p>
           <p className="text-xs font-semibold">
-            {format.number(info?.creditAmount ?? 0)}
+            {format.number(data?.creditAmount ?? 0)}
           </p>
         </div>
         <div className="flex flex-col items-center justify-center p-2">
@@ -56,7 +38,7 @@ export function DataOverviewFlow() {
             {t("lentMoney")}
           </p>
           <p className="text-xs font-semibold">
-            {format.number(info?.lendAmount ?? 0)}
+            {format.number(data?.lendAmount ?? 0)}
           </p>
         </div>
       </div>

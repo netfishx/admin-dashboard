@@ -9,6 +9,7 @@ export function TimeWrapper() {
   const searchParams = useSearchParams();
   const params = new URLSearchParams(searchParams);
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     // 获取当前时区偏移量(分钟)
     const tz = new Date().getTimezoneOffset();
@@ -17,7 +18,7 @@ export function TimeWrapper() {
       const newUrl = `${pathname}?${params.toString()}`;
       router.replace(newUrl);
     }
-  }, [params, pathname, router]);
+  }, []);
 
   return null;
 }

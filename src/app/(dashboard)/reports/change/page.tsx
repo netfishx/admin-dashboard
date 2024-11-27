@@ -1,14 +1,106 @@
 import { getWalletLog } from "@/api";
+import { CustomPagination } from "@/components/custom-pagination";
 import { Skeleton } from "@/components/ui/skeleton";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 import type { WalletLogRequestParams } from "@/lib/types";
-import { endOfDay, startOfDay } from "date-fns";
+import type { PageData } from "@/lib/types";
+import type { WalletLogRecords } from "@/lib/types";
+import { format } from "date-fns";
+import { getTranslations } from "next-intl/server";
 import { Suspense } from "react";
 import { Form } from "./form";
-import { ChangeTable } from "./table";
 
 export default async function Page({
   searchParams,
-}: { searchParams: Promise<{ [key: string]: string | undefined }> }) {
+}: { searchParams: Promise<{ [key: string]: string | string[] }> }) {
+  return (
+    <div className="flex flex-col gap-2 w-full">
+      <Suspense
+        fallback={
+          <div className="bg-background py-2">
+            <Skeleton className="h-9 w-full opacity-25" />
+            <Skeleton className="h-9 w-full opacity-25" />
+            <Skeleton className="h-9 w-full opacity-25" />
+            <Skeleton className="h-9 w-full opacity-25" />
+          </div>
+        }
+      >
+        <Form />
+      </Suspense>
+      <div className="p-2 bg-background flex-1 flex flex-col gap-2">
+        <Suspense
+          fallback={
+            <Table>
+              <TableHeaderWrapper />
+              <TableBodySkeleton />
+            </Table>
+          }
+        >
+          <TableWrapper searchParams={searchParams} />
+        </Suspense>
+      </div>
+    </div>
+  );
+}
+
+function TableBodySkeleton() {
+  return (
+    <TableBody>
+      {Array.from({ length: 5 }).map((_, index) => (
+        // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
+        <TableRow key={index}>
+          <TableCell colSpan={7}>
+            <Skeleton className="w-full h-6" />
+          </TableCell>
+        </TableRow>
+      ))}
+    </TableBody>
+  );
+}
+
+async function TableHeaderWrapper() {
+  const t = await getTranslations("report.change");
+  return (
+    <TableHeader>
+      <TableRow className="bg-muted">
+        <TableHead className="w-24 min-w-24 text-center">
+          {t("userId")}
+        </TableHead>
+        <TableHead className="w-24 min-w-24 text-center">
+          {t("transactionId")}
+        </TableHead>
+        <TableHead className="w-24 min-w-24 text-center">
+          {t("createdTime")}
+        </TableHead>
+        <TableHead className="w-24 min-w-24 text-center">
+          {t("oldBalance")}
+        </TableHead>
+        <TableHead className="w-24 min-w-24 text-center">
+          {t("transactionAmount")}
+        </TableHead>
+        <TableHead className="w-24 min-w-24 text-center">
+          {t("newBalance")}
+        </TableHead>
+        <TableHead className="w-24 min-w-24 text-center">
+          {t("operateType")}
+        </TableHead>
+      </TableRow>
+    </TableHeader>
+  );
+}
+
+async function TableWrapper({
+  searchParams,
+}: { searchParams: Promise<{ [key: string]: string | string[] }> }) {
+  const t = await getTranslations();
+
   const {
     userId,
     transactionID,
@@ -19,18 +111,18 @@ export default async function Page({
     pageNum,
     pageSize,
   } = await searchParams;
-  const now = Date.now();
-  const start = startTime ?? startOfDay(now).getTime();
-  const end = endTime ?? endOfDay(now).getTime();
+  if (!startTime || !endTime) {
+    return null;
+  }
   const params: WalletLogRequestParams = {
     userId: (userId ?? null) as string,
-    transactionID: transactionID ?? "",
+    transactionID: (transactionID ?? null) as string,
     operateCode: Number(operateCode ?? 0),
     userType: Number(userType ?? 1),
     pageNum: Number(pageNum ?? 1),
     pageSize: Number(pageSize ?? 10),
-    startTime: Number(start),
-    endTime: Number(end),
+    startTime: Number(startTime),
+    endTime: Number(endTime),
   };
   // 验证参数是否有效 至少一个参数是有值的
   const validateParams = (params: WalletLogRequestParams) => {
@@ -44,33 +136,68 @@ export default async function Page({
     console.info("请至少选择一个查询条件");
   }
   const { data } = await getWalletLog(params);
-  console.log("🌸 ~ data:", data);
+  console.info("🌸 ~ data:", data);
   return (
-    <div className="flex flex-col gap-2 w-full">
-      <Suspense
-        fallback={
-          <div className="flex justify-between items-center bg-background py-2 px-4">
-            <Skeleton className="w-full h-9 opacity-20" />
-            <Skeleton className="w-full h-9 opacity-20" />
-          </div>
-        }
-      >
-        <Form />
-      </Suspense>
-      <div className="p-2 bg-background flex-1 flex flex-col gap-2">
-        <Suspense
-          fallback={
-            <div className="flex flex-col gap-4 p-4">
-              <Skeleton className="w-full h-6" />
-              <Skeleton className="w-full h-6" />
-              <Skeleton className="w-full h-6" />
-              <Skeleton className="w-2/3 h-6" />
-            </div>
-          }
-        >
-          <ChangeTable data={data} />
-        </Suspense>
+    <div className="bg-background flex-1 w-full ">
+      <div className="relative overflow-y-auto overflow-x-auto border rounded-sm">
+        <Table>
+          <TableHeaderWrapper />
+          <Suspense fallback={<TableBodySkeleton />}>
+            <TableBodyWrapper data={data} />
+          </Suspense>
+        </Table>
       </div>
+      {Number(data?.total) > 0 && (
+        <div className="pt-2">
+          <CustomPagination
+            total={data?.total ?? 0}
+            currentPage={Number(data?.pageNum ?? 1)}
+            pageSize={Number(data?.pageSize ?? 10)}
+          />
+        </div>
+      )}
     </div>
+  );
+}
+async function TableBodyWrapper({
+  data,
+}: { data?: PageData<WalletLogRecords> }) {
+  const t = await getTranslations("");
+  return (
+    <TableBody>
+      {data && data.list.length > 0 ? (
+        data.list.map((item) => (
+          <TableRow key={item.transactionId}>
+            <TableCell className="w-24 min-w-24 text-center">
+              {item.userId}
+            </TableCell>
+            <TableCell className="w-24 min-w-24 text-center">
+              {item.transactionId}
+            </TableCell>
+            <TableCell className="w-24 min-w-24 text-center">
+              {format(item.createdTime, "yyyy-MM-dd HH:mm:ss")}
+            </TableCell>
+            <TableCell className="w-24 min-w-24 text-center">
+              {item.oldBalance}
+            </TableCell>
+            <TableCell className="w-24 min-w-24 text-center">
+              {item.transactionAmount}
+            </TableCell>
+            <TableCell className="w-24 min-w-24 text-center">
+              {item.newBalance}
+            </TableCell>
+            <TableCell className="w-24 min-w-24 text-center">
+              {item.operateType}
+            </TableCell>
+          </TableRow>
+        ))
+      ) : (
+        <TableRow>
+          <TableCell colSpan={7} className="text-center h-40">
+            {t("noData")}
+          </TableCell>
+        </TableRow>
+      )}
+    </TableBody>
   );
 }
