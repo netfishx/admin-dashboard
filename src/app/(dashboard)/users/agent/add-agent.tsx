@@ -13,10 +13,12 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Password } from "@/components/ui/password";
+import { addAgentLoadingAtom } from "@/store";
+import { useSetAtom } from "jotai";
 import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
-import { useState, useTransition } from "react";
+import { useEffect, useState, useTransition } from "react";
 import { toast } from "sonner";
 import { validateFormData } from "./validata";
 
@@ -48,28 +50,36 @@ function AddAgentModal({
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [isPending, startTransition] = useTransition();
+  const [isLoading, setIsLoading] = useState(false);
+  const setAddAgentLoading = useSetAtom(addAgentLoadingAtom);
+  useEffect(() => {
+    setAddAgentLoading(isPending);
+  }, [isPending]);
   const handleClickAddAgent = async () => {
-    startTransition(async () => {
-      const result = await validateFormData({
-        username,
-        password,
-        confirmPassword,
-      });
-      if (result.success) {
-        const { data, code, message } = await addAgent({
-          username,
-          nickname,
-          password,
-        });
-        console.info(data, code, message);
-        onOpenChange(false);
-        router.refresh();
-        closeDialog();
-      } else {
-        console.info(result.errors);
-        toast.error(result.errors?.[0]?.message);
-      }
+    const result = await validateFormData({
+      username,
+      password,
+      confirmPassword,
     });
+    if (!result.success) {
+      toast.error(result.errors?.[0]?.message);
+      return;
+    }
+    setIsLoading(true);
+    const { code, message } = await addAgent({
+      username,
+      nickname,
+      password,
+    });
+    setIsLoading(false);
+    if (code === 0) {
+      closeDialog();
+      startTransition(async () => {
+        router.refresh();
+      });
+    } else {
+      toast.error(message);
+    }
   };
   const closeDialog = () => {
     setUsername("");
@@ -81,7 +91,7 @@ function AddAgentModal({
   return (
     <Dialog open={open} onOpenChange={closeDialog}>
       <DialogContent
-        className="2xl:max-w-lg lg:max-w-md"
+        className="2xl:max-w-xl lg:max-w-lg"
         onPointerDownOutside={(e) => e.preventDefault()}
       >
         <DialogHeader>
@@ -103,6 +113,12 @@ function AddAgentModal({
                 e.target.reportValidity();
               }}
             />
+          </div>
+          <div className="flex gap-2 items-center">
+            <Label className=" w-[120px] text-end shrink-0" />
+            <div className="flex-1 text-xs text-destructive">
+              {t("usernameWarning")}
+            </div>
           </div>
           <div className="flex gap-4 items-center">
             <Label className="shrink-0 w-[120px] text-right text-muted-foreground">
@@ -151,8 +167,8 @@ function AddAgentModal({
             <Button variant="outline" onClick={closeDialog}>
               {translation("cancel")}
             </Button>
-            <Button disabled={isPending} onClick={handleClickAddAgent}>
-              {isPending && <Loader2 className="w-4 h-4 animate-spin" />}
+            <Button disabled={isLoading} onClick={handleClickAddAgent}>
+              {isLoading && <Loader2 className="w-4 h-4 animate-spin" />}
               {translation("confirm")}
             </Button>
           </DialogFooter>

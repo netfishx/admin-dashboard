@@ -152,10 +152,19 @@ export async function getAgents(params: { pageNum: number; pageSize: number }) {
   });
 }
 // 用户管理-代理管理-获取单个代理信息
-export async function getAgentInfo(params: { id: string }) {
+export async function getAgentInfoById(params: { id: string }) {
   const user = await getSession();
   return await apiRequest<AgentData>({
     url: "/agent/user/main/getById",
+    params,
+    token: user?.token,
+  });
+}
+// 用户管理-代理管理-获取单个代理信息
+export async function getAgentInfoByUsername(params: { username: string }) {
+  const user = await getSession();
+  return await apiRequest<AgentData>({
+    url: "/agent/user/main/getByusername",
     params,
     token: user?.token,
   });
@@ -248,7 +257,19 @@ export async function getMemberList(params: {
     token: user?.token,
   });
 }
-
+export async function updateMember(data: {
+  id: string;
+  status: number;
+  agentId?: string;
+}) {
+  const user = await getSession();
+  return await apiRequest({
+    url: "/member/user/main/update",
+    method: "POST",
+    data,
+    token: user?.token,
+  });
+}
 export async function getAgentLoginLog(params: {
   agentId: string;
   pageNum: number;

@@ -90,8 +90,10 @@ export type MemberList = {
   nickname: string;
   status: number;
   upUsername: string;
+  upNickname: string;
   debtAmount: number;
   creditAmount: number;
+  createTime: number;
   depositAddress: string;
 };
 
