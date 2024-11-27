@@ -22,7 +22,7 @@ import { useAtom, useAtomValue } from "jotai";
 import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Form from "next/form";
-import { useEffect, useRef, useState, useTransition } from "react";
+import { useLayoutEffect, useRef, useState, useTransition } from "react";
 import { toast } from "sonner";
 
 export function SubaccountDialog({ roles }: { roles: Role[] }) {
@@ -34,7 +34,7 @@ export function SubaccountDialog({ roles }: { roles: Role[] }) {
   const [isPending, startTransition] = useTransition();
   const [checkedRoles, setCheckedRoles] = useState<number[]>([]);
   const [status, setStatus] = useState<number>(0);
-  useEffect(() => {
+  useLayoutEffect(() => {
     setCheckedRoles(data?.roleList ?? []);
     setStatus(data?.status ?? 0);
   }, [data]);

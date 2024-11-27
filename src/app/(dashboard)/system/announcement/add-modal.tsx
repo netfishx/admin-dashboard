@@ -90,7 +90,7 @@ export function AddModal() {
     setStartTime("");
     setEndTime("");
   };
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+
   useEffect(() => {
     if (data?.id) {
       console.info("contentData", data.content);
@@ -103,7 +103,7 @@ export function AddModal() {
       setStartTime(data.startTime.toString() || "");
       setEndTime(data.endTime.toString() || "");
     }
-  }, [data, editModalTitle]);
+  }, [data]);
 
   // 语言选择变化时更新内容
   const handleLanguageChange = (value: string) => {
