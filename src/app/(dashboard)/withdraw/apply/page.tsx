@@ -43,7 +43,7 @@ export default async function Page({
       <div className="p-2 bg-background flex-1 flex flex-col gap-2">
         <Suspense
           fallback={
-            <Table>
+            <Table className="border rounded-sm">
               <TableHeaderWrapper />
               <TableBodySkeleton />
             </Table>
@@ -63,8 +63,14 @@ async function TableWrapper({
     await searchParams;
   console.info("startTime:", startTime, "endTime:", endTime);
   if (!startTime || !endTime) {
-    return null;
+    return (
+      <Table className="border rounded-sm">
+        <TableHeaderWrapper />
+        <TableBodySkeleton />
+      </Table>
+    );
   }
+
   const { data } = await getWithdrawApplyList({
     startTime: Number(startTime),
     endTime: Number(endTime),

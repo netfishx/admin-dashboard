@@ -1,5 +1,5 @@
 "use client";
-import { saveWithdrawFee } from "@/api";
+import { getWithdrawFeeList, saveWithdrawFee } from "@/api";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -15,13 +15,20 @@ import type { WithdrawFeeList } from "@/lib/types";
 import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
-import { Suspense, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { toast } from "sonner";
-export function List({ data }: { data?: WithdrawFeeList[] }) {
+
+export function List() {
   const router = useRouter();
   const t = useTranslations("fund.withdrawfee");
   const translations = useTranslations();
-  const [feeList, setFeeList] = useState<WithdrawFeeList[]>(data ?? []);
+  const [feeList, setFeeList] = useState<WithdrawFeeList[]>([]);
+
+  useEffect(() => {
+    getWithdrawFeeList().then(({ data }) => {
+      setFeeList(data ?? []);
+    });
+  }, []);
   const [currentParams, setCurrentParams] = useState({});
 
   const [loading, setLoading] = useState(false);
@@ -67,31 +74,8 @@ export function List({ data }: { data?: WithdrawFeeList[] }) {
       <div className="p-2  bg-background gap-2 flex flex-col h-full">
         <div className="border rounded-sm">
           <Table>
-            <TableHeader>
-              <TableRow className="bg-muted">
-                <TableHead className="w-24 min-w-24 text-center">
-                  {t("currency")}
-                </TableHead>
-                <TableHead className="text-center">{t("fixedFee")}</TableHead>
-                <TableHead className="w-24 min-w-24 text-center">
-                  {t("percentageFee")}
-                </TableHead>
-              </TableRow>
-            </TableHeader>
-            <Suspense
-              fallback={
-                <TableBody>
-                  {Array.from({ length: 5 }).map((_, i) => (
-                    // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
-                    <TableRow key={i}>
-                      <TableCell colSpan={3} className="h-40">
-                        <Skeleton className="w-full h-full" />
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              }
-            >
+            <TableHeaderWrapper />
+            <Suspense fallback={<TableBodySkeleton />}>
               <TableBody>
                 {feeList && feeList.length > 0 ? (
                   feeList.map((item, index) => (
@@ -132,7 +116,7 @@ export function List({ data }: { data?: WithdrawFeeList[] }) {
                   ))
                 ) : (
                   <TableRow>
-                    <TableCell colSpan={10} className="text-center h-40">
+                    <TableCell colSpan={3} className="text-center h-40">
                       {translations("noData")}
                     </TableCell>
                   </TableRow>
@@ -143,5 +127,36 @@ export function List({ data }: { data?: WithdrawFeeList[] }) {
         </div>
       </div>
     </div>
+  );
+}
+export function TableHeaderWrapper() {
+  const t = useTranslations("fund.withdrawfee");
+  return (
+    <TableHeader>
+      <TableRow className="bg-muted">
+        <TableHead className="w-24 min-w-24 text-center">
+          {t("currency")}
+        </TableHead>
+        <TableHead className="text-center">{t("fixedFee")}</TableHead>
+        <TableHead className="w-24 min-w-24 text-center">
+          {t("percentageFee")}
+        </TableHead>
+      </TableRow>
+    </TableHeader>
+  );
+}
+
+export function TableBodySkeleton() {
+  return (
+    <TableBody>
+      {Array.from({ length: 5 }).map((_, index) => (
+        // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
+        <TableRow key={index}>
+          <TableCell colSpan={3}>
+            <Skeleton className="w-full h-6" />
+          </TableCell>
+        </TableRow>
+      ))}
+    </TableBody>
   );
 }

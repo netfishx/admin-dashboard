@@ -1,12 +1,19 @@
-import { getWithdrawFeeList } from "@/api";
+import { Table } from "@/components/ui/table";
 import { Suspense } from "react";
 import { List } from "./list";
-export default async function Own() {
-  const { data } = await getWithdrawFeeList();
+import { TableBodySkeleton, TableHeaderWrapper } from "./list";
+export default async function Page() {
   return (
     <div className="flex flex-col gap-2 w-full h-full">
-      <Suspense>
-        <List data={data} />
+      <Suspense
+        fallback={
+          <Table className="border rounded-sm">
+            <TableHeaderWrapper />
+            <TableBodySkeleton />
+          </Table>
+        }
+      >
+        <List />
       </Suspense>
     </div>
   );

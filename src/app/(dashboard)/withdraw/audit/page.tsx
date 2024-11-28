@@ -55,7 +55,12 @@ async function TableWrapper({
   const { startTime, endTime, id, userId, pageNum, pageSize } =
     await searchParams;
   if (!startTime || !endTime) {
-    return null;
+    return (
+      <Table className="border rounded-sm">
+        <TableHeaderWrapper />
+        <TableBodySkeleton />
+      </Table>
+    );
   }
 
   const { data } = await getAuditList({
