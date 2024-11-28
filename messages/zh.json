@@ -448,7 +448,8 @@
       "score": "分数",
       "rank": "名次",
       "tribute": "贡献",
-      "hand": "手牌"
+      "hand": "手牌",
+      "statisticsTime": "统计时间"
     },
     "periodlist": {
       "today": "今天",
