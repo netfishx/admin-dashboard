@@ -2,7 +2,6 @@ import TableSkeleton from "@/components/table-skeleton";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Table } from "@/components/ui/table";
 import type { RewardRecordRequestParams } from "@/lib/types";
-import { hasPermission } from "@/session";
 import { Suspense } from "react";
 import { List, ListHeader } from "./list";
 import { ListFilter } from "./list-filter";
@@ -12,8 +11,6 @@ interface CommonWrapperProps {
 }
 
 export default async function Page({ searchParams }: CommonWrapperProps) {
-  const hasSearchPermission = await hasPermission("admin_supplier_report");
-
   return (
     <div className="flex flex-col gap-2 w-full">
       <Suspense
@@ -23,7 +20,7 @@ export default async function Page({ searchParams }: CommonWrapperProps) {
           </div>
         }
       >
-        <ListFilter hasSearchPermission={hasSearchPermission} />
+        <ListFilter />
       </Suspense>
       <Suspense
         fallback={
