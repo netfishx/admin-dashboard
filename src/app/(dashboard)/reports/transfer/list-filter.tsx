@@ -17,7 +17,7 @@ import { useQueryState } from "nuqs";
 import { useRef } from "react";
 
 export function ListFilter() {
-  const t = useTranslations("report.borrow");
+  const t = useTranslations("report.transfer");
   const router = useRouter();
   const [orderNumber, setOrderNumber] = useQueryState("transactionID", {
     defaultValue: "",

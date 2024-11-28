@@ -19,7 +19,7 @@ import { Suspense } from "react";
 
 export async function ListHeader() {
   "use cache";
-  const t = await getTranslations("report.borrow");
+  const t = await getTranslations("report.credit");
   return (
     <TableHeader>
       <TableRow className="bg-muted">
@@ -71,7 +71,7 @@ async function ListBody({ list }: { list: BorrowRecordRequestRecords[] }) {
 export async function List({
   searchParams,
 }: { searchParams: Promise<BorrowRecordRequestParams> }) {
-  const t = await getTranslations("report.borrow");
+  const t = await getTranslations("report.credit");
   const params = await searchParams;
   const { data } = await postGetCreditLogList(params);
   return (
