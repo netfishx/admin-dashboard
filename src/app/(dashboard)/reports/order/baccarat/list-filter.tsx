@@ -15,7 +15,7 @@ import { DateRangeFilter } from "@/components/daterange-filter";
 import { endOfDay, startOfDay } from "date-fns";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
-import { useQueryState } from "nuqs";
+import { parseAsString, useQueryState } from "nuqs";
 import { useRef } from "react";
 
 export function ListFilter() {
@@ -23,9 +23,11 @@ export function ListFilter() {
   const [gameName, setGameName] = useQueryState("gameId", {
     defaultValue: "",
   });
-  const [bettingtime, setBettingtime] = useQueryState("bettingtime", {
-    defaultValue: "1",
-  });
+  const [bettingtime, setBettingtime] = useQueryState(
+    "bettingtime",
+    parseAsString.withDefault("1").withOptions({ clearOnDefault: false }),
+  );
+  // 代理结算状态
   const [settlementstatus, setSettlementstatus] = useQueryState("orderStatus", {
     defaultValue: "",
   });
@@ -102,6 +104,7 @@ export function ListFilter() {
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="1">{t("bettingtime")}</SelectItem>
+              <SelectItem value="2">{t("statisticsTime")}</SelectItem>
             </SelectContent>
           </Select>
         </div>
