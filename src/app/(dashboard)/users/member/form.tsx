@@ -29,7 +29,7 @@ export default function Form({
     defaultValue: "",
   });
   const [status, setStatus] = useQueryState("status", {
-    defaultValue: "",
+    defaultValue: "all",
   });
   return (
     <div className="flex justify-between items-center bg-background py-2 px-4">
@@ -70,7 +70,7 @@ export default function Form({
               <SelectValue placeholder={t("placeholder")} />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="null">{t("all")}</SelectItem>
+              <SelectItem value="all">{t("all")}</SelectItem>
               <SelectItem value="0">{t("enable")}</SelectItem>
               <SelectItem value="1">{t("disable")}</SelectItem>
               <SelectItem value="2">{t("freeze")}</SelectItem>
