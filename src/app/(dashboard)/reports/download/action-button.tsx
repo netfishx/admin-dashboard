@@ -1,25 +1,21 @@
 "use client";
-import { Button } from "@/components/ui/button";
-import { Loader2 } from "lucide-react";
+import { buttonVariants } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 import { useTranslations } from "next-intl";
-import { useTransition } from "react";
 
 export function ActionButton({ fileUrl }: { fileUrl: string }) {
   const t = useTranslations("report.download");
-  const [isPending, startTransition] = useTransition();
   return (
-    <Button
-      variant="ghost"
-      className="text-primary hover:text-primary/80 text-sm"
-      disabled={isPending}
-      onClick={() => {
-        startTransition(async () => {
-          window.open(fileUrl);
-        });
-      }}
+    <a
+      href={fileUrl}
+      target="_blank"
+      rel="noreferrer"
+      className={cn(
+        buttonVariants({ variant: "ghost" }),
+        "text-sm text-primary hover:text-primary/80 hover:no-underline",
+      )}
     >
-      {isPending && <Loader2 className="w-4 h-4 animate-spin" />}
       {t("download")}
-    </Button>
+    </a>
   );
 }

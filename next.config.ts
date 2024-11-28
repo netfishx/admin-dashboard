@@ -48,6 +48,11 @@ const nextConfig: NextConfig = {
         port: "4000",
         protocol: "http",
       },
+      {
+        hostname: "43.199.192.105",
+        port: "8080",
+        protocol: "http",
+      },
     ],
   },
   output: "standalone",
