@@ -14,8 +14,8 @@ import {
 } from "@/components/ui/select";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
-import { useQueryState } from "nuqs";
-import { useTransition } from "react";
+import { parseAsString, useQueryState } from "nuqs";
+import { useEffect, useTransition } from "react";
 
 export function Form() {
   const t = useTranslations("report.withdraw");
@@ -28,23 +28,26 @@ export function Form() {
   const [rechargeMoney, setRechargeMoney] = useQueryState("rechargeMoney", {
     defaultValue: "",
   });
-  const [operatorSymbol, setOperatorSymbol] = useQueryState("operatorSymbol", {
-    defaultValue: "",
-  });
+  const [operatorSymbol, setOperatorSymbol] = useQueryState(
+    "operatorSymbol",
+    parseAsString.withDefault("0").withOptions({ clearOnDefault: false }),
+  );
+
   const handleFilterChange = (filterType: string) => {
     setOperatorSymbol(filterType);
   };
   const handleAmountChange = (value: string) => {
-    if (operatorSymbol === "") {
-      setOperatorSymbol("0");
-    } else {
-      setRechargeMoney(value);
-    }
+    setRechargeMoney(value);
   };
   const [userId, setUserId] = useQueryState("userId");
   const [userType, setUserType] = useQueryState("userType", {
     defaultValue: "all",
   });
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+  useEffect(() => {
+    setOperatorSymbol("0");
+  }, []);
   return (
     <div className="flex flex-col bg-background py-4 px-4 gap-4">
       <div className="flex gap-4 items-center">

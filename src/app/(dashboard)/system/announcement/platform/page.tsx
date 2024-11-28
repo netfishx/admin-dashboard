@@ -1,25 +1,12 @@
-import { getAnnouncement } from "@/api";
 import { Skeleton } from "@/components/ui/skeleton";
-import { endOfDay, startOfDay } from "date-fns";
+import { Table } from "@/components/ui/table";
 import { Suspense } from "react";
-import { List } from "../components/list";
 import { Form } from "./form";
+import { List, TableBodySkeleton, TableHeaderWrapper } from "./list";
 
 export default async function Platform({
   searchParams,
 }: { searchParams: Promise<{ [key: string]: string | string[] }> }) {
-  const search = await searchParams;
-  const now = Date.now();
-  const start = search.startTime ?? startOfDay(now).getTime();
-  const end = search.endTime ?? endOfDay(now).getTime();
-
-  const { data } = await getAnnouncement({
-    pageSize: Number(search.pageSize ?? 10),
-    pageNum: Number(search.pageNum ?? 1),
-    startLastTime: Number(start),
-    endLastTime: Number(end),
-    userId: (search.userId ?? "") as string,
-  });
   return (
     <div className="flex flex-col gap-2 w-full h-full">
       {/* form: admin permission */}
@@ -35,8 +22,15 @@ export default async function Platform({
         <Form />
       </Suspense>
       <div className="p-2 bg-background flex-1 flex flex-col gap-2">
-        <Suspense>
-          <List data={data} />
+        <Suspense
+          fallback={
+            <Table className="border rounded-sm">
+              <TableHeaderWrapper />
+              <TableBodySkeleton />
+            </Table>
+          }
+        >
+          <List searchParams={searchParams} />
         </Suspense>
       </div>
     </div>

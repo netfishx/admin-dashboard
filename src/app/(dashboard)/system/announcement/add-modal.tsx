@@ -28,12 +28,15 @@ import {
   editModalTitleAtom,
 } from "@/store";
 import { useAtom, useAtomValue } from "jotai";
+import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useTransition } from "react";
 import { TimeRange } from "./time-range";
+
 export function AddModal() {
   const translations = useTranslations();
+  const [isPending, startTransition] = useTransition();
   const router = useRouter();
   const t = useTranslations("system.announcement");
   const [type, setType] = useState("0");
@@ -64,14 +67,16 @@ export function AddModal() {
       endTime: endTime ? new Date(endTime).getTime() : null,
     };
     console.info("addParams", addParams);
-    const res = await saveAnnouncement(addParams);
-    console.info("body", res);
+    startTransition(async () => {
+      const res = await saveAnnouncement(addParams);
+      console.info("body", res);
 
-    if (res.code === 0) {
-      setOpen(false);
-      resetFields();
-      router.refresh();
-    }
+      if (res.code === 0) {
+        setOpen(false);
+        resetFields();
+        router.refresh();
+      }
+    });
   };
 
   // 回调函数，用于接收子组件传递的时间数据
@@ -293,7 +298,10 @@ export function AddModal() {
           <Button variant="outline" onClick={() => setOpen(false)}>
             {translations("cancel")}
           </Button>
-          <Button onClick={handleClickAdd}>{translations("confirm")}</Button>
+          <Button onClick={handleClickAdd} disabled={isPending}>
+            {isPending && <Loader2 className="w-4 h-4 animate-spin" />}
+            {translations("confirm")}
+          </Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>
