@@ -9,10 +9,7 @@ export const usernameSchema = z
   .max(16, "用户名长度必须在6-16位之间")
   .regex(/^[a-z]/, "用户名必须以小写字母开头")
   .regex(/^[a-z0-9]+$/, "用户名只能包含小写字母和数字")
-  .refine(
-    (value) => !value.toLowerCase().includes("admin"),
-    "用户名不能包含'admin'字样",
-  );
+  .refine((value) => !value.includes("admin"), "用户名不能包含'admin'字样");
 
 // 密码验证规则
 export const passwordSchema = z
