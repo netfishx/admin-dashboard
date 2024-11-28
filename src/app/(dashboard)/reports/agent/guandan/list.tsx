@@ -13,17 +13,24 @@ import type {
   PokerReportRequestParams,
   PokerReportRequestRecords,
 } from "@/lib/types";
+import { getSession } from "@/session";
 import { getTranslations } from "next-intl/server";
 import { Suspense } from "react";
 import DetailButton from "./detail-button";
 
 export async function ListHeader() {
-  "use cache";
   const t = await getTranslations("report.agent");
+  const session = await getSession();
+  const permissions = session?.permissions;
+  const hasSearchPermission = permissions?.includes(
+    "agent_report_guandan_search",
+  );
   return (
     <TableHeader>
       <TableRow className="bg-muted">
-        <TableHead className="min-w-24 text-center">{t("agentID")}</TableHead>
+        {hasSearchPermission && (
+          <TableHead className="min-w-24 text-center">{t("agentID")}</TableHead>
+        )}
         <TableHead className="min-w-24 text-center">{t("gameName")}</TableHead>
         <TableHead className="min-w-24 text-center">{t("roomType")}</TableHead>
         <TableHead className="min-w-24 text-center">
@@ -42,12 +49,19 @@ export async function ListHeader() {
 
 async function ListBody({ list }: { list: PokerReportRequestRecords[] }) {
   const translate = await getTranslations();
+  const session = await getSession();
+  const permissions = session?.permissions;
+  const hasSearchPermission = permissions?.includes(
+    "agent_report_guandan_search",
+  );
   return (
     <TableBody>
       {list?.length > 0 ? (
         list?.map((item: PokerReportRequestRecords) => (
           <TableRow key={`${item.agentId}`}>
-            <TableCell className="w-24 text-center">{item.agentId}</TableCell>
+            {hasSearchPermission && (
+              <TableCell className="w-24 text-center">{item.agentId}</TableCell>
+            )}
             <TableCell className="w-24 text-center">{item.gameType}</TableCell>
             <TableCell className="w-24 text-center">{item.roomType}</TableCell>
             <TableCell className="w-24 text-center">

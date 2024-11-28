@@ -1,21 +1,22 @@
 "use client";
-import { getUserBasicInfo } from "@/api";
 import { Button } from "@/components/ui/button";
-import type { UserBasicInfo } from "@/lib/types";
 import { useFormatter, useTranslations } from "next-intl";
-import { useEffect, useState } from "react";
 
-export function DataOverview() {
+export function DataOverview({
+  data,
+}: {
+  data: {
+    totalBalanceMoney: number;
+    usableBalanceMoney: number;
+    gameFreezeMoney: number;
+    withdrawFreezeMoney: number;
+    totalCreditMoney: number;
+    memberToBeRepaidMoney: number;
+  };
+}) {
   const t = useTranslations();
   const format = useFormatter();
-  const [info, setInfo] = useState<UserBasicInfo>();
-  useEffect(() => {
-    const fetchData = async () => {
-      const { data } = await getUserBasicInfo();
-      setInfo(data);
-    };
-    fetchData();
-  }, []);
+
   return (
     <div className="rounded bg-card">
       <div className="px-4 pt-4 flex justify-between items-center mb-4">
@@ -37,7 +38,7 @@ export function DataOverview() {
               {t("totalAmount")}
             </p>
             <p className="text-xs font-semibold">
-              {format.number(info?.totalBalanceMoney ?? 0)}
+              {format.number(data?.totalBalanceMoney ?? 0)}
             </p>
           </div>
           <div className="flex flex-col items-center justify-center p-2">
@@ -45,7 +46,7 @@ export function DataOverview() {
               {t("availableAmount")}
             </p>
             <p className="text-xs font-semibold">
-              {format.number(info?.usableBalanceMoney ?? 0)}
+              {format.number(data?.usableBalanceMoney ?? 0)}
             </p>
           </div>
           <div className="flex flex-col items-center justify-center p-2">
@@ -53,7 +54,7 @@ export function DataOverview() {
               {t("frozenAmount")}
             </p>
             <p className="text-xs font-semibold">
-              {format.number(info?.gameFreezeMoney ?? 0)}
+              {format.number(data?.gameFreezeMoney ?? 0)}
             </p>
           </div>
           <div className="flex flex-col items-center justify-center p-2">
@@ -61,7 +62,7 @@ export function DataOverview() {
               {t("withdrawFrozenAmount")}
             </p>
             <p className="text-xs font-semibold">
-              {format.number(info?.withdrawFreezeMoney ?? 0)}
+              {format.number(data?.withdrawFreezeMoney ?? 0)}
             </p>
           </div>
           <div className="flex flex-col items-center justify-center p-2">
@@ -69,7 +70,7 @@ export function DataOverview() {
               {t("totalCreditAmount")}
             </p>
             <p className="text-xs font-semibold">
-              {format.number(info?.totalCreditMoney ?? 0)}
+              {format.number(data?.totalCreditMoney ?? 0)}
             </p>
           </div>
           <div className="flex flex-col items-center justify-center p-2">
@@ -77,7 +78,7 @@ export function DataOverview() {
               {t("memberReturn")}
             </p>
             <p className="text-xs font-semibold">
-              {format.number(info?.memberToBeRepaidMoney ?? 0)}
+              {format.number(data?.memberToBeRepaidMoney ?? 0)}
             </p>
           </div>
         </div>

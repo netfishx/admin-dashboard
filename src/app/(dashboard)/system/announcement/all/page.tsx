@@ -1,4 +1,4 @@
-import { getAgentAnnouncement } from "@/api";
+import { getSameOrSeniorAnno } from "@/api";
 import { Suspense } from "react";
 import { List } from "../components/list";
 
@@ -8,7 +8,7 @@ export default async function All({
 }: { searchParams: Promise<{ [key: string]: string | string[] }> }) {
   const search = await searchParams;
 
-  const { data } = await getAgentAnnouncement({
+  const { data } = await getSameOrSeniorAnno({
     pageSize: Number(search.pageSize ?? 10),
     pageNum: Number(search.pageNum ?? 1),
     level: 1, // 上级

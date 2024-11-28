@@ -13,6 +13,7 @@ import type {
   TransferRecordRequestParams,
   TransferRecordRequestRecords,
 } from "@/lib/types";
+import { hasPermission } from "@/session";
 import { format } from "date-fns";
 import { getTranslations } from "next-intl/server";
 import { Suspense } from "react";
@@ -82,6 +83,7 @@ export async function List({
   const t = await getTranslations("report.borrow");
   const params = await searchParams;
   const { data } = await postGetTransferLogList(params);
+  const hasSearchPermission = await hasPermission("");
   return (
     <div className="p-2 bg-background flex-1">
       <div className="border rounded-sm relative">

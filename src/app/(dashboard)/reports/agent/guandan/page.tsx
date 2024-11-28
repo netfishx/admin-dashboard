@@ -2,12 +2,22 @@ import TableSkeleton from "@/components/table-skeleton";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Table } from "@/components/ui/table";
 import type { PokerReportRequestParams } from "@/lib/types";
+import { getSession } from "@/session";
 import { Suspense } from "react";
 import { List, ListHeader } from "./list";
 import { ListFilter } from "./list-filter";
 
 interface CommonWrapperProps {
   searchParams: Promise<PokerReportRequestParams>;
+}
+
+async function ListFilterWrapper() {
+  const session = await getSession();
+  const permissions = session?.permissions;
+  const hasSearchPermission = permissions?.includes(
+    "agent_report_guandan_search",
+  );
+  return <ListFilter hasSearchPermission={!!hasSearchPermission} />;
 }
 
 export default function Page({ searchParams }: CommonWrapperProps) {
@@ -20,7 +30,7 @@ export default function Page({ searchParams }: CommonWrapperProps) {
           </div>
         }
       >
-        <ListFilter />
+        <ListFilterWrapper />
       </Suspense>
       <Suspense
         fallback={

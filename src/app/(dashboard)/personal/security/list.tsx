@@ -25,7 +25,7 @@ export async function List() {
                 <span className="text-sm font-medium">
                   {t("loginPassword")}
                 </span>
-                <CheckCircle2 className="h-5 w-5 text-chart-2" />
+                <CheckCircle2 className="h-5 w-5 text-chart-5" />
                 <span className="text-sm text-muted-foreground mt-1">
                   {t("loginPasswordDes")}
                 </span>

@@ -1,14 +1,100 @@
 import { getWithdrawReportList } from "@/api";
+import { CustomPagination } from "@/components/custom-pagination";
+import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 import type { WithdrawReportParams } from "@/lib/types";
-import { endOfDay, startOfDay } from "date-fns";
 import { Suspense } from "react";
 import { Form } from "./form";
-import { WithdrawTable } from "./table";
+
+import type { WithdrawReport } from "@/lib/types";
+import type { PageData } from "@/lib/types";
+import { format } from "date-fns";
+import { getTranslations } from "next-intl/server";
 
 export default async function Page({
   searchParams,
-}: { searchParams: Promise<{ [key: string]: string | undefined }> }) {
+}: { searchParams: Promise<{ [key: string]: string | string[] }> }) {
+  return (
+    <div className="flex flex-col gap-2 w-full">
+      <Suspense
+        fallback={
+          <div className="bg-background py-2">
+            <Skeleton className="h-9 w-full opacity-25" />
+            <Skeleton className="h-9 w-full opacity-25" />
+            <Skeleton className="h-9 w-full opacity-25" />
+            <Skeleton className="h-9 w-full opacity-25" />
+          </div>
+        }
+      >
+        <Form />
+      </Suspense>
+      <div className="p-2 bg-background flex-1 flex flex-col gap-2">
+        <Suspense
+          fallback={
+            <Table>
+              <TableHeaderWrapper />
+              <TableBodySkeleton />
+            </Table>
+          }
+        >
+          <TableWrapper searchParams={searchParams} />
+        </Suspense>
+      </div>
+    </div>
+  );
+}
+
+async function TableHeaderWrapper() {
+  const t = await getTranslations("report.withdraw");
+  return (
+    <TableHeader>
+      <TableRow className="bg-muted">
+        <TableHead className="w-24 min-w-24 text-center">
+          {t("orderNo")}
+        </TableHead>
+        <TableHead className="w-24 min-w-24 text-center">
+          {t("userId")}
+        </TableHead>
+        <TableHead className="w-24 min-w-24 text-center">
+          {t("currency")}
+        </TableHead>
+        <TableHead className="w-24 min-w-24 text-center">
+          {t("withdrawMoney")}
+        </TableHead>
+        <TableHead className="w-24 min-w-24 text-center">
+          {t("withdrawFee")}
+        </TableHead>
+        <TableHead className="w-24 min-w-24 text-center">
+          {t("status")}
+        </TableHead>
+        <TableHead className="w-32 min-w-32 text-center">
+          {t("applyTime")}
+        </TableHead>
+        <TableHead className="w-24 min-w-24 text-center">
+          {t("approverTime")}
+        </TableHead>
+        <TableHead className="w-24 min-w-24 text-center">
+          {t("finishTime")}
+        </TableHead>
+        <TableHead className="min-w-24 text-center">
+          {t("withdrawHash")}
+        </TableHead>
+      </TableRow>
+    </TableHeader>
+  );
+}
+async function TableWrapper({
+  searchParams,
+}: { searchParams: Promise<{ [key: string]: string | string[] }> }) {
+  const t = await getTranslations();
   const {
     orderNo,
     operatorSymbol,
@@ -19,23 +105,23 @@ export default async function Page({
     pageNum,
     pageSize,
   } = await searchParams;
-  const now = Date.now();
-  const start = startTime ?? startOfDay(now).getTime();
-  const end = endTime ?? endOfDay(now).getTime();
+
   const params: WithdrawReportParams = {
-    orderNo: orderNo ?? null,
-    operatorSymbol:
-      operatorSymbol !== undefined ? Number(operatorSymbol) : null,
-    withdrawMoney: withdrawMoney !== undefined ? Number(withdrawMoney) : null,
-    requestStatus: requestStatus !== undefined ? Number(requestStatus) : null,
+    orderNo: (orderNo ?? null) as string,
+    operatorSymbol: Number(operatorSymbol),
+    withdrawMoney: Number(withdrawMoney),
+    requestStatus: Number(requestStatus),
     pageNum: Number(pageNum ?? 1),
     pageSize: Number(pageSize ?? 10),
-    startTime: Number(start),
-    endTime: Number(end),
+    startTime: Number(startTime),
+    endTime: Number(endTime),
   };
+  if (!startTime || !endTime) {
+    return null;
+  }
   // 验证参数是否有效 至少一个参数是有值的
   const validateParams = (params: WithdrawReportParams) => {
-    const { endTime, startTime, pageNum, pageSize, ...otherFields } = params;
+    const { pageNum, pageSize, ...otherFields } = params;
     const isOtherFieldsValid = Object.values(otherFields).some(
       (value) => value !== null && value !== undefined && value !== "",
     );
@@ -45,33 +131,93 @@ export default async function Page({
     console.info("请至少选择一个查询条件");
   }
   const { data } = await getWithdrawReportList(params);
-  console.log("🌸 ~ data:", data);
+  console.info("🌸 ~ data:", data);
   return (
-    <div className="flex flex-col gap-2 w-full">
-      <Suspense
-        fallback={
-          <div className="flex justify-between items-center bg-background py-2 px-4">
-            <Skeleton className="w-full h-9 opacity-20" />
-            <Skeleton className="w-full h-9 opacity-20" />
-          </div>
-        }
-      >
-        <Form />
-      </Suspense>
-      <div className="p-2 bg-background flex-1 flex flex-col gap-2">
-        <Suspense
-          fallback={
-            <div className="flex flex-col gap-4 p-4">
-              <Skeleton className="w-full h-6" />
-              <Skeleton className="w-full h-6" />
-              <Skeleton className="w-full h-6" />
-              <Skeleton className="w-2/3 h-6" />
-            </div>
-          }
-        >
-          <WithdrawTable data={data} />
-        </Suspense>
+    <div className="bg-background flex-1 w-full ">
+      <div className="relative overflow-y-auto overflow-x-auto border rounded-sm">
+        <Table>
+          <TableHeaderWrapper />
+          <Suspense fallback={<TableBodySkeleton />}>
+            <TableBodyWrapper data={data} />
+          </Suspense>
+        </Table>
       </div>
+      {Number(data?.total) > 0 && (
+        <div className="pt-2">
+          <CustomPagination
+            total={data?.total ?? 0}
+            currentPage={Number(data?.pageNum ?? 1)}
+            pageSize={Number(data?.pageSize ?? 10)}
+          />
+        </div>
+      )}
     </div>
+  );
+}
+
+async function TableBodyWrapper({ data }: { data?: PageData<WithdrawReport> }) {
+  const t = await getTranslations("");
+  return (
+    <TableBody>
+      {data && data.list.length > 0 ? (
+        data.list.map((item) => (
+          <TableRow key={item.id}>
+            <TableCell className="w-24 min-w-24 text-center">
+              {item.orderNo}
+            </TableCell>
+            <TableCell className="w-24 min-w-24 text-center">
+              {item.userId}
+            </TableCell>
+            <TableCell className="w-24 min-w-24 text-center">
+              {item.currency}
+            </TableCell>
+            <TableCell className="w-24 min-w-24 text-center">
+              {item.withdrawMoney}
+            </TableCell>
+            <TableCell className="w-24 min-w-24 text-center">
+              {item.withdrawFee}
+            </TableCell>
+            <TableCell className="w-24 min-w-24 text-center">
+              {item.status}
+            </TableCell>
+            <TableCell className="w-32 min-w-32 text-center">
+              {format(item.applyTime, "yyyy-MM-dd HH:mm:ss")}
+            </TableCell>
+            <TableCell className="w-24 min-w-24 text-center">
+              {format(item.approverTime, "yyyy-MM-dd HH:mm:ss")}
+            </TableCell>
+            <TableCell className="w-24 min-w-24 text-center">
+              {format(item.finishTime, "yyyy-MM-dd HH:mm:ss")}
+            </TableCell>
+            <TableCell className="min-w-24 text-center">
+              <Button variant="link" size="icon">
+                {item.withdrawHash}
+              </Button>
+            </TableCell>
+          </TableRow>
+        ))
+      ) : (
+        <TableRow>
+          <TableCell colSpan={10} className="text-center h-40">
+            {t("noData")}
+          </TableCell>
+        </TableRow>
+      )}
+    </TableBody>
+  );
+}
+
+function TableBodySkeleton() {
+  return (
+    <TableBody>
+      {Array.from({ length: 5 }).map((_, index) => (
+        // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
+        <TableRow key={index}>
+          <TableCell colSpan={10}>
+            <Skeleton className="w-full h-6" />
+          </TableCell>
+        </TableRow>
+      ))}
+    </TableBody>
   );
 }

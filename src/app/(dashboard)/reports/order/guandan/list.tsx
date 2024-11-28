@@ -12,13 +12,16 @@ import type {
   GameRecordRequestParams,
   GameRecordRequestRecords,
 } from "@/lib/types";
+import { getSession } from "@/session";
 import { format } from "date-fns";
 import { getTranslations } from "next-intl/server";
 import DetailButton from "./detail-button";
 
 export async function ListHeader() {
-  "use cache";
   const t = await getTranslations("report.orderlist");
+  const session = await getSession();
+  const permissions = session?.permissions;
+  const hasSearchPermission = permissions?.includes("detail_guandan_search");
   return (
     <TableHeader>
       <TableRow className="bg-muted">
@@ -31,7 +34,9 @@ export async function ListHeader() {
         <TableHead className="min-w-24 text-center">
           {t("ministerID")}
         </TableHead>
-        <TableHead className="min-w-24 text-center">{t("agentID")}</TableHead>
+        {hasSearchPermission && (
+          <TableHead className="min-w-24 text-center">{t("agentID")}</TableHead>
+        )}
         <TableHead className="min-w-24 text-center">{t("bottomBet")}</TableHead>
         <TableHead className="min-w-24 text-center">{t("topBet")}</TableHead>
         <TableHead className="min-w-24 text-center">{t("level")}</TableHead>
@@ -81,6 +86,9 @@ function generateResultString(players: GameRecordRequestRecords["result"]) {
 
 async function ListBody({ list }: { list: GameRecordRequestRecords[] }) {
   const translate = await getTranslations();
+  const session = await getSession();
+  const permissions = session?.permissions;
+  const hasSearchPermission = permissions?.includes("detail_guandan_search");
   return (
     <TableBody>
       {list && list?.length > 0 ? (
@@ -93,9 +101,11 @@ async function ListBody({ list }: { list: GameRecordRequestRecords[] }) {
             <TableCell className="w-24 text-center">
               {item.clubOwnerId}
             </TableCell>
-            <TableCell className="w-24 text-center">
-              {item.parentClubOwnerAgentId}
-            </TableCell>
+            {hasSearchPermission && (
+              <TableCell className="w-24 text-center">
+                {item.parentClubOwnerAgentId}
+              </TableCell>
+            )}
             <TableCell className="w-24 text-center">{item.bet}</TableCell>
             <TableCell className="w-24 text-center">{item.settleCap}</TableCell>
             <TableCell className="w-24 text-center">

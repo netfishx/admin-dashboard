@@ -2,6 +2,7 @@ import TableSkeleton from "@/components/table-skeleton";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Table } from "@/components/ui/table";
 import type { GameRecordRequestParams } from "@/lib/types";
+import { getSession } from "@/session";
 import { Suspense } from "react";
 import { BombDetailDialog } from "./bomb-detail-dialog";
 import { List, ListHeader } from "./list";
@@ -9,6 +10,13 @@ import { ListFilter } from "./list-filter";
 import { OrderDetailDialog } from "./order-detail-dialog";
 interface CommonWrapperProps {
   searchParams: Promise<GameRecordRequestParams>;
+}
+
+async function ListFilterWrapper() {
+  const session = await getSession();
+  const permissions = session?.permissions;
+  const hasSearchPermission = permissions?.includes("detail_guandan_search");
+  return <ListFilter hasSearchPermission={!!hasSearchPermission} />;
 }
 
 export default function Page({ searchParams }: CommonWrapperProps) {
@@ -21,7 +29,7 @@ export default function Page({ searchParams }: CommonWrapperProps) {
           </div>
         }
       >
-        <ListFilter />
+        <ListFilterWrapper />
       </Suspense>
       <Suspense
         fallback={

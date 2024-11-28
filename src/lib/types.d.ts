@@ -90,8 +90,10 @@ export type MemberList = {
   nickname: string;
   status: number;
   upUsername: string;
+  upNickname: string;
   debtAmount: number;
   creditAmount: number;
+  createTime: number;
   depositAddress: string;
 };
 
@@ -164,8 +166,8 @@ export type AnnouncementListRequest = {
   endLastTime?: number;
 };
 // 公告列表请求 本级
-export type AnnouncementAgentListRequest = {
-  level: number | string;
+export type SameOrSeniorAnnoListRequest = {
+  level: number;
   pageSize: number;
   pageNum: number;
 };
@@ -186,27 +188,30 @@ export type AnnouncementList = {
   updateTime: number;
 };
 
-export type PeriodReport = {
+export type PeriodReportParams = {
   pageSize: number;
   pageNum: number;
   startTime: number;
   endTime: number;
   issueNumber: string;
-  gameTypeName: string;
-  gameName: string;
+  gameType: number;
+  gameId: number;
 };
 
 export type PeriodReportList = WithPagination & {
   issueNumber: string;
   openTime: string;
-  gameTypeName: string;
-  gameName: string;
-  betNum: number | string;
-  betAmount: number | string;
-  tieAmount: number | string;
-  pairBetAmount: number | string;
-  validBetAmount: number | string;
-  memberBackAmount: number | string;
+  agentId: string;
+  dataLink: [];
+  gameId: number;
+  gameType: number;
+  betNum: number;
+  memberBetAmount: string; // 会员下注金额
+  tieAmount: string; // 开和金额
+  pairBetAmount: string; // 对赌金额
+  availableBetAmount: string; // 有效金额
+  backIncome: string; // 每期会员退水金额汇总
+  total: number;
 };
 
 // 个人中心-基本信息
@@ -468,14 +473,14 @@ export type RechargeReport = {
 };
 // 充值报表请求入参
 export type RechargeReportParams = {
-  userId?: string | null;
+  userId?: string;
   startTime?: number;
   endTime?: number;
-  orderNo?: string | null;
-  withdrawUserType?: number | null;
-  operatorSymbol?: number | null;
-  rechargeMoney?: number | null;
-  requestStatus?: number | null;
+  orderNo?: string;
+  withdrawUserType?: number;
+  operatorSymbol?: number;
+  rechargeMoney?: number;
+  requestStatus?: number;
   pageNum: number;
   pageSize: number;
 };
@@ -510,12 +515,12 @@ export type WithdrawReport = {
 export type WithdrawReportParams = {
   startTime?: number;
   endTime?: number;
-  orderNo?: string | null;
-  operatorSymbol?: number | null;
-  withdrawMoney?: number | null;
+  orderNo?: string;
+  operatorSymbol?: number;
+  withdrawMoney?: number;
   pageNum: number;
   pageSize: number;
-  requestStatus?: number | null;
+  requestStatus?: number;
 };
 
 // 归集地址列表
@@ -695,28 +700,28 @@ export type TodayWinLoss = {
 // 百家乐报表
 export type TodayGameReport = {
   agentBaccaratAmountReport: {
-    gameId: number | string;
-    gameName: string;
     gameType: number;
+    gameId: number;
+    gameName: string;
     betNum: number;
-    memberBetAmount: string | number;
+    memberBetAmount: string;
   }[];
   agentBaccaratBetNumReport: {
-    gameId: number | string;
+    gameId: number;
     gameName: string;
     gameType: number;
     betNum: number;
-    memberBetAmount: string | number;
+    memberBetAmount: string;
   }[];
   dailyBaccaratReport: {
     day: number;
-    betNum: number | string;
-    memberBetAmount: string | number;
+    betNum: number;
+    memberBetAmount: string;
   }[];
   dailyPokerReport: {
     day: number;
-    totaSettledAmount: string | number;
-    issueAmount: number | string;
+    totaSettledAmount: string;
+    issueAmount: number;
   }[];
 };
 // 充提
@@ -727,6 +732,12 @@ export type FundList = {
     withdrawAmount: number;
   }[];
 };
+// 会员趋势
+export type MemberChartList = {
+  day: number;
+  registerCount: number;
+  loginCount: number;
+}[];
 export type TodayFundList = {
   rechargeAmount: number;
   withdrawAmount: number;
