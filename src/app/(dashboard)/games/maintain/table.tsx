@@ -48,8 +48,8 @@ function EditButton({
           className={cn([
             "text-sm",
             data.status
-              ? "text-destructive hover:text-destructive/80"
-              : "text-primary hover:text-primary/80",
+              ? "text-primary hover:text-primary/80"
+              : "text-destructive hover:text-destructive/80",
           ])}
           disabled={isPending}
         >
@@ -60,7 +60,7 @@ function EditButton({
         <AlertDialogHeader>
           <AlertDialogTitle>
             {translations("title", {
-              status: translations(data.status === 1 ? "open" : "close"),
+              status: translations(data.status === 1 ? "close" : "open"),
             })}
           </AlertDialogTitle>
           <AlertDialogDescription />
@@ -147,11 +147,11 @@ export function MaintainTable({
                 className={cn([
                   "p-1 rounded-sm w-24 inline-block",
                   item.status
-                    ? "text-primary bg-primary/20"
-                    : "text-destructive bg-destructive/20",
+                    ? "text-destructive bg-destructive/20"
+                    : "text-primary bg-primary/20",
                 ])}
               >
-                {item.status ? t("normal") : t("maintaining")}
+                {item.status ? t("maintaining") : t("normal")}
               </span>
             </TableCell>
             <TableCell>{item.updateBy}</TableCell>
@@ -160,7 +160,7 @@ export function MaintainTable({
             </TableCell>
             <TableCell className="w-24 text-center">
               <EditButton data={item}>
-                {item.status ? t("open") : t("close")}
+                {item.status ? t("close") : t("open")}
               </EditButton>
             </TableCell>
           </TableRow>

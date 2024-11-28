@@ -1,11 +1,13 @@
 "use server";
 import type { Res } from "@/lib/types";
+import { signOut } from "@/session";
 import axios from "axios";
 import {
   unstable_cacheLife as cacheLife,
   unstable_cacheTag as cacheTag,
 } from "next/cache";
 import { headers } from "next/headers";
+import { redirect } from "next/navigation";
 
 const instance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_BASE_URL,
@@ -91,9 +93,14 @@ async function request<T>({
       params,
     });
 
+    if (res.status === 401) {
+      await signOut();
+      return redirect("/login");
+    }
     return res.data;
   } catch (error) {
     console.error(error);
+
     return {
       code: 500,
       message: "未知异常",

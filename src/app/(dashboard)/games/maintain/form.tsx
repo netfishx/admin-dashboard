@@ -35,7 +35,7 @@ function BatchButton({
     <AlertDialog>
       <AlertDialogTrigger asChild>
         <Button
-          variant={status === 0 ? "destructive" : "default"}
+          variant={status === 0 ? "default" : "destructive"}
           disabled={isPending}
         >
           {isPending ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
@@ -81,8 +81,8 @@ export function MaintainForm() {
   return (
     <div className="flex items-center justify-end gap-2 bg-background p-4">
       <Suspense>
-        <BatchButton status={0}>{t("batchOpen")}</BatchButton>
-        <BatchButton status={1}>{t("batchClose")}</BatchButton>
+        <BatchButton status={0}>{t("batchClose")}</BatchButton>
+        <BatchButton status={1}>{t("batchOpen")}</BatchButton>
       </Suspense>
     </div>
   );
