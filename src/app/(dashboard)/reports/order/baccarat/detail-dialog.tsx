@@ -1,5 +1,6 @@
 "use client";
 import { getOrderDetail } from "@/api";
+import TableSkeleton from "@/components/table-skeleton";
 import {
   Dialog,
   DialogContent,
@@ -7,6 +8,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
+import { Skeleton } from "@/components/ui/skeleton";
 import {
   Table,
   TableBody,
@@ -16,7 +18,8 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import type { OrderItemDetailType } from "@/lib/types";
-import { useEffect, useState } from "react";
+import { useTranslations } from "next-intl";
+import { Suspense, useEffect, useState } from "react";
 
 interface Dialogprops {
   open: boolean;
@@ -26,6 +29,7 @@ interface Dialogprops {
 export function Detaildialog(props: Dialogprops) {
   const { open, onOpenChange } = props;
   const [data, setData] = useState<OrderItemDetailType>();
+  const t = useTranslations("report.orderlist");
   useEffect(() => {
     if (open) {
       getOrderDetail({ id: "1731907697706" }).then((res) => {
@@ -83,38 +87,46 @@ export function Detaildialog(props: Dialogprops) {
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="w-[500px]">
         <DialogHeader>
-          <DialogTitle>详情</DialogTitle>
+          <DialogTitle>{t("detail")}</DialogTitle>
         </DialogHeader>
-        <div className="flex justify-center">占成明细</div>
+        <div className="flex justify-center">{t("shareDetail")}</div>
         <ScrollArea className="w-[450px]">
-          <div className="whitespace-nowrap mb-1">
-            {data?.revenueShare.map(
-              (item) => `${item.accountId} - ${item.percent * 100}%；`,
-            )}
-          </div>
+          <Suspense fallback={<Skeleton className="w-full h-4" />}>
+            <div className="whitespace-nowrap mb-1">
+              {data?.revenueShare.map(
+                (item) => `${item.accountId} - ${item.percent * 100}%；`,
+              )}
+            </div>
+          </Suspense>
           <ScrollBar orientation="horizontal" />
         </ScrollArea>
-        {/* <div>靴数: 8</div>
-        <div>牌局结果: 庄:♣3 ♣7; ♦2 ♠6</div> */}
-        <Table>
-          <TableHeader>
-            <TableRow className="bg-muted">
-              <TableHead className="w-20 text-center">靴数</TableHead>
-              <TableHead className="w-20 text-center">局数</TableHead>
-              <TableHead className="w-40 text-center">牌局结果</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            <TableRow>
-              <TableCell className="w-20 text-center">{data?.shoeId}</TableCell>
-              <TableCell className="w-20 text-center">{data?.playId}</TableCell>
-              <TableCell className="w-40 text-center">
-                {formatResult(data?.result || "")}
-                {/* {data?.result?.split(",")} */}
-              </TableCell>
-            </TableRow>
-          </TableBody>
-        </Table>
+        <Suspense fallback={<TableSkeleton length={1} colSpan={3} />}>
+          <Table>
+            <TableHeader>
+              <TableRow className="bg-muted">
+                <TableHead className="w-20 text-center">{t("shoe")}</TableHead>
+                <TableHead className="w-20 text-center">{t("play")}</TableHead>
+                <TableHead className="w-40 text-center">
+                  {t("resultp")}
+                </TableHead>
+              </TableRow>
+            </TableHeader>
+
+            <TableBody>
+              <TableRow>
+                <TableCell className="w-20 text-center">
+                  {data?.shoeId}
+                </TableCell>
+                <TableCell className="w-20 text-center">
+                  {data?.playId}
+                </TableCell>
+                <TableCell className="w-40 text-center">
+                  {formatResult(data?.result || "")}
+                </TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
+        </Suspense>
       </DialogContent>
     </Dialog>
   );
