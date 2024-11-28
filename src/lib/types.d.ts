@@ -180,6 +180,12 @@ export type AnnouncementList = {
   startTime: number;
   endTime: number;
   language: string;
+  contentList: {
+    id?: string;
+    language: string;
+    content: string;
+    title?: string;
+  }[];
   content: { id?: string; language: string; content: string; title?: string }[];
   contentOfLanguage: string;
   titleOfLanguage: string;

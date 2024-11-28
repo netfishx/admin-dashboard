@@ -375,9 +375,9 @@ export async function getAnnouncement(params: AnnouncementListRequest) {
     res.data.list = res.data.list.map((item) => ({
       ...item,
       contentOfLanguage:
-        item.content.find((i) => i.language === "cn")?.content || "",
+        item.contentList.find((i) => i.language === "zh-CN")?.content || "",
       titleOfLanguage:
-        item.content.find((i) => i.language === "cn")?.title || "",
+        item.contentList.find((i) => i.language === "zh-CN")?.title || "",
     }));
   }
   return res;
@@ -394,9 +394,9 @@ export async function getSameOrSeniorAnno(params: SameOrSeniorAnnoListRequest) {
     res.data.list = res.data.list.map((item) => ({
       ...item,
       contentOfLanguage:
-        item.content.find((i) => i.language === "cn")?.content || "",
+        item.contentList.find((i) => i.language === "zh-CN")?.content || "",
       titleOfLanguage:
-        item.content.find((i) => i.language === "cn")?.title || "",
+        item.contentList.find((i) => i.language === "zh-CN")?.title || "",
     }));
   }
   return res;
