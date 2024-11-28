@@ -16,10 +16,8 @@ import { useRouter } from "next/navigation";
 import { useQueryState } from "nuqs";
 import { useRef } from "react";
 
-export function ListFilter({
-  hasSearchPermission,
-}: { hasSearchPermission: boolean }) {
-  const t = useTranslations("report.borrow");
+export function ListFilter() {
+  const t = useTranslations("report.credit");
   const router = useRouter();
   const [orderNumber, setOrderNumber] = useQueryState("transactionID", {
     defaultValue: "",

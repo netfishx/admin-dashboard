@@ -12,8 +12,9 @@ import {
 } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
 import { Password } from "@/components/ui/password";
+import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { useState } from "react";
+import { useState, useTransition } from "react";
 
 export function MoneyModal({
   open,
@@ -24,23 +25,25 @@ export function MoneyModal({
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [loading, setLoading] = useState(false);
   const isEdit = false;
+  const [isPending, startTransition] = useTransition();
+
   const submit = async () => {
-    setLoading(true);
     if (isEdit) {
-      const { code, message } = await editFundPassword({
-        oldSecret: oldPassword,
-        newSecret: newPassword,
+      startTransition(async () => {
+        const { code, message } = await editFundPassword({
+          oldSecret: oldPassword,
+          newSecret: newPassword,
+        });
       });
     } else {
-      const { code, message } = await bindFundPassword({
-        secret: newPassword,
-        userId: "-1",
+      startTransition(async () => {
+        const { code, message } = await bindFundPassword({
+          secret: newPassword,
+          userId: "-1",
+        });
       });
     }
-
-    setLoading(false);
   };
 
   return (
@@ -109,7 +112,8 @@ export function MoneyModal({
           <Button variant="outline" onClick={() => onOpenChange(false)}>
             {translations("cancel")}
           </Button>
-          <Button onClick={submit} disabled={loading}>
+          <Button onClick={submit} disabled={isPending}>
+            {isPending && <Loader2 className="w-4 h-4 animate-spin" />}
             {translations("confirm")}
           </Button>
         </DialogFooter>

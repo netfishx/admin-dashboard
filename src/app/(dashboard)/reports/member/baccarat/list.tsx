@@ -1,6 +1,7 @@
 import { getMemberReportList } from "@/api";
 import { CustomPagination } from "@/components/custom-pagination";
 import TableSkeleton from "@/components/table-skeleton";
+import { Label } from "@/components/ui/label";
 import {
   Table,
   TableBody,
@@ -104,6 +105,49 @@ export async function List({
   const { data } = await getMemberReportList(params);
   return (
     <div className="p-2 bg-background flex-1">
+      <div>
+        <Label className="min-w-24 text-center text-sm">
+          {t("bet_count")}:
+        </Label>
+        <span className="min-w-24 text-center text-sm">
+          {data?.list[0]?.totalBetNum} &nbsp;
+        </span>
+
+        <Label className="min-w-24 text-center text-sm">
+          {t("bet_amount")}:
+        </Label>
+        <span className="min-w-24 text-center text-sm">
+          {data?.list[0]?.totalMemberBetAmount} &nbsp;
+        </span>
+
+        <Label className="min-w-24 text-center text-sm">
+          {t("valid_amount")}:
+        </Label>
+        <span className="min-w-24 text-center text-sm">
+          {data?.list[0]?.totalAvailableBetAmount} &nbsp;
+        </span>
+
+        <Label className="min-w-24 text-center text-sm">
+          {t("win_loss_amount")}:
+        </Label>
+        <span className="min-w-24 text-center text-sm">
+          {data?.list[0]?.totalWinLossAmount} &nbsp;
+        </span>
+
+        <Label className="min-w-24 text-center text-sm">
+          {t("cashback_amount")}:
+        </Label>
+        <span className="min-w-24 text-center text-sm">
+          {data?.list[0]?.totalPureBackAmount} &nbsp;
+        </span>
+
+        <Label className="min-w-24 text-center text-sm">
+          {t("profit_loss_result")}:
+        </Label>
+        <span className="min-w-24 text-center text-sm">
+          {data?.list[0]?.totalProfitLossAmount} &nbsp;
+        </span>
+      </div>
       <div className="border rounded-sm relative">
         <Table>
           <ListHeader />
@@ -118,54 +162,6 @@ export async function List({
           currentPage={Number(data?.pageNum ?? 1)}
           pageSize={Number(data?.pageSize ?? 10)}
         />
-      </div>
-      <div className="pt-2 w-2/5">
-        <Table>
-          <TableHeader>
-            <TableRow className="bg-muted">
-              <TableHead className="min-w-24 text-center">
-                {t("bet_count")}
-              </TableHead>
-              <TableHead className="min-w-24 text-center">
-                {t("bet_amount")}
-              </TableHead>
-              <TableHead className="min-w-24 text-center">
-                {t("valid_amount")}
-              </TableHead>
-              <TableHead className="min-w-24 text-center">
-                {t("win_loss_amount")}
-              </TableHead>
-              <TableHead className="min-w-24 text-center">
-                {t("cashback_amount")}
-              </TableHead>
-              <TableHead className="min-w-24 text-center">
-                {t("profit_loss_result")}
-              </TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            <TableRow>
-              <TableCell className="w-24 text-center">
-                {data?.list[0].totalBetNum}
-              </TableCell>
-              <TableCell className="w-24 text-center">
-                {data?.list[0].totalMemberBetAmount}
-              </TableCell>
-              <TableCell className="w-24 text-center">
-                {data?.list[0].totalAvailableBetAmount}
-              </TableCell>
-              <TableCell className="w-24 text-center">
-                {data?.list[0].totalWinLossAmount}
-              </TableCell>
-              <TableCell className="w-24 text-center">
-                {data?.list[0].totalPureBackAmount}
-              </TableCell>
-              <TableCell className="w-24 text-center">
-                {data?.list[0].totalProfitLossAmount}
-              </TableCell>
-            </TableRow>
-          </TableBody>
-        </Table>
       </div>
     </div>
   );

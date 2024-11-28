@@ -1,23 +1,24 @@
-import { getSameOrSeniorAnno } from "@/api";
+import { Table } from "@/components/ui/table";
 import { Suspense } from "react";
-import { List } from "./list";
-
+import { List, TableBodySkeleton, TableHeaderWrapper } from "../all/list";
+import { AddBtn } from "./add-btn";
 // 本级公告
 export default async function Own({
   searchParams,
 }: { searchParams: Promise<{ [key: string]: string | string[] }> }) {
-  const search = await searchParams;
-  const { data } = await getSameOrSeniorAnno({
-    pageSize: Number(search.pageSize ?? 10),
-    pageNum: Number(search.pageNum ?? 1),
-    level: 0, // 本级
-  });
-
   return (
-    <div className="flex flex-col w-full h-full">
-      <div className=" flex-1 flex flex-col">
-        <Suspense>
-          <List data={data} />
+    <div className="flex flex-col gap-2 w-full h-full mt-2">
+      <div className="p-2 bg-background flex-1 flex flex-col gap-2">
+        <AddBtn />
+        <Suspense
+          fallback={
+            <Table>
+              <TableHeaderWrapper />
+              <TableBodySkeleton />
+            </Table>
+          }
+        >
+          <List searchParams={searchParams} />
         </Suspense>
       </div>
     </div>

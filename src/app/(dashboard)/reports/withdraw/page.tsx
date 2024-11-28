@@ -117,7 +117,12 @@ async function TableWrapper({
     endTime: Number(endTime),
   };
   if (!startTime || !endTime) {
-    return null;
+    return (
+      <Table className="border rounded-sm">
+        <TableHeaderWrapper />
+        <TableBodySkeleton />
+      </Table>
+    );
   }
   // 验证参数是否有效 至少一个参数是有值的
   const validateParams = (params: WithdrawReportParams) => {

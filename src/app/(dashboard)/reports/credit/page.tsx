@@ -2,7 +2,6 @@ import TableSkeleton from "@/components/table-skeleton";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Table } from "@/components/ui/table";
 import type { BorrowRecordRequestParams } from "@/lib/types";
-import { hasPermission } from "@/session";
 import { Suspense } from "react";
 import { List, ListHeader } from "./list";
 import { ListFilter } from "./list-filter";
@@ -12,7 +11,6 @@ interface CommonWrapperProps {
 }
 
 async function CommonWrapper({ searchParams }: CommonWrapperProps) {
-  const hasSearchPermission = await hasPermission("admin_supplier_report");
   return (
     <>
       <Suspense
@@ -22,7 +20,7 @@ async function CommonWrapper({ searchParams }: CommonWrapperProps) {
           </div>
         }
       >
-        <ListFilter hasSearchPermission={hasSearchPermission} />
+        <ListFilter />
       </Suspense>
       <Suspense
         fallback={

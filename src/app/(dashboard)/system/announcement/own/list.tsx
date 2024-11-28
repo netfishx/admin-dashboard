@@ -1,3 +1,4 @@
+import { getSameOrSeniorAnno } from "@/api";
 import { CustomPagination } from "@/components/custom-pagination";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
@@ -8,7 +9,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import type { AnnouncementList, WithPagination } from "@/lib/types";
+import type {} from "@/lib/types";
 import { format } from "date-fns";
 import { getTranslations } from "next-intl/server";
 import { Suspense } from "react";
@@ -17,10 +18,14 @@ import { TruncatedCell } from "../truncated-cell";
 import { AddBtn } from "./add-btn";
 
 export async function List({
-  data,
-}: {
-  data?: WithPagination & { list: AnnouncementList[] };
-}) {
+  searchParams,
+}: { searchParams: Promise<{ [key: string]: string | string[] }> }) {
+  const search = await searchParams;
+  const { data } = await getSameOrSeniorAnno({
+    pageSize: Number(search.pageSize ?? 10),
+    pageNum: Number(search.pageNum ?? 1),
+    level: 0, // 本级
+  });
   return (
     <div className="p-2 mt-2 gap-2 flex flex-col h-full bg-background">
       <AddBtn />

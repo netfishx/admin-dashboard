@@ -88,8 +88,14 @@ async function PeriodTable({
     gameId,
     issueNumber,
   } = await searchParams;
+
   if (!startTime || !endTime) {
-    return null;
+    return (
+      <Table className="border rounded-sm">
+        <PeriodTableHeader />
+        <TableBodySkeleton />
+      </Table>
+    );
   }
   const { data } = await getPeriodReport({
     pageSize: Number(pageSize ?? 10),

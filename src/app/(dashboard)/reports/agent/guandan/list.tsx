@@ -1,6 +1,7 @@
 import { getPokerReport } from "@/api";
 import { CustomPagination } from "@/components/custom-pagination";
 import TableSkeleton from "@/components/table-skeleton";
+import { Label } from "@/components/ui/label";
 import {
   Table,
   TableBody,
@@ -94,6 +95,20 @@ export async function List({
   const { data } = await getPokerReport(params);
   return (
     <div className="p-2 bg-background flex-1">
+      <div>
+        <Label className="min-w-24 text-center text-sm">
+          {t("totalIssueAmount")}:
+        </Label>
+        <span className="min-w-24 text-center text-sm">
+          {data?.list[0]?.totalIssueAmount} &nbsp;
+        </span>
+        <Label className="min-w-24 text-center text-sm">
+          {t("totaSettledAmount")}:
+        </Label>
+        <span className="min-w-24 text-center text-sm">
+          {data?.list[0]?.totaSettledAmount} &nbsp;
+        </span>
+      </div>
       <div className="border rounded-sm relative">
         <Table>
           <ListHeader />
@@ -108,30 +123,6 @@ export async function List({
           currentPage={data?.pageNum ?? 1}
           pageSize={data?.pageSize ?? 10}
         />
-      </div>
-      <div className="pt-2 w-1/3">
-        <Table>
-          <TableHeader>
-            <TableRow className="bg-muted">
-              <TableHead className="min-w-24 text-center">
-                {t("totalIssueAmount")}
-              </TableHead>
-              <TableHead className="min-w-24 text-center">
-                {t("totaSettledAmount")}
-              </TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            <TableRow>
-              <TableCell className="w-24 text-center">
-                {data?.list[0]?.totalIssueAmount}
-              </TableCell>
-              <TableCell className="w-24 text-center">
-                {data?.list[0]?.totaSettledAmount}
-              </TableCell>
-            </TableRow>
-          </TableBody>
-        </Table>
       </div>
     </div>
   );

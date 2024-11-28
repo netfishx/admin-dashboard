@@ -15,8 +15,9 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Copy } from "lucide-react";
+import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { useState } from "react";
+import { useState, useTransition } from "react";
 import { useCopyToClipboard } from "react-use";
 import { toast } from "sonner";
 
@@ -38,19 +39,24 @@ export function GoogleModal({
   const [authCode, setAuthCode] = useState("");
   const isEdit = false;
   const [, copyToClipboard] = useCopyToClipboard();
+  const [isPending, startTransition] = useTransition();
 
   const submit = async () => {
     if (isEdit) {
       // 重置
-      const { code, message } = await unbindGoogleAuth({
-        secret,
-        code: authCode,
+      startTransition(async () => {
+        const { code, message } = await unbindGoogleAuth({
+          secret,
+          code: authCode,
+        });
       });
     } else {
       // 绑定
-      const { code, message } = await bindGoogleAuth({
-        secret,
-        code: authCode,
+      startTransition(async () => {
+        const { code, message } = await bindGoogleAuth({
+          secret,
+          code: authCode,
+        });
       });
     }
 
@@ -206,7 +212,8 @@ export function GoogleModal({
           <Button variant="outline" onClick={() => onOpenChange(false)}>
             {translations("cancel")}
           </Button>
-          <Button type="submit" onClick={submit}>
+          <Button type="submit" onClick={submit} disabled={isPending}>
+            {isPending && <Loader2 className="w-4 h-4 animate-spin" />}
             {translations("confirm")}
           </Button>
         </DialogFooter>

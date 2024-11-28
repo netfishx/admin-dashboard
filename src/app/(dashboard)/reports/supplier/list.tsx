@@ -1,6 +1,7 @@
 import { getSupplierReportList } from "@/api";
 import { CustomPagination } from "@/components/custom-pagination";
 import TableSkeleton from "@/components/table-skeleton";
+import { Label } from "@/components/ui/label";
 import {
   Table,
   TableBody,
@@ -20,7 +21,6 @@ import { Suspense } from "react";
 export async function ListHeader() {
   "use cache";
   const t = await getTranslations("report.supplier");
-  const translate = await getTranslations();
   return (
     <TableHeader>
       <TableRow className="bg-muted">
@@ -87,6 +87,24 @@ export async function List({
   const { data } = await getSupplierReportList(params);
   return (
     <div className="p-2 bg-background flex-1">
+      <div>
+        <Label className="min-w-24 text-center text-sm">{t("betNum")}:</Label>
+        <span className="min-w-24 text-center text-sm">
+          {data?.list?.[0]?.totalBetNum ?? 0} &nbsp;
+        </span>
+        <Label className="min-w-24 text-center text-sm">
+          {t("betAmount")}:
+        </Label>
+        <span className="min-w-24 text-center text-sm">
+          {data?.list?.[0]?.totalValidAmount ?? 0} &nbsp;
+        </span>
+        <Label className="min-w-24 text-center text-sm">
+          {t("validBetAmount")}:
+        </Label>
+        <span className="min-w-24 text-center text-sm">
+          {data?.list?.[0]?.totalShareAmount ?? 0} &nbsp;
+        </span>
+      </div>
       <div className="border rounded-sm relative">
         <Table>
           <ListHeader />
@@ -101,36 +119,6 @@ export async function List({
           currentPage={data?.pageNum ?? 1}
           pageSize={data?.pageSize ?? 10}
         />
-      </div>
-      <div className="pt-2 w-2/5">
-        <Table>
-          <TableHeader>
-            <TableRow className="bg-muted">
-              <TableHead className="min-w-24 text-center">
-                {t("betNum")}
-              </TableHead>
-              <TableHead className="min-w-24 text-center">
-                {t("betAmount")}
-              </TableHead>
-              <TableHead className="min-w-24 text-center">
-                {t("validBetAmount")}
-              </TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            <TableRow>
-              <TableCell className="w-24 text-center">
-                {data?.list?.[0]?.totalBetNum ?? 0}
-              </TableCell>
-              <TableCell className="w-24 text-center">
-                {data?.list?.[0]?.totalValidAmount ?? 0}
-              </TableCell>
-              <TableCell className="w-24 text-center">
-                {data?.list?.[0]?.totalShareAmount ?? 0}
-              </TableCell>
-            </TableRow>
-          </TableBody>
-        </Table>
       </div>
     </div>
   );

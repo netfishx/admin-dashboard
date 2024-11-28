@@ -96,7 +96,12 @@ async function TableWrapper({
     pageSize,
   } = await searchParams;
   if (!startTime || !endTime) {
-    return null;
+    return (
+      <Table className="border rounded-sm">
+        <TableHeaderWrapper />
+        <TableBodySkeleton />
+      </Table>
+    );
   }
   const params: RechargeReportParams = {
     userId: (userId ?? null) as string,
