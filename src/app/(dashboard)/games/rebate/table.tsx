@@ -46,19 +46,25 @@ export function RebateTable({ data }: { data: GameConfig[] }) {
           <TableRow key={item.gameId}>
             <TableCell>{item.gameName}</TableCell>
             <TableCell className="flex items-center gap-2">
-              <Input
-                value={item.backRate}
-                type="number"
-                min={0}
-                max={item.maxBackRate ?? 0}
-                step={0.01}
-                onChange={(e) =>
-                  handleRebateChange(e.target.value, item.gameId)
-                }
-                onBlur={(e) => {
-                  e.target.reportValidity();
-                }}
-              />
+              <div className="relative flex-1">
+                <Input
+                  className="pr-8"
+                  value={item.backRate}
+                  type="number"
+                  min={0}
+                  max={item.maxBackRate ?? 0}
+                  step={0.01}
+                  onChange={(e) =>
+                    handleRebateChange(e.target.value, item.gameId)
+                  }
+                  onBlur={(e) => {
+                    e.target.reportValidity();
+                  }}
+                />
+                <span className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500">
+                  %
+                </span>
+              </div>
               {item.maxBackRate ? (
                 <span className="text-destructive w-16">
                   ({item.maxBackRate}%)
