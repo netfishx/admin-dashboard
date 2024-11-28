@@ -8,18 +8,22 @@ import { GoogleModal } from "./google-modal";
 export function GoogleBtn({
   secret,
   qrcode,
-}: { secret: string; qrcode: string }) {
+  isOpen,
+}: { secret: string; qrcode: string; isOpen: boolean }) {
   const t = useTranslations("personal.security");
   const [open, setOpen] = useState(false);
   return (
     <>
-      <Button onClick={() => setOpen(true)}>{t("setting")}</Button>
+      <Button onClick={() => setOpen(true)}>
+        {isOpen ? t("edit") : t("setting")}
+      </Button>
 
       <GoogleModal
         open={open}
         onOpenChange={setOpen}
         secret={secret}
         qrcode={qrcode}
+        isOpen={isOpen}
       />
     </>
   );

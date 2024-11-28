@@ -3,6 +3,7 @@ import styles from "./progress.module.css";
 
 export function SecurityProgress({ value }: { value: number }) {
   const t = useTranslations("personal.security");
+
   return (
     <div className="bg-background py-2 px-4 flex flex-col gap-2">
       <span className="text-sm font-medium">{t("progress")}</span>
@@ -11,7 +12,11 @@ export function SecurityProgress({ value }: { value: number }) {
         <span className="text-sm text-muted-foreground">{value}%</span>
       </div>
       <span className="text-sm text-muted-foreground">
-        {t("progressWarning")}
+        {value >= 99
+          ? t("progressWarning3")
+          : value >= 66
+            ? t("progressWarning2")
+            : t("progressWarning")}
       </span>
     </div>
   );

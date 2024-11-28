@@ -919,6 +919,8 @@
       "title": "安全设置",
       "progress": "安全进度",
       "progressWarning": "你的账号安全进度一般，建议完成以下操作进行全面保护",
+      "progressWarning2": "你的账号安全防护较好，完成剩余设置获得全面保护",
+      "progressWarning3": "你的账号安全防护已完善，请继续保持良好的安全习惯",
       "loginPassword": "登录密码",
       "loginPasswordDes": "登录时使用",
       "loginPasswordBtnText": "修改",

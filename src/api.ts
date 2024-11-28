@@ -590,6 +590,14 @@ export async function getGameOdds({ gameId }: { gameId: number }) {
   });
 }
 
+// 获取列表
+export async function getSecurityList() {
+  const user = await getSession();
+  return await apiRequest<{ type: number; isOpen: boolean }[]>({
+    url: "/agent/center/list",
+    token: user?.token,
+  });
+}
 // 获取谷歌二维码
 export async function getGoogleQrCode() {
   const user = await getSession();

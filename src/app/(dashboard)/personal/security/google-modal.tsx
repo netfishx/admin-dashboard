@@ -28,16 +28,18 @@ export function GoogleModal({
   onOpenChange,
   secret,
   qrcode,
+  isOpen,
 }: {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   secret: string;
   qrcode: string;
+  isOpen: boolean;
 }) {
   const t = useTranslations("personal.security");
   const translations = useTranslations("");
   const [authCode, setAuthCode] = useState("");
-  const isEdit = false;
+  const isEdit = isOpen;
   const [, copyToClipboard] = useCopyToClipboard();
   const [isPending, startTransition] = useTransition();
 
