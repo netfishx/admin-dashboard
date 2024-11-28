@@ -19,7 +19,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import type { GameType } from "@/lib/types";
+import type { GameInfo } from "@/lib/types";
 import { gamesSupplierDialogAtom, supplierConfigAtom } from "@/store";
 import { Root as VisuallyHiddenRoot } from "@radix-ui/react-visually-hidden";
 import { useAtom, useAtomValue } from "jotai";
@@ -44,13 +44,7 @@ const suppliers = [
   },
 ];
 
-export function SupplierDialog({ games }: { games: GameType[] }) {
-  const gameList = games.flatMap((item) =>
-    item.list.map((game) => ({
-      ...game,
-      gameType: item.gameType,
-    })),
-  );
+export function SupplierDialog({ games }: { games: GameInfo[] }) {
   const translations = useTranslations();
   const t = useTranslations("games.supplier");
   const [open, setOpen] = useAtom(gamesSupplierDialogAtom);
@@ -104,12 +98,12 @@ export function SupplierDialog({ games }: { games: GameType[] }) {
                   <SelectValue placeholder={t("placeholder")} />
                 </SelectTrigger>
                 <SelectContent>
-                  {gameList.map((item) => (
+                  {games.map((item) => (
                     <SelectItem
                       key={item.gameId}
                       value={`${item.gameType}-${item.gameId}`}
                     >
-                      {item.gameIdLabel}
+                      {item.gameName}
                     </SelectItem>
                   ))}
                 </SelectContent>

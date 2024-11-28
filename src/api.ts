@@ -433,7 +433,7 @@ export async function editReviceOrder({ status }: { status: boolean }) {
 export async function getSupplierConfigs(userId?: string) {
   const user = await getSession();
   const [res, res2] = await Promise.all([
-    getGameList(1),
+    getBaccaratGames(),
     apiRequest<SupplierConfig[]>({
       url: "/supplierConf/list",
       token: user?.token,
@@ -444,9 +444,7 @@ export async function getSupplierConfigs(userId?: string) {
     ...res2,
     data: res2.data?.map((item) => ({
       ...item,
-      gameName: res.data
-        ?.find((i) => i.gameType === item.gameType)
-        ?.list.find((i) => i.gameId === item.gameId)?.gameIdLabel,
+      gameName: res.data?.find((i) => i.gameId === item.gameId)?.gameName,
     })),
   };
 }
