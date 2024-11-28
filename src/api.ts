@@ -81,7 +81,7 @@ export async function getGameList(type: number) {
     url: "/game/list",
     params: { type },
     token: user?.token,
-    expire: "max",
+    expire: "default",
   });
 }
 
@@ -506,6 +506,14 @@ export async function getPeriodReport(params: PeriodReportParams) {
   });
 }
 
+export async function getBaccaratGameConfig(userId?: string) {
+  const result = await getGameConfig(userId);
+  return {
+    ...result,
+    data: result.data?.filter((item) => item.gameType === 61),
+  };
+}
+
 export async function getGameConfig(userId?: string) {
   const user = await getSession();
   const [res, res2] = await Promise.all([
@@ -527,10 +535,40 @@ export async function getGameConfig(userId?: string) {
   };
 }
 
+export async function getDefaultGameConfig() {
+  const user = await getSession();
+  const [res, res2] = await Promise.all([
+    getGameList(1),
+    apiRequest<GameConfig[]>({
+      url: "/game/default/listConfig",
+      token: user?.token,
+    }),
+  ]);
+  return {
+    ...res2,
+    data: res2.data?.map((item) => ({
+      ...item,
+      gameName: res.data
+        ?.find((i) => i.gameType === item.gameType)
+        ?.list.find((i) => i.gameId === item.gameId)?.gameIdLabel,
+    })),
+  };
+}
+
 export async function editGameConfig(list: GameConfig[]) {
   const user = await getSession();
   return await apiRequest({
     url: "/game/config/update",
+    method: "POST",
+    data: { list },
+    token: user?.token,
+  });
+}
+
+export async function editDefaultGameConfig(list: GameConfig[]) {
+  const user = await getSession();
+  return await apiRequest({
+    url: "/game/default/updateConfig",
     method: "POST",
     data: { list },
     token: user?.token,

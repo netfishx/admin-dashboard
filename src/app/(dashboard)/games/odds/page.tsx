@@ -1,4 +1,4 @@
-import { getGameConfig, getGameList, getGameOdds } from "@/api";
+import { getBaccaratGameConfig, getGameList, getGameOdds } from "@/api";
 import { OddsForm } from "@/app/(dashboard)/games/odds/form";
 import { OddsTable } from "@/app/(dashboard)/games/odds/table";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -10,12 +10,15 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { getSession } from "@/session";
+import { getSession, hasPermission } from "@/session";
 import { useTranslations } from "next-intl";
 import { Suspense, use } from "react";
 
 async function FormWrapper() {
-  const [list, dict] = await Promise.all([getGameConfig(), getGameList(1)]);
+  const [list, dict] = await Promise.all([
+    getBaccaratGameConfig(),
+    getGameList(1),
+  ]);
   const session = await getSession();
   return (
     <OddsForm
@@ -28,7 +31,7 @@ async function FormWrapper() {
 
 async function TableBodyWrapper({ gameId }: { gameId?: number }) {
   if (!gameId) {
-    const res = await getGameConfig();
+    const res = await getBaccaratGameConfig();
     gameId = res.data?.filter((item) => item.status === 1)?.[0]?.gameId ?? 0;
   }
   const res = await getGameOdds({ gameId });
@@ -40,6 +43,7 @@ function TableWrapper({
 }: { searchParams: Promise<{ [key: string]: string | undefined }> }) {
   const t = useTranslations("games.odds");
   const { gameId } = use(searchParams);
+  const hasAdminPermission = use(hasPermission("sync_odds"));
   return (
     <Table>
       <TableHeader>
@@ -49,11 +53,15 @@ function TableWrapper({
           <TableHead className="text-center min-w-40">{t("min")}</TableHead>
           <TableHead className="text-center min-w-72">
             {t("max")}
-            <span className="text-destructive">{t("tip")}</span>
+            {!hasAdminPermission && (
+              <span className="text-destructive">{t("tip")}</span>
+            )}
           </TableHead>
           <TableHead className="text-center min-w-72">
             {t("total")}
-            <span className="text-destructive">{t("tip")}</span>
+            {!hasAdminPermission && (
+              <span className="text-destructive">{t("tip")}</span>
+            )}
           </TableHead>
         </TableRow>
       </TableHeader>

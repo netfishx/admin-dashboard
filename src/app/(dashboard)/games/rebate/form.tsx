@@ -1,5 +1,5 @@
 "use client";
-import { editGameConfig } from "@/api";
+import { editDefaultGameConfig } from "@/api";
 import { EditNumber } from "@/components/edit-number";
 import { Button, type ButtonProps } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
@@ -51,8 +51,10 @@ export function RebateForm() {
         ...item,
         backRate: Big(item.backRate).add(num).lt(0)
           ? "0"
-          : Big(item.backRate).add(num).gt(item.maxBackRate)
-            ? item.maxBackRate
+          : item.maxBackRate
+            ? Big(item.backRate).add(num).gt(item.maxBackRate)
+              ? item.maxBackRate
+              : Big(item.backRate).add(num).toString()
             : Big(item.backRate).add(num).toString(),
       })),
     );
@@ -79,7 +81,7 @@ export function RebateForm() {
       <div className="flex gap-2">
         <RebateButton
           onClick={async () => {
-            const res = await editGameConfig(
+            const res = await editDefaultGameConfig(
               list.map(({ gameId, backRate }) => ({
                 gameId,
                 backRate,

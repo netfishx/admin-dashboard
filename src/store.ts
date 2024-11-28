@@ -126,9 +126,9 @@ export const limitAtom = atom<{
   [key: string]: {
     minBet?: number;
     maxBet?: number;
-    maxBetLimit?: number;
+    maxBetLimit?: number | null;
     maxBetPeriod?: number;
-    maxBetPeriodLimit?: number;
+    maxBetPeriodLimit?: number | null;
   };
 }>({});
 export const changedOddsLimitAtom = atom<string[]>([]);

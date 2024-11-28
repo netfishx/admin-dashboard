@@ -1,4 +1,4 @@
-import { getGameConfig } from "@/api";
+import { getBaccaratGameConfig } from "@/api";
 import { FlyOrderForm } from "@/app/(dashboard)/games/flyorder/form";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
@@ -14,7 +14,7 @@ import { Suspense } from "react";
 import { FlyOrderTable } from "./table";
 
 async function TableBodyWrapper() {
-  const res = await getGameConfig();
+  const res = await getBaccaratGameConfig();
   return (
     <FlyOrderTable data={res.data?.filter((item) => item.status === 1) ?? []} />
   );
