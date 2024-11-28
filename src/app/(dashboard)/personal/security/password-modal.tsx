@@ -12,8 +12,9 @@ import {
 } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
 import { Password } from "@/components/ui/password";
+import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { useState } from "react";
+import { useState, useTransition } from "react";
 
 export function PasswordModal({
   open,
@@ -27,19 +28,17 @@ export function PasswordModal({
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [isPending, startTransition] = useTransition();
 
   // todo: 判断二次确认密码和新密码是否一致
   const submit = async () => {
-    setLoading(true);
-
-    const { code, message } = await updateSelfPassword({
-      id: "-1",
-      oldPassword,
-      newPassword,
+    startTransition(async () => {
+      const { code, message } = await updateSelfPassword({
+        id: "-1",
+        oldPassword,
+        newPassword,
+      });
     });
-
-    setLoading(false);
   };
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -98,7 +97,8 @@ export function PasswordModal({
           <Button variant="outline" onClick={() => onOpenChange(false)}>
             {translations("cancel")}
           </Button>
-          <Button onClick={submit} disabled={loading}>
+          <Button onClick={submit} disabled={isPending}>
+            {isPending && <Loader2 className="w-4 h-4 animate-spin" />}
             {translations("confirm")}
           </Button>
         </DialogFooter>

@@ -34,7 +34,11 @@ export function EditNumber({
         className="rounded-none w-14 text-center [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
         value={step}
         onChange={(e) => {
-          setStep(Number(Big(e.target.value).toFixed(limit)));
+          try {
+            setStep(Number(Big(e.target.value).toFixed(limit)));
+          } catch (e) {
+            console.error(e);
+          }
         }}
         required
         step={limit}

@@ -1,4 +1,4 @@
-import { getGameConfig } from "@/api";
+import { getDefaultGameConfig } from "@/api";
 import { RebateForm } from "@/app/(dashboard)/games/rebate/form";
 import { RebateTable } from "@/app/(dashboard)/games/rebate/table";
 import {} from "@/components/ui/select";
@@ -15,7 +15,7 @@ import { useTranslations } from "next-intl";
 import { Suspense } from "react";
 
 async function TableBodyWrapper() {
-  const res = await getGameConfig();
+  const res = await getDefaultGameConfig();
   return (
     <RebateTable data={res.data?.filter((item) => item.status === 1) ?? []} />
   );

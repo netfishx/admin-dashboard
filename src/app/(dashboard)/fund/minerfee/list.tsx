@@ -1,3 +1,4 @@
+import { getOreFeeList } from "@/api";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
   Table,
@@ -7,46 +8,19 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import type { OreFeeList } from "@/lib/types";
 import { getTranslations } from "next-intl/server";
 import { Suspense } from "react";
 import { RemoveBtn } from "./remove-btn";
 
-export async function List({ data }: { data?: { list: OreFeeList[] } }) {
-  const t = await getTranslations("fund.orefee");
+export async function List() {
   const translations = await getTranslations();
+  const { data } = await getOreFeeList();
   return (
     <div className="p-2  bg-background gap-2 flex flex-col h-full">
       <div className="border rounded-sm">
         <Table>
-          <TableHeader>
-            <TableRow className="bg-muted">
-              <TableHead className="w-24 min-w-24 text-center">
-                {t("address")}
-              </TableHead>
-              <TableHead className="text-center">{t("coin")}</TableHead>
-              <TableHead className="w-24 min-w-24 text-center">
-                {t("usdtBalance")}
-              </TableHead>
-              <TableHead className="w-24 min-w-24 text-center">
-                {t("actions")}
-              </TableHead>
-            </TableRow>
-          </TableHeader>
-          <Suspense
-            fallback={
-              <TableBody>
-                {Array.from({ length: 5 }).map((_, i) => (
-                  // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
-                  <TableRow key={i}>
-                    <TableCell colSpan={10} className="h-40">
-                      <Skeleton className="w-full h-full" />
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            }
-          >
+          <TableHeaderWrapper />
+          <Suspense fallback={<TableBodySkeleton />}>
             <TableBody>
               {data && data.list.length > 0 ? (
                 data.list.map((item) => (
@@ -54,7 +28,6 @@ export async function List({ data }: { data?: { list: OreFeeList[] } }) {
                     <TableCell className="w-24 text-center">
                       {item.address}
                     </TableCell>
-
                     <TableCell className="w-24 text-center">
                       {item.coin}
                     </TableCell>
@@ -78,5 +51,40 @@ export async function List({ data }: { data?: { list: OreFeeList[] } }) {
         </Table>
       </div>
     </div>
+  );
+}
+
+export function TableBodySkeleton() {
+  return (
+    <TableBody>
+      {Array.from({ length: 5 }).map((_, index) => (
+        // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
+        <TableRow key={index}>
+          <TableCell colSpan={10}>
+            <Skeleton className="w-full h-6" />
+          </TableCell>
+        </TableRow>
+      ))}
+    </TableBody>
+  );
+}
+
+export async function TableHeaderWrapper() {
+  const t = await getTranslations("fund.orefee");
+  return (
+    <TableHeader>
+      <TableRow className="bg-muted">
+        <TableHead className="w-24 min-w-24 text-center">
+          {t("address")}
+        </TableHead>
+        <TableHead className="text-center">{t("coin")}</TableHead>
+        <TableHead className="w-24 min-w-24 text-center">
+          {t("usdtBalance")}
+        </TableHead>
+        <TableHead className="w-24 min-w-24 text-center">
+          {t("actions")}
+        </TableHead>
+      </TableRow>
+    </TableHeader>
   );
 }

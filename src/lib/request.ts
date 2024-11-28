@@ -96,7 +96,7 @@ async function request<T>({
     console.error(error);
     return {
       code: 500,
-      message: "Internal Server Error",
+      message: "未知异常",
     };
   }
 }

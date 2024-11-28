@@ -16,7 +16,7 @@ export function RebateTable({ data }: { data: GameConfig[] }) {
         gameId,
         gameName,
         backRate: backRate ?? "0",
-        maxBackRate: maxBackRate ?? "0",
+        maxBackRate: maxBackRate ?? "100",
       })),
     );
   }, [data, setRebate]);
@@ -59,9 +59,11 @@ export function RebateTable({ data }: { data: GameConfig[] }) {
                   e.target.reportValidity();
                 }}
               />
-              <span className="text-destructive w-16">
-                ({item.maxBackRate ?? 0}%)
-              </span>
+              {item.maxBackRate ? (
+                <span className="text-destructive w-16">
+                  ({item.maxBackRate}%)
+                </span>
+              ) : null}
             </TableCell>
           </TableRow>
         ))

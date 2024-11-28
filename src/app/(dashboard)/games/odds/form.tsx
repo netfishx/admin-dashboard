@@ -140,6 +140,7 @@ export function OddsForm({
     } else {
       setLimit(
         Object.fromEntries(
+          // biome-ignore lint/complexity/noExcessiveCognitiveComplexity: <explanation>
           Object.keys(limit).map((key) => {
             const upperLimit =
               field === "maxBetPeriod"
@@ -153,8 +154,10 @@ export function OddsForm({
                 ...limit[key],
                 [field]: result.lt(1)
                   ? 1
-                  : result.gt(upperLimit ?? Number.POSITIVE_INFINITY)
-                    ? upperLimit
+                  : upperLimit
+                    ? result.gt(upperLimit)
+                      ? upperLimit
+                      : result.toNumber()
                     : result.toNumber(),
               },
             ];

@@ -1,4 +1,4 @@
-import { getGameConfig } from "@/api";
+import { getDefaultGameConfig } from "@/api";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
   Table,
@@ -12,7 +12,7 @@ import { getTranslations } from "next-intl/server";
 import { Suspense } from "react";
 
 async function TableBodyWrapper() {
-  const res = await getGameConfig();
+  const res = await getDefaultGameConfig();
   const list = res.data?.filter((item) => item.status === 1) ?? [];
   const t = await getTranslations();
   return (
