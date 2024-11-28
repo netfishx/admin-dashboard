@@ -22,6 +22,7 @@ import type {
   DownloadListRecords,
   FundList,
   GameConfig,
+  GameInfo,
   GameOdds,
   GameRecordRequestParams,
   GameRecordRequestRecords,
@@ -85,11 +86,16 @@ export async function getGameList(type: number) {
   });
 }
 
-export async function login(data: {
+export async function login({
+  username,
+  password,
+  code,
+  captcha,
+}: {
   username: string;
   password: string;
   code: string;
-  randomStr: string;
+  captcha: string;
 }) {
   const res = await apiRequest<{
     userDetail: {
@@ -107,13 +113,13 @@ export async function login(data: {
     url: "/agent/login",
     method: "POST",
     data: {
-      username: data.username,
-      password: data.password,
-      captchaImg: data.code,
-      captchaUuid: data.randomStr,
+      username,
+      password,
+      code,
+      captcha,
     },
     header: {
-      Authorization: "f56e2910e849dc73a3588e5a4605a0eb",
+      Authorization: "Basic f56e2910e849dc73a3588e5a4605a0eb",
     },
   });
   return {
@@ -1391,4 +1397,27 @@ export async function getDownloadUrl(params: { id: string }) {
     params,
     token: user?.token,
   });
+}
+
+export async function getAllGames() {
+  const user = await getSession();
+  return await apiRequest<GameInfo[]>({
+    url: "/game/allGame/list",
+    token: user?.token,
+    expire: "default",
+  });
+}
+
+export async function getBaccaratGames() {
+  return await getAllGames().then((res) => ({
+    ...res,
+    data: res?.data?.filter((i) => i.gameType === 61),
+  }));
+}
+
+export async function getGuandanGames() {
+  return await getAllGames().then((res) => ({
+    ...res,
+    data: res?.data?.filter((i) => i.gameType === 20),
+  }));
 }

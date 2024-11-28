@@ -37,13 +37,14 @@ export function LoginForm() {
     const res = await loginAction(new FormData(ref.current));
     if (res?.message) {
       toast.error(res.message);
+      setCode(nanoid());
     }
   }
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     await login();
   }
-  const [randomStr, setRandomStr] = useState(nanoid());
+  const [code, setCode] = useState(nanoid());
   return (
     <Form action={loginAction} onSubmit={handleSubmit} ref={ref}>
       <div className="relative w-full h-screen overflow-hidden bg-accent flex flex-col gap-4 items-center justify-center">
@@ -92,7 +93,7 @@ export function LoginForm() {
             <div className="flex gap-2">
               <Input
                 placeholder={t("code.placeholder")}
-                name="code"
+                name="captcha"
                 onKeyUp={async (e) => {
                   if (e.key === "Enter") {
                     await login();
@@ -100,17 +101,17 @@ export function LoginForm() {
                 }}
               />
               <Image
-                src={`${process.env.NEXT_PUBLIC_BASE_URL}/security/captcha?uuid=${randomStr}`}
+                src={`${process.env.NEXT_PUBLIC_BASE_URL}/security/captcha?code=${code}`}
                 className="cursor-pointer hover:opacity-80"
                 width={96}
                 height={36}
                 alt="captcha"
                 priority
                 onClick={() => {
-                  setRandomStr(nanoid());
+                  setCode(nanoid());
                 }}
               />
-              <input type="hidden" name="randomStr" value={randomStr} />
+              <input type="hidden" name="code" value={code} />
             </div>
           </div>
           <SubmitButton />

@@ -923,3 +923,9 @@ export type BombDetailPlayerDetails = {
   tribute: string | null;
   hand: string[];
 };
+
+export type GameInfo = {
+  gameId: number;
+  gameType: number;
+  gameName: string;
+};
