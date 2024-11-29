@@ -150,8 +150,11 @@ export function GameSettingModal() {
                         </TableRow>
                       ))
                   ) : (
-                    <TableRow>
-                      <TableCell colSpan={3} className="text-center h-20">
+                    <TableRow className="flex justify-center items-center">
+                      <TableCell
+                        colSpan={3}
+                        className="flex justify-center items-center h-20"
+                      >
                         {translations("noData")}
                       </TableCell>
                     </TableRow>
