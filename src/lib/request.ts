@@ -1,6 +1,5 @@
 "use server";
 import type { Res } from "@/lib/types";
-import { signOut } from "@/session";
 import axios from "axios";
 import {
   unstable_cacheLife as cacheLife,
@@ -43,7 +42,10 @@ async function request<T>({
   token?: string;
   expire?: number | "default" | "minutes" | "days" | "max";
   tags?: string[];
-}): Promise<Res<T>> {
+}): Promise<{
+  data: Res<T>;
+  status: number;
+} | null> {
   "use cache";
   if (typeof expire === "number") {
     cacheLife({
@@ -84,6 +86,10 @@ async function request<T>({
     headers.Authorization = `Bearer ${token}`;
   }
 
+  let result: {
+    data: Res<T>;
+    status: number;
+  } | null = null;
   try {
     const res = await instance<Res<T>>({
       url,
@@ -93,19 +99,22 @@ async function request<T>({
       params,
     });
 
-    if (res.status === 401) {
-      await signOut();
-      return redirect("/login");
-    }
-    return res.data;
+    result = {
+      status: res.status,
+      data: res.data,
+    };
   } catch (error) {
     console.error(error);
 
-    return {
-      code: 500,
-      message: "未知异常",
+    result = {
+      status: 500,
+      data: {
+        code: 500,
+        message: "未知异常",
+      },
     };
   }
+  return result;
 }
 
 export async function apiRequest<T>({
@@ -130,7 +139,7 @@ export async function apiRequest<T>({
   const nextHeaders = await headers();
   const ip = nextHeaders.get("x-forwarded-for");
   const locale = nextHeaders.get("accept-language");
-  return await request<T>({
+  const result = await request<T>({
     url,
     ip,
     locale,
@@ -141,4 +150,13 @@ export async function apiRequest<T>({
     token,
     expire,
   });
+  if (result && result.status > 400) {
+    redirect(`/login?e=${encodeURIComponent(result.data.message ?? "")}`);
+  }
+  return (
+    result?.data ?? {
+      code: 500,
+      message: "未知异常",
+    }
+  );
 }

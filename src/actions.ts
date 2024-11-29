@@ -71,7 +71,6 @@ export async function loginAction(formData: FormData) {
     code: code.toString(),
     captcha: captcha.toString(),
   });
-
   if (res.code === 0 && res.data) {
     await setSession(res.data);
     const cookie = await cookies();
