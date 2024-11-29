@@ -90,10 +90,11 @@ async function TableHeaderWrapper() {
   );
 }
 
-function TableBodyWrapper({
+async function TableBodyWrapper({
   list,
   username,
 }: { list: LoginLog[]; username: string }) {
+  const t = await getTranslations();
   return (
     <TableBody>
       {list && list.length > 0 ? (
@@ -113,8 +114,8 @@ function TableBodyWrapper({
         ))
       ) : (
         <TableRow>
-          <TableCell colSpan={5}>
-            <Skeleton className="w-full h-6" />
+          <TableCell colSpan={5} className="text-center h-40">
+            {t("noData")}
           </TableCell>
         </TableRow>
       )}
