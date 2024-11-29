@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/table";
 import { getTranslations } from "next-intl/server";
 
-async function SupplierTableHeader() {
+export async function SupplierTableHeader() {
   "use cache";
   const t = await getTranslations("games.supplier");
   return (

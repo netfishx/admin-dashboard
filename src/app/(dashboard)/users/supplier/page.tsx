@@ -21,7 +21,7 @@ export default async function Page() {
       <Suspense
         fallback={
           <div className="flex justify-between items-center bg-background p-4">
-            <Skeleton className="w-full h-9 opacity-20" />
+            <Skeleton />
           </div>
         }
       >
@@ -102,7 +102,7 @@ function TbodySkeleton() {
         // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
         <TableRow key={index}>
           <TableCell colSpan={6}>
-            <Skeleton className="w-full h-6" />
+            <Skeleton />
           </TableCell>
         </TableRow>
       ))}
