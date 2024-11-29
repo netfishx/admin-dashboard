@@ -1,5 +1,4 @@
 "use client";
-import { getAllGames } from "@/api";
 import { DateRangeFilter } from "@/components/daterange-filter";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -17,13 +16,13 @@ import { startOfDay } from "date-fns";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useQueryState } from "nuqs";
-import { useEffect, useRef, useState } from "react";
+import { useRef } from "react";
 
-export function MemberForm() {
+export function MemberForm({ gameList }: { gameList: GameInfo[] }) {
   const t = useTranslations("report.agent");
   const router = useRouter();
   const [gameName, setGameName] = useQueryState("gameId", {
-    defaultValue: "",
+    defaultValue: "all",
   });
   const [leastlevelID, setLeastlevelID] = useQueryState("agentId", {
     defaultValue: "",
@@ -39,17 +38,10 @@ export function MemberForm() {
   };
 
   const handleReset = () => {
-    setGameName("");
+    setGameName("all");
     setLeastlevelID("");
     handleDateRangeFilterReset();
   };
-
-  const [gameList, setGameList] = useState<GameInfo[]>([]);
-  useEffect(() => {
-    getAllGames().then((res) => {
-      setGameList(res.data ?? []);
-    });
-  }, []);
 
   return (
     <div className="flex flex-col gap-2 bg-background py-2 px-4">
@@ -60,12 +52,13 @@ export function MemberForm() {
           <Select
             value={gameName ?? ""}
             onValueChange={(value) => setGameName(value)}
-            defaultValue="1"
+            defaultValue="all"
           >
             <SelectTrigger className="w-28">
               <SelectValue placeholder={t("placeholderselect")} />
             </SelectTrigger>
             <SelectContent>
+              <SelectItem value="all">{t("all")}</SelectItem>
               {gameList.map((game) => (
                 <SelectItem key={game.gameId} value={game.gameId.toString()}>
                   {game.gameName}

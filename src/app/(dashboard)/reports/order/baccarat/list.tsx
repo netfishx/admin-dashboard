@@ -128,9 +128,23 @@ export async function List({
     ...params,
     pageNum: Number(params?.pageNum) || 1,
     pageSize: Number(params?.pageSize) || 10,
+    startTime: Number(params?.startTime) || 0,
+    endTime: Number(params?.endTime) || 0,
   };
-  const { data } = await getOrderReportList(p);
 
+  if (!(params?.startTime && params?.endTime)) {
+    return (
+      <div className="p-2 bg-background flex-1">
+        <div className="border rounded-sm relative">
+          <Table>
+            <ListHeader />
+            <ListBody list={[]} />
+          </Table>
+        </div>
+      </div>
+    );
+  }
+  const { data } = await getOrderReportList(p);
   return (
     <div className="p-2 bg-background flex-1">
       <div className="border rounded-sm relative">

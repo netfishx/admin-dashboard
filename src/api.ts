@@ -1146,7 +1146,7 @@ export async function deleteBackgroundImage(data: { id: string }) {
   });
 }
 
-// 借还记录list
+// 授信记录list
 export async function postGetCreditLogList(data: BorrowRecordRequestParams) {
   const user = await getSession();
   return await apiRequest<PageData<BorrowRecordRequestRecords>>({

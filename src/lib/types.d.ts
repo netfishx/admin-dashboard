@@ -384,7 +384,7 @@ export type OrderReportsRecord = {
 // 占成拦货报表请求入参
 export type RatioReportRequestParams = {
   agentId?: string; // 代理ID
-  gameId?: number; // 游戏ID（不传时为全部游戏）
+  gameId?: string; // 游戏ID（不传时为全部游戏）
   houseOwnerId?: string; // 房主ID
   parentAgentId?: string; // 上级代理ID
   startTime: number; // 开奖开始时间（必传）

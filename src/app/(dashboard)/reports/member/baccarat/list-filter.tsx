@@ -1,5 +1,4 @@
 "use client";
-import { getAllGames } from "@/api";
 import { DateRangeFilter } from "@/components/daterange-filter";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -18,17 +17,18 @@ import { endOfDay } from "date-fns";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useQueryState } from "nuqs";
-import { useEffect, useRef, useState } from "react";
+import { useRef } from "react";
 
 export function ListFilter({
   hasSearchPermission,
-}: { hasSearchPermission: boolean }) {
+  gameList,
+}: { hasSearchPermission: boolean; gameList: GameInfo[] }) {
   const t = useTranslations("report.member");
   const [parentAgentId, setParentAgentId] = useQueryState("parentAgentId", {
     defaultValue: "",
   });
   const [gameId, setGameId] = useQueryState("gameId", {
-    defaultValue: "",
+    defaultValue: "all",
   });
   const [memberId, setMemberId] = useQueryState("memberId", {
     defaultValue: "",
@@ -49,7 +49,7 @@ export function ListFilter({
 
   const handleReset = () => {
     setParentAgentId("");
-    setGameId("");
+    setGameId("all");
     setMemberId("");
     setMemberType("all");
     handleDateRangeFilterReset();
@@ -60,13 +60,6 @@ export function ListFilter({
     router.refresh();
   };
 
-  const [gameList, setGameList] = useState<GameInfo[]>([]);
-  useEffect(() => {
-    getAllGames().then((res) => {
-      setGameList(res.data ?? []);
-    });
-  }, []);
-
   return (
     <div className="flex flex-col gap-2 bg-background py-2 px-4">
       {/* First row */}
@@ -76,12 +69,13 @@ export function ListFilter({
           <Select
             value={gameId ?? ""}
             onValueChange={(value) => setGameId(value)}
-            defaultValue="1"
+            defaultValue="all"
           >
             <SelectTrigger className="w-28">
               <SelectValue placeholder={t("placeholderselect")} />
             </SelectTrigger>
             <SelectContent>
+              <SelectItem value="all">{t("all")}</SelectItem>
               {gameList.map((game) => (
                 <SelectItem key={game.gameId} value={game.gameId.toString()}>
                   {game.gameName}

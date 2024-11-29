@@ -10,6 +10,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import type { GameInfo } from "@/lib/types";
 import { endOfDay, startOfDay } from "date-fns";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
@@ -18,8 +19,10 @@ import { useRef } from "react";
 
 export function ListFilter({
   hasSearchPermission,
+  gameList,
 }: {
   hasSearchPermission: boolean;
+  gameList: GameInfo[];
 }) {
   const t = useTranslations("report.orderlist");
   // 期号
@@ -92,7 +95,7 @@ export function ListFilter({
               <SelectValue placeholder={t("placeholderselect")} />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="1">{t("guandan")}</SelectItem>
+              <SelectItem value="1">{gameList?.[0]?.gameName}</SelectItem>
             </SelectContent>
           </Select>
         </div>
