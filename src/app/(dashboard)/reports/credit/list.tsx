@@ -10,8 +10,8 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import type {
-  BorrowRecordRequestParams,
-  BorrowRecordRequestRecords,
+  CreditRecordRequestParams,
+  CreditRecordRequestRecords,
 } from "@/lib/types";
 import { format } from "date-fns";
 import { getTranslations } from "next-intl/server";
@@ -36,7 +36,7 @@ export async function ListHeader() {
   );
 }
 
-async function ListBody({ list }: { list: BorrowRecordRequestRecords[] }) {
+async function ListBody({ list }: { list: CreditRecordRequestRecords[] }) {
   const translate = await getTranslations();
   return (
     <TableBody>
@@ -70,7 +70,7 @@ async function ListBody({ list }: { list: BorrowRecordRequestRecords[] }) {
 
 export async function List({
   searchParams,
-}: { searchParams: Promise<BorrowRecordRequestParams> }) {
+}: { searchParams: Promise<CreditRecordRequestParams> }) {
   const t = await getTranslations("report.credit");
   const params = await searchParams;
   const { data } = await postGetCreditLogList(params);

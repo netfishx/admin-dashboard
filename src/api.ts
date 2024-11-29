@@ -17,6 +17,8 @@ import type {
   ChangeLog,
   CollectionAddressListRecords,
   CollectionAddressListRequestParams,
+  CreditRecordRequestParams,
+  CreditRecordRequestRecords,
   DictionaryItemList,
   DictionaryList,
   DownloadListRecords,
@@ -1147,10 +1149,21 @@ export async function deleteBackgroundImage(data: { id: string }) {
 }
 
 // 授信记录list
-export async function postGetCreditLogList(data: BorrowRecordRequestParams) {
+export async function postGetCreditLogList(data: CreditRecordRequestParams) {
+  const user = await getSession();
+  return await apiRequest<PageData<CreditRecordRequestRecords>>({
+    url: "/wallet/getCreditLogList",
+    method: "POST",
+    data,
+    token: user?.token,
+  });
+}
+
+// 借还记录list
+export async function postGetBorrowLogList(data: BorrowRecordRequestParams) {
   const user = await getSession();
   return await apiRequest<PageData<BorrowRecordRequestRecords>>({
-    url: "/wallet/getCreditLogList",
+    url: "/order/credit/report",
     method: "POST",
     data,
     token: user?.token,

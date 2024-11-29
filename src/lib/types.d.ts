@@ -633,8 +633,8 @@ export type DictionaryItemList = {
   remark: string;
 };
 
-// 借还记录请求入参
-export type BorrowRecordRequestParams = {
+// 授信记录请求入参
+export type CreditRecordRequestParams = {
   /** 代理ID */
   agentId: string;
 
@@ -663,8 +663,8 @@ export type BorrowRecordRequestParams = {
   pageSize: number;
 };
 
-// 借还记录请求出参
-export type BorrowRecordRequestRecords = {
+// 授信记录请求出参
+export type CreditRecordRequestRecords = {
   /** 交易ID - UUID格式 */
   transactionID: string;
 
@@ -688,6 +688,34 @@ export type BorrowRecordRequestRecords = {
    * Unix时间戳(毫秒)
    */
   createTime: number;
+};
+
+// 借还记录请求入参
+export type BorrowRecordRequestParams = {
+  startTime: number;
+  endTime: number;
+  orderNo: string;
+  agentId: string;
+  memberId: string;
+  orderType: number;
+  pageNum: number;
+  pageSize: number;
+};
+
+// 借还记录请求出参
+export type BorrowRecordRequestRecords = {
+  id: string;
+  orderNo: string;
+  orderType: number;
+  agentId: string;
+  memberId: string;
+  memberName: string;
+  operateMoney: string;
+  operateTime: number;
+  createTime: number;
+  updateTime: number;
+  actualMoney: string;
+  remainMoney: string;
 };
 
 // 提现手续费
