@@ -22,6 +22,7 @@ import {
 import type { LoginLog } from "@/lib/types";
 import { cn } from "@/lib/utils";
 import { loginLogModalAtom } from "@/store";
+import { format } from "date-fns";
 import { useAtom } from "jotai";
 import { useTranslations } from "next-intl";
 import { useEffect, useState, useTransition } from "react";
@@ -44,7 +45,7 @@ export function LoginLogModal({
       setLoading(true);
       if (id && type === "AGENT") {
         const { data } = await getAgentLoginLog({
-          agentId: id,
+          userId: id,
           pageNum: page,
           pageSize: size,
         });
@@ -104,26 +105,27 @@ export function LoginLogModal({
               <TableBody className="w-full max-h-[370px] overflow-auto flex flex-col">
                 {data?.length > 0 ? (
                   data?.map((item: LoginLog) => (
-                    <TableRow key={item.userId + Math.random()}>
+                    <TableRow key={item.id + Math.random()}>
                       <TableCell className="w-[150px] 2xl:w-[200px]">
-                        {item.loginTime}
+                        {format(item.createTime, "yyyy-MM-dd HH:mm:ss")}
                       </TableCell>
                       <TableCell className="w-[150px] 2xl:w-[200px]">
                         {item.ip}
                       </TableCell>
                       <TableCell className="w-[120px] 2xl:w-[150px]">
-                        {item.address}
+                        {item.region}
                       </TableCell>
                       <TableCell className="w-[100px] 2xl:w-[120px]">
                         <div
                           className={cn(
                             "px-2 rounded-sm w-fit",
-                            item.status === 1 && "text-primary bg-primary/10",
-                            item.status === 2 &&
+                            Number(item.isSuccess) === 1 &&
+                              "text-primary bg-primary/10",
+                            Number(item.isSuccess) === 2 &&
                               "text-destructive bg-destructive/10",
                           )}
                         >
-                          {t(`statusLabel.${item.status}`)}
+                          {t(`statusLabel.${item.isSuccess}`)}
                         </div>
                       </TableCell>
                     </TableRow>
