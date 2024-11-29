@@ -461,10 +461,21 @@ export async function editSupplierConfig(data: SupplierConfig) {
 
 export async function getMaintainList() {
   const user = await getSession();
-  return await apiRequest<MaintainGame[]>({
-    url: "/gameSwitch/list",
-    token: user?.token,
-  });
+  const [res, res2] = await Promise.all([
+    getBaccaratGames(),
+    apiRequest<MaintainGame[]>({
+      url: "/gameSwitch/list",
+      token: user?.token,
+    }),
+  ]);
+
+  return {
+    ...res2,
+    data: res2.data?.map((item) => ({
+      ...item,
+      gameName: res.data?.find((i) => i.gameId === item.gameId)?.gameName,
+    })),
+  };
 }
 
 export async function editMaintain(data: {

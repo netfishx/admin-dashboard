@@ -151,7 +151,7 @@ export async function apiRequest<T>({
     expire,
   });
 
-  if (result && result.status === 401) {
+  if (result && [401, 403].includes(result.status)) {
     redirect(`/login?e=${encodeURIComponent(result.data.message ?? "")}`);
   }
   return (

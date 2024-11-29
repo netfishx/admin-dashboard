@@ -9,7 +9,7 @@ export function APIError() {
   const error = searchParams.get("e");
   const router = useRouter();
   useEffect(() => {
-    if (error) {
+    if (error !== null) {
       toast.error(error, {
         duration: 1000,
         onAutoClose: () => {
