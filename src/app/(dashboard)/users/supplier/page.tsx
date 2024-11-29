@@ -71,11 +71,12 @@ async function SupplierTable({
 }: { searchParams: Promise<{ [key: string]: string | undefined }> }) {
   const translation = await getTranslations();
   const t = await getTranslations("users.supplier");
-  const { pageNum, pageSize } = await searchParams;
+  const { pageNum = "1", pageSize = "10" } = await searchParams;
   const { data } = await getSupplierList({
     pageNum: Number(pageNum),
     pageSize: Number(pageSize),
   });
+  console.info(data);
   return (
     <TableBody>
       {data?.list && data?.list.length > 0 ? (

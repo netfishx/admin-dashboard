@@ -334,7 +334,6 @@ export async function addSupplier(data: {
 
 export async function editSupplier(data: {
   id: string;
-  username: string;
   nickname: string;
   remark: string;
   newPassword: string;
