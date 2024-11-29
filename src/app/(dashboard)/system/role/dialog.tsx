@@ -19,6 +19,7 @@ import { useAtom, useAtomValue } from "jotai";
 import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Form from "next/form";
+import { useRouter } from "next/navigation";
 import { use, useLayoutEffect, useRef, useState, useTransition } from "react";
 import { toast } from "sonner";
 
@@ -26,6 +27,7 @@ export function RoleDialog({
   permissions,
 }: { permissions: Promise<Res<Permission[]>> }) {
   const translations = useTranslations();
+  const router = useRouter();
   const t = useTranslations("system.role");
   const [open, setOpen] = useAtom(roleDialogAtom);
   const data = useAtomValue(roleAtom);
@@ -64,7 +66,7 @@ export function RoleDialog({
               const res = await editRoleAction(formData);
               if (res.code === 0) {
                 setOpen(false);
-                window.location.reload();
+                router.refresh();
               } else {
                 toast.error(res.message);
               }

@@ -22,6 +22,7 @@ import { useAtom, useAtomValue } from "jotai";
 import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Form from "next/form";
+import { useRouter } from "next/navigation";
 import { useLayoutEffect, useRef, useState, useTransition } from "react";
 import { toast } from "sonner";
 
@@ -34,6 +35,7 @@ export function SubaccountDialog({ roles }: { roles: Role[] }) {
   const [isPending, startTransition] = useTransition();
   const [checkedRoles, setCheckedRoles] = useState<number[]>([]);
   const [status, setStatus] = useState<number>(0);
+  const router = useRouter();
   useLayoutEffect(() => {
     setCheckedRoles(data?.roleList ?? []);
     setStatus(data?.status ?? 0);
@@ -73,7 +75,7 @@ export function SubaccountDialog({ roles }: { roles: Role[] }) {
                 const res = await updateSubaccount(result.data as Subaccount);
                 if (res.code === 0) {
                   setOpen(false);
-                  window.location.reload();
+                  router.refresh();
                 } else {
                   toast.error(res.message);
                 }

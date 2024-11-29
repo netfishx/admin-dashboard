@@ -26,6 +26,7 @@ import { useAtom, useAtomValue } from "jotai";
 import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Form from "next/form";
+import { useRouter } from "next/navigation";
 import { useRef, useState, useTransition } from "react";
 import { toast } from "sonner";
 
@@ -43,6 +44,7 @@ export function SupplierDialog({
   )?.username;
   const ref = useRef<HTMLFormElement>(null);
   const [isPending, startTransition] = useTransition();
+  const router = useRouter();
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent
@@ -66,7 +68,7 @@ export function SupplierDialog({
               );
               if (res.code === 0) {
                 setOpen(false);
-                window.location.reload();
+                router.refresh();
               } else {
                 toast.error(res.message);
               }
