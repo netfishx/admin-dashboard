@@ -150,7 +150,8 @@ export async function apiRequest<T>({
     token,
     expire,
   });
-  if (result && result.status > 400) {
+
+  if (result && result.status === 401) {
     redirect(`/login?e=${encodeURIComponent(result.data.message ?? "")}`);
   }
   return (
