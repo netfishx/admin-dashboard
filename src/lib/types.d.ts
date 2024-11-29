@@ -50,7 +50,7 @@ export type SupplierConfig = {
 };
 
 // 供应商列表
-export type SupplierList = {
+export type Supplier = {
   id: string;
   username: string;
   nickname: string;

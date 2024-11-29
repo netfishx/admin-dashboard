@@ -54,8 +54,8 @@ import type {
   Role,
   SameOrSeniorAnnoListRequest,
   Subaccount,
+  Supplier,
   SupplierConfig,
-  SupplierList,
   SupplierReportRecords,
   SupplierReportRequestParams,
   TodayFundList,
@@ -305,15 +305,11 @@ export async function getMemberLoginLog(params: {
   });
 }
 
-export async function getSupplierList(params: {
-  pageNum: number;
-  pageSize: number;
-}) {
+export async function getSupplierList() {
   const user = await getSession();
-  return await apiRequest<PageData<SupplierList>>({
+  return await apiRequest<Supplier[]>({
     url: "/vendor/user/getVendorPage",
     token: user?.token,
-    params,
   });
 }
 
@@ -908,7 +904,7 @@ export async function getRoleList({
 export async function getPermissionList() {
   const user = await getSession();
   return await apiRequest<Permission[]>({
-    url: "/perms/listAll",
+    url: "/perms/listAllOwner",
     token: user?.token,
   });
 }

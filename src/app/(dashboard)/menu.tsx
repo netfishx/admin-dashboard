@@ -161,6 +161,7 @@ function OpenedMenu({
           "recharge_report",
           "withdraw_report",
           "borrow_report",
+          "credit_report",
           "report_download",
         ].includes(v),
       ) && (
@@ -233,6 +234,9 @@ function OpenedMenu({
             )}
             {permissions.includes("credit_report") && (
               <MenuItem label={t("reports.credit")} href="/reports/credit" />
+            )}
+            {permissions.includes("borrow_report") && (
+              <MenuItem label={t("reports.borrow")} href="/reports/borrow" />
             )}
             {permissions.includes("transfer_report") && (
               <MenuItem
@@ -409,6 +413,7 @@ function OpenedMenu({
   );
 }
 
+// biome-ignore lint/complexity/noExcessiveCognitiveComplexity: <explanation>
 function ClosedMenu({
   pathname,
   permissions,
@@ -513,6 +518,7 @@ function ClosedMenu({
           "recharge_report",
           "withdraw_report",
           "borrow_report",
+          "credit_report",
           "report_download",
         ].includes(v),
       ) && (

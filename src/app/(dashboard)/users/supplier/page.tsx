@@ -15,9 +15,7 @@ import { SupplierEditDialog } from "./dialog";
 import { EditButton } from "./edit";
 import { SupplierForm } from "./form";
 
-export default async function Page({
-  searchParams,
-}: { searchParams: Promise<{ [key: string]: string | undefined }> }) {
+export default async function Page() {
   return (
     <div className="flex flex-col gap-2 w-full">
       <Suspense
@@ -39,7 +37,7 @@ export default async function Page({
           <Table>
             <SupplierTableHeader />
             <Suspense fallback={<TbodySkeleton />}>
-              <SupplierTable searchParams={searchParams} />
+              <SupplierTable />
             </Suspense>
           </Table>
         </div>
@@ -66,21 +64,15 @@ async function SupplierTableHeader() {
   );
 }
 
-async function SupplierTable({
-  searchParams,
-}: { searchParams: Promise<{ [key: string]: string | undefined }> }) {
+async function SupplierTable() {
   const translation = await getTranslations();
   const t = await getTranslations("users.supplier");
-  const { pageNum = "1", pageSize = "10" } = await searchParams;
-  const { data } = await getSupplierList({
-    pageNum: Number(pageNum),
-    pageSize: Number(pageSize),
-  });
-  console.info(data);
+  const { data } = await getSupplierList();
+
   return (
     <TableBody>
-      {data?.list && data?.list.length > 0 ? (
-        data.list.map((item) => (
+      {data && data.length > 0 ? (
+        data.map((item) => (
           <TableRow key={item.id}>
             <TableCell>{item.id}</TableCell>
             <TableCell>{item.username}</TableCell>
