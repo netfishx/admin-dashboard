@@ -65,7 +65,7 @@ export type MaintainGame = {
   gameType: number;
   gameId: number;
   status: number;
-  gameName: string;
+  gameName?: string;
   updateTime: number;
   updateBy: string;
   updateUserId: string;
