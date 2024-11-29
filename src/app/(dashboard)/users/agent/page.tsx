@@ -48,8 +48,9 @@ export default async function Page({
 async function TableWrapper({
   searchParams,
 }: { searchParams: Promise<{ [key: string]: string | string[] }> }) {
-  const { pageNum = "1", pageSize = "10" } = await searchParams;
+  const { pageNum = "1", pageSize = "10", ...rest } = await searchParams;
   const { data } = await getAgents({
+    ...rest,
     pageNum: Number(pageNum),
     pageSize: Number(pageSize),
   });
