@@ -10,7 +10,7 @@ export function Announcement({ data }: { data: { list: AnnouncementList[] } }) {
   const router = useRouter();
   return (
     <>
-      <div className="bg-background p-4 rounded flex-1">
+      <div className="bg-background p-4 rounded flex-1 relative">
         <div className="flex justify-between mb-4">
           <div>{t("announcement")}</div>
           <button
@@ -20,28 +20,34 @@ export function Announcement({ data }: { data: { list: AnnouncementList[] } }) {
               router.push("/system/announcement/own");
             }}
           >
-            {t("more")}
+            {data?.list?.length > 0 && t("more")}
           </button>
         </div>
         <div className="flex flex-col gap-2 w-full text-sm">
-          {data?.list.map((item) => {
-            return (
-              <div
-                key={item.id}
-                className="text-ellipsis text-muted-foreground whitespace-nowrap overflow-hidden"
-              >
-                <span
-                  className={cn(
-                    "mr-2 px-2 py-1 inline-block rounded-sm",
-                    `${item.type === "1" ? "text-primary bg-primary/10" : "text-orange bg-orange/10"}`,
-                  )}
+          {data && data.list.length > 0 ? (
+            data?.list.map((item) => {
+              return (
+                <div
+                  key={item.id}
+                  className="text-ellipsis text-muted-foreground whitespace-nowrap overflow-hidden"
                 >
-                  {item.type === "1" ? "平台" : "代理"}
-                </span>
-                {item.contentOfLanguage}
-              </div>
-            );
-          })}
+                  <span
+                    className={cn(
+                      "mr-2 px-2 py-1 inline-block rounded-sm",
+                      `${item.type === "1" ? "text-primary bg-primary/10" : "text-orange bg-orange/10"}`,
+                    )}
+                  >
+                    {item.type === "1" ? "平台" : "代理"}
+                  </span>
+                  {item.contentOfLanguage}
+                </div>
+              );
+            })
+          ) : (
+            <div className="absolute inset-0 flex items-center justify-center">
+              {t("noData")}
+            </div>
+          )}
         </div>
       </div>
     </>

@@ -21,9 +21,14 @@ export async function List() {
 
   // 已开启的安全项数量
   const enabledCount =
-    Number(showGoogle?.isOpen) + Number(showMoney?.isOpen) + 1;
+    Number(showGoogle?.isOpen && permissions.includes("google_code")) +
+    Number(showMoney?.isOpen && permissions.includes("money_password")) +
+    1;
   // 总的安全项数量
-  const totalCount = Number(!!showGoogle) + Number(!!showMoney) + 1;
+  const totalCount =
+    Number(!!showGoogle && permissions.includes("google_code")) +
+    Number(!!showMoney && permissions.includes("money_password")) +
+    1;
   const progressValue = totalCount ? (enabledCount / totalCount) * 100 : 0;
   const finalValue =
     Math.floor(progressValue) >= 99 ? 100 : Math.floor(progressValue);

@@ -96,7 +96,7 @@ export default async function DashboardPage({
       </div>
       <div className="flex flex-col gap-2 w-[280px] min-[2400px]:w-[560px]">
         {permissions?.includes("admin_stat") ? (
-          <Suspense>
+          <Suspense fallback={<div className="h-24 rounded bg-card" />}>
             <DataOverviewFlowWrapper start={start} end={end} />
           </Suspense>
         ) : (
@@ -105,12 +105,12 @@ export default async function DashboardPage({
           </Suspense>
         )}
         <QuickAccess />
-        <Suspense>
+        <Suspense fallback={<div className="h-24 rounded bg-card" />}>
           {/* 普通代理：上级公告， admin：本级公告  */}
           <AnnouncementWrapper />
         </Suspense>
       </div>
-      <Suspense>
+      <Suspense fallback={<div className="h-24 rounded bg-card" />}>
         {/* 普通代理：上级公告， admin：全平台 */}
         <AnnouncementDialogWrapper />
       </Suspense>
@@ -454,9 +454,13 @@ async function AnnouncementDialogWrapper() {
       });
 
   return (
-    <AnnouncementDialog
-      data={announcementData || { list: [] }}
-      isFirstLogin={isFirstLogin || "false"}
-    />
+    <>
+      {(announcementData?.list?.length ?? 0) > 0 && (
+        <AnnouncementDialog
+          data={announcementData ?? { list: [] }}
+          isFirstLogin={isFirstLogin ?? "false"}
+        />
+      )}
+    </>
   );
 }
