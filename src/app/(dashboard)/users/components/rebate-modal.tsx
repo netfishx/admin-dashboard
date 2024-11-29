@@ -170,8 +170,11 @@ function TableBodyWrapper({
             </TableRow>
           ))
       ) : (
-        <TableRow>
-          <TableCell colSpan={2} className="text-center h-20">
+        <TableRow className="flex justify-center items-center">
+          <TableCell
+            colSpan={2}
+            className="flex justify-center items-center h-20"
+          >
             {translations("noData")}
           </TableCell>
         </TableRow>

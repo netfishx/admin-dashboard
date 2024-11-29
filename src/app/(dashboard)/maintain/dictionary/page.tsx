@@ -94,6 +94,7 @@ async function TableHeaderWrapper() {
 }
 
 async function TableBodyWrapper({ list }: { list: DictionaryList[] }) {
+  const translations = await getTranslations();
   return (
     <TableBody>
       {list.length > 0 ? (
@@ -109,8 +110,8 @@ async function TableBodyWrapper({ list }: { list: DictionaryList[] }) {
         ))
       ) : (
         <TableRow>
-          <TableCell colSpan={4} className="text-center">
-            暂无数据
+          <TableCell colSpan={4} className="text-center h-40">
+            {translations("noData")}
           </TableCell>
         </TableRow>
       )}
@@ -125,7 +126,7 @@ function TableBodySkeleton() {
         // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
         <TableRow key={i}>
           <TableCell colSpan={4}>
-            <Skeleton />
+            <Skeleton className="w-full h-6" />
           </TableCell>
         </TableRow>
       ))}
