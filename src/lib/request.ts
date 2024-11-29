@@ -45,7 +45,7 @@ async function request<T>({
 }): Promise<{
   data: Res<T>;
   status: number;
-} | null> {
+}> {
   "use cache";
   if (typeof expire === "number") {
     cacheLife({
@@ -89,7 +89,7 @@ async function request<T>({
   let result: {
     data: Res<T>;
     status: number;
-  } | null = null;
+  };
   try {
     const res = await instance<Res<T>>({
       url,
@@ -152,13 +152,14 @@ export async function apiRequest<T>({
     expire,
   });
 
-  if (result && [401, 403].includes(result.status)) {
-    redirect(`/login?e=${encodeURIComponent(result.data.message ?? "")}`);
+  if (result.status >= 400) {
+    console.error(result);
   }
-  return (
-    result?.data ?? {
-      code: 500,
-      message: "未知异常",
-    }
-  );
+  if ([401, 403].includes(result.status)) {
+    return redirect(
+      `/login?e=${encodeURIComponent(result.data.message ?? "")}`,
+    );
+  }
+
+  return result.data;
 }

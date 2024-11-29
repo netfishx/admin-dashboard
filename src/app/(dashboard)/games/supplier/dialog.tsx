@@ -79,11 +79,18 @@ export function SupplierDialog({
           <div className="flex flex-col gap-4">
             <div className="flex gap-2 items-center">
               <Label className="w-20 text-end">{t("name")}</Label>
+              {data && (
+                <input
+                  type="hidden"
+                  name="game"
+                  value={`${data.gameType}-${data.gameId}`}
+                />
+              )}
               <Select
                 required={true}
-                defaultValue={data && `${data.gameType}-${data.gameId}`}
                 name="game"
                 disabled={!!data?.gameId}
+                defaultValue={data && `${data.gameType}-${data.gameId}`}
               >
                 <SelectTrigger className="flex-1">
                   <SelectValue placeholder={t("placeholder")} />

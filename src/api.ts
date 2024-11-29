@@ -406,7 +406,7 @@ export async function saveAnnouncement(data: Announcement) {
 export async function getReviceOrder() {
   const user = await getSession();
   return await apiRequest<{ status: boolean }>({
-    url: "/agent/reviceOrder",
+    url: "/agent/user/main/receiveOrder",
     token: user?.token,
   });
 }
@@ -414,9 +414,9 @@ export async function getReviceOrder() {
 export async function editReviceOrder({ status }: { status: boolean }) {
   const user = await getSession();
   return await apiRequest<{ status: boolean }>({
-    url: "/agent/reviceOrder",
+    url: "/agent/user/main/receiveOrder",
     method: "POST",
-    data: { status },
+    data: { receiveStatus: status ? 1 : 0 },
     token: user?.token,
   });
 }

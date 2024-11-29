@@ -1,7 +1,6 @@
 import { getDefaultGameConfig } from "@/api";
 import { RebateForm } from "@/app/(dashboard)/games/rebate/form";
 import { RebateTable } from "@/app/(dashboard)/games/rebate/table";
-import {} from "@/components/ui/select";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
   Table,
