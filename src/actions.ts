@@ -56,12 +56,12 @@ export async function loginAction(formData: FormData) {
   const username = formData.get("username");
   const password = formData.get("password");
   const code = formData.get("code");
-  const randomStr = formData.get("randomStr");
+  const captcha = formData.get("captcha");
 
   if (!(username && password)) {
     return { message: "请输入用户名和密码" };
   }
-  if (!(code && randomStr)) {
+  if (!(code && captcha)) {
     return { message: "请输入验证码" };
   }
 
@@ -69,7 +69,7 @@ export async function loginAction(formData: FormData) {
     username: username.toString(),
     password: password.toString(),
     code: code.toString(),
-    randomStr: randomStr.toString(),
+    captcha: captcha.toString(),
   });
   if (res.code === 0 && res.data) {
     await setSession(res.data);
@@ -77,7 +77,7 @@ export async function loginAction(formData: FormData) {
     cookie.set("isFirstLogin", "true");
     return redirect("/");
   }
-  return { message: res.message || "登录失败" };
+  return { message: res.message };
 }
 
 export async function signOutAction() {

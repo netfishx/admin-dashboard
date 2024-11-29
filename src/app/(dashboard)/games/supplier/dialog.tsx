@@ -19,7 +19,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import type { GameType } from "@/lib/types";
+import type { GameInfo, Supplier } from "@/lib/types";
 import { gamesSupplierDialogAtom, supplierConfigAtom } from "@/store";
 import { Root as VisuallyHiddenRoot } from "@radix-ui/react-visually-hidden";
 import { useAtom, useAtomValue } from "jotai";
@@ -29,34 +29,19 @@ import Form from "next/form";
 import { useRef, useState, useTransition } from "react";
 import { toast } from "sonner";
 
-const suppliers = [
-  {
-    name: "1111",
-    id: "AB123456789012345678",
-  },
-  {
-    name: "2222",
-    id: "2",
-  },
-  {
-    name: "3333",
-    id: "3",
-  },
-];
-
-export function SupplierDialog({ games }: { games: GameType[] }) {
-  const gameList = games.flatMap((item) =>
-    item.list.map((game) => ({
-      ...game,
-      gameType: item.gameType,
-    })),
-  );
+export function SupplierDialog({
+  games,
+  suppliers,
+}: { games: GameInfo[]; suppliers: Supplier[] }) {
   const translations = useTranslations();
   const t = useTranslations("games.supplier");
   const [open, setOpen] = useAtom(gamesSupplierDialogAtom);
   const data = useAtomValue(supplierConfigAtom);
   const [supplierId, setSupplierId] = useState(data?.userId);
-  const supplierName = suppliers.find((item) => item.id === supplierId)?.name;
+  console.info(suppliers);
+  const supplierName = suppliers.find(
+    (item) => item.id === supplierId,
+  )?.username;
   const ref = useRef<HTMLFormElement>(null);
   const [isPending, startTransition] = useTransition();
   return (
@@ -104,12 +89,12 @@ export function SupplierDialog({ games }: { games: GameType[] }) {
                   <SelectValue placeholder={t("placeholder")} />
                 </SelectTrigger>
                 <SelectContent>
-                  {gameList.map((item) => (
+                  {games.map((item) => (
                     <SelectItem
                       key={item.gameId}
                       value={`${item.gameType}-${item.gameId}`}
                     >
-                      {item.gameIdLabel}
+                      {item.gameName}
                     </SelectItem>
                   ))}
                 </SelectContent>

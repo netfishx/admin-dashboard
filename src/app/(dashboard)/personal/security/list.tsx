@@ -1,4 +1,5 @@
-import { getGoogleQrCode } from "@/api";
+import { getGoogleQrCode, getSecurityList } from "@/api";
+import { cn } from "@/lib/utils";
 import { getSession } from "@/session";
 import { CheckCircle2 } from "lucide-react";
 import { getTranslations } from "next-intl/server";
@@ -13,10 +14,27 @@ export async function List() {
   const { secret, qrcode } = res.data ?? {};
   const session = await getSession();
   const permissions = session?.permissions ?? [];
+  // 获取列表 type 0 谷歌  1 资金密码
+  const { data: list } = await getSecurityList();
+  const showGoogle = list?.find((item) => item.type === 0);
+  const showMoney = list?.find((item) => item.type === 1);
 
+  // 已开启的安全项数量
+  const enabledCount =
+    Number(showGoogle?.isOpen && permissions.includes("google_code")) +
+    Number(showMoney?.isOpen && permissions.includes("money_password")) +
+    1;
+  // 总的安全项数量
+  const totalCount =
+    Number(!!showGoogle && permissions.includes("google_code")) +
+    Number(!!showMoney && permissions.includes("money_password")) +
+    1;
+  const progressValue = totalCount ? (enabledCount / totalCount) * 100 : 0;
+  const finalValue =
+    Math.floor(progressValue) >= 99 ? 100 : Math.floor(progressValue);
   return (
     <>
-      <SecurityProgress value={33} />
+      <SecurityProgress value={finalValue} />
       <div className="flex-1 flex flex-col gap-4 bg-background py-2 px-4">
         {permissions.includes("edit_password") && (
           <div className="flex items-center justify-between">
@@ -37,35 +55,53 @@ export async function List() {
           </div>
         )}
 
-        {permissions.includes("google_code") && (
+        {permissions.includes("google_code") && showGoogle && (
           <div className="flex items-center justify-between">
             <div className="flex-1">
               <div className="flex items-center gap-24">
                 <span className="text-sm font-medium">
                   {t("googleVerification")}
                 </span>
-                <CheckCircle2 className="h-5 w-5 text-muted-foreground" />
+                <CheckCircle2
+                  className={cn(
+                    "h-5 w-5",
+                    showGoogle?.isOpen
+                      ? "text-chart-5"
+                      : "text-muted-foreground",
+                  )}
+                />
                 <span className="text-sm text-muted-foreground mt-1">
                   {t("googleVerificationDes")}
                 </span>
               </div>
             </div>
-            <GoogleBtn secret={secret ?? ""} qrcode={qrcode ?? ""} />
+            <GoogleBtn
+              secret={secret ?? ""}
+              qrcode={qrcode ?? ""}
+              isOpen={showGoogle?.isOpen}
+            />
           </div>
         )}
 
-        {permissions.includes("money_password") && (
+        {permissions.includes("money_password") && showMoney && (
           <div className="flex items-center justify-between">
             <div className="flex-1">
               <div className="flex items-center gap-24">
                 <span className="text-sm font-medium">{t("fundPassword")}</span>
-                <CheckCircle2 className="h-5 w-5 text-muted-foreground" />
+                <CheckCircle2
+                  className={cn(
+                    "h-5 w-5",
+                    showMoney?.isOpen
+                      ? "text-chart-5"
+                      : "text-muted-foreground",
+                  )}
+                />
                 <span className="text-sm text-muted-foreground mt-1">
                   {t("fundPasswordDes")}
                 </span>
               </div>
             </div>
-            <MoneyBtn />
+            <MoneyBtn isOpen={showMoney?.isOpen} />
           </div>
         )}
       </div>

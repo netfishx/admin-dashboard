@@ -22,6 +22,7 @@ import type {
   DownloadListRecords,
   FundList,
   GameConfig,
+  GameInfo,
   GameOdds,
   GameRecordRequestParams,
   GameRecordRequestRecords,
@@ -53,8 +54,8 @@ import type {
   Role,
   SameOrSeniorAnnoListRequest,
   Subaccount,
+  Supplier,
   SupplierConfig,
-  SupplierList,
   SupplierReportRecords,
   SupplierReportRequestParams,
   TodayFundList,
@@ -85,11 +86,16 @@ export async function getGameList(type: number) {
   });
 }
 
-export async function login(data: {
+export async function login({
+  username,
+  password,
+  code,
+  captcha,
+}: {
   username: string;
   password: string;
   code: string;
-  randomStr: string;
+  captcha: string;
 }) {
   const res = await apiRequest<{
     userDetail: {
@@ -107,13 +113,13 @@ export async function login(data: {
     url: "/agent/login",
     method: "POST",
     data: {
-      username: data.username,
-      password: data.password,
-      captchaImg: data.code,
-      captchaUuid: data.randomStr,
+      username,
+      password,
+      code,
+      captcha,
     },
     header: {
-      Authorization: "f56e2910e849dc73a3588e5a4605a0eb",
+      Authorization: "Basic f56e2910e849dc73a3588e5a4605a0eb",
     },
   });
   return {
@@ -299,15 +305,11 @@ export async function getMemberLoginLog(params: {
   });
 }
 
-export async function getSupplierList(params: {
-  pageNum: number;
-  pageSize: number;
-}) {
+export async function getSupplierList() {
   const user = await getSession();
-  return await apiRequest<PageData<SupplierList>>({
+  return await apiRequest<Supplier[]>({
     url: "/vendor/user/getVendorPage",
     token: user?.token,
-    params,
   });
 }
 
@@ -328,7 +330,6 @@ export async function addSupplier(data: {
 
 export async function editSupplier(data: {
   id: string;
-  username: string;
   nickname: string;
   remark: string;
   newPassword: string;
@@ -369,9 +370,9 @@ export async function getAnnouncement(params: AnnouncementListRequest) {
     res.data.list = res.data.list.map((item) => ({
       ...item,
       contentOfLanguage:
-        item.content.find((i) => i.language === "cn")?.content || "",
+        item.contentList.find((i) => i.language === "zh-CN")?.content || "",
       titleOfLanguage:
-        item.content.find((i) => i.language === "cn")?.title || "",
+        item.contentList.find((i) => i.language === "zh-CN")?.title || "",
     }));
   }
   return res;
@@ -388,9 +389,9 @@ export async function getSameOrSeniorAnno(params: SameOrSeniorAnnoListRequest) {
     res.data.list = res.data.list.map((item) => ({
       ...item,
       contentOfLanguage:
-        item.content.find((i) => i.language === "cn")?.content || "",
+        item.contentList.find((i) => i.language === "zh-CN")?.content || "",
       titleOfLanguage:
-        item.content.find((i) => i.language === "cn")?.title || "",
+        item.contentList.find((i) => i.language === "zh-CN")?.title || "",
     }));
   }
   return res;
@@ -427,7 +428,7 @@ export async function editReviceOrder({ status }: { status: boolean }) {
 export async function getSupplierConfigs(userId?: string) {
   const user = await getSession();
   const [res, res2] = await Promise.all([
-    getGameList(1),
+    getBaccaratGames(),
     apiRequest<SupplierConfig[]>({
       url: "/supplierConf/list",
       token: user?.token,
@@ -438,9 +439,7 @@ export async function getSupplierConfigs(userId?: string) {
     ...res2,
     data: res2.data?.map((item) => ({
       ...item,
-      gameName: res.data
-        ?.find((i) => i.gameType === item.gameType)
-        ?.list.find((i) => i.gameId === item.gameId)?.gameIdLabel,
+      gameName: res.data?.find((i) => i.gameId === item.gameId)?.gameName,
     })),
   };
 }
@@ -457,10 +456,21 @@ export async function editSupplierConfig(data: SupplierConfig) {
 
 export async function getMaintainList() {
   const user = await getSession();
-  return await apiRequest<MaintainGame[]>({
-    url: "/gameSwitch/list",
-    token: user?.token,
-  });
+  const [res, res2] = await Promise.all([
+    getBaccaratGames(),
+    apiRequest<MaintainGame[]>({
+      url: "/gameSwitch/list",
+      token: user?.token,
+    }),
+  ]);
+
+  return {
+    ...res2,
+    data: res2.data?.map((item) => ({
+      ...item,
+      gameName: res.data?.find((i) => i.gameId === item.gameId)?.gameName,
+    })),
+  };
 }
 
 export async function editMaintain(data: {
@@ -584,6 +594,14 @@ export async function getGameOdds({ gameId }: { gameId: number }) {
   });
 }
 
+// 获取列表
+export async function getSecurityList() {
+  const user = await getSession();
+  return await apiRequest<{ type: number; isOpen: boolean }[]>({
+    url: "/agent/center/list",
+    token: user?.token,
+  });
+}
 // 获取谷歌二维码
 export async function getGoogleQrCode() {
   const user = await getSession();
@@ -886,7 +904,7 @@ export async function getRoleList({
 export async function getPermissionList() {
   const user = await getSession();
   return await apiRequest<Permission[]>({
-    url: "/perms/listAll",
+    url: "/perms/listAllOwner",
     token: user?.token,
   });
 }
@@ -1391,4 +1409,27 @@ export async function getDownloadUrl(params: { id: string }) {
     params,
     token: user?.token,
   });
+}
+
+export async function getAllGames() {
+  const user = await getSession();
+  return await apiRequest<GameInfo[]>({
+    url: "/game/allGame/list",
+    token: user?.token,
+    expire: "default",
+  });
+}
+
+export async function getBaccaratGames() {
+  return await getAllGames().then((res) => ({
+    ...res,
+    data: res?.data?.filter((i) => i.gameType === 61),
+  }));
+}
+
+export async function getGuandanGames() {
+  return await getAllGames().then((res) => ({
+    ...res,
+    data: res?.data?.filter((i) => i.gameType === 20),
+  }));
 }

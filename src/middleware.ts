@@ -3,7 +3,10 @@ import { type NextRequest, NextResponse } from "next/server";
 import { urlPermissions } from "./lib/permissions";
 
 export async function middleware(request: NextRequest) {
-  if (request.nextUrl.pathname === "/landing") {
+  if (
+    request.nextUrl.pathname === "/landing" ||
+    request.nextUrl.pathname === "/login"
+  ) {
     return NextResponse.next();
   }
   const user = await getSession();
@@ -22,7 +25,10 @@ export async function middleware(request: NextRequest) {
       if (user.permissions.includes("agent_stat")) {
         return Response.redirect(new URL("/", request.url));
       }
-      return Response.redirect(new URL("/reports/supplier", request.url));
+      if (user.permissions.includes("supplier_report")) {
+        return Response.redirect(new URL("/reports/supplier", request.url));
+      }
+      return Response.redirect(new URL("/login", request.url));
     }
   }
   return NextResponse.next();

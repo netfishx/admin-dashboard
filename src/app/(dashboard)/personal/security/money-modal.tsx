@@ -19,13 +19,18 @@ import { useState, useTransition } from "react";
 export function MoneyModal({
   open,
   onOpenChange,
-}: { open: boolean; onOpenChange: (open: boolean) => void }) {
+  isOpen,
+}: {
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+  isOpen: boolean;
+}) {
   const t = useTranslations("personal.security");
   const translations = useTranslations("");
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const isEdit = false;
+  const isEdit = isOpen;
   const [isPending, startTransition] = useTransition();
 
   const submit = async () => {

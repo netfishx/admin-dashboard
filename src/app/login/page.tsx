@@ -1,10 +1,14 @@
+import { LoginForm } from "@/app/login/form";
+import { APIError } from "@/app/login/toast";
 import { Suspense } from "react";
-import { LoginForm } from "./form";
 
 export default function LoginPage() {
   return (
-    <Suspense fallback={null}>
-      <LoginForm />
-    </Suspense>
+    <>
+      <Suspense>
+        <LoginForm />
+      </Suspense>
+      <APIError />
+    </>
   );
 }

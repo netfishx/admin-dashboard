@@ -50,7 +50,7 @@ export type SupplierConfig = {
 };
 
 // 供应商列表
-export type SupplierList = {
+export type Supplier = {
   id: string;
   username: string;
   nickname: string;
@@ -65,7 +65,7 @@ export type MaintainGame = {
   gameType: number;
   gameId: number;
   status: number;
-  gameName: string;
+  gameName?: string;
   updateTime: number;
   updateBy: string;
   updateUserId: string;
@@ -180,6 +180,12 @@ export type AnnouncementList = {
   startTime: number;
   endTime: number;
   language: string;
+  contentList: {
+    id?: string;
+    language: string;
+    content: string;
+    title?: string;
+  }[];
   content: { id?: string; language: string; content: string; title?: string }[];
   contentOfLanguage: string;
   titleOfLanguage: string;
@@ -922,4 +928,10 @@ export type BombDetailPlayerDetails = {
   rank: number | null;
   tribute: string | null;
   hand: string[];
+};
+
+export type GameInfo = {
+  gameId: number;
+  gameType: number;
+  gameName: string;
 };

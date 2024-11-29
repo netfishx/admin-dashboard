@@ -55,14 +55,14 @@ export function AddEditDialog() {
 
       const { code, message } = response;
       if (code === 0) {
-        setOpen(false);
         // router.refresh();
         toast.success(message);
         setDictName("");
         setDictCode("");
         setRemark("");
-        // window.location.reload();
-        router.refresh();
+        window.location.reload();
+        // router.refresh();
+        setOpen(false);
       } else {
         toast.error(message);
       }
