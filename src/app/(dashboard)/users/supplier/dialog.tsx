@@ -48,9 +48,22 @@ export function SupplierEditDialog() {
   }, [open, data]);
   const handleConfirm = () => {
     startTransition(async () => {
+      console.info(
+        "id:",
+        id,
+        "username:",
+        username,
+        "nickname:",
+        nickname,
+        "password:",
+        password,
+        "remark:",
+        remark,
+        "status:",
+        status,
+      );
       const { code, message } = await editSupplier({
         id,
-        username,
         nickname,
         newPassword: password,
         remark,
