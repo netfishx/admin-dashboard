@@ -308,7 +308,7 @@ export async function getMemberLoginLog(params: {
 export async function getSupplierList() {
   const user = await getSession();
   return await apiRequest<Supplier[]>({
-    url: "/vendor/user/getVendorPage",
+    url: "/vendor/user/getVendorList",
     token: user?.token,
   });
 }

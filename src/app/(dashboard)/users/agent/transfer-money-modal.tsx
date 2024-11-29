@@ -1,3 +1,4 @@
+import { getUserBasicInfo } from "@/api";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -10,33 +11,36 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Password } from "@/components/ui/password";
-import type { AgentData } from "@/lib/types";
+import { agentDataAtom, transferMoneyModalAtom } from "@/store";
+import { useAtom, useAtomValue } from "jotai";
 import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
-import { useState, useTransition } from "react";
-export function TransferMoneyModal({
-  open,
-  onOpenChange,
-  editData,
-}: {
-  open: boolean;
-  onOpenChange: (open: boolean) => void;
-  editData: AgentData | null;
-}) {
+import { useEffect, useState, useTransition } from "react";
+
+export function TransferMoneyModal() {
   const router = useRouter();
   const translation = useTranslations();
   const t = useTranslations("users.agents");
   const [amount, setAmount] = useState(0);
   const [moneyPassword, setMoneyPassword] = useState("");
   const [isPeding, startTransition] = useTransition();
+  const [open, setOpen] = useAtom(transferMoneyModalAtom);
+  const data = useAtomValue(agentDataAtom);
+
   const handleClickTransferMoney = () => {
     console.info(amount, moneyPassword);
-    onOpenChange(false);
+    setOpen(false);
     router.refresh();
   };
+
+  useEffect(() => {
+    getUserBasicInfo().then((res) => {
+      console.info(res);
+    });
+  }, []);
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent
         className="2xl:max-w-lg lg:max-w-md"
         onPointerDownOutside={(e) => e.preventDefault()}
@@ -50,7 +54,7 @@ export function TransferMoneyModal({
             <Label className="shrink-0 w-1/4 text-right text-muted-foreground">
               {t("username")}
             </Label>
-            <span>{editData?.username}</span>
+            <span>{data?.username}</span>
           </div>
           <div className="flex gap-4 items-center">
             <Label className="shrink-0 w-1/4 text-right text-muted-foreground">
@@ -61,6 +65,10 @@ export function TransferMoneyModal({
               value={amount}
               onChange={(e) => setAmount(Number(e.target.value))}
             />
+          </div>
+          <div className="flex gap-4 items-center">
+            <Label className="shrink-0 w-1/4 text-right text-muted-foreground" />
+            <span>123</span>
           </div>
           <div className="flex gap-4 items-center">
             <Label className="shrink-0 w-1/4 text-right text-muted-foreground">
@@ -74,7 +82,7 @@ export function TransferMoneyModal({
           </div>
         </div>
         <DialogFooter>
-          <Button variant="outline" onClick={() => onOpenChange(false)}>
+          <Button variant="outline" onClick={() => setOpen(false)}>
             {translation("cancel")}
           </Button>
           <Button

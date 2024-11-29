@@ -86,7 +86,7 @@ async function SupplierTable() {
         ))
       ) : (
         <TableRow>
-          <TableCell colSpan={6} className="text-center">
+          <TableCell colSpan={6} className="text-center h-40">
             {translation("noData")}
           </TableCell>
         </TableRow>
