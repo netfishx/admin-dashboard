@@ -299,7 +299,6 @@ export async function getMySelfLoginLog(params: {
   ip?: string;
 }) {
   const user = await getSession();
-  console.info(params);
   return await apiRequest<PageData<MySelfLoginLog>>({
     url: "/agent/loginLog/listPageSelf",
     params,

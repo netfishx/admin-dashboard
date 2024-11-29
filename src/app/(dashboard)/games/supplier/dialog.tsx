@@ -64,7 +64,6 @@ export function SupplierDialog({
               const res = await editSupplierConfigAction(
                 new FormData(e.currentTarget),
               );
-              console.info(res);
               if (res.code === 0) {
                 setOpen(false);
                 window.location.reload();

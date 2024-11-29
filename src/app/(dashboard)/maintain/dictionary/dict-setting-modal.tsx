@@ -63,7 +63,6 @@ export function DictSettingModal() {
       getDictionaryItemList({
         dictCode: data.dictCode,
       }).then(({ data }) => {
-        console.info(data);
         setList(data ?? []);
         setLoading(false);
       });
