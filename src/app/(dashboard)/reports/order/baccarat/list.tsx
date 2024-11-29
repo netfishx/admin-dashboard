@@ -124,12 +124,13 @@ export async function List({
 }: { searchParams: Promise<OrderReportsRequestParams>; gameList: GameInfo[] }) {
   const params = await searchParams;
   const p = {
-    ...params,
     gameId: gameList?.[0]?.gameId.toString() ?? "",
+    ...params,
     pageNum: Number(params?.pageNum) || 1,
     pageSize: Number(params?.pageSize) || 10,
   };
   const { data } = await getOrderReportList(p);
+
   return (
     <div className="p-2 bg-background flex-1">
       <div className="border rounded-sm relative">

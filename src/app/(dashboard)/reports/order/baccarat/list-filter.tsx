@@ -16,7 +16,7 @@ import { endOfDay, startOfDay } from "date-fns";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { parseAsString, useQueryState } from "nuqs";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 
 export function ListFilter({ gameList }: { gameList: GameInfo[] }) {
   const t = useTranslations("report.orderlist");
@@ -28,12 +28,12 @@ export function ListFilter({ gameList }: { gameList: GameInfo[] }) {
       .withOptions({ clearOnDefault: false }),
   );
   const [bettingtime, setBettingtime] = useQueryState(
-    "bettingtime",
+    "timeType",
     parseAsString.withDefault("1").withOptions({ clearOnDefault: false }),
   );
   // 代理结算状态
   const [settlementstatus, setSettlementstatus] = useQueryState("orderStatus", {
-    defaultValue: "",
+    defaultValue: "all",
   });
   // 订单号
   const [ordernumber, setOrdernumber] = useQueryState("id", {
@@ -81,12 +81,17 @@ export function ListFilter({ gameList }: { gameList: GameInfo[] }) {
     setMemberID("");
     setRoomeownerID("");
     setLeastlevelID("");
-    setGameName("");
+    setGameName(gameList?.[0]?.gameId.toString() ?? "");
     setBettingtime("1");
-    setSettlementstatus("");
+    setSettlementstatus("all");
     handleAmountFilterReset();
     handleDateRangeFilterReset();
   };
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+  useEffect(() => {
+    handleReset();
+  }, []);
 
   const router = useRouter();
   const handleSearch = () => {
@@ -108,7 +113,7 @@ export function ListFilter({ gameList }: { gameList: GameInfo[] }) {
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="1">{t("bettingtime")}</SelectItem>
-              <SelectItem value="2">{t("statisticsTime")}</SelectItem>
+              <SelectItem value="0">{t("statisticsTime")}</SelectItem>
             </SelectContent>
           </Select>
         </div>
@@ -205,6 +210,7 @@ export function ListFilter({ gameList }: { gameList: GameInfo[] }) {
               <SelectValue placeholder={t("placeholderselect")} />
             </SelectTrigger>
             <SelectContent>
+              <SelectItem value="all">{t("all")}</SelectItem>
               <SelectItem value="0">{t("notCalculated")}</SelectItem>
               <SelectItem value="1">{t("notSettled")}</SelectItem>
               <SelectItem value="2">{t("settled")}</SelectItem>

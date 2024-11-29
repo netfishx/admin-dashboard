@@ -354,10 +354,6 @@ export async function cleanSupplierLoginError(data: { id: string }) {
   });
 }
 
-export async function agentBaccaratReport(data: any) {
-  return await apiRequest({ url: "/api/agentBaccaratReport", data });
-}
-
 // 系统管理-公告管理-全平台公告
 export async function getAnnouncement(params: AnnouncementListRequest) {
   const user = await getSession();

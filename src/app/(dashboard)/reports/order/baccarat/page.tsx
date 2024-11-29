@@ -23,7 +23,7 @@ export default async function Page({ searchParams }: CommonWrapperProps) {
           </div>
         }
       >
-        <ListFilter gameList={gameListResp.data ?? []} />
+        <ListFilter gameList={gameListResp?.data ?? []} />
       </Suspense>
       <Suspense
         fallback={
@@ -37,7 +37,7 @@ export default async function Page({ searchParams }: CommonWrapperProps) {
           </div>
         }
       >
-        <List searchParams={searchParams} gameList={gameListResp.data ?? []} />
+        <List searchParams={searchParams} gameList={gameListResp?.data ?? []} />
       </Suspense>
     </div>
   );
