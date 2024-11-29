@@ -54,7 +54,7 @@ export default function Action({
       >
         {t("userInfo")}
       </Button>
-      {
+      {permissions.includes("agent_transfer") && (
         <Button
           variant="ghost"
           size="sm"
@@ -66,7 +66,7 @@ export default function Action({
         >
           {t("transferMoney")}
         </Button>
-      }
+      )}
       <Button
         variant="ghost"
         size="sm"

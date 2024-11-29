@@ -42,12 +42,12 @@ export default function Page({
       <div className="p-2 bg-background flex-1 gap-2">
         <Suspense
           fallback={
-            <Suspense>
+            <div className="border rounded-sm">
               <Table>
-                <TableHeaderWrapper />
+                <TableHeaderWrapper total={0} />
                 <TableBodySkeleton />
               </Table>
-            </Suspense>
+            </div>
           }
         >
           <TableWrapper searchParams={searchParams} />
@@ -63,10 +63,10 @@ async function TableWrapper({
 }: { searchParams: Promise<{ [key: string]: string | string[] }> }) {
   const params = await searchParams;
   const { data } = await getMemberList({
-    ...params,
-    pageNum: Number(params.pageNum ?? 1),
-    pageSize: Number(params.pageSize ?? 10),
+    pageNum: Number(params.pageNum) ?? 1,
+    pageSize: Number(params.pageSize) ?? 10,
   });
+  console.info("member list:", data);
   const session = await getSession();
   const permissions = session?.permissions;
   return (
@@ -74,7 +74,7 @@ async function TableWrapper({
       <UserInfoModal permissions={permissions} />
       <div className="border rounded-sm relative">
         <Table>
-          <TableHeaderWrapper />
+          <TableHeaderWrapper total={data?.total ?? 0} />
           <Suspense fallback={<TableBodySkeleton />}>
             <TableBodyWrapper list={data?.list} permissions={permissions} />
           </Suspense>
@@ -90,7 +90,7 @@ async function TableWrapper({
     </>
   );
 }
-async function TableHeaderWrapper() {
+async function TableHeaderWrapper({ total }: { total: number }) {
   const t = await getTranslations("users.members");
   const session = await getSession();
   const permissions = session?.permissions;
@@ -110,9 +110,11 @@ async function TableHeaderWrapper() {
         <TableHead className="min-w-28">{t("debtAmount")}</TableHead>
         <TableHead className="min-w-28">{t("creditAmount")}</TableHead>
         <TableHead className="min-w-20">{t("status")}</TableHead>
-        <TableHead className="min-w-[630px] text-center sticky right-0 bg-muted">
-          {t("action")}
-        </TableHead>
+        {total > 0 && (
+          <TableHead className="min-w-[630px] text-center sticky right-0 bg-muted">
+            {t("action")}
+          </TableHead>
+        )}
       </TableRow>
     </TableHeader>
   );

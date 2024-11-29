@@ -35,6 +35,7 @@ import type {
   MemberList,
   MemberReportRequestParams,
   MemberReportsRecord,
+  MySelfLoginLog,
   OrderItemDetailType,
   OrderReportsRecord,
   OrderReportsRequestParams,
@@ -277,7 +278,20 @@ export async function updateMember(data: {
   });
 }
 export async function getAgentLoginLog(params: {
-  agentId: string;
+  userId: string;
+  pageNum: number;
+  pageSize: number;
+}) {
+  const user = await getSession();
+  return await apiRequest<PageData<LoginLog>>({
+    url: "/agent/loginLog/listPage",
+    params,
+    token: user?.token,
+  });
+}
+
+// 用户管理-代理管理-获取自己登录日志
+export async function getMySelfLoginLog(params: {
   pageNum: number;
   pageSize: number;
   startTime?: number;
@@ -285,8 +299,9 @@ export async function getAgentLoginLog(params: {
   ip?: string;
 }) {
   const user = await getSession();
-  return await apiRequest<PageData<LoginLog>>({
-    url: "/agent/loginLog/get",
+  console.info(params);
+  return await apiRequest<PageData<MySelfLoginLog>>({
+    url: "/agent/loginLog/listPageSelf",
     params,
     token: user?.token,
   });
@@ -294,12 +309,12 @@ export async function getAgentLoginLog(params: {
 
 export async function getMemberLoginLog(params: {
   memberId: string;
-  pageNum?: number;
-  pageSize?: number;
+  pageNum: number;
+  pageSize: number;
 }) {
   const user = await getSession();
   return await apiRequest<PageData<LoginLog>>({
-    url: "/agent/loginLog/get",
+    url: "/member/loginLog/listPage",
     params,
     token: user?.token,
   });

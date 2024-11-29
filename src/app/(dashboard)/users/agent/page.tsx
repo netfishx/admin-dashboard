@@ -32,7 +32,7 @@ export default async function Page({
         <Suspense
           fallback={
             <Table className="border rounded-sm">
-              <TableHeaderWrapper />
+              <TableHeaderWrapper total={0} />
               <TableBodySkeleton />
             </Table>
           }
@@ -60,7 +60,7 @@ async function TableWrapper({
     <>
       <div className="border rounded-sm">
         <Table>
-          <TableHeaderWrapper />
+          <TableHeaderWrapper total={data?.total ?? 0} />
           <Suspense fallback={<TableBodySkeleton />}>
             <TableBodyWrapper list={data?.list} permissions={permissions} />
           </Suspense>
@@ -76,7 +76,7 @@ async function TableWrapper({
     </>
   );
 }
-async function TableHeaderWrapper() {
+async function TableHeaderWrapper({ total }: { total: number }) {
   const t = await getTranslations("users.agents");
   const session = await getSession();
   const permissions = session?.permissions;
@@ -93,9 +93,11 @@ async function TableHeaderWrapper() {
         <TableHead>{t("username")}</TableHead>
         <TableHead className="min-w-20">{t("nickname")}</TableHead>
         <TableHead className="min-w-20">{t("status")}</TableHead>
-        <TableHead className="min-w-[480px] text-center sticky right-0 bg-muted">
-          {t("action")}
-        </TableHead>
+        {total > 0 && (
+          <TableHead className="min-w-[480px] text-center sticky right-0 bg-muted">
+            {t("action")}
+          </TableHead>
+        )}
       </TableRow>
     </TableHeader>
   );

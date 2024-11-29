@@ -1,4 +1,4 @@
-import { getAgentLoginLog } from "@/api";
+import { getMySelfLoginLog } from "@/api";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
   Table,
@@ -8,8 +8,7 @@ import {
   TableHeader,
 } from "@/components/ui/table";
 import { TableRow } from "@/components/ui/table";
-import type { LoginLog } from "@/lib/types";
-import { getSession } from "@/session";
+import type { MySelfLoginLog } from "@/lib/types";
 import { format } from "date-fns";
 import { getTranslations } from "next-intl/server";
 import { Suspense } from "react";
@@ -54,14 +53,12 @@ async function TableWrapper({
     endTime,
     ip,
   } = await searchParams;
-  const user = await getSession();
-  if (!(startTime && endTime && user?.mainId)) {
+  if (!(startTime && endTime)) {
     return <TableSkeleton />;
   }
-  const { data } = await getAgentLoginLog({
-    agentId: user.mainId,
-    pageNum: Number(pageNum),
-    pageSize: Number(pageSize),
+  const { data } = await getMySelfLoginLog({
+    pageNum: Number(pageNum) ?? 1,
+    pageSize: Number(pageSize) ?? 10,
     startTime: Number(startTime),
     endTime: Number(endTime),
     ip,
@@ -69,7 +66,7 @@ async function TableWrapper({
   return (
     <Table>
       <TableHeaderWrapper />
-      <TableBodyWrapper list={data?.list ?? []} username={user?.username} />
+      <TableBodyWrapper list={data?.list ?? []} />
     </Table>
   );
 }
@@ -90,10 +87,7 @@ async function TableHeaderWrapper() {
   );
 }
 
-async function TableBodyWrapper({
-  list,
-  username,
-}: { list: LoginLog[]; username: string }) {
+async function TableBodyWrapper({ list }: { list: MySelfLoginLog[] }) {
   const t = await getTranslations();
   return (
     <TableBody>
@@ -101,14 +95,14 @@ async function TableBodyWrapper({
         list.map((item, index) => (
           // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
           <TableRow key={index}>
-            <TableCell>{username}</TableCell>
+            <TableCell>{item.username}</TableCell>
             <TableCell>
-              {format(item.loginTime, "yyyy-MM-dd HH:mm:ss")}
+              {format(item.createTime, "yyyy-MM-dd HH:mm:ss")}
             </TableCell>
             <TableCell>{item.ip}</TableCell>
-            <TableCell>{item.address}</TableCell>
+            <TableCell>{item.region}</TableCell>
             <TableCell>
-              <StatusCell status={item.status} />
+              <StatusCell status={item.isSuccess} />
             </TableCell>
           </TableRow>
         ))
