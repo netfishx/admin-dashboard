@@ -69,7 +69,7 @@ function arrayToTree(
   // 第二次遍历：建立父子关系
   permissions.forEach((item) => {
     const currentNode = nodeMap.get(item.id);
-    if (item.parentId !== undefined) {
+    if (item.parentId) {
       const parentNode = nodeMap.get(item.parentId);
       if (parentNode && currentNode) {
         if (!parentNode.children) {
@@ -89,7 +89,7 @@ function arrayToTree(
   });
   // 获取根节点
   const roots = permissions
-    .filter((item) => item.parentId === null)
+    .filter((item) => !item.parentId)
     .map((item) => nodeMap.get(item.id))
     .filter((node): node is TreeNode => !!node);
   return [roots, checkedState];

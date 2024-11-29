@@ -23,7 +23,6 @@ import type { LoginLog } from "@/lib/types";
 import { cn } from "@/lib/utils";
 import { loginLogModalAtom } from "@/store";
 import { useAtom } from "jotai";
-import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useEffect, useState, useTransition } from "react";
 
@@ -41,35 +40,35 @@ export function LoginLogModal({
   const [page, setPage] = useState<number>(1);
   const [size, setSize] = useState<number>(10);
   useEffect(() => {
-    if (id && type === "AGENT") {
-      console.info(id, type);
+    startTransition(async () => {
       setLoading(true);
-      getAgentLoginLog({ agentId: id, pageNum: page, pageSize: size }).then(
-        ({ data }) => {
-          if (data) {
-            setData(data.list);
-            setTotal(data.total);
-            setPage(data.pageNum);
-            setSize(data.pageSize);
-            setLoading(false);
-          }
-        },
-      );
-    } else if (id && type === "MEMBER") {
-      console.info(id, type);
-      setLoading(true);
-      getMemberLoginLog({ memberId: id, pageNum: page, pageSize: size }).then(
-        ({ data }) => {
-          if (data) {
-            setData(data.list);
-            setTotal(data.total);
-            setPage(data.pageNum);
-            setSize(data.pageSize);
-            setLoading(false);
-          }
-        },
-      );
-    }
+      if (id && type === "AGENT") {
+        const { data } = await getAgentLoginLog({
+          agentId: id,
+          pageNum: page,
+          pageSize: size,
+        });
+        if (data) {
+          setData(data.list);
+          setTotal(data.total);
+          setPage(data.pageNum);
+          setSize(data.pageSize);
+        }
+      } else if (id && type === "MEMBER") {
+        const { data } = await getMemberLoginLog({
+          memberId: id,
+          pageNum: page,
+          pageSize: size,
+        });
+        if (data) {
+          setData(data.list);
+          setTotal(data.total);
+          setPage(data.pageNum);
+          setSize(data.pageSize);
+        }
+      }
+      setLoading(false);
+    });
   }, [id, page, size, type]);
   return (
     <Dialog open={open} onOpenChange={(open) => setOpen(open)}>
@@ -102,7 +101,7 @@ export function LoginLogModal({
             {loading ? (
               <LoginLogSkeleton />
             ) : (
-              <TableBody className="w-full max-h-[370px] overflow-auto block">
+              <TableBody className="w-full max-h-[370px] overflow-auto flex flex-col">
                 {data?.length > 0 ? (
                   data?.map((item: LoginLog) => (
                     <TableRow key={item.userId + Math.random()}>
@@ -130,8 +129,11 @@ export function LoginLogModal({
                     </TableRow>
                   ))
                 ) : (
-                  <TableRow>
-                    <TableCell colSpan={4} className="text-center h-40">
+                  <TableRow className="flex justify-center items-center">
+                    <TableCell
+                      colSpan={4}
+                      className="flex justify-center items-center h-40"
+                    >
                       {translations("noData")}
                     </TableCell>
                   </TableRow>
@@ -151,11 +153,7 @@ export function LoginLogModal({
           <Button variant="outline" onClick={() => setOpen(false)}>
             {translations("cancel")}
           </Button>
-          <Button
-            disabled={isPending}
-            onClick={() => startTransition(() => setOpen(false))}
-          >
-            {isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+          <Button onClick={() => setOpen(false)}>
             {translations("confirm")}
           </Button>
         </DialogFooter>
@@ -171,7 +169,7 @@ function LoginLogSkeleton() {
         // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
         <TableRow key={index}>
           <TableCell colSpan={4}>
-            <Skeleton className="w-full h-6" />
+            <Skeleton />
           </TableCell>
         </TableRow>
       ))}

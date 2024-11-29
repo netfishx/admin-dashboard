@@ -11,7 +11,6 @@
     "rules": {
       "all": true,
       "suspicious": {
-        "noExplicitAny": "info",
         "noReactSpecificProps": "off",
         "noConsole": {
           "level": "warn",
@@ -42,7 +41,6 @@
   },
   "formatter": {
     "enabled": true,
-    "indentStyle": "space",
-    "ignore": ["src/locales/*.ts"]
+    "indentStyle": "space"
   }
 }

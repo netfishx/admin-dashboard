@@ -32,6 +32,7 @@ export function RoleDialog({
   const ref = useRef<HTMLFormElement>(null);
   const [isPending, startTransition] = useTransition();
   const permissionsRes = use(permissions);
+
   const [permsIds, setPermsIds] = useState<number[]>(data?.permsIds ?? []);
   useLayoutEffect(() => {
     if (open) {

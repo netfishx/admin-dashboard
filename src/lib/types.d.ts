@@ -565,8 +565,10 @@ export type Role = {
 export type Permission = {
   id: number;
   permsName: string;
-  parentId?: number;
+  parentId?: number | null;
   permsType: number;
+  permsCode?: string | null;
+  isUnderGrant?: number;
 };
 
 export type TreeNode = {

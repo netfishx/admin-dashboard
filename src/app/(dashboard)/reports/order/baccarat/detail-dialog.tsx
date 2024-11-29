@@ -91,7 +91,7 @@ export function Detaildialog(props: Dialogprops) {
         </DialogHeader>
         <div className="flex justify-center">{t("shareDetail")}</div>
         <ScrollArea className="w-[450px]">
-          <Suspense fallback={<Skeleton className="w-full h-4" />}>
+          <Suspense fallback={<Skeleton />}>
             <div className="whitespace-nowrap mb-1">
               {data?.revenueShare.map(
                 (item) => `${item.accountId} - ${item.percent * 100}%；`,

@@ -12,10 +12,10 @@ export default function Page() {
           <Suspense
             fallback={
               <div className="flex flex-col gap-4 p-4">
-                <Skeleton className="w-full h-6" />
-                <Skeleton className="w-full h-6" />
-                <Skeleton className="w-full h-6" />
-                <Skeleton className="w-2/3 h-6" />
+                <Skeleton />
+                <Skeleton />
+                <Skeleton />
+                <Skeleton />
               </div>
             }
           >

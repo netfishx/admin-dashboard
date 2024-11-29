@@ -111,8 +111,11 @@ export function ChangeLogModal({
                     </TableRow>
                   ))
                 ) : (
-                  <TableRow>
-                    <TableCell colSpan={7} className="text-center h-40">
+                  <TableRow className="flex justify-center items-center">
+                    <TableCell
+                      colSpan={7}
+                      className="flex justify-center items-center h-40"
+                    >
                       {translation("noData")}
                     </TableCell>
                   </TableRow>
@@ -152,7 +155,7 @@ function ChangeLogSkeleton() {
         // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
         <TableRow key={i}>
           <TableCell colSpan={7}>
-            <Skeleton className="w-full h-6" />
+            <Skeleton />
           </TableCell>
         </TableRow>
       ))}

@@ -12,7 +12,7 @@ export default function TableSkeleton(props: {
         // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
         <TableRow key={i}>
           <TableCell colSpan={colSpan}>
-            <Skeleton className="w-full h-6" />
+            <Skeleton />
           </TableCell>
         </TableRow>
       ))}

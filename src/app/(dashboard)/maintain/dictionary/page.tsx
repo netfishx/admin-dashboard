@@ -25,7 +25,7 @@ export default async function Page({
       <Suspense
         fallback={
           <div className="bg-background py-2">
-            <Skeleton className="h-9 w-full opacity-25" />
+            <Skeleton />
           </div>
         }
       >
@@ -94,6 +94,7 @@ async function TableHeaderWrapper() {
 }
 
 async function TableBodyWrapper({ list }: { list: DictionaryList[] }) {
+  const translations = await getTranslations();
   return (
     <TableBody>
       {list.length > 0 ? (
@@ -109,8 +110,8 @@ async function TableBodyWrapper({ list }: { list: DictionaryList[] }) {
         ))
       ) : (
         <TableRow>
-          <TableCell colSpan={4} className="text-center">
-            暂无数据
+          <TableCell colSpan={4} className="text-center h-40">
+            {translations("noData")}
           </TableCell>
         </TableRow>
       )}

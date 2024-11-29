@@ -33,7 +33,7 @@ export default function Page({
       <Suspense
         fallback={
           <div className="bg-background py-2">
-            <Skeleton className="h-9 w-full opacity-25" />
+            <Skeleton />
           </div>
         }
       >
@@ -122,38 +122,47 @@ async function TableBodyWrapper({
   permissions,
 }: { list: MemberList[] | undefined; permissions: string[] | undefined }) {
   const t = await getTranslations("users.members");
+  const translations = await getTranslations();
   return (
     <TableBody>
-      {list?.map((item) => (
-        <TableRow key={item.id}>
-          {permissions?.includes("member_search") && (
-            <>
-              <TableCell>{item.upUsername}</TableCell>
-              <TableCell>{item.level}</TableCell>
-            </>
-          )}
-          <TableCell>{item.id}</TableCell>
-          <TableCell>{item.username}</TableCell>
-          <TableCell>{item.nickname}</TableCell>
-          <TableCell>{item.depositAddress}</TableCell>
-          <TableCell>{item.debtAmount}</TableCell>
-          <TableCell>{item.creditAmount}</TableCell>
-          <TableCell>
-            <div
-              className={cn(
-                "px-2 rounded-sm w-fit",
-                item.status === 0 && "text-green bg-green/10",
-                item.status === 1 && "text-destructive bg-destructive/10",
-              )}
-            >
-              {t(`statusLabel.${item.status}`)}
-            </div>
-          </TableCell>
-          <TableCell className="text-center sticky right-0 bg-background">
-            <Actions data={item} permissions={permissions} />
+      {list && list.length > 0 ? (
+        list.map((item) => (
+          <TableRow key={item.id}>
+            {permissions?.includes("member_search") && (
+              <>
+                <TableCell>{item.upUsername}</TableCell>
+                <TableCell>{item.level}</TableCell>
+              </>
+            )}
+            <TableCell>{item.id}</TableCell>
+            <TableCell>{item.username}</TableCell>
+            <TableCell>{item.nickname}</TableCell>
+            <TableCell>{item.depositAddress}</TableCell>
+            <TableCell>{item.debtAmount}</TableCell>
+            <TableCell>{item.creditAmount}</TableCell>
+            <TableCell>
+              <div
+                className={cn(
+                  "px-2 rounded-sm w-fit",
+                  item.status === 0 && "text-green bg-green/10",
+                  item.status === 1 && "text-destructive bg-destructive/10",
+                )}
+              >
+                {t(`statusLabel.${item.status}`)}
+              </div>
+            </TableCell>
+            <TableCell className="text-center sticky right-0 bg-background">
+              <Actions data={item} permissions={permissions} />
+            </TableCell>
+          </TableRow>
+        ))
+      ) : (
+        <TableRow>
+          <TableCell colSpan={10} className="text-center h-40">
+            {translations("noData")}
           </TableCell>
         </TableRow>
-      ))}
+      )}
     </TableBody>
   );
 }
@@ -165,7 +174,7 @@ async function TableBodySkeleton() {
         // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
         <TableRow key={index}>
           <TableCell colSpan={10}>
-            <Skeleton className="w-full h-6" />
+            <Skeleton />
           </TableCell>
         </TableRow>
       ))}

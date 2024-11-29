@@ -28,10 +28,10 @@ export default async function Page({
       <Suspense
         fallback={
           <div className="bg-background py-2">
-            <Skeleton className="h-9 w-full opacity-25" />
-            <Skeleton className="h-9 w-full opacity-25" />
-            <Skeleton className="h-9 w-full opacity-25" />
-            <Skeleton className="h-9 w-full opacity-25" />
+            <Skeleton />
+            <Skeleton />
+            <Skeleton />
+            <Skeleton />
           </div>
         }
       >
@@ -196,7 +196,7 @@ function TableBodySkeleton() {
         // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
         <TableRow key={index}>
           <TableCell colSpan={12}>
-            <Skeleton className="w-full h-6" />
+            <Skeleton />
           </TableCell>
         </TableRow>
       ))}

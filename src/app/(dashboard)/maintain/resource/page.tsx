@@ -115,7 +115,7 @@ async function TableBodyWrapper({
           </TableRow>
         ))
       ) : (
-        <TableRow className="text-center">
+        <TableRow className="text-center h-40">
           <TableCell colSpan={10}>{translations("noData")}</TableCell>
         </TableRow>
       )}
@@ -152,7 +152,7 @@ function TableBodySkeleton() {
         // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
         <TableRow key={index}>
           <TableCell colSpan={10}>
-            <Skeleton className="w-full h-6" />
+            <Skeleton />
           </TableCell>
         </TableRow>
       ))}

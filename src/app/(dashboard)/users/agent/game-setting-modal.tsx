@@ -150,8 +150,11 @@ export function GameSettingModal() {
                         </TableRow>
                       ))
                   ) : (
-                    <TableRow>
-                      <TableCell colSpan={3} className="text-center h-20">
+                    <TableRow className="flex justify-center items-center">
+                      <TableCell
+                        colSpan={3}
+                        className="flex justify-center items-center h-20"
+                      >
                         {translations("noData")}
                       </TableCell>
                     </TableRow>
@@ -234,7 +237,7 @@ function GameSettingSkeleton({
         // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
         <TableRow key={index}>
           <TableCell colSpan={colSpan}>
-            <Skeleton className="w-full h-6" />
+            <Skeleton />
           </TableCell>
         </TableRow>
       ))}

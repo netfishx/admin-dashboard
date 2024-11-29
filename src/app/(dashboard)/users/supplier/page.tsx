@@ -21,7 +21,7 @@ export default async function Page() {
       <Suspense
         fallback={
           <div className="flex justify-between items-center bg-background p-4">
-            <Skeleton className="w-full h-9 opacity-20" />
+            <Skeleton />
           </div>
         }
       >
@@ -86,7 +86,7 @@ async function SupplierTable() {
         ))
       ) : (
         <TableRow>
-          <TableCell colSpan={6} className="text-center">
+          <TableCell colSpan={6} className="text-center h-40">
             {translation("noData")}
           </TableCell>
         </TableRow>
@@ -102,7 +102,7 @@ function TbodySkeleton() {
         // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
         <TableRow key={index}>
           <TableCell colSpan={6}>
-            <Skeleton className="w-full h-6" />
+            <Skeleton />
           </TableCell>
         </TableRow>
       ))}

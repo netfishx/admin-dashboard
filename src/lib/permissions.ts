@@ -42,3 +42,12 @@ export const urlPermissions: {
   "/reports/transfer": "transfer_report",
   "/reports/download": "report_download",
 };
+
+export function getRedirectUrl(permissions: string[]) {
+  for (const [key, value] of Object.entries(urlPermissions)) {
+    if (permissions.includes(value)) {
+      return key;
+    }
+  }
+  return "/login";
+}

@@ -10,22 +10,22 @@ import {
   limitModalAtom,
   loginLogModalAtom,
   rebateModalAtom,
+  transferMoneyModalAtom,
   userInfoModalAtom,
 } from "@/store";
 import { useSetAtom } from "jotai";
 import { useTranslations } from "next-intl";
-import { useState } from "react";
-import { TransferMoneyModal } from "./transfer-money-modal";
 
 export default function Action({
   data,
   permissions,
 }: { data: AgentData; permissions: string[] }) {
   const t = useTranslations("users.agents");
-  const [transferMoneyModal, setTransferMoneyModal] = useState(false);
 
   // 用户信息 弹窗
   const setUserInfoModal = useSetAtom(userInfoModalAtom);
+  // 转账 弹窗
+  const setTransferMoneyModal = useSetAtom(transferMoneyModalAtom);
   // 游戏设置 弹窗
   const setGameSettingModal = useSetAtom(gameSettingModalAtom);
   // 限额设置 弹窗
@@ -54,18 +54,19 @@ export default function Action({
       >
         {t("userInfo")}
       </Button>
-      {permissions.includes("agent_transfer") && (
+      {
         <Button
           variant="ghost"
           size="sm"
           className="text-primary hover:text-primary/80 text-sm px-2"
           onClick={() => {
+            setAgentData(data);
             setTransferMoneyModal(true);
           }}
         >
           {t("transferMoney")}
         </Button>
-      )}
+      }
       <Button
         variant="ghost"
         size="sm"
@@ -121,11 +122,6 @@ export default function Action({
       >
         {t("changeLog")}
       </Button>
-      <TransferMoneyModal
-        open={transferMoneyModal}
-        onOpenChange={setTransferMoneyModal}
-        editData={data}
-      />
     </>
   );
 }

@@ -101,7 +101,7 @@ export function LimitModal({ userId }: { userId: string }) {
           <DialogDescription />
         </DialogHeader>
         <div className="py-2 px-4 bg-background">
-          <Suspense fallback={<Skeleton className="h-9 w-full" />}>
+          <Suspense fallback={<Skeleton />}>
             <Form list={list} setGameId={setGameId} gameId={gameId} />
           </Suspense>
         </div>
@@ -258,7 +258,7 @@ function LimitSkeleton() {
         // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
         <TableRow key={index}>
           <TableCell colSpan={4}>
-            <Skeleton className="w-full h-6" />
+            <Skeleton />
           </TableCell>
         </TableRow>
       ))}

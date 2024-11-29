@@ -85,7 +85,7 @@ export function AddEditDialog() {
             <Label className="w-20 text-end">{t("dictName")}</Label>
             <Input
               className="flex-1"
-              value={dictName}
+              value={dictName ?? ""}
               onChange={(e) => setDictName(e.target.value)}
             />
           </div>
@@ -93,7 +93,7 @@ export function AddEditDialog() {
             <Label className="w-20 text-end">{t("dictCode")}</Label>
             <Input
               className="flex-1"
-              value={dictCode}
+              value={dictCode ?? ""}
               onChange={(e) => setDictCode(e.target.value)}
             />
           </div>
@@ -101,7 +101,7 @@ export function AddEditDialog() {
             <Label className="w-20 text-end">{t("remark")}</Label>
             <Input
               className="flex-1"
-              value={remark}
+              value={remark ?? ""}
               onChange={(e) => setRemark(e.target.value)}
             />
           </div>

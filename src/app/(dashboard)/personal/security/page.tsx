@@ -8,10 +8,10 @@ export default function PersonalSecurityPage() {
       <Suspense
         fallback={
           <div className="bg-background py-2">
-            <Skeleton className="h-9 w-full opacity-25" />
-            <Skeleton className="h-9 w-full opacity-25" />
-            <Skeleton className="h-9 w-full opacity-25" />
-            <Skeleton className="h-9 w-full opacity-25" />
+            <Skeleton />
+            <Skeleton />
+            <Skeleton />
+            <Skeleton />
           </div>
         }
       >

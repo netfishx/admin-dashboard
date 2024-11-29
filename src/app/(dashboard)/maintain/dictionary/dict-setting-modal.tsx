@@ -112,7 +112,7 @@ export function DictSettingModal() {
                           colSpan={4}
                           className="text-center w-full block"
                         >
-                          <Skeleton className="w-full h-6" />
+                          <Skeleton />
                         </TableCell>
                       </TableRow>
                     ))

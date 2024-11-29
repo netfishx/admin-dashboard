@@ -159,7 +159,7 @@ export default function SubaccountPage({
                     // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
                     <TableRow key={index}>
                       <TableCell colSpan={7}>
-                        <Skeleton className="w-full h-6" />
+                        <Skeleton />
                       </TableCell>
                     </TableRow>
                   ))}

@@ -13,9 +13,9 @@ export default async function Platform({
       <Suspense
         fallback={
           <div className="flex justify-between items-center bg-background py-2 px-4">
-            <Skeleton className="w-full h-9 opacity-20" />
-            <Skeleton className="w-full h-9 opacity-20" />
-            <Skeleton className="w-full h-9 opacity-20" />
+            <Skeleton />
+            <Skeleton />
+            <Skeleton />
           </div>
         }
       >

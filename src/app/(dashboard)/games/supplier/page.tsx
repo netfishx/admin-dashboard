@@ -1,8 +1,12 @@
 import { getBaccaratGames, getSupplierList } from "@/api";
 import { Add } from "@/app/(dashboard)/games/supplier/add";
 import { SupplierForm } from "@/app/(dashboard)/games/supplier/form";
-import { SupplierTable } from "@/app/(dashboard)/games/supplier/table";
+import {
+  SupplierTable,
+  SupplierTableHeader,
+} from "@/app/(dashboard)/games/supplier/table";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
 import { Suspense } from "react";
 
 async function AddButtonWrapper() {
@@ -19,7 +23,7 @@ export default function Page({
       <Suspense
         fallback={
           <div className="flex justify-between items-center bg-background p-4">
-            <Skeleton className="w-full h-9 opacity-20" />
+            <Skeleton className="w-full h-9" />
           </div>
         }
       >
@@ -34,12 +38,19 @@ export default function Page({
         <div className="border rounded-sm">
           <Suspense
             fallback={
-              <div className="flex flex-col gap-4 p-4">
-                <Skeleton className="w-full h-6" />
-                <Skeleton className="w-full h-6" />
-                <Skeleton className="w-full h-6" />
-                <Skeleton className="w-2/3 h-6" />
-              </div>
+              <Table>
+                <SupplierTableHeader />
+                <TableBody>
+                  {Array.from({ length: 5 }).map((_, i) => (
+                    // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
+                    <TableRow key={i}>
+                      <TableCell colSpan={7}>
+                        <Skeleton />
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
             }
           >
             <SupplierTable searchParams={searchParams} />

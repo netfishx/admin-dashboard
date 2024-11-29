@@ -129,7 +129,7 @@ function RebateSkeleton() {
         // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
         <TableRow key={index}>
           <TableCell colSpan={2}>
-            <Skeleton className="w-full h-6" />
+            <Skeleton />
           </TableCell>
         </TableRow>
       ))}
@@ -170,8 +170,11 @@ function TableBodyWrapper({
             </TableRow>
           ))
       ) : (
-        <TableRow>
-          <TableCell colSpan={2} className="text-center h-20">
+        <TableRow className="flex justify-center items-center">
+          <TableCell
+            colSpan={2}
+            className="flex justify-center items-center h-20"
+          >
             {translations("noData")}
           </TableCell>
         </TableRow>

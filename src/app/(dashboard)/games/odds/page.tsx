@@ -72,7 +72,7 @@ function TableWrapper({
               // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
               <TableRow key={i}>
                 <TableCell colSpan={5}>
-                  <Skeleton className="w-full h-6" />
+                  <Skeleton />
                 </TableCell>
               </TableRow>
             ))}
@@ -91,7 +91,7 @@ export default function Page({
   return (
     <div className="flex flex-col gap-2 w-full">
       <div className="flex justify-between items-center bg-background p-4">
-        <Suspense fallback={<Skeleton className="w-full h-9 opacity-20" />}>
+        <Suspense fallback={<Skeleton className="w-full h-9" />}>
           <FormWrapper />
         </Suspense>
       </div>
