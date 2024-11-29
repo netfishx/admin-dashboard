@@ -30,6 +30,8 @@ export const supplierConfigAtom = atom<SupplierConfig | undefined>();
 
 // 用户管理-代理管理-用户信息弹窗
 export const userInfoModalAtom = atom<boolean>(false);
+// 用户管理-代理管理-转账弹窗
+export const transferMoneyModalAtom = atom<boolean>(false);
 // 用户管理-代理管理-游戏设置弹窗
 export const gameSettingModalAtom = atom<boolean>(false);
 // 用户管理-代理管理-限额设置弹窗

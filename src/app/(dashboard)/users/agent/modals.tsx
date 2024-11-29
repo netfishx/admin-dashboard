@@ -7,7 +7,9 @@ import { LimitModal } from "../components/limit-modal";
 import { LoginLogModal } from "../components/login-log-modal";
 import { RebateModal } from "../components/rebate-modal";
 import { GameSettingModal } from "./game-setting-modal";
+import { TransferMoneyModal } from "./transfer-money-modal";
 import { UserInfoModal } from "./user-info-modal";
+
 export function Modals() {
   const agentId = useAtomValue(agentIdAtom);
   return (
@@ -18,6 +20,7 @@ export function Modals() {
       <LimitModal userId={agentId} />
       <RebateModal userId={agentId} />
       <ChangeLogModal targetUserId={agentId} appType="AGENT" />
+      <TransferMoneyModal />
     </>
   );
 }
