@@ -354,10 +354,6 @@ export async function cleanSupplierLoginError(data: { id: string }) {
   });
 }
 
-export async function agentBaccaratReport(data: any) {
-  return await apiRequest({ url: "/api/agentBaccaratReport", data });
-}
-
 // 系统管理-公告管理-全平台公告
 export async function getAnnouncement(params: AnnouncementListRequest) {
   const user = await getSession();
@@ -432,9 +428,10 @@ export async function getSupplierConfigs(userId?: string) {
     apiRequest<SupplierConfig[]>({
       url: "/supplierConf/list",
       token: user?.token,
-      params: { userId },
+      params: userId ? { userId } : undefined,
     }),
   ]);
+
   return {
     ...res2,
     data: res2.data?.map((item) => ({
@@ -1416,7 +1413,7 @@ export async function getAllGames() {
   return await apiRequest<GameInfo[]>({
     url: "/game/allGame/list",
     token: user?.token,
-    expire: "default",
+    expire: "minutes",
   });
 }
 

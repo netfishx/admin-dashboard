@@ -38,7 +38,6 @@ export function SupplierDialog({
   const [open, setOpen] = useAtom(gamesSupplierDialogAtom);
   const data = useAtomValue(supplierConfigAtom);
   const [supplierId, setSupplierId] = useState(data?.userId);
-  console.info(suppliers);
   const supplierName = suppliers.find(
     (item) => item.id === supplierId,
   )?.username;
@@ -65,6 +64,7 @@ export function SupplierDialog({
               const res = await editSupplierConfigAction(
                 new FormData(e.currentTarget),
               );
+              console.info(res);
               if (res.code === 0) {
                 setOpen(false);
                 window.location.reload();

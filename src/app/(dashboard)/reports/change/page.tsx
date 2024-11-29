@@ -99,8 +99,6 @@ async function TableHeaderWrapper() {
 async function TableWrapper({
   searchParams,
 }: { searchParams: Promise<{ [key: string]: string | string[] }> }) {
-  const t = await getTranslations();
-
   const {
     userId,
     transactionID,
@@ -111,7 +109,7 @@ async function TableWrapper({
     pageNum,
     pageSize,
   } = await searchParams;
-  if (!startTime || !endTime) {
+  if (!(startTime && endTime)) {
     return (
       <Table className="border rounded-sm">
         <TableHeaderWrapper />

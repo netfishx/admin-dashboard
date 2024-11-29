@@ -95,7 +95,7 @@ async function TableWrapper({
     pageNum,
     pageSize,
   } = await searchParams;
-  if (!startTime || !endTime) {
+  if (!(startTime && endTime)) {
     return (
       <Table className="border rounded-sm">
         <TableHeaderWrapper />

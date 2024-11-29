@@ -71,7 +71,6 @@ async function ListBody({ list }: { list: BorrowRecordRequestRecords[] }) {
 export async function List({
   searchParams,
 }: { searchParams: Promise<BorrowRecordRequestParams> }) {
-  const t = await getTranslations("report.credit");
   const params = await searchParams;
   const { data } = await postGetCreditLogList(params);
   return (
