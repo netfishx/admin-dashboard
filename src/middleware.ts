@@ -1,6 +1,6 @@
 import { getSession } from "@/session";
 import { type NextRequest, NextResponse } from "next/server";
-import { urlPermissions } from "./lib/permissions";
+import { getRedirectUrl, urlPermissions } from "./lib/permissions";
 
 export async function middleware(request: NextRequest) {
   if (
@@ -22,13 +22,9 @@ export async function middleware(request: NextRequest) {
         );
       })
     ) {
-      if (user.permissions.includes("agent_stat")) {
-        return Response.redirect(new URL("/", request.url));
-      }
-      if (user.permissions.includes("supplier_report")) {
-        return Response.redirect(new URL("/reports/supplier", request.url));
-      }
-      return Response.redirect(new URL("/login", request.url));
+      return Response.redirect(
+        new URL(getRedirectUrl(user.permissions), request.url),
+      );
     }
   }
   return NextResponse.next();

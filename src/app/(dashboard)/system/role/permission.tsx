@@ -8,28 +8,39 @@ function arrayToTree(
   permissions: Permission[],
   checked: number[],
 ): [TreeNode[], Map<string, boolean | "indeterminate">] {
-  // 创建Map来存储所有节点，方便快速查找
   const nodeMap = new Map<number, TreeNode>();
-  // 创建Map来存储节点的选中状态
   const checkedState = new Map<string, boolean | "indeterminate">();
+
+  // 辅助函数：检查节点是否具有叶子节点后代
+  const hasLeafDescendant = (nodeId: number): boolean => {
+    const children = permissions.filter((item) => item.parentId === nodeId);
+
+    // 如果直接子节点中有叶子节点，返回true
+    if (children.some((child) => child.permsType === 1)) {
+      return true;
+    }
+
+    // 递归检查每个非叶子节点的子节点
+    return children
+      .filter((child) => child.permsType === 0)
+      .some((child) => hasLeafDescendant(child.id));
+  };
 
   // 第一次遍历：创建所有节点
   permissions.forEach((item) => {
-    nodeMap.set(item.id, {
-      id: item.id.toString(),
-      label: item.permsName,
-    });
+    // 只创建叶子节点或有叶子节点后代的非叶子节点
+    if (item.permsType === 1 || hasLeafDescendant(item.id)) {
+      nodeMap.set(item.id, {
+        id: item.id.toString(),
+        label: item.permsName,
+      });
+    }
   });
 
-  // 辅助函数：判断节点是否为叶子节点
-  const isLeafNode = (id: number): boolean => {
-    return !permissions.some((item) => item.parentId === id);
-  };
-
-  // 辅助函数：获取节点的所有子节点ID
+  // 辅助函数：获取节点的有效子节点ID（已经在nodeMap中的节点）
   const getChildrenIds = (id: number): number[] => {
     return permissions
-      .filter((item) => item.parentId === id)
+      .filter((item) => item.parentId === id && nodeMap.has(item.id))
       .map((item) => item.id);
   };
 
@@ -62,12 +73,16 @@ function arrayToTree(
       checkedState.set(parentPermission.parentId.toString(), false);
     }
 
-    // 递归更新上层父节点
     updateParentState(parentPermission.parentId);
   };
 
   // 第二次遍历：建立父子关系
+  // biome-ignore lint/complexity/noExcessiveCognitiveComplexity: <explanation>
   permissions.forEach((item) => {
+    if (!nodeMap.has(item.id)) {
+      return; // 跳过未纳入nodeMap的节点
+    }
+
     const currentNode = nodeMap.get(item.id);
     if (item.parentId !== undefined) {
       const parentNode = nodeMap.get(item.parentId);
@@ -79,19 +94,21 @@ function arrayToTree(
       }
     }
 
-    // 设置叶子节点的选中状态
-    if (isLeafNode(item.id)) {
+    // 只为叶子节点设置选中状态
+    if (item.permsType === 1) {
       checkedState.set(item.id.toString(), checked.includes(item.id));
       if (item.parentId !== undefined) {
         updateParentState(item.id);
       }
     }
   });
+
   // 获取根节点
   const roots = permissions
-    .filter((item) => item.parentId === null)
+    .filter((item) => item.parentId === undefined && nodeMap.has(item.id))
     .map((item) => nodeMap.get(item.id))
     .filter((node): node is TreeNode => !!node);
+
   return [roots, checkedState];
 }
 
@@ -105,6 +122,7 @@ export function PermissionTree({
   onChangeAction: (checked: number[]) => void;
 }) {
   const [tree, checkedState] = arrayToTree(permissions, checked);
+
   const [state, setState] = useState(checkedState);
   useEffect(() => {
     onChangeAction(
