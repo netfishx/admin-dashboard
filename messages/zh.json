@@ -455,7 +455,8 @@
       "shareDetail": "占成明细",
       "shoe": "靴数",
       "play": "局数",
-      "resultp": "牌局结果"
+      "resultp": "牌局结果",
+      "all": "全部"
     },
     "periodlist": {
       "today": "今天",

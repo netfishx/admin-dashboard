@@ -1,4 +1,5 @@
 "use client";
+import { getAllGames } from "@/api";
 import { DateRangeFilter } from "@/components/daterange-filter";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -10,12 +11,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import type { GameInfo } from "@/lib/types";
 import { endOfDay } from "date-fns";
 import { startOfDay } from "date-fns";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useQueryState } from "nuqs";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export function RatioForm() {
   const t = useTranslations("report.agent");
@@ -49,6 +51,13 @@ export function RatioForm() {
     handleDateRangeFilterReset();
   };
 
+  const [gameList, setGameList] = useState<GameInfo[]>([]);
+  useEffect(() => {
+    getAllGames().then((res) => {
+      setGameList(res.data ?? []);
+    });
+  }, []);
+
   return (
     <div className="flex flex-col gap-2 bg-background py-2 px-4">
       {/* 第一行 */}
@@ -64,8 +73,11 @@ export function RatioForm() {
               <SelectValue placeholder={t("placeholderselect")} />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="1">百家乐01</SelectItem>
-              <SelectItem value="2">百家乐02</SelectItem>
+              {gameList.map((game) => (
+                <SelectItem key={game.gameId} value={game.gameId.toString()}>
+                  {game.gameName}
+                </SelectItem>
+              ))}
             </SelectContent>
           </Select>
         </div>
