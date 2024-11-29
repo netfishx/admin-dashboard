@@ -9,6 +9,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import type {
+  GameInfo,
   OrderReportsRecord,
   OrderReportsRequestParams,
 } from "@/lib/types";
@@ -119,14 +120,17 @@ async function ListBody({ list }: { list: OrderReportsRecord[] }) {
 
 export async function List({
   searchParams,
-}: { searchParams: Promise<OrderReportsRequestParams> }) {
+  gameList,
+}: { searchParams: Promise<OrderReportsRequestParams>; gameList: GameInfo[] }) {
   const params = await searchParams;
   const p = {
+    gameId: gameList?.[0]?.gameId.toString() ?? "",
     ...params,
     pageNum: Number(params?.pageNum) || 1,
     pageSize: Number(params?.pageSize) || 10,
   };
   const { data } = await getOrderReportList(p);
+
   return (
     <div className="p-2 bg-background flex-1">
       <div className="border rounded-sm relative">
