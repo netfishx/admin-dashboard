@@ -98,12 +98,22 @@ export type MemberList = {
 };
 
 export interface LoginLog {
-  userId: string;
-  loginTime: string;
-  ip: string;
-  address: string;
-  status: number;
+  id: string; // id
+  username: string; // 用户名称
+  isSuccess: number; // 是否成功（0=成功，1=失败）
+  ip: string; // 操作ip
+  region: string; // 操作ip的区域
+  createTime: number; // 登录时间
 }
+
+export type MySelfLoginLog = {
+  id: string; // id
+  username: string; // 用户名称
+  isSuccess: number; // 是否成功（0=成功，1=失败）
+  ip: string; // 操作ip
+  region: string; // 操作ip的区域
+  createTime: number; // 登录时间
+};
 
 export type GameConfig = {
   gameType?: number;
