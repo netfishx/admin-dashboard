@@ -11,16 +11,19 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import type { SessionData } from "@/session";
+import { addAgentLoadingAtom } from "@/store";
+import { useSetAtom } from "jotai";
 import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useQueryState } from "nuqs";
-import { use, useTransition } from "react";
+import { use, useEffect, useTransition } from "react";
 
 export function Form({ session }: { session: Promise<SessionData | null> }) {
   const t = useTranslations("users.agents");
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
+  const [isReset, startReset] = useTransition();
   const [username, setUsername] = useQueryState("username", {
     defaultValue: "",
   });
@@ -35,6 +38,11 @@ export function Form({ session }: { session: Promise<SessionData | null> }) {
     defaultValue: "all",
   });
   const permissions = use(session)?.permissions;
+
+  const setLoading = useSetAtom(addAgentLoadingAtom);
+  useEffect(() => {
+    setLoading(isReset || isPending);
+  }, [isReset, isPending, setLoading]);
   return (
     <div className="flex justify-between items-center bg-background py-2 px-4">
       <div className="flex gap-2 items-center">
@@ -83,7 +91,18 @@ export function Form({ session }: { session: Promise<SessionData | null> }) {
         </div>
       </div>
       <div className="flex gap-2 items-center">
-        <Button variant="outline">{t("reset")}</Button>
+        <Button
+          variant="outline"
+          disabled={isReset}
+          onClick={() => {
+            startReset(() => {
+              router.replace("/users/agent");
+            });
+          }}
+        >
+          {isReset && <Loader2 className="w-4 h-4 animate-spin" />}
+          {t("reset")}
+        </Button>
         <Button
           disabled={isPending}
           onClick={() => {
