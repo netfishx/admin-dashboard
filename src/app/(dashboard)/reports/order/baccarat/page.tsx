@@ -1,3 +1,4 @@
+import { getAllGames } from "@/api";
 import TableSkeleton from "@/components/table-skeleton";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Table } from "@/components/ui/table";
@@ -10,7 +11,9 @@ interface CommonWrapperProps {
   searchParams: Promise<OrderReportsRequestParams>;
 }
 
-export default function Page({ searchParams }: CommonWrapperProps) {
+export default async function Page({ searchParams }: CommonWrapperProps) {
+  const gameListResp = await getAllGames();
+
   return (
     <div className="flex flex-col gap-2 w-full">
       <Suspense
@@ -20,7 +23,7 @@ export default function Page({ searchParams }: CommonWrapperProps) {
           </div>
         }
       >
-        <ListFilter />
+        <ListFilter gameList={gameListResp.data ?? []} />
       </Suspense>
       <Suspense
         fallback={
@@ -34,7 +37,7 @@ export default function Page({ searchParams }: CommonWrapperProps) {
           </div>
         }
       >
-        <List searchParams={searchParams} />
+        <List searchParams={searchParams} gameList={gameListResp.data ?? []} />
       </Suspense>
     </div>
   );

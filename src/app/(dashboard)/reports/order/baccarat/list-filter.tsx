@@ -1,4 +1,6 @@
 "use client";
+import AmountFilter from "@/components/amount-filter";
+import { DateRangeFilter } from "@/components/daterange-filter";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -9,20 +11,22 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-
-import AmountFilter from "@/components/amount-filter";
-import { DateRangeFilter } from "@/components/daterange-filter";
+import type { GameInfo } from "@/lib/types";
 import { endOfDay, startOfDay } from "date-fns";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { parseAsString, useQueryState } from "nuqs";
 import { useRef } from "react";
 
-export function ListFilter() {
+export function ListFilter({ gameList }: { gameList: GameInfo[] }) {
   const t = useTranslations("report.orderlist");
-  const [gameName, setGameName] = useQueryState("gameId", {
-    defaultValue: "",
-  });
+
+  const [gameName, setGameName] = useQueryState(
+    "gameId",
+    parseAsString
+      .withDefault(gameList?.[0]?.gameId.toString() ?? "")
+      .withOptions({ clearOnDefault: false }),
+  );
   const [bettingtime, setBettingtime] = useQueryState(
     "bettingtime",
     parseAsString.withDefault("1").withOptions({ clearOnDefault: false }),
@@ -134,8 +138,11 @@ export function ListFilter() {
               <SelectValue placeholder={t("placeholderselect")} />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="1">百家乐01</SelectItem>
-              <SelectItem value="2">百家乐02</SelectItem>
+              {gameList.map((game) => (
+                <SelectItem key={game.gameId} value={game.gameId.toString()}>
+                  {game.gameName}
+                </SelectItem>
+              ))}
             </SelectContent>
           </Select>
         </div>

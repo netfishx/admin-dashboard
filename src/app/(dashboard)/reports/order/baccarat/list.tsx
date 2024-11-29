@@ -9,6 +9,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import type {
+  GameInfo,
   OrderReportsRecord,
   OrderReportsRequestParams,
 } from "@/lib/types";
@@ -119,10 +120,12 @@ async function ListBody({ list }: { list: OrderReportsRecord[] }) {
 
 export async function List({
   searchParams,
-}: { searchParams: Promise<OrderReportsRequestParams> }) {
+  gameList,
+}: { searchParams: Promise<OrderReportsRequestParams>; gameList: GameInfo[] }) {
   const params = await searchParams;
   const p = {
     ...params,
+    gameId: gameList?.[0]?.gameId.toString() ?? "",
     pageNum: Number(params?.pageNum) || 1,
     pageSize: Number(params?.pageSize) || 10,
   };
