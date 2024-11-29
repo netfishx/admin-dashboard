@@ -74,7 +74,6 @@ export async function List({
   const t = await getTranslations("report.credit");
   const params = await searchParams;
   const { data } = await postGetCreditLogList(params);
-  console.log(data, "data");
 
   return (
     <div className="p-2 bg-background flex-1">

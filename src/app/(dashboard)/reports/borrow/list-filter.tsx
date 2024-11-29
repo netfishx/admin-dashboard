@@ -19,7 +19,7 @@ import { useRef } from "react";
 export function ListFilter() {
   const t = useTranslations("report.credit");
   const router = useRouter();
-  const [orderNumber, setOrderNumber] = useQueryState("transactionID", {
+  const [orderNumber, setOrderNumber] = useQueryState("orderNo", {
     defaultValue: "",
   });
   const [agentId, setAgentId] = useQueryState("agentId", {
