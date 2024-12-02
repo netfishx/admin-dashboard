@@ -124,6 +124,18 @@ export async function MemberList({
   searchParams,
 }: { searchParams: Promise<MemberBetReportRequestParams> }) {
   const params = await searchParams;
+  if (!(params?.startTime && params?.endTime)) {
+    return (
+      <div className="p-2 bg-background flex-1">
+        <div className="border rounded-sm relative">
+          <Table>
+            <ListHeader />
+            <ListBody list={[]} />
+          </Table>
+        </div>
+      </div>
+    );
+  }
   const { data } = await getMemberBetReport(params);
 
   return (

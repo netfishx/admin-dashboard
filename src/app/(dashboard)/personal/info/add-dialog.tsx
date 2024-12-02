@@ -5,9 +5,12 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import { ScrollBar } from "@/components/ui/scroll-area";
 import type { UserBasicInfo } from "@/lib/types";
+import { ScrollArea } from "@radix-ui/react-scroll-area";
 import { useTranslations } from "next-intl";
 import { QRCodeSVG } from "qrcode.react";
+import CopyButton from "../../fund/collection/copy-button";
 
 interface Dialogprops {
   open?: boolean;
@@ -21,7 +24,7 @@ export function AddDialog(props: Dialogprops) {
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="w-[500px]">
+      <DialogContent>
         <div className="flex flex-col gap-4">
           <DialogHeader>
             <DialogTitle>{t("google2fa")}</DialogTitle>
@@ -45,7 +48,15 @@ export function AddDialog(props: Dialogprops) {
               <div className="min-w-[120px] text-muted-foreground text-end">
                 {t("depositAddress")}
               </div>
-              <div>{data?.rechargeAddress}</div>
+              <div className="flex items-center gap-2 w-[300px]">
+                <ScrollArea className="w-[300px] h-[100px]">
+                  <div>
+                    {data?.rechargeAddress}
+                    <CopyButton address={data?.rechargeAddress} />
+                  </div>
+                  <ScrollBar orientation="horizontal" />
+                </ScrollArea>
+              </div>
             </div>
             <div className="text-center flex gap-2 items-start mb-6">
               <div className="min-w-[120px] text-muted-foreground text-end">
