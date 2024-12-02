@@ -151,22 +151,21 @@ export async function apiRequest<T>({
     token,
     expire,
   });
-  console.info(
-    `url: ${url}|`,
-    "header: ",
-    header,
-    `|method: ${method}`,
-    "|data: ",
-    data,
-    "|params: ",
-    params,
-    `|token: ${token}`,
-    `|expire: ${expire}`,
-    "|result: ",
-    JSON.stringify(result),
-  );
+  console.dir({
+    url: url,
+    header: header,
+    method: method,
+    data: data,
+    params: params,
+    token: token,
+    expire: expire,
+    result,
+  });
   if (result.status >= 400 || result.data.code !== 0) {
-    console.error(JSON.stringify(result));
+    console.group("error");
+    console.error("result:");
+    console.dir(result);
+    console.groupEnd();
   }
   if ([401, 403].includes(result.status)) {
     return redirect(

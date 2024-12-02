@@ -15,7 +15,7 @@
         "noConsole": {
           "level": "warn",
           "options": {
-            "allow": ["info", "error", "warn"]
+            "allow": ["info", "error", "warn", "dir", "group", "groupEnd"]
           }
         },
         "useAwait": "off"
