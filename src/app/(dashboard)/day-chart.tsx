@@ -4,7 +4,6 @@ import {
   ChartContainer,
   ChartTooltip,
 } from "@/components/ui/chart";
-import { useTranslations } from "next-intl";
 import type { ReactNode } from "react";
 import { Label, Legend, Pie, PieChart } from "recharts";
 
@@ -21,8 +20,6 @@ export function DayChart({
   data: { game: string; data: number }[];
   chartConfig: ChartConfig;
 }) {
-  const t = useTranslations("chart");
-
   const chartData = data.map(({ game, data }) => ({
     game,
     data,
@@ -91,12 +88,14 @@ const CustomTooltip = ({
     value: ReactNode;
   }[];
 }) => {
-  if (!active || !payload?.length) return null;
+  if (!active || payload?.length === 0) {
+    return null;
+  }
   return (
     <div className="bg-card p-2 rounded shadow-lg border">
       <p className="text-sm">
-        <span className="text-muted-foreground pr-2"> {payload[0].name}:</span>
-        <span className="font-medium">{payload[0].value}</span>
+        <span className="text-muted-foreground pr-2">{payload?.[0].name}:</span>
+        <span className="font-medium">{payload?.[0].value}</span>
       </p>
     </div>
   );

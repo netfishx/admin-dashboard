@@ -37,6 +37,7 @@ import type {
   MemberList,
   MemberReportRequestParams,
   MemberReportsRecord,
+  MySelfLoginLog,
   OrderItemDetailType,
   OrderReportsRecord,
   OrderReportsRequestParams,
@@ -279,7 +280,20 @@ export async function updateMember(data: {
   });
 }
 export async function getAgentLoginLog(params: {
-  agentId: string;
+  userId: string;
+  pageNum: number;
+  pageSize: number;
+}) {
+  const user = await getSession();
+  return await apiRequest<PageData<LoginLog>>({
+    url: "/agent/loginLog/listPage",
+    params,
+    token: user?.token,
+  });
+}
+
+// 用户管理-代理管理-获取自己登录日志
+export async function getMySelfLoginLog(params: {
   pageNum: number;
   pageSize: number;
   startTime?: number;
@@ -287,8 +301,8 @@ export async function getAgentLoginLog(params: {
   ip?: string;
 }) {
   const user = await getSession();
-  return await apiRequest<PageData<LoginLog>>({
-    url: "/agent/loginLog/get",
+  return await apiRequest<PageData<MySelfLoginLog>>({
+    url: "/agent/loginLog/listPageSelf",
     params,
     token: user?.token,
   });
@@ -296,12 +310,12 @@ export async function getAgentLoginLog(params: {
 
 export async function getMemberLoginLog(params: {
   memberId: string;
-  pageNum?: number;
-  pageSize?: number;
+  pageNum: number;
+  pageSize: number;
 }) {
   const user = await getSession();
   return await apiRequest<PageData<LoginLog>>({
-    url: "/agent/loginLog/get",
+    url: "/member/loginLog/listPage",
     params,
     token: user?.token,
   });
@@ -408,7 +422,7 @@ export async function saveAnnouncement(data: Announcement) {
 export async function getReviceOrder() {
   const user = await getSession();
   return await apiRequest<{ status: boolean }>({
-    url: "/agent/reviceOrder",
+    url: "/agent/user/main/receiveOrder",
     token: user?.token,
   });
 }
@@ -416,9 +430,9 @@ export async function getReviceOrder() {
 export async function editReviceOrder({ status }: { status: boolean }) {
   const user = await getSession();
   return await apiRequest<{ status: boolean }>({
-    url: "/agent/reviceOrder",
+    url: "/agent/user/main/receiveOrder",
     method: "POST",
-    data: { status },
+    data: { receiveStatus: status ? 1 : 0 },
     token: user?.token,
   });
 }
@@ -430,9 +444,10 @@ export async function getSupplierConfigs(userId?: string) {
     apiRequest<SupplierConfig[]>({
       url: "/supplierConf/list",
       token: user?.token,
-      params: { userId },
+      params: userId ? { userId } : undefined,
     }),
   ]);
+
   return {
     ...res2,
     data: res2.data?.map((item) => ({
@@ -1425,7 +1440,7 @@ export async function getAllGames() {
   return await apiRequest<GameInfo[]>({
     url: "/game/allGame/list",
     token: user?.token,
-    expire: "default",
+    expire: "minutes",
   });
 }
 

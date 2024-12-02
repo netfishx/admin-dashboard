@@ -26,6 +26,7 @@ import { useAtom, useAtomValue } from "jotai";
 import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Form from "next/form";
+import { useRouter } from "next/navigation";
 import { useRef, useState, useTransition } from "react";
 import { toast } from "sonner";
 
@@ -38,12 +39,12 @@ export function SupplierDialog({
   const [open, setOpen] = useAtom(gamesSupplierDialogAtom);
   const data = useAtomValue(supplierConfigAtom);
   const [supplierId, setSupplierId] = useState(data?.userId);
-  console.info(suppliers);
   const supplierName = suppliers.find(
     (item) => item.id === supplierId,
   )?.username;
   const ref = useRef<HTMLFormElement>(null);
   const [isPending, startTransition] = useTransition();
+  const router = useRouter();
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent
@@ -67,7 +68,7 @@ export function SupplierDialog({
               );
               if (res.code === 0) {
                 setOpen(false);
-                window.location.reload();
+                router.refresh();
               } else {
                 toast.error(res.message);
               }
@@ -79,11 +80,18 @@ export function SupplierDialog({
           <div className="flex flex-col gap-4">
             <div className="flex gap-2 items-center">
               <Label className="w-20 text-end">{t("name")}</Label>
+              {data && (
+                <input
+                  type="hidden"
+                  name="game"
+                  value={`${data.gameType}-${data.gameId}`}
+                />
+              )}
               <Select
                 required={true}
-                defaultValue={data && `${data.gameType}-${data.gameId}`}
                 name="game"
                 disabled={!!data?.gameId}
+                defaultValue={data && `${data.gameType}-${data.gameId}`}
               >
                 <SelectTrigger className="flex-1">
                   <SelectValue placeholder={t("placeholder")} />

@@ -17,12 +17,10 @@ import { dictionaryDataAtom, editDictionaryDialogAtom } from "@/store";
 import { useAtom, useAtomValue } from "jotai";
 import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { useRouter } from "next/navigation";
 import { useEffect, useState, useTransition } from "react";
 import { toast } from "sonner";
 
 export function AddEditDialog() {
-  const router = useRouter();
   const translation = useTranslations();
   const t = useTranslations("maintain.dictionary");
   const [isPending, startTransition] = useTransition();

@@ -14,6 +14,7 @@ import { subaccountDeleteAtom, subaccountDeleteDialogAtom } from "@/store";
 import { useAtom, useAtomValue } from "jotai";
 import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { useRouter } from "next/navigation";
 import { useTransition } from "react";
 import { toast } from "sonner";
 
@@ -23,6 +24,7 @@ export function SubaccountDelete() {
   const translations = useTranslations("system.subaccount");
   const id = useAtomValue(subaccountDeleteAtom);
   const [open, setOpen] = useAtom(subaccountDeleteDialogAtom);
+  const router = useRouter();
   return (
     <AlertDialog open={open} onOpenChange={setOpen}>
       <AlertDialogContent>
@@ -46,7 +48,7 @@ export function SubaccountDelete() {
                   id,
                 });
                 if (res.code === 0) {
-                  window.location.reload();
+                  router.refresh();
                 } else {
                   toast.error(res.message);
                 }

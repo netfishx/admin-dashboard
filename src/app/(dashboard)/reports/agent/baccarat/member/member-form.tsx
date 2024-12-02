@@ -1,4 +1,5 @@
 "use client";
+import { getAllGames } from "@/api";
 import { DateRangeFilter } from "@/components/daterange-filter";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -16,7 +17,7 @@ import { startOfDay } from "date-fns";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useQueryState } from "nuqs";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export function MemberForm({ gameList }: { gameList: GameInfo[] }) {
   const t = useTranslations("report.agent");
@@ -42,6 +43,13 @@ export function MemberForm({ gameList }: { gameList: GameInfo[] }) {
     setLeastlevelID("");
     handleDateRangeFilterReset();
   };
+
+  const [gameList, setGameList] = useState<GameInfo[]>([]);
+  useEffect(() => {
+    getAllGames().then((res) => {
+      setGameList(res.data ?? []);
+    });
+  }, []);
 
   return (
     <div className="flex flex-col gap-2 bg-background py-2 px-4">

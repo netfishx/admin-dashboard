@@ -1,5 +1,5 @@
 "use client";
-import {} from "@/components/ui/select";
+
 import type { UserBasicInfo } from "@/lib/types";
 import { useTranslations } from "next-intl";
 

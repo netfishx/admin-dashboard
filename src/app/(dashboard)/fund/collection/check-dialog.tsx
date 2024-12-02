@@ -11,7 +11,6 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import {} from "@/components/ui/tooltip";
 import type { CollectionAddressListRecords } from "@/lib/types";
 import { AlertTriangle } from "lucide-react";
 import { useTranslations } from "next-intl";
