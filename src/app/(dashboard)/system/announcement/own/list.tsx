@@ -25,6 +25,17 @@ export async function List({
     pageNum: Number(search.pageNum ?? 1),
     level: 0, // 本级
   });
+  const noticeTypeMap = {
+    "1": "平台公告",
+    "2": "代理公告",
+    "3": "大厅公告",
+    "4": "房间公告",
+    "5": "系统配置变更公告",
+  } as const;
+
+  const getNoticeTypeName = (type: string) => {
+    return noticeTypeMap[type as keyof typeof noticeTypeMap];
+  };
   return (
     <div className="p-2 mt-2 gap-2 flex flex-col h-full bg-background">
       <AddBtn />
@@ -32,13 +43,13 @@ export async function List({
         <Suspense
           fallback={
             <Table>
-              <ListHeader />
+              <TableHeaderWrapper />
               <TableBodySkeleton />
             </Table>
           }
         >
           <Table>
-            <ListHeader />
+            <TableHeaderWrapper />
             <TableBody>
               {data?.list?.map((item) => (
                 <TableRow key={Math.random()}>
@@ -51,11 +62,17 @@ export async function List({
                   <TableCell className="w-24 text-center">
                     {format(Number(item.createTime), "yyyy-MM-dd HH:mm:ss")}
                   </TableCell>
+                  <TableCell className="text-center">
+                    {item.labelOfLanguage}
+                  </TableCell>
                   <TruncatedCell
+                    className="w-[550px]"
                     content={item.contentOfLanguage}
                     maxLength={50}
                   />
-                  <TableCell className="text-center">{item.type}</TableCell>
+                  <TableCell className="text-center">
+                    {getNoticeTypeName(item.type)}
+                  </TableCell>
                   <TableCell className="w-24 text-center">
                     <EditBtn data={item} />
                   </TableCell>
@@ -78,7 +95,7 @@ export async function List({
   );
 }
 
-async function ListHeader() {
+export async function TableHeaderWrapper() {
   const t = await getTranslations("system.announcement");
 
   return (
@@ -93,6 +110,7 @@ async function ListHeader() {
         <TableHead className="w-32 min-w-32 text-center">
           {t("createTime")}
         </TableHead>
+        <TableHead className="min-w-24 text-center">{t("title")}</TableHead>
         <TableHead className="w-[450px] min-w-24 text-center">
           {t("content")}
         </TableHead>
@@ -102,7 +120,7 @@ async function ListHeader() {
     </TableHeader>
   );
 }
-function TableBodySkeleton() {
+export function TableBodySkeleton() {
   return (
     <TableBody>
       {Array.from({ length: 5 }).map((_, index) => (

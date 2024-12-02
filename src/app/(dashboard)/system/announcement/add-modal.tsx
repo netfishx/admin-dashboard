@@ -39,11 +39,11 @@ export function AddModal() {
   const [isPending, startTransition] = useTransition();
   const router = useRouter();
   const t = useTranslations("system.announcement");
-  const [type, setType] = useState("0");
-  const [language, setLanguage] = useState("cn");
+  const [type, setType] = useState("1");
+  const [language, setLanguage] = useState("zh-CN");
   const [labelOfLanguage, setTitleOfLanguage] = useState("");
   const [contentOfLanguage, setContentOfLanguage] = useState("");
-  const [status, setStatus] = useState("0");
+  const [status, setStatus] = useState("1");
   const [open, setOpen] = useAtom(contentEditModalAtom);
   const [startTime, setStartTime] = useState("");
   const [endTime, setEndTime] = useState("");
@@ -53,7 +53,7 @@ export function AddModal() {
     {
       id?: string;
       language: string;
-      title?: string;
+      label?: string;
       content: string;
     }[]
   >([]); // 用于存储每个语言的内容
@@ -86,27 +86,30 @@ export function AddModal() {
   };
 
   const resetFields = () => {
-    setType("0");
-    setLanguage(data?.contentList?.[0]?.language || "cn");
+    setType("1");
+    setLanguage(data?.contentList?.[0]?.language || "zh-CN");
     setContentData([]);
     setContentOfLanguage("");
     setTitleOfLanguage("");
-    setStatus("0");
+    setStatus("1");
     setStartTime("");
     setEndTime("");
   };
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     if (data?.id) {
-      console.info("contentData", data.content);
+      console.info("contentData", data);
       setContentData(data.contentList || []);
       setContentOfLanguage(data.contentOfLanguage || "");
       setTitleOfLanguage(data.labelOfLanguage || "");
-      setType(data.type.toString() || "0");
-      setLanguage(data.contentList?.[0]?.language || "cn");
-      setStatus(data.status.toString() || "0");
+      setType(data.type.toString() || "1");
+      setLanguage(data.contentList?.[0]?.language || "zh-CN");
+      setStatus(data.status.toString() || "1");
       setStartTime(data.startTime.toString() || "");
       setEndTime(data.endTime.toString() || "");
+    } else {
+      resetFields();
     }
   }, [data]);
 
@@ -117,7 +120,7 @@ export function AddModal() {
     const currentContent = contentData.find((item) => item.language === value);
     if (currentContent) {
       setContentOfLanguage(currentContent.content);
-      setTitleOfLanguage(currentContent.title || "");
+      setTitleOfLanguage(currentContent.label || "");
     } else {
       setContentOfLanguage(""); // 如果没有找到对应语言，清空内容框
       setTitleOfLanguage("");
@@ -137,7 +140,7 @@ export function AddModal() {
         updatedData[existingIndex] = {
           id: updatedData[existingIndex].id,
           language,
-          title: value,
+          label: value,
           content: contentOfLanguage,
         };
         return updatedData;
@@ -166,7 +169,7 @@ export function AddModal() {
         updatedData[existingIndex] = {
           id: updatedData[existingIndex].id,
           language,
-          title: labelOfLanguage,
+          label: labelOfLanguage,
           content: value,
         };
         return updatedData;
@@ -177,15 +180,9 @@ export function AddModal() {
       }
     });
   };
-  const handleOpenChange = (open: boolean) => {
-    setOpen(open);
-    if (!open) {
-      resetFields();
-    }
-  };
 
   return (
-    <Dialog open={open} onOpenChange={handleOpenChange}>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent
         className="max-w-5xl"
         onPointerDownOutside={(e) => e.preventDefault()}
@@ -200,7 +197,7 @@ export function AddModal() {
               <span className="text-destructive">*</span>
               {t("announcementType")}
             </Label>
-            {/* 公告类型 根据管理员和代理角色 展示的也不一样 */}
+            {/* todo：公告类型 根据管理员和代理角色 展示的也不一样 */}
             <Select
               defaultValue="0"
               value={type}
@@ -211,11 +208,14 @@ export function AddModal() {
                 <SelectValue placeholder={t("placeholderselect")} />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="0">{t("platformAnnouncement")}</SelectItem>
-                <SelectItem value="1">{t("agentAnnouncement")}</SelectItem>
-                <SelectItem value="2">{t("memberAnnouncement")}</SelectItem>
-                <SelectItem value="3">
+                <SelectItem value="1">{t("platformAnnouncement")}</SelectItem>
+                <SelectItem value="2">{t("agentAnnouncement")}</SelectItem>
+                <SelectItem value="3">{t("roomAnnouncement")}</SelectItem>
+                <SelectItem value="4">
                   {t("platformRoomAnnouncement")}
+                </SelectItem>
+                <SelectItem value="5">
+                  {t("systemConfigChangeAnnouncement")}
                 </SelectItem>
               </SelectContent>
             </Select>
@@ -241,8 +241,8 @@ export function AddModal() {
               value={language}
               onValueChange={handleLanguageChange}
             >
-              <ToggleGroupItem value="cn">{t("chinese")}</ToggleGroupItem>
-              <ToggleGroupItem value="en">{t("english")}</ToggleGroupItem>
+              <ToggleGroupItem value="zh-CN">{t("chinese")}</ToggleGroupItem>
+              <ToggleGroupItem value="en-US">{t("english")}</ToggleGroupItem>
             </ToggleGroup>
           </div>
           {/* 标题 : 平台代理公告 下级代理公告时 不显示 */}
@@ -277,6 +277,7 @@ export function AddModal() {
               <span className="text-destructive">*</span>
               {t("status")}
             </Label>
+            {/* 状态： 1 启用 0 停用 */}
             <RadioGroup
               defaultValue="0"
               className="flex gap-2"
@@ -284,12 +285,12 @@ export function AddModal() {
               onValueChange={(value) => setStatus(value)}
             >
               <div className="flex items-center space-x-2">
-                <RadioGroupItem value="0" id="0" />
-                <Label htmlFor="0">{t("enable")}</Label>
+                <RadioGroupItem value="1" id="1" />
+                <Label htmlFor="1">{t("enable")}</Label>
               </div>
               <div className="flex items-center space-x-2">
-                <RadioGroupItem value="1" id="1" />
-                <Label htmlFor="1">{t("disable")}</Label>
+                <RadioGroupItem value="0" id="0" />
+                <Label htmlFor="0">{t("disable")}</Label>
               </div>
             </RadioGroup>
           </div>
