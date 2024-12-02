@@ -21,3 +21,10 @@ export const passwordSchema = z
   .regex(/[A-Z]/, "密码必须包含大写字母")
   .regex(/[a-z]/, "密码必须包含小写字母")
   .regex(/[0-9]/, "密码必须包含数字");
+
+// 资金密码验证规则
+export const moneyPasswordSchema = z
+  .string({
+    required_error: "资金密码不能为空",
+  })
+  .regex(/^[0-9]{6}$/, "资金密码必须是6位数字");

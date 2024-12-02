@@ -970,7 +970,10 @@
       "confirmMoneyDesc": "请输入确认资金密码",
       "confirmMoneyPassword": "确认资金密码",
       "editGoogleAuthTitle": "重置谷歌验证",
-      "editMoneyPasswordTitle": "修改资金密码"
+      "editMoneyPasswordTitle": "修改资金密码",
+      "resetSuccess": "重置成功",
+      "bindSuccess": "设置成功",
+      "inputGoogleCode": "请输入谷歌验证码"
     }
   },
   "withdraw": {

@@ -22,7 +22,9 @@ import { useCopyToClipboard } from "react-use";
 import { toast } from "sonner";
 
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { QRCodeSVG } from "qrcode.react";
+import { useEffect } from "react";
 export function GoogleModal({
   open,
   onOpenChange,
@@ -42,8 +44,12 @@ export function GoogleModal({
   const isEdit = isOpen;
   const [, copyToClipboard] = useCopyToClipboard();
   const [isPending, startTransition] = useTransition();
-
+  const router = useRouter();
   const submit = async () => {
+    if (!authCode) {
+      toast.error(translations("inputGoogleCode"));
+      return;
+    }
     if (isEdit) {
       // 重置
       startTransition(async () => {
@@ -51,6 +57,12 @@ export function GoogleModal({
           secret,
           code: authCode,
         });
+        if (code === 0) {
+          toast.success(translations("resetSuccess"));
+          router.refresh();
+        } else {
+          toast.error(message);
+        }
       });
     } else {
       // 绑定
@@ -59,11 +71,22 @@ export function GoogleModal({
           secret,
           code: authCode,
         });
+        if (code === 0) {
+          toast.success(translations("bindSuccess"));
+          router.refresh();
+        } else {
+          toast.error(message);
+        }
       });
     }
-
-    console.info("绑定成功");
   };
+
+  useEffect(() => {
+    if (open) {
+      setAuthCode("");
+    }
+  }, [open]);
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent
@@ -119,7 +142,12 @@ export function GoogleModal({
               <div className="flex gap-4 mt-10">
                 <div className="text-center">
                   <span className="border p-4 inline-block">
-                    <QRCodeSVG value={""} className="w-20 h-20" />
+                    <QRCodeSVG
+                      value={
+                        "https://apps.apple.com/jp/app/google-authenticator/id388497605"
+                      }
+                      className="w-20 h-20"
+                    />
                   </span>
                   <p className="text-xs text-muted-foreground mt-2">
                     {t("iosQRCode")}
@@ -127,7 +155,12 @@ export function GoogleModal({
                 </div>
                 <div className="text-center">
                   <span className="border p-4 inline-block">
-                    <QRCodeSVG value={""} className="w-20 h-20" />
+                    <QRCodeSVG
+                      value={
+                        "https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2"
+                      }
+                      className="w-20 h-20"
+                    />
                   </span>
                   <p className="text-xs text-muted-foreground mt-2">
                     {t("androidQRCode")}

@@ -66,11 +66,8 @@ export function AddModal() {
       startTime: startTime ? new Date(startTime).getTime() : null,
       endTime: endTime ? new Date(endTime).getTime() : null,
     };
-    console.info("addParams", addParams);
     startTransition(async () => {
       const res = await saveAnnouncement(addParams);
-      console.info("body", res);
-
       if (res.code === 0) {
         setOpen(false);
         resetFields();
@@ -99,7 +96,6 @@ export function AddModal() {
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     if (data?.id) {
-      console.info("contentData", data);
       setContentData(data.contentList || []);
       setContentOfLanguage(data.contentOfLanguage || "");
       setTitleOfLanguage(data.labelOfLanguage || "");
