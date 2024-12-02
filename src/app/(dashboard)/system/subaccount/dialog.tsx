@@ -33,7 +33,7 @@ export function SubaccountDialog({ roles }: { roles: Role[] }) {
   const data = useAtomValue(subaccountAtom);
   const ref = useRef<HTMLFormElement>(null);
   const [isPending, startTransition] = useTransition();
-  const [checkedRoles, setCheckedRoles] = useState<number[]>([]);
+  const [checkedRoles, setCheckedRoles] = useState<string[]>([]);
   const [status, setStatus] = useState<number>(0);
   const router = useRouter();
   useLayoutEffect(() => {
@@ -165,10 +165,10 @@ export function SubaccountDialog({ roles }: { roles: Role[] }) {
                   <div key={role.id} className="flex gap-1">
                     <Checkbox
                       key={role.id}
-                      checked={checkedRoles.includes(role.id ?? -1)}
+                      checked={checkedRoles.includes(role.id ?? "")}
                       onCheckedChange={(checked) => {
                         if (checked) {
-                          setCheckedRoles([...checkedRoles, role.id ?? -1]);
+                          setCheckedRoles([...checkedRoles, role.id ?? ""]);
                         } else {
                           setCheckedRoles(
                             checkedRoles.filter((id) => id !== role.id),

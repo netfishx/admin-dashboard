@@ -10,7 +10,7 @@ const createFormSchema = zfd
     username: zfd.text(usernameSchema),
     newPassword: zfd.text(passwordSchema),
     confirmPassword: zfd.text(passwordSchema),
-    roleList: zfd.repeatableOfType(z.coerce.number()),
+    roleList: zfd.repeatableOfType(z.string()),
   })
   .refine((data) => data.newPassword === data.confirmPassword, {
     message: "两次输入的密码不一致",
@@ -41,7 +41,7 @@ const editFormSchema = zfd
         ])
         .optional(),
     ),
-    roleList: zfd.repeatableOfType(z.coerce.number()),
+    roleList: zfd.repeatableOfType(z.string()),
     status: zfd.numeric(z.coerce.number()),
   })
   .refine(

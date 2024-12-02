@@ -566,7 +566,7 @@ export type CollectionAddressListRequestParams = {
 };
 
 export type Role = {
-  id?: number;
+  id?: string;
   roleName: string;
   updateTime?: number;
   createBy?: string;
@@ -821,7 +821,7 @@ export type Subaccount = {
   status?: number;
   lastLoginTime?: number;
   lastLoginIp?: string;
-  roleList?: number[];
+  roleList?: string[];
 };
 
 // 背景图
