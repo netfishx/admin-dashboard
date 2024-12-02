@@ -643,13 +643,12 @@ export async function unbindGoogleAuth(data: { secret: string; code: string }) {
 // 设置资金密码
 export async function bindFundPassword(data: {
   secret: string;
-  userId: string;
 }) {
   const user = await getSession();
   return await apiRequest({
     url: "/agent/center/fund/bind",
     method: "POST",
-    data,
+    data: { secret: data.secret, userId: user?.id },
     token: user?.token,
   });
 }
@@ -1383,15 +1382,19 @@ export async function postCheckMoneySecret(data: {
 }
 // 修改登录密码
 export async function updateSelfPassword(data: {
-  id: string;
   oldPassword: string;
   newPassword: string;
 }) {
   const user = await getSession();
+  const params = {
+    id: user?.id,
+    oldPassword: data.oldPassword,
+    newPassword: data.newPassword,
+  };
   return await apiRequest({
     url: "/agent/account/updateSelfPassword",
-    method: "POST",
-    data,
+    method: "PUT",
+    params,
     token: user?.token,
   });
 }

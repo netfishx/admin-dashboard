@@ -9,6 +9,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import type { AnnouncementList, PageData } from "@/lib/types";
 import { format } from "date-fns";
 import { getTranslations } from "next-intl/server";
 import { Suspense } from "react";
@@ -25,62 +26,17 @@ export async function List({
     pageNum: Number(search.pageNum ?? 1),
     level: 0, // 本级
   });
-  const noticeTypeMap = {
-    "1": "平台公告",
-    "2": "代理公告",
-    "3": "大厅公告",
-    "4": "房间公告",
-    "5": "系统配置变更公告",
-  } as const;
 
-  const getNoticeTypeName = (type: string) => {
-    return noticeTypeMap[type as keyof typeof noticeTypeMap];
-  };
   return (
     <div className="p-2 mt-2 gap-2 flex flex-col h-full bg-background">
       <AddBtn />
-      <div className="border rounded-sm bg-background">
-        <Suspense
-          fallback={
-            <Table>
-              <TableHeaderWrapper />
-              <TableBodySkeleton />
-            </Table>
-          }
-        >
-          <Table>
-            <TableHeaderWrapper />
-            <TableBody>
-              {data?.list?.map((item) => (
-                <TableRow key={Math.random()}>
-                  <TableCell className="w-24 text-center">
-                    {format(Number(item.startTime), "yyyy-MM-dd HH:mm:ss")}
-                  </TableCell>
-                  <TableCell className="w-24 text-center">
-                    {format(Number(item.endTime), "yyyy-MM-dd HH:mm:ss")}
-                  </TableCell>
-                  <TableCell className="w-24 text-center">
-                    {format(Number(item.createTime), "yyyy-MM-dd HH:mm:ss")}
-                  </TableCell>
-                  <TableCell className="text-center">
-                    {item.labelOfLanguage}
-                  </TableCell>
-                  <TruncatedCell
-                    className="w-[550px]"
-                    content={item.contentOfLanguage}
-                    maxLength={50}
-                  />
-                  <TableCell className="text-center">
-                    {getNoticeTypeName(item.type)}
-                  </TableCell>
-                  <TableCell className="w-24 text-center">
-                    <EditBtn data={item} />
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </Suspense>
+      <div className="border rounded-sm">
+        <Table>
+          <TableHeaderWrapper />
+          <Suspense fallback={<TableBodySkeleton />}>
+            <TableBodyWrapper data={data} />
+          </Suspense>
+        </Table>
       </div>
       {Number(data?.total) > 0 && (
         <div className="pt-2">
@@ -131,6 +87,63 @@ export function TableBodySkeleton() {
           </TableCell>
         </TableRow>
       ))}
+    </TableBody>
+  );
+}
+export async function TableBodyWrapper({
+  data,
+}: { data?: PageData<AnnouncementList> }) {
+  const translations = await getTranslations();
+
+  const noticeTypeMap = {
+    "1": "平台公告",
+    "2": "代理公告",
+    "3": "大厅公告",
+    "4": "房间公告",
+    "5": "系统配置变更公告",
+  } as const;
+
+  const getNoticeTypeName = (type: string) => {
+    return noticeTypeMap[type as keyof typeof noticeTypeMap];
+  };
+
+  return (
+    <TableBody>
+      {data && data.list.length > 0 ? (
+        data.list.map((item) => (
+          <TableRow key={Math.random()}>
+            <TableCell className="w-24 text-center">
+              {format(Number(item.startTime), "yyyy-MM-dd HH:mm:ss")}
+            </TableCell>
+            <TableCell className="w-24 text-center">
+              {format(Number(item.endTime), "yyyy-MM-dd HH:mm:ss")}
+            </TableCell>
+            <TableCell className="w-24 text-center">
+              {format(Number(item.createTime), "yyyy-MM-dd HH:mm:ss")}
+            </TableCell>
+            <TableCell className="text-center">
+              {item.labelOfLanguage}
+            </TableCell>
+            <TruncatedCell
+              className="w-[550px]"
+              content={item.contentOfLanguage}
+              maxLength={50}
+            />
+            <TableCell className="text-center">
+              {getNoticeTypeName(item.type)}
+            </TableCell>
+            <TableCell className="w-24 text-center">
+              <EditBtn data={item} />
+            </TableCell>
+          </TableRow>
+        ))
+      ) : (
+        <TableRow>
+          <TableCell colSpan={7} className="text-center h-40">
+            {translations("noData")}
+          </TableCell>
+        </TableRow>
+      )}
     </TableBody>
   );
 }

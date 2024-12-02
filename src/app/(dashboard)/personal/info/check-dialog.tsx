@@ -80,7 +80,7 @@ function WithdrawForm(props: {
     availableAmount: props?.data?.usableBalanceMoney?.toString(),
     withdrawMoney: "0",
     withdrawFee: "0",
-    withdrawWay: "0",
+    withdrawWay: "",
     secret: "",
   });
 
@@ -91,12 +91,13 @@ function WithdrawForm(props: {
   }, []);
 
   const handleChange = (field: keyof typeof formData) => (value: string) => {
+    let newData = { ...formData };
+
     if (field === "withdrawMoney") {
       const _fee =
         Number(fee?.percentageFee) * Number(value) + Number(fee?.fixedFee);
-      setFormData({ ...formData, withdrawFee: _fee.toString() });
+      newData = { ...newData, withdrawFee: _fee.toString() };
     }
-    const newData = { ...formData };
     newData[field] = value;
     setFormData(newData);
     getFormData(newData);
@@ -179,10 +180,12 @@ export function CheckDialog(props: Dialogprops) {
     }
 
     const _res = await postUserInfoWithdraw(formData);
-    if (_res.code === 200) {
+    console.log(_res, "res");
+    if (_res.code === 0) {
       if (_res?.data?.check && _res?.data?.validationType === 0) {
         setStep(2);
       } else {
+        toast.success(_res.message);
         onOpenChange(false);
       }
     } else {
