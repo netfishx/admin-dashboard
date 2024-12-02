@@ -152,13 +152,15 @@ export async function apiRequest<T>({
     expire,
   });
   console.dir({
-    url: url,
-    header: header,
-    method: method,
-    data: data,
-    params: params,
-    token: token,
-    expire: expire,
+    url,
+    ip,
+    locale,
+    header,
+    method,
+    data,
+    params,
+    token,
+    expire,
     result,
   });
   if (result.status >= 400 || result.data.code !== 0) {
