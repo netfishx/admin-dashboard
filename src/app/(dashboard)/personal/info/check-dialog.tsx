@@ -1,5 +1,5 @@
 "use client";
-import { postUserInfoWithdraw } from "@/api";
+import { getWithdrawFeeList, postUserInfoWithdraw } from "@/api";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -10,14 +10,20 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import type { WithdrawFormData } from "@/lib/types";
+import type {
+  UserBasicInfo,
+  WithdrawFeeList,
+  WithdrawFormData,
+} from "@/lib/types";
 import { cn } from "@/lib/utils";
 import { useTranslations } from "next-intl";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { toast } from "sonner";
 
 interface Dialogprops {
   open?: boolean;
   onOpenChange: (open: boolean) => void;
+  data: UserBasicInfo;
 }
 interface FormField {
   label: string;
@@ -64,19 +70,32 @@ function FormField({
 
 function WithdrawForm(props: {
   getFormData: (data: WithdrawFormData) => void;
+  data: UserBasicInfo;
 }) {
   const { getFormData } = props;
   const t = useTranslations("personal.info");
   const translations = useTranslations();
+  const [fee, setFee] = useState<WithdrawFeeList>();
   const [formData, setFormData] = useState({
-    availableAmount: "1,000,000.00",
-    withdrawMoney: "",
-    withdrawFee: "0.00",
-    withdrawWay: "",
+    availableAmount: props?.data?.usableBalanceMoney?.toString(),
+    withdrawMoney: "0",
+    withdrawFee: "0",
+    withdrawWay: "0",
     secret: "",
   });
 
+  useEffect(() => {
+    getWithdrawFeeList().then((res) => {
+      setFee(res.data?.[0]);
+    });
+  }, []);
+
   const handleChange = (field: keyof typeof formData) => (value: string) => {
+    if (field === "withdrawMoney") {
+      const _fee =
+        Number(fee?.percentageFee) * Number(value) + Number(fee?.fixedFee);
+      setFormData({ ...formData, withdrawFee: _fee.toString() });
+    }
     const newData = { ...formData };
     newData[field] = value;
     setFormData(newData);
@@ -142,22 +161,35 @@ function WithdrawForm(props: {
 }
 
 export function CheckDialog(props: Dialogprops) {
-  const { open = true, onOpenChange } = props;
+  const { open = true, onOpenChange, data } = props;
   const t = useTranslations("personal.info");
   const translations = useTranslations();
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState<WithdrawFormData>({
-    availableAmount: "",
-    withdrawMoney: "",
-    withdrawFee: "",
+    availableAmount: "0 ",
+    withdrawMoney: "0",
+    withdrawFee: "0",
     withdrawWay: "",
     secret: "",
   });
   const handleNext = async () => {
-    setStep(2);
+    if (Number(formData.withdrawMoney) > Number(formData.availableAmount)) {
+      toast.error(t("tips01"));
+      return;
+    }
+
     const _res = await postUserInfoWithdraw(formData);
-    // onOpenChange(false);
+    if (_res.code === 200) {
+      if (_res?.data?.check && _res?.data?.validationType === 0) {
+        setStep(2);
+      } else {
+        onOpenChange(false);
+      }
+    } else {
+      toast.error(_res.message);
+    }
   };
+
   const handleChange = (data: WithdrawFormData) => {
     setFormData(data);
   };
@@ -171,7 +203,7 @@ export function CheckDialog(props: Dialogprops) {
               <DialogTitle>{t("withdraw")}</DialogTitle>
             </DialogHeader>
             <div className="gap-2 items-center">
-              <WithdrawForm getFormData={handleChange} />
+              <WithdrawForm getFormData={handleChange} data={data} />
             </div>
             <DialogFooter>
               <Button variant="outline" onClick={() => onOpenChange(false)}>

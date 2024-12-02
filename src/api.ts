@@ -69,6 +69,7 @@ import type {
   UserBasicInfo,
   WalletLogRecords,
   WalletLogRequestParams,
+  WithdrawApply,
   WithdrawFeeList,
   WithdrawFormData,
   WithdrawReport,
@@ -707,7 +708,7 @@ export async function getUserBasicInfo() {
 
 export async function postUserInfoWithdraw(data: WithdrawFormData) {
   const user = await getSession();
-  return await apiRequest({
+  return await apiRequest<WithdrawApply>({
     url: "/order/withdraw/agent/apply",
     method: "POST",
     data,

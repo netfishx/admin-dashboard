@@ -1,11 +1,13 @@
 "use client";
 import { Button } from "@/components/ui/button";
+import type { UserBasicInfo } from "@/lib/types";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { AddDialog } from "./add-dialog";
 import { CheckDialog } from "./check-dialog";
 
-export function DetailButton() {
+export function DetailButton(props: { data: UserBasicInfo }) {
+  const { data } = props;
   const t = useTranslations("personal.info");
   const [open, setOpen] = useState(false);
   const [openAdd, setOpenAdd] = useState(false);
@@ -18,8 +20,8 @@ export function DetailButton() {
       <Button variant="default" onClick={() => setOpen(true)}>
         {t("withdraw")}
       </Button>
-      {open && <CheckDialog onOpenChange={setOpen} />}
-      {openAdd && <AddDialog onOpenChange={setOpenAdd} />}
+      {open && <CheckDialog onOpenChange={setOpen} data={data} />}
+      {openAdd && <AddDialog onOpenChange={setOpenAdd} data={data} />}
     </div>
   );
 }
