@@ -3,6 +3,22 @@ import createNextIntlPlugin from "next-intl/plugin";
 
 const withNextIntl = createNextIntlPlugin();
 
+function getRemotePatterns(): {
+  hostname: string;
+  port: string;
+  protocol: "http" | "https";
+}[] {
+  const hostnames = process.env.NEXT_PUBLIC_REMOTE_HOSTNAMES?.split(",") || [];
+  const ports = process.env.NEXT_PUBLIC_REMOTE_PORTS?.split(",") || [];
+  const protocols = process.env.NEXT_PUBLIC_REMOTE_PROTOCOLS?.split(",") || [];
+
+  return hostnames.map((hostname, index) => ({
+    hostname,
+    port: ports[index],
+    protocol: protocols[index] as "http" | "https",
+  }));
+}
+
 const nextConfig: NextConfig = {
   async headers() {
     return [
@@ -37,28 +53,7 @@ const nextConfig: NextConfig = {
     dangerouslyAllowSVG: true,
     contentDispositionType: "attachment",
     contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
-    remotePatterns: [
-      {
-        hostname: "16.163.41.52",
-        port: "4000",
-        protocol: "http",
-      },
-      {
-        hostname: "localhost",
-        port: "4000",
-        protocol: "http",
-      },
-      {
-        hostname: "43.199.192.105",
-        port: "8080",
-        protocol: "http",
-      },
-      {
-        hostname: "192.168.50.143",
-        port: "8080",
-        protocol: "http",
-      },
-    ],
+    remotePatterns: getRemotePatterns(),
   },
   output: "standalone",
 };
