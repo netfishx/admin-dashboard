@@ -107,9 +107,9 @@ export async function login({
       status: number;
       inviteCode: string;
       depositAddress: string;
+      permissions: string[];
     };
     accessToken: string;
-    permissions: string[];
   }>({
     url: "/agent/login",
     method: "POST",
@@ -135,7 +135,7 @@ export async function login({
           inviteCode: res.data.userDetail.inviteCode,
           depositAddress: res.data.userDetail.depositAddress,
           token: res.data.accessToken,
-          permissions: res.data.permissions,
+          permissions: res.data.userDetail.permissions,
         }
       : null,
   };

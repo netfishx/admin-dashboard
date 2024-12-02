@@ -81,7 +81,8 @@ export async function loginAction(formData: FormData) {
 }
 
 export async function signOutAction() {
-  await Promise.all([logout(), signOut()]);
+  await logout();
+  await signOut();
 }
 
 export async function editSupplierConfigAction(formData: FormData) {

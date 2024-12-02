@@ -124,7 +124,7 @@ export function OddsTable({ list }: { list: GameOdds[] }) {
                   }
                   type="number"
                   min={1}
-                  max={item.maxBetLimit ?? 1}
+                  max={item.maxBetLimit ?? Number.MAX_SAFE_INTEGER}
                   disabled={!item.canEdit}
                   onChange={(e) =>
                     handleLimitChange(
@@ -155,7 +155,7 @@ export function OddsTable({ list }: { list: GameOdds[] }) {
                   }
                   type="number"
                   min={1}
-                  max={item.maxBetPeriodLimit ?? 1}
+                  max={item.maxBetPeriodLimit ?? Number.MAX_SAFE_INTEGER}
                   disabled={!item.canEdit}
                   onChange={(e) =>
                     handleLimitChange(

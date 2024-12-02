@@ -151,8 +151,21 @@ export async function apiRequest<T>({
     token,
     expire,
   });
-
-  if (result.status >= 400) {
+  console.info(
+    `url: ${url}|`,
+    "header: ",
+    header,
+    `|method: ${method}`,
+    "|data: ",
+    data,
+    "|params: ",
+    params,
+    `|token: ${token}`,
+    `|expire: ${expire}`,
+    "|result: ",
+    result,
+  );
+  if (result.status >= 400 || result.data.code !== 0) {
     console.error(result);
   }
   if ([401, 403].includes(result.status)) {
