@@ -94,6 +94,7 @@ export function RoleDialog({
                 permissions={permissionsRes?.data ?? []}
                 checked={permsIds}
                 onChangeAction={setPermsIds}
+                className="max-h-[50dvh]"
               />
             </div>
           </div>

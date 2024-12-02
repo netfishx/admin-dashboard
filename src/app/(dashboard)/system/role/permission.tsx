@@ -99,10 +99,12 @@ export function PermissionTree({
   permissions,
   checked,
   onChangeAction,
+  className,
 }: {
   permissions: Permission[];
   checked: number[];
   onChangeAction: (checked: number[]) => void;
+  className?: string;
 }) {
   const [tree, checkedState] = arrayToTree(permissions, checked);
   const [state, setState] = useState(checkedState);
@@ -118,6 +120,7 @@ export function PermissionTree({
   }, [permissions, state, onChangeAction]);
   return (
     <TreeSelect
+      className={className}
       data={tree}
       checkedState={state}
       handleChangeAction={setState}

@@ -4,6 +4,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import * as React from "react";
 import { ChevronDown, ChevronRight } from "lucide-react";
 import type { TreeNode } from "@/lib/types";
+import { cn } from "@/lib/utils";
 
 function TreeNode({
   node,
@@ -119,10 +120,12 @@ export function TreeSelect({
   data,
   checkedState: state,
   handleChangeAction,
+  className,
 }: {
   data: TreeNode[];
   checkedState: Map<string, boolean | "indeterminate">;
   handleChangeAction: (checkedState: Map<string, boolean | "indeterminate">) => void;
+  className?: string;
 }) {
   const [checkedState, setCheckedState] = React.useState<
     Map<string, boolean | "indeterminate">
@@ -188,7 +191,12 @@ export function TreeSelect({
   };
 
   return (
-    <div className="w-full max-h-[400px] overflow-y-auto border border-gray-200 rounded-md p-4 bg-white dark:bg-gray-800 dark:border-gray-700">
+    <div
+      className={cn(
+        "w-full overflow-y-auto border border-gray-200 rounded-md p-4 bg-white dark:bg-gray-800 dark:border-gray-700",
+        className,
+      )}
+    >
       {data.map((node) => (
         <TreeNode
           key={node.id}
