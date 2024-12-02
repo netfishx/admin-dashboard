@@ -17,7 +17,7 @@ export async function Detail({ data }: { data: UserBasicInfo }) {
       <div className="py-6 px-5 bg-background flex-1">
         <div className="flex justify-between items-center mb-6">
           <h2 className="justify-between items-center">{t("walletInfo")}</h2>
-          <DetailButton />
+          <DetailButton data={data} />
         </div>
 
         {/* Top row */}
@@ -27,7 +27,7 @@ export async function Detail({ data }: { data: UserBasicInfo }) {
               {t("balance")}
             </div>
             <div className="text-2xl font-normal">
-              {formatNumber(data?.totalBalanceMoney)}
+              {formatNumber(data?.totalBalanceMoney || 0)}
             </div>
           </div>
           <div>
@@ -35,7 +35,7 @@ export async function Detail({ data }: { data: UserBasicInfo }) {
               {t("availableBalance")}
             </div>
             <div className="text-2xl font-normal">
-              {formatNumber(data?.usableBalanceMoney)}
+              {formatNumber(data?.usableBalanceMoney || 0)}
             </div>
           </div>
           <div>
@@ -43,7 +43,7 @@ export async function Detail({ data }: { data: UserBasicInfo }) {
               {t("freezeBalance")}
             </div>
             <div className="text-2xl font-normal">
-              {formatNumber(data?.gameFreezeMoney)}
+              {formatNumber(data?.gameFreezeMoney || 0)}
             </div>
           </div>
         </div>
@@ -55,7 +55,7 @@ export async function Detail({ data }: { data: UserBasicInfo }) {
               {t("creditAmount")}
             </div>
             <div className="text-2xl font-normal">
-              {formatNumber(data?.totalCreditMoney)}
+              {formatNumber(data?.totalCreditMoney || 0)}
             </div>
           </div>
           <div>
@@ -63,7 +63,7 @@ export async function Detail({ data }: { data: UserBasicInfo }) {
               {t("pendingAmount")}
             </div>
             <div className="text-2xl font-normal">
-              {formatNumber(data?.memberToBeRepaidMoney)}
+              {formatNumber(data?.memberToBeRepaidMoney || 0)}
             </div>
           </div>
           <div>
@@ -71,7 +71,7 @@ export async function Detail({ data }: { data: UserBasicInfo }) {
               {t("unUsedCredit")}
             </div>
             <div className="text-2xl font-normal">
-              {formatNumber(data?.memberUnusedMoney)}
+              {formatNumber(data?.memberUnusedMoney || 0)}
             </div>
           </div>
           <div>
@@ -79,7 +79,7 @@ export async function Detail({ data }: { data: UserBasicInfo }) {
               {t("withdrawFreezeAmount")}
             </div>
             <div className="text-2xl font-normal">
-              {formatNumber(data?.withdrawFreezeMoney)}
+              {formatNumber(data?.withdrawFreezeMoney || 0)}
             </div>
           </div>
         </div>
