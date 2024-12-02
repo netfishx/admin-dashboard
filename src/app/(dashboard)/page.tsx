@@ -98,15 +98,14 @@ export default async function DashboardPage({
         </Suspense>
       </div>
       <div className="flex flex-col gap-2 w-[280px] min-[2400px]:w-[560px]">
-        {permissions?.includes("admin_stat") ? (
-          <Suspense fallback={<div className="h-24 rounded bg-card" />}>
+        <Suspense fallback={<div className="h-24 rounded bg-card" />}>
+          {permissions?.includes("admin_stat") ? (
             <DataOverviewFlowWrapper start={start} end={end} />
-          </Suspense>
-        ) : (
-          <Suspense>
+          ) : (
             <DataOverviewWrapper />
-          </Suspense>
-        )}
+          )}
+        </Suspense>
+
         <QuickAccess />
         <Suspense fallback={<div className="h-24 rounded bg-card" />}>
           {/* 普通代理：上级公告， admin：本级公告  */}
