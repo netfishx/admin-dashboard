@@ -104,17 +104,20 @@ async function TableWrapper({
     endTime,
     pageNum,
     pageSize,
+    userId,
+    userType,
   } = await searchParams;
-
   const params: WithdrawReportParams = {
     orderNo: (orderNo ?? null) as string,
     operatorSymbol: Number(operatorSymbol),
-    withdrawMoney: Number(withdrawMoney),
-    requestStatus: Number(requestStatus),
+    withdrawMoney: withdrawMoney ? Number(withdrawMoney) : 0,
+    requestStatus: requestStatus ? Number(requestStatus) : undefined,
     pageNum: Number(pageNum ?? 1),
     pageSize: Number(pageSize ?? 10),
     startTime: Number(startTime),
     endTime: Number(endTime),
+    userId: (userId ?? null) as string,
+    userType: userType ? Number(userType) : undefined,
   };
   if (!startTime || !endTime) {
     return (

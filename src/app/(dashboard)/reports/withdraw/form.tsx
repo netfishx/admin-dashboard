@@ -25,19 +25,21 @@ export function Form() {
   const [requestStatus, setRequestStatus] = useQueryState("requestStatus", {
     defaultValue: "all",
   });
-  const [rechargeMoney, setRechargeMoney] = useQueryState("rechargeMoney", {
-    defaultValue: "",
+  const [withdrawMoney, setWithdrawMoney] = useQueryState("withdrawMoney", {
+    defaultValue: "0",
   });
   const [operatorSymbol, setOperatorSymbol] = useQueryState(
     "operatorSymbol",
-    parseAsString.withDefault("0").withOptions({ clearOnDefault: false }),
+    parseAsString.withDefault("3").withOptions({ clearOnDefault: false }),
   );
 
   const handleFilterChange = (filterType: string) => {
     setOperatorSymbol(filterType);
   };
   const handleAmountChange = (value: string) => {
-    setRechargeMoney(value);
+    // 转换为数字并确保不小于0
+    const numberValue = Math.max(0, Number(value));
+    setWithdrawMoney(numberValue.toString());
   };
   const [userId, setUserId] = useQueryState("userId");
   const [userType, setUserType] = useQueryState("userType", {
@@ -46,7 +48,8 @@ export function Form() {
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
-    setOperatorSymbol("0");
+    setOperatorSymbol("3");
+    setWithdrawMoney("0");
   }, []);
   return (
     <div className="flex flex-col bg-background py-4 px-4 gap-4">
@@ -95,14 +98,15 @@ export function Form() {
               <SelectValue placeholder={t("placeholderselect")} />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="0">&gt;=</SelectItem>
+              <SelectItem value="3">&gt;=</SelectItem>
               <SelectItem value="1">&lt;=</SelectItem>
             </SelectContent>
           </Select>
 
           <Input
             type="number"
-            value={rechargeMoney}
+            min={0}
+            value={withdrawMoney}
             onChange={(e) => handleAmountChange(e.target.value)}
             placeholder={t("placeholder")}
           />

@@ -1,4 +1,4 @@
-import { getAllGames } from "@/api";
+import { getBaccaratGames } from "@/api";
 import TableSkeleton from "@/components/table-skeleton";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Table } from "@/components/ui/table";
@@ -12,7 +12,7 @@ interface CommonWrapperProps {
 }
 
 export default async function Page({ searchParams }: CommonWrapperProps) {
-  const gameListResp = await getAllGames();
+  const gameListResp = await getBaccaratGames();
 
   return (
     <div className="flex flex-col gap-2 w-full">

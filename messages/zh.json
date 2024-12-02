@@ -654,7 +654,11 @@
       "amountfilter": "打赏金额筛选",
       "memberId": "会员ID",
       "roomOwnerId": "房主ID",
-      "ministerId": "部长ID"
+      "ministerId": "部长ID",
+      "orderType": "类型",
+      "borrow": "借款",
+      "repayment": "还款",
+      "writeOff": "销账"
     },
     "download": {
       "list": "仅保留近7天内下载数据",

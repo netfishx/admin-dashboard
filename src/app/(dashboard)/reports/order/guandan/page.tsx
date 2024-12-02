@@ -1,7 +1,8 @@
+import { getGuandanGames } from "@/api";
 import TableSkeleton from "@/components/table-skeleton";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Table } from "@/components/ui/table";
-import type { GameRecordRequestParams } from "@/lib/types";
+import type { GameInfo, GameRecordRequestParams } from "@/lib/types";
 import { getSession } from "@/session";
 import { Suspense } from "react";
 import { BombDetailDialog } from "./bomb-detail-dialog";
@@ -12,14 +13,20 @@ interface CommonWrapperProps {
   searchParams: Promise<GameRecordRequestParams>;
 }
 
-async function ListFilterWrapper() {
+async function ListFilterWrapper({ gameList }: { gameList: GameInfo[] }) {
   const session = await getSession();
   const permissions = session?.permissions;
   const hasSearchPermission = permissions?.includes("detail_guandan_search");
-  return <ListFilter hasSearchPermission={!!hasSearchPermission} />;
+  return (
+    <ListFilter
+      hasSearchPermission={!!hasSearchPermission}
+      gameList={gameList}
+    />
+  );
 }
 
-export default function Page({ searchParams }: CommonWrapperProps) {
+export default async function Page({ searchParams }: CommonWrapperProps) {
+  const gameListResp = await getGuandanGames();
   return (
     <div className="flex flex-col gap-2 w-full">
       <Suspense
@@ -29,7 +36,7 @@ export default function Page({ searchParams }: CommonWrapperProps) {
           </div>
         }
       >
-        <ListFilterWrapper />
+        <ListFilterWrapper gameList={gameListResp?.data ?? []} />
       </Suspense>
       <Suspense
         fallback={

@@ -26,22 +26,26 @@ export function Form() {
   const [userType, setUserType] = useQueryState("userType", {
     defaultValue: "all",
   });
-  const [rechargeMoney, setRechargeMoney] = useQueryState("rechargeMoney", {
-    defaultValue: "",
-  });
+  const [rechargeMoney, setRechargeMoney] = useQueryState(
+    "rechargeMoney",
+    parseAsString.withDefault("0").withOptions({ clearOnDefault: false }),
+  );
   const [operatorSymbol, setOperatorSymbol] = useQueryState(
     "operatorSymbol",
-    parseAsString.withDefault("0").withOptions({ clearOnDefault: false }),
+    parseAsString.withDefault("3").withOptions({ clearOnDefault: false }),
   );
   const handleFilterChange = (filterType: string) => {
     setOperatorSymbol(filterType);
   };
   const handleAmountChange = (value: string) => {
-    setRechargeMoney(value);
+    // 转换为数字并确保不小于0
+    const numberValue = Math.max(0, Number(value));
+    setRechargeMoney(numberValue.toString());
   };
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
-    setOperatorSymbol("0");
+    setOperatorSymbol("3");
+    setRechargeMoney("0");
   }, []);
   return (
     <div className="flex flex-col bg-background py-4 px-4 gap-4">
@@ -71,13 +75,14 @@ export function Form() {
               <SelectValue placeholder={t("placeholderselect")} />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="0">&gt;=</SelectItem>
+              <SelectItem value="3">&gt;=</SelectItem>
               <SelectItem value="1">&lt;=</SelectItem>
             </SelectContent>
           </Select>
 
           <Input
             type="number"
+            min={0}
             value={rechargeMoney}
             onChange={(e) => handleAmountChange(e.target.value)}
             placeholder={t("placeholder")}
@@ -95,7 +100,7 @@ export function Form() {
             <SelectContent>
               <SelectItem value="all">{t("all")}</SelectItem>
               <SelectItem value="0">代理</SelectItem>
-              <SelectItem value="1">会员</SelectItem>
+              <SelectItem value="2">会员</SelectItem>
             </SelectContent>
           </Select>
         </div>

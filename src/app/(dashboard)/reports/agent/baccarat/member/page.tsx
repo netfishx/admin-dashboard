@@ -1,3 +1,4 @@
+import { getBaccaratGames } from "@/api";
 import TableSkeleton from "@/components/table-skeleton";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Table } from "@/components/ui/table";
@@ -11,6 +12,7 @@ interface CommonWrapperProps {
 }
 
 export default async function Page({ searchParams }: CommonWrapperProps) {
+  const gameListResp = await getBaccaratGames();
   return (
     <>
       <Suspense
@@ -20,7 +22,7 @@ export default async function Page({ searchParams }: CommonWrapperProps) {
           </div>
         }
       >
-        <MemberForm />
+        <MemberForm gameList={gameListResp?.data ?? []} />
       </Suspense>
       <Suspense
         fallback={

@@ -17,6 +17,8 @@ import type {
   ChangeLog,
   CollectionAddressListRecords,
   CollectionAddressListRequestParams,
+  CreditRecordRequestParams,
+  CreditRecordRequestRecords,
   DictionaryItemList,
   DictionaryList,
   DownloadListRecords,
@@ -379,10 +381,8 @@ export async function getAnnouncement(params: AnnouncementListRequest) {
   if (res.data?.list) {
     res.data.list = res.data.list.map((item) => ({
       ...item,
-      contentOfLanguage:
-        item.contentList.find((i) => i.language === "zh-CN")?.content || "",
-      titleOfLanguage:
-        item.contentList.find((i) => i.language === "zh-CN")?.title || "",
+      contentOfLanguage: item.content.content,
+      labelOfLanguage: item.content.label,
     }));
   }
   return res;
@@ -398,10 +398,8 @@ export async function getSameOrSeniorAnno(params: SameOrSeniorAnnoListRequest) {
   if (res.data?.list) {
     res.data.list = res.data.list.map((item) => ({
       ...item,
-      contentOfLanguage:
-        item.contentList.find((i) => i.language === "zh-CN")?.content || "",
-      titleOfLanguage:
-        item.contentList.find((i) => i.language === "zh-CN")?.title || "",
+      contentOfLanguage: item.content.content,
+      labelOfLanguage: item.content.label,
     }));
   }
   return res;
@@ -846,13 +844,12 @@ export async function getPokerReport(params: PokerReportRequestParams) {
 // 充值报表
 export async function getRechargeReportList(data: RechargeReportParams) {
   const user = await getSession();
-  const res = await apiRequest<PageData<RechargeReport>>({
+  return await apiRequest<PageData<RechargeReport>>({
     url: "/order/recharge/report",
     method: "POST",
     token: user?.token,
     data,
   });
-  return res;
 }
 // 提现报表
 export async function getWithdrawReportList(data: WithdrawReportParams) {
@@ -864,23 +861,29 @@ export async function getWithdrawReportList(data: WithdrawReportParams) {
     data,
   });
   if (res.data?.list) {
-    let status: number;
-    res.data.list = res.data.list.map((item: WithdrawReport) => {
-      if (item.approverStatus === 0 || item.approverStatus === 1) {
-        status = 0;
-      } else if (item.approverStatus === 3 || item.moneyStatus === 2) {
-        status = 1;
-      } else if (item.approverStatus === 2) {
-        status = 2;
-      } else if (item.moneyStatus === 1) {
-        status = 3;
-      }
+    // 资金状态(moneyStatus)：0转账中，1已到账，2出款失败；
+    // 审核状态(approverStatus)：0未处理，1锁定中，2已拒绝
+    // 未处理 锁定中 > 审核中；已通过、异常 > 提现中； 已拒绝 > 审核失败；已到账 > 提现成功
+    const statusMap = {
+      approver: {
+        0: 0,
+        1: 0,
+        2: 2,
+        3: 1,
+      },
+      money: {
+        1: 3,
+        2: 1,
+      },
+    };
 
-      return {
-        ...item,
-        status,
-      };
-    });
+    res.data.list = res.data.list.map((item: WithdrawReport) => ({
+      ...item,
+      status:
+        statusMap.approver[
+          item.approverStatus as keyof typeof statusMap.approver
+        ] ?? statusMap.money[item.moneyStatus as keyof typeof statusMap.money],
+    }));
   }
   return res;
 }
@@ -1161,11 +1164,22 @@ export async function deleteBackgroundImage(data: { id: string }) {
   });
 }
 
+// 授信记录list
+export async function postGetCreditLogList(data: CreditRecordRequestParams) {
+  const user = await getSession();
+  return await apiRequest<PageData<CreditRecordRequestRecords>>({
+    url: "/wallet/getCreditLogList",
+    method: "POST",
+    data,
+    token: user?.token,
+  });
+}
+
 // 借还记录list
-export async function postGetCreditLogList(data: BorrowRecordRequestParams) {
+export async function postGetBorrowLogList(data: BorrowRecordRequestParams) {
   const user = await getSession();
   return await apiRequest<PageData<BorrowRecordRequestRecords>>({
-    url: "/wallet/getCreditLogList",
+    url: "/order/credit/report",
     method: "POST",
     data,
     token: user?.token,
