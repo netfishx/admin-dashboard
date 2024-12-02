@@ -32,7 +32,7 @@ export async function List() {
     (perm) => permissions.includes(perm),
   ).length;
 
-  const percent = (enabledCount / totalCount) * 100;
+  const percent = Math.floor((enabledCount / totalCount) * 100);
 
   return (
     <>

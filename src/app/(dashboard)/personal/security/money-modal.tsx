@@ -1,5 +1,4 @@
 "use client";
-
 import { bindFundPassword, editFundPassword } from "@/api";
 import { Button } from "@/components/ui/button";
 import {
@@ -14,7 +13,11 @@ import { Label } from "@/components/ui/label";
 import { Password } from "@/components/ui/password";
 import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { useState, useTransition } from "react";
+import Form from "next/form";
+import { useRouter } from "next/navigation";
+import { useRef, useTransition } from "react";
+import { toast } from "sonner";
+import { validateFormData } from "./validate";
 
 export function MoneyModal({
   open,
@@ -27,26 +30,38 @@ export function MoneyModal({
 }) {
   const t = useTranslations("personal.security");
   const translations = useTranslations("");
-  const [oldPassword, setOldPassword] = useState("");
-  const [newPassword, setNewPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
   const isEdit = isOpen;
   const [isPending, startTransition] = useTransition();
-
-  const submit = async () => {
+  const ref = useRef<HTMLFormElement>(null);
+  const router = useRouter();
+  const submit = async (data: {
+    oldPassword?: string;
+    newPassword: string;
+    confirmPassword: string;
+  }) => {
     if (isEdit) {
       startTransition(async () => {
         const { code, message } = await editFundPassword({
-          oldSecret: oldPassword,
-          newSecret: newPassword,
+          oldSecret: data.oldPassword ?? "",
+          newSecret: data.newPassword,
         });
+        if (code === 0) {
+          toast.success(message);
+          router.refresh();
+        } else {
+          toast.error(message);
+        }
       });
     } else {
       startTransition(async () => {
         const { code, message } = await bindFundPassword({
-          secret: newPassword,
-          userId: "-1",
+          secret: data.newPassword,
         });
+        if (code === 0) {
+          toast.success(translations("bindSuccess"));
+        } else {
+          toast.error(message);
+        }
       });
     }
   };
@@ -60,64 +75,85 @@ export function MoneyModal({
           </DialogTitle>
           <DialogDescription />
         </DialogHeader>
-        {isEdit ? (
-          <div className="flex gap-2 items-center pt-4">
-            <div className="flex gap-4 items-center">
-              <Label className="shrink-0 w-[100px] text-right text-muted-foreground">
-                <span className="text-destructive">*</span>
-                {t("oldPassword")}
-              </Label>
 
+        <Form
+          action=""
+          onSubmit={(e) => {
+            e.preventDefault();
+
+            startTransition(async () => {
+              const formData = new FormData(e.currentTarget);
+              const result = await validateFormData(
+                formData,
+                isEdit ? "edit" : "create",
+              );
+              if (result.success) {
+                submit(
+                  result.data as {
+                    oldPassword?: string;
+                    newPassword: string;
+                    confirmPassword: string;
+                  },
+                );
+              } else {
+                toast.error(result.errors?.[0]?.message);
+              }
+            });
+          }}
+          ref={ref}
+        >
+          <input type="hidden" name="id" />
+          <div className="flex flex-col gap-4">
+            {isEdit ? (
+              <div className="flex flex-col gap-1">
+                <div className="flex gap-2 items-center">
+                  <Label className="w-[100px] text-right shrink-0">
+                    {t("oldPassword")}
+                  </Label>
+                  <Password
+                    type="password"
+                    placeholder={t("placeholderOld")}
+                    name="oldPassword"
+                  />
+                </div>
+              </div>
+            ) : null}
+            <div className="flex gap-2 items-center">
+              <Label className="w-[100px] text-right shrink-0">
+                {isEdit ? t("newPassword") : t("fundPassword")}
+              </Label>
               <Password
                 type="password"
-                placeholder={t("placeholderOld")}
-                name="password"
-                value={oldPassword}
-                onChange={(e) => setOldPassword(e.target.value)}
+                placeholder={t("placeholderNew")}
+                name="newPassword"
+              />
+            </div>
+            <div className="flex gap-2 items-center">
+              <Label className="w-[100px] text-right shrink-0">
+                {t("confirmPassword")}
+              </Label>
+              <Password
+                type="password"
+                placeholder={t("confirmMoneyDesc")}
+                name="confirmPassword"
               />
             </div>
           </div>
-        ) : null}
-
-        <div className="flex gap-2 items-center">
-          <div className="flex gap-4 items-center">
-            <Label className="shrink-0 w-[100px] text-right text-muted-foreground">
-              <span className="text-destructive">*</span>
-              {isEdit ? t("newPassword") : t("fundPassword")}
-            </Label>
-
-            <Password
-              type="password"
-              placeholder={t("placeholderNew")}
-              name="password"
-              value={newPassword}
-              onChange={(e) => setNewPassword(e.target.value)}
-            />
-          </div>
-        </div>
-
-        <div className="flex gap-2 items-center">
-          <div className="flex gap-4 items-center">
-            <Label className="shrink-0 w-[100px] text-right text-muted-foreground">
-              <span className="text-destructive">*</span>
-              {t("confirmMoneyPassword")}
-            </Label>
-
-            <Password
-              type="password"
-              placeholder={t("confirmMoneyDesc")}
-              name="password"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-            />
-          </div>
-        </div>
+        </Form>
 
         <DialogFooter>
           <Button variant="outline" onClick={() => onOpenChange(false)}>
             {translations("cancel")}
           </Button>
-          <Button onClick={submit} disabled={isPending}>
+          <Button
+            onClick={(e) => {
+              e.preventDefault();
+              if (ref.current) {
+                ref.current.requestSubmit();
+              }
+            }}
+            disabled={isPending}
+          >
             {isPending && <Loader2 className="w-4 h-4 animate-spin" />}
             {translations("confirm")}
           </Button>
