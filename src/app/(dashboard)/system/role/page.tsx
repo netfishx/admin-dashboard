@@ -29,7 +29,6 @@ function RoleTableHeader() {
         <TableHead>{t("id")}</TableHead>
         <TableHead>{t("name")}</TableHead>
         <TableHead>{t("updateTime")}</TableHead>
-        <TableHead>{t("createBy")}</TableHead>
         <TableHead>{t("type")}</TableHead>
         <TableHead className="text-center sticky right-0 bg-muted">
           {t("action")}
@@ -72,7 +71,6 @@ async function RoleTableWrapper({
                     {item.updateTime &&
                       format(item.updateTime, "yyyy-MM-dd HH:mm:ss")}
                   </TableCell>
-                  <TableCell>{item.createBy}</TableCell>
                   <TableCell>
                     {item.roleType === 0
                       ? translations("systemDefault")

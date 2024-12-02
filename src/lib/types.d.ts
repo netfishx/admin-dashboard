@@ -569,7 +569,6 @@ export type Role = {
   id?: string;
   roleName: string;
   updateTime?: number;
-  createBy?: string;
   roleType?: number;
   permsIds: number[];
 };
