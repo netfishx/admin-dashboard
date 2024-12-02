@@ -1,7 +1,6 @@
 import { Table } from "@/components/ui/table";
 import { Suspense } from "react";
-import { List, TableBodySkeleton, TableHeaderWrapper } from "../all/list";
-import { AddBtn } from "./add-btn";
+import { List, TableBodySkeleton, TableHeaderWrapper } from "./list";
 // 本级公告
 export default async function Own({
   searchParams,
@@ -9,7 +8,6 @@ export default async function Own({
   return (
     <div className="flex flex-col gap-2 w-full h-full mt-2">
       <div className="p-2 bg-background flex-1 flex flex-col gap-2">
-        <AddBtn />
         <Suspense
           fallback={
             <Table>
