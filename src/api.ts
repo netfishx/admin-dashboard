@@ -415,7 +415,7 @@ export async function saveAnnouncement(data: Announcement) {
   });
 }
 
-export async function getReviceOrder() {
+export async function getReceiveOrder() {
   const user = await getSession();
   return await apiRequest<{ status: boolean }>({
     url: "/agent/user/main/receiveOrder",
@@ -423,7 +423,7 @@ export async function getReviceOrder() {
   });
 }
 
-export async function editReviceOrder({ status }: { status: boolean }) {
+export async function editReceiveOrder({ status }: { status: boolean }) {
   const user = await getSession();
   return await apiRequest<{ status: boolean }>({
     url: "/agent/user/main/receiveOrder",

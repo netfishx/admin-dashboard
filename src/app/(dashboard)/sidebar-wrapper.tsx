@@ -1,11 +1,23 @@
-import { getReviceOrder } from "@/api";
+import { getReceiveOrder } from "@/api";
 import { SideBar } from "@/app/(dashboard)/sidebar";
 import { getSession } from "@/session";
 import { connection } from "next/server";
 
 export async function SidebarWrapper() {
   await connection();
-  const res = getReviceOrder();
   const session = await getSession();
-  return <SideBar reviceOrder={res} permissions={session?.permissions ?? []} />;
+  const permissions = session?.permissions ?? [];
+  const hasReceiveOrderPermission = permissions.includes("receive_order");
+  let status = false;
+  if (hasReceiveOrderPermission) {
+    const res = await getReceiveOrder();
+    status = res.data?.status ?? false;
+  }
+  return (
+    <SideBar
+      status={status}
+      permissions={permissions}
+      hasReceiveOrderPermission={hasReceiveOrderPermission}
+    />
+  );
 }

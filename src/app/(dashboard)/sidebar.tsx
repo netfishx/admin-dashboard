@@ -2,18 +2,19 @@
 
 import { Menu } from "@/app/(dashboard)/menu";
 import { ToggleSidebar } from "@/app/(dashboard)/toggle-sidebar";
-import type { Res } from "@/lib/types";
 import { cn } from "@/lib/utils";
 import { sidebarAtom } from "@/store";
 import { useAtomValue } from "jotai";
 import { useTranslations } from "next-intl";
 
 export function SideBar({
-  reviceOrder,
+  status,
   permissions,
+  hasReceiveOrderPermission,
 }: {
-  reviceOrder: Promise<Res<{ status: boolean }>>;
+  status: boolean;
   permissions: string[];
+  hasReceiveOrderPermission: boolean;
 }) {
   const t = useTranslations();
   const isOpened = useAtomValue(sidebarAtom);
@@ -70,7 +71,10 @@ export function SideBar({
         </div>
         <Menu permissions={permissions} />
       </div>
-      <ToggleSidebar reviceOrder={reviceOrder} permissions={permissions} />
+      <ToggleSidebar
+        status={status}
+        hasReceiveOrderPermission={hasReceiveOrderPermission}
+      />
     </div>
   );
 }

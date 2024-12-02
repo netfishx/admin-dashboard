@@ -151,6 +151,8 @@ export async function apiRequest<T>({
     token,
     expire,
   });
+  console.group("request");
+  console.info("info:");
   console.dir({
     url,
     ip,
@@ -163,6 +165,7 @@ export async function apiRequest<T>({
     expire,
     result,
   });
+  console.groupEnd();
   if (result.status >= 400 || result.data.code !== 0) {
     console.group("error");
     console.error("result:");

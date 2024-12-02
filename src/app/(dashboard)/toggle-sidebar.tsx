@@ -1,35 +1,28 @@
 "use client";
-import { editReviceOrder } from "@/api";
+import { editReceiveOrder } from "@/api";
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
-import type { Res } from "@/lib/types";
 import { cn } from "@/lib/utils";
 import { sidebarAtom } from "@/store";
 import { useAtom } from "jotai";
 import { PanelRightCloseIcon, PanelRightOpenIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { use, useState } from "react";
+import { useState } from "react";
 import { toast } from "sonner";
 
 export function ToggleSidebar({
-  reviceOrder,
-  permissions,
+  status,
+  hasReceiveOrderPermission,
 }: {
-  reviceOrder: Promise<Res<{ status: boolean }>>;
-  permissions: string[];
+  status: boolean;
+  hasReceiveOrderPermission: boolean;
 }) {
   const [isOpened, setIsOpened] = useAtom(sidebarAtom);
   const t = useTranslations("menu");
-  const isReviceOrder = permissions.includes("revice_order");
-  let status = false;
-  if (isReviceOrder) {
-    const res = use(reviceOrder);
-    status = res.data?.status ?? false;
-  }
   const [stop, setStop] = useState(status);
   async function handleChange(checked: boolean) {
     setStop(checked);
-    await editReviceOrder({ status: checked });
+    await editReceiveOrder({ status: checked });
     if (checked) {
       toast.error(t("stop"));
     } else {
@@ -42,10 +35,10 @@ export function ToggleSidebar({
       className={cn([
         "flex h-12 py-4 items-center",
         isOpened ? "px-4" : "px-3",
-        isReviceOrder ? "justify-between" : "justify-end",
+        hasReceiveOrderPermission ? "justify-between" : "justify-end",
       ])}
     >
-      {isReviceOrder && (
+      {hasReceiveOrderPermission && (
         <div
           className={cn("flex items-center gap-2", isOpened ? "" : "hidden")}
         >
