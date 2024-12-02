@@ -41,7 +41,7 @@ export function AddModal() {
   const t = useTranslations("system.announcement");
   const [type, setType] = useState("0");
   const [language, setLanguage] = useState("cn");
-  const [titleOfLanguage, setTitleOfLanguage] = useState("");
+  const [labelOfLanguage, setTitleOfLanguage] = useState("");
   const [contentOfLanguage, setContentOfLanguage] = useState("");
   const [status, setStatus] = useState("0");
   const [open, setOpen] = useAtom(contentEditModalAtom);
@@ -60,9 +60,9 @@ export function AddModal() {
   const handleClickAdd = async () => {
     const addParams = {
       id: data?.id || null,
-      type,
+      type: Number(type),
       content: contentData,
-      status,
+      status: Number(status),
       startTime: startTime ? new Date(startTime).getTime() : null,
       endTime: endTime ? new Date(endTime).getTime() : null,
     };
@@ -87,7 +87,7 @@ export function AddModal() {
 
   const resetFields = () => {
     setType("0");
-    setLanguage(data?.content?.[0]?.language || "cn");
+    setLanguage(data?.contentList?.[0]?.language || "cn");
     setContentData([]);
     setContentOfLanguage("");
     setTitleOfLanguage("");
@@ -99,11 +99,11 @@ export function AddModal() {
   useEffect(() => {
     if (data?.id) {
       console.info("contentData", data.content);
-      setContentData(data.content || []);
+      setContentData(data.contentList || []);
       setContentOfLanguage(data.contentOfLanguage || "");
-      setTitleOfLanguage(data.titleOfLanguage || "");
+      setTitleOfLanguage(data.labelOfLanguage || "");
       setType(data.type.toString() || "0");
-      setLanguage(data.content?.[0]?.language || "cn");
+      setLanguage(data.contentList?.[0]?.language || "cn");
       setStatus(data.status.toString() || "0");
       setStartTime(data.startTime.toString() || "");
       setEndTime(data.endTime.toString() || "");
@@ -146,7 +146,7 @@ export function AddModal() {
         // 如果该语言的内容不存在，则添加新数据
         return [
           ...prevData,
-          { language, titleOfLanguage, content: contentOfLanguage },
+          { language, labelOfLanguage, content: contentOfLanguage },
         ];
       }
     });
@@ -166,14 +166,14 @@ export function AddModal() {
         updatedData[existingIndex] = {
           id: updatedData[existingIndex].id,
           language,
-          title: titleOfLanguage,
+          title: labelOfLanguage,
           content: value,
         };
         return updatedData;
         // biome-ignore lint/style/noUselessElse: <explanation>
       } else {
         // 如果该语言的内容不存在，则添加新数据
-        return [...prevData, { language, titleOfLanguage, content: value }];
+        return [...prevData, { language, labelOfLanguage, content: value }];
       }
     });
   };
@@ -254,7 +254,7 @@ export function AddModal() {
             <Input
               placeholder={t("placeholder")}
               className="w-2/3 resize-none"
-              value={titleOfLanguage}
+              value={labelOfLanguage}
               maxLength={20}
               onChange={(e) => handleTitleChange(e.target.value)}
             />
