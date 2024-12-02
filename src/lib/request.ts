@@ -163,10 +163,10 @@ export async function apiRequest<T>({
     `|token: ${token}`,
     `|expire: ${expire}`,
     "|result: ",
-    result,
+    JSON.stringify(result),
   );
   if (result.status >= 400 || result.data.code !== 0) {
-    console.error(result);
+    console.error(JSON.stringify(result));
   }
   if ([401, 403].includes(result.status)) {
     return redirect(
