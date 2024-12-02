@@ -243,6 +243,8 @@ export type UserBasicInfo = {
   memberUnusedMoney: number; // Unused money by the member
   withdrawFreezeMoney: number; // Amount frozen for withdrawal
   chainAddress: string; // Blockchain address
+  majorNetwork: string; // 主网
+  rechargeAddress: string; // 充值地址
 };
 
 // 提现表单数据
@@ -974,4 +976,10 @@ export type GameInfo = {
   gameId: number;
   gameType: number;
   gameName: string;
+};
+
+export type WithdrawApply = {
+  id: string;
+  check: string;
+  validationType: number;
 };

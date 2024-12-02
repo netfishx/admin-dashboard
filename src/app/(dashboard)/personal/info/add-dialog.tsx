@@ -5,16 +5,18 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import type { UserBasicInfo } from "@/lib/types";
 import { useTranslations } from "next-intl";
-import Image from "next/image";
+import { QRCodeSVG } from "qrcode.react";
 
 interface Dialogprops {
   open?: boolean;
   onOpenChange: (open: boolean) => void;
+  data: UserBasicInfo;
 }
 
 export function AddDialog(props: Dialogprops) {
-  const { open = true, onOpenChange } = props;
+  const { open = true, onOpenChange, data } = props;
   const t = useTranslations("personal.info");
 
   return (
@@ -29,26 +31,21 @@ export function AddDialog(props: Dialogprops) {
               <div className="min-w-[120px] text-muted-foreground text-end">
                 {t("mainNet")}
               </div>
-              <div>123</div>
+              <div>{data?.majorNetwork}</div>
             </div>
             <div className="text-center flex gap-2 items-start mb-6">
               <div className="min-w-[120px] text-muted-foreground text-end">
                 {t("qrCode")}
               </div>
               <div>
-                <Image
-                  src="/images/qrcode.png"
-                  alt="qrcode"
-                  width={100}
-                  height={100}
-                />
+                <QRCodeSVG value={data?.rechargeAddress} />
               </div>
             </div>
             <div className="text-center flex gap-2 items-start mb-6">
               <div className="min-w-[120px] text-muted-foreground text-end">
                 {t("depositAddress")}
               </div>
-              <div>Oxaaa7272727278</div>
+              <div>{data?.rechargeAddress}</div>
             </div>
             <div className="text-center flex gap-2 items-start mb-6">
               <div className="min-w-[120px] text-muted-foreground text-end">
@@ -57,12 +54,6 @@ export function AddDialog(props: Dialogprops) {
               <div className="text-left">{t("tips04")}</div>
             </div>
           </div>
-          {/* <DialogFooter>
-            <Button variant="outline" onClick={() => onOpenChange(false)}>
-              {translations("cancel")}
-            </Button>
-            <Button onClick={() => onOpenChange(false)}>{t("verify")}</Button>
-          </DialogFooter> */}
         </div>
       </DialogContent>
     </Dialog>
