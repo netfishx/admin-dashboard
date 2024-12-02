@@ -1,5 +1,4 @@
 "use client";
-import { getAllGames } from "@/api";
 import { DateRangeFilter } from "@/components/daterange-filter";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -18,7 +17,7 @@ import { endOfDay } from "date-fns";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useQueryState } from "nuqs";
-import { useEffect, useRef, useState } from "react";
+import { useRef } from "react";
 
 export function ListFilter({
   hasSearchPermission,
@@ -60,13 +59,6 @@ export function ListFilter({
   const handleSearch = () => {
     router.refresh();
   };
-
-  const [gameList, setGameList] = useState<GameInfo[]>([]);
-  useEffect(() => {
-    getAllGames().then((res) => {
-      setGameList(res.data ?? []);
-    });
-  }, []);
 
   return (
     <div className="flex flex-col gap-2 bg-background py-2 px-4">
