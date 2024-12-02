@@ -32,7 +32,7 @@ import {
 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useTheme } from "next-themes";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { QRCodeSVG } from "qrcode.react";
 import { useState } from "react";
 import { useCopyToClipboard } from "react-use";
@@ -47,9 +47,8 @@ export function Toolbar({
   hasInviteCode: boolean;
 }) {
   const [name, _setName] = useState(username);
-  const { resolvedTheme: mode, setTheme } = useTheme();
+  const { setTheme } = useTheme();
   const [, copyToClipboard] = useCopyToClipboard();
-  const router = useRouter();
   const pathname = usePathname();
   const firstPath = pathname.split("/")[1];
   const t = useTranslations();
@@ -123,7 +122,6 @@ export function Toolbar({
             <DropdownMenuItem
               onClick={async () => {
                 await signOutAction();
-                router.replace("/login");
               }}
             >
               退出登录
