@@ -21,20 +21,22 @@ export async function List() {
 
   // 已开启的安全项数量
   const enabledCount =
-    Number(showGoogle?.isOpen && permissions.includes("google_code")) +
-    Number(showMoney?.isOpen && permissions.includes("money_password")) +
+    Number(showGoogle?.isOpen && permissions.includes("google_code") ? 1 : 0) +
+    Number(
+      showMoney?.isOpen && permissions.includes("money_password") ? 1 : 0,
+    ) +
     1;
+
   // 总的安全项数量
-  const totalCount =
-    Number(!!showGoogle && permissions.includes("google_code")) +
-    Number(!!showMoney && permissions.includes("money_password")) +
-    1;
-  const progressValue = totalCount ? (enabledCount / totalCount) * 100 : 0;
-  const finalValue =
-    Math.floor(progressValue) >= 99 ? 100 : Math.floor(progressValue);
+  const totalCount = ["google_code", "money_password", "edit_password"].filter(
+    (perm) => permissions.includes(perm),
+  ).length;
+
+  const percent = (enabledCount / totalCount) * 100;
+
   return (
     <>
-      <SecurityProgress value={finalValue} />
+      <SecurityProgress value={percent} />
       <div className="flex-1 flex flex-col gap-4 bg-background py-2 px-4">
         {permissions.includes("edit_password") && (
           <div className="flex items-center justify-between">
