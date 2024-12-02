@@ -62,10 +62,12 @@ async function TableWrapper({
   searchParams,
 }: { searchParams: Promise<{ [key: string]: string | string[] }> }) {
   const params = await searchParams;
-  const { data } = await getMemberList({
-    pageNum: Number(params.pageNum) ?? 1,
-    pageSize: Number(params.pageSize) ?? 10,
-  });
+  const requestParams = {
+    pageNum: Number(params.pageNum ?? 1),
+    pageSize: Number(params.pageSize ?? 10),
+    ...params,
+  };
+  const { data } = await getMemberList(requestParams);
   console.info("member list:", data);
   const session = await getSession();
   const permissions = session?.permissions;
