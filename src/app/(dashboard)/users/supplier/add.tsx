@@ -17,6 +17,7 @@ import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
+import { toast } from "sonner";
 
 export function Add() {
   const t = useTranslations("users.supplier");
@@ -46,7 +47,7 @@ function AddDialog({
   const router = useRouter();
   const handleConfirm = () => {
     startTransition(async () => {
-      const { code, data } = await addSupplier({
+      const { code, data, message } = await addSupplier({
         username: supplierUsername,
         nickname: supplierName,
         newPassword: password,
@@ -61,6 +62,8 @@ function AddDialog({
         setPassword("");
         setConfirmPassword("");
         setRemark("");
+      } else {
+        toast.error(message);
       }
     });
   };
