@@ -1,15 +1,11 @@
 import { getReviceOrder } from "@/api";
 import { SideBar } from "@/app/(dashboard)/sidebar";
 import { getSession } from "@/session";
-import { use } from "react";
+import { connection } from "next/server";
 
-export function SidebarWrapper() {
-  const res = use(getReviceOrder());
-  const session = use(getSession());
-  return (
-    <SideBar
-      status={res.data?.status}
-      permissions={session?.permissions ?? []}
-    />
-  );
+export async function SidebarWrapper() {
+  await connection();
+  const res = getReviceOrder();
+  const session = await getSession();
+  return <SideBar reviceOrder={res} permissions={session?.permissions ?? []} />;
 }

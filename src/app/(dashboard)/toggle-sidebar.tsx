@@ -2,23 +2,30 @@
 import { editReviceOrder } from "@/api";
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
+import type { Res } from "@/lib/types";
 import { cn } from "@/lib/utils";
 import { sidebarAtom } from "@/store";
 import { useAtom } from "jotai";
 import { PanelRightCloseIcon, PanelRightOpenIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { useState } from "react";
+import { use, useState } from "react";
 import { toast } from "sonner";
 
 export function ToggleSidebar({
-  status = false,
+  reviceOrder,
   permissions,
 }: {
-  status?: boolean;
+  reviceOrder: Promise<Res<{ status: boolean }>>;
   permissions: string[];
 }) {
   const [isOpened, setIsOpened] = useAtom(sidebarAtom);
   const t = useTranslations("menu");
+  const isReviceOrder = permissions.includes("revice_order");
+  let status = false;
+  if (isReviceOrder) {
+    const res = use(reviceOrder);
+    status = res.data?.status ?? false;
+  }
   const [stop, setStop] = useState(status);
   async function handleChange(checked: boolean) {
     setStop(checked);
@@ -29,7 +36,7 @@ export function ToggleSidebar({
       toast.success(t("start"));
     }
   }
-  const isReviceOrder = permissions.includes("revice_order");
+
   return (
     <div
       className={cn([
