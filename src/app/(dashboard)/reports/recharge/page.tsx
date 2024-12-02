@@ -70,12 +70,10 @@ async function TableHeaderWrapper() {
         <TableHead className="w-24 min-w-24 text-center">
           {t("rechargeMoney")}
         </TableHead>
-        <TableHead className="w-24 min-w-24 text-center">
+        <TableHead className="w-32 min-w-32 text-center">
           {t("finishTime")}
         </TableHead>
-        <TableHead className="w-24 min-w-24 text-center">
-          {t("rechargeHash")}
-        </TableHead>
+        <TableHead className="w-24 text-center">{t("rechargeHash")}</TableHead>
       </TableRow>
     </TableHeader>
   );
@@ -89,7 +87,7 @@ async function TableWrapper({
     orderNo,
     operatorSymbol,
     rechargeMoney,
-    withdrawUserType,
+    userType,
     startTime,
     endTime,
     pageNum,
@@ -107,24 +105,24 @@ async function TableWrapper({
     userId: (userId ?? null) as string,
     orderNo: (orderNo ?? null) as string,
     operatorSymbol: Number(operatorSymbol),
-    rechargeMoney: Number(rechargeMoney),
-    withdrawUserType: Number(withdrawUserType),
+    rechargeMoney: rechargeMoney ? Number(rechargeMoney) : 0,
+    userType: userType ? Number(userType) : undefined,
     pageNum: Number(pageNum ?? 1),
     pageSize: Number(pageSize ?? 10),
     startTime: Number(startTime),
     endTime: Number(endTime),
   };
   // 验证参数是否有效 至少一个参数是有值的
-  const validateParams = (params: RechargeReportParams) => {
-    const { endTime, startTime, pageNum, pageSize, ...otherFields } = params;
-    const isOtherFieldsValid = Object.values(otherFields).some(
-      (value) => value !== null && value !== undefined && value !== "",
-    );
-    return isOtherFieldsValid;
-  };
-  if (!validateParams(params)) {
-    console.info("请至少选择一个查询条件");
-  }
+  // const validateParams = (params: RechargeReportParams) => {
+  //   const { endTime, startTime, pageNum, pageSize, ...otherFields } = params;
+  //   const isOtherFieldsValid = Object.values(otherFields).some(
+  //     (value) => value !== null && value !== undefined && value !== "",
+  //   );
+  //   return isOtherFieldsValid;
+  // };
+  // if (!validateParams(params)) {
+  //   console.info("请至少选择一个查询条件");
+  // }
   const { data } = await getRechargeReportList(params);
   return (
     <div className="bg-background flex-1 w-full ">
@@ -168,11 +166,15 @@ async function TableBodyWrapper({ data }: { data?: PageData<RechargeReport> }) {
             <TableCell className="w-24 min-w-24 text-center">
               {item.rechargeMoney}
             </TableCell>
-            <TableCell className="w-24 min-w-24 text-center">
+            <TableCell className="w-32 min-w-32 text-center">
               {format(item.finishTime, "yyyy-MM-dd HH:mm:ss")}
             </TableCell>
-            <TableCell className="w-24 min-w-24 text-center">
-              <Button variant="link" size="icon">
+            <TableCell className="text-center flex justify-center items-center h-full">
+              <Button
+                variant="link"
+                size="icon"
+                className="block w-[100px] truncate overflow-hidden whitespace-nowrap"
+              >
                 {item.rechargeHash}
               </Button>
             </TableCell>

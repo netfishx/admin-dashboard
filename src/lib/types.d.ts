@@ -161,9 +161,9 @@ export type ChangeLog = {
 // 公告新增 编辑
 export type Announcement = {
   id?: string | null; // 编辑时传
-  type: string;
+  type: number;
   content: { id?: string; language: string; title?: string; content: string }[];
-  status: string;
+  status: number;
   startTime: number | null;
   endTime: number | null;
 };
@@ -194,11 +194,11 @@ export type AnnouncementList = {
     id?: string;
     language: string;
     content: string;
-    title?: string;
+    label?: string;
   }[];
-  content: { id?: string; language: string; content: string; title?: string }[];
+  content: { id?: string; language: string; content: string; label: string };
   contentOfLanguage: string;
-  titleOfLanguage: string;
+  labelOfLanguage: string;
   status: number;
   createTime: number;
   updateTime: number;
@@ -493,7 +493,7 @@ export type RechargeReportParams = {
   startTime?: number;
   endTime?: number;
   orderNo?: string;
-  withdrawUserType?: number;
+  userType?: number;
   operatorSymbol?: number;
   rechargeMoney?: number;
   requestStatus?: number;
@@ -533,6 +533,8 @@ export type WithdrawReportParams = {
   endTime?: number;
   orderNo?: string;
   operatorSymbol?: number;
+  userType?: number;
+  userId?: string;
   withdrawMoney?: number;
   pageNum: number;
   pageSize: number;
