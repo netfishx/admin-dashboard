@@ -21,12 +21,9 @@ import { useEffect, useRef } from "react";
 export function ListFilter({ gameList }: { gameList: GameInfo[] }) {
   const t = useTranslations("report.orderlist");
 
-  const [gameName, setGameName] = useQueryState(
-    "gameId",
-    parseAsString
-      .withDefault(gameList?.[0]?.gameId.toString() ?? "")
-      .withOptions({ clearOnDefault: false }),
-  );
+  const [gameName, setGameName] = useQueryState("gameId", {
+    defaultValue: "all",
+  });
   const [bettingtime, setBettingtime] = useQueryState(
     "timeType",
     parseAsString.withDefault("1").withOptions({ clearOnDefault: false }),
@@ -81,7 +78,7 @@ export function ListFilter({ gameList }: { gameList: GameInfo[] }) {
     setMemberID("");
     setRoomeownerID("");
     setLeastlevelID("");
-    setGameName(gameList?.[0]?.gameId.toString() ?? "");
+    setGameName("all");
     setBettingtime("1");
     setSettlementstatus("all");
     handleAmountFilterReset();
@@ -143,6 +140,9 @@ export function ListFilter({ gameList }: { gameList: GameInfo[] }) {
               <SelectValue placeholder={t("placeholderselect")} />
             </SelectTrigger>
             <SelectContent>
+              <SelectItem key="all" value="all">
+                {t("all")}
+              </SelectItem>
               {gameList.map((game) => (
                 <SelectItem key={game.gameId} value={game.gameId.toString()}>
                   {game.gameName}

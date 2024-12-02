@@ -1,13 +1,13 @@
 import TableSkeleton from "@/components/table-skeleton";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Table } from "@/components/ui/table";
-import type { BorrowRecordRequestParams } from "@/lib/types";
+import type { CreditRecordRequestParams } from "@/lib/types";
 import { Suspense } from "react";
 import { List, ListHeader } from "./list";
 import { ListFilter } from "./list-filter";
 
 interface CommonWrapperProps {
-  searchParams: Promise<BorrowRecordRequestParams>;
+  searchParams: Promise<CreditRecordRequestParams>;
 }
 
 async function CommonWrapper({ searchParams }: CommonWrapperProps) {

@@ -1,7 +1,8 @@
+import { getBaccaratGames } from "@/api";
 import TableSkeleton from "@/components/table-skeleton";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Table } from "@/components/ui/table";
-import type { MemberReportRequestParams } from "@/lib/types";
+import type { GameInfo, MemberReportRequestParams } from "@/lib/types";
 import { getSession } from "@/session";
 import { Suspense } from "react";
 import { List, ListHeader } from "./list";
@@ -11,16 +12,22 @@ interface CommonWrapperProps {
   searchParams: Promise<MemberReportRequestParams>;
 }
 
-async function ListFilterWrapper() {
+async function ListFilterWrapper({ gameList }: { gameList: GameInfo[] }) {
   const session = await getSession();
   const permissions = session?.permissions;
   const hasSearchPermission = permissions?.includes(
     "member_report_baccarat_search",
   );
-  return <ListFilter hasSearchPermission={!!hasSearchPermission} />;
+  return (
+    <ListFilter
+      hasSearchPermission={!!hasSearchPermission}
+      gameList={gameList}
+    />
+  );
 }
 
 async function CommonWrapper({ searchParams }: CommonWrapperProps) {
+  const gameListResp = await getBaccaratGames();
   return (
     <>
       <Suspense
@@ -30,7 +37,7 @@ async function CommonWrapper({ searchParams }: CommonWrapperProps) {
           </div>
         }
       >
-        <ListFilterWrapper />
+        <ListFilterWrapper gameList={gameListResp?.data ?? []} />
       </Suspense>
       <Suspense
         fallback={

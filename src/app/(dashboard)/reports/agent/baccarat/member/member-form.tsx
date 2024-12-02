@@ -19,11 +19,11 @@ import { useRouter } from "next/navigation";
 import { useQueryState } from "nuqs";
 import { useEffect, useRef, useState } from "react";
 
-export function MemberForm() {
+export function MemberForm({ gameList }: { gameList: GameInfo[] }) {
   const t = useTranslations("report.agent");
   const router = useRouter();
   const [gameName, setGameName] = useQueryState("gameId", {
-    defaultValue: "",
+    defaultValue: "all",
   });
   const [leastlevelID, setLeastlevelID] = useQueryState("agentId", {
     defaultValue: "",
@@ -39,7 +39,7 @@ export function MemberForm() {
   };
 
   const handleReset = () => {
-    setGameName("");
+    setGameName("all");
     setLeastlevelID("");
     handleDateRangeFilterReset();
   };
@@ -60,12 +60,13 @@ export function MemberForm() {
           <Select
             value={gameName ?? ""}
             onValueChange={(value) => setGameName(value)}
-            defaultValue="1"
+            defaultValue="all"
           >
             <SelectTrigger className="w-28">
               <SelectValue placeholder={t("placeholderselect")} />
             </SelectTrigger>
             <SelectContent>
+              <SelectItem value="all">{t("all")}</SelectItem>
               {gameList.map((game) => (
                 <SelectItem key={game.gameId} value={game.gameId.toString()}>
                   {game.gameName}

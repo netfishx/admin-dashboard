@@ -17,9 +17,9 @@ import { useQueryState } from "nuqs";
 import { useRef } from "react";
 
 export function ListFilter() {
-  const t = useTranslations("report.credit");
+  const t = useTranslations("report.borrow");
   const router = useRouter();
-  const [orderNumber, setOrderNumber] = useQueryState("transactionID", {
+  const [orderNumber, setOrderNumber] = useQueryState("orderNo", {
     defaultValue: "",
   });
   const [agentId, setAgentId] = useQueryState("agentId", {
@@ -104,8 +104,9 @@ export function ListFilter() {
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="all">{t("all")}</SelectItem>
-              <SelectItem value="1">百家乐01</SelectItem>
-              <SelectItem value="2">百家乐02</SelectItem>
+              <SelectItem value="15">{t("borrow")}</SelectItem>
+              <SelectItem value="16">{t("repayment")}</SelectItem>
+              <SelectItem value="21">{t("writeOff")}</SelectItem>
             </SelectContent>
           </Select>
         </div>

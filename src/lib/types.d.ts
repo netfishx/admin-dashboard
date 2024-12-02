@@ -394,7 +394,7 @@ export type OrderReportsRecord = {
 // 占成拦货报表请求入参
 export type RatioReportRequestParams = {
   agentId?: string; // 代理ID
-  gameId?: number; // 游戏ID（不传时为全部游戏）
+  gameId?: string; // 游戏ID（不传时为全部游戏）
   houseOwnerId?: string; // 房主ID
   parentAgentId?: string; // 上级代理ID
   startTime: number; // 开奖开始时间（必传）
@@ -643,8 +643,8 @@ export type DictionaryItemList = {
   remark: string;
 };
 
-// 借还记录请求入参
-export type BorrowRecordRequestParams = {
+// 授信记录请求入参
+export type CreditRecordRequestParams = {
   /** 代理ID */
   agentId: string;
 
@@ -673,8 +673,8 @@ export type BorrowRecordRequestParams = {
   pageSize: number;
 };
 
-// 借还记录请求出参
-export type BorrowRecordRequestRecords = {
+// 授信记录请求出参
+export type CreditRecordRequestRecords = {
   /** 交易ID - UUID格式 */
   transactionID: string;
 
@@ -698,6 +698,34 @@ export type BorrowRecordRequestRecords = {
    * Unix时间戳(毫秒)
    */
   createTime: number;
+};
+
+// 借还记录请求入参
+export type BorrowRecordRequestParams = {
+  startTime: number;
+  endTime: number;
+  orderNo: string;
+  agentId: string;
+  memberId: string;
+  orderType: number;
+  pageNum: number;
+  pageSize: number;
+};
+
+// 借还记录请求出参
+export type BorrowRecordRequestRecords = {
+  id: string;
+  orderNo: string;
+  orderType: number;
+  agentId: string;
+  memberId: string;
+  memberName: string;
+  operateMoney: string;
+  operateTime: number;
+  createTime: number;
+  updateTime: number;
+  actualMoney: string;
+  remainMoney: string;
 };
 
 // 提现手续费

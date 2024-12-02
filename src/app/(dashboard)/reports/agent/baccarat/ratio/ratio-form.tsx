@@ -19,10 +19,10 @@ import { useRouter } from "next/navigation";
 import { useQueryState } from "nuqs";
 import { useEffect, useRef, useState } from "react";
 
-export function RatioForm() {
+export function RatioForm({ gameList }: { gameList: GameInfo[] }) {
   const t = useTranslations("report.agent");
   const [gameId, setGameId] = useQueryState("gameId", {
-    defaultValue: "",
+    defaultValue: "all",
   });
   const [agentId, setagentId] = useQueryState("agentId", {
     defaultValue: "",
@@ -44,7 +44,7 @@ export function RatioForm() {
   };
 
   const handleReset = () => {
-    setGameId("");
+    setGameId("all");
     setagentId("");
     setHouseOwnerId("");
     setParentAgentId("");
@@ -67,12 +67,13 @@ export function RatioForm() {
           <Select
             value={gameId ?? ""}
             onValueChange={(value) => setGameId(value)}
-            defaultValue="1"
+            defaultValue="all"
           >
             <SelectTrigger className="w-28">
               <SelectValue placeholder={t("placeholderselect")} />
             </SelectTrigger>
             <SelectContent>
+              <SelectItem value="all">{t("all")}</SelectItem>
               {gameList.map((game) => (
                 <SelectItem key={game.gameId} value={game.gameId.toString()}>
                   {game.gameName}
