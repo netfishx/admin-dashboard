@@ -153,23 +153,26 @@ export async function apiRequest<T>({
   });
   console.group("request");
   console.info("info:");
-  console.dir({
-    url,
-    ip,
-    locale,
-    header,
-    method,
-    data,
-    params,
-    token,
-    expire,
-    result,
-  });
+  console.dir(
+    {
+      url,
+      ip,
+      locale,
+      header,
+      method,
+      data,
+      params,
+      token,
+      expire,
+      result,
+    },
+    { depth: null },
+  );
   console.groupEnd();
   if (result.status >= 400 || result.data.code !== 0) {
     console.group("error");
     console.error("result:");
-    console.dir(result);
+    console.dir(result, { depth: null });
     console.groupEnd();
   }
   if ([401, 403].includes(result.status)) {
