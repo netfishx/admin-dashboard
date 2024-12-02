@@ -59,6 +59,9 @@ export default async function DashboardPage({
   const session = await getSession();
   const permissions = session?.permissions;
   const params = await searchParams;
+  if (!params?.tz) {
+    return <TimeWrapper />;
+  }
   const now = new TZDate().withTimeZone(
     timezoneOffsetToString(Number(params?.tz)),
   );
