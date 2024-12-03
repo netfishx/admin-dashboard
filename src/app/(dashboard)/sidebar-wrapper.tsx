@@ -7,7 +7,7 @@ export async function SidebarWrapper() {
   await connection();
   const session = await getSession();
   const permissions = session?.permissions ?? [];
-  const hasReceiveOrderPermission = permissions.includes("receive_order");
+  const hasReceiveOrderPermission = permissions.includes("revice_order");
   let status = false;
   if (hasReceiveOrderPermission) {
     const res = await getReceiveOrder();
