@@ -4,17 +4,19 @@ import { List } from "./list";
 import { TableBodySkeleton, TableHeaderWrapper } from "./list";
 export default async function Page() {
   return (
-    <div className="flex flex-col gap-2 w-full h-full">
-      <Suspense
-        fallback={
-          <Table className="border rounded-sm">
-            <TableHeaderWrapper />
-            <TableBodySkeleton />
-          </Table>
-        }
-      >
-        <List />
-      </Suspense>
+    <div className="flex flex-col gap-2 w-full h-full ">
+      <div className="flex-1 flex flex-col gap-2">
+        <Suspense
+          fallback={
+            <Table className="border rounded-sm ">
+              <TableHeaderWrapper />
+              <TableBodySkeleton />
+            </Table>
+          }
+        >
+          <List />
+        </Suspense>
+      </div>
     </div>
   );
 }
