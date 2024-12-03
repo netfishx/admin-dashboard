@@ -1,0 +1,80 @@
+logging {
+  level  = "info"
+  format = "logfmt"
+}
+
+discovery.docker "containers" {
+  host = "unix:///var/run/docker.sock"
+  refresh_interval = "5s"
+}
+
+discovery.relabel "logs_integrations_docker" {
+    targets = []
+
+
+    rule {
+        target_label = "job"
+        replacement = "integrations/docker"
+    }
+
+
+    rule {
+        target_label = "instance"
+        replacement = constants.hostname
+    }
+
+
+    rule {
+        source_labels = ["__meta_docker_container_name"]
+        regex = "/(.*)"
+        target_label = "container"
+    }
+
+
+    rule {
+        source_labels = ["__meta_docker_container_log_stream"]
+        target_label = "stream"
+    }
+}
+
+loki.source.docker "logs" {
+  host = "unix:///var/run/docker.sock"
+  targets = discovery.docker.containers.targets
+  forward_to = [loki.write.endpoint.receiver]
+
+  relabel_rules = discovery.relabel.logs_integrations_docker.rules
+}
+
+loki.process "default" {
+  forward_to = [loki.write.endpoint.receiver]
+
+  stage.json {
+    expressions = {
+      output = "log",
+      stream = "stream",
+      timestamp = "time",
+    }
+  }
+
+  stage.timestamp {
+    source = "timestamp"
+    format = "RFC3339Nano"
+  }
+
+  stage.labels {
+    values = {
+      stream = "stream",
+    }
+  }
+}
+
+loki.write "endpoint" {
+  endpoint {
+    url = "http://172.31.33.250:7080/loki/api/v1/push"
+  }
+
+  external_labels = {
+    env = "test",
+    datacenter = "dc1",
+  }
+}
