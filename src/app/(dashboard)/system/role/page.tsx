@@ -79,7 +79,7 @@ async function RoleTableWrapper({
                   <TableCell className="text-center sticky right-0 bg-background">
                     <div className="flex justify-center">
                       <EditButton data={item} />
-                      <DeleteButton id={Number(item.id)} />
+                      <DeleteButton id={item.id ?? ""} />
                     </div>
                   </TableCell>
                 </TableRow>

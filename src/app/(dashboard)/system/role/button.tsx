@@ -26,7 +26,7 @@ export function AddButton() {
     </Button>
   );
 }
-export function DeleteButton({ id }: { id: number }) {
+export function DeleteButton({ id }: { id: string }) {
   const t = useTranslations("system.role");
   const setData = useSetAtom(roleDeleteAtom);
   const setOpen = useSetAtom(roleDeleteDialogAtom);

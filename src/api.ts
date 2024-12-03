@@ -948,7 +948,7 @@ export async function editRole(data: Role) {
   });
 }
 
-export async function deleteRole(data: { id: number }) {
+export async function deleteRole(data: { id: string }) {
   const user = await getSession();
   return await apiRequest({
     url: "/role/deleteById",
