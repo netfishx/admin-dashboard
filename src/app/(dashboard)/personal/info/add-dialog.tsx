@@ -5,9 +5,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { ScrollBar } from "@/components/ui/scroll-area";
 import type { UserBasicInfo } from "@/lib/types";
-import { ScrollArea } from "@radix-ui/react-scroll-area";
 import { useTranslations } from "next-intl";
 import { QRCodeSVG } from "qrcode.react";
 import CopyButton from "../../fund/collection/copy-button";
@@ -27,17 +25,17 @@ export function AddDialog(props: Dialogprops) {
       <DialogContent>
         <div className="flex flex-col gap-4">
           <DialogHeader>
-            <DialogTitle>{t("google2fa")}</DialogTitle>
+            <DialogTitle>{t("recharge")}</DialogTitle>
           </DialogHeader>
           <div className="max-w-xl w-full mx-auto p-4">
             <div className="text-center flex gap-2 items-start mb-6">
-              <div className="min-w-[120px] text-muted-foreground text-end">
+              <div className="min-w-[80PX] text-muted-foreground text-end">
                 {t("mainNet")}
               </div>
               <div>{data?.majorNetwork}</div>
             </div>
             <div className="text-center flex gap-2 items-start mb-6">
-              <div className="min-w-[120px] text-muted-foreground text-end">
+              <div className="min-w-[80PX] text-muted-foreground text-end">
                 {t("qrCode")}
               </div>
               <div>
@@ -45,21 +43,16 @@ export function AddDialog(props: Dialogprops) {
               </div>
             </div>
             <div className="text-center flex gap-2 items-start mb-6">
-              <div className="min-w-[120px] text-muted-foreground text-end">
+              <div className="min-w-[80PX] text-muted-foreground text-end">
                 {t("depositAddress")}
               </div>
               <div className="flex items-center gap-2 w-[300px]">
-                <ScrollArea className="w-[300px] h-[100px]">
-                  <div>
-                    {data?.rechargeAddress}
-                    <CopyButton address={data?.rechargeAddress} />
-                  </div>
-                  <ScrollBar orientation="horizontal" />
-                </ScrollArea>
+                {data?.rechargeAddress}
+                <CopyButton address={data?.rechargeAddress} />
               </div>
             </div>
             <div className="text-center flex gap-2 items-start mb-6">
-              <div className="min-w-[120px] text-muted-foreground text-end">
+              <div className="min-w-[80PX] text-muted-foreground text-end">
                 {t("tips03")}
               </div>
               <div className="text-left">{t("tips04")}</div>
