@@ -137,6 +137,7 @@ export async function apiRequest<T>({
   token?: string;
   expire?: number | "default" | "minutes" | "days" | "max";
 }): Promise<Res<T>> {
+  const start = performance.now();
   const nextHeaders = await headers();
   const ip = nextHeaders.get("x-forwarded-for");
   const locale = nextHeaders.get("accept-language");
@@ -165,6 +166,7 @@ export async function apiRequest<T>({
       token,
       expire,
       result,
+      time: performance.now() - start,
     },
     { depth: null },
   );
