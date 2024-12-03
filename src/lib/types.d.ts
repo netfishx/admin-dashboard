@@ -286,6 +286,8 @@ export type ApplyData = {
   approverStatus: number;
   withdrawMode: number;
   moneyStatus: number;
+  withdrawFee: string;
+  withdrawWay: string;
 };
 
 export type ApplyListRequest = {

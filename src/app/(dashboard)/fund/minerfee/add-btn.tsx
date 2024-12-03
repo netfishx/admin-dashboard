@@ -16,6 +16,7 @@ import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useTransition } from "react";
+import { useEffect } from "react";
 import { toast } from "sonner";
 
 export function AddBtn() {
@@ -39,10 +40,22 @@ function AddButton() {
   const translations = useTranslations();
   const [isPending, startTransition] = useTransition();
   const router = useRouter();
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+  useEffect(() => {
+    if (isPending) {
+      router.push("?loading=true");
+    } else {
+      router.push("?loading=false");
+    }
+  }, [isPending]);
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button disabled={isPending}>{t("add")}</Button>
+        <Button disabled={isPending}>
+          {isPending && <Loader2 className="w-4 h-4 animate-spin" />}
+          {t("add")}
+        </Button>
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>

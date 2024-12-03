@@ -9,12 +9,23 @@ import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useQueryState } from "nuqs";
 import { useTransition } from "react";
-
-export function Form() {
+import { useEffect, useState } from "react";
+import { toast } from "sonner";
+export function Form({
+  searchParams,
+}: { searchParams: { [key: string]: string | string[] } }) {
   const t = useTranslations("system.announcement");
   const [isPending, startTransition] = useTransition();
   const router = useRouter();
+  const { startTime, endTime } = searchParams;
+  const [isSearchClick, setIsSearchClick] = useState(false);
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+  useEffect(() => {
+    if ((!startTime || !endTime) && isSearchClick) {
+      toast.error("请选择日期范围");
+    }
+  }, [startTime, endTime]);
   const [userId, setAgentId] = useQueryState("userId", {
     defaultValue: "",
   });
@@ -47,6 +58,7 @@ export function Form() {
             </Button>
             <Button
               onClick={() => {
+                setIsSearchClick(true);
                 startTransition(router.refresh);
               }}
               disabled={isPending}
