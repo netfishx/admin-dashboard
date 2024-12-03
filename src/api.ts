@@ -80,6 +80,10 @@ import { cookies } from "next/headers";
 import { getSession } from "@/session";
 import axios from "axios";
 
+export async function signOut() {
+  (await cookies()).delete("session");
+}
+
 export async function getGameList(type: number) {
   const user = await getSession();
   return await apiRequest<GameType[]>({

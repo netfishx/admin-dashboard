@@ -1,7 +1,7 @@
 "use client";
-
+import { signOut } from "@/api";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect } from "react";
+import { startTransition, useEffect } from "react";
 import { toast } from "sonner";
 
 export function APIError() {
@@ -10,14 +10,17 @@ export function APIError() {
   const router = useRouter();
   useEffect(() => {
     if (error !== null) {
-      toast.error(error, {
-        duration: 1000,
-        onAutoClose: () => {
-          router.replace("/login");
-        },
-        onDismiss: () => {
-          router.replace("/login");
-        },
+      startTransition(async () => {
+        await signOut();
+        toast.error(error, {
+          duration: 1000,
+          onAutoClose: () => {
+            router.replace("/login");
+          },
+          onDismiss: () => {
+            router.replace("/login");
+          },
+        });
       });
     }
   }, [error, router.replace]);
