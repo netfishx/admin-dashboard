@@ -33,6 +33,11 @@ const nextConfig: NextConfig = {
       },
     ];
   },
+  compiler: {
+    removeConsole: {
+      exclude: ["info", "error", "warn", "dir", "group", "groupEnd"],
+    },
+  },
   devIndicators: {
     buildActivityPosition: "bottom-right",
   },
