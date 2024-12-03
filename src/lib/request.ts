@@ -174,7 +174,7 @@ export async function apiRequest<T>({
   );
   console.groupEnd();
 
-  if ([401, 403].includes(result.status)) {
+  if ([401, 403, 500].includes(result.status)) {
     return redirect(
       `/login?e=${encodeURIComponent(result.data.message ?? "")}`,
     );
