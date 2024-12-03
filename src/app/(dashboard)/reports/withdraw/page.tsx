@@ -84,9 +84,7 @@ async function TableHeaderWrapper() {
         <TableHead className="w-24 min-w-24 text-center">
           {t("finishTime")}
         </TableHead>
-        <TableHead className="min-w-24 text-center">
-          {t("withdrawHash")}
-        </TableHead>
+        <TableHead className="w-24 text-center">{t("withdrawHash")}</TableHead>
       </TableRow>
     </TableHeader>
   );
@@ -111,13 +109,13 @@ async function TableWrapper({
     orderNo: (orderNo ?? null) as string,
     operatorSymbol: Number(operatorSymbol),
     withdrawMoney: withdrawMoney ? Number(withdrawMoney) : 0,
-    requestStatus: requestStatus ? Number(requestStatus) : undefined,
+    requestStatus: requestStatus ? Number(requestStatus) : null,
     pageNum: Number(pageNum ?? 1),
     pageSize: Number(pageSize ?? 10),
     startTime: Number(startTime),
     endTime: Number(endTime),
     userId: (userId ?? null) as string,
-    userType: userType ? Number(userType) : undefined,
+    userType: userType ? Number(userType) : null,
   };
   if (!startTime || !endTime) {
     return (
@@ -138,8 +136,8 @@ async function TableWrapper({
   if (!validateParams(params)) {
     console.info("请至少选择一个查询条件");
   }
+
   const { data } = await getWithdrawReportList(params);
-  console.info("🌸 ~ data:", data);
   return (
     <div className="bg-background flex-1 w-full ">
       <div className="relative overflow-y-auto overflow-x-auto border rounded-sm">
@@ -198,7 +196,11 @@ async function TableBodyWrapper({ data }: { data?: PageData<WithdrawReport> }) {
               {format(item.finishTime, "yyyy-MM-dd HH:mm:ss")}
             </TableCell>
             <TableCell className="min-w-24 text-center">
-              <Button variant="link" size="icon">
+              <Button
+                variant="link"
+                size="icon"
+                className="block w-[100px] truncate overflow-hidden whitespace-nowrap"
+              >
                 {item.withdrawHash}
               </Button>
             </TableCell>

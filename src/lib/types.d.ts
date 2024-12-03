@@ -551,12 +551,12 @@ export type WithdrawReportParams = {
   endTime?: number;
   orderNo?: string;
   operatorSymbol?: number;
-  userType?: number;
+  userType?: number | null;
   userId?: string;
   withdrawMoney?: number;
   pageNum: number;
   pageSize: number;
-  requestStatus?: number;
+  requestStatus?: number | null;
 };
 
 // 归集地址列表
