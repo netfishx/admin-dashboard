@@ -1462,3 +1462,16 @@ export async function getGuandanGames() {
     data: res?.data?.filter((i) => i.gameType === 20),
   }));
 }
+
+export async function postUserInfoWithdrawVerify(data: {
+  id: string;
+  code: string;
+}) {
+  const user = await getSession();
+  return await apiRequest({
+    url: "/order/withdraw/google/check",
+    method: "POST",
+    data,
+    token: user?.token,
+  });
+}
