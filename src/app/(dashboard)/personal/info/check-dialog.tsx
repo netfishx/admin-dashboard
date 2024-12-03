@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Password } from "@/components/ui/password";
 import type {
   UserBasicInfo,
   WithdrawFeeList,
@@ -17,6 +18,7 @@ import type {
 } from "@/lib/types";
 import { cn } from "@/lib/utils";
 import { useTranslations } from "next-intl";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
@@ -34,7 +36,6 @@ interface FormField {
   type?: string;
   readOnly?: boolean;
 }
-
 function FormField({
   label,
   value,
@@ -54,6 +55,13 @@ function FormField({
         <div className="flex-1 bg-gray-50 px-3 py-2 rounded-md text-gray-700">
           {value}
         </div>
+      ) : label === "资金密码" ? (
+        <Password
+          type="password"
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          placeholder={placeholder}
+        />
       ) : (
         <Input
           type={type}
@@ -166,6 +174,7 @@ export function CheckDialog(props: Dialogprops) {
   const t = useTranslations("personal.info");
   const translations = useTranslations();
   const [step, setStep] = useState(1);
+  const router = useRouter();
   const [formData, setFormData] = useState<WithdrawFormData>({
     availableAmount: "0 ",
     withdrawMoney: "0",
@@ -180,13 +189,13 @@ export function CheckDialog(props: Dialogprops) {
     }
 
     const _res = await postUserInfoWithdraw(formData);
-    console.log(_res, "res");
     if (_res.code === 0) {
       if (_res?.data?.check && _res?.data?.validationType === 0) {
         setStep(2);
       } else {
         toast.success(_res.message);
         onOpenChange(false);
+        router.refresh();
       }
     } else {
       toast.error(_res.message);

@@ -47,6 +47,7 @@ export function MoneyModal({
         });
         if (code === 0) {
           toast.success(message);
+          onOpenChange(false);
           router.refresh();
         } else {
           toast.error(message);
@@ -58,7 +59,9 @@ export function MoneyModal({
           secret: data.newPassword,
         });
         if (code === 0) {
-          toast.success(translations("bindSuccess"));
+          toast.success(message);
+          onOpenChange(false);
+          router.refresh();
         } else {
           toast.error(message);
         }

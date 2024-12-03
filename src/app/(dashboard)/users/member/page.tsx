@@ -68,7 +68,6 @@ async function TableWrapper({
     ...params,
   };
   const { data } = await getMemberList(requestParams);
-  console.info("member list:", data);
   const session = await getSession();
   const permissions = session?.permissions;
   return (

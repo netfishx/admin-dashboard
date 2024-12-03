@@ -6,10 +6,10 @@ import { zfd } from "zod-form-data";
 export const createFormSchema = zfd
   .formData({
     username: zfd.text(usernameSchema),
-    password: zfd.text(passwordSchema),
+    newPassword: zfd.text(passwordSchema),
     confirmPassword: zfd.text(passwordSchema),
   })
-  .refine((data) => data.password === data.confirmPassword, {
+  .refine((data) => data.newPassword === data.confirmPassword, {
     message: "两次输入的密码不一致",
     path: ["confirmPassword"],
   });

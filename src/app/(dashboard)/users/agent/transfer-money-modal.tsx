@@ -1,4 +1,4 @@
-import { getUserBasicInfo } from "@/api";
+import { getUserBasicInfo, transferMoney } from "@/api";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -17,6 +17,7 @@ import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useEffect, useState, useTransition } from "react";
+import { toast } from "sonner";
 
 export function TransferMoneyModal() {
   const router = useRouter();
@@ -26,19 +27,42 @@ export function TransferMoneyModal() {
   const [moneyPassword, setMoneyPassword] = useState("");
   const [isPeding, startTransition] = useTransition();
   const [open, setOpen] = useAtom(transferMoneyModalAtom);
+  const [fetching, startFetching] = useTransition();
   const data = useAtomValue(agentDataAtom);
+  const [availableAmount, setAvailableAmount] = useState(0);
 
   const handleClickTransferMoney = () => {
-    console.info(amount, moneyPassword);
+    startTransition(async () => {
+      if (!data?.id) {
+        return;
+      }
+      const { code, message } = await transferMoney({
+        userId: data.id,
+        amount,
+        secret: moneyPassword,
+      });
+      if (code === 0) {
+        toast.success(message);
+      } else {
+        toast.error(message);
+      }
+    });
     setOpen(false);
     router.refresh();
   };
 
   useEffect(() => {
-    getUserBasicInfo().then((res) => {
-      console.info(res);
-    });
-  }, []);
+    if (open) {
+      startFetching(async () => {
+        const { code, data, message } = await getUserBasicInfo();
+        if (code === 0) {
+          setAvailableAmount(data?.usableBalanceMoney || 0);
+        } else {
+          toast.error(message);
+        }
+      });
+    }
+  }, [open, setAvailableAmount]);
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent
@@ -68,7 +92,14 @@ export function TransferMoneyModal() {
           </div>
           <div className="flex gap-4 items-center">
             <Label className="shrink-0 w-1/4 text-right text-muted-foreground" />
-            <span>123</span>
+            <div className="flex-1 text-xs text-destructive flex flex-row">
+              {t("availableAmount")}:
+              {fetching ? (
+                <Loader2 className="w-4 h-4 animate-spin" />
+              ) : (
+                availableAmount
+              )}
+            </div>
           </div>
           <div className="flex gap-4 items-center">
             <Label className="shrink-0 w-1/4 text-right text-muted-foreground">
@@ -85,10 +116,7 @@ export function TransferMoneyModal() {
           <Button variant="outline" onClick={() => setOpen(false)}>
             {translation("cancel")}
           </Button>
-          <Button
-            disabled={isPeding}
-            onClick={() => startTransition(handleClickTransferMoney)}
-          >
+          <Button disabled={isPeding} onClick={handleClickTransferMoney}>
             {isPeding && <Loader2 className="w-4 h-4 animate-spin" />}
             {translation("confirm")}
           </Button>
