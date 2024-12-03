@@ -6,6 +6,9 @@ import { zfd } from "zod-form-data";
 export const createFormSchema = zfd
   .formData({
     username: zfd.text(usernameSchema),
+    nickname: zfd.text(
+      z.union([z.string(), z.string().length(0)]), // 允许空字符串
+    ),
     password: zfd.text(passwordSchema),
     confirmPassword: zfd.text(passwordSchema),
   })
@@ -17,8 +20,9 @@ export const createFormSchema = zfd
 // 验证函数
 export async function validateFormData(formData: FormData) {
   try {
-    const result = await createFormSchema.parse(formData);
-    return { success: true, data: result };
+    const { username, nickname, password } =
+      await createFormSchema.parse(formData);
+    return { success: true, data: { username, nickname, password } };
   } catch (error) {
     if (error instanceof z.ZodError) {
       return {
