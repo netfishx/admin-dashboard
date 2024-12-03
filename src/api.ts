@@ -193,6 +193,22 @@ export async function updateAgent(data: {
     token: user?.token,
   });
 }
+
+// 用户管理-代理管理-转账
+export async function transferMoney(data: {
+  userId: string;
+  amount: number;
+  secret: string;
+}) {
+  const user = await getSession();
+  return await apiRequest({
+    url: "/wallet/transfer",
+    method: "POST",
+    data,
+    token: user?.token,
+  });
+}
+
 // 用户管理-代理管理-重置代理返水次数
 export async function resetRestCount(data: { id: string }) {
   const user = await getSession();
