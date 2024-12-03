@@ -736,7 +736,9 @@
       "amountfilter": "打赏金额筛选",
       "memberId": "会员ID",
       "roomOwnerId": "房主ID",
-      "ministerId": "部长ID"
+      "ministerId": "部长ID",
+      "transferOut": "转出",
+      "transferIn": "转入"
     }
   },
   "pagination": {
