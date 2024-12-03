@@ -598,11 +598,13 @@ export type Permission = {
   permsType: number;
   permsCode?: string | null;
   isUnderGrant?: number;
+  children?: Permission[];
 };
 
 export type TreeNode = {
-  id: string;
+  id: number;
   label: string;
+  type: number;
   children?: TreeNode[];
 };
 

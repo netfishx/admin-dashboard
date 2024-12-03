@@ -1,10 +1,10 @@
 "use client";
 
 import { Checkbox } from "@/components/ui/checkbox";
-import * as React from "react";
 import { ChevronDown, ChevronRight } from "lucide-react";
 import type { TreeNode } from "@/lib/types";
 import { cn } from "@/lib/utils";
+import { useState } from "react";
 
 function TreeNode({
   node,
@@ -14,10 +14,10 @@ function TreeNode({
 }: {
   node: TreeNode;
   level?: number;
-  onCheck: (id: string, checked: boolean | "indeterminate") => void;
-  checkedState: Map<string, boolean | "indeterminate">;
+  onCheck: (id: number, checked: boolean | "indeterminate") => void;
+  checkedState: Map<number, boolean | "indeterminate">;
 }) {
-  const [isOpen, setIsOpen] = React.useState(true);
+  const [isOpen, setIsOpen] = useState(true);
   const hasChildren = node.children && node.children.length > 0;
   const checked = checkedState.get(node.id);
 
@@ -47,12 +47,12 @@ function TreeNode({
           )}
           {!hasChildren && <span className="w-5" />}
           <Checkbox
-            id={node.id}
+            id={node.id.toString()}
             checked={checked}
             onCheckedChange={handleCheck}
           />
           <label
-            htmlFor={node.id}
+            htmlFor={node.id.toString()}
             className="ml-2 cursor-pointer select-none text-sm text-gray-700 dark:text-gray-300"
           >
             {node.label}
@@ -76,8 +76,8 @@ function TreeNode({
   );
 }
 
-function getDescendants(node: TreeNode): string[] {
-  let descendants: string[] = [node.id];
+function getDescendants(node: TreeNode): number[] {
+  let descendants: number[] = [node.id];
   if (node.children) {
     node.children.forEach((child) => {
       descendants = descendants.concat(getDescendants(child));
@@ -86,7 +86,7 @@ function getDescendants(node: TreeNode): string[] {
   return descendants;
 }
 
-function getAncestors(id: string, nodes: TreeNode[]): string[] {
+function getAncestors(id: number, nodes: TreeNode[]): number[] {
   for (const node of nodes) {
     if (node.id === id) {
       return [node.id];
@@ -101,7 +101,7 @@ function getAncestors(id: string, nodes: TreeNode[]): string[] {
   return [];
 }
 
-function findNode(id: string, nodes: TreeNode[]): TreeNode | null {
+function findNode(id: number, nodes: TreeNode[]): TreeNode | null {
   for (const node of nodes) {
     if (node.id === id) {
       return node;
@@ -123,21 +123,21 @@ export function TreeSelect({
   className,
 }: {
   data: TreeNode[];
-  checkedState: Map<string, boolean | "indeterminate">;
-  handleChangeAction: (checkedState: Map<string, boolean | "indeterminate">) => void;
+  checkedState: Map<number, boolean | "indeterminate">;
+  handleChangeAction: (checkedState: Map<number, boolean | "indeterminate">) => void;
   className?: string;
 }) {
-  const [checkedState, setCheckedState] = React.useState<
-    Map<string, boolean | "indeterminate">
+  const [checkedState, setCheckedState] = useState<
+    Map<number, boolean | "indeterminate">
   >(state);
 
   const updateCheckedState = (
-    id: string,
+    id: number,
     checked: boolean | "indeterminate",
   ) => {
     const newCheckedState = new Map(checkedState);
 
-    const updateDescendants = (nodeId: string, state: boolean) => {
+    const updateDescendants = (nodeId: number, state: boolean) => {
       const node = findNode(nodeId, data);
       if (node) {
         const descendants = getDescendants(node);
@@ -147,7 +147,7 @@ export function TreeSelect({
       }
     };
 
-    const updateAncestors = (nodeId: string) => {
+    const updateAncestors = (nodeId: number) => {
       const ancestors = getAncestors(nodeId, data);
       ancestors
         .slice(0, -1)
@@ -186,7 +186,7 @@ export function TreeSelect({
     handleChangeAction(newCheckedState);
   };
 
-  const handleCheck = (id: string, checked: boolean | "indeterminate") => {
+  const handleCheck = (id: number, checked: boolean | "indeterminate") => {
     updateCheckedState(id, checked);
   };
 
