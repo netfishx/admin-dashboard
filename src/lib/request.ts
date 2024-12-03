@@ -153,7 +153,9 @@ export async function apiRequest<T>({
     expire,
   });
   console.group("request");
-  console.info("info:");
+  if (result.status >= 400 || result.data.code !== 0) {
+    console.error("error!!!");
+  }
   console.dir(
     {
       url,
@@ -171,12 +173,7 @@ export async function apiRequest<T>({
     { depth: null },
   );
   console.groupEnd();
-  if (result.status >= 400 || result.data.code !== 0) {
-    console.group("error");
-    console.error("result:");
-    console.dir(result, { depth: null });
-    console.groupEnd();
-  }
+
   if ([401, 403].includes(result.status)) {
     return redirect(
       `/login?e=${encodeURIComponent(result.data.message ?? "")}`,
