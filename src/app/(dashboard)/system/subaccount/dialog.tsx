@@ -23,7 +23,7 @@ import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Form from "next/form";
 import { useRouter } from "next/navigation";
-import { useLayoutEffect, useRef, useState, useTransition } from "react";
+import { useEffect, useRef, useState, useTransition } from "react";
 import { toast } from "sonner";
 
 export function SubaccountDialog({ roles }: { roles: Role[] }) {
@@ -36,10 +36,12 @@ export function SubaccountDialog({ roles }: { roles: Role[] }) {
   const [checkedRoles, setCheckedRoles] = useState<string[]>([]);
   const [status, setStatus] = useState<number>(0);
   const router = useRouter();
-  useLayoutEffect(() => {
-    setCheckedRoles(data?.roleList ?? []);
-    setStatus(data?.status ?? 0);
-  }, [data]);
+  useEffect(() => {
+    if (open) {
+      setCheckedRoles(data?.roleList ?? []);
+      setStatus(data?.status ?? 0);
+    }
+  }, [data, open]);
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
