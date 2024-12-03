@@ -36,13 +36,6 @@ interface FormField {
   type?: string;
   readOnly?: boolean;
 }
-{
-  /* <Password
-                    type="password"
-                    placeholder={t("placeholderOld")}
-                    name="oldPassword"
-                  /> */
-}
 function FormField({
   label,
   value,
