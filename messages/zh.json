@@ -328,7 +328,8 @@
       "rebate": "退水",
       "loginLog": "登录日志",
       "changeLog": "变更日志",
-      "check": "查询"
+      "check": "查询",
+      "moneyPassword": "资金密码"
     },
     "supplier": {
       "add": "新增",

@@ -299,6 +299,22 @@ export async function updateMember(data: {
     token: user?.token,
   });
 }
+
+// 用户管理-会员管理-收息
+export async function modifyCreditLimit(data: {
+  userId: string;
+  amount: number;
+  secret: string;
+}) {
+  const user = await getSession();
+  return await apiRequest({
+    url: "/wallet/modifyCreditLimit",
+    method: "POST",
+    data,
+    token: user?.token,
+  });
+}
+
 export async function getAgentLoginLog(params: {
   userId: string;
   pageNum: number;

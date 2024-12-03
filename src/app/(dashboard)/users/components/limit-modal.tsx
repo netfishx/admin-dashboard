@@ -1,6 +1,6 @@
 "use client";
 
-import { getGameConfig, getGameOdds } from "@/api";
+import { getGameConfig, getGameOdds, updateGameOdds } from "@/api";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -35,6 +35,7 @@ import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { Suspense, useEffect, useState, useTransition } from "react";
+import { toast } from "sonner";
 
 export function LimitModal({ userId }: { userId: string }) {
   const translations = useTranslations();
@@ -85,9 +86,18 @@ export function LimitModal({ userId }: { userId: string }) {
   };
 
   const handleSave = () => {
-    console.info(data);
-    setOpen(false);
-    router.refresh();
+    startTransition(async () => {
+      if (gameId) {
+        const { code, message } = await updateGameOdds({ gameId, list: data });
+        if (code === 0) {
+          toast.success(message);
+          setOpen(false);
+          router.refresh();
+        } else {
+          toast.error(message);
+        }
+      }
+    });
   };
 
   return (
@@ -204,10 +214,7 @@ export function LimitModal({ userId }: { userId: string }) {
           <Button variant="outline" onClick={() => setOpen(false)}>
             {translations("cancel")}
           </Button>
-          <Button
-            disabled={isPending}
-            onClick={() => startTransition(handleSave)}
-          >
+          <Button disabled={isPending} onClick={handleSave}>
             {isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
             {translations("confirm")}
           </Button>
