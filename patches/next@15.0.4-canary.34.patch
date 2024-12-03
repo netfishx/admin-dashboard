@@ -14,7 +14,7 @@ index 1ef2bf4ad5ff46cff13b797da5de8f3112b7abb4..2b798a71b0f84ba3b9aa6feac51b1e12
          throw new Error('Using a self signed certificate is only supported with `next dev`.');
      }
      async function requestListener(req, res) {
-+        if (!/^(\/_next\/static|\/_next\/image|\/icon.svg)/.test(req.url)) _logger(req, res);
++        if (!/^(\/_next\/static|\/_next\/image|\/__nextjs_source-map|\/icon.svg)/.test(req.url)) _logger(req, res);
          try {
              if (handlersPromise) {
                  await handlersPromise;
