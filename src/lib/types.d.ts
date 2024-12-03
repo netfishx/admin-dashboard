@@ -49,6 +49,15 @@ export type SupplierConfig = {
   distributionPercent: number;
 };
 
+// 新增供应商
+export type AddSupplier = {
+  username: string;
+  nickname: string;
+  newPassword: string;
+  confirmPassword?: string;
+  remark: string;
+};
+
 // 供应商列表
 export type Supplier = {
   id: string;
@@ -73,6 +82,13 @@ export type MaintainGame = {
 
 export type RatioReportListTypes = {
   [key: string]: string | number | undefined | null | string[] | number[];
+};
+
+export type AddAgents = {
+  username: string;
+  nickname: string;
+  password: string;
+  confirmPassword?: string;
 };
 export interface AgentData {
   upUsername: string;

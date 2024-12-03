@@ -205,7 +205,6 @@ export async function resetRestCount(data: { id: string }) {
 }
 // 用户管理-代理管理-添加代理
 export async function addAgent(data: {
-  upUsername?: string;
   username: string;
   nickname: string;
   password: string;

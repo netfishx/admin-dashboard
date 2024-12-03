@@ -56,7 +56,6 @@ async function TableWrapper({
   });
   const session = await getSession();
   const permissions = session?.permissions;
-  console.info("agent list:", data);
   return (
     <>
       <div className="border rounded-sm">
