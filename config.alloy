@@ -30,6 +30,12 @@ discovery.relabel "logs_integrations_docker" {
         target_label = "container"
     }
 
+    rule {
+        source_labels = ["__meta_docker_container_name"]
+        regex = "/(.*)"
+        target_label = "app"
+    }
+
 
     rule {
         source_labels = ["__meta_docker_container_log_stream"]
@@ -41,7 +47,6 @@ loki.source.docker "logs" {
   host = "unix:///var/run/docker.sock"
   targets = discovery.docker.containers.targets
   forward_to = [loki.write.endpoint.receiver]
-
   relabel_rules = discovery.relabel.logs_integrations_docker.rules
 }
 
@@ -70,7 +75,8 @@ loki.process "default" {
 
 loki.write "endpoint" {
   endpoint {
-    url = "http://172.31.33.250:7080/loki/api/v1/push"
+    url = "http://10.0.29.4:7080/loki/api/v1/push"
+    tenant_id = "docker"
   }
 
   external_labels = {
