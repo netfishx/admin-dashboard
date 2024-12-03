@@ -29,13 +29,13 @@ export function AddDialog(props: Dialogprops) {
           </DialogHeader>
           <div className="max-w-xl w-full mx-auto p-4">
             <div className="text-center flex gap-2 items-start mb-6">
-              <div className="min-w-[80PX] text-muted-foreground text-end">
+              <div className="min-w-[80px] text-muted-foreground text-end">
                 {t("mainNet")}
               </div>
               <div>{data?.majorNetwork}</div>
             </div>
             <div className="text-center flex gap-2 items-start mb-6">
-              <div className="min-w-[80PX] text-muted-foreground text-end">
+              <div className="min-w-[80px] text-muted-foreground text-end">
                 {t("qrCode")}
               </div>
               <div>
@@ -43,7 +43,7 @@ export function AddDialog(props: Dialogprops) {
               </div>
             </div>
             <div className="text-center flex gap-2 items-start mb-6">
-              <div className="min-w-[80PX] text-muted-foreground text-end">
+              <div className="min-w-[80px] text-muted-foreground text-end">
                 {t("depositAddress")}
               </div>
               <div className="flex items-center gap-2 w-[300px]">
@@ -52,7 +52,7 @@ export function AddDialog(props: Dialogprops) {
               </div>
             </div>
             <div className="text-center flex gap-2 items-start mb-6">
-              <div className="min-w-[80PX] text-muted-foreground text-end">
+              <div className="min-w-[80px] text-muted-foreground text-end">
                 {t("tips03")}
               </div>
               <div className="text-left">{t("tips04")}</div>
