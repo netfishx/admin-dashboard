@@ -997,6 +997,6 @@ export type GameInfo = {
 
 export type WithdrawApply = {
   id: string;
-  check: string;
-  validationType: number;
+  check: boolean;
+  validationType: string;
 };
