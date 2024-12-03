@@ -1,5 +1,9 @@
 "use client";
-import { getWithdrawFeeList, postUserInfoWithdraw } from "@/api";
+import {
+  getWithdrawFeeList,
+  postUserInfoWithdraw,
+  postUserInfoWithdrawVerify,
+} from "@/api";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -17,6 +21,7 @@ import type {
   WithdrawFormData,
 } from "@/lib/types";
 import { cn } from "@/lib/utils";
+import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -182,15 +187,21 @@ export function CheckDialog(props: Dialogprops) {
     withdrawWay: "",
     secret: "",
   });
+  const [googleCode, setGoogleCode] = useState("");
+  const [verifyId, setVerifyId] = useState("");
+  const [loading, setLoading] = useState(false);
   const handleNext = async () => {
+    setLoading(true);
     if (Number(formData.withdrawMoney) > Number(formData.availableAmount)) {
       toast.error(t("tips01"));
+      setLoading(false);
       return;
     }
 
     const _res = await postUserInfoWithdraw(formData);
     if (_res.code === 0) {
-      if (_res?.data?.check && _res?.data?.validationType === 0) {
+      if (_res?.data?.check && _res?.data?.validationType === "GOOGLE") {
+        setVerifyId(_res?.data?.id);
         setStep(2);
       } else {
         toast.success(_res.message);
@@ -200,10 +211,27 @@ export function CheckDialog(props: Dialogprops) {
     } else {
       toast.error(_res.message);
     }
+    setLoading(false);
   };
 
   const handleChange = (data: WithdrawFormData) => {
     setFormData(data);
+  };
+
+  const handleVerify = async () => {
+    setLoading(true);
+    const _res = await postUserInfoWithdrawVerify({
+      id: verifyId,
+      code: googleCode,
+    });
+    if (_res.code === 0) {
+      toast.success(_res.message);
+      onOpenChange(false);
+      router.refresh();
+    } else {
+      toast.error(_res.message);
+    }
+    setLoading(false);
   };
 
   return (
@@ -221,7 +249,8 @@ export function CheckDialog(props: Dialogprops) {
               <Button variant="outline" onClick={() => onOpenChange(false)}>
                 {translations("cancel")}
               </Button>
-              <Button onClick={() => handleNext()}>
+              <Button onClick={() => handleNext()} disabled={loading}>
+                {loading && <Loader2 className="w-4 h-4 animate-spin" />}
                 {translations("confirm")}
               </Button>
             </DialogFooter>
@@ -237,14 +266,21 @@ export function CheckDialog(props: Dialogprops) {
                 <Label className="flex items-center gap-1 min-w-[120px] flex-shrink-0 mb-4">
                   {t("google2faCode")}
                 </Label>
-                <Input placeholder={t("google2faCode")} />
+                <Input
+                  placeholder={t("google2faCode")}
+                  value={googleCode}
+                  onChange={(e) => setGoogleCode(e.target.value)}
+                />
               </div>
             </div>
             <DialogFooter>
               <Button variant="outline" onClick={() => onOpenChange(false)}>
                 {translations("cancel")}
               </Button>
-              <Button onClick={() => onOpenChange(false)}>{t("verify")}</Button>
+              <Button onClick={() => handleVerify()} disabled={loading}>
+                {loading && <Loader2 className="w-4 h-4 animate-spin" />}
+                {t("verify")}
+              </Button>
             </DialogFooter>
           </div>
         )}
