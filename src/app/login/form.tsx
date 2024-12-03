@@ -46,7 +46,7 @@ export function LoginForm() {
   }
   const [code, setCode] = useState(nanoid());
   return (
-    <Form action={loginAction} onSubmit={handleSubmit} ref={ref}>
+    <Form action="" onSubmit={handleSubmit} ref={ref}>
       <div className="relative w-full h-screen overflow-hidden bg-accent flex flex-col gap-4 items-center justify-center">
         <Image src={bg} alt="background image" className="object-cover" fill />
         <div className="w-[400px] flex items-center justify-center gap-4">
