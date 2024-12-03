@@ -29,16 +29,15 @@ export function TransferMoneyModal() {
   const data = useAtomValue(agentDataAtom);
 
   const handleClickTransferMoney = () => {
-    console.info(amount, moneyPassword);
     setOpen(false);
     router.refresh();
   };
 
   useEffect(() => {
-    getUserBasicInfo().then((res) => {
-      console.info(res);
-    });
-  }, []);
+    if (open) {
+      getUserBasicInfo();
+    }
+  }, [open]);
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent

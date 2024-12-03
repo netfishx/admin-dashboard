@@ -40,7 +40,6 @@ export function GameSettingModal() {
     if (userId && open) {
       setLoading(true);
       getGameConfig(userId).then(({ data }) => {
-        console.info("game config", data);
         setData(data);
         setLoading(false);
       });
