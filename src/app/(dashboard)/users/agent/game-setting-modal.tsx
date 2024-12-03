@@ -27,6 +27,7 @@ import { useAtom, useAtomValue } from "jotai";
 import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useEffect, useState, useTransition } from "react";
+import { toast } from "sonner";
 
 export function GameSettingModal() {
   const translations = useTranslations();
@@ -39,8 +40,12 @@ export function GameSettingModal() {
   useEffect(() => {
     if (userId && open) {
       setLoading(true);
-      getGameConfig(userId).then(({ data }) => {
-        setData(data);
+      getGameConfig(userId).then(({ code, data, message }) => {
+        if (code === 0) {
+          setData(data);
+        } else {
+          toast.error(message);
+        }
         setLoading(false);
       });
     }
