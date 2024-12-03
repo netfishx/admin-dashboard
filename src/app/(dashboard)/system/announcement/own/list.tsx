@@ -20,13 +20,24 @@ import { AddBtn } from "./add-btn";
 export async function List({
   searchParams,
 }: { searchParams: Promise<{ [key: string]: string | string[] }> }) {
-  const search = await searchParams;
+  const { loading, pageSize, pageNum } = await searchParams;
   const { data } = await getSameOrSeniorAnno({
-    pageSize: Number(search.pageSize ?? 10),
-    pageNum: Number(search.pageNum ?? 1),
+    pageSize: Number(pageSize ?? 10),
+    pageNum: Number(pageNum ?? 1),
     level: 0, // 本级
   });
 
+  if (loading === "true") {
+    return (
+      <div>
+        <AddBtn />
+        <Table>
+          <TableHeaderWrapper />
+          <TableBodySkeleton />
+        </Table>
+      </div>
+    );
+  }
   return (
     <div className="p-2 mt-2 gap-2 flex flex-col h-full bg-background">
       <AddBtn />

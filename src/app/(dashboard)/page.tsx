@@ -340,9 +340,12 @@ async function ChartWrapper({
   const [gameChartResponse, memberChartResponse, fundListResponse] =
     await Promise.all([
       getTodayWinLossChart({
-        startTime: start,
-        endTime: end,
-        beforeEndTime: oneWeekAgo,
+        // startTime: start,
+        // endTime: end,
+        // beforeEndTime: oneWeekAgo,
+        startTime: 1730304000000,
+        endTime: 1730748805000,
+        beforeEndTime: 1730748805000,
         size: 6,
       }),
       getMemberChartList({
@@ -356,6 +359,7 @@ async function ChartWrapper({
     ]);
 
   const { data: gameChartData } = gameChartResponse;
+  console.log("🌸 ~ gameChartData:", gameChartData);
   const { data: memberChartData } = memberChartResponse;
   const { data: fundListData } = fundListResponse;
 

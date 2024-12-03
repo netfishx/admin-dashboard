@@ -997,7 +997,7 @@ export async function getOrderDetail(data: { id: string }) {
 // 矿工费
 export async function getOreFeeList() {
   const user = await getSession();
-  return await apiRequest<{ list: OreFeeList[] }>({
+  return await apiRequest<OreFeeList[]>({
     url: "/orefee/address/list",
     token: user?.token,
   });

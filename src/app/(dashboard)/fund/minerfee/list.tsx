@@ -15,6 +15,7 @@ import { RemoveBtn } from "./remove-btn";
 export async function List() {
   const translations = await getTranslations();
   const { data } = await getOreFeeList();
+
   return (
     <div className="p-2  bg-background gap-2 flex flex-col h-full">
       <div className="border rounded-sm">
@@ -22,9 +23,9 @@ export async function List() {
           <TableHeaderWrapper />
           <Suspense fallback={<TableBodySkeleton />}>
             <TableBody>
-              {data && data.list.length > 0 ? (
-                data.list.map((item) => (
-                  <TableRow key={Math.random()}>
+              {data && data.length > 0 ? (
+                data.map((item) => (
+                  <TableRow key={item.id}>
                     <TableCell className="w-24 text-center">
                       {item.address}
                     </TableCell>
