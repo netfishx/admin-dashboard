@@ -117,6 +117,7 @@ function AddAgentModal({
                 placeholder={t("placeholder")}
                 className="flex-1"
                 name="nickname"
+                required
                 defaultValue={""}
               />
             </div>
