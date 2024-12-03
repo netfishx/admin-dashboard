@@ -56,6 +56,7 @@ export function PasswordModal({
                 } as { oldPassword: string; newPassword: string });
                 if (code === 0) {
                   toast.success(message);
+                  onOpenChange(false);
                   router.refresh();
                 } else {
                   toast.error(message);
