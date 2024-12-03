@@ -275,7 +275,8 @@
       "loginUsername": "登录账号",
       "success": "成功",
       "failed": "失败",
-      "usernameWarning": "以小写字母开头,长度6到16位,且只能包含数字和小写字母的组合,不能包含“admin”的字样"
+      "usernameWarning": "以小写字母开头,长度6到16位,且只能包含数字和小写字母的组合,不能包含“admin”的字样",
+      "availableAmount": "当前可用余额"
     },
     "members": {
       "placeholder": "请输入",
