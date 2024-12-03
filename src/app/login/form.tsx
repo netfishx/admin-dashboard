@@ -59,15 +59,7 @@ export function LoginForm() {
               {t("username.label")}
               <span className="text-red-500">*</span>
             </Label>
-            <Input
-              placeholder={t("username.placeholder")}
-              name="username"
-              onKeyUp={async (e) => {
-                if (e.key === "Enter") {
-                  await login();
-                }
-              }}
-            />
+            <Input placeholder={t("username.placeholder")} name="username" />
           </div>
           <div className="flex flex-col gap-2">
             <Label className="text-sm font-medium flex gap-1">
@@ -78,11 +70,6 @@ export function LoginForm() {
               type="password"
               placeholder={t("password.placeholder")}
               name="password"
-              onKeyUp={async (e) => {
-                if (e.key === "Enter") {
-                  await login();
-                }
-              }}
             />
           </div>
           <div className="flex flex-col gap-2">
@@ -91,15 +78,7 @@ export function LoginForm() {
               <span className="text-red-500">*</span>
             </Label>
             <div className="flex gap-2">
-              <Input
-                placeholder={t("code.placeholder")}
-                name="captcha"
-                onKeyUp={async (e) => {
-                  if (e.key === "Enter") {
-                    await login();
-                  }
-                }}
-              />
+              <Input placeholder={t("code.placeholder")} name="captcha" />
               <Image
                 src={`${process.env.NEXT_PUBLIC_BASE_URL}/security/captcha?code=${code}`}
                 className="cursor-pointer hover:opacity-80"
