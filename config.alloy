@@ -78,9 +78,4 @@ loki.write "endpoint" {
     url = "http://10.0.29.4:7080/loki/api/v1/push"
     tenant_id = "docker"
   }
-
-  external_labels = {
-    env = "test",
-    datacenter = "dc1",
-  }
 }
