@@ -12,16 +12,17 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import type { ApplyData } from "@/lib/types";
 import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
-import { useTransition } from "react";
+import { useState, useTransition } from "react";
 import { toast } from "sonner";
 
 export function Actions({ data }: { data: ApplyData }) {
   const t = useTranslations("withdraw.apply");
-  console.info(data);
   const auditStatus = data.approverStatus;
   const withdrawMode = data.withdrawMode;
   const moneyStatus = data.moneyStatus;
@@ -61,6 +62,7 @@ export function Actions({ data }: { data: ApplyData }) {
         {(auditStatus === 2 || (auditStatus === 3 && moneyStatus !== 2)) && (
           <span>--</span>
         )}
+        {/* <WithdrawModeDialog data={data} /> */}
       </div>
     </>
   );
@@ -90,15 +92,15 @@ function LockButton({ data }: { data: ApplyData }) {
           <AlertDialogAction
             onClick={() => {
               startTransition(async () => {
-                console.info("锁定提款申请", data.id);
-                const res = await lockApply({
+                const { code, message } = await lockApply({
                   id: data.id,
                 });
 
-                if (res.code === 0) {
+                if (code === 0) {
+                  toast.success(message);
                   router.refresh();
                 } else {
-                  toast.error(res.message);
+                  toast.error(message);
                 }
               });
             }}
@@ -117,6 +119,7 @@ function PassButton({ data }: { data: ApplyData }) {
   const translations = useTranslations();
   const [isPending, startTransition] = useTransition();
   const router = useRouter();
+  const [withdrawMode, setWithdrawMode] = useState("0");
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
@@ -130,21 +133,43 @@ function PassButton({ data }: { data: ApplyData }) {
           <AlertDialogTitle>{t("approverDesc")}</AlertDialogTitle>
           <AlertDialogDescription />
         </AlertDialogHeader>
+        <div className="flex items-center py-4">
+          <Label className="w-20 text-right mr-4">
+            <span className="text-destructive">*</span>
+            {t("withdrawMode")}
+          </Label>
+          <RadioGroup
+            defaultValue="0"
+            className="flex gap-2"
+            value={withdrawMode}
+            onValueChange={(value) => setWithdrawMode(value)}
+          >
+            <span className="flex items-center space-x-2">
+              <RadioGroupItem value="0" id="0" />
+              <Label htmlFor="0">{t("auto")}</Label>
+            </span>
+            <span className="flex items-center space-x-2">
+              <RadioGroupItem value="1" id="1" />
+              <Label htmlFor="1">{t("manual")}</Label>
+            </span>
+          </RadioGroup>
+        </div>
         <AlertDialogFooter>
           <AlertDialogCancel>{translations("cancel")}</AlertDialogCancel>
           <AlertDialogAction
             onClick={() => {
               startTransition(async () => {
-                console.info("通过提款申请", data.id);
-                const res = await auditWithdrawRecord({
+                const { code, message } = await auditWithdrawRecord({
                   id: data.id,
                   approverStatusEnum: 3,
+                  modeEnum: Number(withdrawMode),
                 });
 
-                if (res.code === 0) {
+                if (code === 0) {
+                  toast.success(message);
                   router.refresh();
                 } else {
-                  toast.error(res.message);
+                  toast.error(message);
                 }
               });
             }}
@@ -184,16 +209,16 @@ function RejectButton({ data }: { data: ApplyData }) {
           <AlertDialogAction
             onClick={() => {
               startTransition(async () => {
-                console.info("拒绝提款申请", data.id);
-                const res = await auditWithdrawRecord({
+                const { code, message } = await auditWithdrawRecord({
                   id: data.id,
                   approverStatusEnum: 2,
                 });
 
-                if (res.code === 0) {
+                if (code === 0) {
+                  toast.success(message);
                   router.refresh();
                 } else {
-                  toast.error(res.message);
+                  toast.error(message);
                 }
               });
             }}
@@ -233,15 +258,15 @@ function AgainButton({ data }: { data: ApplyData }) {
           <AlertDialogAction
             onClick={() => {
               startTransition(async () => {
-                console.info("再次发起提款申请", data.id);
-                const res = await againApply({
+                const { code, message } = await againApply({
                   id: data.id,
                 });
 
-                if (res.code === 0) {
+                if (code === 0) {
+                  toast.success(message);
                   router.refresh();
                 } else {
-                  toast.error(res.message);
+                  toast.error(message);
                 }
               });
             }}

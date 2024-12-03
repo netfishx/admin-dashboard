@@ -1019,7 +1019,13 @@
       "lockDesc": "确定锁定该申请单吗？",
       "approverDesc": "确定通过该申请单吗？",
       "rejectDesc": "确定拒绝该申请单吗？",
-      "flowDesc": "确定再次发起该申请单吗？"
+      "flowDesc": "确定再次发起该申请单吗？",
+      "withdrawModeTitle": "出金模式选择（单选）",
+      "mode": "模式",
+      "back": "返回",
+      "modeConfirm": "确定出金",
+      "auto": "自动",
+      "manual": "手动"
     },
     "audit": {
       "createTime": "稽核创建日期",

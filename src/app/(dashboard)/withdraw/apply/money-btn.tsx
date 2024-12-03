@@ -55,15 +55,16 @@ export function MoneyDialog({
           </p>
           <p className="flex items-center gap-2">
             <span>{t("withdrawFee")}</span>
-            <span>{data.withdrawMoney}</span>
+            <span>{data.withdrawFee}</span>
           </p>
           <p className="flex items-center gap-2">
             <span>{t("withdrawStatus")}</span>
-            <span>{data.withdrawMoney}</span>
+            {/* 后期应该要换成actualMoney */}
+            <span>{Number(data.withdrawMoney) - Number(data.withdrawFee)}</span>
           </p>
           <p className="flex items-center gap-2">
             <span>{t("withdrawModeNew")}</span>
-            <span>{data.withdrawMoney}</span>
+            <span>{data.withdrawWay}</span>
           </p>
         </div>
       </DialogContent>

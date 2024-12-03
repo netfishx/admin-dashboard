@@ -773,6 +773,7 @@ export async function lockApply(data: { id: string }) {
 export async function auditWithdrawRecord(data: {
   id: string;
   approverStatusEnum: number;
+  modeEnum?: number;
 }) {
   const user = await getSession();
   return await apiRequest({
