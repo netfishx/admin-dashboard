@@ -963,7 +963,7 @@
       "iosQRCode": "iOS用户扫码直接下载",
       "androidQRCode": "安卓用户扫码直接下载",
       "step2Title": "在谷歌验证器中添加密钥并备份",
-      "step2Warning": "如果因用手机丢失或更换失去对该账号的访问验证，将无法恢复必须下方秘钥保存备份。",
+      "step2Warning": "如果因用手机丢失或更换失去对该账号的访问验证，将无法恢复，必须下方秘钥保存备份。",
       "secretLabel": "秘钥：",
       "secretCode": "O3W3MEH6E65S7IEA",
       "copy": "复制",

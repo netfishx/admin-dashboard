@@ -223,11 +223,8 @@ function RejectButton({
           disabled={isPending || !isCurrentAuditor}
           className="px-2"
         >
-          {isPending ? (
-            <Loader2 className="w-4 h-4 animate-spin" />
-          ) : (
-            t("reject")
-          )}
+          {isPending && <Loader2 className="w-4 h-4 animate-spin" />}
+          {t("reject")}
         </Button>
       </AlertDialogTrigger>
       <AlertDialogContent>
@@ -272,11 +269,8 @@ function AgainButton({ data }: { data: ApplyData }) {
     <AlertDialog>
       <AlertDialogTrigger asChild>
         <Button variant="link" disabled={isPending} className="px-2">
-          {isPending ? (
-            <Loader2 className="w-4 h-4 animate-spin" />
-          ) : (
-            t("again")
-          )}
+          {isPending && <Loader2 className="w-4 h-4 animate-spin" />}
+          {t("again")}
         </Button>
       </AlertDialogTrigger>
       <AlertDialogContent>
@@ -320,11 +314,8 @@ function ConfirmButton({ data }: { data: ApplyData }) {
     <AlertDialog>
       <AlertDialogTrigger asChild>
         <Button variant="link" disabled={isPending} className="px-2">
-          {isPending ? (
-            <Loader2 className="w-4 h-4 animate-spin" />
-          ) : (
-            t("confirm")
-          )}
+          {isPending && <Loader2 className="w-4 h-4 animate-spin" />}
+          {t("confirm")}
         </Button>
       </AlertDialogTrigger>
       <AlertDialogContent>
