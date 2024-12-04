@@ -277,7 +277,6 @@ export type ApplyData = {
   orderNo: string;
   userId: string;
   userType: number;
-  username: string;
   nickname: string;
   parentAccount: string;
   withdrawMoney: string;
@@ -288,6 +287,8 @@ export type ApplyData = {
   moneyStatus: number;
   withdrawFee: string;
   withdrawWay: string;
+  approverId: string;
+  account: string;
 };
 
 export type ApplyListRequest = {

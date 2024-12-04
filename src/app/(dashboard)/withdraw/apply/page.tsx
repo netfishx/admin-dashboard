@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/table";
 import type { ApplyData } from "@/lib/types";
 import { cn } from "@/lib/utils";
+import { getSession } from "@/session";
 import { format } from "date-fns";
 import { getTranslations } from "next-intl/server";
 import { Suspense } from "react";
@@ -61,7 +62,7 @@ async function TableWrapper({
 }: { searchParams: Promise<{ [key: string]: string | string[] }> }) {
   const { startTime, endTime, approverStatus, pageNum, pageSize } =
     await searchParams;
-  console.info("startTime:", startTime, "endTime:", endTime);
+
   if (!startTime || !endTime) {
     return (
       <Table className="border rounded-sm">
@@ -110,7 +111,7 @@ async function TableHeaderWrapper() {
         <TableHead className="min-w-32 text-center">{t("orderNo")}</TableHead>
         <TableHead className="min-w-32 text-center">{t("userId")}</TableHead>
         <TableHead className="min-w-32 text-center">{t("userType")}</TableHead>
-        <TableHead className="text-center">{t("username")}</TableHead>
+        <TableHead className="text-center">{t("account")}</TableHead>
         <TableHead className="text-center">{t("nickname")}</TableHead>
         <TableHead className="text-center">{t("parentAccount")}</TableHead>
         <TableHead className="min-w-32 text-center">
@@ -136,6 +137,11 @@ async function TableHeaderWrapper() {
 }
 async function TableBodyWrapper({ list }: { list: ApplyData[] }) {
   const translations = await getTranslations();
+  const userInfo = await getSession();
+  // 审核状态 0未处理 1锁定中 2拒绝 3通过
+  // 资金状态 0转账中 1到账 2异常
+  // 出金模式 0自动 1手动
+  // 用户类型 0代理 1会员
   return (
     <TableBody>
       {list && list.length > 0 ? (
@@ -150,7 +156,7 @@ async function TableBodyWrapper({ list }: { list: ApplyData[] }) {
             <TableCell className="min-w-32 text-center">
               {translateValue(item.userType, userTypeDict)}
             </TableCell>
-            <TableCell className="text-center">{item.username}</TableCell>
+            <TableCell className="text-center">{item.account}</TableCell>
             <TableCell className="text-center">{item.nickname}</TableCell>
             <TableCell className="text-center">{item.parentAccount}</TableCell>
             <TableCell className="min-w-32 text-center text-primary font-bold">
@@ -200,7 +206,7 @@ async function TableBodyWrapper({ list }: { list: ApplyData[] }) {
               </div>
             </TableCell>
             <TableCell className="min-w-48 text-center sticky right-0 bg-background">
-              <Actions data={item} />
+              <Actions data={item} currentUserId={userInfo?.id ?? "0"} />
             </TableCell>
           </TableRow>
         ))
@@ -220,7 +226,7 @@ function TableBodySkeleton() {
       {Array.from({ length: 5 }).map((_, index) => (
         // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
         <TableRow key={index}>
-          <TableCell colSpan={12}>
+          <TableCell colSpan={13}>
             <Skeleton />
           </TableCell>
         </TableRow>
