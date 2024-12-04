@@ -1,5 +1,10 @@
 "use client";
-import { againApply, auditWithdrawRecord, lockApply } from "@/api";
+import {
+  ackWithdrawAccount,
+  againApply,
+  auditWithdrawRecord,
+  lockApply,
+} from "@/api";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -21,7 +26,10 @@ import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
 import { toast } from "sonner";
 
-export function Actions({ data }: { data: ApplyData }) {
+export function Actions({
+  data,
+  currentUserId,
+}: { data: ApplyData; currentUserId: string }) {
   const t = useTranslations("withdraw.apply");
   const auditStatus = data.approverStatus;
   const withdrawMode = data.withdrawMode;
@@ -30,6 +38,10 @@ export function Actions({ data }: { data: ApplyData }) {
   return (
     <>
       <div className="flex justify-center">
+        {/* 审核状态 0未处理 1锁定中 2拒绝 3通过 */}
+        {/* 资金状态 0转账中 1到账 2异常 */}
+        {/* 出金模式 0自动 1手动 */}
+
         {/* 未处理——[锁定]
         锁定中——[通过]、[拒绝]、[流水]
         已通过——自动出金——（无操作）；已通过——手动出金——[确认到账] 
@@ -40,8 +52,14 @@ export function Actions({ data }: { data: ApplyData }) {
         {auditStatus === 0 && <LockButton data={data} />}
         {auditStatus === 1 && (
           <>
-            <PassButton data={data} />
-            <RejectButton data={data} />
+            <PassButton
+              data={data}
+              isCurrentAuditor={currentUserId === data.approverId}
+            />
+            <RejectButton
+              data={data}
+              isCurrentAuditor={currentUserId === data.approverId}
+            />
             <Button
               variant="link"
               className="hover:no-underline hover:text-primary/80 px-0"
@@ -50,16 +68,15 @@ export function Actions({ data }: { data: ApplyData }) {
             </Button>
           </>
         )}
-        {auditStatus === 2 && withdrawMode === 1 && (
-          <Button
-            variant="link"
-            className="hover:no-underline hover:text-primary/80 px-0"
-          >
-            {t("confirm")}
-          </Button>
+        {/* 手动出金时 */}
+        {moneyStatus === 0 && withdrawMode === 1 && (
+          <ConfirmButton data={data} />
         )}
         {moneyStatus === 2 && <AgainButton data={data} />}
-        {(auditStatus === 2 || (auditStatus === 3 && moneyStatus !== 2)) && (
+        {/* 已拒绝 + 已通过并自动并且不异常 + 已通过并手动并已到账   */}
+        {(auditStatus === 2 ||
+          (auditStatus === 3 && withdrawMode === 0 && moneyStatus !== 2) ||
+          (auditStatus === 3 && withdrawMode === 1 && moneyStatus === 1)) && (
           <span>--</span>
         )}
         {/* <WithdrawModeDialog data={data} /> */}
@@ -114,7 +131,10 @@ function LockButton({ data }: { data: ApplyData }) {
 }
 
 // 通过
-function PassButton({ data }: { data: ApplyData }) {
+function PassButton({
+  data,
+  isCurrentAuditor,
+}: { data: ApplyData; isCurrentAuditor: boolean }) {
   const t = useTranslations("withdraw.apply");
   const translations = useTranslations();
   const [isPending, startTransition] = useTransition();
@@ -123,7 +143,11 @@ function PassButton({ data }: { data: ApplyData }) {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button variant="link" disabled={isPending} className="px-2">
+        <Button
+          variant="link"
+          disabled={isPending || !isCurrentAuditor}
+          className="px-2"
+        >
           {isPending && <Loader2 className="w-4 h-4 animate-spin" />}
           {t("pass")}
         </Button>
@@ -183,7 +207,10 @@ function PassButton({ data }: { data: ApplyData }) {
 }
 
 // 拒绝
-function RejectButton({ data }: { data: ApplyData }) {
+function RejectButton({
+  data,
+  isCurrentAuditor,
+}: { data: ApplyData; isCurrentAuditor: boolean }) {
   const t = useTranslations("withdraw.apply");
   const translations = useTranslations();
   const [isPending, startTransition] = useTransition();
@@ -191,7 +218,11 @@ function RejectButton({ data }: { data: ApplyData }) {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button variant="link" disabled={isPending} className="px-2">
+        <Button
+          variant="link"
+          disabled={isPending || !isCurrentAuditor}
+          className="px-2"
+        >
           {isPending ? (
             <Loader2 className="w-4 h-4 animate-spin" />
           ) : (
@@ -259,6 +290,54 @@ function AgainButton({ data }: { data: ApplyData }) {
             onClick={() => {
               startTransition(async () => {
                 const { code, message } = await againApply({
+                  id: data.id,
+                });
+
+                if (code === 0) {
+                  toast.success(message);
+                  router.refresh();
+                } else {
+                  toast.error(message);
+                }
+              });
+            }}
+          >
+            {translations("confirm")}
+          </AlertDialogAction>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
+  );
+}
+
+// 确认到账
+function ConfirmButton({ data }: { data: ApplyData }) {
+  const t = useTranslations("withdraw.apply");
+  const translations = useTranslations();
+  const [isPending, startTransition] = useTransition();
+  const router = useRouter();
+  return (
+    <AlertDialog>
+      <AlertDialogTrigger asChild>
+        <Button variant="link" disabled={isPending} className="px-2">
+          {isPending ? (
+            <Loader2 className="w-4 h-4 animate-spin" />
+          ) : (
+            t("confirm")
+          )}
+        </Button>
+      </AlertDialogTrigger>
+      <AlertDialogContent>
+        <AlertDialogHeader>
+          <AlertDialogTitle>{t("confirmDesc")}</AlertDialogTitle>
+          <AlertDialogDescription />
+        </AlertDialogHeader>
+        <AlertDialogFooter>
+          <AlertDialogCancel>{translations("cancel")}</AlertDialogCancel>
+          <AlertDialogAction
+            onClick={() => {
+              startTransition(async () => {
+                const { code, message } = await ackWithdrawAccount({
                   id: data.id,
                 });
 
