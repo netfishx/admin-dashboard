@@ -92,15 +92,25 @@ function AddDialog({
         </DialogHeader>
         <Form ref={ref} action="" onSubmit={handleConfirm}>
           <div className="flex flex-col gap-4">
-            <div className="flex gap-2 items-center">
-              <Label className="w-32 text-end">{t("supplierUsername")}</Label>
-              <Input
-                className="flex-1"
-                placeholder={t("placeholder")}
-                required
-                defaultValue={""}
-                name="username"
-              />
+            <div className="flex flex-col gap-1">
+              <div className="flex gap-2 items-center">
+                <Label className="w-32 text-end shrink-0">
+                  {t("supplierUsername")}
+                </Label>
+                <Input
+                  className="flex-1"
+                  placeholder={t("placeholder")}
+                  required
+                  defaultValue={""}
+                  name="username"
+                />
+              </div>
+              <div className="flex gap-2 items-center">
+                <Label className="w-32 text-end shrink-0" />
+                <div className="flex-1 text-xs text-destructive">
+                  {t("usernameWarning")}
+                </div>
+              </div>
             </div>
             <div className="flex gap-2 items-center">
               <Label className="w-32 text-end">{t("supplierName")}</Label>
@@ -112,16 +122,24 @@ function AddDialog({
                 name="nickname"
               />
             </div>
-            <div className="flex gap-2 items-center">
-              <Label className="w-32 text-end">{t("password")}</Label>
-              <Password
-                type="password"
-                className="flex-1"
-                placeholder={t("placeholder")}
-                required
-                defaultValue={""}
-                name="newPassword"
-              />
+            <div className="flex flex-col gap-1">
+              <div className="flex gap-2 items-center">
+                <Label className="w-32 text-end">{t("password")}</Label>
+                <Password
+                  type="password"
+                  className="flex-1"
+                  placeholder={t("placeholder")}
+                  required
+                  defaultValue={""}
+                  name="newPassword"
+                />
+              </div>
+              <div className="flex gap-2 items-center">
+                <Label className="w-32 text-end shrink-0" />
+                <div className="flex-1 text-xs text-destructive">
+                  {t("passwordWarning")}
+                </div>
+              </div>
             </div>
             <div className="flex gap-2 items-center">
               <Label className="w-32 text-end">{t("confirmPassword")}</Label>

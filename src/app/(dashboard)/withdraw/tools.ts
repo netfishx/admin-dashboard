@@ -47,7 +47,7 @@ export const moneyStatusDict = [
   },
   {
     value: 2,
-    label: "出款失败",
+    label: "异常",
   },
 ];
 export const userTypeDict = [

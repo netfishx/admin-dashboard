@@ -88,25 +88,27 @@ function AddAgentModal({
         </DialogHeader>
         <Form ref={ref} action="" onSubmit={handleClickAddAgent}>
           <div className="flex flex-col gap-4 w-full px-4">
-            <div className="flex gap-4 items-center">
-              <Label className="shrink-0 w-[120px] text-right text-muted-foreground">
-                {t("username")}
-              </Label>
-              <Input
-                placeholder={t("placeholder")}
-                className="flex-1"
-                name="username"
-                defaultValue={""}
-                required
-                onBlur={(e) => {
-                  e.target.reportValidity();
-                }}
-              />
-            </div>
-            <div className="flex gap-2 items-center">
-              <Label className=" w-[120px] text-end shrink-0" />
-              <div className="flex-1 text-xs text-destructive">
-                {t("usernameWarning")}
+            <div className="flex flex-col gap-1">
+              <div className="flex gap-4 items-center">
+                <Label className="shrink-0 w-[120px] text-right text-muted-foreground">
+                  {t("username")}
+                </Label>
+                <Input
+                  placeholder={t("placeholder")}
+                  className="flex-1"
+                  name="username"
+                  defaultValue={""}
+                  required
+                  onBlur={(e) => {
+                    e.target.reportValidity();
+                  }}
+                />
+              </div>
+              <div className="flex gap-4 items-center">
+                <Label className=" w-[120px] text-end shrink-0" />
+                <div className="flex-1 text-xs text-destructive">
+                  {t("usernameWarning")}
+                </div>
               </div>
             </div>
             <div className="flex gap-4 items-center">
@@ -121,21 +123,29 @@ function AddAgentModal({
                 defaultValue={""}
               />
             </div>
-            <div className="flex gap-4 items-center">
-              <Label className="shrink-0 w-[120px] text-right text-muted-foreground">
-                {t("password")}
-              </Label>
-              <Password
-                type="password"
-                required
-                className="flex-1"
-                placeholder={t("placeholder")}
-                name="password"
-                defaultValue={""}
-                onBlur={(e) => {
-                  e.target.reportValidity();
-                }}
-              />
+            <div className="flex flex-col gap-1">
+              <div className="flex gap-4 items-center">
+                <Label className="shrink-0 w-[120px] text-right text-muted-foreground">
+                  {t("password")}
+                </Label>
+                <Password
+                  type="password"
+                  required
+                  className="flex-1"
+                  placeholder={t("placeholder")}
+                  name="password"
+                  defaultValue={""}
+                  onBlur={(e) => {
+                    e.target.reportValidity();
+                  }}
+                />
+              </div>
+              <div className="flex gap-4 items-center">
+                <Label className="w-[120px] text-end shrink-0" />
+                <div className="flex-1 text-xs text-destructive">
+                  {t("passwordWarning")}
+                </div>
+              </div>
             </div>
             <div className="flex gap-4 items-center">
               <Label className="shrink-0 w-[120px] text-right text-muted-foreground">

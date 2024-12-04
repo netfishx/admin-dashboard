@@ -93,7 +93,7 @@ export function GoogleModal({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent
         onPointerDownOutside={(e) => e.preventDefault()}
-        className="sm:max-w-[600px]"
+        className="sm:max-w-[600px] max-h-[calc(80dvh)] h-[calc(80dvh)]"
       >
         <DialogHeader>
           <DialogTitle>
@@ -102,7 +102,7 @@ export function GoogleModal({
           <DialogDescription />
         </DialogHeader>
 
-        <div className="space-y-8 py-4 max-h-[550px] overflow-y-auto">
+        <div className="space-y-8 py-4 overflow-y-auto">
           {/* Step 1 */}
           {isEdit ? null : (
             <div className="flex gap-8 justify-between">

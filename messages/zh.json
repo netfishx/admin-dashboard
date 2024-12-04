@@ -277,6 +277,7 @@
       "success": "成功",
       "failed": "失败",
       "usernameWarning": "以小写字母开头,长度6到16位,且只能包含数字和小写字母的组合,不能包含“admin”的字样",
+      "passwordWarning": "8-16位的密码,包含大写字母、小写字母、数字",
       "availableAmount": "当前可用余额"
     },
     "members": {
@@ -352,7 +353,9 @@
       "confirmPassword": "再次输入登录密码",
       "resetCount": "剩余尝试次数",
       "enable": "启用",
-      "disable": "停用"
+      "disable": "停用",
+      "usernameWarning": "以小写字母开头,长度6到16位,且只能包含数字和小写字母的组合,不能包含“admin”的字样",
+      "passwordWarning": "8-16位的密码,包含大写字母、小写字母、数字"
     }
   },
   "chart": {
@@ -963,7 +966,7 @@
       "iosQRCode": "iOS用户扫码直接下载",
       "androidQRCode": "安卓用户扫码直接下载",
       "step2Title": "在谷歌验证器中添加密钥并备份",
-      "step2Warning": "如果因用手机丢失或更换失去对该账号的访问验证，将无法恢复必须下方秘钥保存备份。",
+      "step2Warning": "如果因用手机丢失或更换失去对该账号的访问验证，将无法恢复，必须下方秘钥保存备份。",
       "secretLabel": "秘钥：",
       "secretCode": "O3W3MEH6E65S7IEA",
       "copy": "复制",
