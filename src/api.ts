@@ -794,6 +794,16 @@ export async function againApply(data: { id: string }) {
   });
 }
 
+// 确认到账
+export async function ackWithdrawAccount(data: { id: string }) {
+  const user = await getSession();
+  return await apiRequest({
+    url: "/order/withdraw/ack/account",
+    method: "POST",
+    data,
+    token: user?.token,
+  });
+}
 // 稽核管理-稽核列表
 export async function getAuditList(params: AuditListRequest) {
   const user = await getSession();

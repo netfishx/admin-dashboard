@@ -1020,6 +1020,7 @@
       "action": "操作",
       "lockDesc": "确定锁定该申请单吗？",
       "approverDesc": "确定通过该申请单吗？",
+      "confirmDesc": "确定确认到账吗？",
       "rejectDesc": "确定拒绝该申请单吗？",
       "flowDesc": "确定再次发起该申请单吗？",
       "withdrawModeTitle": "出金模式选择（单选）",

@@ -359,7 +359,6 @@ async function ChartWrapper({
     ]);
 
   const { data: gameChartData } = gameChartResponse;
-  console.log("🌸 ~ gameChartData:", gameChartData);
   const { data: memberChartData } = memberChartResponse;
   const { data: fundListData } = fundListResponse;
 
