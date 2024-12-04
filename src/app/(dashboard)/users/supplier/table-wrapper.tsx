@@ -25,7 +25,9 @@ export function SupplierTable({ data }: { data: Supplier[] | undefined }) {
             <TableCell>{item.username}</TableCell>
             <TableCell>{item.nickname}</TableCell>
             <TableCell>{item.remark}</TableCell>
-            <TableCell>{t(`statusLabel.${item.status}`)}</TableCell>
+            <TableCell>
+              <ShowStatus status={item.status} />
+            </TableCell>
             <TableCell className="w-24 text-center">
               <EditButton data={item} />
             </TableCell>
@@ -54,5 +56,21 @@ export function TbodySkeleton() {
         </TableRow>
       ))}
     </TableBody>
+  );
+}
+
+function ShowStatus({ status }: { status: number }) {
+  const t = useTranslations("users.supplier");
+  if (status === 0) {
+    return (
+      <div className="px-2 rounded-sm text-green bg-green/10 w-fit">
+        {t("enable")}
+      </div>
+    );
+  }
+  return (
+    <div className="px-2 rounded-sm text-destructive bg-destructive/10 w-fit">
+      {t("disable")}
+    </div>
   );
 }
