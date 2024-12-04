@@ -34,9 +34,12 @@ const nextConfig: NextConfig = {
     ];
   },
   compiler: {
-    removeConsole: {
-      exclude: ["info", "error", "warn", "dir", "group", "groupEnd"],
-    },
+    removeConsole:
+      process.env.NODE_ENV === "production"
+        ? {
+            exclude: ["error", "dir", "group", "groupEnd"],
+          }
+        : false,
   },
   devIndicators: {
     buildActivityPosition: "bottom-right",
