@@ -27,6 +27,7 @@ import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useEffect, useState, useTransition } from "react";
+import { toast } from "sonner";
 export function RebateModal({ userId }: { userId: string }) {
   const translations = useTranslations();
   const t = useTranslations("users.agents");
@@ -39,10 +40,13 @@ export function RebateModal({ userId }: { userId: string }) {
   useEffect(() => {
     if (userId && open) {
       setLoading(true);
-      getGameConfig(userId).then(({ data }) => {
-        console.info(data);
-        setData(data);
+      getGameConfig(userId).then(({ code, data, message }) => {
         setLoading(false);
+        if (code === 0 && data) {
+          setData(data);
+        } else {
+          toast.error(message);
+        }
       });
     }
   }, [userId, open]);
@@ -70,10 +74,14 @@ export function RebateModal({ userId }: { userId: string }) {
       updateAgentGameConfig({
         userId,
         list: data,
-      }).then(({ data, message, code }) => {
-        console.info(data, message, code);
-        setOpen(false);
-        router.refresh();
+      }).then(({ code, message }) => {
+        if (code === 0) {
+          toast.success(message);
+          setOpen(false);
+          router.refresh();
+        } else {
+          toast.error(message);
+        }
       });
     }
   };
@@ -146,7 +154,7 @@ function TableBodyWrapper({
 }) {
   const translations = useTranslations();
   return (
-    <TableBody className="w-full max-h-[370px] overflow-auto block">
+    <TableBody className="w-full max-h-[50dvh] overflow-auto block">
       {data?.length > 0 ? (
         data
           ?.filter((item) => item.gameType === 61)

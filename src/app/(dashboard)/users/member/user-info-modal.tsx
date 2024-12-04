@@ -75,15 +75,17 @@ export function UserInfoModal({
       status,
       agentId,
     };
-    console.info("requestBody:", requestBody);
     const { code, message } = await updateMember(requestBody);
-    console.info("updateMember:", code, message);
-    setOpen(false);
-    router.refresh();
+    if (code === 0) {
+      toast.success(message);
+      setOpen(false);
+      router.refresh();
+    } else {
+      toast.error(message);
+    }
   };
 
   const handleCheckAgent = async () => {
-    console.info("check agent");
     startChecking(async () => {
       const { code, message, data } = await getAgentInfoByUsername({
         username: upUsername,
@@ -98,7 +100,6 @@ export function UserInfoModal({
   };
 
   const handleFocus = () => {
-    console.info("handleFocus");
     if (upUsername) {
       setUpUsername("");
       setUpNickname("");

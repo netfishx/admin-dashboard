@@ -10,7 +10,6 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { agentDataAtom, agentIdAtom, userInfoModalAtom } from "@/store";
@@ -60,9 +59,12 @@ export function UserInfoModal() {
       status,
     };
     const { code, message } = await updateAgent(requestBody);
-    console.info("updateAgent:", code, message);
-    setOpen(false);
-    router.refresh();
+    if (code === 0) {
+      setOpen(false);
+      router.refresh();
+    } else {
+      toast.error(message);
+    }
   };
 
   const handleClickResetRestCount = async () => {
@@ -96,13 +98,13 @@ export function UserInfoModal() {
             <Label className="shrink-0 w-1/4 text-right text-muted-foreground">
               {t("username")}
             </Label>
-            <Input className="w-1/2" value={username} disabled />
+            <span>{username}</span>
           </div>
           <div className="flex gap-4 items-center">
             <Label className="shrink-0 w-1/4 text-right text-muted-foreground">
               {t("nickname")}
             </Label>
-            <Input className="w-1/2" value={nickname} disabled />
+            <span>{nickname}</span>
           </div>
           <div className="flex gap-4 items-center">
             <Label className="shrink-0 w-1/4 text-right text-muted-foreground">

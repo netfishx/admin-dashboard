@@ -51,7 +51,6 @@ async function TableWrapper({
     pageNum: Number(pageNum),
     pageSize: Number(pageSize),
   });
-  console.info(data);
   return (
     <Table>
       <TableHeaderWrapper />
@@ -101,7 +100,9 @@ async function TableBodyWrapper({
         ))
       ) : (
         <TableRow className="text-center">
-          <TableCell colSpan={7}>{translation("noData")}</TableCell>
+          <TableCell colSpan={7} className="h-40">
+            {translation("noData")}
+          </TableCell>
         </TableRow>
       )}
     </TableBody>
