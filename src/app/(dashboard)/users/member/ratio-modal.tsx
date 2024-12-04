@@ -25,6 +25,7 @@ import { useAtom, useAtomValue } from "jotai";
 import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useEffect, useState, useTransition } from "react";
+import { toast } from "sonner";
 
 export function RatioModal() {
   const translations = useTranslations();
@@ -37,10 +38,13 @@ export function RatioModal() {
   useEffect(() => {
     if (userId && open) {
       setLoading(true);
-      getGameConfig(userId).then(({ data }) => {
-        console.info("game config", data);
-        setData(data);
+      getGameConfig(userId).then(({ code, data, message }) => {
         setLoading(false);
+        if (code === 0 && data) {
+          setData(data);
+        } else {
+          toast.error(message);
+        }
       });
     }
   }, [userId, open]);

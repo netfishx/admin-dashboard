@@ -26,6 +26,7 @@ import { useAtom } from "jotai";
 import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useEffect, useState, useTransition } from "react";
+import { toast } from "sonner";
 
 export function ChangeLogModal({
   targetUserId,
@@ -49,14 +50,15 @@ export function ChangeLogModal({
         appType,
         pageNum,
         pageSize,
-      }).then(({ data }) => {
+      }).then(({ code, data, message }) => {
         setLoading(false);
-        console.info(data);
-        if (data) {
+        if (code === 0 && data) {
           setData(data);
           setTotal(data.total);
           setPageNum(data.pageNum);
           setPageSize(data.pageSize);
+        } else {
+          toast.error(message);
         }
       });
     }
@@ -87,7 +89,7 @@ export function ChangeLogModal({
             {loading ? (
               <ChangeLogSkeleton />
             ) : (
-              <TableBody className="w-full max-h-[370px] overflow-auto block">
+              <TableBody className="w-full max-h-[50dvh] overflow-auto block">
                 {data?.list?.length > 0 ? (
                   data?.list?.map((item) => (
                     <TableRow key={item.id}>

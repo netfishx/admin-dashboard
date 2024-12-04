@@ -50,22 +50,28 @@ export function LimitModal({ userId }: { userId: string }) {
   useEffect(() => {
     if (open && userId) {
       setLoading(true);
-      getGameConfig().then(({ data }) => {
-        console.info(data);
-        const list = data?.filter((item) => item.status === 1) ?? [];
-        setList(list);
-        setGameId(list[0]?.gameId ?? 0);
+      getGameConfig().then(({ code, data, message }) => {
         setLoading(false);
+        if (code === 0 && data) {
+          const list = data?.filter((item) => item.status === 1) ?? [];
+          setList(list);
+          setGameId(list[0]?.gameId ?? 0);
+        } else {
+          toast.error(message);
+        }
       });
     }
   }, [open, userId]);
   useEffect(() => {
     if (gameId) {
       setLoading(true);
-      getGameOdds({ gameId }).then(({ data }) => {
-        console.info(data);
-        setData(data ?? []);
+      getGameOdds({ gameId }).then(({ code, data, message }) => {
         setLoading(false);
+        if (code === 0 && data) {
+          setData(data ?? []);
+        } else {
+          toast.error(message);
+        }
       });
     }
   }, [gameId]);
@@ -77,7 +83,6 @@ export function LimitModal({ userId }: { userId: string }) {
     key: string,
     value: number,
   ) => {
-    console.info(oddsType, betType, groupId, key, value);
     setData(
       data.map((item) =>
         item.groupId === groupId ? { ...item, [key]: value } : item,
@@ -128,7 +133,7 @@ export function LimitModal({ userId }: { userId: string }) {
             {loading ? (
               <LimitSkeleton />
             ) : (
-              <TableBody className="max-h-[370px] overflow-auto w-full block">
+              <TableBody className="max-h-[50dvh] overflow-auto w-full block">
                 {data.length > 0 ? (
                   data.map((item) => (
                     <TableRow key={`${item.oddsType}-${item.betType}`}>
