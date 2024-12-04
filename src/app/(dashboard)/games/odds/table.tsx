@@ -84,7 +84,9 @@ export function OddsTable({ list }: { list: GameOdds[] }) {
             <TableCell>{item.oddsLabel}</TableCell>
             <TableCell>
               <Input
-                value={odds[`${item.oddsType}-${item.betType}`] ?? ""}
+                value={
+                  odds[`${item.oddsType}-${item.betType}`]?.toString() ?? ""
+                }
                 type="number"
                 min={0}
                 step={0.001}
@@ -98,7 +100,11 @@ export function OddsTable({ list }: { list: GameOdds[] }) {
             </TableCell>
             <TableCell>
               <Input
-                value={limit[`${item.oddsType}-${item.betType}`]?.minBet ?? ""}
+                value={
+                  limit[
+                    `${item.oddsType}-${item.betType}`
+                  ]?.minBet?.toString() ?? ""
+                }
                 type="number"
                 min={1}
                 disabled={!item.canEdit}
@@ -120,7 +126,9 @@ export function OddsTable({ list }: { list: GameOdds[] }) {
               <div className="flex items-center gap-2">
                 <Input
                   value={
-                    limit[`${item.oddsType}-${item.betType}`]?.maxBet ?? ""
+                    limit[
+                      `${item.oddsType}-${item.betType}`
+                    ]?.maxBet?.toString() ?? ""
                   }
                   type="number"
                   min={1}
@@ -150,8 +158,9 @@ export function OddsTable({ list }: { list: GameOdds[] }) {
               <div className="flex items-center gap-2">
                 <Input
                   value={
-                    limit[`${item.oddsType}-${item.betType}`]?.maxBetPeriod ??
-                    ""
+                    limit[
+                      `${item.oddsType}-${item.betType}`
+                    ]?.maxBetPeriod?.toString() ?? ""
                   }
                   type="number"
                   min={1}
