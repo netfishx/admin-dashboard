@@ -48,20 +48,6 @@ export function SupplierEditDialog() {
   }, [open, data]);
   const handleConfirm = () => {
     startTransition(async () => {
-      console.info(
-        "id:",
-        id,
-        "username:",
-        username,
-        "nickname:",
-        nickname,
-        "password:",
-        password,
-        "remark:",
-        remark,
-        "status:",
-        status,
-      );
       const { code, message } = await editSupplier({
         id,
         nickname,
@@ -69,17 +55,22 @@ export function SupplierEditDialog() {
         remark,
         status,
       });
-      console.info(code, data, message);
-      setOpen(false);
-      router.refresh();
+      if (code === 0) {
+        toast.success(message);
+        setOpen(false);
+        router.refresh();
+      } else {
+        toast.error(message);
+      }
     });
   };
   const handleResetRestCount = () => {
     startResetTransition(async () => {
-      const { code, data, message } = await cleanSupplierLoginError({ id });
-      console.info(data);
+      const { code, message } = await cleanSupplierLoginError({ id });
       if (code === 0) {
         toast.success(message);
+      } else {
+        toast.error(message);
       }
     });
   };

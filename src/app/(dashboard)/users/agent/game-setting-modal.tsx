@@ -75,27 +75,30 @@ export function GameSettingModal() {
     }
   };
   const handleClickUpdate = () => {
-    if (data) {
-      const req = data.map((item) => ({
-        gameId: item.gameId,
-        gameType: item.gameType,
-        percent: item.percent,
-        status: item.status,
-      }));
-      updateAgentGameConfig({ userId, list: req }).then(
-        ({ data, code, message }) => {
-          console.info(data, code, message);
+    startTransition(async () => {
+      if (data) {
+        const req = data.map((item) => ({
+          gameId: item.gameId,
+          gameType: item.gameType,
+          percent: item.percent,
+          status: item.status,
+        }));
+        const { code, message } = await updateAgentGameConfig({
+          userId,
+          list: req,
+        });
+        if (code === 0) {
+          toast.success(message);
           setOpen(false);
-        },
-      );
-    }
+        } else {
+          toast.error(message);
+        }
+      }
+    });
   };
   return (
     <Dialog open={open} onOpenChange={(open) => setOpen(open)}>
-      <DialogContent
-        className="2xl:max-w-lg lg:max-w-md"
-        onPointerDownOutside={(e) => e.preventDefault()}
-      >
+      <DialogContent onPointerDownOutside={(e) => e.preventDefault()}>
         <DialogHeader>
           <DialogTitle>{t("gamesSetting")}</DialogTitle>
           <DialogDescription />
@@ -106,9 +109,9 @@ export function GameSettingModal() {
             <Table>
               <TableHeader className="table w-full">
                 <TableRow className="bg-muted">
-                  <TableHead className="w-[100px]">{t("name")}</TableHead>
+                  <TableHead className="w-[120px]">{t("name")}</TableHead>
                   <TableHead className="w-[100px]">{t("switch")}</TableHead>
-                  <TableHead className="w-[200px]">{t("ratio")}</TableHead>
+                  <TableHead className="w-auto">{t("ratio")}</TableHead>
                 </TableRow>
               </TableHeader>
               {loading ? (
@@ -121,7 +124,7 @@ export function GameSettingModal() {
                       ?.filter((item) => item.gameType === 61)
                       .map((item) => (
                         <TableRow key={item.gameId}>
-                          <TableCell className="w-[100px]">
+                          <TableCell className="w-[120px]">
                             {item.gameName}
                           </TableCell>
                           <TableCell className="w-[100px]">
@@ -135,7 +138,7 @@ export function GameSettingModal() {
                               }}
                             />
                           </TableCell>
-                          <TableCell className="flex items-center gap-2 w-[200px]">
+                          <TableCell className="flex items-center gap-2 w-auto">
                             <Input
                               value={item.percent}
                               type="number"
@@ -218,10 +221,7 @@ export function GameSettingModal() {
           <Button variant="outline" onClick={() => setOpen(false)}>
             {translations("cancel")}
           </Button>
-          <Button
-            disabled={isPeding}
-            onClick={() => startTransition(handleClickUpdate)}
-          >
+          <Button disabled={isPeding} onClick={handleClickUpdate}>
             {isPeding && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
             {translations("confirm")}
           </Button>
