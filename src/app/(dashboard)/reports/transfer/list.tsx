@@ -42,6 +42,7 @@ export async function ListHeader() {
 
 async function ListBody({ list }: { list: TransferRecordRequestRecords[] }) {
   const translate = await getTranslations();
+  const t = await getTranslations("report.transfer");
   return (
     <TableBody>
       {list?.length > 0 ? (
@@ -58,7 +59,7 @@ async function ListBody({ list }: { list: TransferRecordRequestRecords[] }) {
             </TableCell>
             <TableCell className="w-24 text-center">{item.amount}</TableCell>
             <TableCell className="w-24 text-center">
-              {item.operateCode}
+              {item.operateCode === -1 ? t("transferOut") : t("transferIn")}
             </TableCell>
             <TableCell className="w-24 text-center">
               {format(item.createTime, "yyyy-MM-dd HH:mm:ss")}
@@ -80,6 +81,13 @@ export async function List({
   searchParams,
 }: { searchParams: Promise<TransferRecordRequestParams> }) {
   const params = await searchParams;
+  const p = {
+    ...params,
+    pageNum: Number(params.pageNum) || 1,
+    pageSize: Number(params.pageSize) || 10,
+    startTime: Number(params.startTime) || 0,
+    endTime: Number(params.endTime) || 0,
+  };
   if (!(params?.startTime && params?.endTime)) {
     return (
       <div className="p-2 bg-background flex-1">
@@ -92,7 +100,8 @@ export async function List({
       </div>
     );
   }
-  const { data } = await postGetTransferLogList(params);
+  const { data } = await postGetTransferLogList(p);
+
   return (
     <div className="p-2 bg-background flex-1">
       <div className="border rounded-sm relative">

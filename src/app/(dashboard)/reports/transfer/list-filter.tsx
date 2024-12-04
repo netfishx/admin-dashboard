@@ -11,10 +11,11 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { endOfDay, startOfDay } from "date-fns";
+import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useQueryState } from "nuqs";
-import { useRef } from "react";
+import { useRef, useTransition } from "react";
 
 export function ListFilter() {
   const t = useTranslations("report.transfer");
@@ -31,6 +32,7 @@ export function ListFilter() {
   const [typeId, setTypeId] = useQueryState("operateCode", {
     defaultValue: "all",
   });
+  const [isPending, startTransition] = useTransition();
 
   const dateRangeFilterReset = useRef<
     ((start: number, end: number) => void) | null
@@ -49,7 +51,9 @@ export function ListFilter() {
     handleDateRangeFilterReset();
   };
   const handleSearch = () => {
-    router.refresh();
+    startTransition(() => {
+      router.refresh();
+    });
   };
 
   return (
@@ -104,8 +108,8 @@ export function ListFilter() {
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="all">{t("all")}</SelectItem>
-              <SelectItem value="1">百家乐01</SelectItem>
-              <SelectItem value="2">百家乐02</SelectItem>
+              <SelectItem value="-1">{t("transferOut")}</SelectItem>
+              <SelectItem value="1">{t("transferIn")}</SelectItem>
             </SelectContent>
           </Select>
         </div>
@@ -119,8 +123,11 @@ export function ListFilter() {
           >
             {t("reset")}
           </Button>
-          <Button onClick={handleSearch}>{t("search")}</Button>
-          <Button>{t("download")}</Button>
+          <Button disabled={isPending} onClick={handleSearch}>
+            {isPending && <Loader2 className="w-4 h-4 animate-spin" />}
+            {t("search")}
+          </Button>
+          <Button disabled={isPending}>{t("download")}</Button>
         </div>
       </div>
     </div>
