@@ -1,6 +1,7 @@
 'use client';
 
-import { motion, Transition, useAnimation, Variants } from 'framer-motion';
+import type { Transition, Variants } from 'motion/react';
+import { motion, useAnimation } from 'motion/react';
 
 const defaultTransition: Transition = {
   duration: 0.6,
