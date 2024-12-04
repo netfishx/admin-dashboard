@@ -115,9 +115,7 @@ export function MaintainTable({
             <Checkbox
               checked={allChecked}
               onCheckedChange={(status) => {
-                status
-                  ? setChecked(data.map((item) => item.id))
-                  : setChecked([]);
+                setChecked(status ? data.map((item) => item.id) : []);
               }}
             />
           </TableHead>

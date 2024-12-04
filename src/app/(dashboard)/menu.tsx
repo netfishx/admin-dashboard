@@ -63,9 +63,9 @@ function OpenedMenu({
 
   function handleOpenChange(key: string, e: boolean) {
     startTransition(async () => {
-      e
-        ? await setOpenedMenu([...openedMenu, key])
-        : await setOpenedMenu(openedMenu.filter((v) => v !== key));
+      await setOpenedMenu(
+        e ? [...openedMenu, key] : openedMenu.filter((v) => v !== key),
+      );
     });
   }
   return (
@@ -413,7 +413,6 @@ function OpenedMenu({
   );
 }
 
-// biome-ignore lint/complexity/noExcessiveCognitiveComplexity: <explanation>
 function ClosedMenu({
   pathname,
   permissions,

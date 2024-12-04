@@ -71,7 +71,6 @@ async function ListBody({ list }: { list: CreditRecordRequestRecords[] }) {
 export async function List({
   searchParams,
 }: { searchParams: Promise<CreditRecordRequestParams> }) {
-  const t = await getTranslations("report.credit");
   const params = await searchParams;
   if (!(params?.startTime && params?.endTime)) {
     return (

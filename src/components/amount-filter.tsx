@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/select";
 import { useTranslations } from "next-intl";
 import { parseAsString, useQueryState } from "nuqs";
-import { useEffect } from "react";
+import { type ChangeEvent, useEffect } from "react";
 
 export default function AmountFilter({
   amountText = "betAmount",
@@ -30,8 +30,7 @@ export default function AmountFilter({
     setFilterAmountType(filterType);
   };
 
-  // biome-ignore lint/correctness/noUndeclaredVariables: <explanation>
-  const handleAmountChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleAmountChange = (event: ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
     setFilterAmount(value);
   };
@@ -46,10 +45,9 @@ export default function AmountFilter({
     handleReset();
   }, []);
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     onReset(() => handleReset());
-  }, [onReset]);
+  }, [onReset, handleReset]);
 
   return (
     <div className="flex items-center space-x-2">

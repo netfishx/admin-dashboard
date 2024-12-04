@@ -92,7 +92,6 @@ async function TableHeaderWrapper() {
 async function TableWrapper({
   searchParams,
 }: { searchParams: Promise<{ [key: string]: string | string[] }> }) {
-  const t = await getTranslations();
   const {
     orderNo,
     operatorSymbol,
@@ -117,7 +116,7 @@ async function TableWrapper({
     userId: (userId ?? null) as string,
     userType: userType ? Number(userType) : null,
   };
-  if (!startTime || !endTime) {
+  if (!(startTime && endTime)) {
     return (
       <Table className="border rounded-sm">
         <TableHeaderWrapper />

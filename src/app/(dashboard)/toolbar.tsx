@@ -34,7 +34,6 @@ import { useTranslations } from "next-intl";
 import { useTheme } from "next-themes";
 import { usePathname } from "next/navigation";
 import { QRCodeSVG } from "qrcode.react";
-import { useState } from "react";
 import { useCopyToClipboard } from "react-use";
 import { toast } from "sonner";
 
@@ -47,7 +46,6 @@ export function Toolbar({
   inviteCode: string;
   hasInviteCode: boolean;
 }) {
-  const [name, _setName] = useState(username);
   const { setTheme } = useTheme();
   const [, copyToClipboard] = useCopyToClipboard();
   const pathname = usePathname();
@@ -116,7 +114,7 @@ export function Toolbar({
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="ghost" size="sm">
-              {name}
+              {username}
               <ChevronDown />
             </Button>
           </DropdownMenuTrigger>
