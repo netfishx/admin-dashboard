@@ -109,14 +109,24 @@ export function SubaccountDialog({ roles }: { roles: Role[] }) {
                 </div>
               </div>
             </div>
-            <div className="flex gap-2 items-center">
-              <Label className="w-20 text-end shrink-0">{t("password")}</Label>
-              <Password
-                className="flex-1"
-                placeholder={t("password")}
-                name="newPassword"
-                type="password"
-              />
+            <div className="flex flex-col gap-1">
+              <div className="flex gap-2 items-center">
+                <Label className="w-20 text-end shrink-0">
+                  {t("password")}
+                </Label>
+                <Password
+                  className="flex-1"
+                  placeholder={t("password")}
+                  name="newPassword"
+                  type="password"
+                />
+              </div>
+              <div className="flex gap-2 items-center">
+                <Label className="w-20 text-end shrink-0" />
+                <div className="flex-1 text-xs text-destructive">
+                  {t("passwordWarning")}
+                </div>
+              </div>
             </div>
             <div className="flex gap-2 items-center">
               <Label className="w-20 text-end shrink-0">
