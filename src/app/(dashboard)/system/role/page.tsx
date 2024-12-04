@@ -88,11 +88,13 @@ async function RoleTableWrapper({
           </TableBody>
         </Table>
       </div>
-      <CustomPagination
-        total={res.data?.total || 0}
-        currentPage={Number(pageNum)}
-        pageSize={Number(pageSize)}
-      />
+      {!!res.data?.total && (
+        <CustomPagination
+          total={res.data?.total || 0}
+          currentPage={Number(pageNum)}
+          pageSize={Number(pageSize)}
+        />
+      )}
     </>
   );
 }

@@ -26,6 +26,7 @@ import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
+
 export function CustomPagination({
   total,
   currentPage,
@@ -54,8 +55,7 @@ export function CustomPagination({
             {currentPage === 1 ? (
               <div
                 className={cn(
-                  buttonVariants({ variant: "ghost", size: "icon" }),
-                  "w-6 flex items-center justify-center px-1 cursor-not-allowed text-muted-foreground",
+                  "w-6 flex items-center justify-center px-1 text-muted-foreground pointer-events-none opacity-50",
                 )}
               >
                 <ChevronFirst className="size-4" />
@@ -79,8 +79,7 @@ export function CustomPagination({
             {currentPage === 1 ? (
               <div
                 className={cn(
-                  buttonVariants({ variant: "ghost", size: "icon" }),
-                  "w-6 flex items-center justify-center px-1 cursor-not-allowed text-muted-foreground",
+                  "w-6 flex items-center justify-center px-1 text-muted-foreground pointer-events-none opacity-50",
                 )}
               >
                 <ChevronLeftIcon className="size-4" />
@@ -107,8 +106,7 @@ export function CustomPagination({
             {currentPage === totalPage ? (
               <div
                 className={cn(
-                  buttonVariants({ variant: "ghost", size: "icon" }),
-                  "w-6 flex items-center justify-center px-1 cursor-not-allowed text-muted-foreground",
+                  "w-6 flex items-center justify-center px-1 pointer-events-none opacity-50 text-muted-foreground",
                 )}
               >
                 <ChevronRightIcon className="size-4" />
@@ -130,8 +128,7 @@ export function CustomPagination({
             {currentPage === totalPage ? (
               <div
                 className={cn(
-                  buttonVariants({ variant: "ghost", size: "icon" }),
-                  "w-6 flex items-center justify-center px-1 cursor-not-allowed text-muted-foreground",
+                  "w-6 flex items-center justify-center px-1 pointer-events-none opacity-50 text-muted-foreground",
                 )}
               >
                 <ChevronLast className="size-4" />
