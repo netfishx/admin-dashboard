@@ -26,7 +26,7 @@ export default function Page({ searchParams }: CommonWrapperProps) {
         fallback={
           <Table>
             <ListHeader />
-            <TableSkeleton length={5} colSpan={15} />
+            <TableSkeleton length={5} colSpan={6} />
           </Table>
         }
       >

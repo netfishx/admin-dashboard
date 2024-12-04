@@ -30,7 +30,7 @@ async function CommonWrapper({ searchParams }: CommonWrapperProps) {
             <div className="border rounded-sm relative">
               <Table>
                 <ListHeader />
-                <TableSkeleton length={5} colSpan={15} />
+                <TableSkeleton length={5} colSpan={7} />
               </Table>
             </div>
           </div>

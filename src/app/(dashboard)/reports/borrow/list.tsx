@@ -71,18 +71,6 @@ export async function List({
 }: { searchParams: Promise<BorrowRecordRequestParams> }) {
   const t = await getTranslations("report.borrow");
   const params = await searchParams;
-  if (!(params?.startTime && params?.endTime)) {
-    return (
-      <div className="p-2 bg-background flex-1">
-        <div className="border rounded-sm relative">
-          <Table>
-            <ListHeader />
-            <ListBody list={[]} />
-          </Table>
-        </div>
-      </div>
-    );
-  }
   const p = {
     ...params,
     pageNum: Number(params?.pageNum) || 1,
@@ -109,7 +97,7 @@ export async function List({
       <div className="border rounded-sm relative">
         <Table>
           <ListHeader />
-          <Suspense fallback={<TableSkeleton length={5} colSpan={10} />}>
+          <Suspense fallback={<TableSkeleton length={5} colSpan={6} />}>
             <ListBody list={data?.list ?? []} />
           </Suspense>
         </Table>

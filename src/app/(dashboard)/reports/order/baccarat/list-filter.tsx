@@ -1,5 +1,4 @@
 "use client";
-import AmountFilter from "@/components/amount-filter";
 import { DateRangeFilter } from "@/components/daterange-filter";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -56,6 +55,14 @@ export function ListFilter({ gameList }: { gameList: GameInfo[] }) {
   const [leastlevelID, setLeastlevelID] = useQueryState("lastAgentId", {
     defaultValue: "",
   });
+  const [rechargeMoney, setRechargeMoney] = useQueryState(
+    "betAmount",
+    parseAsString.withDefault("0").withOptions({ clearOnDefault: false }),
+  );
+  const [operatorSymbol, setOperatorSymbol] = useQueryState(
+    "operators",
+    parseAsString.withDefault("0").withOptions({ clearOnDefault: false }),
+  );
 
   const dateRangeFilterReset = useRef<
     ((start: number, end: number) => void) | null
@@ -66,9 +73,14 @@ export function ListFilter({ gameList }: { gameList: GameInfo[] }) {
     dateRangeFilterReset.current?.(start, end);
   };
 
-  const amountFilterReset = useRef<(() => void) | null>(null);
-  const handleAmountFilterReset = () => {
-    amountFilterReset.current?.();
+  const handleFilterChange = (filterType: string) => {
+    setOperatorSymbol(filterType);
+  };
+
+  const handleAmountChange = (value: string) => {
+    // 转换为数字并确保不小于0
+    const numberValue = Math.max(0, Number(value));
+    setRechargeMoney(numberValue.toString());
   };
 
   const handleReset = () => {
@@ -81,11 +93,11 @@ export function ListFilter({ gameList }: { gameList: GameInfo[] }) {
     setGameName("all");
     setBettingtime("1");
     setSettlementstatus("all");
-    handleAmountFilterReset();
+    setRechargeMoney("0");
+    setOperatorSymbol("0");
     handleDateRangeFilterReset();
   };
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     handleReset();
   }, []);
@@ -194,9 +206,26 @@ export function ListFilter({ gameList }: { gameList: GameInfo[] }) {
         </div>
         <div className="flex gap-2 items-center">
           <Label className="shrink-0">{t("amountfilter")}</Label>
-          <AmountFilter
-            // biome-ignore lint/suspicious/noAssignInExpressions: <explanation>
-            onReset={(resetFn) => (amountFilterReset.current = resetFn)}
+          <Select
+            onValueChange={(value) => handleFilterChange(value)}
+            defaultValue={operatorSymbol}
+            value={operatorSymbol}
+          >
+            <SelectTrigger className="w-20">
+              <SelectValue placeholder={t("placeholderselect")} />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="0">&gt;=</SelectItem>
+              <SelectItem value="1">&lt;=</SelectItem>
+            </SelectContent>
+          </Select>
+
+          <Input
+            type="number"
+            min={0}
+            value={rechargeMoney}
+            onChange={(e) => handleAmountChange(e.target.value)}
+            placeholder={t("placeholderselect")}
           />
         </div>
         <div className="flex gap-2 items-center">

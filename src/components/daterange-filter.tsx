@@ -162,7 +162,7 @@ export function DateRangeFilter({
   enableTimeSelect?: boolean;
   startTimeText?: string;
   endTimeText?: string;
-  onChange?: (dateRange: any) => void;
+  onChange?: (dateRange: Record<string, number> | null) => void;
   reset?: (resetFn: (start: number, end: number) => void) => void;
 }) {
   const today = new Date();
@@ -318,7 +318,6 @@ export function DateRangeFilter({
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   const handleDateRangeChange = useCallback(
-    // biome-ignore lint/complexity/noExcessiveCognitiveComplexity: <explanation>
     (range?: DateRange) => {
       if (range) {
         let from = range.from;
@@ -357,7 +356,7 @@ export function DateRangeFilter({
         onChange?.({
           [startTimeText]: startDate?.getTime(),
           [endTimeText]: endDate?.getTime(),
-        });
+        } as Record<string, number>);
       } else {
         handleClear();
       }

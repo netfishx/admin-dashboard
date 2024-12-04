@@ -85,7 +85,7 @@ export async function List({
       <div className="border rounded-sm relative">
         <Table>
           <ListHeader />
-          <Suspense fallback={<TableSkeleton length={5} colSpan={10} />}>
+          <Suspense fallback={<TableSkeleton length={5} colSpan={6} />}>
             <ListBody list={data?.list ?? []} />
           </Suspense>
         </Table>
