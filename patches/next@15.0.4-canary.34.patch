@@ -1,23 +1,16 @@
 diff --git a/dist/server/lib/start-server.js b/dist/server/lib/start-server.js
-index 1ef2bf4ad5ff46cff13b797da5de8f3112b7abb4..a5a1e73232c1df5ae5df79eb5daaa3d9eb4704fd 100644
+index 1ef2bf4ad5ff46cff13b797da5de8f3112b7abb4..b6c489f941e14f822883a0b27b0dbe411b751964 100644
 --- a/dist/server/lib/start-server.js
 +++ b/dist/server/lib/start-server.js
-@@ -42,6 +42,14 @@ const _trace = require("../../trace");
+@@ -42,6 +42,7 @@ const _trace = require("../../trace");
  const _ispostpone = require("./router-utils/is-postpone");
  const _isipv6 = require("./is-ipv6");
  const _asynccallbackset = require("./async-callback-set");
-+const _logger = require("pino-http")({
-+    serializers: {
-+        req(req) {
-+          req.headers.cookie = undefined;
-+          return req;
-+        }
-+    }
-+});
++const _logger = require("pino-http")();
  function _interop_require_default(obj) {
      return obj && obj.__esModule ? obj : {
          default: obj
-@@ -138,6 +146,7 @@ async function startServer(serverOptions) {
+@@ -138,6 +139,7 @@ async function startServer(serverOptions) {
          throw new Error('Using a self signed certificate is only supported with `next dev`.');
      }
      async function requestListener(req, res) {
