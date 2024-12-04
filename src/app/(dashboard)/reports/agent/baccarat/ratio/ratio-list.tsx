@@ -58,15 +58,22 @@ export async function ListHeader() {
   );
 }
 
-async function ListBody({ list }: { list: RatioReportRequestRecords[] }) {
+async function ListBody({
+  list,
+  gameList,
+}: { list: RatioReportRequestRecords[]; gameList: GameInfo[] }) {
   const translate = await getTranslations();
+  const t = await getTranslations("report.agent");
   return (
     <TableBody>
       {list?.length > 0 ? (
         list?.map((item: RatioReportRequestRecords) => (
           <TableRow key={`${item.userId}`}>
             <TableCell className="w-24 text-center">{item.userId}</TableCell>
-            <TableCell className="w-24 text-center">{item.gameName}</TableCell>
+            <TableCell className="w-24 text-center">
+              {gameList.find((game) => game.gameId === item.gameId)?.gameName ||
+                t("all")}
+            </TableCell>
             <TableCell className="w-24 text-center">
               {item.expectedShareAmount}
             </TableCell>
@@ -113,10 +120,11 @@ export async function RatioList({
 }: { gameList: GameInfo[]; searchParams: Promise<RatioReportRequestParams> }) {
   const params = await searchParams;
   const p = {
-    gameId: gameList?.[0]?.gameId.toString() ?? "",
     ...params,
     pageNum: Number(params.pageNum) || 1,
     pageSize: Number(params.pageSize) || 10,
+    startTime: Number(params.startTime) || 0,
+    endTime: Number(params.endTime) || 0,
   };
   if (!(params?.startTime && params?.endTime)) {
     return (
@@ -124,7 +132,7 @@ export async function RatioList({
         <div className="border rounded-sm relative">
           <Table>
             <ListHeader />
-            <ListBody list={[]} />
+            <ListBody list={[]} gameList={gameList} />
           </Table>
         </div>
       </div>
@@ -138,7 +146,7 @@ export async function RatioList({
         <Table>
           <ListHeader />
           <Suspense fallback={<TableSkeleton length={5} colSpan={11} />}>
-            <ListBody list={data?.list ?? []} />
+            <ListBody list={data?.list || []} gameList={gameList} />
           </Suspense>
         </Table>
       </div>
