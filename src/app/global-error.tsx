@@ -1,5 +1,7 @@
 "use client";
 import { Button } from "@/components/ui/button";
+import { useRouter } from "next/navigation";
+import { startTransition } from "react";
 
 export default function GlobalError({
   reset,
@@ -7,6 +9,7 @@ export default function GlobalError({
   error: Error & { digest?: string };
   reset: () => void;
 }) {
+  const router = useRouter();
   return (
     <html lang="en">
       <body className="flex flex-col gap-4 p-4">
@@ -14,7 +17,12 @@ export default function GlobalError({
         <Button
           type="button"
           className="text-base w-fit"
-          onClick={() => reset()}
+          onClick={() => {
+            startTransition(() => {
+              reset();
+              router.refresh();
+            });
+          }}
         >
           重试
         </Button>

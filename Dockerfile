@@ -40,7 +40,5 @@ USER nextjs
 EXPOSE 3000
 
 ENV PORT=3000
-# ENV NEXT_PUBLIC_BASE_URL=http://16.163.41.52:4000
-# ENV HOSTNAME=localhost
 
 CMD ["node", "server.js"]

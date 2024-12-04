@@ -18,8 +18,8 @@ export default async function Page({
     <div className="flex flex-col gap-2 w-full">
       <Suspense
         fallback={
-          <div className="bg-background py-2">
-            <Skeleton />
+          <div className="bg-background py-2 px-4">
+            <Skeleton className="w-full h-9" />
           </div>
         }
       >
