@@ -1,14 +1,20 @@
 "use client";
-import AmountFilter from "@/components/amount-filter";
 import { DateRangeFilter } from "@/components/daterange-filter";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { endOfDay, startOfDay } from "date-fns";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
-import { useQueryState } from "nuqs";
-import { useRef } from "react";
+import { parseAsString, useQueryState } from "nuqs";
+import { useEffect, useRef } from "react";
 
 export function ListFilter() {
   const t = useTranslations("report.reward");
@@ -25,6 +31,14 @@ export function ListFilter() {
   const [ministerId, setMinisterId] = useQueryState("ministerId", {
     defaultValue: "",
   });
+  const [rechargeMoney, setRechargeMoney] = useQueryState(
+    "betAmount",
+    parseAsString.withDefault("0").withOptions({ clearOnDefault: false }),
+  );
+  const [operatorSymbol, setOperatorSymbol] = useQueryState(
+    "operators",
+    parseAsString.withDefault("0").withOptions({ clearOnDefault: false }),
+  );
 
   const dateRangeFilterReset = useRef<
     ((start: number, end: number) => void) | null
@@ -35,9 +49,14 @@ export function ListFilter() {
     dateRangeFilterReset.current?.(start, end);
   };
 
-  const amountFilterReset = useRef<(() => void) | null>(null);
-  const handleAmountFilterReset = () => {
-    amountFilterReset.current?.();
+  const handleFilterChange = (filterType: string) => {
+    setOperatorSymbol(filterType);
+  };
+
+  const handleAmountChange = (value: string) => {
+    // 转换为数字并确保不小于0
+    const numberValue = Math.max(0, Number(value));
+    setRechargeMoney(numberValue.toString());
   };
 
   const handleReset = () => {
@@ -46,11 +65,15 @@ export function ListFilter() {
     setHouseOwnerId("");
     setMinisterId("");
     handleDateRangeFilterReset();
-    handleAmountFilterReset();
+    setRechargeMoney("0");
+    setOperatorSymbol("0");
   };
   const handleSearch = () => {
     router.refresh();
   };
+  useEffect(() => {
+    handleReset();
+  }, []);
 
   return (
     <div className="flex flex-col gap-2 bg-background py-2 px-4">
@@ -102,10 +125,26 @@ export function ListFilter() {
         </div>
         <div className="flex gap-4 items-center">
           <Label className="shrink-0">{t("amountfilter")}</Label>
-          <AmountFilter
-            amountText="amount"
-            // biome-ignore lint/suspicious/noAssignInExpressions: <explanation>
-            onReset={(resetFn) => (amountFilterReset.current = resetFn)}
+          <Select
+            onValueChange={(value) => handleFilterChange(value)}
+            defaultValue={operatorSymbol}
+            value={operatorSymbol}
+          >
+            <SelectTrigger className="w-20">
+              <SelectValue placeholder={t("placeholderselect")} />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="0">&gt;=</SelectItem>
+              <SelectItem value="1">&lt;=</SelectItem>
+            </SelectContent>
+          </Select>
+
+          <Input
+            type="number"
+            min={0}
+            value={rechargeMoney}
+            onChange={(e) => handleAmountChange(e.target.value)}
+            placeholder={t("placeholderselect")}
           />
         </div>
       </div>
