@@ -817,8 +817,8 @@ export type TodayFundList = {
 export type TransferRecordRequestParams = {
   senderAgentId: string; // 转出代理id
   recipientAgentId: string; // 转入代理id
-  startTime: string; // 开始时间
-  endTime: string; // 结束时间
+  startTime: number; // 开始时间
+  endTime: number; // 结束时间
   transactionID: string; // 订单号
   operateCode: number; // 类型
   pageNum: number; // 页数从1开始
