@@ -102,9 +102,17 @@ export async function List({
 }: { searchParams: Promise<MemberReportRequestParams> }) {
   const t = await getTranslations("report.member");
   const params = await searchParams;
+  const p = {
+    ...params,
+    pageNum: Number(params?.pageNum || 1),
+    pageSize: Number(params?.pageSize || 10),
+    startTime: Number(params?.startTime || 0),
+    endTime: Number(params?.endTime || 0),
+  };
   if (!(params?.startTime && params?.endTime)) {
     return (
       <div className="p-2 bg-background flex-1">
+        <div className="h-6" />
         <div className="border rounded-sm relative">
           <Table>
             <ListHeader />
@@ -114,52 +122,57 @@ export async function List({
       </div>
     );
   }
-  const { data } = await getMemberReportList(params);
+  const { data } = await getMemberReportList(p);
   return (
     <div className="p-2 bg-background flex-1">
-      <div>
-        <Label className="min-w-24 text-center text-sm">
-          {t("bet_count")}:
-        </Label>
-        <span className="min-w-24 text-center text-sm">
-          {data?.list[0]?.totalBetNum} &nbsp;
-        </span>
+      <div className="h-6">
+        {data?.list && data?.list?.length > 0 && (
+          <>
+            <Label className="min-w-24 text-center text-sm">
+              {t("bet_count")}:
+            </Label>
+            <span className="min-w-24 text-center text-sm">
+              {data?.list[0]?.totalBetNum} &nbsp;
+            </span>
 
-        <Label className="min-w-24 text-center text-sm">
-          {t("bet_amount")}:
-        </Label>
-        <span className="min-w-24 text-center text-sm">
-          {data?.list[0]?.totalMemberBetAmount} &nbsp;
-        </span>
+            <Label className="min-w-24 text-center text-sm">
+              {t("bet_amount")}:
+            </Label>
+            <span className="min-w-24 text-center text-sm">
+              {data?.list[0]?.totalMemberBetAmount} &nbsp;
+            </span>
 
-        <Label className="min-w-24 text-center text-sm">
-          {t("valid_amount")}:
-        </Label>
-        <span className="min-w-24 text-center text-sm">
-          {data?.list[0]?.totalAvailableBetAmount} &nbsp;
-        </span>
+            <Label className="min-w-24 text-center text-sm">
+              {t("valid_amount")}:
+            </Label>
+            <span className="min-w-24 text-center text-sm">
+              {data?.list[0]?.totalAvailableBetAmount} &nbsp;
+            </span>
 
-        <Label className="min-w-24 text-center text-sm">
-          {t("win_loss_amount")}:
-        </Label>
-        <span className="min-w-24 text-center text-sm">
-          {data?.list[0]?.totalWinLossAmount} &nbsp;
-        </span>
+            <Label className="min-w-24 text-center text-sm">
+              {t("win_loss_amount")}:
+            </Label>
+            <span className="min-w-24 text-center text-sm">
+              {data?.list[0]?.totalWinLossAmount} &nbsp;
+            </span>
 
-        <Label className="min-w-24 text-center text-sm">
-          {t("cashback_amount")}:
-        </Label>
-        <span className="min-w-24 text-center text-sm">
-          {data?.list[0]?.totalPureBackAmount} &nbsp;
-        </span>
+            <Label className="min-w-24 text-center text-sm">
+              {t("cashback_amount")}:
+            </Label>
+            <span className="min-w-24 text-center text-sm">
+              {data?.list[0]?.totalPureBackAmount} &nbsp;
+            </span>
 
-        <Label className="min-w-24 text-center text-sm">
-          {t("profit_loss_result")}:
-        </Label>
-        <span className="min-w-24 text-center text-sm">
-          {data?.list[0]?.totalProfitLossAmount} &nbsp;
-        </span>
+            <Label className="min-w-24 text-center text-sm">
+              {t("profit_loss_result")}:
+            </Label>
+            <span className="min-w-24 text-center text-sm">
+              {data?.list[0]?.totalProfitLossAmount} &nbsp;
+            </span>
+          </>
+        )}
       </div>
+
       <div className="border rounded-sm relative">
         <Table>
           <ListHeader />

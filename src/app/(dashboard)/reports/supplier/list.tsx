@@ -1,7 +1,7 @@
 import { getSupplierReportList } from "@/api";
 import { CustomPagination } from "@/components/custom-pagination";
-import TableSkeleton from "@/components/table-skeleton";
 import { Label } from "@/components/ui/label";
+import { Skeleton } from "@/components/ui/skeleton";
 import {
   Table,
   TableBody,
@@ -84,31 +84,61 @@ export async function List({
 }: { searchParams: Promise<SupplierReportRequestParams> }) {
   const t = await getTranslations("report.supplier");
   const params = await searchParams;
+  if (!(params?.startTime && params?.endTime)) {
+    return (
+      <div className="p-2 bg-background flex-1">
+        <div className="h-6" />
+        <div className="border rounded-sm relative">
+          <Table>
+            <ListHeader />
+            <ListBody list={[]} />
+          </Table>
+        </div>
+      </div>
+    );
+  }
   const { data } = await getSupplierReportList(params);
   return (
     <div className="p-2 bg-background flex-1">
-      <div>
-        <Label className="min-w-24 text-center text-sm">{t("betNum")}:</Label>
-        <span className="min-w-24 text-center text-sm">
-          {data?.list?.[0]?.totalBetNum ?? 0} &nbsp;
-        </span>
-        <Label className="min-w-24 text-center text-sm">
-          {t("betAmount")}:
-        </Label>
-        <span className="min-w-24 text-center text-sm">
-          {data?.list?.[0]?.totalValidAmount ?? 0} &nbsp;
-        </span>
-        <Label className="min-w-24 text-center text-sm">
-          {t("validBetAmount")}:
-        </Label>
-        <span className="min-w-24 text-center text-sm">
-          {data?.list?.[0]?.totalShareAmount ?? 0} &nbsp;
-        </span>
+      <div className="h-6">
+        {data?.list && data?.list?.length > 0 && (
+          <>
+            <Label className="min-w-24 text-center text-sm">
+              {t("betNum")}:
+            </Label>
+            <span className="min-w-24 text-center text-sm">
+              {data?.list?.[0]?.totalBetNum ?? 0} &nbsp;
+            </span>
+            <Label className="min-w-24 text-center text-sm">
+              {t("betAmount")}:
+            </Label>
+            <span className="min-w-24 text-center text-sm">
+              {data?.list?.[0]?.totalValidAmount ?? 0} &nbsp;
+            </span>
+            <Label className="min-w-24 text-center text-sm">
+              {t("validBetAmount")}:
+            </Label>
+            <span className="min-w-24 text-center text-sm">
+              {data?.list?.[0]?.totalShareAmount ?? 0} &nbsp;
+            </span>
+          </>
+        )}
       </div>
+
       <div className="border rounded-sm relative">
         <Table>
           <ListHeader />
-          <Suspense fallback={<TableSkeleton length={5} colSpan={10} />}>
+          <Suspense
+            fallback={
+              <div className="flex justify-between items-center bg-background p-4">
+                <Skeleton />
+                <Skeleton />
+                <Skeleton />
+                <Skeleton />
+                <Skeleton />
+              </div>
+            }
+          >
             <ListBody list={data?.list ?? []} />
           </Suspense>
         </Table>

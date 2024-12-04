@@ -676,10 +676,10 @@ export type CreditRecordRequestParams = {
   memberId: string;
 
   /** 开始时间戳 */
-  startTime: string;
+  startTime: number;
 
   /** 结束时间戳 */
-  endTime: string;
+  endTime: number;
 
   /** 交易ID */
   transactionID: string;

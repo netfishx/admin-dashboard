@@ -84,14 +84,21 @@ export async function List({
       </div>
     );
   }
-  const { data } = await postGetCreditLogList(params);
+  const p = {
+    ...params,
+    pageNum: Number(params?.pageNum || 1),
+    pageSize: Number(params?.pageSize || 10),
+    startTime: Number(params?.startTime || 0),
+    endTime: Number(params?.endTime || 0),
+  };
+  const { data } = await postGetCreditLogList(p);
 
   return (
     <div className="p-2 bg-background flex-1">
       <div className="border rounded-sm relative">
         <Table>
           <ListHeader />
-          <Suspense fallback={<TableSkeleton length={5} colSpan={10} />}>
+          <Suspense fallback={<TableSkeleton length={5} colSpan={6} />}>
             <ListBody list={data?.list ?? []} />
           </Suspense>
         </Table>

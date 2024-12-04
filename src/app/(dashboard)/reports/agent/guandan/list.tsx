@@ -18,7 +18,6 @@ import { getSession } from "@/session";
 import { getTranslations } from "next-intl/server";
 import { Suspense } from "react";
 import DetailButton from "./detail-button";
-
 export async function ListHeader() {
   const t = await getTranslations("report.agent");
   const session = await getSession();
@@ -95,6 +94,7 @@ export async function List({
   if (!(params?.startTime && params?.endTime)) {
     return (
       <div className="p-2 bg-background flex-1">
+        <div className="h-6" />
         <div className="border rounded-sm relative">
           <Table>
             <ListHeader />
@@ -107,33 +107,38 @@ export async function List({
   const { data } = await getPokerReport(params);
   return (
     <div className="p-2 bg-background flex-1">
-      <div>
-        <Label className="min-w-24 text-center text-sm">
-          {t("totalIssueAmount")}:
-        </Label>
-        <span className="min-w-24 text-center text-sm">
-          {data?.list[0]?.totalIssueAmount} &nbsp;
-        </span>
-        <Label className="min-w-24 text-center text-sm">
-          {t("totaSettledAmount")}:
-        </Label>
-        <span className="min-w-24 text-center text-sm">
-          {data?.list[0]?.totaSettledAmount} &nbsp;
-        </span>
+      <div className="h-6">
+        {/* biome-ignore lint/style/useExplicitLengthCheck: <explanation> */}
+        {data?.list?.length && data?.list?.length > 0 && (
+          <>
+            <Label className="min-w-24 text-center text-sm">
+              {t("totalIssueAmount")}:
+            </Label>
+            <span className="min-w-24 text-center text-sm">
+              {data?.list[0]?.totalIssueAmount} &nbsp;
+            </span>
+            <Label className="min-w-24 text-center text-sm">
+              {t("totaSettledAmount")}:
+            </Label>
+            <span className="min-w-24 text-center text-sm">
+              {data?.list[0]?.totaSettledAmount} &nbsp;
+            </span>
+          </>
+        )}
       </div>
       <div className="border rounded-sm relative">
         <Table>
           <ListHeader />
-          <Suspense fallback={<TableSkeleton length={5} colSpan={10} />}>
-            <ListBody list={data?.list ?? []} />
+          <Suspense fallback={<TableSkeleton length={5} colSpan={14} />}>
+            <ListBody list={data?.list || []} />
           </Suspense>
         </Table>
       </div>
       <div className="pt-2">
         <CustomPagination
-          total={data?.total ?? 0}
-          currentPage={data?.pageNum ?? 1}
-          pageSize={data?.pageSize ?? 10}
+          total={data?.total || 0}
+          currentPage={data?.pageNum || 1}
+          pageSize={data?.pageSize || 10}
         />
       </div>
     </div>
