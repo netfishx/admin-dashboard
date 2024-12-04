@@ -19,7 +19,12 @@ import { format } from "date-fns";
 import { cookies } from "next/headers";
 import { Suspense } from "react";
 
-import type { FundList, MemberChartList, TodayGameReport } from "@/lib/types";
+import type {
+  FundList,
+  MemberChartList,
+  TodayGameReport,
+  UserBasicInfo,
+} from "@/lib/types";
 import { add, startOfDay, sub } from "date-fns";
 import { AnnouncementDialog } from "./announcement-dialog";
 import { DataOverview } from "./data-overview";
@@ -68,7 +73,7 @@ export default async function DashboardPage({
   const start = startOfDay(now).getTime();
   const end = startOfDay(add(now, { days: 1 })).getTime();
   const oneWeekAgo = sub(start, { days: 7 }).getTime();
-
+  const t = await getTranslations();
   return (
     <>
       <TimeWrapper />
@@ -84,12 +89,24 @@ export default async function DashboardPage({
           fallback={
             <>
               <div className="grid grid-cols-2 gap-2">
-                <div className="rounded bg-card h-40 lg:h-48 xl:h-72" />
-                <div className="rounded bg-card h-40 lg:h-48 xl:h-72" />
+                <div className="rounded bg-card ">
+                  <div className="p-4">{t("chart.todayCashflow")}</div>
+                  <div className="h-40 lg:h-48 xl:h-72" />
+                </div>
+                <div className="rounded bg-card">
+                  <div className="p-4">{t("chart.todayActiveUsers")}</div>
+                  <div className="h-40 lg:h-48 xl:h-72" />
+                </div>
               </div>
               <div className="grid gap-2">
-                <div className="p-4 rounded bg-card h-40 lg:h-48 xl:h-72" />
-                <div className="p-4 rounded bg-card h-40 lg:h-48 xl:h-72" />
+                <div className="p-4 rounded bg-card">
+                  <div className="p-4">{t("chart.bjlDataTrending")}</div>
+                  <div className="h-40 lg:h-48 xl:h-72" />
+                </div>
+                <div className="p-4 rounded bg-card">
+                  <div className="p-4">{t("chart.gdDataTrending")}</div>
+                  <div className="h-40 lg:h-48 xl:h-72" />
+                </div>
               </div>
             </>
           }
@@ -98,7 +115,18 @@ export default async function DashboardPage({
         </Suspense>
       </div>
       <div className="flex flex-col gap-2 w-[280px] min-[2400px]:w-[560px]">
-        <Suspense fallback={<div className="h-24 rounded bg-card" />}>
+        <Suspense
+          fallback={
+            <div className="rounded bg-card">
+              {permissions?.includes("admin_stat") ? (
+                <div className="text-base mb-4 p-4">{t("dataOverview")}</div>
+              ) : (
+                <div className="text-base mb-4 p-4">{t("walletData")}</div>
+              )}
+              <div className="h-32" />
+            </div>
+          }
+        >
           {permissions?.includes("admin_stat") ? (
             <DataOverviewFlowWrapper start={start} end={end} />
           ) : (
@@ -107,7 +135,14 @@ export default async function DashboardPage({
         </Suspense>
 
         <QuickAccess />
-        <Suspense fallback={<div className="h-24 rounded bg-card" />}>
+        <Suspense
+          fallback={
+            <div className="bg-background p-4 rounded flex-1 relative">
+              <div className="text-base mb-4 p-4">{t("announcement")}</div>
+              <div className="h-48" />
+            </div>
+          }
+        >
           {/* 普通代理：上级公告， admin：本级公告  */}
           <AnnouncementWrapper />
         </Suspense>
@@ -404,20 +439,7 @@ async function DataOverviewFlowWrapper({
 
 async function DataOverviewWrapper() {
   const { data } = await getUserBasicInfo();
-  return (
-    <DataOverview
-      data={
-        data || {
-          totalBalanceMoney: 0,
-          usableBalanceMoney: 0,
-          gameFreezeMoney: 0,
-          withdrawFreezeMoney: 0,
-          totalCreditMoney: 0,
-          memberToBeRepaidMoney: 0,
-        }
-      }
-    />
-  );
+  return <DataOverview data={data || ({} as UserBasicInfo)} />;
 }
 
 async function AnnouncementWrapper() {
