@@ -109,7 +109,7 @@ function WithdrawForm(props: {
     if (field === "withdrawMoney") {
       const _fee =
         Number(fee?.percentageFee) * Number(value) + Number(fee?.fixedFee);
-      newData = { ...newData, withdrawFee: _fee.toString() };
+      newData = { ...newData, withdrawFee: _fee.toFixed(4) };
     }
     newData[field] = value;
     setFormData(newData);

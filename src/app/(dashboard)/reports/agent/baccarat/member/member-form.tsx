@@ -13,10 +13,11 @@ import {
 import type { GameInfo } from "@/lib/types";
 import { endOfDay } from "date-fns";
 import { startOfDay } from "date-fns";
+import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useQueryState } from "nuqs";
-import { useRef } from "react";
+import { useRef, useTransition } from "react";
 
 export function MemberForm({ gameList }: { gameList: GameInfo[] }) {
   const t = useTranslations("report.agent");
@@ -27,6 +28,7 @@ export function MemberForm({ gameList }: { gameList: GameInfo[] }) {
   const [leastlevelID, setLeastlevelID] = useQueryState("agentId", {
     defaultValue: "",
   });
+  const [isPending, startTransition] = useTransition();
 
   const dateRangeFilterReset = useRef<
     ((start: number, end: number) => void) | null
@@ -94,8 +96,16 @@ export function MemberForm({ gameList }: { gameList: GameInfo[] }) {
           >
             {t("reset")}
           </Button>
-          <Button onClick={() => router.refresh()}>{t("search")}</Button>
-          <Button>{t("download")}</Button>
+          <Button
+            disabled={isPending}
+            onClick={() => startTransition(() => router.refresh())}
+          >
+            {isPending ? (
+              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+            ) : null}
+            {t("search")}
+          </Button>
+          <Button disabled={isPending}>{t("download")}</Button>
         </div>
       </div>
     </div>

@@ -11,6 +11,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import type {
+  GameInfo,
   MemberBetReportRequestParams,
   MemberBetReportRequestRecords,
 } from "@/lib/types";
@@ -64,15 +65,25 @@ export async function ListHeader() {
   );
 }
 
-async function ListBody({ list }: { list: MemberBetReportRequestRecords[] }) {
+async function ListBody({
+  list,
+  gameList,
+}: {
+  list: MemberBetReportRequestRecords[];
+  gameList: GameInfo[];
+}) {
   const translate = await getTranslations();
+  const t = await getTranslations("report.agent");
   return (
     <TableBody>
       {list?.length > 0 ? (
         list?.map((item: MemberBetReportRequestRecords) => (
           <TableRow key={item.agentId}>
             <TableCell className="w-24 text-center">{item.agentId}</TableCell>
-            <TableCell className="w-24 text-center">{item.gameName}</TableCell>
+            <TableCell className="w-24 text-center">
+              {gameList.find((game) => game.gameId === item.gameId)?.gameName ||
+                t("all")}
+            </TableCell>
             <TableCell className="w-24 text-center">{item.betNum}</TableCell>
             <TableCell className="w-24 text-center">
               {item.memberBetAmount}
@@ -122,21 +133,35 @@ async function ListBody({ list }: { list: MemberBetReportRequestRecords[] }) {
 
 export async function MemberList({
   searchParams,
-}: { searchParams: Promise<MemberBetReportRequestParams> }) {
+  gameList,
+}: {
+  searchParams: Promise<MemberBetReportRequestParams>;
+  gameList: GameInfo[];
+}) {
   const params = await searchParams;
+  const p = {
+    ...params,
+    pageNum: Number(params?.pageNum) || 1,
+    pageSize: Number(params?.pageSize) || 10,
+    startTime: Number(params?.startTime) || 0,
+    endTime: Number(params?.endTime) || 0,
+  };
+
   if (!(params?.startTime && params?.endTime)) {
     return (
       <div className="p-2 bg-background flex-1">
         <div className="border rounded-sm relative">
           <Table>
             <ListHeader />
-            <ListBody list={[]} />
+            <ListBody list={[]} gameList={gameList} />
           </Table>
         </div>
       </div>
     );
   }
-  const { data } = await getMemberBetReport(params);
+
+  const { data } = await getMemberBetReport(p);
+  console.info(data, "data");
 
   return (
     <div className="p-2 bg-background flex-1">
@@ -144,7 +169,7 @@ export async function MemberList({
         <Table>
           <ListHeader />
           <Suspense fallback={<TableSkeleton length={5} colSpan={14} />}>
-            <ListBody list={data?.list ?? []} />
+            <ListBody list={data?.list ?? []} gameList={gameList} />
           </Suspense>
         </Table>
       </div>

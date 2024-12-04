@@ -36,7 +36,10 @@ export default async function Page({ searchParams }: CommonWrapperProps) {
           </div>
         }
       >
-        <MemberList searchParams={searchParams} />
+        <MemberList
+          searchParams={searchParams}
+          gameList={gameListResp?.data ?? []}
+        />
       </Suspense>
     </>
   );
