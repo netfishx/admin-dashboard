@@ -7,7 +7,7 @@ import { cookies } from "next/headers";
 const encoder = new CborEncoder();
 const decoder = new CborDecoderBase();
 
-const expiresTime = 24 * 60 * 60;
+const expiresTime = 24 * 60 * 60 * 1000;
 
 export type SessionData = User & {
   expires: string;
@@ -39,7 +39,7 @@ export async function getSession() {
 }
 
 export async function setSession(user: User) {
-  const expires = new Date(Date.now() + expiresTime * 1000);
+  const expires = new Date(Date.now() + expiresTime);
   const session: SessionData = {
     ...user,
     expires: expires.toISOString(),
