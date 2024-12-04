@@ -162,7 +162,6 @@ export function DateRangeFilter({
   enableTimeSelect?: boolean;
   startTimeText?: string;
   endTimeText?: string;
-  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
   onChange?: (dateRange: any) => void;
   reset?: (resetFn: (start: number, end: number) => void) => void;
 }) {

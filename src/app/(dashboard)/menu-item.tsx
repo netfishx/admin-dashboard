@@ -12,7 +12,6 @@ export function MenuItem({
   icon,
   label,
   href,
-  isOpen,
   hasChildren,
   subHref = [],
   ...props
@@ -20,7 +19,6 @@ export function MenuItem({
   icon?: ReactNode;
   label: string;
   href?: string;
-  isOpen?: boolean;
   hasChildren?: boolean;
   subHref?: string[];
 }) {

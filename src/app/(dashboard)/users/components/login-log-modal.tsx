@@ -25,7 +25,7 @@ import { loginLogModalAtom } from "@/store";
 import { format } from "date-fns";
 import { useAtom } from "jotai";
 import { useTranslations } from "next-intl";
-import { useEffect, useState, useTransition } from "react";
+import { startTransition, useEffect, useState } from "react";
 
 export function LoginLogModal({
   id,
@@ -35,7 +35,6 @@ export function LoginLogModal({
   const t = useTranslations("users.agents");
   const [data, setData] = useState<LoginLog[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
-  const [isPending, startTransition] = useTransition();
   const [open, setOpen] = useAtom(loginLogModalAtom);
   const [total, setTotal] = useState<number>(0);
   const [page, setPage] = useState<number>(1);
