@@ -1,21 +1,15 @@
 import { getSupplierList } from "@/api";
 import { Skeleton } from "@/components/ui/skeleton";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
+import { Table, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { getTranslations } from "next-intl/server";
 import { Suspense } from "react";
 import { Add } from "./add";
 import { SupplierEditDialog } from "./dialog";
-import { EditButton } from "./edit";
 import { SupplierForm } from "./form";
+import { SupplierTable, TbodySkeleton } from "./table-wrapper";
 
 export default async function Page() {
+  const { data } = await getSupplierList();
   return (
     <div className="flex flex-col gap-2 w-full">
       <Suspense
@@ -37,7 +31,7 @@ export default async function Page() {
           <Table>
             <SupplierTableHeader />
             <Suspense fallback={<TbodySkeleton />}>
-              <SupplierTable />
+              <SupplierTable data={data} />
             </Suspense>
           </Table>
         </div>
@@ -61,51 +55,5 @@ async function SupplierTableHeader() {
         <TableHead className="w-24 text-center">{t("action")}</TableHead>
       </TableRow>
     </TableHeader>
-  );
-}
-
-async function SupplierTable() {
-  const translation = await getTranslations();
-  const t = await getTranslations("users.supplier");
-  const { data } = await getSupplierList();
-
-  return (
-    <TableBody>
-      {data && data.length > 0 ? (
-        data.map((item) => (
-          <TableRow key={item.id}>
-            <TableCell>{item.id}</TableCell>
-            <TableCell>{item.username}</TableCell>
-            <TableCell>{item.nickname}</TableCell>
-            <TableCell>{item.remark}</TableCell>
-            <TableCell>{t(`statusLabel.${item.status}`)}</TableCell>
-            <TableCell className="w-24 text-center">
-              <EditButton data={item} />
-            </TableCell>
-          </TableRow>
-        ))
-      ) : (
-        <TableRow>
-          <TableCell colSpan={6} className="text-center h-40">
-            {translation("noData")}
-          </TableCell>
-        </TableRow>
-      )}
-    </TableBody>
-  );
-}
-
-function TbodySkeleton() {
-  return (
-    <TableBody>
-      {Array.from({ length: 5 }).map((_, index) => (
-        // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
-        <TableRow key={index}>
-          <TableCell colSpan={6}>
-            <Skeleton />
-          </TableCell>
-        </TableRow>
-      ))}
-    </TableBody>
   );
 }

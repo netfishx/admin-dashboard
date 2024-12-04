@@ -98,15 +98,14 @@ export default async function DashboardPage({
         </Suspense>
       </div>
       <div className="flex flex-col gap-2 w-[280px] min-[2400px]:w-[560px]">
-        {permissions?.includes("admin_stat") ? (
-          <Suspense fallback={<div className="h-24 rounded bg-card" />}>
+        <Suspense fallback={<div className="h-24 rounded bg-card" />}>
+          {permissions?.includes("admin_stat") ? (
             <DataOverviewFlowWrapper start={start} end={end} />
-          </Suspense>
-        ) : (
-          <Suspense>
+          ) : (
             <DataOverviewWrapper />
-          </Suspense>
-        )}
+          )}
+        </Suspense>
+
         <QuickAccess />
         <Suspense fallback={<div className="h-24 rounded bg-card" />}>
           {/* 普通代理：上级公告， admin：本级公告  */}
@@ -341,9 +340,12 @@ async function ChartWrapper({
   const [gameChartResponse, memberChartResponse, fundListResponse] =
     await Promise.all([
       getTodayWinLossChart({
-        startTime: start,
-        endTime: end,
-        beforeEndTime: oneWeekAgo,
+        // startTime: start,
+        // endTime: end,
+        // beforeEndTime: oneWeekAgo,
+        startTime: 1730304000000,
+        endTime: 1730748805000,
+        beforeEndTime: 1730748805000,
         size: 6,
       }),
       getMemberChartList({
@@ -357,6 +359,7 @@ async function ChartWrapper({
     ]);
 
   const { data: gameChartData } = gameChartResponse;
+  console.log("🌸 ~ gameChartData:", gameChartData);
   const { data: memberChartData } = memberChartResponse;
   const { data: fundListData } = fundListResponse;
 

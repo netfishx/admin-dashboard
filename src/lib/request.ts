@@ -137,6 +137,7 @@ export async function apiRequest<T>({
   token?: string;
   expire?: number | "default" | "minutes" | "days" | "max";
 }): Promise<Res<T>> {
+  const start = performance.now();
   const nextHeaders = await headers();
   const ip = nextHeaders.get("x-forwarded-for");
   const locale = nextHeaders.get("accept-language");
@@ -152,7 +153,9 @@ export async function apiRequest<T>({
     expire,
   });
   console.group("request");
-  console.info("info:");
+  if (result.status >= 400 || result.data.code !== 0) {
+    console.error("error!!!");
+  }
   console.dir(
     {
       url,
@@ -165,17 +168,13 @@ export async function apiRequest<T>({
       token,
       expire,
       result,
+      time: performance.now() - start,
     },
     { depth: null },
   );
   console.groupEnd();
-  if (result.status >= 400 || result.data.code !== 0) {
-    console.group("error");
-    console.error("result:");
-    console.dir(result, { depth: null });
-    console.groupEnd();
-  }
-  if ([401, 403].includes(result.status)) {
+
+  if ([401, 403, 500].includes(result.status)) {
     return redirect(
       `/login?e=${encodeURIComponent(result.data.message ?? "")}`,
     );

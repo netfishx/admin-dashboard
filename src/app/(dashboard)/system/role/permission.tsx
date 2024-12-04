@@ -7,18 +7,37 @@ import { useEffect, useState } from "react";
 function arrayToTree(
   permissions: Permission[],
   checked: number[],
-): [TreeNode[], Map<string, boolean | "indeterminate">] {
+): [TreeNode[], Map<number, boolean | "indeterminate">] {
   // 创建Map来存储所有节点，方便快速查找
   const nodeMap = new Map<number, TreeNode>();
   // 创建Map来存储节点的选中状态
-  const checkedState = new Map<string, boolean | "indeterminate">();
+  const checkedState = new Map<number, boolean | "indeterminate">();
 
-  // 第一次遍历：创建所有节点
+  // 判断节点是否应该显示
+  const shouldShowNode = (id: number): boolean => {
+    const permission = permissions.find((p) => p.id === id);
+    if (!permission) {
+      return false;
+    }
+
+    // 如果类型不为0，直接显示
+    if (permission.permsType !== 0) {
+      return true;
+    }
+
+    // 如果类型为0，检查是否有子节点
+    return permissions.some((item) => item.parentId === id);
+  };
+
+  // 第一次遍历：创建所有应该显示的节点
   permissions.forEach((item) => {
-    nodeMap.set(item.id, {
-      id: item.id.toString(),
-      label: item.permsName,
-    });
+    if (shouldShowNode(item.id)) {
+      nodeMap.set(item.id, {
+        id: item.id,
+        label: item.permsName,
+        type: item.permsType,
+      });
+    }
   });
 
   // 辅助函数：判断节点是否为叶子节点
@@ -29,7 +48,7 @@ function arrayToTree(
   // 辅助函数：获取节点的所有子节点ID
   const getChildrenIds = (id: number): number[] => {
     return permissions
-      .filter((item) => item.parentId === id)
+      .filter((item) => item.parentId === id && shouldShowNode(item.id))
       .map((item) => item.id);
   };
 
@@ -46,20 +65,18 @@ function arrayToTree(
     }
 
     const siblings = getChildrenIds(parentPermission.parentId);
-    const siblingsStates = siblings.map(
-      (id) => checkedState.get(id.toString()) ?? false,
-    );
+    const siblingsStates = siblings.map((id) => checkedState.get(id) ?? false);
 
     if (siblingsStates.every((state) => state === true)) {
-      checkedState.set(parentPermission.parentId.toString(), true);
+      checkedState.set(parentPermission.parentId, true);
     } else if (
       siblingsStates.some(
         (state) => state === true || state === "indeterminate",
       )
     ) {
-      checkedState.set(parentPermission.parentId.toString(), "indeterminate");
+      checkedState.set(parentPermission.parentId, "indeterminate");
     } else {
-      checkedState.set(parentPermission.parentId.toString(), false);
+      checkedState.set(parentPermission.parentId, false);
     }
 
     // 递归更新上层父节点
@@ -68,6 +85,10 @@ function arrayToTree(
 
   // 第二次遍历：建立父子关系
   permissions.forEach((item) => {
+    if (!shouldShowNode(item.id)) {
+      return;
+    }
+
     const currentNode = nodeMap.get(item.id);
     if (item.parentId) {
       const parentNode = nodeMap.get(item.parentId);
@@ -81,17 +102,20 @@ function arrayToTree(
 
     // 设置叶子节点的选中状态
     if (isLeafNode(item.id)) {
-      checkedState.set(item.id.toString(), checked.includes(item.id));
+      checkedState.set(item.id, checked.includes(item.id));
       if (item.parentId !== undefined) {
         updateParentState(item.id);
       }
     }
   });
-  // 获取根节点
+
+  // 获取根节点(同时过滤掉不应该显示的节点)
   const roots = permissions
-    .filter((item) => !item.parentId)
+    .filter((item) => !item.parentId && shouldShowNode(item.id))
     .map((item) => nodeMap.get(item.id))
-    .filter((node): node is TreeNode => !!node);
+    .filter((node): node is TreeNode => !!node)
+    .sort((a, b) => a.id - b.id);
+
   return [roots, checkedState];
 }
 
@@ -111,10 +135,7 @@ export function PermissionTree({
   useEffect(() => {
     onChangeAction(
       permissions
-        .filter(
-          (item) =>
-            state.get(item.id.toString()) === true && item.permsType === 1,
-        )
+        .filter((item) => state.get(item.id) === true && item.permsType === 1)
         .map((item) => item.id),
     );
   }, [permissions, state, onChangeAction]);

@@ -13,11 +13,22 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Password } from "@/components/ui/password";
+import type { AddSupplier } from "@/lib/types";
+import { supplierLoadingAtom } from "@/store";
+import { useSetAtom } from "jotai";
 import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
+import Form from "next/form";
 import { useRouter } from "next/navigation";
-import { useState, useTransition } from "react";
+import {
+  type FormEvent,
+  useEffect,
+  useRef,
+  useState,
+  useTransition,
+} from "react";
 import { toast } from "sonner";
+import { validateFormData } from "./validata";
 
 export function Add() {
   const t = useTranslations("users.supplier");
@@ -38,34 +49,35 @@ function AddDialog({
 }: { open: boolean; setOpen: (open: boolean) => void }) {
   const t = useTranslations("users.supplier");
   const translation = useTranslations();
+  const ref = useRef<HTMLFormElement>(null);
   const [isPending, startTransition] = useTransition();
-  const [supplierUsername, setSupplierUsername] = useState("");
-  const [supplierName, setSupplierName] = useState("");
-  const [remark, setRemark] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
-  const handleConfirm = () => {
-    startTransition(async () => {
-      const { code, data, message } = await addSupplier({
-        username: supplierUsername,
-        nickname: supplierName,
-        newPassword: password,
-        remark,
-      });
-      console.info(data);
+  const setSupplierLoading = useSetAtom(supplierLoadingAtom);
+
+  useEffect(() => {
+    setSupplierLoading(isPending);
+  }, [isPending, setSupplierLoading]);
+
+  const handleConfirm = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    const result = await validateFormData(formData);
+    if (result.success) {
+      setIsLoading(true);
+      const { code, message } = await addSupplier(result.data as AddSupplier);
+      setIsLoading(false);
       if (code === 0) {
         setOpen(false);
-        router.refresh();
-        setSupplierUsername("");
-        setSupplierName("");
-        setPassword("");
-        setConfirmPassword("");
-        setRemark("");
+        startTransition(() => {
+          router.refresh();
+        });
       } else {
         toast.error(message);
       }
-    });
+    } else {
+      toast.error(result.errors?.[0]?.message);
+    }
   };
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -78,65 +90,75 @@ function AddDialog({
           <DialogTitle>{t("add")}</DialogTitle>
           <DialogDescription />
         </DialogHeader>
-        <div className="flex flex-col gap-4">
-          <div className="flex gap-2 items-center">
-            <Label className="w-32 text-end">{t("supplierUsername")}</Label>
-            <Input
-              className="flex-1"
-              placeholder={t("placeholder")}
-              required
-              value={supplierUsername}
-              onChange={(e) => setSupplierUsername(e.target.value)}
-            />
+        <Form ref={ref} action="" onSubmit={handleConfirm}>
+          <div className="flex flex-col gap-4">
+            <div className="flex gap-2 items-center">
+              <Label className="w-32 text-end">{t("supplierUsername")}</Label>
+              <Input
+                className="flex-1"
+                placeholder={t("placeholder")}
+                required
+                defaultValue={""}
+                name="username"
+              />
+            </div>
+            <div className="flex gap-2 items-center">
+              <Label className="w-32 text-end">{t("supplierName")}</Label>
+              <Input
+                className="flex-1"
+                placeholder={t("placeholder")}
+                required
+                defaultValue={""}
+                name="nickname"
+              />
+            </div>
+            <div className="flex gap-2 items-center">
+              <Label className="w-32 text-end">{t("password")}</Label>
+              <Password
+                type="password"
+                className="flex-1"
+                placeholder={t("placeholder")}
+                required
+                defaultValue={""}
+                name="newPassword"
+              />
+            </div>
+            <div className="flex gap-2 items-center">
+              <Label className="w-32 text-end">{t("confirmPassword")}</Label>
+              <Password
+                type="password"
+                className="flex-1"
+                placeholder={t("placeholder")}
+                required
+                defaultValue={""}
+                name="confirmPassword"
+              />
+            </div>
+            <div className="flex gap-2 items-center">
+              <Label className="w-32 text-end">{t("remark")}</Label>
+              <Input
+                className="flex-1"
+                placeholder={t("placeholder")}
+                defaultValue={""}
+                name="remark"
+              />
+            </div>
           </div>
-          <div className="flex gap-2 items-center">
-            <Label className="w-32 text-end">{t("supplierName")}</Label>
-            <Input
-              className="flex-1"
-              placeholder={t("placeholder")}
-              required
-              value={supplierName}
-              onChange={(e) => setSupplierName(e.target.value)}
-            />
-          </div>
-          <div className="flex gap-2 items-center">
-            <Label className="w-32 text-end">{t("password")}</Label>
-            <Password
-              type="password"
-              className="flex-1"
-              placeholder={t("placeholder")}
-              required
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-          </div>
-          <div className="flex gap-2 items-center">
-            <Label className="w-32 text-end">{t("confirmPassword")}</Label>
-            <Password
-              type="password"
-              className="flex-1"
-              placeholder={t("placeholder")}
-              required
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-            />
-          </div>
-          <div className="flex gap-2 items-center">
-            <Label className="w-32 text-end">{t("remark")}</Label>
-            <Input
-              className="flex-1"
-              placeholder={t("placeholder")}
-              value={remark}
-              onChange={(e) => setRemark(e.target.value)}
-            />
-          </div>
-        </div>
+        </Form>
         <DialogFooter>
           <Button variant="outline" onClick={() => setOpen(false)}>
             {translation("cancel")}
           </Button>
-          <Button disabled={isPending} onClick={handleConfirm}>
-            {isPending ? <Loader2 className="w-4 h-4 animate-spin" /> : null}
+          <Button
+            disabled={isLoading}
+            onClick={(e) => {
+              e.preventDefault();
+              if (ref.current) {
+                ref.current.requestSubmit();
+              }
+            }}
+          >
+            {isLoading ? <Loader2 className="w-4 h-4 animate-spin" /> : null}
             {translation("confirm")}
           </Button>
         </DialogFooter>

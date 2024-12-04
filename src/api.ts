@@ -80,6 +80,10 @@ import { cookies } from "next/headers";
 import { getSession } from "@/session";
 import axios from "axios";
 
+export async function signOut() {
+  (await cookies()).delete("session");
+}
+
 export async function getGameList(type: number) {
   const user = await getSession();
   return await apiRequest<GameType[]>({
@@ -193,6 +197,22 @@ export async function updateAgent(data: {
     token: user?.token,
   });
 }
+
+// 用户管理-代理管理-转账
+export async function transferMoney(data: {
+  userId: string;
+  amount: number;
+  secret: string;
+}) {
+  const user = await getSession();
+  return await apiRequest({
+    url: "/wallet/transfer",
+    method: "POST",
+    data,
+    token: user?.token,
+  });
+}
+
 // 用户管理-代理管理-重置代理返水次数
 export async function resetRestCount(data: { id: string }) {
   const user = await getSession();
@@ -205,7 +225,6 @@ export async function resetRestCount(data: { id: string }) {
 }
 // 用户管理-代理管理-添加代理
 export async function addAgent(data: {
-  upUsername?: string;
   username: string;
   nickname: string;
   password: string;
@@ -280,6 +299,22 @@ export async function updateMember(data: {
     token: user?.token,
   });
 }
+
+// 用户管理-会员管理-收息
+export async function modifyCreditLimit(data: {
+  userId: string;
+  amount: number;
+  secret: string;
+}) {
+  const user = await getSession();
+  return await apiRequest({
+    url: "/wallet/modifyCreditLimit",
+    method: "POST",
+    data,
+    token: user?.token,
+  });
+}
+
 export async function getAgentLoginLog(params: {
   userId: string;
   pageNum: number;
@@ -738,6 +773,7 @@ export async function lockApply(data: { id: string }) {
 export async function auditWithdrawRecord(data: {
   id: string;
   approverStatusEnum: number;
+  modeEnum?: number;
 }) {
   const user = await getSession();
   return await apiRequest({
@@ -933,7 +969,7 @@ export async function editRole(data: Role) {
   });
 }
 
-export async function deleteRole(data: { id: number }) {
+export async function deleteRole(data: { id: string }) {
   const user = await getSession();
   return await apiRequest({
     url: "/role/deleteById",
@@ -982,7 +1018,7 @@ export async function getOrderDetail(data: { id: string }) {
 // 矿工费
 export async function getOreFeeList() {
   const user = await getSession();
-  return await apiRequest<{ list: OreFeeList[] }>({
+  return await apiRequest<OreFeeList[]>({
     url: "/orefee/address/list",
     token: user?.token,
   });

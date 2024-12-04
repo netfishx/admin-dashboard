@@ -41,6 +41,9 @@ export function LoginLogModal({
   const [page, setPage] = useState<number>(1);
   const [size, setSize] = useState<number>(10);
   useEffect(() => {
+    if (!open) {
+      return;
+    }
     startTransition(async () => {
       setLoading(true);
       if (id && type === "AGENT") {
@@ -70,7 +73,7 @@ export function LoginLogModal({
       }
       setLoading(false);
     });
-  }, [id, page, size, type]);
+  }, [id, page, size, type, open]);
   return (
     <Dialog open={open} onOpenChange={(open) => setOpen(open)}>
       <DialogContent
@@ -102,7 +105,7 @@ export function LoginLogModal({
             {loading ? (
               <LoginLogSkeleton />
             ) : (
-              <TableBody className="w-full max-h-[370px] overflow-auto flex flex-col">
+              <TableBody className="w-full max-h-[50dvh] overflow-auto flex flex-col">
                 {data?.length > 0 ? (
                   data?.map((item: LoginLog) => (
                     <TableRow key={item.id + Math.random()}>
@@ -119,9 +122,9 @@ export function LoginLogModal({
                         <div
                           className={cn(
                             "px-2 rounded-sm w-fit",
-                            Number(item.isSuccess) === 1 &&
+                            Number(item.isSuccess) === 0 &&
                               "text-primary bg-primary/10",
-                            Number(item.isSuccess) === 2 &&
+                            Number(item.isSuccess) === 1 &&
                               "text-destructive bg-destructive/10",
                           )}
                         >

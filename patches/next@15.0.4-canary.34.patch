@@ -1,0 +1,20 @@
+diff --git a/dist/server/lib/start-server.js b/dist/server/lib/start-server.js
+index 1ef2bf4ad5ff46cff13b797da5de8f3112b7abb4..2b798a71b0f84ba3b9aa6feac51b1e1257cd2106 100644
+--- a/dist/server/lib/start-server.js
++++ b/dist/server/lib/start-server.js
+@@ -42,6 +42,7 @@ const _trace = require("../../trace");
+ const _ispostpone = require("./router-utils/is-postpone");
+ const _isipv6 = require("./is-ipv6");
+ const _asynccallbackset = require("./async-callback-set");
++const _logger = require("pino-http")();
+ function _interop_require_default(obj) {
+     return obj && obj.__esModule ? obj : {
+         default: obj
+@@ -138,6 +139,7 @@ async function startServer(serverOptions) {
+         throw new Error('Using a self signed certificate is only supported with `next dev`.');
+     }
+     async function requestListener(req, res) {
++        if (!/^(\/_next\/static|\/_next\/image|\/__nextjs_source-map|\/icon.svg)/.test(req.url)) _logger(req, res);
+         try {
+             if (handlersPromise) {
+                 await handlersPromise;

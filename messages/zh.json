@@ -6,6 +6,7 @@
   "search": "查询",
   "action": "操作",
   "inviteCode": "邀请码",
+  "copied": "已复制",
   "announcement": "公告",
   "more": "查看更多",
   "placeholder": "请输入",
@@ -275,7 +276,8 @@
       "loginUsername": "登录账号",
       "success": "成功",
       "failed": "失败",
-      "usernameWarning": "以小写字母开头,长度6到16位,且只能包含数字和小写字母的组合,不能包含“admin”的字样"
+      "usernameWarning": "以小写字母开头,长度6到16位,且只能包含数字和小写字母的组合,不能包含“admin”的字样",
+      "availableAmount": "当前可用余额"
     },
     "members": {
       "placeholder": "请输入",
@@ -326,7 +328,8 @@
       "rebate": "退水",
       "loginLog": "登录日志",
       "changeLog": "变更日志",
-      "check": "查询"
+      "check": "查询",
+      "moneyPassword": "资金密码"
     },
     "supplier": {
       "add": "新增",
@@ -1018,7 +1021,13 @@
       "lockDesc": "确定锁定该申请单吗？",
       "approverDesc": "确定通过该申请单吗？",
       "rejectDesc": "确定拒绝该申请单吗？",
-      "flowDesc": "确定再次发起该申请单吗？"
+      "flowDesc": "确定再次发起该申请单吗？",
+      "withdrawModeTitle": "出金模式选择（单选）",
+      "mode": "模式",
+      "back": "返回",
+      "modeConfirm": "确定出金",
+      "auto": "自动",
+      "manual": "手动"
     },
     "audit": {
       "createTime": "稽核创建日期",

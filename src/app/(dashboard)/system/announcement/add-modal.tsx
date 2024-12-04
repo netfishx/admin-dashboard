@@ -31,10 +31,12 @@ import { useAtom, useAtomValue } from "jotai";
 import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { useEffect, useState, useTransition } from "react";
 import { TimeRange } from "./time-range";
 
 export function AddModal() {
+  const searchParams = useSearchParams();
   const translations = useTranslations();
   const [isPending, startTransition] = useTransition();
   const router = useRouter();
@@ -176,7 +178,16 @@ export function AddModal() {
       }
     });
   };
-
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+  useEffect(() => {
+    const params = new URLSearchParams(searchParams);
+    if (isPending) {
+      params.set("loading", "true");
+    } else {
+      params.set("loading", "false");
+    }
+    router.push(`?${params.toString()}`);
+  }, [isPending]);
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent

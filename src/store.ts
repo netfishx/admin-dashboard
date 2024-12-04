@@ -63,6 +63,9 @@ export const increaseCreditModalAtom = atom<boolean>(false);
 export const decreaseCreditModalAtom = atom<boolean>(false);
 // 用户管理-会员管理-销账弹窗
 export const deleteCreditModalAtom = atom<boolean>(false);
+
+// 用户管理-供应商管理-供应商loading
+export const supplierLoadingAtom = atom<boolean>(false);
 // 用户管理-供应商管理-编辑弹窗
 export const supplierEditModalAtom = atom<boolean>(false);
 // 用户管理-供应商管理-编辑数据
@@ -137,7 +140,7 @@ export const changedOddsLimitAtom = atom<string[]>([]);
 
 export const roleAtom = atom<Role | null>(null);
 export const roleDialogAtom = atom<boolean>(false);
-export const roleDeleteAtom = atom<number | null>(null);
+export const roleDeleteAtom = atom<string | null>(null);
 export const roleDeleteDialogAtom = atom<boolean>(false);
 
 export const subaccountAtom = atom<Subaccount | null>(null);

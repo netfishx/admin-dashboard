@@ -6,13 +6,10 @@ import { zfd } from "zod-form-data";
 export const createFormSchema = zfd
   .formData({
     username: zfd.text(usernameSchema),
-    nickname: zfd.text(
-      z.union([z.string(), z.string().length(0)]), // 允许空字符串
-    ),
-    password: zfd.text(passwordSchema),
+    newPassword: zfd.text(passwordSchema),
     confirmPassword: zfd.text(passwordSchema),
   })
-  .refine((data) => data.password === data.confirmPassword, {
+  .refine((data) => data.newPassword === data.confirmPassword, {
     message: "两次输入的密码不一致",
     path: ["confirmPassword"],
   });
@@ -20,9 +17,8 @@ export const createFormSchema = zfd
 // 验证函数
 export async function validateFormData(formData: FormData) {
   try {
-    const { username, nickname, password } =
-      await createFormSchema.parse(formData);
-    return { success: true, data: { username, nickname, password } };
+    const result = await createFormSchema.parse(formData);
+    return { success: true, data: result };
   } catch (error) {
     if (error instanceof z.ZodError) {
       return {

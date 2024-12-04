@@ -140,7 +140,7 @@ export function SupplierDialog({
             </div>
             <div className="flex gap-2 items-center">
               <Label className="w-20 text-end">{t("supplierName")}</Label>
-              <Input disabled className="flex-1" defaultValue={supplierName} />
+              <Input disabled className="flex-1" value={supplierName} />
             </div>
             <div className="flex gap-2 items-center">
               <Label className="w-20 text-end">{t("quota")}</Label>

@@ -36,6 +36,7 @@ import { usePathname } from "next/navigation";
 import { QRCodeSVG } from "qrcode.react";
 import { useState } from "react";
 import { useCopyToClipboard } from "react-use";
+import { toast } from "sonner";
 
 export function Toolbar({
   username,
@@ -103,6 +104,7 @@ export function Toolbar({
                   className="size-4"
                   onClick={() => {
                     copyToClipboard(inviteCode);
+                    toast.success(t("copied"));
                   }}
                 >
                   <Copy className="size-4" />
