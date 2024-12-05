@@ -20,7 +20,7 @@ import { cookies } from "next/headers";
 import { Suspense } from "react";
 
 import type { UserBasicInfo } from "@/lib/types";
-import { add, startOfDay, sub } from "date-fns";
+import { add, endOfDay, startOfDay, sub } from "date-fns";
 import { AnnouncementDialog } from "./announcement-dialog";
 import { DataOverview } from "./data-overview";
 import { DataOverviewFlow } from "./data-overview-flow";
@@ -67,6 +67,7 @@ export default async function DashboardPage({
   );
   const start = startOfDay(now).getTime();
   const end = startOfDay(add(now, { days: 1 })).getTime();
+  const todayEnd = endOfDay(now).getTime();
   const oneWeekAgo = sub(start, { days: 7 }).getTime();
   const t = await getTranslations();
   return (
@@ -76,7 +77,7 @@ export default async function DashboardPage({
         {permissions?.includes("admin_stat") && (
           <div className="grid gap-2">
             <Suspense fallback={<div className="p-4 rounded bg-card h-24" />}>
-              <SalutationsWrapper start={start} end={end} />
+              <SalutationsWrapper start={start} end={todayEnd} />
             </Suspense>
           </div>
         )}
@@ -170,12 +171,12 @@ async function DayChartWrapper({
   const {
     data: { agentBaccaratAmountReport, agentBaccaratBetNumReport },
   } = await getTodayWinLossChart({
-    // startTime: start,
-    // endTime: end,
-    // beforeEndTime: oneWeekAgo,
-    startTime: 1730304000000,
-    endTime: 1730748805000,
-    beforeEndTime: 1730748805000,
+    startTime: start,
+    endTime: end,
+    beforeEndTime: oneWeekAgo,
+    // startTime: 1730304000000,
+    // endTime: 1730748805000,
+    // beforeEndTime: 1730748805000,
     size: 6,
   });
 
