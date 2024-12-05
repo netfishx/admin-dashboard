@@ -909,7 +909,7 @@ export async function getWithdrawReportList(data: WithdrawReportParams) {
   if (res.data?.list) {
     // 资金状态(moneyStatus)：0转账中，1已到账，2出款失败；
     // 审核状态(approverStatus)：0未处理，1锁定中，2已拒绝
-    // 未处理 锁定中 > 审核中；已通过、异常 > 提现中； 已拒绝 > 审核失败；已到账 > 提现成功
+    // 未处理 锁定中 > 审核中（0）；已通过、异常 > 提现中（1）； 已拒绝 > 审核失败（2）；已到账 > 提现成功（3）
     const statusMap = {
       approver: {
         0: 0,
