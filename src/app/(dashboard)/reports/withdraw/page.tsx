@@ -27,10 +27,9 @@ export default async function Page({
       <Suspense
         fallback={
           <div className="bg-background py-2">
-            <Skeleton />
-            <Skeleton />
-            <Skeleton />
-            <Skeleton />
+            <Skeleton className="w-full h-12" />
+            <Skeleton className="w-full h-12" />
+            <Skeleton className="w-full h-12" />
           </div>
         }
       >
@@ -162,6 +161,12 @@ async function TableWrapper({
 
 async function TableBodyWrapper({ data }: { data?: PageData<WithdrawReport> }) {
   const t = await getTranslations("");
+  const statusMap = {
+    0: "审核中",
+    1: "提现中",
+    2: "审核失败",
+    3: "提现成功",
+  };
   return (
     <TableBody>
       {data && data.list.length > 0 ? (
@@ -183,16 +188,20 @@ async function TableBodyWrapper({ data }: { data?: PageData<WithdrawReport> }) {
               {item.withdrawFee}
             </TableCell>
             <TableCell className="w-24 min-w-24 text-center">
-              {item.status}
+              {statusMap[item.status as keyof typeof statusMap]}
             </TableCell>
             <TableCell className="w-32 min-w-32 text-center">
               {format(item.applyTime, "yyyy-MM-dd HH:mm:ss")}
             </TableCell>
             <TableCell className="w-24 min-w-24 text-center">
-              {format(item.approverTime, "yyyy-MM-dd HH:mm:ss")}
+              {item.approverTime
+                ? format(item.approverTime, "yyyy-MM-dd HH:mm:ss")
+                : ""}
             </TableCell>
             <TableCell className="w-24 min-w-24 text-center">
-              {format(item.finishTime, "yyyy-MM-dd HH:mm:ss")}
+              {item.finishTime
+                ? format(item.finishTime, "yyyy-MM-dd HH:mm:ss")
+                : ""}
             </TableCell>
             <TableCell className="min-w-24 text-center">
               <Button

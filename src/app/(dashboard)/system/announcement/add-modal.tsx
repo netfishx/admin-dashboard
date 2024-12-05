@@ -33,6 +33,7 @@ import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState, useTransition } from "react";
+import { toast } from "sonner";
 import { TimeRange } from "./time-range";
 
 export function AddModal() {
@@ -69,11 +70,14 @@ export function AddModal() {
       endTime: endTime ? new Date(endTime).getTime() : null,
     };
     startTransition(async () => {
-      const res = await saveAnnouncement(addParams);
-      if (res.code === 0) {
+      const { code, message } = await saveAnnouncement(addParams);
+      if (code === 0) {
         setOpen(false);
+        toast.success(message);
         resetFields();
         router.refresh();
+      } else {
+        toast.error(message);
       }
     });
   };
