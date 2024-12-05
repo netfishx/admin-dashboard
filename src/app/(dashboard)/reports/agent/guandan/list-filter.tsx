@@ -12,15 +12,17 @@ import {
 } from "@/components/ui/select";
 import { startOfDay } from "date-fns";
 import { endOfDay } from "date-fns";
+import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useQueryState } from "nuqs";
-import { useRef } from "react";
+import { useTransition } from "react";
 export function ListFilter({
   hasSearchPermission,
 }: { hasSearchPermission: boolean }) {
   const t = useTranslations("report.agent");
   const router = useRouter();
+  const [isPending, startTransition] = useTransition();
   const [agentId, setAgentId] = useQueryState("agentId", {
     defaultValue: "",
   });
@@ -28,23 +30,10 @@ export function ListFilter({
     defaultValue: "all",
   });
 
-  const dateRangeFilterReset = useRef<
-    ((start: number, end: number) => void) | null
-  >(null);
-  const handleDateRangeFilterReset = () => {
-    const start = startOfDay(new Date()).getTime();
-    const end = endOfDay(new Date()).getTime();
-    dateRangeFilterReset.current?.(start, end);
-  };
-
   const handleReset = () => {
-    setAgentId("");
-    setRoomId("all");
-    handleDateRangeFilterReset();
-  };
-
-  const handleSearch = () => {
-    router.refresh();
+    router.replace(
+      `/reports/agent/guandan?startTime=${startOfDay(new Date()).getTime()}&endTime=${endOfDay(new Date()).getTime()}`,
+    );
   };
 
   return (
@@ -53,17 +42,13 @@ export function ListFilter({
       <div className="flex gap-4 items-center">
         <div className="flex gap-2 items-center">
           <Label>{t("pickdate")}</Label>
-          <DateRangeFilter
-            enableTimeSelect
-            // biome-ignore lint/suspicious/noAssignInExpressions: <explanation>
-            reset={(resetFn) => (dateRangeFilterReset.current = resetFn)}
-          />
+          <DateRangeFilter enableTimeSelect />
         </div>
         {hasSearchPermission && (
           <div className="flex gap-4 items-center">
             <Label className="shrink-0">{t("agentID")}</Label>
             <Input
-              value={agentId ?? ""}
+              value={agentId || ""}
               onChange={(e) => setAgentId(e.target.value)}
               placeholder={t("placeholderinput")}
             />
@@ -76,7 +61,7 @@ export function ListFilter({
         <div className="flex gap-2 items-center">
           <Label className="shrink-0">{t("roomType")}</Label>
           <Select
-            value={roomId ?? ""}
+            value={roomId || ""}
             onValueChange={(value) => setRoomId(value)}
             defaultValue="all"
           >
@@ -101,8 +86,18 @@ export function ListFilter({
           >
             {t("reset")}
           </Button>
-          <Button onClick={handleSearch}>{t("search")}</Button>
-          <Button>{t("download")}</Button>
+          <Button
+            onClick={() => {
+              startTransition(() => {
+                router.refresh();
+              });
+            }}
+            disabled={isPending}
+          >
+            {isPending && <Loader2 className="w-4 h-4 animate-spin" />}
+            {t("search")}
+          </Button>
+          <Button disabled={isPending}>{t("download")}</Button>
         </div>
       </div>
     </div>

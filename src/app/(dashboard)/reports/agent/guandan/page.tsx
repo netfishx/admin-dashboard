@@ -1,3 +1,4 @@
+import { getGuandanGames } from "@/api";
 import TableSkeleton from "@/components/table-skeleton";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Table } from "@/components/ui/table";
@@ -20,7 +21,8 @@ async function ListFilterWrapper() {
   return <ListFilter hasSearchPermission={!!hasSearchPermission} />;
 }
 
-export default function Page({ searchParams }: CommonWrapperProps) {
+export default async function Page({ searchParams }: CommonWrapperProps) {
+  const gameListResp = await getGuandanGames();
   return (
     <div className="flex flex-col gap-2 w-full">
       <Suspense
@@ -44,7 +46,7 @@ export default function Page({ searchParams }: CommonWrapperProps) {
           </div>
         }
       >
-        <List searchParams={searchParams} />
+        <List searchParams={searchParams} gameList={gameListResp?.data || []} />
       </Suspense>
     </div>
   );
