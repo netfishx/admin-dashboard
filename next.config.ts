@@ -61,12 +61,7 @@ const nextConfig: NextConfig = {
     dangerouslyAllowSVG: true,
     contentDispositionType: "attachment",
     contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
-    // remotePatterns: getRemotePatterns(),
-    remotePatterns: [
-      {
-        hostname: "**",
-      },
-    ],
+    remotePatterns: getRemotePatterns(),
   },
   output: "standalone",
 };

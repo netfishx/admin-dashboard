@@ -358,6 +358,8 @@ export type MemberReportsRecord = {
   memberTypeName: string;
   dataLink: string[];
   gameId: number;
+  gameName: string;
+  gameType: number;
   betNum: number;
   memberBetAmount: string;
   availableBetAmount: string | null;

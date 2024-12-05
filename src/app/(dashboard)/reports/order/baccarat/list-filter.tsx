@@ -15,10 +15,9 @@ import { endOfDay, startOfDay } from "date-fns";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { parseAsString, useQueryState } from "nuqs";
-import { useEffect, useRef } from "react";
-
 export function ListFilter({ gameList }: { gameList: GameInfo[] }) {
   const t = useTranslations("report.orderlist");
+  const router = useRouter();
 
   const [gameName, setGameName] = useQueryState("gameId", {
     defaultValue: "all",
@@ -64,15 +63,6 @@ export function ListFilter({ gameList }: { gameList: GameInfo[] }) {
     parseAsString.withDefault("0").withOptions({ clearOnDefault: false }),
   );
 
-  const dateRangeFilterReset = useRef<
-    ((start: number, end: number) => void) | null
-  >(null);
-  const handleDateRangeFilterReset = () => {
-    const start = startOfDay(new Date()).getTime();
-    const end = endOfDay(new Date()).getTime();
-    dateRangeFilterReset.current?.(start, end);
-  };
-
   const handleFilterChange = (filterType: string) => {
     setOperatorSymbol(filterType);
   };
@@ -84,26 +74,11 @@ export function ListFilter({ gameList }: { gameList: GameInfo[] }) {
   };
 
   const handleReset = () => {
-    setOrdernumber("");
-    setIssuenumber("");
-    setMinisterID("");
-    setMemberID("");
-    setRoomeownerID("");
-    setLeastlevelID("");
-    setGameName("all");
-    setBettingtime("1");
-    setSettlementstatus("all");
-    setRechargeMoney("0");
-    setOperatorSymbol("0");
-    handleDateRangeFilterReset();
+    router.replace(
+      `/reports/order/baccarat?startTime=${startOfDay(new Date()).getTime()}&endTime=${endOfDay(new Date()).getTime()}`,
+    );
   };
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
-  useEffect(() => {
-    handleReset();
-  }, []);
-
-  const router = useRouter();
   const handleSearch = () => {
     router.refresh();
   };
@@ -127,9 +102,7 @@ export function ListFilter({ gameList }: { gameList: GameInfo[] }) {
             </SelectContent>
           </Select>
         </div>
-        <DateRangeFilter // biome-ignore lint/suspicious/noAssignInExpressions: <explanation>
-          reset={(resetFn) => (dateRangeFilterReset.current = resetFn)}
-        />
+        <DateRangeFilter enableTimeSelect={false} />
       </div>
 
       {/* 第二行 */}

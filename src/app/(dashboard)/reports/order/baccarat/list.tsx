@@ -142,7 +142,7 @@ export async function List({
         <div className="border rounded-sm relative">
           <Table>
             <ListHeader />
-            <ListBody list={[]} />
+            <ListBody list={[]} gameList={gameList} />
           </Table>
         </div>
       </div>
