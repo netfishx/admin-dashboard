@@ -93,7 +93,7 @@ export function GoogleModal({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent
         onPointerDownOutside={(e) => e.preventDefault()}
-        className="sm:max-w-[600px] max-h-[calc(80dvh)] h-[calc(80dvh)]"
+        className="sm:max-w-[600px] max-h-[80dvh] h-[80dvh]"
       >
         <DialogHeader>
           <DialogTitle>
@@ -111,7 +111,7 @@ export function GoogleModal({
                   <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary text-background">
                     1
                   </div>
-                  <span>{t("step1Title")}</span>
+                  <span className="text-sm">{t("step1Title")}</span>
                 </div>
 
                 <div className="space-y-4">
@@ -178,7 +178,7 @@ export function GoogleModal({
                 <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary text-background">
                   2
                 </div>
-                <span>{t("step2Title")}</span>
+                <span className="text-sm">{t("step2Title")}</span>
               </div>
 
               <div className="rounded-lg bg-muted/50 p-4">
@@ -186,7 +186,7 @@ export function GoogleModal({
                   <div className="mt-1 h-4 w-4 rounded-full">
                     <InfoFilled className="size-4 text-chart-4" />
                   </div>
-                  <p className="text-sm text-chart-4">{t("step2Warning")}</p>
+                  <p className="text-xs text-chart-4">{t("step2Warning")}</p>
                 </div>
                 <div className="mt-4 flex justify-center">
                   <span className="border p-4 inline-block">
@@ -201,10 +201,10 @@ export function GoogleModal({
                   </span>
                 </div>
                 <div className="mt-4 text-center">
-                  <span className="text-sm text-muted-foreground">
+                  <span className="text-xs text-muted-foreground">
                     {t("secretLabel")}
                   </span>
-                  <span className="text-sm text-primary">{secret}</span>
+                  <span className="text-xs text-primary">{secret}</span>
                   <Button
                     variant="ghost"
                     className="size-4"
@@ -226,12 +226,15 @@ export function GoogleModal({
                 <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary text-background">
                   3
                 </div>
-                <span>{t("step3Title")}</span>
+                <span className="text-sm">{t("step3Title")}</span>
               </div>
             )}
             <div className="flex items-center gap-4 justify-center text-center">
-              <Label className="text-sm text-destructive">
-                {t("googleCodeLabel")}
+              <Label className="text-xs">
+                <span className="text-destructive">*</span>
+                <span className="text-muted-foreground">
+                  {t("googleCodeLabel")}
+                </span>
               </Label>
               <Input
                 id="auth-code"
@@ -239,7 +242,7 @@ export function GoogleModal({
                 onChange={(e) => setAuthCode(e.target.value)}
                 value={authCode}
                 placeholder={t("placeholder")}
-                className="max-w-[240px] bg-muted/50"
+                className="max-w-[240px] placeholder:text-xs"
               />
             </div>
           </div>

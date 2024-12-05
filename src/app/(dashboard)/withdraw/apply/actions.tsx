@@ -30,61 +30,76 @@ export function Actions({
   data,
   currentUserId,
 }: { data: ApplyData; currentUserId: string }) {
-  const t = useTranslations("withdraw.apply");
-  const auditStatus = data.approverStatus;
-  const withdrawMode = data.withdrawMode;
-  const moneyStatus = data.moneyStatus;
-
-  return (
-    <>
-      <div className="flex justify-center">
-        {/* 审核状态 0未处理 1锁定中 2拒绝 3通过 */}
-        {/* 资金状态 0转账中 1到账 2异常 */}
-        {/* 出金模式 0自动 1手动 */}
-
-        {/* 未处理——[锁定]
-        锁定中——[通过]、[拒绝]、[流水]
-        已通过——自动出金——（无操作）；已通过——手动出金——[确认到账] 
-        已拒绝——（无操作）
-        到账失败——[再次发起]
-        */}
-        {/* todo: 锁定人和当前登录id不一致时 通过拒绝按钮的置灰 */}
-        {auditStatus === 0 && <LockButton data={data} />}
-        {auditStatus === 1 && (
-          <>
-            <PassButton
-              data={data}
-              isCurrentAuditor={currentUserId === data.approverId}
-            />
-            <RejectButton
-              data={data}
-              isCurrentAuditor={currentUserId === data.approverId}
-            />
-            <Button
-              variant="link"
-              className="hover:no-underline hover:text-primary/80 px-0"
-            >
-              {t("flow")}
-            </Button>
-          </>
-        )}
-        {/* 手动出金时 */}
-        {moneyStatus === 0 && withdrawMode === 1 && (
-          <ConfirmButton data={data} />
-        )}
-        {moneyStatus === 2 && <AgainButton data={data} />}
-        {/* 已拒绝 + 已通过并自动并且不异常 + 已通过并手动并已到账   */}
-        {(auditStatus === 2 ||
-          (auditStatus === 3 && withdrawMode === 0 && moneyStatus !== 2) ||
-          (auditStatus === 3 && withdrawMode === 1 && moneyStatus === 1)) && (
-          <span>--</span>
-        )}
-        {/* <WithdrawModeDialog data={data} /> */}
-      </div>
-    </>
-  );
+  return <ActionButtons data={data} currentUserId={currentUserId} />;
 }
 
+function ActionButtons({
+  data,
+  currentUserId,
+}: { data: ApplyData; currentUserId: string }) {
+  const t = useTranslations("withdraw.apply");
+  // 审核状态 0未处理 1锁定中 2拒绝 3通过
+  // 资金状态 0转账中 1到账 2异常
+  // 出金模式 0自动 1手动
+  // 未处理——[锁定]
+  // 锁定中——[通过]、[拒绝]、[流水]
+  // 已通过——自动出金——（无操作）；已通过——手动出金——[确认到账]
+  // 已拒绝——（无操作）
+  // 到账失败——[再次发起]
+
+  const { approverStatus, withdrawMode, moneyStatus, approverId } = data;
+
+  // 未处理 - 显示锁定按钮
+  if (approverStatus === 0) {
+    return (
+      <div className="flex justify-center">
+        <LockButton data={data} />
+      </div>
+    );
+  }
+
+  // 锁定中 - 显示审核按钮
+  if (approverStatus === 1) {
+    const isCurrentAuditor = currentUserId === approverId;
+    return (
+      <div className="flex justify-center">
+        <PassButton data={data} isCurrentAuditor={isCurrentAuditor} />
+        <RejectButton data={data} isCurrentAuditor={isCurrentAuditor} />
+        <Button
+          variant="link"
+          className="hover:no-underline hover:text-primary/80 px-0"
+        >
+          {t("flow")}
+        </Button>
+      </div>
+    );
+  }
+
+  // 手动出金中 - 显示确认按钮
+  if (moneyStatus === 0 && withdrawMode === 1) {
+    return (
+      <div className="flex justify-center">
+        <ConfirmButton data={data} />
+      </div>
+    );
+  }
+
+  // 出金异常 - 显示重试按钮
+  if (moneyStatus === 2) {
+    return (
+      <div className="flex justify-center">
+        <AgainButton data={data} />
+      </div>
+    );
+  }
+
+  // 其他所有状态 - 显示无操作
+  return (
+    <div className="flex justify-center">
+      <span>--</span>
+    </div>
+  );
+}
 // 锁定
 function LockButton({ data }: { data: ApplyData }) {
   const t = useTranslations("withdraw.apply");

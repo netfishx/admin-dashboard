@@ -226,8 +226,8 @@ export type PeriodReportParams = {
   startTime: number;
   endTime: number;
   issueNumber: string;
-  gameType: number;
-  gameId: number;
+  gameType: number | null;
+  gameId: number | null;
 };
 
 export type PeriodReportList = WithPagination & {
@@ -869,12 +869,13 @@ export type WalletLogRequestParams = {
   userType: number; //用户类型
   userId: string; //用户id
   transactionID: string; //订单号
-  operateCode: number; //类型
+  operateCode: number | null; //类型
   pageNum: number; // 页数从1开始
   pageSize: number; // 页面大小
 };
 
 export type WalletLogRecords = {
+  id: number;
   transactionId: string; //账变id
   operateType: number; //账变类型
   transactionAmount: string; //变更余额

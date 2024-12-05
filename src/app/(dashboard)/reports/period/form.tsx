@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Loader2 } from "lucide-react";
 
+import { getAllGames } from "@/api";
 import {
   Select,
   SelectContent,
@@ -15,8 +16,7 @@ import {
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useQueryState } from "nuqs";
-import { useTransition } from "react";
-
+import { useEffect, useTransition } from "react";
 export function Form() {
   const t = useTranslations("report.periodlist");
 
@@ -31,6 +31,13 @@ export function Form() {
   const [issueNumber, setIssueNumber] = useQueryState("issueNumber", {
     defaultValue: "",
   });
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+  useEffect(() => {
+    getAllGames().then((res) => {
+      console.info(" ~ games:", res);
+    });
+  }, []);
 
   return (
     <div className="flex flex-col gap-2 w-full">
