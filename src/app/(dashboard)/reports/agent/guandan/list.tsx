@@ -11,6 +11,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import type {
+  GameInfo,
   PokerReportRequestParams,
   PokerReportRequestRecords,
 } from "@/lib/types";
@@ -47,13 +48,28 @@ export async function ListHeader() {
   );
 }
 
-async function ListBody({ list }: { list: PokerReportRequestRecords[] }) {
+async function ListBody({
+  list,
+  gameList = [],
+}: { list: PokerReportRequestRecords[]; gameList: GameInfo[] }) {
   const translate = await getTranslations();
+  const t = await getTranslations("report.agent");
   const session = await getSession();
   const permissions = session?.permissions;
   const hasSearchPermission = permissions?.includes(
     "agent_report_guandan_search",
   );
+
+  const handleRoomType = (roomType: number) => {
+    if (roomType === 1) {
+      return t("gameHall");
+    }
+    if (roomType === 2) {
+      return t("club");
+    }
+    return "";
+  };
+
   return (
     <TableBody>
       {list?.length > 0 ? (
@@ -62,8 +78,12 @@ async function ListBody({ list }: { list: PokerReportRequestRecords[] }) {
             {hasSearchPermission && (
               <TableCell className="w-24 text-center">{item.agentId}</TableCell>
             )}
-            <TableCell className="w-24 text-center">{item.gameType}</TableCell>
-            <TableCell className="w-24 text-center">{item.roomType}</TableCell>
+            <TableCell className="w-24 text-center">
+              {gameList.find((i) => i.gameType === item.gameType)?.gameName}
+            </TableCell>
+            <TableCell className="w-24 text-center">
+              {handleRoomType(Number(item.roomType))}
+            </TableCell>
             <TableCell className="w-24 text-center">
               {item.issueAmount}
             </TableCell>
@@ -88,7 +108,8 @@ async function ListBody({ list }: { list: PokerReportRequestRecords[] }) {
 
 export async function List({
   searchParams,
-}: { searchParams: Promise<PokerReportRequestParams> }) {
+  gameList,
+}: { searchParams: Promise<PokerReportRequestParams>; gameList: GameInfo[] }) {
   const t = await getTranslations("report.agent");
   const params = await searchParams;
   if (!(params?.startTime && params?.endTime)) {
@@ -98,18 +119,24 @@ export async function List({
         <div className="border rounded-sm relative">
           <Table>
             <ListHeader />
-            <ListBody list={[]} />
+            <ListBody list={[]} gameList={gameList} />
           </Table>
         </div>
       </div>
     );
   }
-  const { data } = await getPokerReport(params);
+  const p = {
+    ...params,
+    pageNum: Number(params?.pageNum || 1),
+    pageSize: Number(params?.pageSize || 10),
+    startTime: Number(params?.startTime || 0),
+    endTime: Number(params?.endTime || 0),
+  };
+  const { data } = await getPokerReport(p);
   return (
     <div className="p-2 bg-background flex-1">
       <div className="h-6">
-        {/* biome-ignore lint/style/useExplicitLengthCheck: <explanation> */}
-        {data?.list?.length && data?.list?.length > 0 && (
+        {data?.list && data.list.length > 0 && (
           <>
             <Label className="min-w-24 text-center text-sm">
               {t("totalIssueAmount")}:
@@ -130,7 +157,7 @@ export async function List({
         <Table>
           <ListHeader />
           <Suspense fallback={<TableSkeleton length={5} colSpan={14} />}>
-            <ListBody list={data?.list || []} />
+            <ListBody list={data?.list || []} gameList={gameList} />
           </Suspense>
         </Table>
       </div>

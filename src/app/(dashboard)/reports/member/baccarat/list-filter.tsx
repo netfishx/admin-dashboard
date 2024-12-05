@@ -14,16 +14,18 @@ import type { GameInfo } from "@/lib/types";
 
 import { startOfDay } from "date-fns";
 import { endOfDay } from "date-fns";
+import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useQueryState } from "nuqs";
-import { useRef } from "react";
+import { useTransition } from "react";
 
 export function ListFilter({
   hasSearchPermission,
   gameList,
 }: { hasSearchPermission: boolean; gameList: GameInfo[] }) {
   const t = useTranslations("report.member");
+  const [isPending, startTransition] = useTransition();
   const [parentAgentId, setParentAgentId] = useQueryState("parentAgentId", {
     defaultValue: "",
   });
@@ -38,21 +40,10 @@ export function ListFilter({
     defaultValue: "all",
   });
 
-  const dateRangeFilterReset = useRef<
-    ((start: number, end: number) => void) | null
-  >(null);
-  const handleDateRangeFilterReset = () => {
-    const start = startOfDay(new Date()).getTime();
-    const end = endOfDay(new Date()).getTime();
-    dateRangeFilterReset.current?.(start, end);
-  };
-
   const handleReset = () => {
-    setParentAgentId("");
-    setGameId("all");
-    setMemberId("");
-    setMemberType("all");
-    handleDateRangeFilterReset();
+    router.replace(
+      `/reports/member/baccarat?startTime=${startOfDay(new Date()).getTime()}&endTime=${endOfDay(new Date()).getTime()}`,
+    );
   };
 
   const router = useRouter();
@@ -86,11 +77,7 @@ export function ListFilter({
         </div>
         <div className="flex gap-2 items-center">
           <Label>{t("openTime")}</Label>
-          <DateRangeFilter
-            enableTimeSelect={false}
-            // biome-ignore lint/suspicious/noAssignInExpressions: <explanation>
-            reset={(resetFn) => (dateRangeFilterReset.current = resetFn)}
-          />
+          <DateRangeFilter enableTimeSelect={false} />
         </div>
         <div className="flex gap-4 items-center">
           <Label className="shrink-0">{t("memberId")}</Label>
@@ -142,8 +129,14 @@ export function ListFilter({
           >
             {t("reset")}
           </Button>
-          <Button onClick={handleSearch}>{t("search")}</Button>
-          <Button>{t("download")}</Button>
+          <Button
+            onClick={() => startTransition(handleSearch)}
+            disabled={isPending}
+          >
+            {isPending && <Loader2 className="animate-spin" />}
+            {t("search")}
+          </Button>
+          <Button disabled={isPending}>{t("download")}</Button>
         </div>
       </div>
     </div>

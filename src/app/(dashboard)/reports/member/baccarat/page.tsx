@@ -26,10 +26,11 @@ async function ListFilterWrapper({ gameList }: { gameList: GameInfo[] }) {
   );
 }
 
-async function CommonWrapper({ searchParams }: CommonWrapperProps) {
+export default async function Page({ searchParams }: CommonWrapperProps) {
   const gameListResp = await getBaccaratGames();
+
   return (
-    <>
+    <div className="flex flex-col gap-2 w-full h-full">
       <Suspense
         fallback={
           <div className="flex justify-between items-center bg-background p-4">
@@ -51,16 +52,8 @@ async function CommonWrapper({ searchParams }: CommonWrapperProps) {
           </div>
         }
       >
-        <List searchParams={searchParams} />
+        <List searchParams={searchParams} gameList={gameListResp?.data ?? []} />
       </Suspense>
-    </>
-  );
-}
-
-export default function Page({ searchParams }: CommonWrapperProps) {
-  return (
-    <div className="flex flex-col gap-2 w-full h-full">
-      <CommonWrapper searchParams={searchParams} />
     </div>
   );
 }
