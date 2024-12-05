@@ -11,7 +11,7 @@ export async function SidebarWrapper() {
   let status = false;
   if (hasReceiveOrderPermission) {
     const res = await getReceiveOrder();
-    status = res.data?.status ?? false;
+    status = res.data?.receiveStatus ?? false;
   }
   return (
     <SideBar

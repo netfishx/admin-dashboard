@@ -453,7 +453,7 @@ export async function saveAnnouncement(data: Announcement) {
 
 export async function getReceiveOrder() {
   const user = await getSession();
-  return await apiRequest<{ status: boolean }>({
+  return await apiRequest<{ receiveStatus: boolean }>({
     url: "/agent/user/main/receiveOrder",
     token: user?.token,
   });
