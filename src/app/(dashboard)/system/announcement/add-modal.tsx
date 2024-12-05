@@ -226,9 +226,6 @@ export function AddModal() {
                 <SelectItem value="4">
                   {t("platformRoomAnnouncement")}
                 </SelectItem>
-                <SelectItem value="5">
-                  {t("systemConfigChangeAnnouncement")}
-                </SelectItem>
               </SelectContent>
             </Select>
           </div>
