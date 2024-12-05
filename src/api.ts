@@ -90,7 +90,7 @@ export async function getGameList(type: number) {
     url: "/game/list",
     params: { type },
     token: user?.token,
-    expire: "default",
+    expire: "minutes",
   });
 }
 

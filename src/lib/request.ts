@@ -40,7 +40,7 @@ async function request<T>({
   // biome-ignore lint/suspicious/noExplicitAny: <explanation>
   data?: any;
   token?: string;
-  expire?: number | "default" | "minutes" | "days" | "max";
+  expire?: number | "minutes" | "days" | "hours";
   tags?: string[];
 }): Promise<{
   data: Res<T>;
@@ -51,21 +51,18 @@ async function request<T>({
     cacheLife({
       stale: expire,
       revalidate: expire,
-      expire,
+      expire: expire * 10,
     });
   } else {
     switch (expire) {
-      case "default":
-        cacheLife("default");
-        break;
       case "minutes":
         cacheLife("minutes");
         break;
       case "days":
         cacheLife("days");
         break;
-      case "max":
-        cacheLife("max");
+      case "hours":
+        cacheLife("hours");
         break;
       default:
         cacheLife("seconds");
@@ -135,7 +132,7 @@ export async function apiRequest<T>({
   // biome-ignore lint/suspicious/noExplicitAny: <explanation>
   data?: any;
   token?: string;
-  expire?: number | "default" | "minutes" | "days" | "max";
+  expire?: number | "minutes" | "days" | "hours";
 }): Promise<Res<T>> {
   const start = performance.now();
   const nextHeaders = await headers();
