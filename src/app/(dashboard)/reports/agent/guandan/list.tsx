@@ -104,12 +104,19 @@ export async function List({
       </div>
     );
   }
-  const { data } = await getPokerReport(params);
+  const p = {
+    ...params,
+    pageNum: Number(params?.pageNum || 1),
+    pageSize: Number(params?.pageSize || 10),
+    startTime: Number(params?.startTime || 0),
+    endTime: Number(params?.endTime || 0),
+  };
+  const { data } = await getPokerReport(p);
+
   return (
     <div className="p-2 bg-background flex-1">
       <div className="h-6">
-        {/* biome-ignore lint/style/useExplicitLengthCheck: <explanation> */}
-        {data?.list?.length && data?.list?.length > 0 && (
+        {data?.list && data.list.length > 0 && (
           <>
             <Label className="min-w-24 text-center text-sm">
               {t("totalIssueAmount")}:

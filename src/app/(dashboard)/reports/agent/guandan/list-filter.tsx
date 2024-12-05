@@ -13,13 +13,14 @@ import {
 import { startOfDay } from "date-fns";
 import { endOfDay } from "date-fns";
 import { useTranslations } from "next-intl";
+import { useRouter } from "next/navigation";
 import { useQueryState } from "nuqs";
 import { useRef } from "react";
-
 export function ListFilter({
   hasSearchPermission,
 }: { hasSearchPermission: boolean }) {
   const t = useTranslations("report.agent");
+  const router = useRouter();
   const [agentId, setAgentId] = useQueryState("agentId", {
     defaultValue: "",
   });
@@ -40,6 +41,10 @@ export function ListFilter({
     setAgentId("");
     setRoomId("all");
     handleDateRangeFilterReset();
+  };
+
+  const handleSearch = () => {
+    router.refresh();
   };
 
   return (
@@ -96,7 +101,7 @@ export function ListFilter({
           >
             {t("reset")}
           </Button>
-          <Button>{t("search")}</Button>
+          <Button onClick={handleSearch}>{t("search")}</Button>
           <Button>{t("download")}</Button>
         </div>
       </div>

@@ -98,6 +98,7 @@ export function ListFilter({ gameList }: { gameList: GameInfo[] }) {
     handleDateRangeFilterReset();
   };
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     handleReset();
   }, []);
