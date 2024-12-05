@@ -15,6 +15,7 @@ import { getTranslations } from "next-intl/server";
 import { Suspense } from "react";
 import { Actions } from "./actions";
 import { Form } from "./form";
+
 export default async function Page({
   searchParams,
 }: { searchParams: Promise<{ [key: string]: string | string[] }> }) {
@@ -23,8 +24,8 @@ export default async function Page({
       <Suspense
         fallback={
           <div className="bg-background py-2">
-            <Skeleton />
-            <Skeleton />
+            <Skeleton className="w-full h-11" />
+            <Skeleton className="w-full h-11" />
           </div>
         }
       >
@@ -97,15 +98,16 @@ async function PeriodTable({
       </Table>
     );
   }
-  const { data } = await getPeriodReport({
+  const params = {
     pageSize: Number(pageSize ?? 10),
     pageNum: Number(pageNum ?? 1),
     startTime: Number(startTime),
     endTime: Number(endTime),
-    gameType: Number(gameType),
-    gameId: Number(gameId) ?? null,
+    gameType: gameType ? Number(gameType) : null,
+    gameId: gameId ? Number(gameId) : null,
     issueNumber: issueNumber?.toString() ?? "",
-  });
+  };
+  const { data } = await getPeriodReport(params);
   return (
     <div className="flex flex-col gap-2 w-full">
       <div className="bg-background flex-1">

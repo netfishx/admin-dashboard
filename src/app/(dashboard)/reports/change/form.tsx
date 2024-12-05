@@ -24,7 +24,7 @@ export function Form() {
   const [userId, setUserId] = useQueryState("userId");
   const [transactionId, setTransactionId] = useQueryState("transactionId");
   const [userType, setUserType] = useQueryState("userType", {
-    defaultValue: "all",
+    defaultValue: "0",
   });
   const [operateCode, setOperateCode] = useQueryState("operateCode", {
     defaultValue: "all",
@@ -44,7 +44,7 @@ export function Form() {
           <Select
             onValueChange={(value) => setOperateCode(value)}
             defaultValue="all"
-            value={operateCode}
+            value={operateCode ?? ""}
           >
             <SelectTrigger className="w-36">
               <SelectValue placeholder={t("placeholderselect")} />
@@ -84,13 +84,14 @@ export function Form() {
           <Select
             value={userType ?? ""}
             onValueChange={(value) => setUserType(value)}
+            defaultValue="0"
           >
             <SelectTrigger className="w-28">
               <SelectValue placeholder={t("placeholderselect")} />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="all">{t("all")}</SelectItem>
-              <SelectItem value="1">代理</SelectItem>
+              {/* <SelectItem value="all">{t("all")}</SelectItem> */}
+              <SelectItem value="0">代理</SelectItem>
               <SelectItem value="2">会员</SelectItem>
             </SelectContent>
           </Select>

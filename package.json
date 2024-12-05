@@ -49,7 +49,7 @@
     "lz-string": "^1.5.0",
     "motion": "12.0.0-alpha.2",
     "nanoid": "^5.0.9",
-    "next": "^15.0.4-canary.34",
+    "next": "^15.0.4-canary.41",
     "next-intl": "^3.25.3",
     "next-safe-action": "^7.9.9",
     "next-themes": "^0.4.3",
@@ -90,7 +90,7 @@
     "@types/react": "npm:types-react@19.0.0-rc.1",
     "@types/react-dom": "npm:types-react-dom@19.0.0-rc.1",
     "date-fns": "4.1.0",
-    "next": "15.0.4-canary.34",
+    "next": "15.0.4-canary.41",
     "react": "19.0.0-rc-5b0ef217-20241202",
     "react-dom": "19.0.0-rc-5b0ef217-20241202",
     "react-is": "19.0.0-rc-5b0ef217-20241202"
@@ -98,6 +98,6 @@
   "trustedDependencies": ["@biomejs/biome", "sharp"],
   "patchedDependencies": {
     "jotai@2.10.3": "patches/jotai@2.10.3.patch",
-    "next@15.0.4-canary.34": "patches/next@15.0.4-canary.34.patch"
+    "next@15.0.4-canary.41": "patches/next@15.0.4-canary.41.patch"
   }
 }

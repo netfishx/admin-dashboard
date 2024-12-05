@@ -123,7 +123,7 @@ export function Form() {
             <SelectContent>
               <SelectItem value="all">{t("all")}</SelectItem>
               <SelectItem value="0">代理</SelectItem>
-              <SelectItem value="1">会员</SelectItem>
+              <SelectItem value="2">会员</SelectItem>
             </SelectContent>
           </Select>
         </div>

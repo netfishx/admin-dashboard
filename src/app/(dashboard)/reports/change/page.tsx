@@ -25,10 +25,9 @@ export default async function Page({
       <Suspense
         fallback={
           <div className="bg-background py-2">
-            <Skeleton />
-            <Skeleton />
-            <Skeleton />
-            <Skeleton />
+            <Skeleton className="w-full h-12" />
+            <Skeleton className="w-full h-12" />
+            <Skeleton className="w-full h-12" />
           </div>
         }
       >
@@ -120,12 +119,14 @@ async function TableWrapper({
   const params: WalletLogRequestParams = {
     userId: (userId ?? null) as string,
     transactionID: (transactionID ?? null) as string,
-    operateCode: Number(operateCode ?? 0),
-    userType: Number(userType ?? 1),
+    operateCode: operateCode ? Number(operateCode) : null,
+    userType: userType ? Number(userType) : 0,
     pageNum: Number(pageNum ?? 1),
     pageSize: Number(pageSize ?? 10),
-    startTime: Number(startTime),
-    endTime: Number(endTime),
+    // startTime: Number(startTime),
+    // endTime: Number(endTime),
+    startTime: 1732165114683,
+    endTime: 1733290152826,
   };
   // 验证参数是否有效 至少一个参数是有值的
   const validateParams = (params: WalletLogRequestParams) => {
@@ -139,7 +140,6 @@ async function TableWrapper({
     console.info("请至少选择一个查询条件");
   }
   const { data } = await getWalletLog(params);
-  console.info("🌸 ~ data:", data);
   return (
     <div className="bg-background flex-1 w-full ">
       <div className="relative overflow-y-auto overflow-x-auto border rounded-sm">
@@ -170,7 +170,7 @@ async function TableBodyWrapper({
     <TableBody>
       {data && data.list.length > 0 ? (
         data.list.map((item) => (
-          <TableRow key={item.transactionId}>
+          <TableRow key={item.id}>
             <TableCell className="w-24 min-w-24 text-center">
               {item.userId}
             </TableCell>
