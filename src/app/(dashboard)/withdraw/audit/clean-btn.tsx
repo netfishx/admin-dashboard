@@ -22,7 +22,7 @@ import { toast } from "sonner";
 export function CleanBtn({ data }: { data: AuditList }) {
   return (
     <div>
-      <CleanButton data={data} />
+      {data.status === 0 ? <CleanButton data={data} /> : <span> -- </span>}
     </div>
   );
 }
@@ -54,15 +54,15 @@ function CleanButton({ data }: { data: AuditList }) {
           <AlertDialogAction
             onClick={() => {
               startTransition(async () => {
-                console.info("清除稽核", data.id);
-                const res = await clearAudit({
+                const { code, message } = await clearAudit({
                   id: data.id,
+                  userId: data.userId,
                 });
-
-                if (res.code === 0) {
+                if (code === 0) {
+                  toast.success(message);
                   router.refresh();
                 } else {
-                  toast.error(res.message);
+                  toast.error(message);
                 }
               });
             }}

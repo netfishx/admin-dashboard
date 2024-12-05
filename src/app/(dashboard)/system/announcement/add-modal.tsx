@@ -65,6 +65,7 @@ export function AddModal() {
       id: data?.id || null,
       type: Number(type),
       content: contentData,
+      contentId: data?.contentId || null,
       status: Number(status),
       startTime: startTime ? new Date(startTime).getTime() : null,
       endTime: endTime ? new Date(endTime).getTime() : null,

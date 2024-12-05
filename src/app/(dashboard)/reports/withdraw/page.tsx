@@ -1,6 +1,5 @@
 import { getWithdrawReportList } from "@/api";
 import { CustomPagination } from "@/components/custom-pagination";
-import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
   Table,
@@ -12,6 +11,7 @@ import {
 } from "@/components/ui/table";
 import type { WithdrawReportParams } from "@/lib/types";
 import { Suspense } from "react";
+import { Actions } from "./actions";
 import { Form } from "./form";
 
 import type { WithdrawReport } from "@/lib/types";
@@ -164,7 +164,7 @@ async function TableBodyWrapper({ data }: { data?: PageData<WithdrawReport> }) {
   const statusMap = {
     0: "审核中",
     1: "提现中",
-    2: "审核失败",
+    2: "审核拒绝",
     3: "提现成功",
   };
   return (
@@ -204,13 +204,7 @@ async function TableBodyWrapper({ data }: { data?: PageData<WithdrawReport> }) {
                 : ""}
             </TableCell>
             <TableCell className="min-w-24 text-center">
-              <Button
-                variant="link"
-                size="icon"
-                className="block w-[100px] truncate overflow-hidden whitespace-nowrap"
-              >
-                {item.withdrawHash}
-              </Button>
+              <Actions item={item} />
             </TableCell>
           </TableRow>
         ))
