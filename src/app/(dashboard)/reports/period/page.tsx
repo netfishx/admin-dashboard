@@ -101,11 +101,14 @@ async function PeriodTable({
   const params = {
     pageSize: Number(pageSize ?? 10),
     pageNum: Number(pageNum ?? 1),
-    startTime: Number(startTime),
-    endTime: Number(endTime),
-    gameType: gameType ? Number(gameType) : null,
+    // startTime: Number(startTime),
+    // endTime: Number(endTime),
+    // temp临时参数
+    startTime: 1730304000000,
+    endTime: 1730504000000,
+    gameType: gameType ? Number(gameType) : 61, // 第一期先写死
     gameId: gameId ? Number(gameId) : null,
-    issueNumber: issueNumber?.toString() ?? "",
+    issueNumber: issueNumber?.toString() ?? null,
   };
   const { data } = await getPeriodReport(params);
   return (
@@ -115,7 +118,7 @@ async function PeriodTable({
           <Table>
             <PeriodTableHeader />
             <Suspense fallback={<TableBodySkeleton />}>
-              <TableBodyWrapper data={data} />
+              <TableBodyWrapper data={data} searchParams={searchParams} />
             </Suspense>
           </Table>
         </div>
@@ -135,8 +138,13 @@ async function PeriodTable({
 
 async function TableBodyWrapper({
   data,
-}: { data?: PageData<PeriodReportList> }) {
+  searchParams,
+}: {
+  data?: PageData<PeriodReportList>;
+  searchParams: Promise<{ [key: string]: string | string[] }>;
+}) {
   const translations = await getTranslations();
+  const urlParams = await searchParams;
 
   return (
     <TableBody>
@@ -164,7 +172,7 @@ async function TableBodyWrapper({
             </TableCell>
             <TableCell className="text-center">{item.backIncome}</TableCell>
             <TableCell className="sticky right-0 bg-background w-24 text-center">
-              <Actions />
+              <Actions searchParams={urlParams} />
             </TableCell>
           </TableRow>
         ))

@@ -1,6 +1,5 @@
 import { getRechargeReportList } from "@/api";
 import { CustomPagination } from "@/components/custom-pagination";
-import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
   Table,
@@ -18,6 +17,7 @@ import type {
 import { format } from "date-fns";
 import { getTranslations } from "next-intl/server";
 import { Suspense } from "react";
+import { Actions } from "./actions";
 import { Form } from "./form";
 
 export default async function Page({
@@ -170,13 +170,7 @@ async function TableBodyWrapper({ data }: { data?: PageData<RechargeReport> }) {
               {format(item.finishTime, "yyyy-MM-dd HH:mm:ss")}
             </TableCell>
             <TableCell className="text-center flex justify-center items-center h-full">
-              <Button
-                variant="link"
-                size="icon"
-                className="block w-[100px] truncate overflow-hidden whitespace-nowrap"
-              >
-                {item.rechargeHash}
-              </Button>
+              <Actions item={item} />
             </TableCell>
           </TableRow>
         ))

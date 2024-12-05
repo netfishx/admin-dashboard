@@ -81,16 +81,21 @@ export function PasswordModal({
                 name="oldPassword"
               />
             </div>
-            <div className="flex gap-2 items-center">
-              <Label className="shrink-0 w-[100px] text-right text-muted-foreground">
-                <span className="text-destructive">*</span>
-                {t("newPassword")}
-              </Label>
-              <Password
-                type="password"
-                placeholder={t("placeholderNew")}
-                name="newPassword"
-              />
+            <div>
+              <div className="flex gap-2 items-center">
+                <Label className="shrink-0 w-[100px] text-right text-muted-foreground">
+                  <span className="text-destructive">*</span>
+                  {t("newPassword")}
+                </Label>
+                <Password
+                  type="password"
+                  placeholder={t("placeholderNew")}
+                  name="newPassword"
+                />
+              </div>
+              <div className="text-xs text-destructive ml-[110px] mt-2">
+                {t("passwordWarning")}
+              </div>
             </div>
             <div className="flex gap-2 items-center">
               <Label className="w-[100px] text-right shrink-0  text-muted-foreground">
