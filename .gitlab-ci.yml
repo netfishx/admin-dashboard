@@ -6,4 +6,4 @@ build:
     - docker build -t admin-006:$CI_COMMIT_SHORT_SHA .
     - docker stop admin-006 || true
     - docker rm admin-006 || true
-    - docker run -d -p 3333:3000 --name admin-006 --network demo admin-006:$CI_COMMIT_SHORT_SHA
+    - docker run -d -p 3333:3000 --name admin-006 --network demo --restart unless-stopped admin-006:$CI_COMMIT_SHORT_SHA
