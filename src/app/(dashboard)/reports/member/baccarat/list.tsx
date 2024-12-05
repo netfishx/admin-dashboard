@@ -11,9 +11,11 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import type {
+  GameInfo,
   MemberReportRequestParams,
   MemberReportsRecord,
 } from "@/lib/types";
+import { nanoid } from "nanoid";
 import { getTranslations } from "next-intl/server";
 import { Suspense } from "react";
 import DetailButton from "./detail-button";
@@ -53,18 +55,27 @@ export async function ListHeader() {
   );
 }
 
-async function ListBody({ list }: { list: MemberReportsRecord[] }) {
+async function ListBody({
+  list,
+  gameList,
+}: { list: MemberReportsRecord[]; gameList?: GameInfo[] }) {
   const translate = await getTranslations();
+
   return (
     <TableBody>
       {list && list?.length > 0 ? (
         list?.map((item: MemberReportsRecord) => (
-          <TableRow key={item.memberId}>
+          <TableRow key={nanoid()}>
             <TableCell className="w-24 text-center">{item.memberId}</TableCell>
             <TableCell className="w-24 text-center">
               {item.memberTypeName}
             </TableCell>
-            <TableCell className="w-24 text-center">{item.gameId}</TableCell>
+            <TableCell className="w-24 text-center">
+              {
+                gameList?.find((game) => game.gameType === item.gameType)
+                  ?.gameName
+              }
+            </TableCell>
             <TableCell className="w-24 text-center">{item.betNum}</TableCell>
             <TableCell className="w-24 text-center">
               {item.memberBetAmount}
@@ -99,7 +110,11 @@ async function ListBody({ list }: { list: MemberReportsRecord[] }) {
 
 export async function List({
   searchParams,
-}: { searchParams: Promise<MemberReportRequestParams> }) {
+  gameList,
+}: {
+  searchParams: Promise<MemberReportRequestParams>;
+  gameList: GameInfo[];
+}) {
   const t = await getTranslations("report.member");
   const params = await searchParams;
   const p = {
@@ -123,6 +138,7 @@ export async function List({
     );
   }
   const { data } = await getMemberReportList(p);
+
   return (
     <div className="p-2 bg-background flex-1">
       <div className="h-6">
@@ -177,7 +193,7 @@ export async function List({
         <Table>
           <ListHeader />
           <Suspense fallback={<TableSkeleton length={5} colSpan={10} />}>
-            <ListBody list={data?.list ?? []} />
+            <ListBody list={data?.list ?? []} gameList={gameList || []} />
           </Suspense>
         </Table>
       </div>

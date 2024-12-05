@@ -10,6 +10,7 @@ export default function DetailButton({ item }: { item: MemberReportsRecord }) {
   const searchParams = useSearchParams();
   const startTime = searchParams.get("startTime");
   const endTime = searchParams.get("endTime");
+
   return (
     <div>
       <Button

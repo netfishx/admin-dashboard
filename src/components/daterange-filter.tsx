@@ -174,8 +174,6 @@ export function DateRangeFilter({
     [endTimeText]: parseAsInteger.withDefault(0),
   });
 
-  // Move the initialization logic to useEffect
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     const startTimeFromUrl = searchParams.get(startTimeText);
     const endTimeFromUrl = searchParams.get(endTimeText);
@@ -210,14 +208,12 @@ export function DateRangeFilter({
     });
   };
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     if (reset) {
       reset(resetDateRange);
     }
   }, [reset]);
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     startTransition(async () => {
       onChange?.({
@@ -225,146 +221,139 @@ export function DateRangeFilter({
         [endTimeText]: dateRange[endTimeText],
       });
     });
-  }, [dateRange[startTimeText], dateRange[endTimeText]]);
+  }, [
+    dateRange[startTimeText],
+    dateRange[endTimeText],
+    endTimeText,
+    onChange,
+    startTimeText,
+  ]);
 
   const handleClear = () => {
     setDateRange(null);
     onChange?.(null);
   };
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
-  const handleQuickSelect = useCallback(
-    (type: string) => {
-      let from: Date;
-      let to: Date;
+  const handleQuickSelect = (type: string) => {
+    let from: Date;
+    let to: Date;
 
-      switch (type) {
-        case "today": {
-          from = startOfDay(today);
-          to = endOfDay(today);
-          break;
-        }
-        case "yesterday": {
-          const yesterday = subDays(today, 1);
-          from = startOfDay(yesterday);
-          to = endOfDay(yesterday);
-          break;
-        }
-        case "week": {
-          from = startOfWeek(today, { weekStartsOn: 1 });
-          to = endOfWeek(today, { weekStartsOn: 1 });
-          break;
-        }
-        case "lastweek": {
-          const lastWeek = subWeeks(today, 1);
-          from = startOfWeek(lastWeek, { weekStartsOn: 1 });
-          to = endOfWeek(lastWeek, { weekStartsOn: 1 });
-          break;
-        }
-        case "month": {
-          from = startOfMonth(today);
-          to = endOfMonth(today);
-          break;
-        }
-        case "lastmonth": {
-          const lastMonth = subMonths(today, 1);
-          from = startOfMonth(lastMonth);
-          to = endOfMonth(lastMonth);
-          break;
-        }
-        default:
-          return;
+    switch (type) {
+      case "today": {
+        from = startOfDay(today);
+        to = endOfDay(today);
+        break;
       }
+      case "yesterday": {
+        const yesterday = subDays(today, 1);
+        from = startOfDay(yesterday);
+        to = endOfDay(yesterday);
+        break;
+      }
+      case "week": {
+        from = startOfWeek(today, { weekStartsOn: 1 });
+        to = endOfWeek(today, { weekStartsOn: 1 });
+        break;
+      }
+      case "lastweek": {
+        const lastWeek = subWeeks(today, 1);
+        from = startOfWeek(lastWeek, { weekStartsOn: 1 });
+        to = endOfWeek(lastWeek, { weekStartsOn: 1 });
+        break;
+      }
+      case "month": {
+        from = startOfMonth(today);
+        to = endOfMonth(today);
+        break;
+      }
+      case "lastmonth": {
+        const lastMonth = subMonths(today, 1);
+        from = startOfMonth(lastMonth);
+        to = endOfMonth(lastMonth);
+        break;
+      }
+      default:
+        return;
+    }
+
+    setDateRange({
+      [startTimeText]: from.getTime(),
+      [endTimeText]: to.getTime(),
+    });
+    onChange?.({
+      [startTimeText]: from.getTime(),
+      [endTimeText]: to.getTime(),
+    });
+  };
+
+  const handleTimeChange = (
+    type: "start" | "end",
+    timeUnit: "hours" | "minutes" | "seconds",
+    value: string,
+  ) => {
+    const currentDate =
+      type === "start"
+        ? new Date(dateRange[startTimeText])
+        : new Date(dateRange[endTimeText]);
+
+    const newDate = set(currentDate, {
+      [timeUnit]: Number.parseInt(value, 10),
+    });
+
+    setDateRange((prev) => {
+      const updatedRange = {
+        ...prev,
+        [type === "start" ? startTimeText : endTimeText]: newDate.getTime(),
+      };
+      onChange?.(updatedRange);
+      return updatedRange;
+    });
+  };
+
+  const handleDateRangeChange = (range?: DateRange) => {
+    if (range) {
+      let from = range.from;
+      let to = range.to;
+
+      if (from?.getTime() === 0) {
+        from = today;
+      }
+
+      if (from && to && from.getTime() > to.getTime()) {
+        const temp = from;
+        from = to;
+        to = temp;
+      }
+
+      const startDate = from
+        ? set(from, {
+            hours: new Date(dateRange[startTimeText]).getHours(),
+            minutes: new Date(dateRange[startTimeText]).getMinutes(),
+            seconds: new Date(dateRange[startTimeText]).getSeconds(),
+          })
+        : undefined;
+
+      const endDate = to
+        ? set(to, {
+            hours: new Date(dateRange[endTimeText]).getHours(),
+            minutes: new Date(dateRange[endTimeText]).getMinutes(),
+            seconds: new Date(dateRange[endTimeText]).getSeconds(),
+          })
+        : undefined;
 
       setDateRange({
-        [startTimeText]: from.getTime(),
-        [endTimeText]: to.getTime(),
+        [startTimeText]: startDate?.getTime(),
+        [endTimeText]: endDate?.getTime(),
       });
       onChange?.({
-        [startTimeText]: from.getTime(),
-        [endTimeText]: to.getTime(),
-      });
-    },
-    [setDateRange, onChange],
-  );
+        [startTimeText]: startDate?.getTime(),
+        [endTimeText]: endDate?.getTime(),
+      } as Record<string, number>);
+    } else {
+      handleClear();
+    }
+  };
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
-  const handleTimeChange = useCallback(
-    (
-      type: "start" | "end",
-      timeUnit: "hours" | "minutes" | "seconds",
-      value: string,
-    ) => {
-      const currentDate =
-        type === "start"
-          ? new Date(dateRange[startTimeText])
-          : new Date(dateRange[endTimeText]);
-
-      const newDate = set(currentDate, {
-        [timeUnit]: Number.parseInt(value, 10),
-      });
-
-      setDateRange((prev) => {
-        const updatedRange = {
-          ...prev,
-          [type === "start" ? startTimeText : endTimeText]: newDate.getTime(),
-        };
-        onChange?.(updatedRange);
-        return updatedRange;
-      });
-    },
-    [dateRange[startTimeText], dateRange[endTimeText], setDateRange, onChange],
-  );
-
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
-  const handleDateRangeChange = useCallback(
-    (range?: DateRange) => {
-      if (range) {
-        let from = range.from;
-        let to = range.to;
-
-        if (from?.getTime() === 0) {
-          from = today;
-        }
-
-        if (from && to && from.getTime() > to.getTime()) {
-          const temp = from;
-          from = to;
-          to = temp;
-        }
-
-        const startDate = from
-          ? set(from, {
-              hours: new Date(dateRange[startTimeText]).getHours(),
-              minutes: new Date(dateRange[startTimeText]).getMinutes(),
-              seconds: new Date(dateRange[startTimeText]).getSeconds(),
-            })
-          : undefined;
-
-        const endDate = to
-          ? set(to, {
-              hours: new Date(dateRange[endTimeText]).getHours(),
-              minutes: new Date(dateRange[endTimeText]).getMinutes(),
-              seconds: new Date(dateRange[endTimeText]).getSeconds(),
-            })
-          : undefined;
-
-        setDateRange({
-          [startTimeText]: startDate?.getTime(),
-          [endTimeText]: endDate?.getTime(),
-        });
-        onChange?.({
-          [startTimeText]: startDate?.getTime(),
-          [endTimeText]: endDate?.getTime(),
-        } as Record<string, number>);
-      } else {
-        handleClear();
-      }
-    },
-    [dateRange[startTimeText], dateRange[endTimeText], setDateRange],
-  );
-
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   const formattedDateRange = useMemo(() => {
     if (!dateRange) {
       return t("choicedate");
@@ -398,6 +387,7 @@ export function DateRangeFilter({
             className={cn(
               "justify-start text-left font-normal",
               !dateRange && "text-muted-foreground",
+              enableTimeSelect ? "w-[361px]" : "w-[241px]",
             )}
           >
             <CalendarIcon className="mr-2 h-4 w-4" />

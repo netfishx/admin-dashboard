@@ -59,7 +59,10 @@ export async function ListHeader() {
   );
 }
 
-async function ListBody({ list }: { list: OrderReportsRecord[] }) {
+async function ListBody({
+  list,
+  gameList,
+}: { list: OrderReportsRecord[]; gameList: GameInfo[] }) {
   const translate = await getTranslations();
   return (
     <TableBody>
@@ -78,7 +81,9 @@ async function ListBody({ list }: { list: OrderReportsRecord[] }) {
             <TableCell className="w-24 text-center">
               {item.lastAgentId}
             </TableCell>
-            <TableCell className="w-24 text-center">{item.gameId}</TableCell>
+            <TableCell className="w-24 text-center">
+              {gameList.find((game) => game.gameId === item.gameId)?.gameName}
+            </TableCell>
             <TableCell className="w-24 text-center">{item.betType}</TableCell>
             <TableCell className="w-24 text-center">
               {
@@ -124,7 +129,6 @@ export async function List({
 }: { searchParams: Promise<OrderReportsRequestParams>; gameList: GameInfo[] }) {
   const params = await searchParams;
   const p = {
-    gameId: gameList?.[0]?.gameId.toString() ?? "",
     ...params,
     pageNum: Number(params?.pageNum) || 1,
     pageSize: Number(params?.pageSize) || 10,
@@ -138,7 +142,7 @@ export async function List({
         <div className="border rounded-sm relative">
           <Table>
             <ListHeader />
-            <ListBody list={[]} />
+            <ListBody list={[]} gameList={gameList} />
           </Table>
         </div>
       </div>
@@ -151,7 +155,7 @@ export async function List({
       <div className="border rounded-sm relative">
         <Table>
           <ListHeader />
-          <ListBody list={data?.list ?? []} />
+          <ListBody list={data?.list ?? []} gameList={gameList} />
         </Table>
       </div>
       <div className="pt-2">
