@@ -51,10 +51,6 @@ const nextConfig: NextConfig = {
     serverActions: {
       bodySizeLimit: "5mb",
     },
-    staleTimes: {
-      dynamic: 1,
-      static: 60 * 60 * 24,
-    },
   },
   images: {
     dangerouslyAllowSVG: true,
