@@ -117,16 +117,16 @@ async function TableBodyWrapper({ list }: { list: MySelfLoginLog[] }) {
   );
 }
 
-async function StatusCell({ status }: { status: number }) {
+async function StatusCell({ status }: { status: string }) {
   const t = await getTranslations("users.agents");
-  if (status === 0) {
+  if (status === "0") {
     return (
       <span className="p-1 rounded-sm inline-block text-center text-primary bg-primary/20">
         {t("success")}
       </span>
     );
   }
-  if (status === 1) {
+  if (status === "1") {
     return (
       <span className="p-1 rounded-sm inline-block text-center text-destructive bg-destructive/20">
         {t("failed")}
