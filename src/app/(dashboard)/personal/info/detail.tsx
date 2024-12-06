@@ -13,14 +13,13 @@ export async function Detail({ data }: { data?: UserBasicInfo }) {
   };
 
   return (
-    <div className="py-6 px-5 bg-background flex-1">
-      <div className="flex justify-between items-center mb-6">
-        <h2 className="justify-between items-center">{t("walletInfo")}</h2>
+    <div className="p-4 bg-background flex-1 flex flex-col gap-2">
+      <div className="flex justify-between items-center">
+        <h2 className="text-sm font-medium">{t("walletInfo")}</h2>
         <DetailButton data={data} />
       </div>
 
-      {/* Top row */}
-      <div className="grid grid-cols-4 gap-4 mb-4">
+      <div className="grid grid-cols-4 gap-4">
         <div>
           <div className="text-muted-foreground text-sm mb-1">
             {t("balance")}
@@ -57,10 +56,7 @@ export async function Detail({ data }: { data?: UserBasicInfo }) {
             )}
           </div>
         </div>
-      </div>
-
-      {/* Bottom row */}
-      <div className="grid grid-cols-4 gap-4">
+        <div />
         <div>
           <div className="text-muted-foreground text-sm mb-1">
             {t("creditAmount")}

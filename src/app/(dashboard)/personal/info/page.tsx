@@ -14,19 +14,19 @@ export default function Page() {
   const t = useTranslations("personal.info");
   return (
     <div className="flex flex-col gap-2 w-full h-full">
-      <div className="flex flex-col gap-2 bg-background py-6 px-5">
-        <div className="justify-between items-center">{t("userInfo")}</div>
-        <div className="flex items-center justify-center gap-2 pl-20 w-[300px]">
+      <div className="flex flex-col gap-2 bg-background p-4">
+        <div className="text-sm font-medium">{t("userInfo")}</div>
+        <div className="flex items-center gap-2">
           <div className="text-muted-foreground text-sm w-[100px] text-right">
             {t("account")}:
           </div>
-          <div className="w-[300px] text-sm">{session?.username}</div>
+          <div className="text-sm">{session?.username}</div>
         </div>
-        <div className="flex items-center justify-center gap-2 pl-20 w-[300px]">
+        <div className="flex items-center gap-2">
           <div className="text-muted-foreground text-sm w-[100px] text-right">
             {t("inviteCode")}:
           </div>
-          <div className="w-[300px] text-sm">{session?.inviteCode}</div>
+          <div className="text-sm">{session?.inviteCode}</div>
         </div>
       </div>
       <Suspense fallback={<Detail />}>
