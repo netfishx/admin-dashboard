@@ -16,7 +16,6 @@ import type {
   BorrowRecordRequestRecords,
   ChangeLog,
   CollectionAddressListRecords,
-  CollectionAddressListRequestParams,
   CreditRecordRequestParams,
   CreditRecordRequestRecords,
   DictionaryItemList,
@@ -357,10 +356,14 @@ export async function getMemberLoginLog(params: {
   });
 }
 
-export async function getSupplierList() {
+export async function getSupplierList(params?: {
+  id?: string;
+  username?: string;
+}) {
   const user = await getSession();
   return await apiRequest<Supplier[]>({
     url: "/vendor/user/getVendorList",
+    params,
     token: user?.token,
   });
 }
@@ -384,7 +387,7 @@ export async function editSupplier(data: {
   id: string;
   nickname: string;
   remark: string;
-  newPassword: string;
+  newPassword?: string;
   status: number;
 }) {
   const user = await getSession();
@@ -946,14 +949,11 @@ export async function getWithdrawReportList(data: WithdrawReportParams) {
 }
 
 // 归集地址列表
-export async function getCollectionAddressList(
-  params: CollectionAddressListRequestParams,
-) {
+export async function getCollectionAddressList() {
   const user = await getSession();
   return await apiRequest<CollectionAddressListRecords[]>({
     url: "/collection/address/list",
     token: user?.token,
-    params,
   });
 }
 

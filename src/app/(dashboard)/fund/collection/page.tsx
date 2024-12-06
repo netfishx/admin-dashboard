@@ -1,16 +1,11 @@
 import TableSkeleton from "@/components/table-skeleton";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Table } from "@/components/ui/table";
-import type { CollectionAddressListRequestParams } from "@/lib/types";
 import { Suspense } from "react";
 import { Form } from "./form";
 import { List, ListHeader } from "./list";
 
-interface CommonWrapperProps {
-  searchParams: Promise<CollectionAddressListRequestParams>;
-}
-
-export default async function Page({ searchParams }: CommonWrapperProps) {
+export default async function Page() {
   return (
     <div className="flex flex-col gap-2 w-full h-full">
       <Suspense
@@ -30,7 +25,7 @@ export default async function Page({ searchParams }: CommonWrapperProps) {
           </Table>
         }
       >
-        <List searchParams={searchParams} />
+        <List />
       </Suspense>
     </div>
   );

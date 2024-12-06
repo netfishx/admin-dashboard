@@ -38,6 +38,11 @@ export async function ListHeader() {
 
 async function ListBody({ list }: { list: CreditRecordRequestRecords[] }) {
   const translate = await getTranslations();
+  const t = await getTranslations("report.credit");
+  const typeMap = {
+    18: t("addCredit"),
+    19: t("reduceCredit"),
+  };
   return (
     <TableBody>
       {list?.length > 0 ? (
@@ -50,7 +55,7 @@ async function ListBody({ list }: { list: CreditRecordRequestRecords[] }) {
             <TableCell className="w-24 text-center">{item.memberId}</TableCell>
             <TableCell className="w-24 text-center">{item.amount}</TableCell>
             <TableCell className="w-24 text-center">
-              {item.operateCode}
+              {typeMap[item.operateCode as keyof typeof typeMap]}
             </TableCell>
             <TableCell className="w-24 text-center">
               {format(item.createTime, "yyyy-MM-dd HH:mm:ss")}
@@ -86,6 +91,7 @@ export async function List({
   }
   const p = {
     ...params,
+    operateCode: Number(params?.operateCode || 0),
     pageNum: Number(params?.pageNum || 1),
     pageSize: Number(params?.pageSize || 10),
     startTime: Number(params?.startTime || 0),

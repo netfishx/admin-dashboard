@@ -11,14 +11,16 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { endOfDay, startOfDay } from "date-fns";
+import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useQueryState } from "nuqs";
-import { useRef } from "react";
+import { useTransition } from "react";
 
 export function ListFilter() {
   const t = useTranslations("report.credit");
   const router = useRouter();
+  const [isPending, startTransition] = useTransition();
   const [orderNumber, setOrderNumber] = useQueryState("transactionID", {
     defaultValue: "",
   });
@@ -28,28 +30,14 @@ export function ListFilter() {
   const [memberId, setMemberId] = useQueryState("memberId", {
     defaultValue: "",
   });
-  const [typeId, setTypeId] = useQueryState("orderType", {
+  const [typeId, setTypeId] = useQueryState("operateCode", {
     defaultValue: "all",
   });
 
-  const dateRangeFilterReset = useRef<
-    ((start: number, end: number) => void) | null
-  >(null);
-  const handleDateRangeFilterReset = () => {
-    const start = startOfDay(new Date()).getTime();
-    const end = endOfDay(new Date()).getTime();
-    dateRangeFilterReset.current?.(start, end);
-  };
-
   const handleReset = () => {
-    setOrderNumber("");
-    setAgentId("");
-    setMemberId("");
-    setTypeId("all");
-    handleDateRangeFilterReset();
-  };
-  const handleSearch = () => {
-    router.refresh();
+    router.replace(
+      `/reports/credit?startTime=${startOfDay(new Date()).getTime()}&endTime=${endOfDay(new Date()).getTime()}`,
+    );
   };
 
   return (
@@ -58,11 +46,7 @@ export function ListFilter() {
       <div className="flex gap-4 items-center">
         <div className="flex gap-2 items-center">
           <Label>{t("dateRange")}</Label>
-          <DateRangeFilter
-            enableTimeSelect={false}
-            // biome-ignore lint/suspicious/noAssignInExpressions: <explanation>
-            reset={(resetFn) => (dateRangeFilterReset.current = resetFn)}
-          />
+          <DateRangeFilter enableTimeSelect={false} />
         </div>
       </div>
 
@@ -104,8 +88,8 @@ export function ListFilter() {
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="all">{t("all")}</SelectItem>
-              <SelectItem value="1">百家乐01</SelectItem>
-              <SelectItem value="2">百家乐02</SelectItem>
+              <SelectItem value="18">{t("addCredit")}</SelectItem>
+              <SelectItem value="19">{t("reduceCredit")}</SelectItem>
             </SelectContent>
           </Select>
         </div>
@@ -119,8 +103,18 @@ export function ListFilter() {
           >
             {t("reset")}
           </Button>
-          <Button onClick={handleSearch}>{t("search")}</Button>
-          <Button>{t("download")}</Button>
+          <Button
+            onClick={() => {
+              startTransition(() => {
+                router.refresh();
+              });
+            }}
+            disabled={isPending}
+          >
+            {isPending && <Loader2 className="animate-spin" />}
+            {t("search")}
+          </Button>
+          <Button disabled={isPending}>{t("download")}</Button>
         </div>
       </div>
     </div>
