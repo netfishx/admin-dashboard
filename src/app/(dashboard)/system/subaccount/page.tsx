@@ -29,13 +29,13 @@ function SubaccountTableHeader() {
   return (
     <TableHeader>
       <TableRow className="bg-muted">
-        <TableHead className="text-center">{t("name")}</TableHead>
-        <TableHead className="text-center">{t("role")}</TableHead>
-        <TableHead className="text-center">{t("createTime")}</TableHead>
-        <TableHead className="text-center">{t("lastLoginIp")}</TableHead>
-        <TableHead className="text-center">{t("lastLoginTime")}</TableHead>
-        <TableHead className="text-center">{t("status")}</TableHead>
-        <TableHead className="w-24 text-center sticky right-0 bg-muted">
+        <TableHead className="text-center w-36">{t("name")}</TableHead>
+        <TableHead className="text-center w-48">{t("role")}</TableHead>
+        <TableHead className="text-center w-48">{t("createTime")}</TableHead>
+        <TableHead className="text-center w-36">{t("lastLoginIp")}</TableHead>
+        <TableHead className="text-center w-48">{t("lastLoginTime")}</TableHead>
+        <TableHead className="text-center w-24">{t("status")}</TableHead>
+        <TableHead className="w-56 text-center sticky right-0 bg-muted">
           {t("action")}
         </TableHead>
       </TableRow>
@@ -69,7 +69,7 @@ async function SubaccountTableWrapper({
       <SubaccountDialog roles={roles} />
       <SubaccountDelete />
       <div className="border rounded-sm">
-        <Table>
+        <Table className="table-fixed">
           <SubaccountTableHeader />
           <TableBody>
             {!res.data?.list || res.data?.list.length === 0 ? (
@@ -82,7 +82,7 @@ async function SubaccountTableWrapper({
               res.data?.list.map((item) => (
                 <TableRow key={item.id}>
                   <TableCell className="text-center">{item.username}</TableCell>
-                  <TableCell className="text-start max-w-32 break-all">
+                  <TableCell className="text-start break-all">
                     {item.roleList
                       ?.map(
                         (id) => roles.find((role) => role.id === id)?.roleName,
@@ -103,7 +103,7 @@ async function SubaccountTableWrapper({
                   <TableCell className="text-center">
                     <span
                       className={cn([
-                        "p-1 rounded-sm w-24 inline-block text-center",
+                        "p-1 rounded-sm w-16 inline-block text-center",
                         item.status === 0
                           ? "text-green bg-green/20"
                           : "text-destructive bg-destructive/20",
@@ -114,7 +114,7 @@ async function SubaccountTableWrapper({
                         : translations("disable")}
                     </span>
                   </TableCell>
-                  <TableCell className="w-24 text-center sticky right-0 bg-background">
+                  <TableCell className="text-center sticky right-0 bg-background">
                     <div className="flex justify-center">
                       <EditButton data={item} />
                       <LoginLogButton id={item.id ?? ""} />
