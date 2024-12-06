@@ -588,6 +588,8 @@ export type CollectionAddressListRequestParams = {
   percentageFee: number;
   pageNum: number;
   pageSize: number;
+  startTime: number;
+  endTime: number;
 };
 
 export type Role = {

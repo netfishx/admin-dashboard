@@ -98,7 +98,7 @@ export async function List({
         <Table>
           <ListHeader />
           <Suspense fallback={<TableSkeleton length={5} colSpan={6} />}>
-            <ListBody list={data?.list ?? []} />
+            <ListBody list={data?.list || []} />
           </Suspense>
         </Table>
       </div>

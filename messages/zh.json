@@ -700,7 +700,9 @@
       "amountfilter": "打赏金额筛选",
       "memberId": "会员ID",
       "roomOwnerId": "房主ID",
-      "ministerId": "部长ID"
+      "ministerId": "部长ID",
+      "addCredit": "增加授信",
+      "reduceCredit": "减少授信"
     },
     "reward": {
       "agentID": "代理ID",
