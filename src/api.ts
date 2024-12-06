@@ -16,6 +16,7 @@ import type {
   BorrowRecordRequestRecords,
   ChangeLog,
   CollectionAddressListRecords,
+  CreditRecordRequestParams,
   CreditRecordRequestRecords,
   DictionaryItemList,
   DictionaryList,
