@@ -116,7 +116,7 @@ export function OddsForm({
   );
   const [field, setField] = useState<
     "odds" | "minBet" | "maxBet" | "maxBetPeriod"
-  >("odds");
+  >(permissions.includes("sync_odds") ? "odds" : "minBet");
   const stepLimit = field === "odds" ? 3 : 0;
   const [step, setStep] = useState(1);
 
@@ -263,7 +263,9 @@ export function OddsForm({
               <SelectValue placeholder={t("placeholder")} />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="odds">{t("odds")}</SelectItem>
+              {permissions.includes("sync_odds") && (
+                <SelectItem value="odds">{t("odds")}</SelectItem>
+              )}
               <SelectItem value="minBet">{t("min")}</SelectItem>
               <SelectItem value="maxBet">{t("max")}</SelectItem>
               <SelectItem value="maxBetPeriod">{t("total")}</SelectItem>

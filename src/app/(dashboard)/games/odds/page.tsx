@@ -29,13 +29,18 @@ async function FormWrapper() {
   );
 }
 
-async function TableBodyWrapper({ gameId }: { gameId?: number }) {
+async function TableBodyWrapper({
+  gameId,
+  hasAdminPermission,
+}: { gameId?: number; hasAdminPermission: boolean }) {
   if (!gameId) {
     const res = await getBaccaratGameConfig();
     gameId = res.data?.filter((item) => item.status === 1)?.[0]?.gameId ?? 0;
   }
   const res = await getGameOdds({ gameId });
-  return <OddsTable list={res.data ?? []} />;
+  return (
+    <OddsTable list={res.data ?? []} hasAdminPermission={hasAdminPermission} />
+  );
 }
 
 function TableWrapper({
@@ -81,7 +86,10 @@ function TableWrapper({
           </TableBody>
         }
       >
-        <TableBodyWrapper gameId={gameId ? Number(gameId) : undefined} />
+        <TableBodyWrapper
+          gameId={gameId ? Number(gameId) : undefined}
+          hasAdminPermission={hasAdminPermission}
+        />
       </Suspense>
     </Table>
   );

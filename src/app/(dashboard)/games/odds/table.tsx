@@ -9,7 +9,10 @@ import { useAtom } from "jotai";
 import { useTranslations } from "next-intl";
 import { useLayoutEffect } from "react";
 
-export function OddsTable({ list }: { list: GameOdds[] }) {
+export function OddsTable({
+  list,
+  hasAdminPermission,
+}: { list: GameOdds[]; hasAdminPermission: boolean }) {
   const [odds, setOdds] = useAtom(oddsAtom);
   const [changedList, setChangedList] = useAtom(changedOddsLimitAtom);
   const [limit, setLimit] = useAtom(limitAtom);
@@ -88,6 +91,7 @@ export function OddsTable({ list }: { list: GameOdds[] }) {
                   odds[`${item.oddsType}-${item.betType}`]?.toString() ?? ""
                 }
                 type="number"
+                disabled={!hasAdminPermission}
                 min={0}
                 step={0.001}
                 onChange={(e) =>
