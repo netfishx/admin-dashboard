@@ -9,10 +9,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import type {
-  CollectionAddressListRecords,
-  CollectionAddressListRequestParams,
-} from "@/lib/types";
+import type { CollectionAddressListRecords } from "@/lib/types";
 import { getTranslations } from "next-intl/server";
 import { Suspense } from "react";
 import CopyButton from "./copy-button";
@@ -73,11 +70,8 @@ async function ListBody({ list }: { list: CollectionAddressListRecords[] }) {
   );
 }
 
-export async function List({
-  searchParams,
-}: { searchParams: Promise<CollectionAddressListRequestParams> }) {
-  const params = await searchParams;
-  const { data } = await getCollectionAddressList(params);
+export async function List() {
+  const { data } = await getCollectionAddressList();
   return (
     <div className="p-2 bg-background flex-1">
       <div className="border rounded-sm relative">

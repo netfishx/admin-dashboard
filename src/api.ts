@@ -16,8 +16,6 @@ import type {
   BorrowRecordRequestRecords,
   ChangeLog,
   CollectionAddressListRecords,
-  CollectionAddressListRequestParams,
-  CreditRecordRequestParams,
   CreditRecordRequestRecords,
   DictionaryItemList,
   DictionaryList,
@@ -935,14 +933,11 @@ export async function getWithdrawReportList(data: WithdrawReportParams) {
 }
 
 // 归集地址列表
-export async function getCollectionAddressList(
-  params: CollectionAddressListRequestParams,
-) {
+export async function getCollectionAddressList() {
   const user = await getSession();
   return await apiRequest<CollectionAddressListRecords[]>({
     url: "/collection/address/list",
     token: user?.token,
-    params,
   });
 }
 
