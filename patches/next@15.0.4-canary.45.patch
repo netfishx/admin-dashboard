@@ -1,5 +1,5 @@
 diff --git a/dist/server/lib/start-server.js b/dist/server/lib/start-server.js
-index 1ef2bf4ad5ff46cff13b797da5de8f3112b7abb4..b6c489f941e14f822883a0b27b0dbe411b751964 100644
+index 849c6039110c41b0ad3afcd328f2fffa7402b193..7bd1c8217f2a3ced941eedec4cbb33315fa4c9e2 100644
 --- a/dist/server/lib/start-server.js
 +++ b/dist/server/lib/start-server.js
 @@ -42,6 +42,7 @@ const _trace = require("../../trace");
