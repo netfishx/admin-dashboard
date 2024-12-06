@@ -1141,6 +1141,7 @@ export async function addDictionaryItem(data: {
   label: string;
   value: string;
   remark: string;
+  i18nType: string;
 }) {
   const user = await getSession();
   return await apiRequest({
@@ -1158,6 +1159,7 @@ export async function editDictionaryItem(data: {
   label: string;
   value: string;
   remark: string;
+  i18nType: string;
 }) {
   const user = await getSession();
   return await apiRequest({
