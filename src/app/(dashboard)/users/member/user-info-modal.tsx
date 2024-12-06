@@ -180,7 +180,9 @@ export function UserInfoModal({
             </Label>
             <Input
               className="w-1/2"
-              value={format(createTime, "yyyy-MM-dd HH:mm:ss")}
+              value={
+                createTime ? format(createTime, "yyyy-MM-dd HH:mm:ss") : ""
+              }
               disabled
             />
           </div>

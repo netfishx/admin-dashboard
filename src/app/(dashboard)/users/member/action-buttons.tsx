@@ -80,6 +80,7 @@ export default function Action({
             className="text-primary hover:text-primary/80 text-sm px-2"
             onClick={() => {
               setMemberId(data.id);
+              setMemberInfoData(data);
               setIncreaseCreditModal(true);
             }}
           >
@@ -92,6 +93,7 @@ export default function Action({
             className="text-primary hover:text-primary/80 text-sm px-2"
             onClick={() => {
               setMemberId(data.id);
+              setMemberInfoData(data);
               setDecreaseCreditModal(true);
             }}
           >
@@ -104,6 +106,7 @@ export default function Action({
             className="text-primary hover:text-primary/80 text-sm px-2"
             onClick={() => {
               setMemberId(data.id);
+              setMemberInfoData(data);
               setDeleteCreditModal(true);
             }}
           >

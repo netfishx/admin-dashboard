@@ -141,8 +141,8 @@ async function TableBodyWrapper({
             <TableCell>{item.username}</TableCell>
             <TableCell>{item.nickname}</TableCell>
             <TableCell>{item.depositAddress}</TableCell>
-            <TableCell>{item.debtAmount}</TableCell>
-            <TableCell>{item.creditAmount}</TableCell>
+            <TableCell>{item.debtAmount ?? 0}</TableCell>
+            <TableCell>{item.creditAmount ?? 0}</TableCell>
             <TableCell>
               <div
                 className={cn(

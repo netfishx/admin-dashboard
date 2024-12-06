@@ -31,11 +31,11 @@ export function AddEditDialog() {
   const [dictCode, setDictCode] = useState("");
   const [remark, setRemark] = useState("");
   useEffect(() => {
-    if (open && data) {
-      setId(data.id);
-      setDictName(data.dictName);
-      setDictCode(data.dictCode);
-      setRemark(data.remark);
+    if (open) {
+      setId(data ? data.id : "");
+      setDictName(data ? data.dictName : "");
+      setDictCode(data ? data.dictCode : "");
+      setRemark(data ? data.remark : "");
     }
   }, [open, data]);
   const handleConfirm = () => {

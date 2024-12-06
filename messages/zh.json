@@ -330,7 +330,8 @@
       "loginLog": "登录日志",
       "changeLog": "变更日志",
       "check": "查询",
-      "moneyPassword": "资金密码"
+      "moneyPassword": "资金密码",
+      "deleteCreditWarning": "注意：销账金额不可大于可用余额，若余额不足请先充值"
     },
     "supplier": {
       "add": "新增",
