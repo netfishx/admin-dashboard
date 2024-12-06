@@ -357,10 +357,14 @@ export async function getMemberLoginLog(params: {
   });
 }
 
-export async function getSupplierList() {
+export async function getSupplierList(params?: {
+  id?: string;
+  username?: string;
+}) {
   const user = await getSession();
   return await apiRequest<Supplier[]>({
     url: "/vendor/user/getVendorList",
+    params,
     token: user?.token,
   });
 }
@@ -384,7 +388,7 @@ export async function editSupplier(data: {
   id: string;
   nickname: string;
   remark: string;
-  newPassword: string;
+  newPassword?: string;
   status: number;
 }) {
   const user = await getSession();

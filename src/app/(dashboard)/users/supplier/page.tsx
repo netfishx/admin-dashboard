@@ -8,8 +8,16 @@ import { SupplierEditDialog } from "./dialog";
 import { SupplierForm } from "./form";
 import { SupplierTable, TbodySkeleton } from "./table-wrapper";
 
-export default async function Page() {
-  const { data } = await getSupplierList();
+export default async function Page({
+  searchParams,
+}: {
+  searchParams: Promise<{ [key: string]: string | string[] }>;
+}) {
+  const { id, username } = await searchParams;
+  const { data } = await getSupplierList({
+    id: id as string,
+    username: username as string,
+  });
   return (
     <div className="flex flex-col gap-2 w-full">
       <Suspense
