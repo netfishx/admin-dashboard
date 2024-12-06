@@ -15,40 +15,50 @@ import { agentDataAtom, transferMoneyModalAtom } from "@/store";
 import { useAtom, useAtomValue } from "jotai";
 import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
+import Form from "next/form";
 import { useRouter } from "next/navigation";
-import { useEffect, useState, useTransition } from "react";
+import {
+  type FormEvent,
+  useEffect,
+  useRef,
+  useState,
+  useTransition,
+} from "react";
 import { toast } from "sonner";
 
 export function TransferMoneyModal() {
   const router = useRouter();
   const translation = useTranslations();
   const t = useTranslations("users.agents");
-  const [amount, setAmount] = useState(0);
-  const [moneyPassword, setMoneyPassword] = useState("");
+  const [amount] = useState(0);
+  const [moneyPassword] = useState("");
   const [isPeding, startTransition] = useTransition();
   const [open, setOpen] = useAtom(transferMoneyModalAtom);
   const [fetching, startFetching] = useTransition();
   const data = useAtomValue(agentDataAtom);
   const [availableAmount, setAvailableAmount] = useState(0);
+  const ref = useRef<HTMLFormElement>(null);
 
-  const handleClickTransferMoney = () => {
+  const handleClickTransferMoney = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
     startTransition(async () => {
       if (!data?.id) {
         return;
       }
       const { code, message } = await transferMoney({
-        userId: data.id,
-        amount,
-        secret: moneyPassword,
+        userId: formData.get("id") as string,
+        amount: Number(formData.get("amount")),
+        secret: formData.get("moneyPassword") as string,
       });
       if (code === 0) {
         toast.success(message);
+        setOpen(false);
+        router.refresh();
       } else {
         toast.error(message);
       }
     });
-    setOpen(false);
-    router.refresh();
   };
 
   useEffect(() => {
@@ -62,7 +72,7 @@ export function TransferMoneyModal() {
         }
       });
     }
-  }, [open, setAvailableAmount]);
+  }, [open]);
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent
@@ -73,50 +83,62 @@ export function TransferMoneyModal() {
           <DialogTitle>{t("transferMoney")}</DialogTitle>
           <DialogDescription />
         </DialogHeader>
-        <div className="flex flex-col gap-4 w-full px-4">
-          <div className="flex gap-4 items-center">
-            <Label className="shrink-0 w-1/4 text-right text-muted-foreground">
-              {t("username")}
-            </Label>
-            <span>{data?.username}</span>
-          </div>
-          <div className="flex gap-4 items-center">
-            <Label className="shrink-0 w-1/4 text-right text-muted-foreground">
-              {t("amount")}
-            </Label>
-            <Input
-              className="w-[200px]"
-              value={amount}
-              onChange={(e) => setAmount(Number(e.target.value))}
-            />
-          </div>
-          <div className="flex gap-4 items-center">
-            <Label className="shrink-0 w-1/4 text-right text-muted-foreground" />
-            <div className="flex-1 text-xs text-destructive flex flex-row">
-              {t("availableAmount")}:
-              {fetching ? (
-                <Loader2 className="w-4 h-4 animate-spin" />
-              ) : (
-                availableAmount
-              )}
+        <Form ref={ref} action="" onSubmit={handleClickTransferMoney}>
+          <input type="hidden" name="id" value={data?.id} />
+          <div className="flex flex-col gap-4 w-full px-4">
+            <div className="flex gap-4 items-center">
+              <Label className="shrink-0 w-1/4 text-right text-muted-foreground">
+                {t("username")}
+              </Label>
+              <span>{data?.username}</span>
+            </div>
+            <div className="flex gap-4 items-center">
+              <Label className="shrink-0 w-1/4 text-right text-muted-foreground">
+                {t("amount")}
+              </Label>
+              <Input
+                className="w-[200px]"
+                name="amount"
+                defaultValue={amount}
+                type="number"
+              />
+            </div>
+            <div className="flex gap-4 items-center">
+              <Label className="shrink-0 w-1/4 text-right text-muted-foreground" />
+              <div className="flex-1 text-xs text-destructive flex flex-row">
+                {t("availableAmount")}:
+                {fetching ? (
+                  <Loader2 className="w-4 h-4 animate-spin" />
+                ) : (
+                  availableAmount
+                )}
+              </div>
+            </div>
+            <div className="flex gap-4 items-center">
+              <Label className="shrink-0 w-1/4 text-right text-muted-foreground">
+                {t("moneyPassword")}
+              </Label>
+              <Password
+                defaultValue={moneyPassword}
+                type="password"
+                name="moneyPassword"
+              />
             </div>
           </div>
-          <div className="flex gap-4 items-center">
-            <Label className="shrink-0 w-1/4 text-right text-muted-foreground">
-              {t("moneyPassword")}
-            </Label>
-            <Password
-              value={moneyPassword}
-              type="password"
-              onChange={(e) => setMoneyPassword(e.target.value)}
-            />
-          </div>
-        </div>
+        </Form>
         <DialogFooter>
           <Button variant="outline" onClick={() => setOpen(false)}>
             {translation("cancel")}
           </Button>
-          <Button disabled={isPeding} onClick={handleClickTransferMoney}>
+          <Button
+            disabled={isPeding}
+            onClick={(e) => {
+              e.preventDefault();
+              if (ref.current) {
+                ref.current.requestSubmit();
+              }
+            }}
+          >
             {isPeding && <Loader2 className="w-4 h-4 animate-spin" />}
             {translation("confirm")}
           </Button>

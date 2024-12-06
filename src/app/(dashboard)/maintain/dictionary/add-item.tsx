@@ -1,3 +1,5 @@
+"use client";
+
 import { addDictionaryItem, editDictionaryItem } from "@/api";
 import { Button } from "@/components/ui/button";
 import {
@@ -18,6 +20,7 @@ import {
 import { useAtom, useAtomValue } from "jotai";
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
+import { toast } from "sonner";
 
 export function AddItemDialog() {
   const t = useTranslations("maintain.dictionary");
@@ -39,7 +42,7 @@ export function AddItemDialog() {
 
   const handleConfirm = async () => {
     if (data?.dictCode && operation === "add") {
-      const { code } = await addDictionaryItem({
+      const { code, message } = await addDictionaryItem({
         dictCode: data.dictCode,
         label: itemName,
         value: itemValue,
@@ -47,9 +50,11 @@ export function AddItemDialog() {
       });
       if (code === 0) {
         setOpen(false);
+      } else {
+        toast.error(message);
       }
     } else if (data && operation === "edit") {
-      const { code } = await editDictionaryItem({
+      const { code, message } = await editDictionaryItem({
         id: data.id,
         dictCode: data.dictCode,
         label: itemName,
@@ -58,6 +63,8 @@ export function AddItemDialog() {
       });
       if (code === 0) {
         setOpen(false);
+      } else {
+        toast.error(message);
       }
     }
   };

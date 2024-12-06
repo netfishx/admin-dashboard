@@ -205,8 +205,11 @@ export function LimitModal({ userId }: { userId: string }) {
                     </TableRow>
                   ))
                 ) : (
-                  <TableRow>
-                    <TableCell colSpan={4} className="text-center h-40">
+                  <TableRow className="flex justify-center items-center">
+                    <TableCell
+                      colSpan={4}
+                      className="flex justify-center items-center text-center h-40"
+                    >
                       {translations("noData")}
                     </TableCell>
                   </TableRow>
