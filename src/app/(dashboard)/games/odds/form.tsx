@@ -210,7 +210,7 @@ export function OddsForm({
 
   return (
     <>
-      <div className="flex gap-2">
+      <div className="flex flex-wrap gap-2">
         <div className="flex gap-2 items-center">
           <Label className="shrink-0">{t("type")}</Label>
           <Select defaultValue={dict[0]?.gameType.toString()} disabled>
@@ -281,7 +281,7 @@ export function OddsForm({
           />
         </div>
       </div>
-      <div className="flex gap-2">
+      <div className="flex gap-2 ml-auto">
         {permissions.includes("sync_odds") && (
           <SyncButton onClick={handleSync} />
         )}

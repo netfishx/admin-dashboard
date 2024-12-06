@@ -49,7 +49,9 @@ function TableWrapper({
       <TableHeader>
         <TableRow className="bg-muted">
           <TableHead className="min-w-24">{t("smallType")}</TableHead>
-          <TableHead className="text-center w-32">{t("odds")}</TableHead>
+          <TableHead className="text-center w-32 min-w-32">
+            {t("odds")}
+          </TableHead>
           <TableHead className="text-center min-w-40">{t("min")}</TableHead>
           <TableHead className="text-center min-w-72">
             {t("max")}
@@ -90,7 +92,7 @@ export default function Page({
 }: { searchParams: Promise<{ [key: string]: string | undefined }> }) {
   return (
     <div className="flex flex-col gap-2 w-full">
-      <div className="flex justify-between items-center bg-background p-4">
+      <div className="flex flex-wrap gap-2 justify-between items-center bg-background p-4">
         <Suspense fallback={<Skeleton className="w-full h-9" />}>
           <FormWrapper />
         </Suspense>
