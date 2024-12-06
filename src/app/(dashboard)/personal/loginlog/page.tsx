@@ -36,7 +36,7 @@ export default async function Page({
 }
 function TableSkeleton() {
   return (
-    <Table>
+    <Table className="table-fixed">
       <TableHeaderWrapper />
       <TableBodySkeleton />
     </Table>
@@ -64,7 +64,7 @@ async function TableWrapper({
     ...rest,
   });
   return (
-    <Table>
+    <Table className="table-fixed">
       <TableHeaderWrapper />
       <TableBodyWrapper list={data?.list ?? []} />
     </Table>
@@ -77,11 +77,11 @@ async function TableHeaderWrapper() {
   return (
     <TableHeader>
       <TableRow className="bg-muted">
-        <TableHead>{t("loginUsername")}</TableHead>
-        <TableHead>{t("loginTime")}</TableHead>
-        <TableHead>{t("ip")}</TableHead>
-        <TableHead>{t("address")}</TableHead>
-        <TableHead>{t("status")}</TableHead>
+        <TableHead className="w-32">{t("loginUsername")}</TableHead>
+        <TableHead className="w-48">{t("loginTime")}</TableHead>
+        <TableHead className="w-32">{t("ip")}</TableHead>
+        <TableHead className="w-48">{t("address")}</TableHead>
+        <TableHead className="w-24">{t("status")}</TableHead>
       </TableRow>
     </TableHeader>
   );
