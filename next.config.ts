@@ -62,6 +62,9 @@ const nextConfig: NextConfig = {
     contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
     remotePatterns: getRemotePatterns(),
   },
+  env: {
+    NEXT_PUBLIC_TIMESTAMP: Date.now().toString(),
+  },
   output: "standalone",
 };
 

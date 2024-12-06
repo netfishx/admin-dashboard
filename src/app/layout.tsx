@@ -1,4 +1,5 @@
 import "@/assets/globals.css";
+import { CheckVersion } from "@/app/check-version";
 import { I18nProvider } from "@/app/i18n-provider";
 import { ErrorToast } from "@/components/error-toast";
 import { ThemeProvider } from "@/components/theme-provider";
@@ -48,6 +49,7 @@ export default function RootLayout({
               </JotaiProvider>
             </ThemeProvider>
           </NuqsAdapter>
+          <CheckVersion />
         </body>
       </html>
     </ViewTransitions>

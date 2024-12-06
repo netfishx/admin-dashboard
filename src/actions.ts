@@ -4,6 +4,10 @@ import { setSession, signOut } from "@/session";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
+export async function getVersion() {
+  return process.env.NEXT_PUBLIC_TIMESTAMP;
+}
+
 export async function loginAction(formData: FormData) {
   const username = formData.get("username");
   const password = formData.get("password");
