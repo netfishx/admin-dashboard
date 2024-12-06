@@ -65,6 +65,7 @@ export function AddModal() {
       id: data?.id || null,
       type: Number(type),
       content: contentData,
+      contentId: data?.contentId || null,
       status: Number(status),
       startTime: startTime ? new Date(startTime).getTime() : null,
       endTime: endTime ? new Date(endTime).getTime() : null,
@@ -224,9 +225,6 @@ export function AddModal() {
                 <SelectItem value="3">{t("roomAnnouncement")}</SelectItem>
                 <SelectItem value="4">
                   {t("platformRoomAnnouncement")}
-                </SelectItem>
-                <SelectItem value="5">
-                  {t("systemConfigChangeAnnouncement")}
                 </SelectItem>
               </SelectContent>
             </Select>

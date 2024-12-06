@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Loader2 } from "lucide-react";
 
-import { getAllGames } from "@/api";
+import { getGameList } from "@/api";
 import {
   Select,
   SelectContent,
@@ -16,14 +16,18 @@ import {
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useQueryState } from "nuqs";
-import { useEffect, useTransition } from "react";
+import { useEffect, useState, useTransition } from "react";
 export function Form() {
   const t = useTranslations("report.periodlist");
 
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
+  // const [gameType, setGameType] = useQueryState(
+  //   "gameType",
+  //   parseAsString.withDefault("61").withOptions({ clearOnDefault: false }),
+  // );
   const [gameType, setGameType] = useQueryState("gameType", {
-    defaultValue: "0",
+    defaultValue: "61",
   });
   const [gameId, setGameId] = useQueryState("gameId", {
     defaultValue: "all",
@@ -31,14 +35,24 @@ export function Form() {
   const [issueNumber, setIssueNumber] = useQueryState("issueNumber", {
     defaultValue: "",
   });
+  const [gameIdList, setGameIdList] = useState<
+    { gameId: number; gameIdLabel: string }[]
+  >([]);
+  const [gameTypeList, setGameTypeList] = useState<
+    { gameType: number; gameTypeLabel: string }[]
+  >([]);
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
-    getAllGames().then((res) => {
-      console.info(" ~ games:", res);
+    getGameList(1).then((res) => {
+      setGameTypeList(res.data ?? []);
+      const gameIdList = res.data?.[0]?.list?.map((item) => ({
+        gameId: item.gameId,
+        gameIdLabel: item.gameIdLabel,
+      }));
+      setGameIdList(gameIdList ?? []);
     });
   }, []);
-
   return (
     <div className="flex flex-col gap-2 w-full">
       <div className="bg-background">
@@ -46,15 +60,19 @@ export function Form() {
           <div className="flex gap-2 items-center">
             <div className="flex gap-2 items-center">
               <Label className="shrink-0">{t("gameType")}</Label>
-              <Select
-                value={gameType}
-                onValueChange={(value) => setGameType(value)}
-              >
+              <Select defaultValue={gameType} disabled>
                 <SelectTrigger className="w-28">
                   <SelectValue placeholder={t("placeholderselect")} />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="0">百家乐</SelectItem>
+                  {gameTypeList?.map((item) => (
+                    <SelectItem
+                      key={item.gameType}
+                      value={item.gameType.toString()}
+                    >
+                      {item.gameTypeLabel}
+                    </SelectItem>
+                  ))}
                 </SelectContent>
               </Select>
             </div>
@@ -65,14 +83,19 @@ export function Form() {
                 onValueChange={(value) => setGameId(value)}
                 defaultValue="all"
               >
-                <SelectTrigger className="w-28">
+                <SelectTrigger className="w-36">
                   <SelectValue placeholder={t("placeholderselect")} />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="all">{t("all")}</SelectItem>
-                  <SelectItem value="0">百家乐01</SelectItem>
-                  <SelectItem value="1">百家乐02</SelectItem>
-                  <SelectItem value="2">百家乐03</SelectItem>
+                  {gameIdList?.map((item) => (
+                    <SelectItem
+                      key={item.gameId}
+                      value={item.gameId.toString()}
+                    >
+                      {item.gameIdLabel}
+                    </SelectItem>
+                  ))}
                 </SelectContent>
               </Select>
             </div>

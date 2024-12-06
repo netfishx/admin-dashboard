@@ -125,6 +125,7 @@ async function TableWrapper({
     pageSize: Number(pageSize ?? 10),
     // startTime: Number(startTime),
     // endTime: Number(endTime),
+    // temp 临时参数
     startTime: 1732165114683,
     endTime: 1733290152826,
   };
@@ -166,6 +167,28 @@ async function TableBodyWrapper({
   data,
 }: { data?: PageData<WalletLogRecords> }) {
   const t = await getTranslations("");
+
+  const operateTypeMap = {
+    1: "百家乐投注",
+    3: "入金",
+    4: "出金进行中",
+    5: "出金完成",
+    6: "出金退回",
+    7: "创建钱包",
+    8: "发反水",
+    9: "百家乐结算",
+    10: "掼蛋结算",
+    11: "关闭房间",
+    12: "房间充值",
+    13: "领反水",
+    15: "借款",
+    16: "还款",
+    17: "创建房间",
+    18: "提升额度",
+    19: "减少额度",
+    20: "转款",
+    21: "销账",
+  };
   return (
     <TableBody>
       {data && data.list.length > 0 ? (
@@ -190,7 +213,7 @@ async function TableBodyWrapper({
               {item.newBalance}
             </TableCell>
             <TableCell className="w-24 min-w-24 text-center">
-              {item.operateType}
+              {operateTypeMap[item.operateType as keyof typeof operateTypeMap]}
             </TableCell>
           </TableRow>
         ))
