@@ -51,16 +51,15 @@ const nextConfig: NextConfig = {
     serverActions: {
       bodySizeLimit: "5mb",
     },
-    staleTimes: {
-      dynamic: 1,
-      static: 60 * 60 * 24,
-    },
   },
   images: {
     dangerouslyAllowSVG: true,
     contentDispositionType: "attachment",
     contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
     remotePatterns: getRemotePatterns(),
+  },
+  env: {
+    NEXT_PUBLIC_TIMESTAMP: Date.now().toString(),
   },
   output: "standalone",
 };

@@ -39,7 +39,7 @@ export async function List({
     );
   }
   return (
-    <div className="p-2 mt-2 gap-2 flex flex-col h-full bg-background">
+    <div className="p-2 gap-2 flex flex-col h-full bg-background">
       <AddBtn />
       <div className="border rounded-sm">
         <Table>

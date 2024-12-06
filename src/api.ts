@@ -356,10 +356,14 @@ export async function getMemberLoginLog(params: {
   });
 }
 
-export async function getSupplierList() {
+export async function getSupplierList(params?: {
+  id?: string;
+  username?: string;
+}) {
   const user = await getSession();
   return await apiRequest<Supplier[]>({
     url: "/vendor/user/getVendorList",
+    params,
     token: user?.token,
   });
 }
@@ -383,7 +387,7 @@ export async function editSupplier(data: {
   id: string;
   nickname: string;
   remark: string;
-  newPassword: string;
+  newPassword?: string;
   status: number;
 }) {
   const user = await getSession();
@@ -398,7 +402,7 @@ export async function editSupplier(data: {
 export async function cleanSupplierLoginError(data: { id: string }) {
   const user = await getSession();
   return await apiRequest({
-    url: "/vendor/user/main/cleanLoginError",
+    url: "/vendor/user/cleanLoginError",
     method: "POST",
     data,
     token: user?.token,
@@ -1086,7 +1090,7 @@ export async function addDictionary(data: {
   const user = await getSession();
   return await apiRequest<{ code: number; message: string }>({
     url: "/dict/save",
-    method: "PUT",
+    method: "POST",
     data,
     token: user?.token,
   });
@@ -1102,7 +1106,7 @@ export async function editDictionary(data: {
   const user = await getSession();
   return await apiRequest<{ code: number; message: string }>({
     url: "/dict/update",
-    method: "POST",
+    method: "PUT",
     data,
     token: user?.token,
   });

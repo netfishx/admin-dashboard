@@ -67,6 +67,7 @@ export type Supplier = {
   status: number;
   createTime: number;
   updateTime: number;
+  remainLoginTime: number;
 };
 
 export type MaintainGame = {
@@ -116,7 +117,7 @@ export type MemberList = {
 export interface LoginLog {
   id: string; // id
   username: string; // 用户名称
-  isSuccess: number; // 是否成功（0=成功，1=失败）
+  isSuccess: string; // 是否成功（0=成功，1=失败）
   ip: string; // 操作ip
   region: string; // 操作ip的区域
   createTime: number; // 登录时间
@@ -125,7 +126,7 @@ export interface LoginLog {
 export type MySelfLoginLog = {
   id: string; // id
   username: string; // 用户名称
-  isSuccess: number; // 是否成功（0=成功，1=失败）
+  isSuccess: string; // 是否成功（0=成功，1=失败）
   ip: string; // 操作ip
   region: string; // 操作ip的区域
   createTime: number; // 登录时间

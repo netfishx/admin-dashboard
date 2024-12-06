@@ -55,16 +55,14 @@ export function LoginForm() {
         </div>
         <div className="w-[400px] bg-background p-10 border rounded-lg flex flex-col gap-6 z-10">
           <div className="flex flex-col gap-2">
-            <Label className="text-sm font-medium flex gap-1">
+            <Label className="text-sm font-medium flex gap-1 after:content-['*'] after:text-red-500">
               {t("username.label")}
-              <span className="text-red-500">*</span>
             </Label>
             <Input placeholder={t("username.placeholder")} name="username" />
           </div>
           <div className="flex flex-col gap-2">
-            <Label className="text-sm font-medium flex gap-1">
+            <Label className="text-sm font-medium flex gap-1 after:content-['*'] after:text-red-500">
               {t("password.label")}
-              <span className="text-red-500">*</span>
             </Label>
             <Password
               type="password"
@@ -73,9 +71,8 @@ export function LoginForm() {
             />
           </div>
           <div className="flex flex-col gap-2">
-            <Label className="text-sm font-medium flex gap-1">
+            <Label className="text-sm font-medium flex gap-1 after:content-['*'] after:text-red-500">
               {t("code.label")}
-              <span className="text-red-500">*</span>
             </Label>
             <div className="flex gap-2">
               <Input placeholder={t("code.placeholder")} name="captcha" />
