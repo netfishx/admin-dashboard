@@ -177,6 +177,7 @@ export type ChangeLog = {
 // 公告新增 编辑
 export type Announcement = {
   id?: string | null; // 编辑时传
+  contentId?: string | null; // 编辑时传
   type: number;
   content: { id?: string; language: string; title?: string; content: string }[];
   status: number;
@@ -213,6 +214,7 @@ export type AnnouncementList = {
     label?: string;
   }[];
   content: { id?: string; language: string; content: string; label: string };
+  contentId: string | null;
   contentOfLanguage: string;
   labelOfLanguage: string;
   status: number;
@@ -324,13 +326,13 @@ export type AuditList = {
   id: string;
   orderNo: string;
   createTime: number;
-  orderType: string;
+  orderType: number;
   userId: string;
   orderAmount: string;
   auditMultiple: string;
   availableAudit: string;
   remainingAudit: string;
-  status: string;
+  status: number;
 };
 export type AuditListRequest = {
   startTime: number;

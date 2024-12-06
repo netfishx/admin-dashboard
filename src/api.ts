@@ -812,7 +812,7 @@ export async function getAuditList(params: AuditListRequest) {
   });
 }
 // 清除稽核
-export async function clearAudit(data: { id: string }) {
+export async function clearAudit(data: { id: string; userId: string }) {
   const user = await getSession();
   return await apiRequest({
     url: "/agent/audit/cleanAudit",
@@ -905,28 +905,39 @@ export async function getWithdrawReportList(data: WithdrawReportParams) {
     data,
   });
   if (res.data?.list) {
+    // 审核状态(approverStatus)：0未处理，1锁定中，2已拒绝，3已通过
     // 资金状态(moneyStatus)：0转账中，1已到账，2出款失败；
-    // 审核状态(approverStatus)：0未处理，1锁定中，2已拒绝
-    // 未处理 锁定中 > 审核中（0）；已通过、异常 > 提现中（1）； 已拒绝 > 审核失败（2）；已到账 > 提现成功（3）
-    const statusMap = {
-      approver: {
-        0: 0,
-        1: 0,
-        2: 2,
-        3: 1,
-      },
-      money: {
-        1: 3,
-        2: 1,
-      },
+    // status： 未处理 锁定中 > 审核中（0）；已通过并异常 > 提现中（1）； 已拒绝 > 审核拒绝（2）；已到账 > 提现成功（3）
+    const getStatus = ({
+      approverStatus,
+      moneyStatus,
+    }: { approverStatus: number; moneyStatus: number }) => {
+      // 审核中
+      if (approverStatus === 0 || approverStatus === 1) {
+        return 0;
+      }
+      // 提现中 (已通过并出款失败)
+      if (approverStatus === 3 && moneyStatus === 2) {
+        return 1;
+      }
+      // 审核拒绝
+      if (approverStatus === 2) {
+        return 2;
+      }
+      // 提现成功 (已到账)
+      if (moneyStatus === 1) {
+        return 3;
+      }
+
+      return 1; // 默认提现中
     };
 
     res.data.list = res.data.list.map((item: WithdrawReport) => ({
       ...item,
-      status:
-        statusMap.approver[
-          item.approverStatus as keyof typeof statusMap.approver
-        ] ?? statusMap.money[item.moneyStatus as keyof typeof statusMap.money],
+      status: getStatus({
+        approverStatus: item.approverStatus,
+        moneyStatus: item.moneyStatus,
+      }),
     }));
   }
   return res;

@@ -98,6 +98,7 @@ async function TableWrapper({
 async function TableHeaderWrapper() {
   const t = await getTranslations("withdraw.audit");
   const translations = await getTranslations();
+
   return (
     <TableHeader>
       <TableRow className="bg-muted">
@@ -128,6 +129,16 @@ async function TableHeaderWrapper() {
 }
 async function TableBodyWrapper({ list }: { list: AuditList[] }) {
   const translations = await getTranslations();
+
+  const orderTypeList = {
+    0: "充值",
+    1: "返水",
+  };
+  const statusList = {
+    0: "未完成",
+    1: "已完成",
+    2: "手工清除",
+  };
   return (
     <TableBody>
       {list && list.length > 0 ? (
@@ -139,7 +150,7 @@ async function TableBodyWrapper({ list }: { list: AuditList[] }) {
             </TableCell>
 
             <TableCell className="min-w-32 text-center">
-              {item.orderType}
+              {orderTypeList[item.orderType as keyof typeof orderTypeList]}
             </TableCell>
             <TableCell className="min-w-32 text-center">
               {item.userId}
@@ -155,7 +166,7 @@ async function TableBodyWrapper({ list }: { list: AuditList[] }) {
             </TableCell>
             <TableCell className="text-center">{item.remainingAudit}</TableCell>
             <TableCell className="min-w-32 text-center">
-              {item.status}
+              {statusList[item.status as keyof typeof statusList]}
             </TableCell>
 
             <TableCell className="min-w-48 text-center sticky right-0 bg-background">
