@@ -130,7 +130,10 @@ export function DictSettingModal() {
                               className="text-primary hover:text-primary/80 text-sm px-2"
                               onClick={() => {
                                 setAddOpen(true);
-                                setAddData(item);
+                                setAddData({
+                                  ...item,
+                                  dictCode: data?.dictCode ?? "",
+                                });
                                 setOperation("edit");
                               }}
                             >

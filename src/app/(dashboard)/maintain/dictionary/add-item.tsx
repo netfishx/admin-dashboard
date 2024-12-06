@@ -47,6 +47,7 @@ export function AddItemDialog() {
         label: itemName,
         value: itemValue,
         remark,
+        i18nType: "zh-CN",
       });
       if (code === 0) {
         setOpen(false);
@@ -60,6 +61,7 @@ export function AddItemDialog() {
         label: itemName,
         value: itemValue,
         remark,
+        i18nType: "zh-CN",
       });
       if (code === 0) {
         setOpen(false);

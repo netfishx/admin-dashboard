@@ -47,7 +47,7 @@ export function UserInfoModal({
   useEffect(() => {
     if (open && memberInfoData) {
       setUpUsername(memberInfoData.upUsername);
-      // setUpNickname(memberInfoData.upNickname);
+      setUpNickname(memberInfoData.upNickname);
       setMemberId(memberInfoData.id);
       setUsername(memberInfoData.username);
       setMemberNickname(memberInfoData.nickname);
@@ -56,7 +56,7 @@ export function UserInfoModal({
     }
     return () => {
       setUpUsername("");
-      // setUpNickname("");
+      setUpNickname("");
       setMemberId("");
       setUsername("");
       setMemberNickname("");
