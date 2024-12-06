@@ -31,7 +31,7 @@ export default async function Page({
         </div>
         <Suspense
           fallback={
-            <Table className="border rounded-sm">
+            <Table className="border rounded-sm table-fixed">
               <TableHeaderWrapper total={0} />
               <TableBodySkeleton />
             </Table>
@@ -59,7 +59,7 @@ async function TableWrapper({
   return (
     <>
       <div className="border rounded-sm">
-        <Table>
+        <Table className="table-fixed">
           <TableHeaderWrapper total={data?.total ?? 0} />
           <Suspense fallback={<TableBodySkeleton />}>
             <TableBodyWrapper list={data?.list} permissions={permissions} />
@@ -67,11 +67,13 @@ async function TableWrapper({
         </Table>
       </div>
       <div className="pt-2">
-        <CustomPagination
-          total={data?.total ?? 0}
-          currentPage={Number(data?.pageNum ?? 1)}
-          pageSize={Number(data?.pageSize ?? 10)}
-        />
+        {!!data?.total && (
+          <CustomPagination
+            total={data?.total ?? 0}
+            currentPage={Number(pageNum ?? 1)}
+            pageSize={Number(pageSize ?? 10)}
+          />
+        )}
       </div>
     </>
   );
@@ -85,16 +87,16 @@ async function TableHeaderWrapper({ total }: { total: number }) {
       <TableRow className="bg-muted">
         {permissions?.includes("agent_search") && (
           <>
-            <TableHead className="min-w-28">{t("upUsername")}</TableHead>
-            <TableHead className="min-w-28">{t("deptId")}</TableHead>
+            <TableHead className="w-28">{t("upUsername")}</TableHead>
+            <TableHead className="w-28">{t("deptId")}</TableHead>
           </>
         )}
-        <TableHead className="min-w-60">{t("userId")}</TableHead>
+        <TableHead className="w-60">{t("userId")}</TableHead>
         <TableHead>{t("username")}</TableHead>
-        <TableHead className="min-w-20">{t("nickname")}</TableHead>
-        <TableHead className="min-w-20">{t("status")}</TableHead>
+        <TableHead className="w-20">{t("nickname")}</TableHead>
+        <TableHead className="w-20">{t("status")}</TableHead>
         {total > 0 && (
-          <TableHead className="min-w-[480px] text-center sticky right-0 bg-muted">
+          <TableHead className="w-[480px] text-center sticky right-0 bg-muted">
             {t("action")}
           </TableHead>
         )}

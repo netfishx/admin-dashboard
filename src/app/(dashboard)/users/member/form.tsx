@@ -10,15 +10,19 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useQueryState } from "nuqs";
+import { useTransition } from "react";
 
 export default function Form({
   permissions,
 }: { permissions: string[] | undefined }) {
   const t = useTranslations("users.members");
   const router = useRouter();
+  const [isPending, startTransition] = useTransition();
+  const [isReset, startResetTransition] = useTransition();
   const [username, setUsername] = useQueryState("username", {
     defaultValue: "",
   });
@@ -79,8 +83,23 @@ export default function Form({
         </div>
       </div>
       <div className="flex gap-2 items-center">
-        <Button variant="outline">{t("reset")}</Button>
-        <Button onClick={() => router.refresh()}>{t("search")}</Button>
+        <Button
+          variant="outline"
+          disabled={isReset}
+          onClick={() =>
+            startResetTransition(() => router.replace("/users/member"))
+          }
+        >
+          {isReset && <Loader2 className="w-4 h-4 animate-spin" />}
+          {t("reset")}
+        </Button>
+        <Button
+          onClick={() => startTransition(() => router.refresh())}
+          disabled={isPending}
+        >
+          {isPending && <Loader2 className="w-4 h-4 animate-spin" />}
+          {t("search")}
+        </Button>
       </div>
     </div>
   );

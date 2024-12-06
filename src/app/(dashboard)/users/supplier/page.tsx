@@ -36,7 +36,7 @@ export default async function Page({
           </Suspense>
         </div>
         <div className="border rounded-sm">
-          <Table>
+          <Table className="table-fixed">
             <SupplierTableHeader />
             <Suspense fallback={<TbodySkeleton />}>
               <SupplierTable data={data} />
@@ -55,11 +55,11 @@ async function SupplierTableHeader() {
   return (
     <TableHeader>
       <TableRow className="bg-muted">
-        <TableHead className="min-w-64">{t("supplierId")}</TableHead>
-        <TableHead>{t("supplierUsername")}</TableHead>
-        <TableHead>{t("supplierName")}</TableHead>
-        <TableHead>{t("remark")}</TableHead>
-        <TableHead>{t("status")}</TableHead>
+        <TableHead className="w-64">{t("supplierId")}</TableHead>
+        <TableHead className="w-40">{t("supplierUsername")}</TableHead>
+        <TableHead className="w-40">{t("supplierName")}</TableHead>
+        <TableHead className="w-40">{t("remark")}</TableHead>
+        <TableHead className="w-20">{t("status")}</TableHead>
         <TableHead className="w-24 text-center">{t("action")}</TableHead>
       </TableRow>
     </TableHeader>
