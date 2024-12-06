@@ -22,9 +22,14 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import type { GameConfig, GameType } from "@/lib/types";
-import { changedOddsLimitAtom, limitAtom, oddsAtom } from "@/store";
+import {
+  changedOddsLimitAtom,
+  limitAtom,
+  oddsAtom,
+  verifyLimitAtom,
+} from "@/store";
 import Big from "big.js";
-import { useAtom } from "jotai";
+import { useAtom, useAtomValue } from "jotai";
 import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
@@ -88,11 +93,17 @@ function RestoreButton({ onClick }: { onClick: () => void }) {
   );
 }
 
-function SaveButton({ onClick }: { onClick: () => void }) {
+function SaveButton({
+  onClick,
+  disabled,
+}: { onClick: () => void; disabled: boolean }) {
   const t = useTranslations("games.odds");
   const [isPending, startTransition] = useTransition();
   return (
-    <Button disabled={isPending} onClick={() => startTransition(onClick)}>
+    <Button
+      disabled={isPending || disabled}
+      onClick={() => startTransition(onClick)}
+    >
       {isPending ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
       {t("save")}
     </Button>
@@ -165,6 +176,7 @@ export function OddsForm({
       );
     }
   }
+  const verifyLimit = useAtomValue(verifyLimitAtom);
 
   async function handleSync() {
     const res = await syncGameOdds({
@@ -178,6 +190,9 @@ export function OddsForm({
   }
 
   async function handleSave() {
+    if (changedList.length === 0) {
+      return;
+    }
     const res = await updateGameOdds({
       gameId: game.gameId ? Number(game.gameId) : list[0].gameId,
       list: changedList.map((key) => ({
@@ -290,7 +305,7 @@ export function OddsForm({
           <RestoreButton onClick={handleRestore} />
         )}
         {permissions.includes("edit_odds") && (
-          <SaveButton onClick={handleSave} />
+          <SaveButton onClick={handleSave} disabled={!verifyLimit} />
         )}
       </div>
     </>

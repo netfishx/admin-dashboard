@@ -127,6 +127,7 @@ export const rebateAtom = atom<
 export const oddsAtom = atom<{
   [key: string]: string;
 }>({});
+export const verifyLimitAtom = atom<boolean>(true);
 export const limitAtom = atom<{
   [key: string]: {
     minBet?: number;

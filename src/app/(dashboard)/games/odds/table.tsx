@@ -3,9 +3,14 @@
 import { Input } from "@/components/ui/input";
 import { TableBody, TableCell, TableRow } from "@/components/ui/table";
 import type { GameOdds } from "@/lib/types";
-import { changedOddsLimitAtom, limitAtom, oddsAtom } from "@/store";
+import {
+  changedOddsLimitAtom,
+  limitAtom,
+  oddsAtom,
+  verifyLimitAtom,
+} from "@/store";
 import { uniq } from "es-toolkit";
-import { useAtom } from "jotai";
+import { useAtom, useSetAtom } from "jotai";
 import { useTranslations } from "next-intl";
 import { useLayoutEffect } from "react";
 
@@ -73,6 +78,7 @@ export function OddsTable({
       ),
     });
   }
+  const setVerifyLimit = useSetAtom(verifyLimitAtom);
   return (
     <TableBody>
       {list.length === 0 ? (
@@ -94,11 +100,11 @@ export function OddsTable({
                 disabled={!hasAdminPermission}
                 min={0}
                 step={0.001}
-                onChange={(e) =>
-                  handleOddsChange(item.oddsType, item.betType, e.target.value)
-                }
+                onChange={(e) => {
+                  handleOddsChange(item.oddsType, item.betType, e.target.value);
+                }}
                 onBlur={(e) => {
-                  e.target.reportValidity();
+                  setVerifyLimit(e.target.reportValidity());
                 }}
               />
             </TableCell>
@@ -112,17 +118,17 @@ export function OddsTable({
                 type="number"
                 min={1}
                 disabled={!item.canEdit}
-                onChange={(e) =>
+                onChange={(e) => {
                   handleLimitChange(
                     item.oddsType,
                     item.betType,
                     item.groupId ?? 0,
                     "minBet",
                     Number(e.target.value),
-                  )
-                }
+                  );
+                }}
                 onBlur={(e) => {
-                  e.target.reportValidity();
+                  setVerifyLimit(e.target.reportValidity());
                 }}
               />
             </TableCell>
@@ -138,17 +144,17 @@ export function OddsTable({
                   min={1}
                   max={item.maxBetLimit ?? Number.MAX_SAFE_INTEGER}
                   disabled={!item.canEdit}
-                  onChange={(e) =>
+                  onChange={(e) => {
                     handleLimitChange(
                       item.oddsType,
                       item.betType,
                       item.groupId ?? 0,
                       "maxBet",
                       Number(e.target.value),
-                    )
-                  }
+                    );
+                  }}
                   onBlur={(e) => {
-                    e.target.reportValidity();
+                    setVerifyLimit(e.target.reportValidity());
                   }}
                 />
                 {item.maxBetLimit ? (
@@ -170,17 +176,17 @@ export function OddsTable({
                   min={1}
                   max={item.maxBetPeriodLimit ?? Number.MAX_SAFE_INTEGER}
                   disabled={!item.canEdit}
-                  onChange={(e) =>
+                  onChange={(e) => {
                     handleLimitChange(
                       item.oddsType,
                       item.betType,
                       item.groupId ?? 0,
                       "maxBetPeriod",
                       Number(e.target.value),
-                    )
-                  }
+                    );
+                  }}
                   onBlur={(e) => {
-                    e.target.reportValidity();
+                    setVerifyLimit(e.target.reportValidity());
                   }}
                 />
                 {item.maxBetPeriodLimit ? (
