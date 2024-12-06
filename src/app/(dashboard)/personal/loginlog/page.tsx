@@ -51,7 +51,7 @@ async function TableWrapper({
     pageSize = "10",
     startTime,
     endTime,
-    ip,
+    ...rest
   } = await searchParams;
   if (!(startTime && endTime)) {
     return <TableSkeleton />;
@@ -61,7 +61,7 @@ async function TableWrapper({
     pageSize: Number(pageSize) ?? 10,
     startTime: Number(startTime),
     endTime: Number(endTime),
-    ip,
+    ...rest,
   });
   return (
     <Table>
