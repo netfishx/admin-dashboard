@@ -43,7 +43,7 @@ export default function Page({
         <Suspense
           fallback={
             <div className="border rounded-sm">
-              <Table>
+              <Table className="table-fixed">
                 <TableHeaderWrapper total={0} />
                 <TableBodySkeleton />
               </Table>
@@ -74,7 +74,7 @@ async function TableWrapper({
     <>
       <UserInfoModal permissions={permissions} />
       <div className="border rounded-sm relative">
-        <Table>
+        <Table className="table-fixed">
           <TableHeaderWrapper total={data?.total ?? 0} />
           <Suspense fallback={<TableBodySkeleton />}>
             <TableBodyWrapper list={data?.list} permissions={permissions} />
@@ -82,11 +82,13 @@ async function TableWrapper({
         </Table>
       </div>
       <div className="pt-2">
-        <CustomPagination
-          total={data?.total ?? 0}
-          currentPage={Number(data?.pageNum ?? 1)}
-          pageSize={Number(data?.pageSize ?? 10)}
-        />
+        {!!data?.total && (
+          <CustomPagination
+            total={data?.total ?? 0}
+            currentPage={Number(params.pageNum ?? 1)}
+            pageSize={Number(params.pageSize ?? 10)}
+          />
+        )}
       </div>
     </>
   );
@@ -100,19 +102,19 @@ async function TableHeaderWrapper({ total }: { total: number }) {
       <TableRow className="bg-muted">
         {permissions?.includes("member_search") && (
           <>
-            <TableHead>{t("upUsername")}</TableHead>
-            <TableHead className="min-w-28">{t("deptId")}</TableHead>
+            <TableHead className="w-28">{t("upUsername")}</TableHead>
+            <TableHead className="w-28">{t("deptId")}</TableHead>
           </>
         )}
-        <TableHead className="min-w-60">{t("userId")}</TableHead>
-        <TableHead>{t("username")}</TableHead>
-        <TableHead>{t("nickname")}</TableHead>
-        <TableHead className="min-w-28">{t("walletAddress")}</TableHead>
-        <TableHead className="min-w-28">{t("debtAmount")}</TableHead>
-        <TableHead className="min-w-28">{t("creditAmount")}</TableHead>
-        <TableHead className="min-w-20">{t("status")}</TableHead>
+        <TableHead className="w-60">{t("userId")}</TableHead>
+        <TableHead className="w-40">{t("username")}</TableHead>
+        <TableHead className="w-40">{t("nickname")}</TableHead>
+        <TableHead className="w-72">{t("walletAddress")}</TableHead>
+        <TableHead className="w-28">{t("debtAmount")}</TableHead>
+        <TableHead className="w-28">{t("creditAmount")}</TableHead>
+        <TableHead className="w-20">{t("status")}</TableHead>
         {total > 0 && (
-          <TableHead className="min-w-[630px] text-center sticky right-0 bg-muted">
+          <TableHead className="w-[630px] text-center sticky right-0 bg-muted">
             {t("action")}
           </TableHead>
         )}
