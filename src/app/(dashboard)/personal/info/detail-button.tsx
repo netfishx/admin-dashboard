@@ -6,7 +6,7 @@ import { useState } from "react";
 import { AddDialog } from "./add-dialog";
 import { CheckDialog } from "./check-dialog";
 
-export function DetailButton(props: { data: UserBasicInfo }) {
+export function DetailButton(props: { data?: UserBasicInfo }) {
   const { data } = props;
   const t = useTranslations("personal.info");
   const [open, setOpen] = useState(false);
@@ -20,8 +20,8 @@ export function DetailButton(props: { data: UserBasicInfo }) {
       <Button variant="default" onClick={() => setOpen(true)}>
         {t("withdraw")}
       </Button>
-      {open && <CheckDialog onOpenChange={setOpen} data={data} />}
-      {openAdd && <AddDialog onOpenChange={setOpenAdd} data={data} />}
+      {open && data && <CheckDialog onOpenChange={setOpen} data={data} />}
+      {openAdd && data && <AddDialog onOpenChange={setOpenAdd} data={data} />}
     </div>
   );
 }
