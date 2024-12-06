@@ -54,17 +54,20 @@ export default async function Page({
 async function TableWrapper({
   searchParams,
 }: { searchParams: Promise<{ [key: string]: string | undefined }> }) {
-  const { pageNum, pageSize } = await searchParams;
+  const { pageNum = "1", pageSize = "10", ...rest } = await searchParams;
   const { data } = await getDictionaryList({
-    pageNum: Number(pageNum) || 1,
-    pageSize: Number(pageSize) || 10,
+    ...rest,
+    pageNum: Number(pageNum),
+    pageSize: Number(pageSize),
   });
   return (
     <>
-      <Table className="border rounded-sm">
-        <TableHeaderWrapper />
-        <TableBodyWrapper list={data?.list ?? []} />
-      </Table>
+      <div className="border rounded-sm">
+        <Table>
+          <TableHeaderWrapper />
+          <TableBodyWrapper list={data?.list ?? []} />
+        </Table>
+      </div>
       <div className="pt-2">
         {data?.total && data?.total > 0 ? (
           <CustomPagination

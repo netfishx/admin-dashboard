@@ -3,12 +3,16 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useQueryState } from "nuqs";
+import { useTransition } from "react";
 
 export function Form() {
   const t = useTranslations("maintain.dictionary");
+  const [isPending, startTransition] = useTransition();
+  const [isReset, startResetTransition] = useTransition();
   const router = useRouter();
   const [dictName, setDictName] = useQueryState("dictName", {
     defaultValue: "",
@@ -37,8 +41,23 @@ export function Form() {
         </div>
       </div>
       <div className="flex gap-2 items-center">
-        <Button variant="outline">{t("reset")}</Button>
-        <Button onClick={() => router.refresh()}>{t("search")}</Button>
+        <Button
+          variant="outline"
+          disabled={isReset}
+          onClick={() =>
+            startResetTransition(() => router.replace("/maintain/dictionary"))
+          }
+        >
+          {isReset && <Loader2 className="w-4 h-4 animate-spin" />}
+          {t("reset")}
+        </Button>
+        <Button
+          disabled={isPending}
+          onClick={() => startTransition(() => router.refresh())}
+        >
+          {isPending && <Loader2 className="w-4 h-4 animate-spin" />}
+          {t("search")}
+        </Button>
       </div>
     </div>
   );
