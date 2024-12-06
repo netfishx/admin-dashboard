@@ -151,11 +151,13 @@ export async function RatioList({
         </Table>
       </div>
       <div className="pt-2">
-        <CustomPagination
-          total={data?.total ?? 0}
-          currentPage={Number(data?.pageNum ?? 1)}
-          pageSize={Number(data?.pageSize ?? 10)}
-        />
+        {!!data?.total && (
+          <CustomPagination
+            total={data?.total ?? 0}
+            currentPage={p.pageNum}
+            pageSize={p.pageSize}
+          />
+        )}
       </div>
     </div>
   );
