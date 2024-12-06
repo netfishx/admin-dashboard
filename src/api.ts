@@ -403,7 +403,7 @@ export async function editSupplier(data: {
 export async function cleanSupplierLoginError(data: { id: string }) {
   const user = await getSession();
   return await apiRequest({
-    url: "/vendor/user/main/cleanLoginError",
+    url: "/vendor/user/cleanLoginError",
     method: "POST",
     data,
     token: user?.token,

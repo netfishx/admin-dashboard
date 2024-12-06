@@ -40,9 +40,10 @@ export function SupplierEditDialog() {
   const [id, setId] = useState("");
   const [username, setUsername] = useState("");
   const [nickname, setNickname] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+  const [password] = useState("");
+  const [confirmPassword] = useState("");
   const [remark, setRemark] = useState("");
+  const [remainLoginTime, setRemainLoginTime] = useState(0);
   const [status, setStatus] = useState(0);
   const router = useRouter();
   const ref = useRef<HTMLFormElement>(null);
@@ -51,6 +52,7 @@ export function SupplierEditDialog() {
       setId(data.id);
       setUsername(data.username);
       setNickname(data.nickname);
+      setRemainLoginTime(data.remainLoginTime);
       setRemark(data.remark);
       setStatus(data.status);
     }
@@ -82,9 +84,10 @@ export function SupplierEditDialog() {
   };
   const handleResetRestCount = () => {
     startResetTransition(async () => {
-      const { code, message } = await cleanSupplierLoginError({ id });
+      const { code, data, message } = await cleanSupplierLoginError({ id });
       if (code === 0) {
         toast.success(message);
+        setRemainLoginTime(Number(data));
       } else {
         toast.error(message);
       }
@@ -141,7 +144,7 @@ export function SupplierEditDialog() {
             </div>
             <div className="flex gap-2 items-center">
               <Label className="w-32 text-end">{t("resetCount")}</Label>
-              <span>{3}</span>
+              <span>{remainLoginTime}</span>
               <Button
                 size="sm"
                 disabled={isResetPending}

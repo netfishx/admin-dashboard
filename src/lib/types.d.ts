@@ -67,6 +67,7 @@ export type Supplier = {
   status: number;
   createTime: number;
   updateTime: number;
+  remainLoginTime: number;
 };
 
 export type MaintainGame = {
