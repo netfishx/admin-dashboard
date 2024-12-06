@@ -1079,7 +1079,7 @@ export async function addDictionary(data: {
   const user = await getSession();
   return await apiRequest<{ code: number; message: string }>({
     url: "/dict/save",
-    method: "PUT",
+    method: "POST",
     data,
     token: user?.token,
   });
@@ -1095,7 +1095,7 @@ export async function editDictionary(data: {
   const user = await getSession();
   return await apiRequest<{ code: number; message: string }>({
     url: "/dict/update",
-    method: "POST",
+    method: "PUT",
     data,
     token: user?.token,
   });
