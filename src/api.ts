@@ -1128,7 +1128,7 @@ export async function getDictionaryItemList(params: {
   dictCode: string;
 }) {
   const user = await getSession();
-  return await apiRequest<DictionaryItemList[]>({
+  return await apiRequest<{ [key: string]: DictionaryItemList[] }>({
     url: "/dict/item/selectList",
     token: user?.token,
     params,

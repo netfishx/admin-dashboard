@@ -73,8 +73,13 @@ export function LoginLogModal({
       setLoading(false);
     });
   }, [id, page, size, type, open]);
+
+  const handleClose = () => {
+    setOpen(false);
+    setData([]);
+  };
   return (
-    <Dialog open={open} onOpenChange={(open) => setOpen(open)}>
+    <Dialog open={open} onOpenChange={handleClose}>
       <DialogContent
         className="2xl:max-w-2xl lg:max-w-xl"
         onPointerDownOutside={(e) => e.preventDefault()}
@@ -154,12 +159,10 @@ export function LoginLogModal({
           setSize={setSize}
         />
         <DialogFooter>
-          <Button variant="outline" onClick={() => setOpen(false)}>
+          <Button variant="outline" onClick={handleClose}>
             {translations("cancel")}
           </Button>
-          <Button onClick={() => setOpen(false)}>
-            {translations("confirm")}
-          </Button>
+          <Button onClick={handleClose}>{translations("confirm")}</Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

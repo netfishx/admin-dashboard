@@ -11,10 +11,11 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import type {
+  GameInfo,
   SupplierReportRecords,
   SupplierReportRequestParams,
 } from "@/lib/types";
-import { format } from "date-fns";
+import { nanoid } from "nanoid";
 import { getTranslations } from "next-intl/server";
 import { Suspense } from "react";
 
@@ -44,28 +45,31 @@ export async function ListHeader() {
   );
 }
 
-async function ListBody({ list }: { list: SupplierReportRecords[] }) {
+async function ListBody({
+  list,
+  gameList = [],
+}: { list: SupplierReportRecords[]; gameList?: GameInfo[] }) {
   const translate = await getTranslations();
 
   return (
     <TableBody>
       {list?.length > 0 ? (
         list?.map((item) => (
-          <TableRow key={item.supplierId}>
+          <TableRow key={nanoid()}>
+            <TableCell className="w-24 text-center">{item.supplyId}</TableCell>
             <TableCell className="w-24 text-center">
-              {item.supplierId}
+              {item.supplyName}
             </TableCell>
-            <TableCell className="w-24 text-center">{item.gameName}</TableCell>
+            <TableCell className="w-24 text-center">{item.openDay}</TableCell>
             <TableCell className="w-24 text-center">
-              {format(item.analysisTime, "yyyy-MM-dd HH:mm:ss")}
+              {gameList?.find((i) => i.gameId === item.gameId)?.gameName}
             </TableCell>
-            <TableCell className="w-24 text-center">{item.gameId}</TableCell>
             <TableCell className="w-24 text-center">{item.betNum}</TableCell>
             <TableCell className="w-24 text-center">
-              {item.validAmount}
+              {item.availableBetAmount}
             </TableCell>
             <TableCell className="w-24 text-center">
-              {item.shareAmount}
+              {item.percentAmount}
             </TableCell>
           </TableRow>
         ))
@@ -82,7 +86,11 @@ async function ListBody({ list }: { list: SupplierReportRecords[] }) {
 
 export async function List({
   searchParams,
-}: { searchParams: Promise<SupplierReportRequestParams> }) {
+  gameList,
+}: {
+  searchParams: Promise<SupplierReportRequestParams>;
+  gameList: GameInfo[];
+}) {
   const t = await getTranslations("report.supplier");
   const params = await searchParams;
   const p = {
@@ -122,13 +130,13 @@ export async function List({
               {t("betAmount")}:
             </Label>
             <span className="min-w-24 text-center text-sm">
-              {data?.list?.[0]?.totalValidAmount || 0} &nbsp;
+              {data?.list?.[0]?.totalAvailableBetAmount || 0} &nbsp;
             </span>
             <Label className="min-w-24 text-center text-sm">
               {t("validBetAmount")}:
             </Label>
             <span className="min-w-24 text-center text-sm">
-              {data?.list?.[0]?.totalShareAmount || 0} &nbsp;
+              {data?.list?.[0]?.totalPercentAmount || 0} &nbsp;
             </span>
           </>
         )}
@@ -148,7 +156,7 @@ export async function List({
               </div>
             }
           >
-            <ListBody list={data?.list ?? []} />
+            <ListBody list={data?.list || []} gameList={gameList || []} />
           </Suspense>
         </Table>
       </div>

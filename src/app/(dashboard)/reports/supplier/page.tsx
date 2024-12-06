@@ -1,3 +1,4 @@
+import { getAllGames } from "@/api";
 import TableSkeleton from "@/components/table-skeleton";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Table } from "@/components/ui/table";
@@ -11,10 +12,11 @@ interface CommonWrapperProps {
   searchParams: Promise<SupplierReportRequestParams>;
 }
 
-async function CommonWrapper({ searchParams }: CommonWrapperProps) {
+export default async function Page({ searchParams }: CommonWrapperProps) {
   const hasSearchPermission = await hasPermission("admin_supplier_report");
+  const resp = await getAllGames();
   return (
-    <>
+    <div className="flex flex-col gap-2 w-full">
       <Suspense
         fallback={
           <div className="flex justify-between items-center bg-background p-4">
@@ -36,17 +38,7 @@ async function CommonWrapper({ searchParams }: CommonWrapperProps) {
           </div>
         }
       >
-        <List searchParams={searchParams} />
-      </Suspense>
-    </>
-  );
-}
-
-export default function Page({ searchParams }: CommonWrapperProps) {
-  return (
-    <div className="flex flex-col gap-2 w-full">
-      <Suspense>
-        <CommonWrapper searchParams={searchParams} />
+        <List searchParams={searchParams} gameList={resp?.data || []} />
       </Suspense>
     </div>
   );

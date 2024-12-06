@@ -305,16 +305,16 @@ export type ApplyListRequest = {
 };
 // 供应商报表出参
 export type SupplierReportRecords = {
-  supplierId: string; // 供应商ID
-  analysisTime: number; // 日期（时间戳格式）
-  gameName: string; // 游戏名称
+  supplyId: string; // 供应商ID
+  openDay: number; // 日期
+  supplyName: string; // 供应商名称
   gameId: number; // 游戏ID
   betNum: number; // 下注笔数
-  validAmount: number; // 有效金额
-  shareAmount: number; // 比例分成金额
+  availableBetAmount: number; // 有效金额
+  percentAmount: number; // 比例分成金额
   totalBetNum: number; // 累计下注笔数
-  totalValidAmount: number; // 累计有效金额
-  totalShareAmount: number; // 累计比例分成金额
+  totalAvailableBetAmount: number; // 累计有效金额
+  totalPercentAmount: number; // 累计比例分成金额
 };
 
 // 供应商报表请求入参

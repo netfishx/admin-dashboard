@@ -57,13 +57,15 @@ export function DictSettingModal() {
   const [loading, setLoading] = useState(true);
   const [deleteLoading, setDeleteLoading] = useState(false);
   const setOperation = useSetAtom(dictionaryItemOperationAtom);
+
+  const key = "zh-CN";
   useEffect(() => {
     if (data && open && !addOpen && !deleteLoading) {
       setLoading(true);
       getDictionaryItemList({
         dictCode: data.dictCode,
       }).then(({ data }) => {
-        setList(data ?? []);
+        setList(data?.[key] ?? []);
         setLoading(false);
       });
     }
