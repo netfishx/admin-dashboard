@@ -46,6 +46,7 @@ export async function ListHeader() {
 
 async function ListBody({ list }: { list: SupplierReportRecords[] }) {
   const translate = await getTranslations();
+
   return (
     <TableBody>
       {list?.length > 0 ? (
@@ -84,6 +85,13 @@ export async function List({
 }: { searchParams: Promise<SupplierReportRequestParams> }) {
   const t = await getTranslations("report.supplier");
   const params = await searchParams;
+  const p = {
+    ...params,
+    startTime: Number(params?.startTime || 0),
+    endTime: Number(params?.endTime || 0),
+    pageNum: Number(params?.pageNum || 1),
+    pageSize: Number(params?.pageSize || 10),
+  };
   if (!(params?.startTime && params?.endTime)) {
     return (
       <div className="p-2 bg-background flex-1">
@@ -97,7 +105,8 @@ export async function List({
       </div>
     );
   }
-  const { data } = await getSupplierReportList(params);
+  const { data } = await getSupplierReportList(p);
+
   return (
     <div className="p-2 bg-background flex-1">
       <div className="h-6">
@@ -107,19 +116,19 @@ export async function List({
               {t("betNum")}:
             </Label>
             <span className="min-w-24 text-center text-sm">
-              {data?.list?.[0]?.totalBetNum ?? 0} &nbsp;
+              {data?.list?.[0]?.totalBetNum || 0} &nbsp;
             </span>
             <Label className="min-w-24 text-center text-sm">
               {t("betAmount")}:
             </Label>
             <span className="min-w-24 text-center text-sm">
-              {data?.list?.[0]?.totalValidAmount ?? 0} &nbsp;
+              {data?.list?.[0]?.totalValidAmount || 0} &nbsp;
             </span>
             <Label className="min-w-24 text-center text-sm">
               {t("validBetAmount")}:
             </Label>
             <span className="min-w-24 text-center text-sm">
-              {data?.list?.[0]?.totalShareAmount ?? 0} &nbsp;
+              {data?.list?.[0]?.totalShareAmount || 0} &nbsp;
             </span>
           </>
         )}
@@ -145,9 +154,9 @@ export async function List({
       </div>
       <div className="pt-2">
         <CustomPagination
-          total={data?.total ?? 0}
-          currentPage={data?.pageNum ?? 1}
-          pageSize={data?.pageSize ?? 10}
+          total={data?.total || 0}
+          currentPage={data?.pageNum || 1}
+          pageSize={data?.pageSize || 10}
         />
       </div>
     </div>
