@@ -321,6 +321,9 @@ export type SupplierReportRecords = {
 export type SupplierReportRequestParams = {
   startTime: number;
   endTime: number;
+  pageNum: number;
+  pageSize: number;
+  supplierId?: string | null;
 };
 
 export type AuditList = {
