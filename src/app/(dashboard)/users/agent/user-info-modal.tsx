@@ -72,6 +72,8 @@ export function UserInfoModal() {
     if (code === 0) {
       setRemainLoginTime(Number(data));
       toast.success(message);
+    } else {
+      toast.error(message);
     }
   };
 
