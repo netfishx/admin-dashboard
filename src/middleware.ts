@@ -1,6 +1,6 @@
+import { getRedirectUrl, urlPermissions } from "@/lib/permissions";
 import { getSession } from "@/session";
 import { type NextRequest, NextResponse } from "next/server";
-import { getRedirectUrl, urlPermissions } from "./lib/permissions";
 
 export async function middleware(request: NextRequest) {
   if (
