@@ -2,6 +2,18 @@ import * as React from "react"
 
 import { cn } from "@/lib/utils"
 
+const ScrollableTable = React.forwardRef<
+  HTMLTableElement,
+  React.HTMLAttributes<HTMLTableElement>
+>(({ className, ...props }, ref) => (
+    <table
+      ref={ref}
+      className={cn("w-full caption-bottom text-sm", className)}
+      {...props}
+    />
+))
+ScrollableTable.displayName = "TableContainer"
+
 const Table = React.forwardRef<
   HTMLTableElement,
   React.HTMLAttributes<HTMLTableElement>
@@ -12,7 +24,7 @@ const Table = React.forwardRef<
       className={cn("w-full caption-bottom text-sm", className)}
       {...props}
     />
-  </div>
+    </div>
 ))
 Table.displayName = "Table"
 
@@ -117,4 +129,5 @@ export {
   TableRow,
   TableCell,
   TableCaption,
+  ScrollableTable,
 }
