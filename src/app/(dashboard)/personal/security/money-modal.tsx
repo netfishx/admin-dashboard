@@ -105,7 +105,6 @@ export function MoneyModal({
           }}
           ref={ref}
         >
-          <input type="hidden" name="id" />
           <div className="flex flex-col gap-4">
             {isEdit ? (
               <div className="flex flex-col gap-1">

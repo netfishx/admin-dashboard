@@ -68,7 +68,6 @@ export function PasswordModal({
           }}
           ref={ref}
         >
-          <input type="hidden" name="id" />
           <div className="flex flex-col gap-4">
             <div className="flex gap-2 items-center">
               <Label className="shrink-0 w-[100px] text-right text-muted-foreground">

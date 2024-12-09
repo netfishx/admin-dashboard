@@ -11,18 +11,28 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { endOfDay, startOfDay } from "date-fns";
 import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { useQueryState } from "nuqs";
 import { useTransition } from "react";
+import { toast } from "sonner";
 import { approverStatusDict } from "../tools";
 
 export function Form() {
   const t = useTranslations("withdraw.apply");
   const translations = useTranslations();
   const router = useRouter();
+
+  const searchParams = useSearchParams();
+  const startTime = searchParams.get("startTime");
+  const endTime = searchParams.get("endTime");
+
+  const [isReset, startReset] = useTransition();
   const [isPending, startTransition] = useTransition();
+
   const [userId, setUserId] = useQueryState("userId", {
     defaultValue: "",
   });
@@ -39,6 +49,13 @@ export function Form() {
     })),
   ];
 
+  function search() {
+    if (startTime && endTime) {
+      startTransition(router.refresh);
+    } else {
+      toast.error(t("selectDate"));
+    }
+  }
   return (
     <div className="flex flex-col gap-2  bg-background py-2 px-4">
       <div className="flex gap-2 items-center">
@@ -86,13 +103,20 @@ export function Form() {
         </div>
       </div>
       <div className="flex gap-2 justify-end items-start">
-        <Button variant="outline">{translations("reset")}</Button>
         <Button
+          variant="outline"
+          disabled={isReset}
           onClick={() => {
-            startTransition(router.refresh);
+            startReset(() => {
+              router.replace(
+                `/withdraw/apply?startTime=${startOfDay(new Date()).getTime()}&endTime=${endOfDay(new Date()).getTime()}`,
+              );
+            });
           }}
-          disabled={isPending}
         >
+          {t("reset")}
+        </Button>
+        <Button onClick={search} disabled={isPending}>
           {isPending ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
           {translations("search")}
         </Button>

@@ -12,16 +12,25 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { endOfDay, startOfDay } from "date-fns";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { parseAsString, useQueryState } from "nuqs";
 import { useEffect, useTransition } from "react";
+import { toast } from "sonner";
 
 export function Form() {
   const t = useTranslations("report.withdraw");
   const [orderNo, setOrderNo] = useQueryState("orderNo");
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
+  const [isReset, startReset] = useTransition();
+
+  const searchParams = useSearchParams();
+  const startTime = searchParams.get("startTime");
+  const endTime = searchParams.get("endTime");
+
   const [requestStatus, setRequestStatus] = useQueryState("requestStatus", {
     defaultValue: "all",
   });
@@ -46,11 +55,19 @@ export function Form() {
     defaultValue: "all",
   });
 
+  function search() {
+    if (!(startTime && endTime) && !orderNo) {
+      toast.error(t("selectDateOrId"));
+    } else {
+      startTransition(router.refresh);
+    }
+  }
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     setOperatorSymbol("3");
     setWithdrawMoney("0");
   }, []);
+
   return (
     <div className="flex flex-col bg-background py-4 px-4 gap-4">
       <div className="flex gap-4 items-center">
@@ -122,8 +139,8 @@ export function Form() {
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="all">{t("all")}</SelectItem>
-              <SelectItem value="0">代理</SelectItem>
-              <SelectItem value="2">会员</SelectItem>
+              <SelectItem value="0">{t("agent")}</SelectItem>
+              <SelectItem value="2">{t("member")}</SelectItem>
             </SelectContent>
           </Select>
         </div>
@@ -137,13 +154,20 @@ export function Form() {
         </div>
       </div>
       <div className="flex gap-2 justify-end items-start">
-        <Button variant="outline">{t("reset")}</Button>
         <Button
+          variant="outline"
+          disabled={isReset}
           onClick={() => {
-            startTransition(router.refresh);
+            startReset(() => {
+              router.replace(
+                `/reports/withdraw?startTime=${startOfDay(new Date()).getTime()}&endTime=${endOfDay(new Date()).getTime()}`,
+              );
+            });
           }}
-          disabled={isPending}
         >
+          {t("reset")}
+        </Button>
+        <Button onClick={search} disabled={isPending}>
           {isPending ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
           {t("search")}
         </Button>

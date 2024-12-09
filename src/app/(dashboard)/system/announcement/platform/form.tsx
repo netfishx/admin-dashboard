@@ -4,34 +4,38 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
+import { endOfDay, startOfDay } from "date-fns";
 import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { useQueryState } from "nuqs";
 import { useTransition } from "react";
-import { useEffect, useState } from "react";
 import { toast } from "sonner";
-export function Form({
-  searchParams,
-}: { searchParams: { [key: string]: string | string[] } }) {
+
+export function Form() {
   const t = useTranslations("system.announcement");
   const [isPending, startTransition] = useTransition();
-  const router = useRouter();
-  const { startTime, endTime } = searchParams;
-  const [isSearchClick, setIsSearchClick] = useState(false);
+  const [isReset, startReset] = useTransition();
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
-  useEffect(() => {
-    if ((!startTime || !endTime) && isSearchClick) {
-      toast.error("请选择日期范围");
-    }
-  }, [startTime, endTime]);
+  const router = useRouter();
+
+  const searchParams = useSearchParams();
+  const startTime = searchParams.get("startTime");
+  const endTime = searchParams.get("endTime");
+
   const [userId, setAgentId] = useQueryState("userId", {
     defaultValue: "",
   });
-  const reset = () => {
-    setAgentId("");
-  };
+
+  function search() {
+    if (!startTime || !endTime) {
+      toast.error(t("selectDateRange"));
+    } else {
+      startTransition(router.refresh);
+    }
+  }
+
   return (
     <>
       <div className="flex flex-col gap-2 w-full">
@@ -53,16 +57,21 @@ export function Form({
             </div>
           </div>
           <div className="flex gap-2 items-center float-right p-2">
-            <Button variant="outline" onClick={reset}>
+            <Button
+              variant="outline"
+              disabled={isReset}
+              onClick={() => {
+                startReset(() => {
+                  router.replace(
+                    `/system/announcement/platform?startTime=${startOfDay(new Date()).getTime()}&endTime=${endOfDay(new Date()).getTime()}`,
+                  );
+                });
+              }}
+            >
+              {isReset && <Loader2 className="w-4 h-4 animate-spin" />}
               {t("reset")}
             </Button>
-            <Button
-              onClick={() => {
-                setIsSearchClick(true);
-                startTransition(router.refresh);
-              }}
-              disabled={isPending}
-            >
+            <Button onClick={search} disabled={isPending}>
               {isPending ? (
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
               ) : null}

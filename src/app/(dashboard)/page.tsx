@@ -145,7 +145,8 @@ export default async function DashboardPage({
       </div>
       <Suspense fallback={<div className="h-24 rounded bg-card" />}>
         {/* 普通代理：上级公告， admin：全平台 */}
-        <AnnouncementDialogWrapper />
+        {/* 12.06 update admin不展示弹窗 */}
+        {!permissions?.includes("admin_stat") && <AnnouncementDialogWrapper />}
       </Suspense>
     </>
   );
@@ -316,6 +317,7 @@ async function AnnouncementDialogWrapper() {
 
   // 弹窗：
   // 普通代理：上级公告， admin：全平台
+  // 12.06 update admin不展示弹窗
   const { data: announcementData } = permissions?.includes("admin_stat")
     ? await getAnnouncement({
         pageSize: 5,
@@ -345,17 +347,15 @@ async function GameWeekChartWrapper({
   oneWeekAgo,
 }: { start: number; end: number; oneWeekAgo: number }) {
   const t = await getTranslations();
-  const session = await getSession();
-  const permissions = session?.permissions;
   const {
     data: { dailyBaccaratReport: baccaratData, dailyPokerReport: pokerData },
   } = await getTodayWinLossChart({
-    // startTime: start,
-    // endTime: end,
-    // beforeEndTime: oneWeekAgo,
-    startTime: 1730304000000,
-    endTime: 1730748805000,
-    beforeEndTime: 1730748805000,
+    startTime: start,
+    endTime: end,
+    beforeEndTime: oneWeekAgo,
+    // startTime: 1730304000000,
+    // endTime: 1730748805000,
+    // beforeEndTime: 1730748805000,
     size: 6,
   });
 
