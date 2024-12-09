@@ -27,11 +27,10 @@ export default async function Page({
     <div className="flex flex-col gap-2 w-full">
       <Suspense
         fallback={
-          <div className="bg-background py-2">
-            <Skeleton />
-            <Skeleton />
-            <Skeleton />
-            <Skeleton />
+          <div className="bg-background py-2 flex flex-col gap-2">
+            <Skeleton className="w-full h-9" />
+            <Skeleton className="w-full h-9" />
+            <Skeleton className="w-full h-9" />
           </div>
         }
       >
@@ -93,7 +92,8 @@ async function TableWrapper({
     pageNum,
     pageSize,
   } = await searchParams;
-  if (!(startTime && endTime)) {
+
+  if (!(startTime && endTime) && !orderNo) {
     return (
       <Table className="border rounded-sm">
         <TableHeaderWrapper />
@@ -112,17 +112,7 @@ async function TableWrapper({
     startTime: Number(startTime),
     endTime: Number(endTime),
   };
-  // 验证参数是否有效 至少一个参数是有值的
-  // const validateParams = (params: RechargeReportParams) => {
-  //   const { endTime, startTime, pageNum, pageSize, ...otherFields } = params;
-  //   const isOtherFieldsValid = Object.values(otherFields).some(
-  //     (value) => value !== null && value !== undefined && value !== "",
-  //   );
-  //   return isOtherFieldsValid;
-  // };
-  // if (!validateParams(params)) {
-  //   console.info("请至少选择一个查询条件");
-  // }
+
   const { data } = await getRechargeReportList(params);
   return (
     <div className="bg-background flex-1 w-full ">

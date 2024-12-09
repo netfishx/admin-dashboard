@@ -44,8 +44,10 @@ export function Announcement({ data }: { data: { list: AnnouncementList[] } }) {
               );
             })
           ) : (
-            <div className="absolute inset-0 flex items-center justify-center text-muted-foreground">
-              {t("noData")}
+            <div className="h-20 lg:h-48 xl:h-72">
+              <div className="text-muted-foreground h-full flex items-center justify-center">
+                {t("noData")}
+              </div>
             </div>
           )}
         </div>

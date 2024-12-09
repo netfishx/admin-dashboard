@@ -104,10 +104,10 @@ async function request<T>({
     console.error(error);
 
     result = {
-      status: 500,
+      status: -1,
       data: {
         code: 500,
-        message: "未知异常",
+        message: "服务繁忙，请稍后再试",
       },
     };
   }

@@ -16,7 +16,6 @@ export function Actions({
       variant="link"
       className="hover:no-underline hover:text-primary/80"
       onClick={() => {
-        console.info("更多");
         router.push(
           `/reports/order/baccarat?${new URLSearchParams(searchParamsStr).toString()}`,
         );

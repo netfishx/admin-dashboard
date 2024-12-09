@@ -12,17 +12,25 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { endOfDay, startOfDay } from "date-fns";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { useQueryState } from "nuqs";
 import { useTransition } from "react";
+import { toast } from "sonner";
 
 export function Form() {
   const t = useTranslations("report.change");
   const router = useRouter();
+  const [isReset, startReset] = useTransition();
+
+  const searchParams = useSearchParams();
+  const startTime = searchParams.get("startTime");
+  const endTime = searchParams.get("endTime");
 
   const [userId, setUserId] = useQueryState("userId");
-  const [transactionId, setTransactionId] = useQueryState("transactionId");
+  const [transactionID, setTransactionID] = useQueryState("transactionID");
   const [userType, setUserType] = useQueryState("userType", {
     defaultValue: "0",
   });
@@ -31,6 +39,13 @@ export function Form() {
   });
   const [isPending, startTransition] = useTransition();
 
+  function search() {
+    if (!(startTime && endTime) && !transactionID) {
+      toast.error(t("selectDateOrId"));
+    } else {
+      startTransition(router.refresh);
+    }
+  }
   return (
     <div className="flex flex-col bg-background py-4 px-4 gap-4">
       <div className="flex gap-4 items-center">
@@ -51,20 +66,25 @@ export function Form() {
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="all">{t("all")}</SelectItem>
-              <SelectItem value="0">百家乐代理结算</SelectItem>
-              <SelectItem value="1">百家乐会员结算</SelectItem>
-              <SelectItem value="2">掼蛋会员结算</SelectItem>
-              <SelectItem value="3">返水</SelectItem>
-              <SelectItem value="4">充值</SelectItem>
-              <SelectItem value="5">提现</SelectItem>
-              <SelectItem value="6">借款</SelectItem>
-              <SelectItem value="7">还款</SelectItem>
-              <SelectItem value="8">授信</SelectItem>
-              <SelectItem value="9">减少授信</SelectItem>
-              <SelectItem value="10">转出</SelectItem>
-              <SelectItem value="11">转入</SelectItem>
-              <SelectItem value="12">投注</SelectItem>
-              <SelectItem value="13">打赏</SelectItem>
+              <SelectItem value="1">百家乐投注</SelectItem>
+              <SelectItem value="3">入金</SelectItem>
+              <SelectItem value="4">出金进行中</SelectItem>
+              <SelectItem value="5">出金完成</SelectItem>
+              <SelectItem value="6">出金退回</SelectItem>
+              <SelectItem value="7">创建钱包</SelectItem>
+              <SelectItem value="8">发反水</SelectItem>
+              <SelectItem value="9">百家乐结算</SelectItem>
+              <SelectItem value="10">掼蛋结算</SelectItem>
+              <SelectItem value="11">关闭房间</SelectItem>
+              <SelectItem value="12">房间充值</SelectItem>
+              <SelectItem value="13">领反水</SelectItem>
+              <SelectItem value="15">借款</SelectItem>
+              <SelectItem value="16">还款</SelectItem>
+              <SelectItem value="17">创建房间</SelectItem>
+              <SelectItem value="18">提升额度</SelectItem>
+              <SelectItem value="19">减少额度</SelectItem>
+              <SelectItem value="20">转款</SelectItem>
+              <SelectItem value="21">销账</SelectItem>
             </SelectContent>
           </Select>
         </div>
@@ -74,8 +94,8 @@ export function Form() {
           <Label className="shrink-0">{t("transactionId")}</Label>
           <Input
             placeholder={t("placeholder")}
-            value={transactionId ?? ""}
-            onChange={(e) => setTransactionId(e.target.value)}
+            value={transactionID ?? ""}
+            onChange={(e) => setTransactionID(e.target.value)}
           />
         </div>
         {/* todo admin permission */}
@@ -91,8 +111,8 @@ export function Form() {
             </SelectTrigger>
             <SelectContent>
               {/* <SelectItem value="all">{t("all")}</SelectItem> */}
-              <SelectItem value="0">代理</SelectItem>
-              <SelectItem value="2">会员</SelectItem>
+              <SelectItem value="0">{t("agent")}</SelectItem>
+              <SelectItem value="2">{t("member")}</SelectItem>
             </SelectContent>
           </Select>
         </div>
@@ -107,13 +127,20 @@ export function Form() {
         </div>
       </div>
       <div className="flex gap-2 justify-end items-start">
-        <Button variant="outline">{t("reset")}</Button>
         <Button
+          variant="outline"
+          disabled={isReset}
           onClick={() => {
-            startTransition(router.refresh);
+            startReset(() => {
+              router.replace(
+                `/reports/change?startTime=${startOfDay(new Date()).getTime()}&endTime=${endOfDay(new Date()).getTime()}`,
+              );
+            });
           }}
-          disabled={isPending}
         >
+          {t("reset")}
+        </Button>
+        <Button onClick={search} disabled={isPending}>
           {isPending ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
           {t("search")}
         </Button>
