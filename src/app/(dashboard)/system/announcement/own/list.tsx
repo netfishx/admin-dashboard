@@ -107,11 +107,10 @@ export async function TableBodyWrapper({
   const translations = await getTranslations();
 
   const noticeTypeMap = {
-    "1": "平台公告",
-    "2": "代理公告",
-    "3": "大厅公告",
-    "4": "房间公告",
-    "5": "系统配置变更公告",
+    "1": "平台代理公告",
+    "2": "平台会员公告",
+    "3": "直属代理公告",
+    "4": "直属会员公告",
   } as const;
 
   const getNoticeTypeName = (type: string) => {
