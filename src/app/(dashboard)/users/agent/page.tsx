@@ -92,7 +92,7 @@ async function TableHeaderWrapper({ total }: { total: number }) {
           </>
         )}
         <TableHead className="w-60">{t("userId")}</TableHead>
-        <TableHead>{t("username")}</TableHead>
+        <TableHead className="w-40">{t("username")}</TableHead>
         <TableHead className="w-20">{t("nickname")}</TableHead>
         <TableHead className="w-20">{t("status")}</TableHead>
         {total > 0 && (
