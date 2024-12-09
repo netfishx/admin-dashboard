@@ -7,7 +7,6 @@ import { List, TableBodySkeleton, TableHeaderWrapper } from "./list";
 export default async function Platform({
   searchParams,
 }: { searchParams: Promise<{ [key: string]: string | string[] }> }) {
-  const resolvedParams = await searchParams;
   return (
     <div className="flex flex-col gap-2 w-full h-full">
       {/* form: admin permission */}
@@ -20,7 +19,7 @@ export default async function Platform({
           </div>
         }
       >
-        <Form searchParams={resolvedParams} />
+        <Form />
       </Suspense>
       <div className="p-2 bg-background flex-1 flex flex-col gap-2">
         <Suspense

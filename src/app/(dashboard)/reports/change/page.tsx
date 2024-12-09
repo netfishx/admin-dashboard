@@ -24,7 +24,7 @@ export default async function Page({
     <div className="flex flex-col gap-2 w-full">
       <Suspense
         fallback={
-          <div className="bg-background py-2">
+          <div className="bg-background py-2 flex flex-col gap-2">
             <Skeleton className="w-full h-12" />
             <Skeleton className="w-full h-12" />
             <Skeleton className="w-full h-12" />
@@ -108,7 +108,8 @@ async function TableWrapper({
     pageNum,
     pageSize,
   } = await searchParams;
-  if (!(startTime && endTime)) {
+
+  if (!(startTime && endTime) && !transactionID) {
     return (
       <Table className="border rounded-sm">
         <TableHeaderWrapper />
@@ -123,23 +124,13 @@ async function TableWrapper({
     userType: userType ? Number(userType) : 0,
     pageNum: Number(pageNum ?? 1),
     pageSize: Number(pageSize ?? 10),
-    // startTime: Number(startTime),
-    // endTime: Number(endTime),
+    startTime: Number(startTime),
+    endTime: Number(endTime),
     // temp 临时参数
-    startTime: 1732165114683,
-    endTime: 1733290152826,
+    // startTime: 1732165114683,
+    // endTime: 1733290152826,
   };
-  // 验证参数是否有效 至少一个参数是有值的
-  const validateParams = (params: WalletLogRequestParams) => {
-    const { endTime, startTime, pageNum, pageSize, ...otherFields } = params;
-    const isOtherFieldsValid = Object.values(otherFields).some(
-      (value) => value !== null && value !== undefined && value !== "",
-    );
-    return isOtherFieldsValid;
-  };
-  if (!validateParams(params)) {
-    console.info("请至少选择一个查询条件");
-  }
+
   const { data } = await getWalletLog(params);
   return (
     <div className="bg-background flex-1 w-full ">

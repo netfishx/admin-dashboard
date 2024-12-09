@@ -22,6 +22,7 @@ import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 
 import { saveAnnouncement } from "@/api";
 import { Label } from "@/components/ui/label";
+import type { SessionData } from "@/session";
 import {
   contentEditModalAtom,
   contentModalDataAtom,
@@ -32,17 +33,24 @@ import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useSearchParams } from "next/navigation";
-import { useEffect, useState, useTransition } from "react";
+import { use, useEffect, useRef, useState, useTransition } from "react";
 import { toast } from "sonner";
 import { TimeRange } from "./time-range";
 
-export function AddModal() {
+export function AddModal({
+  session,
+}: { session: Promise<SessionData | null> }) {
   const searchParams = useSearchParams();
   const translations = useTranslations();
+  const ref = useRef<HTMLFormElement>(null);
+
+  const sessionData = use(session);
+  const permissions = sessionData?.permissions;
+
   const [isPending, startTransition] = useTransition();
   const router = useRouter();
   const t = useTranslations("system.announcement");
-  const [type, setType] = useState("1");
+  const [type, setType] = useState("");
   const [language, setLanguage] = useState("zh-CN");
   const [labelOfLanguage, setTitleOfLanguage] = useState("");
   const [contentOfLanguage, setContentOfLanguage] = useState("");
@@ -90,8 +98,8 @@ export function AddModal() {
   };
 
   const resetFields = () => {
-    setType("1");
-    setLanguage(data?.contentList?.[0]?.language || "zh-CN");
+    setType("");
+    setLanguage("zh-CN");
     setContentData([]);
     setContentOfLanguage("");
     setTitleOfLanguage("");
@@ -106,8 +114,8 @@ export function AddModal() {
       setContentData(data.contentList || []);
       setContentOfLanguage(data.contentOfLanguage || "");
       setTitleOfLanguage(data.labelOfLanguage || "");
-      setType(data.type.toString() || "1");
-      setLanguage(data.contentList?.[0]?.language || "zh-CN");
+      setType(data.type.toString() || "");
+      setLanguage("zh-CN");
       setStatus(data.status.toString() || "1");
       setStartTime(data.startTime.toString() || "");
       setEndTime(data.endTime.toString() || "");
@@ -203,15 +211,20 @@ export function AddModal() {
           <DialogTitle>{editModalTitle}</DialogTitle>
           <DialogDescription />
         </DialogHeader>
+
         <div className="flex flex-col gap-4 w-full px-4">
           <div className="flex gap-4 items-center">
             <Label className="shrink-0 w-24 text-right text-muted-foreground">
               <span className="text-destructive">*</span>
               {t("announcementType")}
             </Label>
-            {/* todo：公告类型 根据管理员和代理角色 展示的也不一样 */}
+            {/* 公告类型 根据管理员和代理角色 展示的也不一样 */}
+            {/* 
+              类型：平台代理公告（对象：所有代理），平台会员公告（对象：所有会员），直属代理公告（对象：直属下级），直属会员公告（对象：直属会员）
+              代理只展示直属代理公告和直属会员公告，admin展示所有
+            */}
             <Select
-              defaultValue="0"
+              defaultValue=""
               value={type}
               onValueChange={(value) => setType(value)}
               disabled={!!data?.id && Date.now() > data?.startTime}
@@ -220,12 +233,19 @@ export function AddModal() {
                 <SelectValue placeholder={t("placeholderselect")} />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="1">{t("platformAnnouncement")}</SelectItem>
-                <SelectItem value="2">{t("agentAnnouncement")}</SelectItem>
-                <SelectItem value="3">{t("roomAnnouncement")}</SelectItem>
-                <SelectItem value="4">
-                  {t("platformRoomAnnouncement")}
-                </SelectItem>
+                <SelectItem value="all">{t("all")}</SelectItem>
+                {permissions?.includes("admin_stat") && (
+                  <>
+                    <SelectItem value="1">
+                      {t("platformAgentAnnouncement")}
+                    </SelectItem>
+                    <SelectItem value="2">
+                      {t("platformMemberAnnouncement")}
+                    </SelectItem>
+                  </>
+                )}
+                <SelectItem value="3">{t("agentAnnouncement")}</SelectItem>
+                <SelectItem value="4">{t("memberAnnouncement")}</SelectItem>
               </SelectContent>
             </Select>
           </div>
@@ -254,20 +274,21 @@ export function AddModal() {
               <ToggleGroupItem value="en-US">{t("english")}</ToggleGroupItem>
             </ToggleGroup>
           </div>
-          {/* 标题 : 平台代理公告 下级代理公告时 不显示 */}
-          <div className="flex gap-4 items-center">
-            <Label className="shrink-0 w-24 text-right text-muted-foreground">
-              <span className="text-destructive">*</span>
-              {t("title")}
-            </Label>
-            <Input
-              placeholder={t("placeholder")}
-              className="w-2/3 resize-none"
-              value={labelOfLanguage}
-              maxLength={20}
-              onChange={(e) => handleTitleChange(e.target.value)}
-            />
-          </div>
+          {(type === "2" || type === "4") && (
+            <div className="flex gap-4 items-center">
+              <Label className="shrink-0 w-24 text-right text-muted-foreground">
+                <span className="text-destructive">*</span>
+                {t("title")}
+              </Label>
+              <Input
+                placeholder={t("placeholder")}
+                className="w-2/3 resize-none"
+                value={labelOfLanguage}
+                maxLength={20}
+                onChange={(e) => handleTitleChange(e.target.value)}
+              />
+            </div>
+          )}
           <div className="flex gap-4 items-center">
             <Label className="shrink-0 w-24 text-right text-muted-foreground">
               <span className="text-destructive">*</span>
@@ -286,13 +307,13 @@ export function AddModal() {
               <span className="text-destructive">*</span>
               {t("status")}
             </Label>
-            {/* 状态： 1 启用 0 停用 */}
             <RadioGroup
               defaultValue="0"
               className="flex gap-2"
               value={status.toString()}
               onValueChange={(value) => setStatus(value)}
             >
+              {/* 状态： 1 启用 0 停用 */}
               <div className="flex items-center space-x-2">
                 <RadioGroupItem value="1" id="1" />
                 <Label htmlFor="1">{t("enable")}</Label>
