@@ -891,7 +891,13 @@
       "createTime": "创建时间",
       "action": "操作",
       "title": "归集地址管理",
-      "caozuo": "操作"
+      "caozuo": "操作",
+      "enable": "使用中",
+      "disable": "停用",
+      "locked": "锁定",
+      "deleted": "停用",
+      "unknown": "未知状态",
+      "addSuccess": "新增成功"
     },
     "orefee": {
       "add": "新增",
