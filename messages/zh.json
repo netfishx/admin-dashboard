@@ -362,7 +362,7 @@
   "chart": {
     "dataTrending": "数据趋势",
     "lastSevenDays": "（近7日）",
-    "lastEightDays": "（近8日）",
+    "noData": "暂无数据",
     "cashflow": "流水",
     "headcount": "人次",
     "addMember": "新增会员",
@@ -493,7 +493,8 @@
       "action": "操作",
       "more": "查看",
       "pickdate": "请选择日期",
-      "all": "全部"
+      "all": "全部",
+      "selectDateRange": "请选择日期范围"
     },
     "agent": {
       "title": "占成拦货列表",
@@ -595,7 +596,10 @@
       "userType": "用户类型",
       "placeholder": "请输入",
       "placeholderselect": "请选择",
-      "all": "全部"
+      "all": "全部",
+      "agent": "代理",
+      "member": "会员",
+      "selectDateOrId": "请选择日期或帐变ID"
     },
     "recharge": {
       "id": "ID",
@@ -615,7 +619,10 @@
       "placeholderselect": "请选择",
       "search": "查询",
       "reset": "重置",
-      "all": "全部"
+      "all": "全部",
+      "selectDateOrId": "请选择日期或订单号",
+      "agent": "代理",
+      "member": "会员"
     },
     "withdraw": {
       "status": "状态",
@@ -640,7 +647,10 @@
       "placeholderselect": "请选择",
       "search": "查询",
       "reset": "重置",
-      "all": "全部"
+      "all": "全部",
+      "selectDateOrId": "请选择日期或订单号",
+      "agent": "代理",
+      "member": "会员"
     },
     "borrow": {
       "agentID": "代理ID",
@@ -781,12 +791,10 @@
       "placeholder": "请输入",
       "placeholderselect": "请选择",
       "selectTime": "请输入",
-      "platformAnnouncement": "平台公告",
-      "agentAnnouncement": "代理公告",
-      "roomAnnouncement": "大厅公告",
-      "memberAnnouncement": "会员公告",
-      "platformRoomAnnouncement": "房间公告",
-      "systemConfigChangeAnnouncement": "系统配置变更公告",
+      "platformAgentAnnouncement": "平台代理公告",
+      "platformMemberAnnouncement": "平台会员公告",
+      "agentAnnouncement": "直属代理公告",
+      "memberAnnouncement": "直属会员公告",
       "status": "状态",
       "enable": "启用",
       "disable": "停用",
@@ -799,7 +807,10 @@
       "english": "英文",
       "japanese": "日文",
       "viewMore": "查看更多",
-      "collapse": "收起"
+      "collapse": "收起",
+      "selectDateRange": "请选择日期范围",
+      "all": "请选择"
+
     },
     "role": {
       "title": "角色",
@@ -957,12 +968,12 @@
       "changePassword": "修改密码",
       "oldPassword": "旧密码",
       "newPassword": "新密码",
-      "confirmPassword": "二次确认密码",
-      "confirmPasswordDesc": "请输入二次确认密码",
+      "confirmPassword": "确认密码",
+      "confirmPasswordDesc": "请输入确认密码",
       "placeholderOld": "请输入旧密码",
       "placeholderNew": "请输入新密码",
       "passwordWarning": "8-16位的密码，包含大写字母、小写字母、数字",
-      "placeholderConfirm": "请输入二次确认密码",
+      "placeholderConfirm": "请输入确认密码",
       "googleAuthTitle": "谷歌验证绑定",
       "step1Title": "安装完成后打开Google Auth",
       "step1iOS": "iOS用户登录APP Store 搜索“Authenticator”下载",
@@ -1036,7 +1047,9 @@
       "back": "返回",
       "modeConfirm": "确定出金",
       "auto": "自动",
-      "manual": "手动"
+      "manual": "手动",
+      "selectDate": "请选择时间范围",
+      "reset": "重置"
     },
     "audit": {
       "createTime": "稽核创建日期",
@@ -1056,7 +1069,9 @@
       "status": "稽核状态",
       "clear": "清除稽核",
       "cleanDesc": "确定清除该稽核吗？",
-      "cancel": "取消"
+      "cancel": "取消",
+      "selectDate": "请选择时间范围",
+      "reset": "重置"
     }
   },
   "maintain": {

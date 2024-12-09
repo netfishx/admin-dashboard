@@ -7,11 +7,21 @@ export default function PersonalSecurityPage() {
     <div className="flex flex-col gap-2 w-full">
       <Suspense
         fallback={
-          <div className="bg-background py-2">
-            <Skeleton />
-            <Skeleton />
-            <Skeleton />
-            <Skeleton />
+          <div>
+            <div className="bg-background py-2">
+              <div className="flex flex-col gap-2">
+                <Skeleton />
+                <Skeleton />
+                <Skeleton />
+              </div>
+            </div>
+            <div className="bg-background py-2 mt-2">
+              <div className="flex flex-col gap-2">
+                <Skeleton className="h-10" />
+                <Skeleton className="h-10" />
+                <Skeleton className="h-10" />
+              </div>
+            </div>
           </div>
         }
       >

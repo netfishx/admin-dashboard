@@ -33,7 +33,7 @@ export default async function Page({
     <div className="flex flex-col gap-2 w-full">
       <Suspense
         fallback={
-          <div className="bg-background py-2">
+          <div className="bg-background py-2 flex flex-col gap-2">
             <Skeleton />
             <Skeleton />
           </div>
