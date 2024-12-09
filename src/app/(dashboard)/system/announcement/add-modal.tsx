@@ -22,6 +22,7 @@ import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 
 import { saveAnnouncement } from "@/api";
 import { Label } from "@/components/ui/label";
+import type { Announcement } from "@/lib/types";
 import type { SessionData } from "@/session";
 import {
   contentEditModalAtom,
@@ -33,16 +34,14 @@ import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useSearchParams } from "next/navigation";
-import { use, useEffect, useRef, useState, useTransition } from "react";
+import { use, useEffect, useState, useTransition } from "react";
 import { toast } from "sonner";
 import { TimeRange } from "./time-range";
-
 export function AddModal({
   session,
 }: { session: Promise<SessionData | null> }) {
   const searchParams = useSearchParams();
   const translations = useTranslations();
-  const ref = useRef<HTMLFormElement>(null);
 
   const sessionData = use(session);
   const permissions = sessionData?.permissions;
@@ -75,22 +74,67 @@ export function AddModal({
       content: contentData,
       contentId: data?.contentId || null,
       status: Number(status),
-      startTime: startTime ? new Date(startTime).getTime() : null,
-      endTime: endTime ? new Date(endTime).getTime() : null,
+      startTime: new Date(startTime).getTime(),
+      endTime: new Date(endTime).getTime(),
     };
-    startTransition(async () => {
-      const { code, message } = await saveAnnouncement(addParams);
-      if (code === 0) {
-        setOpen(false);
-        toast.success(message);
-        resetFields();
-        router.refresh();
-      } else {
-        toast.error(message);
-      }
-    });
+    const { valid, message } = validateParams(addParams);
+    if (valid) {
+      startTransition(async () => {
+        const { code, message } = await saveAnnouncement(addParams);
+        if (code === 0) {
+          setOpen(false);
+          toast.success(message);
+          resetFields();
+          router.refresh();
+        } else {
+          toast.error(message);
+        }
+      });
+    } else {
+      toast.error(message);
+      return;
+    }
   };
 
+  // 验证参数 已确认： 有其中一个语言的完整内容即可 新增的时候id可以为空，编辑的时候id和content（会员公告的话还需要有label）必须同时存在，
+  function validateParams(params: Announcement) {
+    // debugger;
+    // 基础验证
+    if (
+      !params.type ||
+      !params.status ||
+      !params.startTime ||
+      !params.endTime ||
+      !Array.isArray(params.content) ||
+      !params.content.some((item) => item.content) // 至少一个语言有内容
+    ) {
+      return { valid: false, message: t("allRequired") };
+    }
+
+    // 编辑状态验证
+    if (params.id) {
+      const contentWithId = params.content.filter((item) => item.id);
+      // 有id的内容项中至少有一个content不为空
+      if (!contentWithId.some((item) => item.content)) {
+        return { valid: false, message: t("allRequired") };
+      }
+
+      // 如果是会员公告类型
+      if (params.type === 2 || params.type === 4) {
+        // label和content必须同时存在或都不存在
+        if (
+          contentWithId.some(
+            (item) =>
+              (!item.label && item.content) || (item.label && !item.content),
+          )
+        ) {
+          return { valid: false, message: t("allRequired") };
+        }
+      }
+    }
+
+    return { valid: true };
+  }
   // 回调函数，用于接收子组件传递的时间数据
   const handleDateRangeChange = (start: string, end: string) => {
     setStartTime(start);
@@ -204,7 +248,7 @@ export function AddModal({
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent
-        className="max-w-5xl"
+        className="max-w-5xl max-h-[60dvh] h-[60dvh]"
         onPointerDownOutside={(e) => e.preventDefault()}
       >
         <DialogHeader>
@@ -212,7 +256,7 @@ export function AddModal({
           <DialogDescription />
         </DialogHeader>
 
-        <div className="flex flex-col gap-4 w-full px-4">
+        <div className="flex flex-col gap-4 w-full px-4 overflow-y-auto">
           <div className="flex gap-4 items-center">
             <Label className="shrink-0 w-24 text-right text-muted-foreground">
               <span className="text-destructive">*</span>
@@ -325,7 +369,7 @@ export function AddModal({
             </RadioGroup>
           </div>
         </div>
-        <DialogFooter>
+        <DialogFooter className="mt-auto">
           <Button variant="outline" onClick={() => setOpen(false)}>
             {translations("cancel")}
           </Button>

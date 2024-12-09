@@ -180,10 +180,10 @@ export type Announcement = {
   id?: string | null; // 编辑时传
   contentId?: string | null; // 编辑时传
   type: number;
-  content: { id?: string; language: string; title?: string; content: string }[];
+  content: { id?: string; language: string; label?: string; content: string }[];
   status: number;
-  startTime: number | null;
-  endTime: number | null;
+  startTime: number;
+  endTime: number;
 };
 // 公告列表请求 全平台
 export type AnnouncementListRequest = {

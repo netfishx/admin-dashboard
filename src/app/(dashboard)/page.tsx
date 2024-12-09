@@ -68,7 +68,7 @@ export default async function DashboardPage({
   const start = startOfDay(now).getTime();
   const end = startOfDay(add(now, { days: 1 })).getTime();
   const todayEnd = endOfDay(now).getTime();
-  const oneWeekAgo = sub(start, { days: 7 }).getTime();
+  const oneWeekAgo = sub(end, { days: 7 }).getTime();
   const t = await getTranslations();
   return (
     <>
