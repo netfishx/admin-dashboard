@@ -4,6 +4,7 @@ import { Input } from "@/components/ui/input";
 import { TableBody, TableCell, TableRow } from "@/components/ui/table";
 import type { GameConfig } from "@/lib/types";
 import { rebateAtom } from "@/store";
+import Big from "big.js";
 import { useAtom } from "jotai";
 import { useTranslations } from "next-intl";
 import { useLayoutEffect } from "react";
@@ -22,17 +23,20 @@ export function RebateTable({ data }: { data: GameConfig[] }) {
   }, [data, setRebate]);
 
   const handleRebateChange = (rebate: string, id: number) => {
+    if (Number.isNaN(Number(rebate))) {
+      return;
+    }
     setRebate(
       list.map(({ gameId, gameName, backRate, maxBackRate }) => ({
         gameId,
         gameName,
         backRate:
           id === gameId
-            ? Number(rebate) < 0
+            ? Number(rebate) <= 0
               ? "0"
               : Number(rebate) > Number(maxBackRate)
                 ? maxBackRate
-                : rebate
+                : Big(rebate).round(2, 0).toString()
             : backRate,
         maxBackRate,
       })),

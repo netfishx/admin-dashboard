@@ -809,7 +809,8 @@
       "viewMore": "查看更多",
       "collapse": "收起",
       "selectDateRange": "请选择日期范围",
-      "all": "请选择"
+      "all": "请选择",
+      "allRequired": "请填写所有必填项"
 
     },
     "role": {
