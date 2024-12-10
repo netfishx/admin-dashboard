@@ -41,6 +41,7 @@ function RemoveButton({ data }: { data: OreFeeList }) {
     <AlertDialog>
       <AlertDialogTrigger asChild>
         <Button disabled={isPending} size="sm">
+          {isPending && <Loader2 className="w-4 h-4 animate-spin" />}
           {t("remove")}
         </Button>
       </AlertDialogTrigger>

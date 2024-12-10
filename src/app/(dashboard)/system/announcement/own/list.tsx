@@ -21,11 +21,6 @@ export async function List({
   searchParams,
 }: { searchParams: Promise<{ [key: string]: string | string[] }> }) {
   const { loading, pageSize, pageNum } = await searchParams;
-  const { data } = await getSameOrSeniorAnno({
-    pageSize: Number(pageSize ?? 10),
-    pageNum: Number(pageNum ?? 1),
-    level: 0, // 本级
-  });
 
   if (loading === "true") {
     return (
@@ -38,6 +33,13 @@ export async function List({
       </div>
     );
   }
+
+  const { data } = await getSameOrSeniorAnno({
+    pageSize: Number(pageSize ?? 10),
+    pageNum: Number(pageNum ?? 1),
+    level: 0, // 本级
+  });
+
   return (
     <div className="p-2 gap-2 flex flex-col h-full bg-background">
       <AddBtn />
