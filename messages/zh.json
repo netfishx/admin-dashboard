@@ -892,7 +892,13 @@
       "createTime": "创建时间",
       "action": "操作",
       "title": "归集地址管理",
-      "caozuo": "操作"
+      "caozuo": "操作",
+      "enable": "使用中",
+      "disable": "停用",
+      "locked": "锁定",
+      "deleted": "停用",
+      "unknown": "未知状态",
+      "addSuccess": "新增成功"
     },
     "orefee": {
       "add": "新增",
@@ -928,7 +934,7 @@
       "walletInfo": "钱包信息",
       "balance": "总余额",
       "availableBalance": "可用余额",
-      "freezeBalance": "冻结余额",
+      "freezeBalance": "游戏冻结余额",
       "withdrawPassword": "提款密码",
       "withdrawAmount": "提款金额",
       "google2fa": "谷歌二次验证",
@@ -944,7 +950,7 @@
       "mainNet": "主网",
       "qrCode": "二维码",
       "depositAddress": "充币地址",
-      "unUsedCredit": "未使用授信"
+      "unUsedCredit": "会员未使用授信"
     },
     "security": {
       "title": "安全设置",

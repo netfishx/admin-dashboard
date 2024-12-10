@@ -1,4 +1,5 @@
 import { getUserBasicInfo } from "@/api";
+import CopyButton from "@/app/(dashboard)/fund/collection/copy-button";
 import { getSession } from "@/session";
 import { useTranslations } from "next-intl";
 import { Suspense, use } from "react";
@@ -20,13 +21,19 @@ export default function Page() {
           <div className="text-muted-foreground text-sm w-[100px] text-right">
             {t("account")}:
           </div>
-          <div className="text-sm">{session?.username}</div>
+          <div className="text-sm flex items-center">
+            {session?.username}
+            <CopyButton address={session?.username as string} />
+          </div>
         </div>
         <div className="flex items-center gap-2">
           <div className="text-muted-foreground text-sm w-[100px] text-right">
             {t("inviteCode")}:
           </div>
-          <div className="text-sm">{session?.inviteCode}</div>
+          <div className="text-sm flex items-center">
+            {session?.inviteCode}
+            <CopyButton address={session?.inviteCode as string} />
+          </div>
         </div>
       </div>
       <Suspense fallback={<Detail />}>

@@ -30,34 +30,42 @@ export function DetailButton({ item }: { item: CollectionAddressListRecords }) {
   }
   return (
     <div className="flex gap-2 justify-around">
-      <Button
-        variant="ghost"
-        className="hover:no-underline hover:text-primary/80 text-primary"
-        onClick={() => handleDetail("UNLOCK")}
-      >
-        {t("unlock")}
-      </Button>
-      <Button
-        variant="ghost"
-        className="hover:no-underline hover:text-primary/80 text-primary"
-        onClick={() => handleDetail("CHECK")}
-      >
-        {t("check")}
-      </Button>
-      <Button
-        variant="ghost"
-        className="hover:no-underline hover:text-primary/80 text-primary"
-        onClick={() => handleDetail("LOCK")}
-      >
-        {t("lock")}
-      </Button>
-      <Button
-        variant="link"
-        className="hover:no-underline hover:text-primary/80 text-red-500"
-        onClick={() => handleDetail("STOP")}
-      >
-        {t("stop")}
-      </Button>
+      {item.status === 2 && (
+        <Button
+          variant="ghost"
+          className="hover:no-underline hover:text-primary/80 text-primary"
+          onClick={() => handleDetail("UNLOCK")}
+        >
+          {t("unlock")}
+        </Button>
+      )}
+      {(item.status === 2 || item.status === 3) && (
+        <Button
+          variant="ghost"
+          className="hover:no-underline hover:text-primary/80 text-primary"
+          onClick={() => handleDetail("CHECK")}
+        >
+          {t("check")}
+        </Button>
+      )}
+      {item.status === 1 && (
+        <Button
+          variant="ghost"
+          className="hover:no-underline hover:text-primary/80 text-primary"
+          onClick={() => handleDetail("LOCK")}
+        >
+          {t("lock")}
+        </Button>
+      )}
+      {item.status === 2 && (
+        <Button
+          variant="link"
+          className="hover:no-underline hover:text-primary/80 text-red-500"
+          onClick={() => handleDetail("STOP")}
+        >
+          {t("stop")}
+        </Button>
+      )}
       {showStatus === ShowStatus.UNLOCK && (
         <UnlockDialog
           onOpenChange={() => setShowStatus(undefined)}

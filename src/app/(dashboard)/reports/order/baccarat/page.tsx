@@ -11,9 +11,8 @@ interface CommonWrapperProps {
   searchParams: Promise<OrderReportsRequestParams>;
 }
 
-export default async function Page({ searchParams }: CommonWrapperProps) {
+async function CommonWrapper({ searchParams }: CommonWrapperProps) {
   const gameListResp = await getBaccaratGames();
-
   return (
     <div className="flex flex-col gap-2 w-full">
       <Suspense
@@ -40,5 +39,23 @@ export default async function Page({ searchParams }: CommonWrapperProps) {
         <List searchParams={searchParams} gameList={gameListResp?.data ?? []} />
       </Suspense>
     </div>
+  );
+}
+
+export default function Page({ searchParams }: CommonWrapperProps) {
+  return (
+    <Suspense
+      fallback={
+        <div className="flex flex-col gap-2 w-full">
+          <Skeleton />
+          <Skeleton />
+          <Skeleton />
+          <Skeleton />
+          <Skeleton />
+        </div>
+      }
+    >
+      <CommonWrapper searchParams={searchParams} />
+    </Suspense>
   );
 }
