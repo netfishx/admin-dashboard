@@ -39,7 +39,7 @@ export function DetailButton({ item }: { item: CollectionAddressListRecords }) {
           {t("unlock")}
         </Button>
       )}
-      {(item.status === 2 || item.status === 3) && (
+      {(item.status === 2 || item.status === 0) && (
         <Button
           variant="ghost"
           className="hover:no-underline hover:text-primary/80 text-primary"
