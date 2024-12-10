@@ -874,6 +874,7 @@
       "unlockTitle": "操作确认",
       "lockTitle": "操作确认",
       "stopTitle": "操作确认",
+      "passwordCheckTips": "请输入资金密码以查看私钥",
       "checkStep1Title": "资金密码验证",
       "checkStep2Title": "查看密钥",
       "checkStep1Desc": "请输入您的资金密码",

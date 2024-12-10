@@ -9,12 +9,13 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Password } from "@/components/ui/password";
 import type { CollectionAddressListRecords } from "@/lib/types";
-import { AlertTriangle } from "lucide-react";
+import { AlertTriangle, Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { useState } from "react";
+import { useState, useTransition } from "react";
+import { toast } from "sonner";
 import CopyButton from "./copy-button";
 
 interface Dialogprops {
@@ -27,19 +28,25 @@ export function CheckDialog(props: Dialogprops) {
   const { open = true, onOpenChange, item } = props;
   const t = useTranslations("fund.collection");
   const translations = useTranslations();
+  const [isPending, startTransition] = useTransition();
   const [step, setStep] = useState(1);
-  const handleNext = async () => {
-    const res = await postCheckMoneySecret({
-      userId: item.id,
-      secret: password,
+  const handleNext = () => {
+    startTransition(async () => {
+      const res = await postCheckMoneySecret({
+        userId: item.id,
+        secret: password,
+      });
+      if (res.code === 0) {
+        setStep(2);
+      } else {
+        toast.error(res.message);
+      }
     });
-    setStep(2);
   };
   const [password, setPassword] = useState("");
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent
-        className="w-[500px]"
         onInteractOutside={(event) => {
           event.preventDefault(); // 阻止关闭弹框
         }}
@@ -50,8 +57,9 @@ export function CheckDialog(props: Dialogprops) {
               <DialogTitle>{t("checkStep1Title")}</DialogTitle>
             </DialogHeader>
             <div className="gap-2 items-center">
-              <Label className="shrink-0">{t("password")}</Label>
-              <Input
+              <Label className="shrink-0">{t("passwordCheckTips")}</Label>
+              <Password
+                type="password"
                 value={password ?? ""}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder={t("checkStep1Desc")}
@@ -61,7 +69,8 @@ export function CheckDialog(props: Dialogprops) {
               <Button variant="outline" onClick={() => onOpenChange(false)}>
                 {translations("cancel")}
               </Button>
-              <Button onClick={() => handleNext()}>
+              <Button onClick={() => handleNext()} disabled={isPending}>
+                {isPending && <Loader2 className="w-4 h-4 animate-spin" />}
                 {translations("confirm")}
               </Button>
             </DialogFooter>
@@ -76,11 +85,11 @@ export function CheckDialog(props: Dialogprops) {
               <Card className="border border-gray-200 shadow-sm">
                 {/* Header row */}
                 <div className="flex divide-x divide-gray-200">
-                  <div className="py-2.5 px-4 text-gray-600 bg-gray-50 w-24 text-sm">
+                  <div className="py-2.5 px-4 text-gray-600 bg-gray-50 w-24 text-sm flex items-center justify-center">
                     {t("secretInfo")}
                   </div>
                   <div className="py-2.5 px-4 flex-1 flex justify-between items-center bg-card">
-                    <span className="text-gray-800 font-mono text-sm">
+                    <span className="text-gray-800 font-mono text-sm break-all">
                       {item?.privateKey}
                     </span>
                     <CopyButton address={item?.privateKey} />
