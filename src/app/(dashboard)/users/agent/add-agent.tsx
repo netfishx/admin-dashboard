@@ -98,7 +98,6 @@ function AddAgentModal({
                   className="flex-1"
                   name="username"
                   defaultValue={""}
-                  required
                   onBlur={(e) => {
                     e.target.reportValidity();
                   }}
@@ -119,7 +118,6 @@ function AddAgentModal({
                 placeholder={t("placeholder")}
                 className="flex-1"
                 name="nickname"
-                required
                 defaultValue={""}
               />
             </div>
@@ -130,7 +128,6 @@ function AddAgentModal({
                 </Label>
                 <Password
                   type="password"
-                  required
                   className="flex-1"
                   placeholder={t("placeholder")}
                   name="password"
@@ -153,7 +150,6 @@ function AddAgentModal({
               </Label>
               <Password
                 type="password"
-                required
                 className="flex-1"
                 placeholder={t("placeholder")}
                 name="confirmPassword"

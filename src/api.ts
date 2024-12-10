@@ -204,8 +204,34 @@ export async function transferMoney(data: {
   secret: string;
 }) {
   const user = await getSession();
-  return await apiRequest({
+  return await apiRequest<{ check: boolean; id: string }>({
     url: "/wallet/transfer",
+    method: "POST",
+    data,
+    token: user?.token,
+  });
+}
+
+// 用户管理-会员管理-销账
+export async function deleteDebt(data: {
+  memberId: string;
+  money: number;
+  secret: string;
+}) {
+  const user = await getSession();
+  return await apiRequest({
+    url: "/order/repayment/pay",
+    method: "POST",
+    data,
+    token: user?.token,
+  });
+}
+
+// 用户管理-谷歌验证
+export async function googleValidata(data: { id: string; code: string }) {
+  const user = await getSession();
+  return await apiRequest({
+    url: "/wallet/google/check",
     method: "POST",
     data,
     token: user?.token,
