@@ -11,7 +11,6 @@ import {
 } from "@/components/ui/table";
 import type { PageData } from "@/lib/types";
 import type { AnnouncementList } from "@/lib/types";
-import { cn } from "@/lib/utils";
 import { format } from "date-fns";
 import { getTranslations } from "next-intl/server";
 import { Suspense } from "react";
@@ -71,6 +70,12 @@ export async function TableBodyWrapper({
   data,
 }: { data?: PageData<AnnouncementList> }) {
   const translations = await getTranslations();
+  const noticeTypeMap: { [key: number]: string } = {
+    1: "平台代理公告",
+    2: "平台会员公告",
+    3: "直属代理公告",
+    4: "直属会员公告",
+  };
 
   return (
     <TableBody>
@@ -81,14 +86,7 @@ export async function TableBodyWrapper({
               {format(Number(item.endTime), "yyyy-MM-dd HH:mm:ss")}
             </TableCell>
             <TableCell className="text-center">
-              <span
-                className={cn(
-                  "mr-2 px-2 py-1 inline-block rounded-sm",
-                  `${item.type === "1" ? "text-primary bg-primary/10" : "text-orange bg-orange/10"}`,
-                )}
-              >
-                {item.type === "1" ? "平台" : "代理"}
-              </span>
+              {noticeTypeMap[item.type]}
             </TableCell>
 
             <TruncatedCell content={item.contentOfLanguage} maxLength={50} />

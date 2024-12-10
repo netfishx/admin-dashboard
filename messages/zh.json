@@ -48,6 +48,8 @@
   "memberReport": "会员报表",
   "accountChangeRecord": "账变记录",
   "noData": "暂无数据",
+  "platform": "平台",
+  "agent": "代理",
   "login": {
     "button": "登录",
     "title": "代理后台",
@@ -810,8 +812,10 @@
       "collapse": "收起",
       "selectDateRange": "请选择日期范围",
       "all": "请选择",
-      "allRequired": "请填写所有必填项"
-
+      "allRequired": "请填写所有必填项",
+      "timeError": "请选择正确的时间范围",
+      "platform": "平台",
+      "agent": "代理"
     },
     "role": {
       "title": "角色",
