@@ -67,6 +67,7 @@ export function AddModal({
       content: string;
     }[]
   >([]); // 用于存储每个语言的内容
+
   const handleClickAdd = async () => {
     const addParams = {
       id: data?.id || null,
@@ -77,14 +78,15 @@ export function AddModal({
       startTime: new Date(startTime).getTime(),
       endTime: new Date(endTime).getTime(),
     };
+
     const { valid, message } = validateParams(addParams);
+
     if (valid) {
       startTransition(async () => {
         const { code, message } = await saveAnnouncement(addParams);
         if (code === 0) {
           setOpen(false);
           toast.success(message);
-          resetFields();
           router.refresh();
         } else {
           toast.error(message);
@@ -123,7 +125,7 @@ export function AddModal({
       if (params.type === 2 || params.type === 4) {
         // label和content必须同时存在或都不存在
         if (
-          contentWithId.some(
+          params.content.some(
             (item) =>
               (!item.label && item.content) || (item.label && !item.content),
           )
@@ -152,24 +154,9 @@ export function AddModal({
     setEndTime("");
   };
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
-  useEffect(() => {
-    if (data?.id) {
-      setContentData(data.contentList || []);
-      setContentOfLanguage(data.contentOfLanguage || "");
-      setTitleOfLanguage(data.labelOfLanguage || "");
-      setType(data.type.toString() || "");
-      setLanguage("zh-CN");
-      setStatus(data.status.toString() || "1");
-      setStartTime(data.startTime.toString() || "");
-      setEndTime(data.endTime.toString() || "");
-    } else {
-      resetFields();
-    }
-  }, [data]);
-
   // 语言选择变化时更新内容
   const handleLanguageChange = (value: string) => {
+    if (!value) return;
     setLanguage(value);
     // 根据选择的语言，更新内容框的内容
     const currentContent = contentData.find((item) => item.language === value);
@@ -235,16 +222,35 @@ export function AddModal({
       }
     });
   };
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+
   useEffect(() => {
-    const params = new URLSearchParams(searchParams);
+    // const params = new URLSearchParams(searchParams);
     if (isPending) {
-      params.set("loading", "true");
+      // params.set("loading", "true");
+      // router.push(`?${params.toString()}`);
+      router.push("?loading=true");
     } else {
-      params.set("loading", "false");
+      // params.set("loading", "false");
+      // router.push(`?${params.toString()}`);
+      router.push("?loading=false");
     }
-    router.push(`?${params.toString()}`);
   }, [isPending]);
+
+  useEffect(() => {
+    if (!open) {
+      resetFields();
+    } else if (open && data?.id) {
+      setContentData(data.contentList || []);
+      setContentOfLanguage(data.contentOfLanguage || "");
+      setTitleOfLanguage(data.labelOfLanguage || "");
+      setType(data.type.toString() || "");
+      setLanguage("zh-CN");
+      setStatus(data.status.toString() || "1");
+      setStartTime(data.startTime.toString() || "");
+      setEndTime(data.endTime.toString() || "");
+    }
+  }, [open]);
+
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent
@@ -256,7 +262,7 @@ export function AddModal({
           <DialogDescription />
         </DialogHeader>
 
-        <div className="flex flex-col gap-4 w-full px-4 overflow-y-auto">
+        <div className="flex flex-col gap-4 w-full p-4 overflow-y-auto">
           <div className="flex gap-4 items-center">
             <Label className="shrink-0 w-24 text-right text-muted-foreground">
               <span className="text-destructive">*</span>
@@ -313,6 +319,7 @@ export function AddModal({
               type="single"
               value={language}
               onValueChange={handleLanguageChange}
+              defaultValue="zh-CN"
             >
               <ToggleGroupItem value="zh-CN">{t("chinese")}</ToggleGroupItem>
               <ToggleGroupItem value="en-US">{t("english")}</ToggleGroupItem>
