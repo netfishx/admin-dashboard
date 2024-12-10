@@ -28,6 +28,11 @@ import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useEffect, useState, useTransition } from "react";
 import { toast } from "sonner";
+
+/**
+ * 返点设置模态框组件
+ * @param userId - 用户ID
+ */
 export function RebateModal({ userId }: { userId: string }) {
   const translations = useTranslations();
   const t = useTranslations("users.agents");
@@ -37,6 +42,8 @@ export function RebateModal({ userId }: { userId: string }) {
   const [isPending, startTransition] = useTransition();
   const [data, setData] = useState<GameConfig[] | undefined>();
   const router = useRouter();
+  const [initialData, setInitialData] = useState<GameConfig[] | undefined>();
+
   useEffect(() => {
     if (userId && open) {
       setLoading(true);
@@ -44,6 +51,7 @@ export function RebateModal({ userId }: { userId: string }) {
         setLoading(false);
         if (code === 0 && data) {
           setData(data);
+          setInitialData(data);
         } else {
           toast.error(message);
         }
@@ -69,11 +77,37 @@ export function RebateModal({ userId }: { userId: string }) {
     }
   };
 
+  const hasChanges = () => {
+    if (!(data && initialData)) {
+      return false;
+    }
+    return data.some((item) => {
+      const initialItem = initialData.find((i) => i.gameId === item.gameId);
+      return initialItem && initialItem.backRate !== item.backRate;
+    });
+  };
+
+  const getChangedItems = () => {
+    if (!(data && initialData)) {
+      return [];
+    }
+    return data.filter((item) => {
+      const initialItem = initialData.find((i) => i.gameId === item.gameId);
+      return initialItem && initialItem.backRate !== item.backRate;
+    });
+  };
+
   const handleConfirm = () => {
     if (data) {
+      const changedItems = getChangedItems();
+      if (changedItems.length === 0) {
+        setOpen(false);
+        return;
+      }
+
       updateAgentGameConfig({
         userId,
-        list: data,
+        list: changedItems,
       }).then(({ code, message }) => {
         if (code === 0) {
           toast.success(message);
@@ -118,7 +152,7 @@ export function RebateModal({ userId }: { userId: string }) {
             {translations("cancel")}
           </Button>
           <Button
-            disabled={isPending}
+            disabled={isPending || !hasChanges()}
             onClick={() => startTransition(handleConfirm)}
           >
             {isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
@@ -130,11 +164,14 @@ export function RebateModal({ userId }: { userId: string }) {
   );
 }
 
+/**
+ * 加载状态骨架屏组件
+ */
 function RebateSkeleton() {
   return (
     <TableBody>
       {Array.from({ length: 5 }).map((_, index) => (
-        // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
+        // biome-ignore lint/suspicious/noArrayIndexKey: 骨架屏使用索引作为key是可以接受的
         <TableRow key={index}>
           <TableCell colSpan={2}>
             <Skeleton />
@@ -145,6 +182,11 @@ function RebateSkeleton() {
   );
 }
 
+/**
+ * 表格主体包装器组件
+ * @param data - 游戏配置数据
+ * @param handleChange - 处理数值变化的回调函数
+ */
 function TableBodyWrapper({
   data,
   handleChange,
@@ -157,7 +199,7 @@ function TableBodyWrapper({
     <TableBody className="w-full max-h-[50dvh] overflow-auto block">
       {data?.length > 0 ? (
         data
-          ?.filter((item) => item.gameType === 61)
+          ?.filter((item) => item.gameType === 61) // 仅显示gameType为61的项目
           .map((item) => (
             <TableRow key={item.gameId}>
               <TableCell className="w-44">{item.gameName}</TableCell>
@@ -173,11 +215,12 @@ function TableBodyWrapper({
                     handleChange(item.gameId, e.target.value);
                   }}
                 />
-                <span className="text-destructive">{`${item.maxBackRate}%`}</span>
+                <span className="text-destructive">{`${item.maxBackRate ?? 0}%`}</span>
               </TableCell>
             </TableRow>
           ))
       ) : (
+        // 无数据显示
         <TableRow className="flex justify-center items-center">
           <TableCell
             colSpan={2}

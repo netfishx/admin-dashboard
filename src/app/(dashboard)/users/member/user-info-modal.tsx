@@ -116,7 +116,6 @@ export function UserInfoModal({
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent
-        className="2xl:max-w-lg lg:max-w-md"
         onPointerDownOutside={(e) => e.preventDefault()}
         onOpenAutoFocus={(e) => e.preventDefault()}
       >
@@ -125,7 +124,8 @@ export function UserInfoModal({
           <DialogDescription />
         </DialogHeader>
         <div className="flex flex-col gap-4 w-full px-4">
-          {permissions?.includes("member_search") && (
+          {permissions?.includes("member_search") &&
+          memberInfoData?.agentId === "-2" ? (
             <>
               <div className="flex gap-4 items-center">
                 <Label className="shrink-0 w-1/4 text-right text-muted-foreground">
@@ -161,30 +161,39 @@ export function UserInfoModal({
                 />
               </div>
             </>
+          ) : (
+            <>
+              <div className="flex gap-4 items-center text-muted-foreground">
+                <Label className="shrink-0 w-1/4 text-right text-muted-foreground">
+                  {t("agentUsername")}
+                </Label>
+                <span>{upUsername}</span>
+              </div>
+              <div className="flex gap-4 items-center text-muted-foreground">
+                <Label className="shrink-0 w-1/4 text-right text-muted-foreground">
+                  {t("agentNickname")}
+                </Label>
+                <span>{upNickname}</span>
+              </div>
+            </>
           )}
-          <div className="flex gap-4 items-center">
-            <Label className="shrink-0 w-1/4 text-right text-muted-foreground">
-              {t("memberId")}
-            </Label>
-            <Input className="w-1/2" value={username} disabled />
+          <div className="flex gap-4 items-center text-muted-foreground">
+            <Label className="shrink-0 w-1/4 text-right">{t("memberId")}</Label>
+            <span>{username}</span>
           </div>
-          <div className="flex gap-4 items-center">
-            <Label className="shrink-0 w-1/4 text-right text-muted-foreground">
+          <div className="flex gap-4 items-center text-muted-foreground">
+            <Label className="shrink-0 w-1/4 text-right">
               {t("memberUsername")}
             </Label>
-            <Input className="w-1/2" value={memberNickname} disabled />
+            <span>{memberNickname}</span>
           </div>
-          <div className="flex gap-4 items-center">
-            <Label className="shrink-0 w-1/4 text-right text-muted-foreground">
+          <div className="flex gap-4 items-center text-muted-foreground">
+            <Label className="shrink-0 w-1/4 text-right">
               {t("createTime")}
             </Label>
-            <Input
-              className="w-1/2"
-              value={
-                createTime ? format(createTime, "yyyy-MM-dd HH:mm:ss") : ""
-              }
-              disabled
-            />
+            <span>
+              {createTime ? format(createTime, "yyyy-MM-dd HH:mm:ss") : ""}
+            </span>
           </div>
           <div className="flex gap-4 items-center">
             <Label className="shrink-0 w-1/4 text-right text-muted-foreground">
