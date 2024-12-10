@@ -112,6 +112,7 @@ export type MemberList = {
   creditAmount: number;
   createTime: number;
   depositAddress: string;
+  agentId: string;
 };
 
 export interface LoginLog {

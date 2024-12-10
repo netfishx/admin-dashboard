@@ -46,6 +46,7 @@ export function LimitModal({ userId }: { userId: string }) {
   const [list, setList] = useState<GameConfig[]>([]);
   const [gameId, setGameId] = useState<number>();
   const [data, setData] = useState<GameOdds[]>([]);
+  const [initialData, setInitialData] = useState<GameOdds[]>([]);
   const router = useRouter();
   useEffect(() => {
     if (open && userId) {
@@ -53,7 +54,9 @@ export function LimitModal({ userId }: { userId: string }) {
       getGameConfig().then(({ code, data, message }) => {
         setLoading(false);
         if (code === 0 && data) {
-          const list = data?.filter((item) => item.status === 1) ?? [];
+          const list =
+            data?.filter((item) => item.status === 1 && item.gameType === 61) ??
+            [];
           setList(list);
           setGameId(list[0]?.gameId ?? 0);
         } else {
@@ -69,6 +72,7 @@ export function LimitModal({ userId }: { userId: string }) {
         setLoading(false);
         if (code === 0 && data) {
           setData(data ?? []);
+          setInitialData(data ?? []);
         } else {
           toast.error(message);
         }
@@ -76,13 +80,7 @@ export function LimitModal({ userId }: { userId: string }) {
     }
   }, [gameId]);
 
-  const handleLimitChange = (
-    oddsType: number,
-    betType: number,
-    groupId: number,
-    key: string,
-    value: number,
-  ) => {
+  const handleLimitChange = (groupId: number, key: string, value: number) => {
     setData(
       data.map((item) =>
         item.groupId === groupId ? { ...item, [key]: value } : item,
@@ -93,7 +91,23 @@ export function LimitModal({ userId }: { userId: string }) {
   const handleSave = () => {
     startTransition(async () => {
       if (gameId) {
-        const { code, message } = await updateGameOdds({ gameId, list: data });
+        const changedItems = data.filter((item) => {
+          const initialItem = initialData.find(
+            (i) => i.groupId === item.groupId,
+          );
+          return (
+            initialItem &&
+            (initialItem.minBet !== item.minBet ||
+              initialItem.maxBet !== item.maxBet ||
+              initialItem.maxBetPeriod !== item.maxBetPeriod)
+          );
+        });
+
+        const { code, message } = await updateGameOdds({
+          gameId,
+          list: changedItems,
+        });
+
         if (code === 0) {
           toast.success(message);
           setOpen(false);
@@ -102,6 +116,18 @@ export function LimitModal({ userId }: { userId: string }) {
           toast.error(message);
         }
       }
+    });
+  };
+
+  const hasChanges = () => {
+    return data.some((item) => {
+      const initialItem = initialData.find((i) => i.groupId === item.groupId);
+      return (
+        initialItem &&
+        (initialItem.minBet !== item.minBet ||
+          initialItem.maxBet !== item.maxBet ||
+          initialItem.maxBetPeriod !== item.maxBetPeriod)
+      );
     });
   };
 
@@ -150,8 +176,6 @@ export function LimitModal({ userId }: { userId: string }) {
                           step={1}
                           onChange={(e) =>
                             handleLimitChange(
-                              item.oddsType,
-                              item.betType,
                               item.groupId ?? 0,
                               "minBet",
                               Number(e.target.value),
@@ -170,8 +194,6 @@ export function LimitModal({ userId }: { userId: string }) {
                           step={1}
                           onChange={(e) =>
                             handleLimitChange(
-                              item.oddsType,
-                              item.betType,
                               item.groupId ?? 0,
                               "maxBet",
                               Number(e.target.value),
@@ -193,8 +215,6 @@ export function LimitModal({ userId }: { userId: string }) {
                           step={1}
                           onChange={(e) =>
                             handleLimitChange(
-                              item.oddsType,
-                              item.betType,
                               item.groupId ?? 0,
                               "maxBetPeriod",
                               Number(e.target.value),
@@ -225,7 +245,7 @@ export function LimitModal({ userId }: { userId: string }) {
           <Button variant="outline" onClick={() => setOpen(false)}>
             {translations("cancel")}
           </Button>
-          <Button disabled={isPending} onClick={handleSave}>
+          <Button disabled={isPending || !hasChanges()} onClick={handleSave}>
             {isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
             {translations("confirm")}
           </Button>
