@@ -584,6 +584,7 @@ export type CollectionAddressListRecords = {
   remark: string;
   status: number;
   updateTime: string;
+  usdtBalance: number;
 };
 // 归集地址列表请求入参
 export type CollectionAddressListRequestParams = {

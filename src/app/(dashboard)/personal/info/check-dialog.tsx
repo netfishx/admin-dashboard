@@ -136,6 +136,7 @@ function WithdrawForm(props: {
             onChange={handleChange("withdrawMoney")}
             required
             placeholder={t("withdrawAmount")}
+            type="number"
           />
           <div className="ml-[140px] text-sm space-y-1">
             <div className="text-red-500">{t("tips03")}:</div>

@@ -56,7 +56,9 @@ async function ListBody({ list }: { list: CollectionAddressListRecords[] }) {
               </div>
             </TableCell>
             <TableCell className="w-32 text-center">{item.coin}</TableCell>
-            <TableCell className="w-36 text-center">{item.coin}</TableCell>
+            <TableCell className="w-36 text-center">
+              {item.usdtBalance}
+            </TableCell>
             <TableCell className="w-36 text-center">
               {typeMap[item.status as keyof typeof typeMap]}
             </TableCell>
