@@ -120,7 +120,11 @@ export async function TableBodyWrapper({
             {/* admin permission */}
             <TableCell className="text-center">{item.userId}</TableCell>
 
-            <TruncatedCell content={item.contentOfLanguage} maxLength={50} />
+            <TruncatedCell
+              type={item.type}
+              content={item.contentOfLanguage}
+              maxLength={50}
+            />
           </TableRow>
         ))
       ) : (

@@ -67,13 +67,14 @@ function AddButton() {
           <AlertDialogAction
             onClick={() => {
               startTransition(async () => {
-                const res = await addOreFee({
+                const { code, message } = await addOreFee({
                   size: 1,
                 });
-                if (res.code === 0) {
+                if (code === 0) {
+                  toast.success(message);
                   router.refresh();
                 } else {
-                  toast.error(res.message);
+                  toast.error(message);
                 }
               });
             }}

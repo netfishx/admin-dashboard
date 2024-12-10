@@ -13,8 +13,9 @@ export function Actions({
   ).toString();
   return (
     <Button
-      variant="link"
-      className="hover:no-underline hover:text-primary/80"
+      variant="ghost"
+      size="sm"
+      className="text-primary hover:text-primary/80 text-sm px-2"
       onClick={() => {
         router.push(
           `/reports/order/baccarat?${new URLSearchParams(searchParamsStr).toString()}`,
