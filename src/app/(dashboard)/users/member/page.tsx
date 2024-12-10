@@ -44,7 +44,7 @@ export default function Page({
           fallback={
             <div className="border rounded-sm">
               <Table className="table-fixed">
-                <TableHeaderWrapper total={0} />
+                <TableHeaderWrapper total={1} />
                 <TableBodySkeleton />
               </Table>
             </div>

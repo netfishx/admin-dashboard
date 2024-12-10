@@ -60,7 +60,7 @@ async function TableWrapper({
     <>
       <div className="border rounded-sm">
         <Table className="table-fixed">
-          <TableHeaderWrapper total={data?.total ?? 0} />
+          <TableHeaderWrapper total={1} />
           <Suspense fallback={<TableBodySkeleton />}>
             <TableBodyWrapper list={data?.list} permissions={permissions} />
           </Suspense>

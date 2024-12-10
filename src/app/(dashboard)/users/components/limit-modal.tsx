@@ -142,11 +142,12 @@ export function LimitModal({ userId }: { userId: string }) {
                       </TableCell>
                       <TableCell className="w-[240px]">
                         <Input
-                          value={item.minBet}
+                          value={item.minBet?.toString() ?? ""}
                           className="inline-block max-w-32 min-w-28"
                           type="number"
                           disabled={!item.canEdit}
                           min={1}
+                          step={1}
                           onChange={(e) =>
                             handleLimitChange(
                               item.oddsType,
@@ -160,12 +161,13 @@ export function LimitModal({ userId }: { userId: string }) {
                       </TableCell>
                       <TableCell className="w-[280px]">
                         <Input
-                          value={item.maxBet}
+                          value={item.maxBet?.toString() ?? ""}
                           className="inline-block max-w-32 min-w-28"
                           type="number"
                           min={1}
-                          max={item.maxBetLimit ?? 1}
+                          max={item.maxBet ?? 1}
                           disabled={!item.canEdit}
+                          step={1}
                           onChange={(e) =>
                             handleLimitChange(
                               item.oddsType,
@@ -177,17 +179,18 @@ export function LimitModal({ userId }: { userId: string }) {
                           }
                         />
                         <span className="text-destructive">
-                          ({item.maxBetLimit})
+                          ({item.maxBet})
                         </span>
                       </TableCell>
                       <TableCell className="w-[300px]">
                         <Input
-                          value={item.maxBetPeriod}
+                          value={item.maxBetPeriod?.toString() ?? ""}
                           className="inline-block max-w-32 min-w-28"
                           type="number"
                           min={1}
-                          max={item.maxBetPeriodLimit ?? 1}
+                          max={item.maxBetPeriod ?? 1}
                           disabled={!item.canEdit}
+                          step={1}
                           onChange={(e) =>
                             handleLimitChange(
                               item.oddsType,
@@ -199,7 +202,7 @@ export function LimitModal({ userId }: { userId: string }) {
                           }
                         />
                         <span className="text-destructive">
-                          ({item.maxBetPeriodLimit})
+                          ({item.maxBetPeriod})
                         </span>
                       </TableCell>
                     </TableRow>

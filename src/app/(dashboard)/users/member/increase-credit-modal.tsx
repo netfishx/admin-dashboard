@@ -23,6 +23,7 @@ import { useAtom, useAtomValue } from "jotai";
 import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Form from "next/form";
+import { useRouter } from "next/navigation";
 import { type FormEvent, useRef, useState, useTransition } from "react";
 import { toast } from "sonner";
 
@@ -37,7 +38,7 @@ export function IncreaseCreditModal() {
   const memberId = useAtomValue(memberIdAtom);
   const memberInfoData = useAtomValue(memberInfoDataAtom);
   const ref = useRef<HTMLFormElement>(null);
-
+  const router = useRouter();
   const handleConfirm = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
@@ -50,6 +51,7 @@ export function IncreaseCreditModal() {
       if (code === 0) {
         toast.success(message);
         setOpen(false);
+        router.refresh();
       } else {
         toast.error(message);
       }

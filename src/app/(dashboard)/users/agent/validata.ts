@@ -6,9 +6,7 @@ import { zfd } from "zod-form-data";
 export const createFormSchema = zfd
   .formData({
     username: zfd.text(usernameSchema),
-    nickname: zfd.text(
-      z.union([z.string(), z.string().length(0)]), // 允许空字符串
-    ),
+    nickname: zfd.text(z.string().optional()),
     password: zfd.text(passwordSchema),
     confirmPassword: zfd.text(passwordSchema),
   })

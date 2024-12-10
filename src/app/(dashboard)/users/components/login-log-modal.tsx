@@ -20,7 +20,6 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import type { LoginLog } from "@/lib/types";
-import { cn } from "@/lib/utils";
 import { loginLogModalAtom } from "@/store";
 import { format } from "date-fns";
 import { useAtom } from "jotai";
@@ -123,17 +122,7 @@ export function LoginLogModal({
                         {item.region}
                       </TableCell>
                       <TableCell className="w-[100px] 2xl:w-[120px]">
-                        <div
-                          className={cn(
-                            "px-2 rounded-sm w-fit",
-                            Number(item.isSuccess) === 0 &&
-                              "text-primary bg-primary/10",
-                            Number(item.isSuccess) === 1 &&
-                              "text-destructive bg-destructive/10",
-                          )}
-                        >
-                          {t(`statusLabel.${item.isSuccess}`)}
-                        </div>
+                        <StatusLabel status={Number(item.isSuccess)} />
                       </TableCell>
                     </TableRow>
                   ))
@@ -181,5 +170,21 @@ function LoginLogSkeleton() {
         </TableRow>
       ))}
     </TableBody>
+  );
+}
+
+function StatusLabel({ status }: { status: number }) {
+  const t = useTranslations("users.agents");
+  if (status === 0) {
+    return (
+      <div className="text-primary bg-primary/10 px-2 rounded-sm w-fit">
+        {t("success")}
+      </div>
+    );
+  }
+  return (
+    <div className="text-destructive bg-destructive/10 px-2 rounded-sm w-fit">
+      {t("failed")}
+    </div>
   );
 }

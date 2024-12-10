@@ -1,6 +1,6 @@
 "use client";
 
-import { getUserBasicInfo, modifyCreditLimit } from "@/api";
+import { deleteDebt, getUserBasicInfo } from "@/api";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -47,9 +47,9 @@ export function DeleteCreditModal() {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
     startTransition(async () => {
-      const { code, message } = await modifyCreditLimit({
-        userId: formData.get("userId") as string,
-        amount: -Number(formData.get("amount")),
+      const { code, message } = await deleteDebt({
+        memberId: formData.get("userId") as string,
+        money: Number(formData.get("amount")),
         secret: formData.get("secret") as string,
       });
       if (code === 0) {
@@ -134,7 +134,7 @@ export function DeleteCreditModal() {
             onClick={(e) => {
               e.preventDefault();
               if (ref.current) {
-                ref.current.submit();
+                ref.current.requestSubmit();
               }
             }}
           >
