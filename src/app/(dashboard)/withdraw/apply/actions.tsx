@@ -65,9 +65,11 @@ function ActionButtons({
       <div className="flex justify-center">
         <PassButton data={data} isCurrentAuditor={isCurrentAuditor} />
         <RejectButton data={data} isCurrentAuditor={isCurrentAuditor} />
+        {/* todo 跳转主单列表 先展示弹窗 */}
         <Button
-          variant="link"
-          className="hover:no-underline hover:text-primary/80 px-0"
+          variant="ghost"
+          size="sm"
+          className="text-primary hover:text-primary/80 text-sm px-2"
         >
           {t("flow")}
         </Button>
@@ -109,7 +111,12 @@ function LockButton({ data }: { data: ApplyData }) {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button variant="link" disabled={isPending} className="px-2">
+        <Button
+          disabled={isPending}
+          variant="ghost"
+          size="sm"
+          className="text-primary hover:text-primary/80 text-sm px-2"
+        >
           {isPending && <Loader2 className="w-4 h-4 animate-spin" />}
           {t("lock")}
         </Button>
@@ -159,9 +166,10 @@ function PassButton({
     <AlertDialog>
       <AlertDialogTrigger asChild>
         <Button
-          variant="link"
           disabled={isPending || !isCurrentAuditor}
-          className="px-2"
+          variant="ghost"
+          size="sm"
+          className="text-primary hover:text-primary/80 text-sm px-2"
         >
           {isPending && <Loader2 className="w-4 h-4 animate-spin" />}
           {t("pass")}
@@ -234,9 +242,10 @@ function RejectButton({
     <AlertDialog>
       <AlertDialogTrigger asChild>
         <Button
-          variant="link"
           disabled={isPending || !isCurrentAuditor}
-          className="px-2"
+          variant="ghost"
+          size="sm"
+          className="text-primary hover:text-primary/80 text-sm px-2"
         >
           {isPending && <Loader2 className="w-4 h-4 animate-spin" />}
           {t("reject")}
@@ -283,7 +292,12 @@ function AgainButton({ data }: { data: ApplyData }) {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button variant="link" disabled={isPending} className="px-2">
+        <Button
+          disabled={isPending}
+          variant="ghost"
+          size="sm"
+          className="text-primary hover:text-primary/80 text-sm px-2"
+        >
           {isPending && <Loader2 className="w-4 h-4 animate-spin" />}
           {t("again")}
         </Button>
@@ -328,7 +342,12 @@ function ConfirmButton({ data }: { data: ApplyData }) {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button variant="link" disabled={isPending} className="px-2">
+        <Button
+          disabled={isPending}
+          variant="ghost"
+          size="sm"
+          className="text-primary hover:text-primary/80 text-sm px-2"
+        >
           {isPending && <Loader2 className="w-4 h-4 animate-spin" />}
           {t("confirm")}
         </Button>

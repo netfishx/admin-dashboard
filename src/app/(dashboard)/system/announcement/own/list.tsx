@@ -79,7 +79,6 @@ export async function TableHeaderWrapper() {
         <TableHead className="w-32 min-w-32 text-center">
           {t("createTime")}
         </TableHead>
-        <TableHead className="min-w-24 text-center">{t("title")}</TableHead>
         <TableHead className="w-[450px] min-w-24 text-center">
           {t("content")}
         </TableHead>
@@ -113,6 +112,10 @@ export async function TableBodyWrapper({
     2: "平台会员公告",
     3: "直属代理公告",
     4: "直属会员公告",
+    5: "系统配置公告",
+    // todo
+    6: "占成公告",
+    7: "退水公告",
   };
 
   return (
@@ -129,11 +132,9 @@ export async function TableBodyWrapper({
             <TableCell className="w-24 text-center">
               {format(Number(item.createTime), "yyyy-MM-dd HH:mm:ss")}
             </TableCell>
-            <TableCell className="text-center">
-              {item.labelOfLanguage ? item.labelOfLanguage : "--"}
-            </TableCell>
             <TruncatedCell
               className="w-[550px]"
+              type={item.type}
               content={item.contentOfLanguage}
               maxLength={50}
             />
@@ -147,7 +148,7 @@ export async function TableBodyWrapper({
         ))
       ) : (
         <TableRow>
-          <TableCell colSpan={7} className="text-center h-40">
+          <TableCell colSpan={6} className="text-center h-40">
             {translations("noData")}
           </TableCell>
         </TableRow>

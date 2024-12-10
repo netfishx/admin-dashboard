@@ -112,8 +112,11 @@ export function AddModal({
     ) {
       return { valid: false, message: t("allRequired") };
     }
-    // 时间校验
-    if (params.startTime > params.endTime || params.endTime < Date.now()) {
+    // 时间校验 （新增时）
+    if (
+      !params.id &&
+      (params.startTime > params.endTime || params.endTime < Date.now())
+    ) {
       return { valid: false, message: t("timeError") };
     }
 

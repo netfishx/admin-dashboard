@@ -75,6 +75,10 @@ export async function TableBodyWrapper({
     2: "平台会员公告",
     3: "直属代理公告",
     4: "直属会员公告",
+    5: "系统配置公告",
+    // todo
+    6: "占成公告",
+    7: "退水公告",
   };
 
   return (
@@ -89,7 +93,11 @@ export async function TableBodyWrapper({
               {noticeTypeMap[item.type]}
             </TableCell>
 
-            <TruncatedCell content={item.contentOfLanguage} maxLength={50} />
+            <TruncatedCell
+              type={item.type}
+              content={item.contentOfLanguage}
+              maxLength={50}
+            />
           </TableRow>
         ))
       ) : (

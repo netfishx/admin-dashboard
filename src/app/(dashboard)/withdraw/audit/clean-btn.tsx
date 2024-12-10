@@ -36,7 +36,12 @@ function CleanButton({ data }: { data: AuditList }) {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button variant="link" disabled={isPending} className="px-2">
+        <Button
+          disabled={isPending}
+          variant="ghost"
+          size="sm"
+          className="text-primary hover:text-primary/80 text-sm px-2"
+        >
           {isPending ? (
             <Loader2 className="w-4 h-4 animate-spin" />
           ) : (
