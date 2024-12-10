@@ -1,7 +1,6 @@
 "use client";
 
 import type { AnnouncementList } from "@/lib/types";
-import { cn } from "@/lib/utils";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 
@@ -31,14 +30,16 @@ export function Announcement({ data }: { data: { list: AnnouncementList[] } }) {
                   key={item.id}
                   className="text-ellipsis text-muted-foreground whitespace-nowrap overflow-hidden"
                 >
-                  <span
-                    className={cn(
-                      "mr-2 px-2 py-1 inline-block rounded-sm",
-                      `${item.type === "1" ? "text-primary bg-primary/10" : "text-orange bg-orange/10"}`,
-                    )}
-                  >
-                    {item.type === "1" ? "平台" : "代理"}
-                  </span>
+                  {item.type === 1 && (
+                    <span className="mr-2 px-2 py-1 inline-block rounded-sm text-primary bg-primary/10">
+                      {t("platform")}
+                    </span>
+                  )}
+                  {item.type === 3 && (
+                    <span className="mr-2 px-2 py-1 inline-block rounded-sm text-orange bg-orange/10">
+                      {t("agent")}
+                    </span>
+                  )}
                   {item.contentOfLanguage}
                 </div>
               );

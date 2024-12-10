@@ -204,7 +204,7 @@ export type SameOrSeniorAnnoListRequest = {
 export type AnnouncementList = {
   id: string;
   userId: string;
-  type: string;
+  type: number;
   startTime: number;
   endTime: number;
   language: string;

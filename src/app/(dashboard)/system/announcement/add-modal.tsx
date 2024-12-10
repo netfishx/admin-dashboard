@@ -101,7 +101,7 @@ export function AddModal({
   // 验证参数 已确认： 有其中一个语言的完整内容即可 新增的时候id可以为空，编辑的时候id和content（会员公告的话还需要有label）必须同时存在，
   function validateParams(params: Announcement) {
     // debugger;
-    // 基础验证
+    // 基础必填验证
     if (
       !params.type ||
       !params.status ||
@@ -111,6 +111,10 @@ export function AddModal({
       !params.content.some((item) => item.content) // 至少一个语言有内容
     ) {
       return { valid: false, message: t("allRequired") };
+    }
+    // 时间校验
+    if (params.startTime > params.endTime || params.endTime < Date.now()) {
+      return { valid: false, message: t("timeError") };
     }
 
     // 编辑状态验证
@@ -295,7 +299,9 @@ export function AddModal({
                   </>
                 )}
                 <SelectItem value="3">{t("agentAnnouncement")}</SelectItem>
-                <SelectItem value="4">{t("memberAnnouncement")}</SelectItem>
+                {!permissions?.includes("admin_stat") && (
+                  <SelectItem value="4">{t("memberAnnouncement")}</SelectItem>
+                )}
               </SelectContent>
             </Select>
           </div>

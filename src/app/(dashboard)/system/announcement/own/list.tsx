@@ -108,15 +108,11 @@ export async function TableBodyWrapper({
 }: { data?: PageData<AnnouncementList> }) {
   const translations = await getTranslations();
 
-  const noticeTypeMap = {
-    "1": "平台代理公告",
-    "2": "平台会员公告",
-    "3": "直属代理公告",
-    "4": "直属会员公告",
-  } as const;
-
-  const getNoticeTypeName = (type: string) => {
-    return noticeTypeMap[type as keyof typeof noticeTypeMap];
+  const noticeTypeMap: { [key: number]: string } = {
+    1: "平台代理公告",
+    2: "平台会员公告",
+    3: "直属代理公告",
+    4: "直属会员公告",
   };
 
   return (
@@ -134,7 +130,7 @@ export async function TableBodyWrapper({
               {format(Number(item.createTime), "yyyy-MM-dd HH:mm:ss")}
             </TableCell>
             <TableCell className="text-center">
-              {item.labelOfLanguage}
+              {item.labelOfLanguage ? item.labelOfLanguage : "--"}
             </TableCell>
             <TruncatedCell
               className="w-[550px]"
@@ -142,7 +138,7 @@ export async function TableBodyWrapper({
               maxLength={50}
             />
             <TableCell className="text-center">
-              {getNoticeTypeName(item.type)}
+              {noticeTypeMap[item.type]}
             </TableCell>
             <TableCell className="w-24 text-center">
               <EditBtn data={item} />
