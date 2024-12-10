@@ -29,7 +29,7 @@ export function DetailButton({ item }: { item: CollectionAddressListRecords }) {
     setShowStatus(status);
   }
   return (
-    <div className="flex gap-2 justify-around">
+    <div className="flex justify-center">
       {item.status === 2 && (
         <Button
           variant="ghost"
