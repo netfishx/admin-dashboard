@@ -860,6 +860,7 @@
   },
   "fund": {
     "collection": {
+      "lockSuccess": "锁定成功",
       "lock": "锁定",
       "unlock": "解锁",
       "stop": "停用",

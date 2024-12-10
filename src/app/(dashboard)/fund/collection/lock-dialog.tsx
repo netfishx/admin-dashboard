@@ -11,7 +11,10 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import type { CollectionAddressListRecords } from "@/lib/types";
+import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { useRouter } from "next/navigation";
+import { useTransition } from "react";
 import { toast } from "sonner";
 import { CollectionAddressStatus } from "./defiend";
 
@@ -25,17 +28,23 @@ export function LockDialog(props: Dialogprops) {
   const { open = true, onOpenChange } = props;
   const t = useTranslations("fund.collection");
   const translations = useTranslations();
-  const handleConfirm = async () => {
-    const res = await lockCollectionAddress({
-      address: props.item.address,
-      status: CollectionAddressStatus.LOCKED,
-    });
+  const [isPending, startTransition] = useTransition();
+  const router = useRouter();
+  const handleConfirm = () => {
+    startTransition(async () => {
+      const res = await lockCollectionAddress({
+        address: props.item.address,
+        status: CollectionAddressStatus.LOCKED,
+      });
 
-    if (res.code === 0) {
-      toast.success(t("lockSuccess"));
-      onOpenChange(false);
-    }
+      if (res.code === 0) {
+        toast.success(res.message);
+        router.refresh();
+        onOpenChange(false);
+      }
+    });
   };
+
   return (
     <AlertDialog open={open} onOpenChange={onOpenChange}>
       <AlertDialogContent>
@@ -45,7 +54,8 @@ export function LockDialog(props: Dialogprops) {
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>{translations("cancel")}</AlertDialogCancel>
-          <AlertDialogAction onClick={handleConfirm}>
+          <AlertDialogAction onClick={handleConfirm} disabled={isPending}>
+            {isPending && <Loader2 className="w-4 h-4 animate-spin" />}
             {translations("confirm")}
           </AlertDialogAction>
         </AlertDialogFooter>
