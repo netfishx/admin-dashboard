@@ -82,7 +82,7 @@ export function Toolbar({
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
-        {hasInviteCode && (
+        {hasInviteCode && inviteCode && (
           <Popover>
             <PopoverTrigger asChild>
               <Button

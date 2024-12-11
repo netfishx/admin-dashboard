@@ -23,18 +23,20 @@ export default function Page() {
           </div>
           <div className="text-sm flex items-center">
             {session?.username}
-            <CopyButton address={session?.username as string} />
+            <CopyButton address={session?.username ?? ""} />
           </div>
         </div>
-        <div className="flex items-center gap-2">
-          <div className="text-muted-foreground text-sm w-[100px] text-right">
-            {t("inviteCode")}:
+        {session?.inviteCode && (
+          <div className="flex items-center gap-2">
+            <div className="text-muted-foreground text-sm w-[100px] text-right">
+              {t("inviteCode")}:
+            </div>
+            <div className="text-sm flex items-center">
+              {session?.inviteCode}
+              <CopyButton address={session?.inviteCode ?? ""} />
+            </div>
           </div>
-          <div className="text-sm flex items-center">
-            {session?.inviteCode}
-            <CopyButton address={session?.inviteCode as string} />
-          </div>
-        </div>
+        )}
       </div>
       <Suspense fallback={<Detail />}>
         <CommonWrapper />
