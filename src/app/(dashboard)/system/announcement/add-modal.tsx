@@ -33,14 +33,12 @@ import { useAtom, useAtomValue } from "jotai";
 import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
-import { useSearchParams } from "next/navigation";
 import { use, useEffect, useState, useTransition } from "react";
 import { toast } from "sonner";
 import { TimeRange } from "./time-range";
 export function AddModal({
   session,
 }: { session: Promise<SessionData | null> }) {
-  const searchParams = useSearchParams();
   const translations = useTranslations();
 
   const sessionData = use(session);
@@ -231,19 +229,6 @@ export function AddModal({
   };
 
   useEffect(() => {
-    // const params = new URLSearchParams(searchParams);
-    if (isPending) {
-      // params.set("loading", "true");
-      // router.push(`?${params.toString()}`);
-      router.push("?loading=true");
-    } else {
-      // params.set("loading", "false");
-      // router.push(`?${params.toString()}`);
-      router.push("?loading=false");
-    }
-  }, [isPending]);
-
-  useEffect(() => {
     if (!open) {
       resetFields();
     } else if (open && data?.id) {
@@ -271,8 +256,7 @@ export function AddModal({
 
         <div className="flex flex-col gap-4 w-full p-4 overflow-y-auto">
           <div className="flex gap-4 items-center">
-            <Label className="shrink-0 w-24 text-right text-muted-foreground">
-              <span className="text-destructive">*</span>
+            <Label className="shrink-0 w-24 text-right text-muted-foreground before:content-['*'] before:text-destructive">
               {t("announcementType")}
             </Label>
             {/* 公告类型 根据管理员和代理角色 展示的也不一样 */}
@@ -309,8 +293,7 @@ export function AddModal({
             </Select>
           </div>
           <div className="flex gap-4 items-center">
-            <Label className="shrink-0 w-24 text-right text-muted-foreground">
-              <span className="text-destructive">*</span>
+            <Label className="shrink-0 w-24 text-right text-muted-foreground before:content-['*'] before:text-destructive">
               {t("announcementTime")}
             </Label>
             <TimeRange
@@ -320,8 +303,7 @@ export function AddModal({
             />
           </div>
           <div className="flex gap-4 items-center">
-            <Label className="shrink-0 w-24 text-right text-muted-foreground">
-              <span className="text-destructive">*</span>
+            <Label className="shrink-0 w-24 text-right text-muted-foreground before:content-['*'] before:text-destructive">
               {t("language")}
             </Label>
             <ToggleGroup
@@ -336,8 +318,7 @@ export function AddModal({
           </div>
           {(type === "2" || type === "4") && (
             <div className="flex gap-4 items-center">
-              <Label className="shrink-0 w-24 text-right text-muted-foreground">
-                <span className="text-destructive">*</span>
+              <Label className="shrink-0 w-24 text-right text-muted-foreground before:content-['*'] before:text-destructive">
                 {t("title")}
               </Label>
               <Input
@@ -350,8 +331,7 @@ export function AddModal({
             </div>
           )}
           <div className="flex gap-4 items-center">
-            <Label className="shrink-0 w-24 text-right text-muted-foreground">
-              <span className="text-destructive">*</span>
+            <Label className="shrink-0 w-24 text-right text-muted-foreground before:content-['*'] before:text-destructive">
               {t("announcementContent")}
             </Label>
             <Textarea
@@ -363,8 +343,7 @@ export function AddModal({
             />
           </div>
           <div className="flex gap-4 items-center">
-            <Label className="shrink-0 w-24 text-right text-muted-foreground">
-              <span className="text-destructive">*</span>
+            <Label className="shrink-0 w-24 text-right text-muted-foreground before:content-['*'] before:text-destructive">
               {t("status")}
             </Label>
             <RadioGroup

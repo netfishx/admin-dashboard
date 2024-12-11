@@ -19,7 +19,6 @@ import { useSearchParams } from "next/navigation";
 import { useQueryState } from "nuqs";
 import { useTransition } from "react";
 import { toast } from "sonner";
-import { approverStatusDict } from "../tools";
 
 export function Form() {
   const t = useTranslations("withdraw.apply");
@@ -29,6 +28,25 @@ export function Form() {
   const searchParams = useSearchParams();
   const startTime = searchParams.get("startTime");
   const endTime = searchParams.get("endTime");
+
+  const approverStatusDict = [
+    {
+      value: 0,
+      label: t("unprocessed"),
+    },
+    {
+      value: 1,
+      label: t("locked"),
+    },
+    {
+      value: 2,
+      label: t("rejected"),
+    },
+    {
+      value: 3,
+      label: t("passed"),
+    },
+  ];
 
   const [isReset, startReset] = useTransition();
   const [isPending, startTransition] = useTransition();

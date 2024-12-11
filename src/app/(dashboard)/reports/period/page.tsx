@@ -101,11 +101,11 @@ async function PeriodTable({
   const params = {
     pageSize: Number(pageSize ?? 10),
     pageNum: Number(pageNum ?? 1),
-    // startTime: Number(startTime),
-    // endTime: Number(endTime),
+    startTime: Number(startTime),
+    endTime: Number(endTime),
     // temp临时参数
-    startTime: 1730304000000,
-    endTime: 1730504000000,
+    // startTime: 1730304000000,
+    // endTime: 1730504000000,
     gameType: gameType ? Number(gameType) : 61, // 第一期先写死
     gameId: gameId ? Number(gameId) : null,
     issueNumber: issueNumber?.toString() ?? null,

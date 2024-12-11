@@ -332,7 +332,7 @@ export async function modifyCreditLimit(data: {
   secret: string;
 }) {
   const user = await getSession();
-  return await apiRequest({
+  return await apiRequest<{ check: boolean; id: string }>({
     url: "/wallet/modifyCreditLimit",
     method: "POST",
     data,
@@ -1563,6 +1563,20 @@ export async function postUserInfoWithdrawVerify(data: {
   const user = await getSession();
   return await apiRequest({
     url: "/order/withdraw/google/check",
+    method: "POST",
+    data,
+    token: user?.token,
+  });
+}
+
+// 生成下载任务
+export async function exportClick(data: {
+  exportButtonCode: number;
+  queryParams: string;
+}) {
+  const user = await getSession();
+  return await apiRequest({
+    url: "/exportClick",
     method: "POST",
     data,
     token: user?.token,

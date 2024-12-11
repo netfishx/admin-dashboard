@@ -50,6 +50,8 @@
   "noData": "暂无数据",
   "platform": "平台",
   "agent": "代理",
+  "google2fa": "二次验证",
+  "google2faCode": "谷歌验证码",
   "login": {
     "button": "登录",
     "title": "代理后台",
@@ -248,8 +250,8 @@
       "close": "取消",
       "save": "确定",
       "restCount": "剩余尝试次数",
-      "password": "登入密码",
-      "confirmPassword": "再次输入登入密码",
+      "password": "密码",
+      "confirmPassword": "确认密码",
       "statusLabel": {
         "0": "启用",
         "1": "停用",
@@ -333,7 +335,8 @@
       "changeLog": "变更日志",
       "check": "查询",
       "moneyPassword": "资金密码",
-      "deleteCreditWarning": "注意：销账金额不可大于可用余额，若余额不足请先充值"
+      "deleteCreditWarning": "注意：销账金额不可大于可用余额，若余额不足请先充值",
+      "availableAmount": "当前可用余额"
     },
     "supplier": {
       "add": "新增",
@@ -601,7 +604,26 @@
       "all": "全部",
       "agent": "代理",
       "member": "会员",
-      "selectDateOrId": "请选择日期或帐变ID"
+      "selectDateOrId": "请选择日期或帐变ID",
+      "lotteryBet": "百家乐投注",
+      "deposit": "入金",
+      "withdrawal": "出金进行中",
+      "withdrawalCompleted": "出金完成",
+      "withdrawalReturned": "出金退回",
+      "createWallet": "创建钱包",
+      "issueRebate": "发反水",
+      "lotterySettlement": "百家乐结算",
+      "guandanSettlement": "掼蛋结算",
+      "closeRoom": "关闭房间",
+      "roomRecharge": "房间充值",
+      "receiveRebate": "领反水",
+      "borrow": "借款",
+      "repayment": "还款",
+      "createRoom": "创建房间",
+      "increaseCredit": "提升额度",
+      "decreaseCredit": "减少额度",
+      "transfer": "转款",
+      "writeOff": "销账"
     },
     "recharge": {
       "id": "ID",
@@ -652,7 +674,16 @@
       "all": "全部",
       "selectDateOrId": "请选择日期或订单号",
       "agent": "代理",
-      "member": "会员"
+      "member": "会员",
+      "unprocessed": "未处理",
+      "locked": "锁定中",
+      "rejected": "已拒绝",
+      "passed": "已通过",
+      "auditing": "审核中",
+      "withdrawing": "提现中",
+      "failed": "审核失败",
+      "success": "提现成功"
+
     },
     "borrow": {
       "agentID": "代理ID",
@@ -1065,7 +1096,16 @@
       "auto": "自动",
       "manual": "手动",
       "selectDate": "请选择时间范围",
-      "reset": "重置"
+      "reset": "重置",
+      "unprocessed": "未处理",
+      "locked": "锁定中",
+      "rejected": "已拒绝",
+      "passed": "已通过",
+      "transferred": "转帐中",
+      "received": "已到账",
+      "exception": "异常",
+      "member": "会员",
+      "agent": "代理"
     },
     "audit": {
       "createTime": "稽核创建日期",
@@ -1087,7 +1127,12 @@
       "cleanDesc": "确定清除该稽核吗？",
       "cancel": "取消",
       "selectDate": "请选择时间范围",
-      "reset": "重置"
+      "reset": "重置",
+      "deposit": "充值",
+      "issueRebate": "返水",
+      "uncompleted": "未完成",
+      "completed": "已完成",
+      "manualCleared": "手工清除"
     }
   },
   "maintain": {

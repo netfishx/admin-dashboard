@@ -157,28 +157,29 @@ async function TableWrapper({
 async function TableBodyWrapper({
   data,
 }: { data?: PageData<WalletLogRecords> }) {
-  const t = await getTranslations("");
+  const translations = await getTranslations("");
+  const t = await getTranslations("report.change");
 
   const operateTypeMap = {
-    1: "百家乐投注",
-    3: "入金",
-    4: "出金进行中",
-    5: "出金完成",
-    6: "出金退回",
-    7: "创建钱包",
-    8: "发反水",
-    9: "百家乐结算",
-    10: "掼蛋结算",
-    11: "关闭房间",
-    12: "房间充值",
-    13: "领反水",
-    15: "借款",
-    16: "还款",
-    17: "创建房间",
-    18: "提升额度",
-    19: "减少额度",
-    20: "转款",
-    21: "销账",
+    1: t("lotteryBet"),
+    3: t("deposit"),
+    4: t("withdrawal"),
+    5: t("withdrawalCompleted"),
+    6: t("withdrawalReturned"),
+    7: t("createWallet"),
+    8: t("issueRebate"),
+    9: t("lotterySettlement"),
+    10: t("guandanSettlement"),
+    11: t("closeRoom"),
+    12: t("roomRecharge"),
+    13: t("receiveRebate"),
+    15: t("borrow"),
+    16: t("repayment"),
+    17: t("createRoom"),
+    18: t("increaseCredit"),
+    19: t("decreaseCredit"),
+    20: t("transfer"),
+    21: t("writeOff"),
   };
   return (
     <TableBody>
@@ -211,7 +212,7 @@ async function TableBodyWrapper({
       ) : (
         <TableRow>
           <TableCell colSpan={7} className="text-center h-40">
-            {t("noData")}
+            {translations("noData")}
           </TableCell>
         </TableRow>
       )}

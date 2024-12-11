@@ -129,15 +129,16 @@ async function TableHeaderWrapper() {
 }
 async function TableBodyWrapper({ list }: { list: AuditList[] }) {
   const translations = await getTranslations();
+  const t = await getTranslations("withdraw.audit");
 
   const orderTypeList = {
-    0: "充值",
-    1: "返水",
+    0: t("deposit"),
+    1: t("issueRebate"),
   };
   const statusList = {
-    0: "未完成",
-    1: "已完成",
-    2: "手工清除",
+    0: t("uncompleted"),
+    1: t("completed"),
+    2: t("manualCleared"),
   };
   return (
     <TableBody>
