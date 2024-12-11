@@ -244,9 +244,6 @@ function OpenedMenu({
                 href="/reports/transfer"
               />
             )}
-            {permissions.includes("reward_report") && (
-              <MenuItem label={t("reports.reward")} href="/reports/reward" />
-            )}
             {permissions.includes("report_download") && (
               <MenuItem
                 label={t("reports.download")}

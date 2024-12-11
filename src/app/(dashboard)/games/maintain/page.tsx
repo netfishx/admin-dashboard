@@ -1,7 +1,9 @@
 import { MaintainForm } from "@/app/(dashboard)/games/maintain/form";
 import { MaintainTableWrapper } from "@/app/(dashboard)/games/maintain/table-wrapper";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
 import { Suspense } from "react";
+import { MaintainTableHeader } from "./table";
 
 export default function Page() {
   return (
@@ -11,12 +13,19 @@ export default function Page() {
         <div className="border rounded-sm">
           <Suspense
             fallback={
-              <div className="flex flex-col gap-4 p-4">
-                <Skeleton />
-                <Skeleton />
-                <Skeleton />
-                <Skeleton />
-              </div>
+              <Table className="table-fixed">
+                <MaintainTableHeader allChecked={false} />
+                <TableBody>
+                  {Array.from({ length: 5 }).map((_, i) => (
+                    // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
+                    <TableRow key={i}>
+                      <TableCell colSpan={6}>
+                        <Skeleton />
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
             }
           >
             <MaintainTableWrapper />

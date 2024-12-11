@@ -20,7 +20,7 @@ export default async function DashboardLayout({
         >
           <ToolbarWrapper />
         </Suspense>
-        <div className="bg-accent overflow-y-auto flex gap-2 p-2">
+        <div className="bg-accent overflow-y-auto flex gap-2 p-2 h-full">
           {children}
         </div>
       </main>

@@ -106,7 +106,6 @@
       "recharge": "充值记录",
       "withdraw": "提现记录",
       "borrow": "借还记录",
-      "reward": "打赏记录",
       "credit": "授信记录",
       "transfer": "转账记录",
       "download": "报表下载"
@@ -683,7 +682,6 @@
       "withdrawing": "提现中",
       "failed": "审核失败",
       "success": "提现成功"
-
     },
     "borrow": {
       "agentID": "代理ID",
