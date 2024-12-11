@@ -19,6 +19,7 @@ import { format } from "date-fns";
 import { cookies } from "next/headers";
 import { Suspense } from "react";
 
+import { ScrollArea } from "@/components/ui/scroll-area";
 import type { UserBasicInfo } from "@/lib/types";
 import { add, endOfDay, startOfDay, sub } from "date-fns";
 import { AnnouncementDialog } from "./announcement-dialog";
@@ -73,53 +74,54 @@ export default async function DashboardPage({
   return (
     <>
       <TimeWrapper />
-      <div className="flex-1 flex flex-col gap-2">
-        {permissions?.includes("admin_stat") && (
-          <div className="grid gap-2">
-            <Suspense fallback={<div className="p-4 rounded bg-card h-24" />}>
-              <SalutationsWrapper start={start} end={todayEnd} />
-            </Suspense>
-          </div>
-        )}
+      <ScrollArea className="flex-1 h-[calc(100dvh-3.5rem)]">
+        <div className="flex flex-col gap-2">
+          {permissions?.includes("admin_stat") && (
+            <div className="grid gap-2">
+              <Suspense fallback={<div className="p-4 rounded bg-card h-24" />}>
+                <SalutationsWrapper start={start} end={todayEnd} />
+              </Suspense>
+            </div>
+          )}
+          <Suspense
+            fallback={
+              <>
+                <div className="grid grid-cols-2 gap-2">
+                  <div className="rounded bg-card ">
+                    <div className="p-4">{t("chart.todayCashflow")}</div>
+                    <div className="h-40 lg:h-48 xl:h-72" />
+                  </div>
+                  <div className="rounded bg-card">
+                    <div className="p-4">{t("chart.todayActiveUsers")}</div>
+                    <div className="h-40 lg:h-48 xl:h-72" />
+                  </div>
+                </div>
+                <div className="grid gap-2">
+                  <div className="p-4 rounded bg-card">
+                    <div className="p-4">{t("chart.bjlDataTrending")}</div>
+                    <div className="h-40 lg:h-48 xl:h-72" />
+                  </div>
+                  <div className="p-4 rounded bg-card">
+                    <div className="p-4">{t("chart.gdDataTrending")}</div>
+                    <div className="h-40 lg:h-48 xl:h-72" />
+                  </div>
+                </div>
+              </>
+            }
+          >
+            <ChartWrapper start={start} end={end} oneWeekAgo={oneWeekAgo} />
+          </Suspense>
+        </div>
+      </ScrollArea>
+      <div className="flex flex-col gap-2 w-[280px] min-[2400px]:w-[560px] shrink-0">
         <Suspense
           fallback={
-            <>
-              <div className="grid grid-cols-2 gap-2">
-                <div className="rounded bg-card ">
-                  <div className="p-4">{t("chart.todayCashflow")}</div>
-                  <div className="h-40 lg:h-48 xl:h-72" />
-                </div>
-                <div className="rounded bg-card">
-                  <div className="p-4">{t("chart.todayActiveUsers")}</div>
-                  <div className="h-40 lg:h-48 xl:h-72" />
-                </div>
+            <div className="rounded bg-card h-48 shrink-0">
+              <div className="text-base p-4">
+                {permissions?.includes("admin_stat")
+                  ? t("dataOverview")
+                  : t("walletData")}
               </div>
-              <div className="grid gap-2">
-                <div className="p-4 rounded bg-card">
-                  <div className="p-4">{t("chart.bjlDataTrending")}</div>
-                  <div className="h-40 lg:h-48 xl:h-72" />
-                </div>
-                <div className="p-4 rounded bg-card">
-                  <div className="p-4">{t("chart.gdDataTrending")}</div>
-                  <div className="h-40 lg:h-48 xl:h-72" />
-                </div>
-              </div>
-            </>
-          }
-        >
-          <ChartWrapper start={start} end={end} oneWeekAgo={oneWeekAgo} />
-        </Suspense>
-      </div>
-      <div className="flex flex-col gap-2 w-[280px] min-[2400px]:w-[560px]">
-        <Suspense
-          fallback={
-            <div className="rounded bg-card">
-              {permissions?.includes("admin_stat") ? (
-                <div className="text-base mb-4 p-4">{t("dataOverview")}</div>
-              ) : (
-                <div className="text-base mb-4 p-4">{t("walletData")}</div>
-              )}
-              <div className="h-32" />
             </div>
           }
         >
@@ -143,9 +145,8 @@ export default async function DashboardPage({
           <AnnouncementWrapper />
         </Suspense>
       </div>
-      <Suspense fallback={<div className="h-24 rounded bg-card" />}>
-        {/* 普通代理：上级公告， admin：全平台 */}
-        {/* 12.06 update admin不展示弹窗 */}
+
+      <Suspense>
         {!permissions?.includes("admin_stat") && <AnnouncementDialogWrapper />}
       </Suspense>
     </>
