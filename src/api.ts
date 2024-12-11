@@ -1568,3 +1568,17 @@ export async function postUserInfoWithdrawVerify(data: {
     token: user?.token,
   });
 }
+
+// 生成下载任务
+export async function exportClick(data: {
+  exportButtonCode: number;
+  queryParams: string;
+}) {
+  const user = await getSession();
+  return await apiRequest({
+    url: "/exportClick",
+    method: "POST",
+    data,
+    token: user?.token,
+  });
+}

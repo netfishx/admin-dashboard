@@ -15,7 +15,6 @@ import { QuickAccess } from "@/app/(dashboard)/quick-access";
 import type { ChartConfig } from "@/components/ui/chart";
 import { getSession } from "@/session";
 import { TZDate } from "@date-fns/tz";
-import { format } from "date-fns";
 import { cookies } from "next/headers";
 import { Suspense } from "react";
 
@@ -250,11 +249,7 @@ async function ChartWrapper({
       </div>
       <GameWeekChartWrapper start={start} end={end} oneWeekAgo={oneWeekAgo} />
       {permissions?.includes("admin_stat") && (
-        <MemberWeekChartWrapper
-          start={start}
-          end={end}
-          oneWeekAgo={oneWeekAgo}
-        />
+        <MemberWeekChartWrapper end={end} oneWeekAgo={oneWeekAgo} />
       )}
       {permissions?.includes("admin_stat") && (
         <FundWeekChartWrapper start={start} end={end} oneWeekAgo={oneWeekAgo} />
@@ -306,7 +301,12 @@ async function AnnouncementWrapper() {
         pageNum: 1,
         level: 1,
       });
-  return <Announcement data={announcementSubData || { list: [] }} />;
+  return (
+    <Announcement
+      data={announcementSubData || { list: [] }}
+      permissions={permissions || []}
+    />
+  );
 }
 
 async function AnnouncementDialogWrapper() {
@@ -362,26 +362,26 @@ async function GameWeekChartWrapper({
   // 百家乐数据
   const bjlTrendingBetAmountData =
     baccaratData?.map(({ day, memberBetAmount }) => ({
-      name: format(day, "yyyy-MM-dd"),
+      name: day,
       data: Number(memberBetAmount),
     })) || [];
 
   const bjlTrendingBetNumData =
     baccaratData?.map(({ day, betNum }) => ({
-      name: format(day, "yyyy-MM-dd"),
+      name: day,
       data: Number(betNum),
     })) || [];
 
   // 掼蛋数据
   const gdTrendingBetAmountData =
     pokerData?.map(({ day, totaSettledAmount }) => ({
-      name: format(day, "yyyy-MM-dd"),
+      name: day,
       data: Number(totaSettledAmount),
     })) || [];
 
   const gdTrendingBetNumData =
     pokerData?.map(({ day, issueAmount }) => ({
-      name: format(day, "yyyy-MM-dd"),
+      name: day,
       data: Number(issueAmount),
     })) || [];
 
@@ -423,10 +423,9 @@ async function GameWeekChartWrapper({
 }
 
 async function MemberWeekChartWrapper({
-  start,
   end,
   oneWeekAgo,
-}: { start: number; end: number; oneWeekAgo: number }) {
+}: { end: number; oneWeekAgo: number }) {
   const t = await getTranslations();
 
   const { data: memberData } = await getMemberChartList({
@@ -435,17 +434,16 @@ async function MemberWeekChartWrapper({
   });
 
   // member
-  const registerData: { name: string; data: number }[] = [];
-  const loginData: { name: string; data: number }[] = [];
+  const registerData: { name: number; data: number }[] = [];
+  const loginData: { name: number; data: number }[] = [];
   memberData?.forEach(({ day, registerCount, loginCount }) => {
-    const formattedDay = format(day, "yyyy-MM-dd");
     registerData.push({
-      name: formattedDay,
+      name: day,
       data: Number(registerCount),
     });
 
     loginData.push({
-      name: formattedDay,
+      name: day,
       data: Number(loginCount),
     });
   });
@@ -474,7 +472,6 @@ async function MemberWeekChartWrapper({
 }
 
 async function FundWeekChartWrapper({
-  start,
   end,
   oneWeekAgo,
 }: { start: number; end: number; oneWeekAgo: number }) {
@@ -488,13 +485,13 @@ async function FundWeekChartWrapper({
   // 充提
   const rechargeData =
     fundData?.fundList?.map(({ day, rechargeAmount }) => ({
-      name: format(day, "yyyy-MM-dd"),
+      name: day,
       data: Number(rechargeAmount),
     })) || [];
 
   const withdrawData =
     fundData?.fundList?.map(({ day, withdrawAmount }) => ({
-      name: format(day, "yyyy-MM-dd"),
+      name: day,
       data: Number(withdrawAmount),
     })) || [];
 

@@ -109,8 +109,7 @@ export function MoneyModal({
             {isEdit ? (
               <div className="flex flex-col gap-1">
                 <div className="flex gap-2 items-center">
-                  <Label className="w-[100px] text-right shrink-0 text-muted-foreground">
-                    <span className="text-destructive">*</span>
+                  <Label className="w-[100px] text-right shrink-0 text-muted-foreground before:content-['*'] before:text-destructive">
                     {t("oldPassword")}
                   </Label>
                   <Password
@@ -122,8 +121,7 @@ export function MoneyModal({
               </div>
             ) : null}
             <div className="flex gap-2 items-center">
-              <Label className="w-[100px] text-right shrink-0 text-muted-foreground">
-                <span className="text-destructive">*</span>
+              <Label className="w-[100px] text-right shrink-0 text-muted-foreground before:content-['*'] before:text-destructive">
                 {isEdit ? t("newPassword") : t("fundPassword")}
               </Label>
               <Password
@@ -133,8 +131,7 @@ export function MoneyModal({
               />
             </div>
             <div className="flex gap-2 items-center">
-              <Label className="w-[100px] text-right shrink-0 text-muted-foreground">
-                <span className="text-destructive">*</span>
+              <Label className="w-[100px] text-right shrink-0 text-muted-foreground before:content-['*'] before:text-destructive">
                 {t("confirmPassword")}
               </Label>
               <Password
