@@ -64,6 +64,10 @@ export function SubaccountDialog({ roles }: { roles: Role[] }) {
             e.preventDefault();
 
             startTransition(async () => {
+              if (checkedRoles.length === 0) {
+                toast.error(t("selectRoles"));
+                return;
+              }
               const formData = new FormData(e.currentTarget);
               checkedRoles.forEach((id) => {
                 formData.append("roleList", id.toString());

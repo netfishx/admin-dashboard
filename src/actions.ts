@@ -27,6 +27,9 @@ export async function loginAction(formData: FormData) {
     code: code.toString(),
     captcha: captcha.toString(),
   });
+  if (res.data?.permissions?.length === 0) {
+    return { message: "当前账号未分配权限，无法登录" };
+  }
   if (res.code === 0 && res.data) {
     await setSession(res.data);
     const cookie = await cookies();

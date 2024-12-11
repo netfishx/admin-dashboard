@@ -61,6 +61,10 @@ export function RoleDialog({
           onSubmit={(e) => {
             e.preventDefault();
             startTransition(async () => {
+              if (permsIds.length === 0) {
+                toast.error(t("selectPermissions"));
+                return;
+              }
               const formData = new FormData(e.currentTarget);
               formData.set("permsIds", permsIds.join(","));
               const res = await editRoleAction(formData);

@@ -810,7 +810,6 @@
       "collapse": "收起",
       "selectDateRange": "请选择日期范围",
       "all": "请选择"
-
     },
     "role": {
       "title": "角色",
@@ -829,7 +828,8 @@
       "deleteModalDescriptionWarning": "存在关联用户的角色无法删除",
       "systemDefault": "系统默认",
       "personalCreate": "个人创建",
-      "permissions": "角色权限"
+      "permissions": "角色权限",
+      "selectPermissions": "请选择权限"
     },
     "subaccount": {
       "title": "子账号",
@@ -854,7 +854,8 @@
       "confirmPassword": "确认密码",
       "chooseRole": "角色选择",
       "usernameWarning": "以小写字母开头，长度6到16位，且只能包含数字和小写字母的组合，不能包含“admin”的字样",
-      "passwordWarning": "8-16位的密码，包含大写字母、小写字母、数字"
+      "passwordWarning": "8-16位的密码，包含大写字母、小写字母、数字",
+      "selectRoles": "请选择角色"
     }
   },
   "fund": {
