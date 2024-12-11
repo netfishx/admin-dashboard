@@ -17,7 +17,7 @@ import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useQueryState } from "nuqs";
-import { useRef, useTransition } from "react";
+import { useTransition } from "react";
 
 export function RatioForm({ gameList }: { gameList: GameInfo[] }) {
   const t = useTranslations("report.agent");
@@ -35,21 +35,11 @@ export function RatioForm({ gameList }: { gameList: GameInfo[] }) {
     defaultValue: "",
   });
   const router = useRouter();
-  const dateRangeFilterReset = useRef<
-    ((start: number, end: number) => void) | null
-  >(null);
-  const handleDateRangeFilterReset = () => {
-    const start = startOfDay(new Date()).getTime();
-    const end = endOfDay(new Date()).getTime();
-    dateRangeFilterReset.current?.(start, end);
-  };
 
   const handleReset = () => {
-    setGameId("all");
-    setagentId("");
-    setHouseOwnerId("");
-    setParentAgentId("");
-    handleDateRangeFilterReset();
+    router.replace(
+      `/reports/agent/baccarat/ratio?startTime=${startOfDay(new Date()).getTime()}&endTime=${endOfDay(new Date()).getTime()}`,
+    );
   };
 
   return (
@@ -78,10 +68,7 @@ export function RatioForm({ gameList }: { gameList: GameInfo[] }) {
         </div>
         <div className="flex gap-2 items-center">
           <Label className="shrink-0">{t("drawtime")}</Label>
-          <DateRangeFilter
-            // biome-ignore lint/suspicious/noAssignInExpressions: <explanation>
-            reset={(resetFn) => (dateRangeFilterReset.current = resetFn)}
-          />
+          <DateRangeFilter />
         </div>
       </div>
 

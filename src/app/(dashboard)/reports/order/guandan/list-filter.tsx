@@ -15,7 +15,6 @@ import { endOfDay, startOfDay } from "date-fns";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useQueryState } from "nuqs";
-import { useRef } from "react";
 
 export function ListFilter({
   hasSearchPermission,
@@ -38,41 +37,21 @@ export function ListFilter({
     defaultValue: "",
   });
 
-  const dateRangeFilterReset = useRef<
-    ((start: number, end: number) => void) | null
-  >(null);
-  const handleDateRangeFilterReset = () => {
-    const start = startOfDay(new Date()).getTime();
-    const end = endOfDay(new Date()).getTime();
-    dateRangeFilterReset.current?.(start, end);
-  };
-
-  const amountFilterReset = useRef<(() => void) | null>(null);
-  const handleAmountFilterReset = () => {
-    amountFilterReset.current?.();
-  };
-
-  const handleReset = () => {
-    setIssuenumber("");
-    setMinisterID("");
-    setAgentID("");
-    handleAmountFilterReset();
-    handleDateRangeFilterReset();
-  };
-
   const router = useRouter();
   const handleSearch = () => {
     router.refresh();
+  };
+  const handleReset = () => {
+    router.replace(
+      `/reports/order/guandan?startTime=${startOfDay(new Date()).getTime()}&endTime=${endOfDay(new Date()).getTime()}`,
+    );
   };
 
   return (
     <div className="flex flex-col gap-2 bg-background py-2 px-4">
       {/* 第一行 */}
       <div className="flex gap-4 items-center">
-        <DateRangeFilter
-          // biome-ignore lint/suspicious/noAssignInExpressions: <explanation>
-          reset={(resetFn) => (dateRangeFilterReset.current = resetFn)}
-        />
+        <DateRangeFilter />
       </div>
 
       {/* 第二行 */}

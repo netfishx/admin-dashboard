@@ -17,7 +17,7 @@ import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useQueryState } from "nuqs";
-import { useRef, useTransition } from "react";
+import { useTransition } from "react";
 
 export function MemberForm({ gameList }: { gameList: GameInfo[] }) {
   const t = useTranslations("report.agent");
@@ -30,19 +30,10 @@ export function MemberForm({ gameList }: { gameList: GameInfo[] }) {
   });
   const [isPending, startTransition] = useTransition();
 
-  const dateRangeFilterReset = useRef<
-    ((start: number, end: number) => void) | null
-  >(null);
-  const handleDateRangeFilterReset = () => {
-    const start = startOfDay(new Date()).getTime();
-    const end = endOfDay(new Date()).getTime();
-    dateRangeFilterReset.current?.(start, end);
-  };
-
   const handleReset = () => {
-    setGameName("all");
-    setLeastlevelID("");
-    handleDateRangeFilterReset();
+    router.replace(
+      `/reports/agent/baccarat/member?startTime=${startOfDay(new Date()).getTime()}&endTime=${endOfDay(new Date()).getTime()}`,
+    );
   };
 
   return (
@@ -71,10 +62,7 @@ export function MemberForm({ gameList }: { gameList: GameInfo[] }) {
         </div>
         <div className="flex gap-2 items-center">
           <Label className="shrink-0">{t("drawtime")}</Label>
-          <DateRangeFilter
-            // biome-ignore lint/suspicious/noAssignInExpressions: <explanation>
-            reset={(resetFn) => (dateRangeFilterReset.current = resetFn)}
-          />
+          <DateRangeFilter />
         </div>
       </div>
       <div className="flex gap-4 items-center">

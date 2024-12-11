@@ -14,7 +14,6 @@ import { endOfDay, startOfDay } from "date-fns";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { parseAsString, useQueryState } from "nuqs";
-import { useEffect, useRef } from "react";
 
 export function ListFilter() {
   const t = useTranslations("report.reward");
@@ -40,15 +39,6 @@ export function ListFilter() {
     parseAsString.withDefault("0").withOptions({ clearOnDefault: false }),
   );
 
-  const dateRangeFilterReset = useRef<
-    ((start: number, end: number) => void) | null
-  >(null);
-  const handleDateRangeFilterReset = () => {
-    const start = startOfDay(new Date()).getTime();
-    const end = endOfDay(new Date()).getTime();
-    dateRangeFilterReset.current?.(start, end);
-  };
-
   const handleFilterChange = (filterType: string) => {
     setOperatorSymbol(filterType);
   };
@@ -60,20 +50,13 @@ export function ListFilter() {
   };
 
   const handleReset = () => {
-    setOrderNumber("");
-    setMemberId("");
-    setHouseOwnerId("");
-    setMinisterId("");
-    handleDateRangeFilterReset();
-    setRechargeMoney("0");
-    setOperatorSymbol("0");
+    router.replace(
+      `/reports/reward?startTime=${startOfDay(new Date()).getTime()}&endTime=${endOfDay(new Date()).getTime()}`,
+    );
   };
   const handleSearch = () => {
     router.refresh();
   };
-  useEffect(() => {
-    handleReset();
-  }, []);
 
   return (
     <div className="flex flex-col gap-2 bg-background py-2 px-4">
@@ -81,11 +64,7 @@ export function ListFilter() {
       <div className="flex gap-4 items-center">
         <div className="flex gap-2 items-center">
           <Label>{t("dateRange")}</Label>
-          <DateRangeFilter
-            enableTimeSelect={false}
-            // biome-ignore lint/suspicious/noAssignInExpressions: <explanation>
-            reset={(resetFn) => (dateRangeFilterReset.current = resetFn)}
-          />
+          <DateRangeFilter enableTimeSelect={false} />
         </div>
       </div>
 
