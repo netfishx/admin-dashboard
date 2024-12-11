@@ -32,8 +32,8 @@ export default function Page({
     <div className="flex flex-col gap-2 w-full">
       <Suspense
         fallback={
-          <div className="bg-background py-2">
-            <Skeleton />
+          <div className="bg-background p-4">
+            <Skeleton className="h-9" />
           </div>
         }
       >

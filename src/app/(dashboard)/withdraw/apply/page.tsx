@@ -33,7 +33,7 @@ export default async function Page({
     <div className="flex flex-col gap-2 w-full">
       <Suspense
         fallback={
-          <div className="bg-background py-2 flex flex-col gap-2">
+          <div className="bg-background p-4 flex flex-col gap-2">
             <Skeleton />
             <Skeleton />
           </div>
@@ -63,7 +63,7 @@ async function TableWrapper({
   const { startTime, endTime, approverStatus, pageNum, pageSize } =
     await searchParams;
 
-  if (!startTime || !endTime) {
+  if (!(startTime && endTime)) {
     return (
       <Table className="border rounded-sm">
         <TableHeaderWrapper />

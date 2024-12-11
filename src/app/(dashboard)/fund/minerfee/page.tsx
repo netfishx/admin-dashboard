@@ -11,7 +11,7 @@ export default async function Page({
   const { loading } = await searchParams;
   if (loading === "true") {
     return (
-      <div className="flex flex-col gap-2 w-full h-full ">
+      <div className="flex flex-col gap-2 w-full h-full">
         <AddBtn />
         <div className="p-2 bg-background flex-1 flex flex-col gap-2">
           <Table className="border rounded-sm ">

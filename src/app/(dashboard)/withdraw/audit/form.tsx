@@ -39,7 +39,7 @@ export function Form() {
     }
   }
   return (
-    <div className="flex flex-col gap-2  bg-background py-2 px-4">
+    <div className="flex flex-col gap-2 bg-background p-4">
       <div className="flex gap-2 items-center">
         <div className="flex gap-2 items-center">
           <Label className="shrink-0">{t("createTime")}</Label>

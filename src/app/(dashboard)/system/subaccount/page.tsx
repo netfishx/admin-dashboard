@@ -1,10 +1,5 @@
 import { getRoleList, getSubaccountList } from "@/api";
-import {
-  AddButton,
-  DeleteButton,
-  EditButton,
-  LoginLogButton,
-} from "@/app/(dashboard)/system/subaccount/button";
+import { AddButton } from "@/app/(dashboard)/system/subaccount/button";
 import { SubaccountDelete } from "@/app/(dashboard)/system/subaccount/delete";
 import { SubaccountDialog } from "@/app/(dashboard)/system/subaccount/dialog";
 import { CustomPagination } from "@/components/custom-pagination";
@@ -17,12 +12,10 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { cn } from "@/lib/utils";
-import { format } from "date-fns";
 import { useTranslations } from "next-intl";
-import { getTranslations } from "next-intl/server";
 import { Suspense } from "react";
 import { LoginLogModalWrapper } from "./login-log-modal";
+import { SubaccountTableBody } from "./table";
 
 function SubaccountTableHeader() {
   const t = useTranslations("system.subaccount");
@@ -60,9 +53,7 @@ async function SubaccountTableWrapper({
       pageSize: 1000,
     }),
   ]);
-  const roles = roleRes.data?.list || [];
-  const t = await getTranslations();
-  const translations = await getTranslations("system.subaccount");
+  const roles = roleRes.data?.list ?? [];
 
   return (
     <>
@@ -71,60 +62,7 @@ async function SubaccountTableWrapper({
       <div className="border rounded-sm">
         <Table className="table-fixed">
           <SubaccountTableHeader />
-          <TableBody>
-            {!res.data?.list || res.data?.list.length === 0 ? (
-              <TableRow>
-                <TableCell colSpan={7} className="text-center h-32">
-                  {t("noData")}
-                </TableCell>
-              </TableRow>
-            ) : (
-              res.data?.list.map((item) => (
-                <TableRow key={item.id}>
-                  <TableCell className="text-center">{item.username}</TableCell>
-                  <TableCell className="text-start break-all">
-                    {item.roleList
-                      ?.map(
-                        (id) => roles.find((role) => role.id === id)?.roleName,
-                      )
-                      .join("，")}
-                  </TableCell>
-                  <TableCell className="text-center">
-                    {item.createTime &&
-                      format(item.createTime, "yyyy-MM-dd HH:mm:ss")}
-                  </TableCell>
-                  <TableCell className="text-center">
-                    {item.lastLoginIp}
-                  </TableCell>
-                  <TableCell className="text-center">
-                    {!!item.lastLoginTime &&
-                      format(item.lastLoginTime, "yyyy-MM-dd HH:mm:ss")}
-                  </TableCell>
-                  <TableCell className="text-center">
-                    <span
-                      className={cn([
-                        "p-1 rounded-sm w-16 inline-block text-center",
-                        item.status === 0
-                          ? "text-green bg-green/20"
-                          : "text-destructive bg-destructive/20",
-                      ])}
-                    >
-                      {item.status === 0
-                        ? translations("enable")
-                        : translations("disable")}
-                    </span>
-                  </TableCell>
-                  <TableCell className="text-center sticky right-0 bg-background">
-                    <div className="flex justify-center">
-                      <EditButton data={item} />
-                      <LoginLogButton id={item.id ?? ""} />
-                      <DeleteButton id={item.id ?? ""} />
-                    </div>
-                  </TableCell>
-                </TableRow>
-              ))
-            )}
-          </TableBody>
+          <SubaccountTableBody list={res.data?.list ?? []} roles={roles} />
         </Table>
       </div>
       {!!res.data?.total && (

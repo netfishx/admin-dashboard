@@ -10,7 +10,7 @@ export default async function Page() {
     <div className="flex flex-col gap-2 w-full h-full">
       <Suspense
         fallback={
-          <div className="flex justify-between items-center bg-background p-4">
+          <div className="bg-background p-4">
             <Skeleton />
           </div>
         }

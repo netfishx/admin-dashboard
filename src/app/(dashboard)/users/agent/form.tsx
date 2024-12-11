@@ -44,7 +44,7 @@ export function Form({ session }: { session: Promise<SessionData | null> }) {
     setLoading(isReset || isPending);
   }, [isReset, isPending, setLoading]);
   return (
-    <div className="flex justify-between items-center bg-background py-2 px-4">
+    <div className="flex justify-between items-center bg-background p-4">
       <div className="flex gap-2 items-center">
         <div className="flex gap-2 items-center">
           <Label className="shrink-0">{t("username")}</Label>

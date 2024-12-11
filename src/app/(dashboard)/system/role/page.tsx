@@ -1,11 +1,8 @@
 import { getPermissionList, getRoleList } from "@/api";
-import {
-  AddButton,
-  DeleteButton,
-  EditButton,
-} from "@/app/(dashboard)/system/role/button";
+import { AddButton } from "@/app/(dashboard)/system/role/button";
 import { RoleDelete } from "@/app/(dashboard)/system/role/delete";
 import { RoleDialog } from "@/app/(dashboard)/system/role/dialog";
+import { RoleTableBody } from "@/app/(dashboard)/system/role/table";
 import { CustomPagination } from "@/components/custom-pagination";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
@@ -16,9 +13,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { format } from "date-fns";
 import { useTranslations } from "next-intl";
-import { getTranslations } from "next-intl/server";
 import { Suspense } from "react";
 
 function RoleTableHeader() {
@@ -48,44 +43,13 @@ async function RoleTableWrapper({
     pageNum: Number(pageNum),
     pageSize: Number(pageSize),
   });
-  const t = await getTranslations();
-  const translations = await getTranslations("system.role");
+
   return (
     <>
       <div className="border rounded-sm">
         <Table>
           <RoleTableHeader />
-          <TableBody>
-            {!res.data?.list || res.data?.list.length === 0 ? (
-              <TableRow>
-                <TableCell colSpan={6} className="text-center h-32">
-                  {t("noData")}
-                </TableCell>
-              </TableRow>
-            ) : (
-              res.data?.list.map((item) => (
-                <TableRow key={item.id}>
-                  <TableCell>{item.id}</TableCell>
-                  <TableCell>{item.roleName}</TableCell>
-                  <TableCell>
-                    {item.updateTime &&
-                      format(item.updateTime, "yyyy-MM-dd HH:mm:ss")}
-                  </TableCell>
-                  <TableCell>
-                    {item.roleType === 0
-                      ? translations("systemDefault")
-                      : translations("personalCreate")}
-                  </TableCell>
-                  <TableCell className="text-center sticky right-0 bg-background">
-                    <div className="flex justify-center">
-                      <EditButton data={item} />
-                      <DeleteButton id={item.id ?? ""} />
-                    </div>
-                  </TableCell>
-                </TableRow>
-              ))
-            )}
-          </TableBody>
+          <RoleTableBody list={res.data?.list || []} />
         </Table>
       </div>
       {!!res.data?.total && (
