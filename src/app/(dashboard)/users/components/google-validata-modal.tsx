@@ -57,14 +57,14 @@ export function GoogleValidataModal({
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Google Validata</DialogTitle>
+          <DialogTitle>{t("google2fa")}</DialogTitle>
           <DialogDescription />
         </DialogHeader>
         <Form ref={ref} action="" onSubmit={handleSubmit}>
           <input type="hidden" name="id" value={id} />
           <div className="flex flex-col gap-2">
             <div className="flex flex-col gap-2">
-              <Label>Google Validata</Label>
+              <Label>{t("google2faCode")}</Label>
               <Password type="password" name="googleCode" />
             </div>
           </div>

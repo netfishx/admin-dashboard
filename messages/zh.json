@@ -50,6 +50,8 @@
   "noData": "暂无数据",
   "platform": "平台",
   "agent": "代理",
+  "google2fa": "二次验证",
+  "google2faCode": "谷歌验证码",
   "login": {
     "button": "登录",
     "title": "代理后台",
@@ -248,8 +250,8 @@
       "close": "取消",
       "save": "确定",
       "restCount": "剩余尝试次数",
-      "password": "登入密码",
-      "confirmPassword": "再次输入登入密码",
+      "password": "密码",
+      "confirmPassword": "确认密码",
       "statusLabel": {
         "0": "启用",
         "1": "停用",
@@ -333,7 +335,8 @@
       "changeLog": "变更日志",
       "check": "查询",
       "moneyPassword": "资金密码",
-      "deleteCreditWarning": "注意：销账金额不可大于可用余额，若余额不足请先充值"
+      "deleteCreditWarning": "注意：销账金额不可大于可用余额，若余额不足请先充值",
+      "availableAmount": "当前可用余额"
     },
     "supplier": {
       "add": "新增",

@@ -332,7 +332,7 @@ export async function modifyCreditLimit(data: {
   secret: string;
 }) {
   const user = await getSession();
-  return await apiRequest({
+  return await apiRequest<{ check: boolean; id: string }>({
     url: "/wallet/modifyCreditLimit",
     method: "POST",
     data,
