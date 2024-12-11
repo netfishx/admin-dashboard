@@ -77,11 +77,13 @@ export async function List() {
                 </span>
               </div>
             </div>
-            <GoogleBtn
-              secret={secret ?? ""}
-              qrcode={qrcode ?? ""}
-              isOpen={showGoogle?.isOpen}
-            />
+            {!showGoogle?.isOpen && (
+              <GoogleBtn
+                secret={secret ?? ""}
+                qrcode={qrcode ?? ""}
+                isOpen={showGoogle?.isOpen}
+              />
+            )}
           </div>
         )}
 

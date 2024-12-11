@@ -13,7 +13,8 @@ import {
 import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useTransition } from "react";
+import { toast } from "sonner";
 
 interface Dialogprops {
   open?: boolean;
@@ -22,18 +23,16 @@ interface Dialogprops {
 
 export function AddDialog(props: Dialogprops) {
   const { open = true, onOpenChange } = props;
-  const [loading, setLoading] = useState(false);
+  const [isPending, startTransition] = useTransition();
   const t = useTranslations("fund.collection");
   const translations = useTranslations();
   const router = useRouter();
   const handleConfirm = async () => {
-    setLoading(true);
     const _res = await addCollectionAddress({ size: 1 });
-    onOpenChange(false);
-    setLoading(false);
-
     if (_res.code === 0) {
       router.refresh();
+      toast.success(t("addSuccess"));
+      onOpenChange(false);
     }
   };
   return (
@@ -45,8 +44,11 @@ export function AddDialog(props: Dialogprops) {
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>{translations("cancel")}</AlertDialogCancel>
-          <AlertDialogAction onClick={handleConfirm} disabled={loading}>
-            {loading && <Loader2 className="w-4 h-4 animate-spin" />}
+          <AlertDialogAction
+            onClick={() => startTransition(handleConfirm)}
+            disabled={isPending}
+          >
+            {isPending && <Loader2 className="w-4 h-4 animate-spin" />}
             {translations("confirm")}
           </AlertDialogAction>
         </AlertDialogFooter>

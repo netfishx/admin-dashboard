@@ -62,7 +62,7 @@ export function ChangeLogModal({
         }
       });
     }
-  }, [targetUserId, open, pageNum, pageSize]);
+  }, [open, targetUserId, setLoading]);
   return (
     <Dialog open={open} onOpenChange={(open) => setOpen(open)}>
       <DialogContent

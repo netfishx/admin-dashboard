@@ -112,6 +112,7 @@ export type MemberList = {
   creditAmount: number;
   createTime: number;
   depositAddress: string;
+  agentId: string;
 };
 
 export interface LoginLog {
@@ -180,10 +181,10 @@ export type Announcement = {
   id?: string | null; // 编辑时传
   contentId?: string | null; // 编辑时传
   type: number;
-  content: { id?: string; language: string; title?: string; content: string }[];
+  content: { id?: string; language: string; label?: string; content: string }[];
   status: number;
-  startTime: number | null;
-  endTime: number | null;
+  startTime: number;
+  endTime: number;
 };
 // 公告列表请求 全平台
 export type AnnouncementListRequest = {
@@ -204,7 +205,7 @@ export type SameOrSeniorAnnoListRequest = {
 export type AnnouncementList = {
   id: string;
   userId: string;
-  type: string;
+  type: number;
   startTime: number;
   endTime: number;
   language: string;
@@ -584,6 +585,7 @@ export type CollectionAddressListRecords = {
   remark: string;
   status: number;
   updateTime: string;
+  usdtBalance: number;
 };
 // 归集地址列表请求入参
 export type CollectionAddressListRequestParams = {

@@ -10,6 +10,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import type { CollectionAddressListRecords } from "@/lib/types";
+import { nanoid } from "nanoid";
 import { getTranslations } from "next-intl/server";
 import { Suspense } from "react";
 import CopyButton from "./copy-button";
@@ -37,11 +38,17 @@ export async function ListHeader() {
 
 async function ListBody({ list }: { list: CollectionAddressListRecords[] }) {
   const translate = await getTranslations();
+  const t = await getTranslations("fund.collection");
+  const typeMap = {
+    0: t("disable"),
+    1: t("enable"),
+    2: t("locked"),
+  };
   return (
     <TableBody>
       {list && list?.length > 0 ? (
         list?.map((item: CollectionAddressListRecords) => (
-          <TableRow key={item.address}>
+          <TableRow key={nanoid()}>
             <TableCell className="w-32 text-center">
               <div className="flex items-center justify-center gap-2">
                 {item.address}
@@ -49,8 +56,12 @@ async function ListBody({ list }: { list: CollectionAddressListRecords[] }) {
               </div>
             </TableCell>
             <TableCell className="w-32 text-center">{item.coin}</TableCell>
-            <TableCell className="w-36 text-center">{item.coin}</TableCell>
-            <TableCell className="w-36 text-center">{item.status}</TableCell>
+            <TableCell className="w-36 text-center">
+              {item.usdtBalance}
+            </TableCell>
+            <TableCell className="w-36 text-center">
+              {typeMap[item.status as keyof typeof typeMap]}
+            </TableCell>
             <TableCell className="w-36 text-center">
               {item.updateTime}
             </TableCell>

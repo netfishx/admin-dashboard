@@ -48,6 +48,8 @@
   "memberReport": "会员报表",
   "accountChangeRecord": "账变记录",
   "noData": "暂无数据",
+  "platform": "平台",
+  "agent": "代理",
   "login": {
     "button": "登录",
     "title": "代理后台",
@@ -807,9 +809,14 @@
       "english": "英文",
       "japanese": "日文",
       "viewMore": "查看更多",
+      "view": "点击查看",
       "collapse": "收起",
       "selectDateRange": "请选择日期范围",
-      "all": "请选择"
+      "all": "请选择",
+      "allRequired": "请填写所有必填项",
+      "timeError": "请选择正确的时间范围",
+      "platform": "平台",
+      "agent": "代理"
     },
     "role": {
       "title": "角色",
@@ -860,6 +867,7 @@
   },
   "fund": {
     "collection": {
+      "lockSuccess": "锁定成功",
       "lock": "锁定",
       "unlock": "解锁",
       "stop": "停用",
@@ -873,6 +881,7 @@
       "unlockTitle": "操作确认",
       "lockTitle": "操作确认",
       "stopTitle": "操作确认",
+      "passwordCheckTips": "请输入资金密码以查看私钥",
       "checkStep1Title": "资金密码验证",
       "checkStep2Title": "查看密钥",
       "checkStep1Desc": "请输入您的资金密码",
@@ -892,7 +901,13 @@
       "createTime": "创建时间",
       "action": "操作",
       "title": "归集地址管理",
-      "caozuo": "操作"
+      "caozuo": "操作",
+      "enable": "使用中",
+      "disable": "停用",
+      "locked": "锁定",
+      "deleted": "停用",
+      "unknown": "未知状态",
+      "addSuccess": "新增成功"
     },
     "orefee": {
       "add": "新增",
@@ -928,7 +943,7 @@
       "walletInfo": "钱包信息",
       "balance": "总余额",
       "availableBalance": "可用余额",
-      "freezeBalance": "冻结余额",
+      "freezeBalance": "游戏冻结余额",
       "withdrawPassword": "提款密码",
       "withdrawAmount": "提款金额",
       "google2fa": "谷歌二次验证",
@@ -944,7 +959,7 @@
       "mainNet": "主网",
       "qrCode": "二维码",
       "depositAddress": "充币地址",
-      "unUsedCredit": "未使用授信"
+      "unUsedCredit": "会员未使用授信"
     },
     "security": {
       "title": "安全设置",

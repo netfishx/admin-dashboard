@@ -7,7 +7,6 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import type { AnnouncementList } from "@/lib/types";
-import { cn } from "@/lib/utils";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 
@@ -31,6 +30,7 @@ export function AnnouncementDialog({
       onOpenChange={handleOpenChange}
     >
       <DialogContent
+        className="w-[90dvh] max-w-[90dvw]"
         onInteractOutside={(e) => {
           e.preventDefault();
         }}
@@ -45,14 +45,16 @@ export function AnnouncementDialog({
                 key={item.id}
                 className="text-ellipsis whitespace-nowrap overflow-hidden"
               >
-                <span
-                  className={cn(
-                    `${item.type === "1" ? "text-primary bg-primary/10" : "text-orange bg-orange/10"}`,
-                    "mr-2 p-1 inline-block rounded-md",
-                  )}
-                >
-                  {item.type === "1" ? "平台" : "代理"}
-                </span>
+                {item.type === 1 && (
+                  <span className="mr-2 px-2 py-1 inline-block rounded-sm text-primary bg-primary/10">
+                    {t("platform")}
+                  </span>
+                )}
+                {item.type === 3 && (
+                  <span className="mr-2 px-2 py-1 inline-block rounded-sm text-orange bg-orange/10">
+                    {t("agent")}
+                  </span>
+                )}
                 {item.contentOfLanguage}
               </div>
             );

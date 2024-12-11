@@ -66,6 +66,7 @@ function FormField({
           value={value}
           onChange={(e) => onChange(e.target.value)}
           placeholder={placeholder}
+          className={cn("flex-1 bg-gray-50", readOnly && "cursor-not-allowed")}
         />
       ) : (
         <Input
@@ -109,7 +110,7 @@ function WithdrawForm(props: {
     if (field === "withdrawMoney") {
       const _fee =
         Number(fee?.percentageFee) * Number(value) + Number(fee?.fixedFee);
-      newData = { ...newData, withdrawFee: _fee.toFixed(4) };
+      newData = { ...newData, withdrawFee: _fee.toFixed(2) };
     }
     newData[field] = value;
     setFormData(newData);
@@ -135,6 +136,7 @@ function WithdrawForm(props: {
             onChange={handleChange("withdrawMoney")}
             required
             placeholder={t("withdrawAmount")}
+            type="number"
           />
           <div className="ml-[140px] text-sm space-y-1">
             <div className="text-red-500">{t("tips03")}:</div>
@@ -178,6 +180,7 @@ export function CheckDialog(props: Dialogprops) {
   const { open = true, onOpenChange, data } = props;
   const t = useTranslations("personal.info");
   const translations = useTranslations();
+  const [isAllow, setIsAllow] = useState(false);
   const [step, setStep] = useState(1);
   const router = useRouter();
   const [formData, setFormData] = useState<WithdrawFormData>({
@@ -191,13 +194,11 @@ export function CheckDialog(props: Dialogprops) {
   const [verifyId, setVerifyId] = useState("");
   const [loading, setLoading] = useState(false);
   const handleNext = async () => {
-    setLoading(true);
     if (Number(formData.withdrawMoney) > Number(formData.availableAmount)) {
       toast.error(t("tips01"));
-      setLoading(false);
       return;
     }
-
+    setLoading(true);
     const _res = await postUserInfoWithdraw(formData);
     if (_res.code === 0) {
       if (_res?.data?.check && _res?.data?.validationType === "GOOGLE") {
@@ -215,6 +216,12 @@ export function CheckDialog(props: Dialogprops) {
   };
 
   const handleChange = (data: WithdrawFormData) => {
+    if (data.secret && data.withdrawWay && data.withdrawMoney) {
+      setIsAllow(true);
+    } else {
+      setIsAllow(false);
+    }
+
     setFormData(data);
   };
 
@@ -249,7 +256,10 @@ export function CheckDialog(props: Dialogprops) {
               <Button variant="outline" onClick={() => onOpenChange(false)}>
                 {translations("cancel")}
               </Button>
-              <Button onClick={() => handleNext()} disabled={loading}>
+              <Button
+                onClick={() => handleNext()}
+                disabled={loading || !isAllow}
+              >
                 {loading && <Loader2 className="w-4 h-4 animate-spin" />}
                 {translations("confirm")}
               </Button>

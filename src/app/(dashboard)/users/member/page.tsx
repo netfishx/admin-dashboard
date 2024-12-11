@@ -44,7 +44,7 @@ export default function Page({
           fallback={
             <div className="border rounded-sm">
               <Table className="table-fixed">
-                <TableHeaderWrapper total={0} />
+                <TableHeaderWrapper total={1} />
                 <TableBodySkeleton />
               </Table>
             </div>
@@ -109,7 +109,7 @@ async function TableHeaderWrapper({ total }: { total: number }) {
         <TableHead className="w-60">{t("userId")}</TableHead>
         <TableHead className="w-40">{t("username")}</TableHead>
         <TableHead className="w-40">{t("nickname")}</TableHead>
-        <TableHead className="w-72">{t("walletAddress")}</TableHead>
+        <TableHead className="w-80">{t("walletAddress")}</TableHead>
         <TableHead className="w-28">{t("debtAmount")}</TableHead>
         <TableHead className="w-28">{t("creditAmount")}</TableHead>
         <TableHead className="w-20">{t("status")}</TableHead>
@@ -140,8 +140,8 @@ async function TableBodyWrapper({
               </>
             )}
             <TableCell>{item.id}</TableCell>
-            <TableCell>{item.username}</TableCell>
-            <TableCell>{item.nickname}</TableCell>
+            <TableCell className="break-all">{item.username}</TableCell>
+            <TableCell className="break-all">{item.nickname}</TableCell>
             <TableCell>{item.depositAddress}</TableCell>
             <TableCell>{item.debtAmount ?? 0}</TableCell>
             <TableCell>{item.creditAmount ?? 0}</TableCell>

@@ -21,11 +21,6 @@ export async function List({
   searchParams,
 }: { searchParams: Promise<{ [key: string]: string | string[] }> }) {
   const { loading, pageSize, pageNum } = await searchParams;
-  const { data } = await getSameOrSeniorAnno({
-    pageSize: Number(pageSize ?? 10),
-    pageNum: Number(pageNum ?? 1),
-    level: 0, // 本级
-  });
 
   if (loading === "true") {
     return (
@@ -38,6 +33,13 @@ export async function List({
       </div>
     );
   }
+
+  const { data } = await getSameOrSeniorAnno({
+    pageSize: Number(pageSize ?? 10),
+    pageNum: Number(pageNum ?? 1),
+    level: 0, // 本级
+  });
+
   return (
     <div className="p-2 gap-2 flex flex-col h-full bg-background">
       <AddBtn />
@@ -77,7 +79,6 @@ export async function TableHeaderWrapper() {
         <TableHead className="w-32 min-w-32 text-center">
           {t("createTime")}
         </TableHead>
-        <TableHead className="min-w-24 text-center">{t("title")}</TableHead>
         <TableHead className="w-[450px] min-w-24 text-center">
           {t("content")}
         </TableHead>
@@ -106,16 +107,15 @@ export async function TableBodyWrapper({
 }: { data?: PageData<AnnouncementList> }) {
   const translations = await getTranslations();
 
-  const noticeTypeMap = {
-    "1": "平台公告",
-    "2": "代理公告",
-    "3": "大厅公告",
-    "4": "房间公告",
-    "5": "系统配置变更公告",
-  } as const;
-
-  const getNoticeTypeName = (type: string) => {
-    return noticeTypeMap[type as keyof typeof noticeTypeMap];
+  const noticeTypeMap: { [key: number]: string } = {
+    1: "平台代理公告",
+    2: "平台会员公告",
+    3: "直属代理公告",
+    4: "直属会员公告",
+    5: "系统配置公告",
+    // todo
+    6: "占成公告",
+    7: "退水公告",
   };
 
   return (
@@ -132,16 +132,14 @@ export async function TableBodyWrapper({
             <TableCell className="w-24 text-center">
               {format(Number(item.createTime), "yyyy-MM-dd HH:mm:ss")}
             </TableCell>
-            <TableCell className="text-center">
-              {item.labelOfLanguage}
-            </TableCell>
             <TruncatedCell
               className="w-[550px]"
+              type={item.type}
               content={item.contentOfLanguage}
               maxLength={50}
             />
             <TableCell className="text-center">
-              {getNoticeTypeName(item.type)}
+              {noticeTypeMap[item.type]}
             </TableCell>
             <TableCell className="w-24 text-center">
               <EditBtn data={item} />
@@ -150,7 +148,7 @@ export async function TableBodyWrapper({
         ))
       ) : (
         <TableRow>
-          <TableCell colSpan={7} className="text-center h-40">
+          <TableCell colSpan={6} className="text-center h-40">
             {translations("noData")}
           </TableCell>
         </TableRow>
