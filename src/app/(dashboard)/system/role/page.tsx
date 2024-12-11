@@ -7,6 +7,7 @@ import {
 import { RoleDelete } from "@/app/(dashboard)/system/role/delete";
 import { RoleDialog } from "@/app/(dashboard)/system/role/dialog";
 import { CustomPagination } from "@/components/custom-pagination";
+import { Time } from "@/components/time";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
   Table,
@@ -16,7 +17,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { formatTime } from "@/lib/time";
 import { useTranslations } from "next-intl";
 import { getTranslations } from "next-intl/server";
 import { Suspense } from "react";
@@ -68,7 +68,7 @@ async function RoleTableWrapper({
                   <TableCell>{item.id}</TableCell>
                   <TableCell>{item.roleName}</TableCell>
                   <TableCell>
-                    {item.updateTime && formatTime(item.updateTime)}
+                    {item.updateTime && <Time time={item.updateTime} />}
                   </TableCell>
                   <TableCell>
                     {item.roleType === 0

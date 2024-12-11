@@ -8,6 +8,7 @@ import {
 import { SubaccountDelete } from "@/app/(dashboard)/system/subaccount/delete";
 import { SubaccountDialog } from "@/app/(dashboard)/system/subaccount/dialog";
 import { CustomPagination } from "@/components/custom-pagination";
+import { Time } from "@/components/time";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
   Table,
@@ -17,7 +18,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { formatTime } from "@/lib/time";
 import { cn } from "@/lib/utils";
 import { useTranslations } from "next-intl";
 import { getTranslations } from "next-intl/server";
@@ -90,13 +90,13 @@ async function SubaccountTableWrapper({
                       .join("，")}
                   </TableCell>
                   <TableCell className="text-center">
-                    {item.createTime && formatTime(item.createTime)}
+                    {item.createTime && <Time time={item.createTime} />}
                   </TableCell>
                   <TableCell className="text-center">
                     {item.lastLoginIp}
                   </TableCell>
                   <TableCell className="text-center">
-                    {!!item.lastLoginTime && formatTime(item.lastLoginTime)}
+                    {!!item.lastLoginTime && <Time time={item.lastLoginTime} />}
                   </TableCell>
                   <TableCell className="text-center">
                     <span
