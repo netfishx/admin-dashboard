@@ -1,8 +1,11 @@
 import { getPermissionList, getRoleList } from "@/api";
-import { AddButton } from "@/app/(dashboard)/system/role/button";
+import {
+  AddButton,
+  DeleteButton,
+  EditButton,
+} from "@/app/(dashboard)/system/role/button";
 import { RoleDelete } from "@/app/(dashboard)/system/role/delete";
 import { RoleDialog } from "@/app/(dashboard)/system/role/dialog";
-import { RoleTableBody } from "@/app/(dashboard)/system/role/table";
 import { CustomPagination } from "@/components/custom-pagination";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
@@ -13,7 +16,9 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { formatTime } from "@/lib/time";
 import { useTranslations } from "next-intl";
+import { getTranslations } from "next-intl/server";
 import { Suspense } from "react";
 
 function RoleTableHeader() {
@@ -43,13 +48,43 @@ async function RoleTableWrapper({
     pageNum: Number(pageNum),
     pageSize: Number(pageSize),
   });
-
+  const t = await getTranslations();
+  const translations = await getTranslations("system.role");
   return (
     <>
       <div className="border rounded-sm">
         <Table>
           <RoleTableHeader />
-          <RoleTableBody list={res.data?.list || []} />
+          <TableBody>
+            {!res.data?.list || res.data?.list.length === 0 ? (
+              <TableRow>
+                <TableCell colSpan={6} className="text-center h-32">
+                  {t("noData")}
+                </TableCell>
+              </TableRow>
+            ) : (
+              res.data?.list.map((item) => (
+                <TableRow key={item.id}>
+                  <TableCell>{item.id}</TableCell>
+                  <TableCell>{item.roleName}</TableCell>
+                  <TableCell>
+                    {item.updateTime && formatTime(item.updateTime)}
+                  </TableCell>
+                  <TableCell>
+                    {item.roleType === 0
+                      ? translations("systemDefault")
+                      : translations("personalCreate")}
+                  </TableCell>
+                  <TableCell className="text-center sticky right-0 bg-background">
+                    <div className="flex justify-center">
+                      <EditButton data={item} />
+                      <DeleteButton id={item.id ?? ""} />
+                    </div>
+                  </TableCell>
+                </TableRow>
+              ))
+            )}
+          </TableBody>
         </Table>
       </div>
       {!!res.data?.total && (
