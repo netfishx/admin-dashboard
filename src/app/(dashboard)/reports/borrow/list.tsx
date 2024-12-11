@@ -38,6 +38,12 @@ export async function ListHeader() {
 
 async function ListBody({ list }: { list: BorrowRecordRequestRecords[] }) {
   const translate = await getTranslations();
+  const t = await getTranslations("report.borrow");
+  const typeMap = {
+    15: t("borrow"),
+    16: t("repayment"),
+    21: t("writeOff"),
+  };
   return (
     <TableBody>
       {list?.length > 0 ? (
@@ -49,7 +55,9 @@ async function ListBody({ list }: { list: BorrowRecordRequestRecords[] }) {
             <TableCell className="w-24 text-center">
               {item.operateMoney}
             </TableCell>
-            <TableCell className="w-24 text-center">{item.orderType}</TableCell>
+            <TableCell className="w-24 text-center">
+              {typeMap[item.orderType as keyof typeof typeMap]}
+            </TableCell>
             <TableCell className="w-24 text-center">
               {format(item.createTime, "yyyy-MM-dd HH:mm:ss")}
             </TableCell>
@@ -90,6 +98,7 @@ export async function List({
       </div>
     );
   }
+
   const { data } = await postGetBorrowLogList(p);
 
   return (
