@@ -43,6 +43,8 @@ export function TransferMoneyModal() {
   const [googleValidataOpen, setGoogleValidataOpen] = useState(false);
   // 订单id
   const [orderId, setOrderId] = useState("");
+  // 金额校验是否正确
+  const [isValidataMoney, setIsValidataMoney] = useState(false);
 
   const handleClickTransferMoney = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -99,42 +101,49 @@ export function TransferMoneyModal() {
             <input type="hidden" name="id" value={data?.id} />
             <div className="flex flex-col gap-4 w-full px-4">
               <div className="flex gap-4 items-center">
-                <Label className="shrink-0 w-1/4 text-right text-muted-foreground">
+                <Label className="shrink-0 w-20 text-right text-muted-foreground">
                   {t("username")}
                 </Label>
                 <span>{data?.username}</span>
               </div>
-              <div className="flex gap-4 items-center">
-                <Label className="shrink-0 w-1/4 text-right text-muted-foreground">
-                  {t("amount")}
-                </Label>
-                <Input
-                  className="w-[200px]"
-                  name="amount"
-                  type="number"
-                  min={0}
-                  max={availableAmount ?? 0}
-                />
-              </div>
-              <div className="flex gap-4 items-center">
-                <Label className="shrink-0 w-1/4 text-right text-muted-foreground" />
-                <div className="flex-1 text-xs text-destructive flex flex-row">
-                  {t("availableAmount")}:
-                  {fetching ? (
-                    <Loader2 className="w-4 h-4 animate-spin" />
-                  ) : (
-                    availableAmount
-                  )}
+              <div className="flex flex-col gap-1">
+                <div className="flex gap-4 items-center">
+                  <Label className="shrink-0 w-20 text-right text-muted-foreground">
+                    {t("amount")}
+                  </Label>
+                  <Input
+                    className="flex-1"
+                    name="amount"
+                    type="number"
+                    min={0}
+                    max={availableAmount}
+                    step={0.01}
+                    onBlur={(e) => {
+                      setIsValidataMoney(e.target.reportValidity());
+                    }}
+                  />
+                </div>
+                <div className="flex gap-4 items-center">
+                  <Label className="shrink-0 w-20 text-right text-muted-foreground" />
+                  <div className="flex-1 text-xs text-destructive flex flex-row">
+                    {t("availableAmount")}:
+                    {fetching ? (
+                      <Loader2 className="w-4 h-4 animate-spin" />
+                    ) : (
+                      availableAmount
+                    )}
+                  </div>
                 </div>
               </div>
               <div className="flex gap-4 items-center">
-                <Label className="shrink-0 w-1/4 text-right text-muted-foreground">
+                <Label className="shrink-0 w-20 text-right text-muted-foreground">
                   {t("moneyPassword")}
                 </Label>
                 <Password
                   defaultValue={moneyPassword}
                   type="password"
                   name="moneyPassword"
+                  className="flex-1"
                 />
               </div>
             </div>
@@ -144,7 +153,7 @@ export function TransferMoneyModal() {
               {translation("cancel")}
             </Button>
             <Button
-              disabled={isPeding}
+              disabled={isPeding || !isValidataMoney}
               onClick={(e) => {
                 e.preventDefault();
                 if (ref.current) {
