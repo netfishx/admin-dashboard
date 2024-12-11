@@ -66,25 +66,25 @@ export function Form() {
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="all">{t("all")}</SelectItem>
-              <SelectItem value="1">百家乐投注</SelectItem>
-              <SelectItem value="3">入金</SelectItem>
-              <SelectItem value="4">出金进行中</SelectItem>
-              <SelectItem value="5">出金完成</SelectItem>
-              <SelectItem value="6">出金退回</SelectItem>
-              <SelectItem value="7">创建钱包</SelectItem>
-              <SelectItem value="8">发反水</SelectItem>
-              <SelectItem value="9">百家乐结算</SelectItem>
-              <SelectItem value="10">掼蛋结算</SelectItem>
-              <SelectItem value="11">关闭房间</SelectItem>
-              <SelectItem value="12">房间充值</SelectItem>
-              <SelectItem value="13">领反水</SelectItem>
-              <SelectItem value="15">借款</SelectItem>
-              <SelectItem value="16">还款</SelectItem>
-              <SelectItem value="17">创建房间</SelectItem>
-              <SelectItem value="18">提升额度</SelectItem>
-              <SelectItem value="19">减少额度</SelectItem>
-              <SelectItem value="20">转款</SelectItem>
-              <SelectItem value="21">销账</SelectItem>
+              <SelectItem value="1">{t("lotteryBet")}</SelectItem>
+              <SelectItem value="3">{t("deposit")}</SelectItem>
+              <SelectItem value="4">{t("withdrawal")}</SelectItem>
+              <SelectItem value="5">{t("withdrawalCompleted")}</SelectItem>
+              <SelectItem value="6">{t("withdrawalReturned")}</SelectItem>
+              <SelectItem value="7">{t("createWallet")}</SelectItem>
+              <SelectItem value="8">{t("issueRebate")}</SelectItem>
+              <SelectItem value="9">{t("lotterySettlement")}</SelectItem>
+              <SelectItem value="10">{t("guandanSettlement")}</SelectItem>
+              <SelectItem value="11">{t("closeRoom")}</SelectItem>
+              <SelectItem value="12">{t("roomRecharge")}</SelectItem>
+              <SelectItem value="13">{t("receiveRebate")}</SelectItem>
+              <SelectItem value="15">{t("borrow")}</SelectItem>
+              <SelectItem value="16">{t("repayment")}</SelectItem>
+              <SelectItem value="17">{t("createRoom")}</SelectItem>
+              <SelectItem value="18">{t("increaseCredit")}</SelectItem>
+              <SelectItem value="19">{t("decreaseCredit")}</SelectItem>
+              <SelectItem value="20">{t("transfer")}</SelectItem>
+              <SelectItem value="21">{t("writeOff")}</SelectItem>
             </SelectContent>
           </Select>
         </div>

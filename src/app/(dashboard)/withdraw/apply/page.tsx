@@ -15,13 +15,6 @@ import { cn } from "@/lib/utils";
 import { getSession } from "@/session";
 import { getTranslations } from "next-intl/server";
 import { Suspense } from "react";
-import { translateValue } from "../tools";
-import {
-  approverStatusDict,
-  moneyStatusDict,
-  userTypeDict,
-  withdrawModeDict,
-} from "../tools";
 import { Actions } from "./actions";
 import { Form } from "./form";
 import { MoneyBtn } from "./money-btn";
@@ -138,10 +131,73 @@ async function TableHeaderWrapper() {
 async function TableBodyWrapper({ list }: { list: ApplyData[] }) {
   const translations = await getTranslations();
   const userInfo = await getSession();
+  const t = await getTranslations("withdraw.apply");
   // 审核状态 0未处理 1锁定中 2拒绝 3通过
   // 资金状态 0转账中 1到账 2异常
   // 出金模式 0自动 1手动
   // 用户类型 0代理 1会员
+  function translateValue(
+    value: number,
+    map: Array<{
+      value: number;
+      label: string;
+    }>,
+  ): string {
+    return map.find((item) => item.value === value)?.label || "--";
+  }
+  const approverStatusDict = [
+    {
+      value: 0,
+      label: t("unprocessed"),
+    },
+    {
+      value: 1,
+      label: t("locked"),
+    },
+    {
+      value: 2,
+      label: t("rejected"),
+    },
+    {
+      value: 3,
+      label: t("passed"),
+    },
+  ];
+  const withdrawModeDict = [
+    {
+      value: 0,
+      label: t("auto"),
+    },
+    {
+      value: 1,
+      label: t("manual"),
+    },
+  ];
+  const moneyStatusDict = [
+    {
+      value: 0,
+      label: t("transferred"),
+    },
+    {
+      value: 1,
+      label: t("received"),
+    },
+    {
+      value: 2,
+      label: t("exception"),
+    },
+  ];
+  const userTypeDict = [
+    {
+      value: 0,
+      label: t("agent"),
+    },
+    {
+      value: 1,
+      label: t("member"),
+    },
+  ];
+
   return (
     <TableBody>
       {list && list.length > 0 ? (

@@ -99,10 +99,10 @@ export function Form() {
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="all">{t("all")}</SelectItem>
-              <SelectItem value="0">审核中</SelectItem>
-              <SelectItem value="1">提现中</SelectItem>
-              <SelectItem value="2">审核失败</SelectItem>
-              <SelectItem value="3">提现成功</SelectItem>
+              <SelectItem value="0">{t("auditing")}</SelectItem>
+              <SelectItem value="1">{t("withdrawing")}</SelectItem>
+              <SelectItem value="2">{t("failed")}</SelectItem>
+              <SelectItem value="3">{t("success")}</SelectItem>
             </SelectContent>
           </Select>
         </div>

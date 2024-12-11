@@ -6,7 +6,7 @@ import { Label } from "@/components/ui/label";
 import { Loader2 } from "lucide-react";
 import { useSearchParams } from "next/navigation";
 
-import { getGameList } from "@/api";
+import { exportClick, getGameList } from "@/api";
 import {
   Select,
   SelectContent,
@@ -163,7 +163,22 @@ export function Form() {
           </Button>
           <Button
             onClick={() => {
-              startTransition(router.refresh);
+              startTransition(async () => {
+                const params = {
+                  exportButtonCode: 100001,
+                  queryParams: JSON.stringify(
+                    Object.fromEntries(
+                      new URLSearchParams(searchParams.toString()),
+                    ),
+                  ),
+                };
+                const { code, message } = await exportClick(params);
+                if (code === 0) {
+                  toast.success(message);
+                } else {
+                  toast.error(message);
+                }
+              });
             }}
             disabled={isPending}
           >

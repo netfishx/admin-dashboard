@@ -20,19 +20,7 @@ import { AddBtn } from "./add-btn";
 export async function List({
   searchParams,
 }: { searchParams: Promise<{ [key: string]: string | string[] }> }) {
-  const { loading, pageSize, pageNum } = await searchParams;
-
-  if (loading === "true") {
-    return (
-      <div>
-        <AddBtn />
-        <Table>
-          <TableHeaderWrapper />
-          <TableBodySkeleton />
-        </Table>
-      </div>
-    );
-  }
+  const { pageSize, pageNum } = await searchParams;
 
   const { data } = await getSameOrSeniorAnno({
     pageSize: Number(pageSize ?? 10),

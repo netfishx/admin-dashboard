@@ -5,9 +5,11 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { format } from "date-fns";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { CartesianGrid, Line, LineChart, XAxis, YAxis } from "recharts";
+
 // 定义配置对象
 const chartConfigs = {
   "0": {
@@ -30,11 +32,11 @@ export function WeekChart({
   chartConfig: {
     data: {
       mainData?: {
-        name: string;
+        name: number;
         data: number;
       }[];
       subData?: {
-        name: string;
+        name: number;
         data: number;
       }[];
     };
@@ -47,7 +49,7 @@ export function WeekChart({
   const [activeTab, setActiveTab] = useState("0");
   function getData(tab: string) {
     let initialData: {
-      name: string;
+      name: number;
       data: number;
     }[] = [];
 
@@ -60,7 +62,7 @@ export function WeekChart({
   }
   const [data, setData] = useState<
     {
-      name: string;
+      name: number;
       data: number;
     }[]
   >(getData(activeTab));
@@ -106,7 +108,10 @@ export function WeekChart({
             className="w-[40dvw] lg:w-[50dvw] xl:w-[55dvw] 2xl:w-[60dvw] mx-auto h-60"
           >
             <LineChart
-              data={data}
+              data={data.map((item) => ({
+                name: format(item.name, "yyyy-MM-dd"),
+                data: item.data,
+              }))}
               margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
             >
               <XAxis
