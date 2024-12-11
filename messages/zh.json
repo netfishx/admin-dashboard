@@ -73,8 +73,8 @@
     "games": {
       "title": "游戏管理",
       "flyorder": "拦货设置",
-      "odds": "赔率限制",
-      "ratio": "默认占成",
+      "odds": "赔率限额",
+      "ratio": "占成上限",
       "rebate": "退水设置",
       "supplier": "供应商设置",
       "maintain": "维护设置"
