@@ -1,5 +1,6 @@
 import { getWithdrawApplyList } from "@/api";
 import { CustomPagination } from "@/components/custom-pagination";
+import { Time } from "@/components/time";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
   Table,
@@ -12,7 +13,6 @@ import {
 import type { ApplyData } from "@/lib/types";
 import { cn } from "@/lib/utils";
 import { getSession } from "@/session";
-import { format } from "date-fns";
 import { getTranslations } from "next-intl/server";
 import { Suspense } from "react";
 import { translateValue } from "../tools";
@@ -163,7 +163,7 @@ async function TableBodyWrapper({ list }: { list: ApplyData[] }) {
               <MoneyBtn data={item} />
             </TableCell>
             <TableCell className="min-w-32 text-center">
-              {format(Number(item.applyTime), "yyyy-MM-dd HH:mm:ss")}
+              <Time time={item.applyTime} />
             </TableCell>
             <TableCell className="text-center">{item.approverName}</TableCell>
             <TableCell className="min-w-32 text-center">

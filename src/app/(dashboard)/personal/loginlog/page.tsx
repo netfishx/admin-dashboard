@@ -1,4 +1,5 @@
 import { getMySelfLoginLog } from "@/api";
+import { Time } from "@/components/time";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
   Table,
@@ -9,7 +10,6 @@ import {
 } from "@/components/ui/table";
 import { TableRow } from "@/components/ui/table";
 import type { MySelfLoginLog } from "@/lib/types";
-import { format } from "date-fns";
 import { getTranslations } from "next-intl/server";
 import { Suspense } from "react";
 import { Form } from "./form";
@@ -92,12 +92,11 @@ async function TableBodyWrapper({ list }: { list: MySelfLoginLog[] }) {
   return (
     <TableBody>
       {list && list.length > 0 ? (
-        list.map((item, index) => (
-          // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
-          <TableRow key={index}>
+        list.map((item) => (
+          <TableRow key={item.id}>
             <TableCell>{item.username}</TableCell>
             <TableCell>
-              {format(item.createTime, "yyyy-MM-dd HH:mm:ss")}
+              <Time time={item.createTime} />
             </TableCell>
             <TableCell>{item.ip}</TableCell>
             <TableCell>{item.region}</TableCell>

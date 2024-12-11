@@ -14,14 +14,15 @@ import { Suspense } from "react";
 import { Actions } from "./actions";
 import { Form } from "./form";
 
+import { Time } from "@/components/time";
 import type { WithdrawReport } from "@/lib/types";
 import type { PageData } from "@/lib/types";
-import { format } from "date-fns";
 import { getTranslations } from "next-intl/server";
 
 export default async function Page({
   searchParams,
 }: { searchParams: Promise<{ [key: string]: string | string[] }> }) {
+  const { startTime, endTime } = await searchParams;
   return (
     <div className="flex flex-col gap-2 w-full">
       <Suspense
@@ -33,7 +34,7 @@ export default async function Page({
           </div>
         }
       >
-        <Form />
+        <Form key={`${startTime}-${endTime}`} />
       </Suspense>
       <div className="p-2 bg-background flex-1 flex flex-col gap-2">
         <Suspense
@@ -116,7 +117,7 @@ async function TableWrapper({
     userType: userType ? Number(userType) : null,
   };
 
-  if (!(startTime && endTime) && !orderNo) {
+  if (!((startTime && endTime) || orderNo)) {
     return (
       <Table className="border rounded-sm">
         <TableHeaderWrapper />
@@ -181,17 +182,13 @@ async function TableBodyWrapper({ data }: { data?: PageData<WithdrawReport> }) {
               {statusMap[item.status as keyof typeof statusMap]}
             </TableCell>
             <TableCell className="w-32 min-w-32 text-center">
-              {format(item.applyTime, "yyyy-MM-dd HH:mm:ss")}
+              <Time time={item.applyTime} />
             </TableCell>
             <TableCell className="w-24 min-w-24 text-center">
-              {item.approverTime
-                ? format(item.approverTime, "yyyy-MM-dd HH:mm:ss")
-                : ""}
+              {!!item.approverTime && <Time time={item.approverTime} />}
             </TableCell>
             <TableCell className="w-24 min-w-24 text-center">
-              {item.finishTime
-                ? format(item.finishTime, "yyyy-MM-dd HH:mm:ss")
-                : ""}
+              {!!item.finishTime && <Time time={item.finishTime} />}
             </TableCell>
             <TableCell className="min-w-24 text-center">
               <Actions item={item} />

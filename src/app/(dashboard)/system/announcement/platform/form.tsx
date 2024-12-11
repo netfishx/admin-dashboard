@@ -29,10 +29,10 @@ export function Form() {
   });
 
   function search() {
-    if (!startTime || !endTime) {
-      toast.error(t("selectDateRange"));
-    } else {
+    if (startTime && endTime) {
       startTransition(router.refresh);
+    } else {
+      toast.error(t("selectDateRange"));
     }
   }
 

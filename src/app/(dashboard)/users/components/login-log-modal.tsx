@@ -1,6 +1,7 @@
 "use client";
 import { getAgentLoginLog, getMemberLoginLog } from "@/api";
 import { ModalPagination } from "@/components/modal-pagination";
+import { Time } from "@/components/time";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -21,7 +22,6 @@ import {
 } from "@/components/ui/table";
 import type { LoginLog } from "@/lib/types";
 import { loginLogModalAtom } from "@/store";
-import { format } from "date-fns";
 import { useAtom } from "jotai";
 import { useTranslations } from "next-intl";
 import { startTransition, useEffect, useState } from "react";
@@ -113,7 +113,7 @@ export function LoginLogModal({
                   data?.map((item: LoginLog) => (
                     <TableRow key={item.id + Math.random()}>
                       <TableCell className="w-[150px] 2xl:w-[200px]">
-                        {format(item.createTime, "yyyy-MM-dd HH:mm:ss")}
+                        <Time time={item.createTime} />
                       </TableCell>
                       <TableCell className="w-[150px] 2xl:w-[200px]">
                         {item.ip}

@@ -9,8 +9,8 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { format } from "date-fns";
 
+import { Time } from "@/components/time";
 import type { AuditList } from "@/lib/types";
 import { getTranslations } from "next-intl/server";
 import { Suspense } from "react";
@@ -146,7 +146,7 @@ async function TableBodyWrapper({ list }: { list: AuditList[] }) {
           <TableRow key={item.id}>
             <TableCell className="min-w-32 text-center">{item.id}</TableCell>
             <TableCell className="min-w-32 text-center">
-              {format(item.createTime, "yyyy-MM-dd HH:mm:ss")}
+              <Time time={item.createTime} />
             </TableCell>
 
             <TableCell className="min-w-32 text-center">

@@ -1,5 +1,6 @@
 import { getGuandanReportList } from "@/api";
 import { CustomPagination } from "@/components/custom-pagination";
+import { Time } from "@/components/time";
 import {
   Table,
   TableBody,
@@ -13,7 +14,6 @@ import type {
   GameRecordRequestRecords,
 } from "@/lib/types";
 import { getSession } from "@/session";
-import { format } from "date-fns";
 import { getTranslations } from "next-intl/server";
 import DetailButton from "./detail-button";
 
@@ -122,10 +122,10 @@ async function ListBody({ list }: { list: GameRecordRequestRecords[] }) {
               {generateResultString(item?.result)}
             </TableCell>
             <TableCell className="w-24 text-center">
-              {format(item.gameStartTime, "yyyy-MM-dd HH:mm:ss")}
+              <Time time={item.gameStartTime} />
             </TableCell>
             <TableCell className="w-24 text-center">
-              {format(item.gameEndTime, "yyyy-MM-dd HH:mm:ss")}
+              <Time time={item.gameEndTime} />
             </TableCell>
             <TableCell className="w-24 text-center sticky right-0 z-10 bg-background">
               <DetailButton item={item} />

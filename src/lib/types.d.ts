@@ -284,7 +284,7 @@ export type ApplyData = {
   nickname: string;
   parentAccount: string;
   withdrawMoney: string;
-  applyTime: string;
+  applyTime: number;
   approverName: string;
   approverStatus: number;
   withdrawMode: number;

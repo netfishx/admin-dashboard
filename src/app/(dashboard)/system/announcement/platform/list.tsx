@@ -1,5 +1,6 @@
 import { getAnnouncement } from "@/api";
 import { CustomPagination } from "@/components/custom-pagination";
+import { Time } from "@/components/time";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
   Table,
@@ -11,7 +12,6 @@ import {
 } from "@/components/ui/table";
 import type { PageData } from "@/lib/types";
 import type { AnnouncementList } from "@/lib/types";
-import { format } from "date-fns";
 import { getTranslations } from "next-intl/server";
 import { Suspense } from "react";
 import { TruncatedCell } from "../truncated-cell";
@@ -20,7 +20,7 @@ export async function List({
   searchParams,
 }: { searchParams: Promise<{ [key: string]: string | string[] }> }) {
   const { startTime, endTime, userId, pageNum, pageSize } = await searchParams;
-  if (!startTime || !endTime) {
+  if (!(startTime && endTime)) {
     return (
       <Table className="border rounded-sm">
         <TableHeaderWrapper />
@@ -103,15 +103,15 @@ export async function TableBodyWrapper({
           <TableRow key={item.id}>
             {/* admin permission */}
             <TableCell className="w-24 text-center">
-              {format(Number(item.startTime), "yyyy-MM-dd HH:mm:ss")}
+              <Time time={Number(item.startTime)} />
             </TableCell>
 
             <TableCell className="w-24 text-center">
-              {format(Number(item.endTime), "yyyy-MM-dd HH:mm:ss")}
+              <Time time={Number(item.endTime)} />
             </TableCell>
             {/* admin permission */}
             <TableCell className="w-24 text-center">
-              {format(Number(item.createTime), "yyyy-MM-dd HH:mm:ss")}
+              <Time time={Number(item.createTime)} />
             </TableCell>
 
             {/* admin permission */}

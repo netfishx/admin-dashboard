@@ -1,5 +1,6 @@
 import { getSameOrSeniorAnno } from "@/api";
 import { CustomPagination } from "@/components/custom-pagination";
+import { Time } from "@/components/time";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
   Table,
@@ -10,7 +11,6 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import type { AnnouncementList, PageData } from "@/lib/types";
-import { format } from "date-fns";
 import { getTranslations } from "next-intl/server";
 import { Suspense } from "react";
 import { EditBtn } from "../edit-btn";
@@ -124,13 +124,13 @@ export async function TableBodyWrapper({
         data.list.map((item) => (
           <TableRow key={Math.random()}>
             <TableCell className="w-24 text-center">
-              {format(Number(item.startTime), "yyyy-MM-dd HH:mm:ss")}
+              <Time time={Number(item.startTime)} />
             </TableCell>
             <TableCell className="w-24 text-center">
-              {format(Number(item.endTime), "yyyy-MM-dd HH:mm:ss")}
+              <Time time={Number(item.endTime)} />
             </TableCell>
             <TableCell className="w-24 text-center">
-              {format(Number(item.createTime), "yyyy-MM-dd HH:mm:ss")}
+              <Time time={Number(item.createTime)} />
             </TableCell>
             <TruncatedCell
               className="w-[550px]"

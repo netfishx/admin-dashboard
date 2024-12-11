@@ -12,11 +12,15 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { endOfDay, startOfDay } from "date-fns";
+import {} from "date-fns";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
-import { useSearchParams } from "next/navigation";
-import { parseAsString, useQueryState } from "nuqs";
+import {
+  parseAsInteger,
+  parseAsString,
+  useQueryState,
+  useQueryStates,
+} from "nuqs";
 import { useEffect, useTransition } from "react";
 import { toast } from "sonner";
 
@@ -24,12 +28,13 @@ export function Form() {
   const t = useTranslations("report.withdraw");
   const [orderNo, setOrderNo] = useQueryState("orderNo");
   const router = useRouter();
-  const [isPending, startTransition] = useTransition();
+  const [isPending, startSearch] = useTransition();
   const [isReset, startReset] = useTransition();
 
-  const searchParams = useSearchParams();
-  const startTime = searchParams.get("startTime");
-  const endTime = searchParams.get("endTime");
+  const [dateRange] = useQueryStates({
+    startTime: parseAsInteger,
+    endTime: parseAsInteger,
+  });
 
   const [requestStatus, setRequestStatus] = useQueryState("requestStatus", {
     defaultValue: "all",
@@ -56,17 +61,17 @@ export function Form() {
   });
 
   function search() {
-    if (!(startTime && endTime) && !orderNo) {
-      toast.error(t("selectDateOrId"));
+    if ((dateRange.startTime && dateRange.endTime) || orderNo) {
+      startSearch(router.refresh);
     } else {
-      startTransition(router.refresh);
+      toast.error(t("selectDateOrId"));
     }
   }
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+
   useEffect(() => {
     setOperatorSymbol("3");
     setWithdrawMoney("0");
-  }, []);
+  }, [setOperatorSymbol, setWithdrawMoney]);
 
   return (
     <div className="flex flex-col bg-background py-4 px-4 gap-4">
@@ -159,9 +164,7 @@ export function Form() {
           disabled={isReset}
           onClick={() => {
             startReset(() => {
-              router.replace(
-                `/reports/withdraw?startTime=${startOfDay(new Date()).getTime()}&endTime=${endOfDay(new Date()).getTime()}`,
-              );
+              router.replace("/reports/withdraw");
             });
           }}
         >

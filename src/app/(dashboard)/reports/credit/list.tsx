@@ -1,6 +1,7 @@
 import { postGetCreditLogList } from "@/api";
 import { CustomPagination } from "@/components/custom-pagination";
 import TableSkeleton from "@/components/table-skeleton";
+import { Time } from "@/components/time";
 import {
   Table,
   TableBody,
@@ -13,7 +14,6 @@ import type {
   CreditRecordRequestParams,
   CreditRecordRequestRecords,
 } from "@/lib/types";
-import { format } from "date-fns";
 import { getTranslations } from "next-intl/server";
 import { Suspense } from "react";
 
@@ -58,7 +58,7 @@ async function ListBody({ list }: { list: CreditRecordRequestRecords[] }) {
               {typeMap[item.operateCode as keyof typeof typeMap]}
             </TableCell>
             <TableCell className="w-24 text-center">
-              {format(item.createTime, "yyyy-MM-dd HH:mm:ss")}
+              <Time time={item.createTime} />
             </TableCell>
           </TableRow>
         ))

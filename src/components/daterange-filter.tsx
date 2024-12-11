@@ -29,10 +29,9 @@ import {
 } from "date-fns";
 import { Calendar as CalendarIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
 import { parseAsInteger, useQueryStates } from "nuqs";
-import { memo, startTransition, useCallback, useEffect, useMemo } from "react";
+import { startTransition, useCallback, useEffect } from "react";
 import type { DateRange } from "react-day-picker";
 type rangeType =
   | "today"
@@ -58,88 +57,85 @@ const TIME_OPTIONS = {
   })),
 };
 
-// Extracted TimeSelect as a separate component
-const TimeSelect = memo(
-  ({
-    type,
-    date,
-    onTimeChange,
-  }: {
-    type: "start" | "end";
-    date: number;
-    onTimeChange: (
-      type: "start" | "end",
-      timeUnit: "hours" | "minutes" | "seconds",
-      value: string,
-    ) => void;
-  }) => {
-    const currentDate = new Date(date);
-    const currentHour = currentDate.getHours().toString().padStart(2, "0");
-    const currentMinute = currentDate.getMinutes().toString().padStart(2, "0");
-    const currentSecond = currentDate.getSeconds().toString().padStart(2, "0");
-    const t = useTranslations("report.orderlist");
+const TimeSelect = ({
+  type,
+  date,
+  onTimeChange,
+}: {
+  type: "start" | "end";
+  date: number;
+  onTimeChange: (
+    type: "start" | "end",
+    timeUnit: "hours" | "minutes" | "seconds",
+    value: string,
+  ) => void;
+}) => {
+  const currentDate = new Date(date);
+  const currentHour = currentDate.getHours().toString().padStart(2, "0");
+  const currentMinute = currentDate.getMinutes().toString().padStart(2, "0");
+  const currentSecond = currentDate.getSeconds().toString().padStart(2, "0");
+  const t = useTranslations("report.orderlist");
 
-    const handleChange = useCallback(
-      (timeUnit: "hours" | "minutes" | "seconds", value: string) => {
-        onTimeChange(type, timeUnit, value);
-      },
-      [type, onTimeChange],
-    );
+  const handleChange = useCallback(
+    (timeUnit: "hours" | "minutes" | "seconds", value: string) => {
+      onTimeChange(type, timeUnit, value);
+    },
+    [type, onTimeChange],
+  );
 
-    return (
-      <div className="flex items-center gap-2 p-2">
-        <span className="text-sm text-gray-500">
-          {type === "start" ? t("startTime") : t("endTime")}
-        </span>
-        <Select
-          value={currentHour}
-          onValueChange={(value) => handleChange("hours", value)}
-        >
-          <SelectTrigger className="w-16">
-            <SelectValue />
-          </SelectTrigger>
-          <SelectContent>
-            {TIME_OPTIONS.hours.map(({ value, label }) => (
-              <SelectItem key={value} value={value}>
-                {label}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-        <Select
-          value={currentMinute}
-          onValueChange={(value) => handleChange("minutes", value)}
-        >
-          <SelectTrigger className="w-16">
-            <SelectValue />
-          </SelectTrigger>
-          <SelectContent>
-            {TIME_OPTIONS.minutes.map(({ value, label }) => (
-              <SelectItem key={value} value={value}>
-                {label}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-        <Select
-          value={currentSecond}
-          onValueChange={(value) => handleChange("seconds", value)}
-        >
-          <SelectTrigger className="w-16">
-            <SelectValue />
-          </SelectTrigger>
-          <SelectContent>
-            {TIME_OPTIONS.seconds.map(({ value, label }) => (
-              <SelectItem key={value} value={value}>
-                {label}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-      </div>
-    );
-  },
-);
+  return (
+    <div className="flex items-center gap-2 p-2">
+      <span className="text-sm text-gray-500">
+        {type === "start" ? t("startTime") : t("endTime")}
+      </span>
+      <Select
+        value={currentHour}
+        onValueChange={(value) => handleChange("hours", value)}
+      >
+        <SelectTrigger className="w-16">
+          <SelectValue />
+        </SelectTrigger>
+        <SelectContent>
+          {TIME_OPTIONS.hours.map(({ value, label }) => (
+            <SelectItem key={value} value={value}>
+              {label}
+            </SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
+      <Select
+        value={currentMinute}
+        onValueChange={(value) => handleChange("minutes", value)}
+      >
+        <SelectTrigger className="w-16">
+          <SelectValue />
+        </SelectTrigger>
+        <SelectContent>
+          {TIME_OPTIONS.minutes.map(({ value, label }) => (
+            <SelectItem key={value} value={value}>
+              {label}
+            </SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
+      <Select
+        value={currentSecond}
+        onValueChange={(value) => handleChange("seconds", value)}
+      >
+        <SelectTrigger className="w-16">
+          <SelectValue />
+        </SelectTrigger>
+        <SelectContent>
+          {TIME_OPTIONS.seconds.map(({ value, label }) => (
+            <SelectItem key={value} value={value}>
+              {label}
+            </SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
+    </div>
+  );
+};
 
 TimeSelect.displayName = "TimeSelect";
 
@@ -155,84 +151,33 @@ export function DateRangeFilter({
   enableTimeSelect = true,
   startTimeText = "startTime",
   endTimeText = "endTime",
-  onChange = () => {},
-  reset,
 }: {
   quickSetBtn?: rangeType[];
   enableTimeSelect?: boolean;
   startTimeText?: string;
   endTimeText?: string;
-  onChange?: (dateRange: Record<string, number> | null) => void;
-  reset?: (resetFn: (start: number, end: number) => void) => void;
 }) {
-  const today = new Date();
   const t = useTranslations("report.orderlist");
-  const searchParams = useSearchParams();
-  const router = useRouter();
+  const today = new Date();
   const [dateRange, setDateRange] = useQueryStates({
     [startTimeText]: parseAsInteger.withDefault(0),
     [endTimeText]: parseAsInteger.withDefault(0),
   });
 
+  const router = useRouter();
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
-    const startTimeFromUrl = searchParams.get(startTimeText);
-    const endTimeFromUrl = searchParams.get(endTimeText);
-
-    const initialStartTime = startTimeFromUrl
-      ? Number.parseInt(startTimeFromUrl, 10)
-      : startOfDay(today).getTime();
-
-    const initialEndTime = endTimeFromUrl
-      ? Number.parseInt(endTimeFromUrl, 10)
-      : endOfDay(today).getTime();
-
     startTransition(async () => {
-      await setDateRange({
-        [startTimeText]: initialStartTime,
-        [endTimeText]: initialEndTime,
-      });
-      if (!(startTimeFromUrl && endTimeFromUrl)) {
+      if (!(dateRange[startTimeText] && dateRange[endTimeText])) {
+        const today = new Date();
+        await setDateRange({
+          [startTimeText]: startOfDay(today).getTime(),
+          [endTimeText]: endOfDay(today).getTime(),
+        });
         router.refresh();
       }
     });
   }, []);
-
-  const resetDateRange = (start: number, end: number) => {
-    setDateRange({
-      [startTimeText]: start,
-      [endTimeText]: end,
-    });
-    onChange?.({
-      [startTimeText]: start,
-      [endTimeText]: end,
-    });
-  };
-
-  useEffect(() => {
-    if (reset) {
-      reset(resetDateRange);
-    }
-  }, [reset]);
-
-  useEffect(() => {
-    startTransition(async () => {
-      onChange?.({
-        [startTimeText]: dateRange[startTimeText],
-        [endTimeText]: dateRange[endTimeText],
-      });
-    });
-  }, [
-    dateRange[startTimeText],
-    dateRange[endTimeText],
-    endTimeText,
-    onChange,
-    startTimeText,
-  ]);
-
-  const handleClear = () => {
-    setDateRange(null);
-    onChange?.(null);
-  };
 
   const handleQuickSelect = (type: string) => {
     let from: Date;
@@ -280,10 +225,6 @@ export function DateRangeFilter({
       [startTimeText]: from.getTime(),
       [endTimeText]: to.getTime(),
     });
-    onChange?.({
-      [startTimeText]: from.getTime(),
-      [endTimeText]: to.getTime(),
-    });
   };
 
   const handleTimeChange = (
@@ -305,7 +246,6 @@ export function DateRangeFilter({
         ...prev,
         [type === "start" ? startTimeText : endTimeText]: newDate.getTime(),
       };
-      onChange?.(updatedRange);
       return updatedRange;
     });
   };
@@ -345,16 +285,12 @@ export function DateRangeFilter({
         [startTimeText]: startDate?.getTime(),
         [endTimeText]: endDate?.getTime(),
       });
-      onChange?.({
-        [startTimeText]: startDate?.getTime(),
-        [endTimeText]: endDate?.getTime(),
-      } as Record<string, number>);
     } else {
-      handleClear();
+      setDateRange(null);
     }
   };
 
-  const formattedDateRange = useMemo(() => {
+  const formattedDateRange = () => {
     if (!dateRange) {
       return t("choicedate");
     }
@@ -376,7 +312,7 @@ export function DateRangeFilter({
           dateRange[endTimeText],
           "yyyy-MM-dd",
         )}`;
-  }, [dateRange]);
+  };
 
   return (
     <div className="flex items-center gap-2">
@@ -391,7 +327,7 @@ export function DateRangeFilter({
             )}
           >
             <CalendarIcon className="mr-2 h-4 w-4" />
-            {formattedDateRange}
+            {formattedDateRange()}
           </Button>
         </PopoverTrigger>
         <PopoverContent className="w-auto p-0" align="start">

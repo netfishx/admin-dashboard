@@ -1,5 +1,6 @@
 import { getWalletLog } from "@/api";
 import { CustomPagination } from "@/components/custom-pagination";
+import { Time } from "@/components/time";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
   Table,
@@ -12,7 +13,6 @@ import {
 import type { WalletLogRequestParams } from "@/lib/types";
 import type { PageData } from "@/lib/types";
 import type { WalletLogRecords } from "@/lib/types";
-import { format } from "date-fns";
 import { getTranslations } from "next-intl/server";
 import { Suspense } from "react";
 import { Form } from "./form";
@@ -109,7 +109,7 @@ async function TableWrapper({
     pageSize,
   } = await searchParams;
 
-  if (!(startTime && endTime) && !transactionID) {
+  if (!((startTime && endTime) || transactionID)) {
     return (
       <Table className="border rounded-sm">
         <TableHeaderWrapper />
@@ -192,7 +192,7 @@ async function TableBodyWrapper({
               {item.transactionId}
             </TableCell>
             <TableCell className="w-24 min-w-24 text-center">
-              {format(item.createdTime, "yyyy-MM-dd HH:mm:ss")}
+              <Time time={item.createdTime} />
             </TableCell>
             <TableCell className="w-24 min-w-24 text-center">
               {item.oldBalance}

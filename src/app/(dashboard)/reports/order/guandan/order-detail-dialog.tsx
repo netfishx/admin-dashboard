@@ -2,6 +2,7 @@
 
 import { getGuandanReportListDetail } from "@/api";
 import { ModalPagination } from "@/components/modal-pagination";
+import { Time } from "@/components/time";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -27,7 +28,6 @@ import {
   orderListGuandanDetailDialogAtom,
   orderListGuandanDetailItemAtom,
 } from "@/store";
-import { format } from "date-fns";
 import { useAtom, useAtomValue } from "jotai";
 import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
@@ -108,7 +108,7 @@ export function OrderDetailDialog() {
                         {item.bombCount}
                       </TableCell>
                       <TableCell className="w-[150px]">
-                        {format(item.createdAt, "yyyy-MM-dd HH:mm:ss")}
+                        <Time time={item.createdAt} />
                       </TableCell>
                       <TableCell className="w-[150px]">
                         <Button

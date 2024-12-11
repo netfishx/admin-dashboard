@@ -1,6 +1,7 @@
 "use client";
 
 import { getAgentInfoByUsername, updateMember } from "@/api";
+import { Time } from "@/components/time";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -14,7 +15,6 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { memberInfoDataAtom, memberInfoModalAtom } from "@/store";
-import { format } from "date-fns";
 import { useAtomValue, useSetAtom } from "jotai";
 import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
@@ -41,7 +41,7 @@ export function UserInfoModal({
   const [tempNickname, setTempNickname] = useState("");
   const [memberNickname, setMemberNickname] = useState("");
   // todo 获取创建时间
-  const [createTime, setCreateTime] = useState<number>(0);
+  const [createTime, setCreateTime] = useState<number>();
   const [status, setStatus] = useState(1);
   const router = useRouter();
   useEffect(() => {
@@ -191,9 +191,7 @@ export function UserInfoModal({
             <Label className="shrink-0 w-1/4 text-right">
               {t("createTime")}
             </Label>
-            <span>
-              {createTime ? format(createTime, "yyyy-MM-dd HH:mm:ss") : ""}
-            </span>
+            <span>{createTime && <Time time={createTime} />}</span>
           </div>
           <div className="flex gap-4 items-center">
             <Label className="shrink-0 w-1/4 text-right text-muted-foreground">

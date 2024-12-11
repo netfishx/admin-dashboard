@@ -1,5 +1,6 @@
 "use client";
 import { editMaintain } from "@/api";
+import { Time } from "@/components/time";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -23,7 +24,6 @@ import {
 } from "@/components/ui/table";
 import type { MaintainGame } from "@/lib/types";
 import { cn } from "@/lib/utils";
-import { format } from "date-fns";
 import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
@@ -154,7 +154,7 @@ export function MaintainTable({
             </TableCell>
             <TableCell>{item.updateBy}</TableCell>
             <TableCell>
-              {format(item.updateTime, "yyyy-MM-dd HH:mm:ss")}
+              <Time time={item.updateTime} />
             </TableCell>
             <TableCell className="w-24 text-center">
               <EditButton data={item}>

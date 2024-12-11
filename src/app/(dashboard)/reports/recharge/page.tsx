@@ -1,5 +1,6 @@
 import { getRechargeReportList } from "@/api";
 import { CustomPagination } from "@/components/custom-pagination";
+import { Time } from "@/components/time";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
   Table,
@@ -14,7 +15,6 @@ import type {
   RechargeReport,
   RechargeReportParams,
 } from "@/lib/types";
-import { format } from "date-fns";
 import { getTranslations } from "next-intl/server";
 import { Suspense } from "react";
 import { Actions } from "./actions";
@@ -93,7 +93,7 @@ async function TableWrapper({
     pageSize,
   } = await searchParams;
 
-  if (!(startTime && endTime) && !orderNo) {
+  if (!((startTime && endTime) || orderNo)) {
     return (
       <Table className="border rounded-sm">
         <TableHeaderWrapper />
@@ -157,7 +157,7 @@ async function TableBodyWrapper({ data }: { data?: PageData<RechargeReport> }) {
               {item.rechargeMoney}
             </TableCell>
             <TableCell className="w-32 min-w-32 text-center">
-              {format(item.finishTime, "yyyy-MM-dd HH:mm:ss")}
+              <Time time={item.finishTime} />
             </TableCell>
             <TableCell className="text-center flex justify-center items-center h-full">
               <Actions item={item} />

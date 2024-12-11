@@ -1,6 +1,7 @@
 import { postGetRewardRecordList } from "@/api";
 import { CustomPagination } from "@/components/custom-pagination";
 import TableSkeleton from "@/components/table-skeleton";
+import { Time } from "@/components/time";
 import {
   Table,
   TableBody,
@@ -13,7 +14,6 @@ import type {
   RewardRecordRequestParams,
   RewardRecordRequestRecords,
 } from "@/lib/types";
-import { format } from "date-fns";
 import { getTranslations } from "next-intl/server";
 import { Suspense } from "react";
 
@@ -59,7 +59,7 @@ async function ListBody({ list }: { list: RewardRecordRequestRecords[] }) {
             </TableCell>
             <TableCell className="w-24 text-center">{item.amount}</TableCell>
             <TableCell className="w-24 text-center">
-              {format(item.createTime, "yyyy-MM-dd HH:mm:ss")}
+              <Time time={item.createTime} />
             </TableCell>
           </TableRow>
         ))
@@ -77,7 +77,6 @@ async function ListBody({ list }: { list: RewardRecordRequestRecords[] }) {
 export async function List({
   searchParams,
 }: { searchParams: Promise<RewardRecordRequestParams> }) {
-  const t = await getTranslations("report.reward");
   const params = await searchParams;
   const { data } = await postGetRewardRecordList(params);
   return (

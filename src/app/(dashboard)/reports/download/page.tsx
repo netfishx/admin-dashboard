@@ -1,4 +1,5 @@
 import { getDownloadList } from "@/api";
+import { Time } from "@/components/time";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
   Table,
@@ -9,7 +10,6 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import type { DownloadListRecords } from "@/lib/types";
-import { format } from "date-fns";
 import { getTranslations } from "next-intl/server";
 import { Suspense } from "react";
 import { ActionButton } from "./action-button";
@@ -85,9 +85,11 @@ async function TableBodyWrapper({
         list?.map((item) => (
           <TableRow key={item.id}>
             <TableCell>{item.exportFileName}</TableCell>
-            <TableCell>{format(item.endTime, "yyyy-MM-dd HH:mm:ss")}</TableCell>
             <TableCell>
-              {format(item.downloadTime, "yyyy-MM-dd HH:mm:ss")}
+              <Time time={item.endTime} />
+            </TableCell>
+            <TableCell>
+              <Time time={item.downloadTime} />
             </TableCell>
             <TableCell>
               <ShowStatusLable status={item.status} />

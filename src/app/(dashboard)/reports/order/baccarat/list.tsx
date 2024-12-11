@@ -1,5 +1,6 @@
 import { getOrderReportList } from "@/api";
 import { CustomPagination } from "@/components/custom-pagination";
+import { Time } from "@/components/time";
 import {
   Table,
   TableBody,
@@ -13,7 +14,6 @@ import type {
   OrderReportsRecord,
   OrderReportsRequestParams,
 } from "@/lib/types";
-import { format } from "date-fns";
 import { getTranslations } from "next-intl/server";
 import DetailButton from "./detail-button";
 
@@ -99,10 +99,10 @@ async function ListBody({
               {item.winLossAmount}
             </TableCell>
             <TableCell className="text-center">
-              {format(item.betTime, "yyyy-MM-dd HH:mm:ss")}
+              <Time time={item.betTime} />
             </TableCell>
             <TableCell className="text-center">
-              {format(item.settleTime, "yyyy-MM-dd HH:mm:ss")}
+              <Time time={item.settleTime} />
             </TableCell>
             <TableCell className="w-24 text-center">
               {item.orderStatus}

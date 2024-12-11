@@ -1,5 +1,6 @@
 import { getPeriodReport } from "@/api";
 import { CustomPagination } from "@/components/custom-pagination";
+import { Time } from "@/components/time";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
   Table,
@@ -10,7 +11,6 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import type { PageData, PeriodReportList } from "@/lib/types";
-import { format } from "date-fns";
 import { getTranslations } from "next-intl/server";
 import { Suspense } from "react";
 import { Actions } from "./actions";
@@ -90,7 +90,7 @@ async function PeriodTable({
     issueNumber,
   } = await searchParams;
 
-  if (!startTime || !endTime) {
+  if (!(startTime && endTime)) {
     return (
       <Table className="border rounded-sm">
         <PeriodTableHeader />
@@ -155,7 +155,7 @@ async function TableBodyWrapper({
               {item.issueNumber}
             </TableCell>
             <TableCell className="w-24 text-center">
-              {format(Number(item.openTime), "yyyy-MM-dd HH:mm:ss")}
+              <Time time={Number(item.openTime)} />
             </TableCell>
             <TableCell className="w-24 text-center">{item.gameType}</TableCell>
             <TableCell className="w-24 text-center">{item.gameId}</TableCell>

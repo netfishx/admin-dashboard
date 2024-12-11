@@ -2,6 +2,9 @@
 
 import { format } from "date-fns";
 
-export function Time({ time }: { time: number }) {
-  return <>{format(time, "yyyy-MM-dd HH:mm:ss")}</>;
+export function Time({
+  time,
+  formatStr = "yyyy-MM-dd HH:mm:ss",
+}: { time: number; formatStr?: string }) {
+  return <>{format(time, formatStr)}</>;
 }
