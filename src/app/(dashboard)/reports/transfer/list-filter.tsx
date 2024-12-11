@@ -15,7 +15,7 @@ import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useQueryState } from "nuqs";
-import { useRef, useTransition } from "react";
+import { useTransition } from "react";
 
 export function ListFilter() {
   const t = useTranslations("report.transfer");
@@ -34,21 +34,10 @@ export function ListFilter() {
   });
   const [isPending, startTransition] = useTransition();
 
-  const dateRangeFilterReset = useRef<
-    ((start: number, end: number) => void) | null
-  >(null);
-  const handleDateRangeFilterReset = () => {
-    const start = startOfDay(new Date()).getTime();
-    const end = endOfDay(new Date()).getTime();
-    dateRangeFilterReset.current?.(start, end);
-  };
-
   const handleReset = () => {
-    setOrderNumber("");
-    setAgentId("");
-    setMemberId("");
-    setTypeId("all");
-    handleDateRangeFilterReset();
+    router.replace(
+      `/reports/transfer?startTime=${startOfDay(new Date()).getTime()}&endTime=${endOfDay(new Date()).getTime()}`,
+    );
   };
   const handleSearch = () => {
     startTransition(() => {
@@ -62,11 +51,7 @@ export function ListFilter() {
       <div className="flex gap-4 items-center">
         <div className="flex gap-2 items-center">
           <Label>{t("dateRange")}</Label>
-          <DateRangeFilter
-            enableTimeSelect={false}
-            // biome-ignore lint/suspicious/noAssignInExpressions: <explanation>
-            reset={(resetFn) => (dateRangeFilterReset.current = resetFn)}
-          />
+          <DateRangeFilter enableTimeSelect={false} />
         </div>
       </div>
 

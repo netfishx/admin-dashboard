@@ -11,14 +11,16 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { endOfDay, startOfDay } from "date-fns";
+import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useQueryState } from "nuqs";
-import { useRef } from "react";
+import { useTransition } from "react";
 
 export function ListFilter() {
   const t = useTranslations("report.borrow");
   const router = useRouter();
+  const [isPending, startTransition] = useTransition();
   const [orderNumber, setOrderNumber] = useQueryState("orderNo", {
     defaultValue: "",
   });
@@ -32,21 +34,10 @@ export function ListFilter() {
     defaultValue: "all",
   });
 
-  const dateRangeFilterReset = useRef<
-    ((start: number, end: number) => void) | null
-  >(null);
-  const handleDateRangeFilterReset = () => {
-    const start = startOfDay(new Date()).getTime();
-    const end = endOfDay(new Date()).getTime();
-    dateRangeFilterReset.current?.(start, end);
-  };
-
   const handleReset = () => {
-    setOrderNumber("");
-    setAgentId("");
-    setMemberId("");
-    setTypeId("all");
-    handleDateRangeFilterReset();
+    router.replace(
+      `/reports/borrow?startTime=${startOfDay(new Date()).getTime()}&endTime=${endOfDay(new Date()).getTime()}`,
+    );
   };
   const handleSearch = () => {
     router.refresh();
@@ -58,11 +49,7 @@ export function ListFilter() {
       <div className="flex gap-4 items-center">
         <div className="flex gap-2 items-center">
           <Label>{t("dateRange")}</Label>
-          <DateRangeFilter
-            enableTimeSelect={false}
-            // biome-ignore lint/suspicious/noAssignInExpressions: <explanation>
-            reset={(resetFn) => (dateRangeFilterReset.current = resetFn)}
-          />
+          <DateRangeFilter enableTimeSelect={false} />
         </div>
       </div>
 
@@ -120,8 +107,14 @@ export function ListFilter() {
           >
             {t("reset")}
           </Button>
-          <Button onClick={handleSearch}>{t("search")}</Button>
-          <Button>{t("download")}</Button>
+          <Button
+            onClick={() => startTransition(handleSearch)}
+            disabled={isPending}
+          >
+            {isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+            {t("search")}
+          </Button>
+          <Button disabled={isPending}>{t("download")}</Button>
         </div>
       </div>
     </div>
