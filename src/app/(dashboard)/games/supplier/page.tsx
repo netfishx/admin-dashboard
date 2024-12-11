@@ -1,4 +1,4 @@
-import { getBaccaratGames, getSupplierList } from "@/api";
+import { getSupplierGames, getSupplierList } from "@/api";
 import { Add } from "@/app/(dashboard)/games/supplier/add";
 import { SupplierForm } from "@/app/(dashboard)/games/supplier/form";
 import {
@@ -10,7 +10,7 @@ import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
 import { Suspense } from "react";
 
 async function AddButtonWrapper() {
-  const res = await getBaccaratGames();
+  const res = await getSupplierGames();
   const suppliers = await getSupplierList();
   return <Add games={res.data ?? []} suppliers={suppliers.data ?? []} />;
 }
