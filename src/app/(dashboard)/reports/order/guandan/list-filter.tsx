@@ -127,6 +127,7 @@ export function ListFilter({
             onClick={() =>
               startDownload(() => makeDownload(searchParams, 100006))
             }
+            disabled={isDownload}
           >
             {isDownload && <Loader2 className="w-4 h-4 animate-spin" />}
             {t("download")}
