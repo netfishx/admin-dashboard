@@ -91,7 +91,7 @@ async function ListBody({
             <TableCell className="w-24 text-center">
               {item.lastAgentId}
             </TableCell>
-            <TableCell className="w-24 text-center">
+            <TableCell className="w-24 text-center whitespace-nowrap">
               {gameList.find((game) => game.gameId === item.gameId)?.gameName}
             </TableCell>
             <TableCell className="w-24 text-center">{item.betType}</TableCell>
@@ -111,10 +111,10 @@ async function ListBody({
             <TableCell className="w-24 text-center">
               <AgentId session={session as SessionData} />
             </TableCell>
-            <TableCell className="text-center">
+            <TableCell className="text-center whitespace-nowrap">
               <Time time={item.betTime} />
             </TableCell>
-            <TableCell className="text-center">
+            <TableCell className="text-center whitespace-nowrap">
               <Time time={item.settleTime} />
             </TableCell>
             <TableCell className="w-24 text-center">
