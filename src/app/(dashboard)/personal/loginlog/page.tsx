@@ -1,4 +1,5 @@
 import { getMySelfLoginLog } from "@/api";
+import { CustomPagination } from "@/components/custom-pagination";
 import { Time } from "@/components/time";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
@@ -25,18 +26,16 @@ export default async function Page({
         <Form />
       </div>
       <div className="p-2 bg-background flex-1">
-        <div className="border rounded-sm">
-          <Suspense fallback={<TableSkeleton />}>
-            <TableWrapper searchParams={searchParams} />
-          </Suspense>
-        </div>
+        <Suspense fallback={<TableSkeleton />}>
+          <TableWrapper searchParams={searchParams} />
+        </Suspense>
       </div>
     </div>
   );
 }
 function TableSkeleton() {
   return (
-    <Table className="table-fixed">
+    <Table className="table-fixed border rounded-sm">
       <TableHeaderWrapper />
       <TableBodySkeleton />
     </Table>
@@ -57,17 +56,28 @@ async function TableWrapper({
     return <TableSkeleton />;
   }
   const { data } = await getMySelfLoginLog({
-    pageNum: Number(pageNum) ?? 1,
-    pageSize: Number(pageSize) ?? 10,
+    pageNum: Number(pageNum ?? 1),
+    pageSize: Number(pageSize ?? 10),
     startTime: Number(startTime),
     endTime: Number(endTime),
     ...rest,
   });
   return (
-    <Table className="table-fixed">
-      <TableHeaderWrapper />
-      <TableBodyWrapper list={data?.list ?? []} />
-    </Table>
+    <>
+      <div className="border rounded-sm mb-2">
+        <Table className="table-fixed">
+          <TableHeaderWrapper />
+          <TableBodyWrapper list={data?.list ?? []} />
+        </Table>
+      </div>
+      {!!data?.total && (
+        <CustomPagination
+          total={data?.total ?? 0}
+          currentPage={Number(pageNum ?? 1)}
+          pageSize={Number(pageSize ?? 10)}
+        />
+      )}
+    </>
   );
 }
 
