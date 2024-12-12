@@ -280,7 +280,7 @@
       "loginUsername": "登录账号",
       "success": "成功",
       "failed": "失败",
-      "usernameWarning": "以小写字母开头,长度6到16位,且只能包含数字和小写字母的组合,不能包含“admin”的字样",
+      "usernameWarning": "以小写字母开头,长度6到16位,包含数字、小写字母,不能包含“admin”的字样",
       "passwordWarning": "8-16位的密码,包含大写字母、小写字母、数字",
       "availableAmount": "当前可用余额"
     },
@@ -360,7 +360,7 @@
       "resetCount": "剩余尝试次数",
       "enable": "启用",
       "disable": "停用",
-      "usernameWarning": "以小写字母开头,长度6到16位,且只能包含数字和小写字母的组合,不能包含“admin”的字样",
+      "usernameWarning": "以小写字母开头,长度6到16位,包含数字、小写字母,不能包含“admin”的字样",
       "passwordWarning": "8-16位的密码,包含大写字母、小写字母、数字"
     }
   },

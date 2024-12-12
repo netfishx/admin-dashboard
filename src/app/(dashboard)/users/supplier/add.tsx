@@ -36,9 +36,7 @@ export function Add() {
   return (
     <>
       <AddDialog open={open} setOpen={setOpen} />
-      <Button size="sm" onClick={() => setOpen(true)}>
-        {t("add")}
-      </Button>
+      <Button onClick={() => setOpen(true)}>{t("add")}</Button>
     </>
   );
 }
@@ -54,6 +52,8 @@ function AddDialog({
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
   const setSupplierLoading = useSetAtom(supplierLoadingAtom);
+  // 验证是否校验
+  const [validata, setValidata] = useState(false);
 
   useEffect(() => {
     setSupplierLoading(isPending);
@@ -103,6 +103,9 @@ function AddDialog({
                   required
                   defaultValue={""}
                   name="username"
+                  onBlur={(e) => {
+                    setValidata(e.target.reportValidity());
+                  }}
                 />
               </div>
               <div className="flex gap-2 items-center">
@@ -120,6 +123,10 @@ function AddDialog({
                 required
                 defaultValue={""}
                 name="nickname"
+                maxLength={20}
+                onBlur={(e) => {
+                  setValidata(e.target.reportValidity());
+                }}
               />
             </div>
             <div className="flex flex-col gap-1">
@@ -132,6 +139,9 @@ function AddDialog({
                   required
                   defaultValue={""}
                   name="newPassword"
+                  onBlur={(e) => {
+                    setValidata(e.target.reportValidity());
+                  }}
                 />
               </div>
               <div className="flex gap-2 items-center">
@@ -150,6 +160,9 @@ function AddDialog({
                 required
                 defaultValue={""}
                 name="confirmPassword"
+                onBlur={(e) => {
+                  setValidata(e.target.reportValidity());
+                }}
               />
             </div>
             <div className="flex gap-2 items-center">
@@ -159,6 +172,10 @@ function AddDialog({
                 placeholder={t("placeholder")}
                 defaultValue={""}
                 name="remark"
+                maxLength={100}
+                onBlur={(e) => {
+                  setValidata(e.target.reportValidity());
+                }}
               />
             </div>
           </div>
@@ -168,7 +185,7 @@ function AddDialog({
             {translation("cancel")}
           </Button>
           <Button
-            disabled={isLoading}
+            disabled={isLoading || !validata}
             onClick={(e) => {
               e.preventDefault();
               if (ref.current) {

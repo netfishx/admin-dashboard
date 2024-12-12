@@ -30,9 +30,7 @@ export function AddAgent() {
   const [open, setOpen] = useState(false);
   return (
     <>
-      <Button size="sm" onClick={() => setOpen(true)}>
-        {t("addAgent")}
-      </Button>
+      <Button onClick={() => setOpen(true)}>{t("addAgent")}</Button>
       <AddAgentModal open={open} onOpenChange={setOpen} />
     </>
   );
@@ -116,6 +114,7 @@ function AddAgentModal({
                 className="flex-1"
                 name="nickname"
                 defaultValue={""}
+                maxLength={20}
               />
             </div>
             <div className="flex flex-col gap-1">
