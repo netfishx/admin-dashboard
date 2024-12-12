@@ -1,28 +1,23 @@
 import { Skeleton } from "@/components/ui/skeleton";
 import { Suspense } from "react";
 import { List } from "./list";
+import { SecurityProgress } from "./progress";
 
 export default function PersonalSecurityPage() {
   return (
-    <div className="flex flex-col gap-2 w-full">
+    <div className="flex flex-col gap-2 flex-1">
       <Suspense
         fallback={
-          <div>
-            <div className="bg-background py-2">
+          <>
+            <SecurityProgress />
+            <div className="bg-background flex-1 p-4">
               <div className="flex flex-col gap-2">
-                <Skeleton />
-                <Skeleton />
-                <Skeleton />
+                <Skeleton className="h-8" />
+                <Skeleton className="h-8" />
+                <Skeleton className="h-8" />
               </div>
             </div>
-            <div className="bg-background py-2 mt-2">
-              <div className="flex flex-col gap-2">
-                <Skeleton className="h-10" />
-                <Skeleton className="h-10" />
-                <Skeleton className="h-10" />
-              </div>
-            </div>
-          </div>
+          </>
         }
       >
         <List />

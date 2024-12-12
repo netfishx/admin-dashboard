@@ -90,12 +90,40 @@ function EditButton({
   );
 }
 
+export function MaintainTableHeader({
+  allChecked,
+  handleCheckedChange,
+}: {
+  allChecked: boolean | "indeterminate";
+  handleCheckedChange?: (status: boolean) => void;
+}) {
+  const t = useTranslations("games.maintain");
+  return (
+    <TableHeader>
+      <TableRow className="bg-muted">
+        <TableHead className="w-10">
+          <Checkbox
+            checked={allChecked}
+            onCheckedChange={handleCheckedChange}
+          />
+        </TableHead>
+        <TableHead className="w-32">{t("name")}</TableHead>
+        <TableHead className="w-32 text-center">{t("status")}</TableHead>
+        <TableHead className="w-48">{t("lastId")}</TableHead>
+        <TableHead className="w-32">{t("lastTime")}</TableHead>
+        <TableHead className="w-32 text-center">{t("action")}</TableHead>
+      </TableRow>
+    </TableHeader>
+  );
+}
+
 export function MaintainTable({
   data,
 }: {
   data: MaintainGame[];
 }) {
   const t = useTranslations("games.maintain");
+  const translations = useTranslations();
   const [checked, setChecked] = useQueryState(
     "checked",
     parseAsArrayOf(parseAsString).withDefault([]),
@@ -108,61 +136,58 @@ export function MaintainTable({
         : false;
 
   return (
-    <Table>
-      <TableHeader>
-        <TableRow className="bg-muted">
-          <TableHead>
-            <Checkbox
-              checked={allChecked}
-              onCheckedChange={(status) => {
-                setChecked(status ? data.map((item) => item.id) : []);
-              }}
-            />
-          </TableHead>
-          <TableHead>{t("name")}</TableHead>
-          <TableHead className="text-center">{t("status")}</TableHead>
-          <TableHead>{t("lastId")}</TableHead>
-          <TableHead>{t("lastTime")}</TableHead>
-          <TableHead className="w-24 text-center">{t("action")}</TableHead>
-        </TableRow>
-      </TableHeader>
+    <Table className="table-fixed">
+      <MaintainTableHeader
+        allChecked={allChecked}
+        handleCheckedChange={(status) => {
+          setChecked(status ? data.map((item) => item.id) : []);
+        }}
+      />
       <TableBody>
-        {data.map((item) => (
-          <TableRow key={item.id}>
-            <TableCell>
-              <Checkbox
-                checked={checked.includes(item.id)}
-                onCheckedChange={(status) => {
-                  status
-                    ? setChecked([...checked, item.id])
-                    : setChecked(checked.filter((id) => id !== item.id));
-                }}
-              />
-            </TableCell>
-            <TableCell>{item.gameName}</TableCell>
-            <TableCell className="text-center">
-              <span
-                className={cn([
-                  "p-1 rounded-sm w-24 inline-block",
-                  item.status
-                    ? "text-destructive bg-destructive/20"
-                    : "text-primary bg-primary/20",
-                ])}
-              >
-                {item.status ? t("maintaining") : t("normal")}
-              </span>
-            </TableCell>
-            <TableCell>{item.updateBy}</TableCell>
-            <TableCell>
-              <Time time={item.updateTime} />
-            </TableCell>
-            <TableCell className="w-24 text-center">
-              <EditButton data={item}>
-                {item.status ? t("close") : t("open")}
-              </EditButton>
+        {data.length > 0 ? (
+          data.map((item) => (
+            <TableRow key={item.id}>
+              <TableCell>
+                <Checkbox
+                  checked={checked.includes(item.id)}
+                  onCheckedChange={(status) => {
+                    status
+                      ? setChecked([...checked, item.id])
+                      : setChecked(checked.filter((id) => id !== item.id));
+                  }}
+                />
+              </TableCell>
+              <TableCell>{item.gameName}</TableCell>
+              <TableCell className="text-center">
+                <span
+                  className={cn([
+                    "p-1 rounded-sm w-24 inline-block",
+                    item.status
+                      ? "text-destructive bg-destructive/20"
+                      : "text-primary bg-primary/20",
+                  ])}
+                >
+                  {item.status ? t("maintaining") : t("normal")}
+                </span>
+              </TableCell>
+              <TableCell>{item.updateBy}</TableCell>
+              <TableCell>
+                <Time time={item.updateTime} />
+              </TableCell>
+              <TableCell className="text-center">
+                <EditButton data={item}>
+                  {item.status ? t("close") : t("open")}
+                </EditButton>
+              </TableCell>
+            </TableRow>
+          ))
+        ) : (
+          <TableRow>
+            <TableCell colSpan={6} className="text-center h-40">
+              {translations("noData")}
             </TableCell>
           </TableRow>
-        ))}
+        )}
       </TableBody>
     </Table>
   );

@@ -78,10 +78,7 @@ function AddAgentModal({
 
   return (
     <Dialog open={open} onOpenChange={() => onOpenChange(false)}>
-      <DialogContent
-        className="2xl:max-w-xl lg:max-w-lg"
-        onPointerDownOutside={(e) => e.preventDefault()}
-      >
+      <DialogContent onPointerDownOutside={(e) => e.preventDefault()}>
         <DialogHeader>
           <DialogTitle>{t("addAgent")}</DialogTitle>
           <DialogDescription />
@@ -90,7 +87,7 @@ function AddAgentModal({
           <div className="flex flex-col gap-4 w-full px-4">
             <div className="flex flex-col gap-1">
               <div className="flex gap-4 items-center">
-                <Label className="shrink-0 w-[120px] text-right text-muted-foreground">
+                <Label className="shrink-0 w-20 text-right text-muted-foreground">
                   {t("username")}
                 </Label>
                 <Input
@@ -104,14 +101,14 @@ function AddAgentModal({
                 />
               </div>
               <div className="flex gap-4 items-center">
-                <Label className=" w-[120px] text-end shrink-0" />
+                <Label className=" w-20 text-end shrink-0" />
                 <div className="flex-1 text-xs text-destructive">
                   {t("usernameWarning")}
                 </div>
               </div>
             </div>
             <div className="flex gap-4 items-center">
-              <Label className="shrink-0 w-[120px] text-right text-muted-foreground">
+              <Label className="shrink-0 w-20 text-right text-muted-foreground">
                 {t("nickname")}
               </Label>
               <Input
@@ -123,7 +120,7 @@ function AddAgentModal({
             </div>
             <div className="flex flex-col gap-1">
               <div className="flex gap-4 items-center">
-                <Label className="shrink-0 w-[120px] text-right text-muted-foreground">
+                <Label className="shrink-0 w-20 text-right text-muted-foreground">
                   {t("password")}
                 </Label>
                 <Password
@@ -138,14 +135,14 @@ function AddAgentModal({
                 />
               </div>
               <div className="flex gap-4 items-center">
-                <Label className="w-[120px] text-end shrink-0" />
+                <Label className="w-20 text-end shrink-0" />
                 <div className="flex-1 text-xs text-destructive">
                   {t("passwordWarning")}
                 </div>
               </div>
             </div>
             <div className="flex gap-4 items-center">
-              <Label className="shrink-0 w-[120px] text-right text-muted-foreground">
+              <Label className="shrink-0 w-20 text-right text-muted-foreground">
                 {t("confirmPassword")}
               </Label>
               <Password

@@ -52,7 +52,7 @@ export function Toolbar({
   const firstPath = pathname.split("/")[1];
   const t = useTranslations();
   return (
-    <div className="w-full h-10 flex flex-row justify-between border-b px-2">
+    <div className="w-full h-10 flex justify-between border-b px-2 shrink-0">
       <div className="flex flex-row gap-2 items-center text-sm">
         <TitleIcon title={firstPath} />
         <span>/</span>
@@ -82,7 +82,7 @@ export function Toolbar({
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
-        {hasInviteCode && (
+        {hasInviteCode && inviteCode && (
           <Popover>
             <PopoverTrigger asChild>
               <Button

@@ -4,9 +4,13 @@ import type { AnnouncementList } from "@/lib/types";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 
-export function Announcement({ data }: { data: { list: AnnouncementList[] } }) {
+export function Announcement({
+  data,
+  permissions,
+}: { data: { list: AnnouncementList[] }; permissions: string[] }) {
   const t = useTranslations();
   const router = useRouter();
+
   return (
     <>
       <div className="bg-background p-4 rounded flex-1 relative">
@@ -30,15 +34,19 @@ export function Announcement({ data }: { data: { list: AnnouncementList[] } }) {
                   key={item.id}
                   className="text-ellipsis text-muted-foreground whitespace-nowrap overflow-hidden"
                 >
-                  {item.type === 1 && (
-                    <span className="mr-2 px-2 py-1 inline-block rounded-sm text-primary bg-primary/10">
-                      {t("platform")}
-                    </span>
-                  )}
-                  {item.type === 3 && (
-                    <span className="mr-2 px-2 py-1 inline-block rounded-sm text-orange bg-orange/10">
-                      {t("agent")}
-                    </span>
+                  {!permissions?.includes("admin_stat") && (
+                    <>
+                      {item.type === 1 && (
+                        <span className="mr-2 px-2 py-1 inline-block rounded-sm text-primary bg-primary/10">
+                          {t("platform")}
+                        </span>
+                      )}
+                      {item.type === 3 && (
+                        <span className="mr-2 px-2 py-1 inline-block rounded-sm text-orange bg-orange/10">
+                          {t("agent")}
+                        </span>
+                      )}
+                    </>
                   )}
                   {item.contentOfLanguage}
                 </div>
