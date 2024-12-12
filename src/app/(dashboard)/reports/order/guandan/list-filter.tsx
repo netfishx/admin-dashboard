@@ -11,10 +11,13 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import type { GameInfo } from "@/lib/types";
+import { makeDownload } from "@/lib/utils";
 import { endOfDay, startOfDay } from "date-fns";
+import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useQueryState } from "nuqs";
+import { useTransition } from "react";
 
 export function ListFilter({
   hasSearchPermission,
@@ -24,6 +27,8 @@ export function ListFilter({
   gameList: GameInfo[];
 }) {
   const t = useTranslations("report.orderlist");
+  const [isDownload, startDownload] = useTransition();
+  const searchParams = useSearchParams();
   // 期号
   const [issuenumber, setIssuenumber] = useQueryState("issueNumber", {
     defaultValue: "",
@@ -118,7 +123,14 @@ export function ListFilter({
             {t("reset")}
           </Button>
           <Button onClick={handleSearch}>{t("search")}</Button>
-          <Button>{t("download")}</Button>
+          <Button
+            onClick={() =>
+              startDownload(() => makeDownload(searchParams, 100006))
+            }
+          >
+            {isDownload && <Loader2 className="w-4 h-4 animate-spin" />}
+            {t("download")}
+          </Button>
         </div>
       </div>
     </div>
