@@ -38,7 +38,7 @@ export default function Page({
         <div className="border rounded-sm">
           <Suspense
             fallback={
-              <Table>
+              <Table className="table-fixed">
                 <SupplierTableHeader />
                 <TableBody>
                   {Array.from({ length: 5 }).map((_, i) => (

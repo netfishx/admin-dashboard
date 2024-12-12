@@ -601,7 +601,7 @@ export async function getBaccaratGameConfig(userId?: string) {
 export async function getGameConfig(userId?: string) {
   const user = await getSession();
   const [res, res2] = await Promise.all([
-    getGameList(1),
+    getAllGames(),
     apiRequest<GameConfig[]>({
       url: "/game/config/list",
       token: user?.token,
@@ -612,9 +612,9 @@ export async function getGameConfig(userId?: string) {
     ...res2,
     data: res2.data?.map((item) => ({
       ...item,
-      gameName: res.data
-        ?.find((i) => i.gameType === item.gameType)
-        ?.list.find((i) => i.gameId === item.gameId)?.gameIdLabel,
+      gameName: res.data?.find(
+        (i) => i.gameType === item.gameType && i.gameId === item.gameId,
+      )?.gameName,
     })),
   };
 }

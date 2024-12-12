@@ -14,6 +14,7 @@ import { Input } from "@/components/ui/input";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Switch } from "@/components/ui/switch";
 import {
+  ScrollableTable,
   Table,
   TableBody,
   TableCell,
@@ -105,29 +106,27 @@ export function GameSettingModal() {
         </DialogHeader>
         <div className="flex flex-col gap-2">
           <span className="text-md font-medium">{t("baccarat")}</span>
-          <div className="border rounded-sm">
-            <Table>
-              <TableHeader className="table w-full">
-                <TableRow className="bg-muted">
-                  <TableHead className="w-[120px]">{t("name")}</TableHead>
-                  <TableHead className="w-[100px]">{t("switch")}</TableHead>
-                  <TableHead className="w-auto">{t("ratio")}</TableHead>
+          <div className="border rounded-sm overflow-auto max-h-[50dvh]">
+            <ScrollableTable className="relative">
+              <TableHeader>
+                <TableRow className="bg-muted sticky top-0">
+                  <TableHead>{t("name")}</TableHead>
+                  <TableHead>{t("switch")}</TableHead>
+                  <TableHead>{t("ratio")}</TableHead>
                 </TableRow>
               </TableHeader>
               {loading ? (
                 <GameSettingSkeleton length={5} colSpan={3} />
               ) : (
-                <TableBody className="max-h-[370px] overflow-auto w-full block">
+                <TableBody>
                   {data &&
                   data?.filter((item) => item.gameType === 61).length > 0 ? (
                     data
                       ?.filter((item) => item.gameType === 61)
                       .map((item) => (
                         <TableRow key={item.gameId}>
-                          <TableCell className="w-[120px]">
-                            {item.gameName}
-                          </TableCell>
-                          <TableCell className="w-[100px]">
+                          <TableCell>{item.gameName}</TableCell>
+                          <TableCell>
                             <Switch
                               checked={item.status === 1}
                               onCheckedChange={(checked) => {
@@ -138,7 +137,7 @@ export function GameSettingModal() {
                               }}
                             />
                           </TableCell>
-                          <TableCell className="flex items-center gap-2 w-auto">
+                          <TableCell className="flex flex-row items-center gap-2">
                             <Input
                               value={item.percent}
                               type="number"
@@ -168,7 +167,7 @@ export function GameSettingModal() {
                   )}
                 </TableBody>
               )}
-            </Table>
+            </ScrollableTable>
           </div>
         </div>
         <div className="flex flex-col gap-2">
@@ -191,7 +190,7 @@ export function GameSettingModal() {
                       ?.filter((item) => item.gameType === 20)
                       .map((item) => (
                         <TableRow key={item.gameId}>
-                          <TableCell>{item.gameId}</TableCell>
+                          <TableCell>{item.gameName}</TableCell>
                           <TableCell>
                             <Switch
                               checked={item.status === 1}

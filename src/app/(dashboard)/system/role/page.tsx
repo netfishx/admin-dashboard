@@ -29,7 +29,6 @@ function RoleTableHeader() {
         <TableHead>{t("id")}</TableHead>
         <TableHead>{t("name")}</TableHead>
         <TableHead>{t("updateTime")}</TableHead>
-        <TableHead>{t("type")}</TableHead>
         <TableHead className="text-center sticky right-0 bg-muted">
           {t("action")}
         </TableHead>
@@ -49,7 +48,6 @@ async function RoleTableWrapper({
     pageSize: Number(pageSize),
   });
   const t = await getTranslations();
-  const translations = await getTranslations("system.role");
   return (
     <>
       <div className="border rounded-sm">
@@ -58,7 +56,7 @@ async function RoleTableWrapper({
           <TableBody>
             {!res.data?.list || res.data?.list.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={6} className="text-center h-32">
+                <TableCell colSpan={5} className="text-center h-32">
                   {t("noData")}
                 </TableCell>
               </TableRow>
@@ -69,11 +67,6 @@ async function RoleTableWrapper({
                   <TableCell>{item.roleName}</TableCell>
                   <TableCell>
                     {item.updateTime && <Time time={item.updateTime} />}
-                  </TableCell>
-                  <TableCell>
-                    {item.roleType === 0
-                      ? translations("systemDefault")
-                      : translations("personalCreate")}
                   </TableCell>
                   <TableCell className="text-center sticky right-0 bg-background">
                     <div className="flex justify-center">

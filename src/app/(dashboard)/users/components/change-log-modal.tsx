@@ -2,6 +2,7 @@
 
 import { getChangeLog } from "@/api";
 import { ModalPagination } from "@/components/modal-pagination";
+import { Time } from "@/components/time";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -13,7 +14,7 @@ import {
 } from "@/components/ui/dialog";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
-  Table,
+  ScrollableTable,
   TableBody,
   TableCell,
   TableHead,
@@ -62,9 +63,15 @@ export function ChangeLogModal({
         }
       });
     }
-  }, [open, targetUserId, setLoading]);
+  }, [open, targetUserId, appType, pageNum, pageSize]);
+
+  const handleClose = () => {
+    setOpen(false);
+    setPageNum(1);
+    setPageSize(10);
+  };
   return (
-    <Dialog open={open} onOpenChange={(open) => setOpen(open)}>
+    <Dialog open={open} onOpenChange={handleClose}>
       <DialogContent
         className="max-w-5xl"
         onPointerDownOutside={(e) => e.preventDefault()}
@@ -73,58 +80,47 @@ export function ChangeLogModal({
           <DialogTitle>{t("changeLog")}</DialogTitle>
           <DialogDescription />
         </DialogHeader>
-        <div className="border rounded-sm">
-          <Table>
-            <TableHeader className="table w-full">
-              <TableRow className="bg-muted">
-                <TableHead className="w-[150px]">{t("operateTime")}</TableHead>
-                <TableHead className="w-[100px]">{t("operater")}</TableHead>
-                <TableHead className="w-[100px]">{t("username")}</TableHead>
-                <TableHead className="w-[150px]">{t("ip")}</TableHead>
-                <TableHead className="w-[150px]">{t("address")}</TableHead>
-                <TableHead className="w-[100px]">{t("operateType")}</TableHead>
-                <TableHead className="flex-1">{t("operateDesc")}</TableHead>
+        <div className="border rounded-sm overflow-auto max-h-[50dvh]">
+          <ScrollableTable className="relative">
+            <TableHeader>
+              <TableRow className="bg-muted sticky top-0">
+                <TableHead>{t("operateTime")}</TableHead>
+                <TableHead>{t("operater")}</TableHead>
+                <TableHead>{t("username")}</TableHead>
+                <TableHead>{t("ip")}</TableHead>
+                <TableHead>{t("address")}</TableHead>
+                <TableHead>{t("operateType")}</TableHead>
+                <TableHead>{t("operateDesc")}</TableHead>
               </TableRow>
             </TableHeader>
             {loading ? (
               <ChangeLogSkeleton />
             ) : (
-              <TableBody className="w-full max-h-[50dvh] overflow-auto block">
+              <TableBody>
                 {data?.list?.length > 0 ? (
                   data?.list?.map((item) => (
                     <TableRow key={item.id}>
-                      <TableCell className="w-[150px]">
-                        {item.operateTime}
+                      <TableCell>
+                        <Time time={item.createTime} />
                       </TableCell>
-                      <TableCell className="w-[100px]">
-                        {item.userNickName}
-                      </TableCell>
-                      <TableCell className="w-[100px]">
-                        {item.userName}
-                      </TableCell>
-                      <TableCell className="w-[150px]">
-                        {item.remoteIp}
-                      </TableCell>
-                      <TableCell className="w-[150px]">{item.region}</TableCell>
-                      <TableCell className="w-[100px]">
-                        {item.bizType}
-                      </TableCell>
-                      <TableCell className="flex-1">{item.msg}</TableCell>
+                      <TableCell>{item.userNickName}</TableCell>
+                      <TableCell>{item.userName}</TableCell>
+                      <TableCell>{item.remoteIp}</TableCell>
+                      <TableCell>{item.region}</TableCell>
+                      <TableCell>{item.bizType}</TableCell>
+                      <TableCell>{item.msg}</TableCell>
                     </TableRow>
                   ))
                 ) : (
-                  <TableRow className="flex justify-center items-center">
-                    <TableCell
-                      colSpan={7}
-                      className="flex justify-center items-center h-40"
-                    >
+                  <TableRow>
+                    <TableCell colSpan={7} className="text-center h-40">
                       {translation("noData")}
                     </TableCell>
                   </TableRow>
                 )}
               </TableBody>
             )}
-          </Table>
+          </ScrollableTable>
         </div>
         <ModalPagination
           total={total}
@@ -134,7 +130,7 @@ export function ChangeLogModal({
           setSize={setPageSize}
         />
         <DialogFooter>
-          <Button variant="outline" onClick={() => setOpen(false)}>
+          <Button variant="outline" onClick={handleClose}>
             {translation("cancel")}
           </Button>
           <Button

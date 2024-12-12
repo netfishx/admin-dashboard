@@ -16,12 +16,12 @@ export async function SupplierTableHeader() {
   return (
     <TableHeader>
       <TableRow className="bg-muted">
-        <TableHead>{t("name")}</TableHead>
-        <TableHead className="min-w-60">{t("video")}</TableHead>
-        <TableHead className="min-w-60">{t("supplierId")}</TableHead>
-        <TableHead>{t("supplierName")}</TableHead>
-        <TableHead>{t("quota")}</TableHead>
-        <TableHead>{t("percent")}</TableHead>
+        <TableHead className="w-32">{t("name")}</TableHead>
+        <TableHead className="w-60">{t("video")}</TableHead>
+        <TableHead className="w-60">{t("supplierId")}</TableHead>
+        <TableHead className="w-32">{t("supplierName")}</TableHead>
+        <TableHead className="w-24">{t("quota")}</TableHead>
+        <TableHead className="w-24">{t("percent")}</TableHead>
         <TableHead className="w-24 text-center">{t("action")}</TableHead>
       </TableRow>
     </TableHeader>
@@ -35,7 +35,7 @@ export async function SupplierTable({
   const res = await getSupplierConfigs(userId);
   const t = await getTranslations();
   return (
-    <Table>
+    <Table className="table-fixed">
       <SupplierTableHeader />
       <TableBody>
         {res.data && res.data.length > 0 ? (

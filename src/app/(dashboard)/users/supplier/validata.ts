@@ -60,8 +60,8 @@ const editFormSchema = zfd
         .optional(),
     ),
     status: zfd.numeric(z.coerce.number()),
-    nickname: zfd.text(),
-    remark: zfd.text(),
+    nickname: zfd.text(z.string().optional()),
+    remark: zfd.text(z.string().optional()),
   })
   .refine(
     (data) => {
