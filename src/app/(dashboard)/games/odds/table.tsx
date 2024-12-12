@@ -51,7 +51,7 @@ export function OddsTable({
     setChangedList(uniq([...changedList, `${oddsType}-${betType}`]));
     setOdds({
       ...odds,
-      [`${oddsType}-${betType}`]: value ? Number(value) : 0,
+      [`${oddsType}-${betType}`]: Number(value) > 0 ? Number(value) : 0,
     });
   }
 
@@ -101,10 +101,8 @@ export function OddsTable({
                 min={0}
                 step={0.001}
                 onChange={(e) => {
-                  handleOddsChange(item.oddsType, item.betType, e.target.value);
-                }}
-                onBlur={(e) => {
                   setVerifyLimit(e.target.reportValidity());
+                  handleOddsChange(item.oddsType, item.betType, e.target.value);
                 }}
               />
             </TableCell>
@@ -119,6 +117,7 @@ export function OddsTable({
                 min={1}
                 disabled={!item.canEdit}
                 onChange={(e) => {
+                  setVerifyLimit(!!e.target.value && e.target.reportValidity());
                   handleLimitChange(
                     item.oddsType,
                     item.betType,
@@ -126,9 +125,6 @@ export function OddsTable({
                     "minBet",
                     Number(e.target.value),
                   );
-                }}
-                onBlur={(e) => {
-                  setVerifyLimit(e.target.reportValidity());
                 }}
               />
             </TableCell>
@@ -145,6 +141,9 @@ export function OddsTable({
                   max={item.maxBetLimit ?? Number.MAX_SAFE_INTEGER}
                   disabled={!item.canEdit}
                   onChange={(e) => {
+                    setVerifyLimit(
+                      !!e.target.value && e.target.reportValidity(),
+                    );
                     handleLimitChange(
                       item.oddsType,
                       item.betType,
@@ -152,9 +151,6 @@ export function OddsTable({
                       "maxBet",
                       Number(e.target.value),
                     );
-                  }}
-                  onBlur={(e) => {
-                    setVerifyLimit(e.target.reportValidity());
                   }}
                 />
                 {item.maxBetLimit ? (
@@ -177,6 +173,9 @@ export function OddsTable({
                   max={item.maxBetPeriodLimit ?? Number.MAX_SAFE_INTEGER}
                   disabled={!item.canEdit}
                   onChange={(e) => {
+                    setVerifyLimit(
+                      !!e.target.value && e.target.reportValidity(),
+                    );
                     handleLimitChange(
                       item.oddsType,
                       item.betType,
@@ -184,9 +183,6 @@ export function OddsTable({
                       "maxBetPeriod",
                       Number(e.target.value),
                     );
-                  }}
-                  onBlur={(e) => {
-                    setVerifyLimit(e.target.reportValidity());
                   }}
                 />
                 {item.maxBetPeriodLimit ? (
