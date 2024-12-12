@@ -21,6 +21,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Skeleton } from "@/components/ui/skeleton";
 import type { GameConfig, GameType } from "@/lib/types";
 import {
   changedOddsLimitAtom,
@@ -227,65 +228,77 @@ export function OddsForm({
       <div className="flex flex-wrap gap-2">
         <div className="flex gap-2 items-center">
           <Label className="shrink-0">{t("type")}</Label>
-          <Select defaultValue={dict[0]?.gameType.toString()} disabled>
-            <SelectTrigger className="w-36">
-              <SelectValue placeholder={t("placeholder")} />
-            </SelectTrigger>
-            <SelectContent>
-              {dict.map((item) => (
-                <SelectItem
-                  key={item.gameType}
-                  value={item.gameType.toString()}
-                >
-                  {item.gameTypeLabel}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+          {dict.length === 0 ? (
+            <Skeleton className="w-36 h-9" />
+          ) : (
+            <Select defaultValue={dict[0]?.gameType.toString()} disabled>
+              <SelectTrigger className="w-36">
+                <SelectValue placeholder={t("placeholder")} />
+              </SelectTrigger>
+              <SelectContent>
+                {dict.map((item) => (
+                  <SelectItem
+                    key={item.gameType}
+                    value={item.gameType.toString()}
+                  >
+                    {item.gameTypeLabel}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          )}
         </div>
         <div className="flex gap-2 items-center">
           <Label className="shrink-0">{t("name")}</Label>
-          <Select
-            value={game?.gameId ?? undefined}
-            onValueChange={(value) => {
-              setGame({
-                gameType: game.gameType,
-                gameId: value,
-              });
-            }}
-          >
-            <SelectTrigger className="w-36">
-              <SelectValue placeholder={t("placeholder")} />
-            </SelectTrigger>
-            <SelectContent>
-              {list.map((item) => (
-                <SelectItem key={item.gameId} value={item.gameId.toString()}>
-                  {item.gameName}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+          {dict.length === 0 ? (
+            <Skeleton className="w-36 h-9" />
+          ) : (
+            <Select
+              value={game?.gameId ?? undefined}
+              onValueChange={(value) => {
+                setGame({
+                  gameType: game.gameType,
+                  gameId: value,
+                });
+              }}
+            >
+              <SelectTrigger className="w-36">
+                <SelectValue placeholder={t("placeholder")} />
+              </SelectTrigger>
+              <SelectContent>
+                {list.map((item) => (
+                  <SelectItem key={item.gameId} value={item.gameId.toString()}>
+                    {item.gameName}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          )}
         </div>
         <div className="flex gap-2 items-center">
           <Label className="shrink-0">{t("batch")}</Label>
-          <Select
-            value={field}
-            onValueChange={(value) =>
-              setField(value as "odds" | "minBet" | "maxBet" | "maxBetPeriod")
-            }
-          >
-            <SelectTrigger className="w-40">
-              <SelectValue placeholder={t("placeholder")} />
-            </SelectTrigger>
-            <SelectContent>
-              {permissions.includes("sync_odds") && (
-                <SelectItem value="odds">{t("odds")}</SelectItem>
-              )}
-              <SelectItem value="minBet">{t("min")}</SelectItem>
-              <SelectItem value="maxBet">{t("max")}</SelectItem>
-              <SelectItem value="maxBetPeriod">{t("total")}</SelectItem>
-            </SelectContent>
-          </Select>
+          {permissions.length === 0 ? (
+            <Skeleton className="w-40 h-9" />
+          ) : (
+            <Select
+              value={field}
+              onValueChange={(value) =>
+                setField(value as "odds" | "minBet" | "maxBet" | "maxBetPeriod")
+              }
+            >
+              <SelectTrigger className="w-40">
+                <SelectValue placeholder={t("placeholder")} />
+              </SelectTrigger>
+              <SelectContent>
+                {permissions.includes("sync_odds") && (
+                  <SelectItem value="odds">{t("odds")}</SelectItem>
+                )}
+                <SelectItem value="minBet">{t("min")}</SelectItem>
+                <SelectItem value="maxBet">{t("max")}</SelectItem>
+                <SelectItem value="maxBetPeriod">{t("total")}</SelectItem>
+              </SelectContent>
+            </Select>
+          )}
         </div>
         <div className="flex gap-2 items-center">
           <Label className="shrink-0">{t("column")}</Label>
@@ -298,6 +311,7 @@ export function OddsForm({
         </div>
       </div>
       <div className="flex gap-2 ml-auto">
+        {permissions.length === 0 && <Skeleton className="w-80 h-9" />}
         {permissions.includes("sync_odds") && (
           <SyncButton onClick={handleSync} />
         )}

@@ -50,21 +50,19 @@ function TableWrapper({
   const { gameId } = use(searchParams);
   const hasAdminPermission = use(hasPermission("sync_odds"));
   return (
-    <Table>
+    <Table className="table-fixed">
       <TableHeader>
         <TableRow className="bg-muted">
-          <TableHead className="min-w-24">{t("smallType")}</TableHead>
-          <TableHead className="text-center w-32 min-w-32">
-            {t("odds")}
-          </TableHead>
-          <TableHead className="text-center min-w-40">{t("min")}</TableHead>
-          <TableHead className="text-center min-w-72">
+          <TableHead className="w-32">{t("smallType")}</TableHead>
+          <TableHead className="text-center w-32">{t("odds")}</TableHead>
+          <TableHead className="text-center w-40">{t("min")}</TableHead>
+          <TableHead className="text-center w-72">
             {t("max")}
             {!hasAdminPermission && (
               <span className="text-destructive">{t("tip")}</span>
             )}
           </TableHead>
-          <TableHead className="text-center min-w-72">
+          <TableHead className="text-center w-72">
             {t("total")}
             {!hasAdminPermission && (
               <span className="text-destructive">{t("tip")}</span>
@@ -101,7 +99,7 @@ export default function Page({
   return (
     <div className="flex flex-col gap-2 w-full">
       <div className="flex flex-col gap-2 bg-background p-4">
-        <Suspense fallback={<Skeleton className="w-full h-9" />}>
+        <Suspense fallback={<OddsForm list={[]} dict={[]} permissions={[]} />}>
           <FormWrapper />
         </Suspense>
       </div>
