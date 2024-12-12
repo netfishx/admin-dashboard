@@ -68,6 +68,7 @@ export function TransferMoneyModal() {
           setGoogleValidataOpen(true);
           setOpen(false);
         } else {
+          toast.success(message);
           setOpen(false);
           router.refresh();
         }

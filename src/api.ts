@@ -659,12 +659,18 @@ export async function editDefaultGameConfig(list: GameConfig[]) {
   });
 }
 
-export async function getGameOdds({ gameId }: { gameId: number }) {
+export async function getGameOdds({
+  gameId,
+  userId,
+}: {
+  gameId: number;
+  userId?: string;
+}) {
   const user = await getSession();
   return await apiRequest<GameOdds[]>({
     url: "/game/oddsLimit/list",
     token: user?.token,
-    params: { gameId },
+    params: { gameId, userId },
   });
 }
 
@@ -751,6 +757,7 @@ export async function restoreGameOdds({ gameId }: { gameId: number }) {
 export async function updateGameOdds(data: {
   gameId: number;
   list: GameOdds[];
+  userId?: string;
 }) {
   const user = await getSession();
   return await apiRequest({
