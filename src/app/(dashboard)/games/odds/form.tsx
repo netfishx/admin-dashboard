@@ -143,8 +143,8 @@ export function OddsForm({
           Object.keys(odds).map((key) => [
             key,
             Big(odds[key]).add(num).lt(0)
-              ? "0"
-              : Big(odds[key]).add(num).toString(),
+              ? 0
+              : Big(odds[key]).add(num).toNumber(),
           ]),
         ),
       );
@@ -198,7 +198,7 @@ export function OddsForm({
       list: changedList.map((key) => ({
         oddsType: Number(key.split("-")[0]),
         betType: Number(key.split("-")[1]),
-        odds: odds[key],
+        odds: odds[key]?.toString(),
         ...limit[key],
       })),
     });

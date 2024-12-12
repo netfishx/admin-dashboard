@@ -27,7 +27,7 @@ export function OddsTable({
       Object.fromEntries(
         list.map((item) => [
           `${item.oddsType}-${item.betType}`,
-          item.odds ?? "",
+          item.odds ? Number(item.odds) : 0,
         ]),
       ),
     );
@@ -51,7 +51,7 @@ export function OddsTable({
     setChangedList(uniq([...changedList, `${oddsType}-${betType}`]));
     setOdds({
       ...odds,
-      [`${oddsType}-${betType}`]: value,
+      [`${oddsType}-${betType}`]: value ? Number(value) : 0,
     });
   }
 

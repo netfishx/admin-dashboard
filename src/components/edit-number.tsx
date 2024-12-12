@@ -32,10 +32,10 @@ export function EditNumber({
       </Button>
       <Input
         className="rounded-none w-14 text-center [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
-        value={step}
+        defaultValue={step}
         onChange={(e) => {
           try {
-            setStep(Number(Big(e.target.value).toFixed(limit)));
+            setStep(e.target.value ? Big(e.target.value).toNumber() : 0);
           } catch (e) {
             console.error(e);
           }
