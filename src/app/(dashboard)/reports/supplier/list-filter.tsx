@@ -3,10 +3,11 @@ import { DateRangeFilter } from "@/components/daterange-filter";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { makeDownload } from "@/lib/utils";
 import { endOfDay, startOfDay } from "date-fns";
 import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useQueryState } from "nuqs";
 import { useTransition } from "react";
 export function ListFilter({
@@ -14,6 +15,8 @@ export function ListFilter({
 }: { hasSearchPermission: boolean }) {
   const t = useTranslations("report.supplier");
   const [isPending, startTransition] = useTransition();
+  const [isDownload, startDownload] = useTransition();
+  const searchParams = useSearchParams();
   const [supplierId, setSupplierId] = useQueryState("supplierId", {
     defaultValue: "",
   });
@@ -60,6 +63,15 @@ export function ListFilter({
           >
             {isPending && <Loader2 className="w-4 h-4 animate-spin" />}
             {t("search")}
+          </Button>
+          <Button
+            onClick={() =>
+              startDownload(() => makeDownload(searchParams, 100000))
+            }
+            disabled={isDownload}
+          >
+            {isDownload && <Loader2 className="w-4 h-4 animate-spin" />}
+            {t("download")}
           </Button>
         </div>
       </div>

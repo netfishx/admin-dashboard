@@ -11,17 +11,20 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import type { GameInfo } from "@/lib/types";
+import { makeDownload } from "@/lib/utils";
 import { endOfDay } from "date-fns";
 import { startOfDay } from "date-fns";
 import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useQueryState } from "nuqs";
 import { useTransition } from "react";
 
 export function RatioForm({ gameList }: { gameList: GameInfo[] }) {
   const t = useTranslations("report.agent");
   const [isPending, startTransition] = useTransition();
+  const [isDownload, startDownload] = useTransition();
+  const searchParams = useSearchParams();
   const [gameId, setGameId] = useQueryState("gameId", {
     defaultValue: "all",
   });
@@ -114,7 +117,15 @@ export function RatioForm({ gameList }: { gameList: GameInfo[] }) {
             {isPending && <Loader2 className="w-4 h-4 animate-spin" />}
             {t("search")}
           </Button>
-          <Button disabled={isPending}>{t("download")}</Button>
+          <Button
+            disabled={isDownload}
+            onClick={() =>
+              startDownload(() => makeDownload(searchParams, 100003))
+            }
+          >
+            {isDownload && <Loader2 className="w-4 h-4 animate-spin" />}
+            {t("download")}
+          </Button>
         </div>
       </div>
     </div>

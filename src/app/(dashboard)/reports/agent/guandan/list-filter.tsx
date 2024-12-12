@@ -97,7 +97,7 @@ export function ListFilter({
             {isPending && <Loader2 className="w-4 h-4 animate-spin" />}
             {t("search")}
           </Button>
-          <Button disabled={isPending}>{t("download")}</Button>
+          {/* <Button disabled={isPending}>{t("download")}</Button> */}
         </div>
       </div>
     </div>

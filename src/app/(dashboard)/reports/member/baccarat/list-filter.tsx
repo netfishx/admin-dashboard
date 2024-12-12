@@ -11,12 +11,13 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import type { GameInfo } from "@/lib/types";
+import { makeDownload } from "@/lib/utils";
 
 import { startOfDay } from "date-fns";
 import { endOfDay } from "date-fns";
 import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useQueryState } from "nuqs";
 import { useTransition } from "react";
 
@@ -26,6 +27,8 @@ export function ListFilter({
 }: { hasSearchPermission: boolean; gameList: GameInfo[] }) {
   const t = useTranslations("report.member");
   const [isPending, startTransition] = useTransition();
+  const [isDownload, startDownload] = useTransition();
+  const searchParams = useSearchParams();
   const [parentAgentId, setParentAgentId] = useQueryState("parentAgentId", {
     defaultValue: "",
   });
@@ -103,8 +106,8 @@ export function ListFilter({
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="all">{t("all")}</SelectItem>
-              <SelectItem value="1">直属会员</SelectItem>
-              <SelectItem value="2">非直属会员</SelectItem>
+              <SelectItem value="1">{t("directMember")}</SelectItem>
+              <SelectItem value="2">{t("nonDirectMember")}</SelectItem>
             </SelectContent>
           </Select>
         </div>
@@ -136,7 +139,15 @@ export function ListFilter({
             {isPending && <Loader2 className="animate-spin" />}
             {t("search")}
           </Button>
-          <Button disabled={isPending}>{t("download")}</Button>
+          <Button
+            disabled={isDownload}
+            onClick={() =>
+              startDownload(() => makeDownload(searchParams, 100004))
+            }
+          >
+            {isDownload && <Loader2 className="w-4 h-4 animate-spin" />}
+            {t("download")}
+          </Button>
         </div>
       </div>
     </div>

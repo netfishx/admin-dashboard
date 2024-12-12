@@ -11,11 +11,12 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import type { GameInfo } from "@/lib/types";
+import { makeDownload } from "@/lib/utils";
 import { endOfDay } from "date-fns";
 import { startOfDay } from "date-fns";
 import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useQueryState } from "nuqs";
 import { useTransition } from "react";
 
@@ -29,6 +30,8 @@ export function MemberForm({ gameList }: { gameList: GameInfo[] }) {
     defaultValue: "",
   });
   const [isPending, startTransition] = useTransition();
+  const [isDownload, startDownload] = useTransition();
+  const searchParams = useSearchParams();
 
   const handleReset = () => {
     router.replace(
@@ -93,7 +96,15 @@ export function MemberForm({ gameList }: { gameList: GameInfo[] }) {
             ) : null}
             {t("search")}
           </Button>
-          <Button disabled={isPending}>{t("download")}</Button>
+          <Button
+            disabled={isDownload}
+            onClick={() =>
+              startDownload(() => makeDownload(searchParams, 100002))
+            }
+          >
+            {isDownload && <Loader2 className="w-4 h-4 animate-spin" />}
+            {t("download")}
+          </Button>
         </div>
       </div>
     </div>

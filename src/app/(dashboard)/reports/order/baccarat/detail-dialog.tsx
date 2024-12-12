@@ -17,22 +17,24 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import type { OrderItemDetailType } from "@/lib/types";
+import type { OrderItemDetailType, OrderReportsRecord } from "@/lib/types";
 import { useTranslations } from "next-intl";
 import { Suspense, useEffect, useState } from "react";
 
 interface Dialogprops {
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  item: OrderReportsRecord;
 }
 
 export function Detaildialog(props: Dialogprops) {
-  const { open, onOpenChange } = props;
+  const { open, onOpenChange, item } = props;
   const [data, setData] = useState<OrderItemDetailType>();
   const t = useTranslations("report.orderlist");
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     if (open) {
-      getOrderDetail({ id: "1731907697706" }).then((res) => {
+      getOrderDetail({ id: item.id }).then((res) => {
         setData(res?.data);
       });
     }
