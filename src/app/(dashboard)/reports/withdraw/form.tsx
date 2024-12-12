@@ -15,13 +15,8 @@ import {
 import {} from "date-fns";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
-import {
-  parseAsInteger,
-  parseAsString,
-  useQueryState,
-  useQueryStates,
-} from "nuqs";
-import { useEffect, useTransition } from "react";
+import { parseAsInteger, useQueryState, useQueryStates } from "nuqs";
+import { useTransition } from "react";
 import { toast } from "sonner";
 
 export function Form() {
@@ -42,10 +37,9 @@ export function Form() {
   const [withdrawMoney, setWithdrawMoney] = useQueryState("withdrawMoney", {
     defaultValue: "0",
   });
-  const [operatorSymbol, setOperatorSymbol] = useQueryState(
-    "operatorSymbol",
-    parseAsString.withDefault("3").withOptions({ clearOnDefault: false }),
-  );
+  const [operatorSymbol, setOperatorSymbol] = useQueryState("operatorSymbol", {
+    defaultValue: "3",
+  });
 
   const handleFilterChange = (filterType: string) => {
     setOperatorSymbol(filterType);
@@ -67,11 +61,6 @@ export function Form() {
       toast.error(t("selectDateOrId"));
     }
   }
-
-  useEffect(() => {
-    setOperatorSymbol("3");
-    setWithdrawMoney("0");
-  }, [setOperatorSymbol, setWithdrawMoney]);
 
   return (
     <div className="flex flex-col bg-background py-4 px-4 gap-4">

@@ -12,10 +12,8 @@ import {
 } from "@/components/ui/table";
 import type { AnnouncementList, PageData } from "@/lib/types";
 import { getTranslations } from "next-intl/server";
-import { Suspense } from "react";
 import { EditBtn } from "../edit-btn";
 import { TruncatedCell } from "../truncated-cell";
-import { AddBtn } from "./add-btn";
 
 export async function List({
   searchParams,
@@ -30,13 +28,10 @@ export async function List({
 
   return (
     <div className="p-2 gap-2 flex flex-col h-full bg-background">
-      <AddBtn />
       <div className="border rounded-sm">
         <Table>
           <TableHeaderWrapper />
-          <Suspense fallback={<TableBodySkeleton />}>
-            <TableBodyWrapper data={data} />
-          </Suspense>
+          <TableBodyWrapper data={data} />
         </Table>
       </div>
       {!!data?.total && (
@@ -101,9 +96,8 @@ export async function TableBodyWrapper({
     3: "直属代理公告",
     4: "直属会员公告",
     5: "系统配置公告",
-    // todo
-    6: "占成公告",
-    7: "退水公告",
+    6: "代理占成变动通知",
+    7: "代理返水变动通知",
   };
 
   return (

@@ -20,18 +20,19 @@ import { Form } from "./form";
 export default async function Page({
   searchParams,
 }: { searchParams: Promise<{ [key: string]: string | string[] }> }) {
+  const { startTime, endTime } = await searchParams;
   return (
     <div className="flex flex-col gap-2 w-full">
       <Suspense
         fallback={
-          <div className="bg-background p-4 flex flex-col gap-2">
+          <div className="bg-background p-2 flex flex-col gap-2">
             <Skeleton />
             <Skeleton />
             <Skeleton />
           </div>
         }
       >
-        <Form />
+        <Form key={`${startTime}-${endTime}`} />
       </Suspense>
       <div className="bg-background flex-1">
         <Suspense

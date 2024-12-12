@@ -4,12 +4,11 @@ import { DateRangeFilter } from "@/components/daterange-filter";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { endOfDay, startOfDay } from "date-fns";
+import {} from "date-fns";
 import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
-import { useSearchParams } from "next/navigation";
-import { useQueryState } from "nuqs";
+import { parseAsInteger, useQueryState, useQueryStates } from "nuqs";
 import { useTransition } from "react";
 import { toast } from "sonner";
 
@@ -27,12 +26,13 @@ export function Form() {
   const [isPending, startTransition] = useTransition();
   const [isReset, startReset] = useTransition();
 
-  const searchParams = useSearchParams();
-  const startTime = searchParams.get("startTime");
-  const endTime = searchParams.get("endTime");
+  const [dateRange] = useQueryStates({
+    startTime: parseAsInteger,
+    endTime: parseAsInteger,
+  });
 
   function search() {
-    if (startTime && endTime) {
+    if (dateRange.startTime && dateRange.endTime) {
       startTransition(router.refresh);
     } else {
       toast.error(t("selectDate"));
@@ -70,12 +70,11 @@ export function Form() {
           disabled={isReset}
           onClick={() => {
             startReset(() => {
-              router.replace(
-                `/withdraw/audit?startTime=${startOfDay(new Date()).getTime()}&endTime=${endOfDay(new Date()).getTime()}`,
-              );
+              router.replace("/withdraw/audit");
             });
           }}
         >
+          {isReset ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
           {t("reset")}
         </Button>
         <Button onClick={search} disabled={isPending}>

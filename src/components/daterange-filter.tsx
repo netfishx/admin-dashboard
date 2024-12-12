@@ -31,7 +31,7 @@ import { Calendar as CalendarIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { parseAsInteger, useQueryStates } from "nuqs";
-import { startTransition, useCallback, useEffect } from "react";
+import { startTransition, useCallback, useEffect, useState } from "react";
 import type { DateRange } from "react-day-picker";
 type rangeType =
   | "today"
@@ -151,18 +151,31 @@ export function DateRangeFilter({
   enableTimeSelect = true,
   startTimeText = "startTime",
   endTimeText = "endTime",
+  isSearch = true, // true： 来自于搜索组件， false： 来自于表单
+  formDateRange, // 表单里传过来的日期范围
+  onDateRangeChange,
 }: {
   quickSetBtn?: rangeType[];
   enableTimeSelect?: boolean;
   startTimeText?: string;
   endTimeText?: string;
+  isSearch?: boolean;
+  formDateRange?: { from: number; to: number };
+  onDateRangeChange?: (startTime: number, endTime: number) => void;
 }) {
   const t = useTranslations("report.orderlist");
   const today = new Date();
-  const [dateRange, setDateRange] = useQueryStates({
+  const [dateRangeUrl, setDateRangeUrl] = useQueryStates({
     [startTimeText]: parseAsInteger.withDefault(0),
     [endTimeText]: parseAsInteger.withDefault(0),
   });
+  const [dateRangeForm, setDateRangeForm] = useState({
+    [startTimeText]: formDateRange?.from ?? 0,
+    [endTimeText]: formDateRange?.to ?? 0,
+  });
+
+  const dateRange = isSearch ? dateRangeUrl : dateRangeForm;
+  const setDateRange = isSearch ? setDateRangeUrl : setDateRangeForm;
 
   const router = useRouter();
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
@@ -178,6 +191,10 @@ export function DateRangeFilter({
       }
     });
   }, []);
+
+  useEffect(() => {
+    onDateRangeChange?.(dateRange[startTimeText], dateRange[endTimeText]);
+  }, [dateRange, onDateRangeChange]);
 
   const handleQuickSelect = (type: string) => {
     let from: Date;
@@ -282,11 +299,14 @@ export function DateRangeFilter({
         : undefined;
 
       setDateRange({
-        [startTimeText]: startDate?.getTime(),
-        [endTimeText]: endDate?.getTime(),
+        [startTimeText]: startDate?.getTime() ?? 0,
+        [endTimeText]: endDate?.getTime() ?? 0,
       });
     } else {
-      setDateRange(null);
+      setDateRange({
+        [startTimeText]: 0,
+        [endTimeText]: 0,
+      });
     }
   };
 
@@ -345,6 +365,11 @@ export function DateRangeFilter({
               }
               onSelect={handleDateRangeChange}
               numberOfMonths={1}
+              defaultMonth={
+                dateRange[startTimeText]
+                  ? new Date(dateRange[startTimeText])
+                  : today
+              }
             />
             {enableTimeSelect && (
               <TimeSelect

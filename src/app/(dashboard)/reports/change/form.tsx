@@ -12,11 +12,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { endOfDay, startOfDay } from "date-fns";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
-import { useSearchParams } from "next/navigation";
-import { useQueryState } from "nuqs";
+import { parseAsInteger, useQueryState, useQueryStates } from "nuqs";
 import { useTransition } from "react";
 import { toast } from "sonner";
 
@@ -25,9 +23,10 @@ export function Form() {
   const router = useRouter();
   const [isReset, startReset] = useTransition();
 
-  const searchParams = useSearchParams();
-  const startTime = searchParams.get("startTime");
-  const endTime = searchParams.get("endTime");
+  const [dateRange] = useQueryStates({
+    startTime: parseAsInteger,
+    endTime: parseAsInteger,
+  });
 
   const [userId, setUserId] = useQueryState("userId");
   const [transactionID, setTransactionID] = useQueryState("transactionID");
@@ -37,13 +36,13 @@ export function Form() {
   const [operateCode, setOperateCode] = useQueryState("operateCode", {
     defaultValue: "all",
   });
-  const [isPending, startTransition] = useTransition();
+  const [isPending, startSearch] = useTransition();
 
   function search() {
-    if (!(startTime && endTime) && !transactionID) {
-      toast.error(t("selectDateOrId"));
+    if ((dateRange.startTime && dateRange.endTime) || transactionID) {
+      startSearch(router.refresh);
     } else {
-      startTransition(router.refresh);
+      toast.error(t("selectDateOrId"));
     }
   }
   return (
@@ -132,12 +131,11 @@ export function Form() {
           disabled={isReset}
           onClick={() => {
             startReset(() => {
-              router.replace(
-                `/reports/change?startTime=${startOfDay(new Date()).getTime()}&endTime=${endOfDay(new Date()).getTime()}`,
-              );
+              router.replace("/reports/change");
             });
           }}
         >
+          {isReset ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
           {t("reset")}
         </Button>
         <Button onClick={search} disabled={isPending}>
