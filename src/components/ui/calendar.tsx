@@ -72,7 +72,7 @@ function Calendar({
         ...classNames,
       }}
       components={{
-        Dropdown: ({ children, ...props }) => {
+        Dropdown: (props) => {
           const { options, className, disabled } = props;
           const { goToMonth, months } = useDayPicker();
           const currentShown = months[0].date;
@@ -117,13 +117,13 @@ function Calendar({
             </Select>
           );
         },
-        YearsDropdown: ({ children, ...props }) => {
+        YearsDropdown: (props) => {
           const { components } = useDayPicker()
           // sort years in descending order
           const sortedOptions = props.options?.sort((a, b) => b.value - a.value)
           return <components.Dropdown {...props} options={sortedOptions} />
         },
-        PreviousMonthButton: ({ className, children, ...props }) => {
+        PreviousMonthButton: ({ className, ...props }) => {
           const previousMonth = useDayPicker().previousMonth
           return (
             <Button
@@ -137,8 +137,8 @@ function Calendar({
               tabIndex={previousMonth ? -1 : undefined}
               disabled={!previousMonth}
               aria-label={labelPrevious(previousMonth)}
-              onClick={() => {
-                props.onClick()
+              onClick={(e) => {
+                props.onClick?.(e);
               }}
             >
               <ChevronLeftIcon className="h-4 w-4" />
@@ -159,8 +159,8 @@ function Calendar({
               tabIndex={nextMonth ? -1 : undefined}
               disabled={!nextMonth}
               aria-label={labelNext(nextMonth)}
-              onClick={() => {
-                props.onClick()
+              onClick={(e) => {
+                props.onClick?.(e);
               }}
             >
               <ChevronRightIcon className="h-4 w-4" />

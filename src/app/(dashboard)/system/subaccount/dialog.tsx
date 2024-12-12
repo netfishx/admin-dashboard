@@ -149,7 +149,7 @@ export function SubaccountDialog({ roles }: { roles: Role[] }) {
                 <div className="flex-1 flex gap-2">
                   <div>
                     <RadioGroup
-                      className="flex gap-2"
+                      className="flex gap-4"
                       value={status.toString() ?? "0"}
                       onValueChange={(value) => {
                         setStatus(Number(value));
@@ -176,9 +176,9 @@ export function SubaccountDialog({ roles }: { roles: Role[] }) {
               <Label className="w-20 text-end shrink-0">
                 {t("chooseRole")}
               </Label>
-              <div className="flex-1 flex gap-2 flex-wrap">
+              <div className="flex-1 flex gap-4 flex-wrap">
                 {roles.map((role) => (
-                  <div key={role.id} className="flex gap-1">
+                  <div key={role.id} className="flex gap-2">
                     <Checkbox
                       key={role.id}
                       checked={checkedRoles.includes(role.id ?? "")}

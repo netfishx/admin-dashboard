@@ -75,7 +75,12 @@ export function RebateForm() {
         </div>
         <div className="flex gap-2 items-center">
           <Label className="shrink-0">{t("column")}</Label>
-          <EditNumber step={step} setStep={setStep} handleEdit={handleEdit} />
+          <EditNumber
+            step={step}
+            setStep={setStep}
+            handleEdit={handleEdit}
+            limit={0.01}
+          />
         </div>
       </div>
       <div className="flex gap-2">

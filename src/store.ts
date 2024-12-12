@@ -125,7 +125,7 @@ export const rebateAtom = atom<
   }[]
 >([]);
 export const oddsAtom = atom<{
-  [key: string]: string;
+  [key: string]: number;
 }>({});
 export const verifyLimitAtom = atom<boolean>(true);
 export const limitAtom = atom<{

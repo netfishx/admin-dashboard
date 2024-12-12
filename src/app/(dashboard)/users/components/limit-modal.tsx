@@ -47,6 +47,8 @@ export function LimitModal({ userId }: { userId: string }) {
   const [gameId, setGameId] = useState<number>();
   const [data, setData] = useState<GameOdds[]>([]);
   const [initialData, setInitialData] = useState<GameOdds[]>([]);
+  // 数据校验是否正确
+  const [isValidataData, setIsValidataData] = useState(false);
   const router = useRouter();
   useEffect(() => {
     if (open && userId) {
@@ -65,10 +67,11 @@ export function LimitModal({ userId }: { userId: string }) {
       });
     }
   }, [open, userId]);
+
   useEffect(() => {
-    if (gameId) {
+    if (gameId && userId && open) {
       setLoading(true);
-      getGameOdds({ gameId }).then(({ code, data, message }) => {
+      getGameOdds({ gameId, userId }).then(({ code, data, message }) => {
         setLoading(false);
         if (code === 0 && data) {
           setData(data ?? []);
@@ -78,9 +81,9 @@ export function LimitModal({ userId }: { userId: string }) {
         }
       });
     }
-  }, [gameId]);
+  }, [gameId, userId, open]);
 
-  const handleLimitChange = (groupId: number, key: string, value: number) => {
+  const handleLimitChange = (groupId: number, key: string, value: string) => {
     setData(
       data.map((item) =>
         item.groupId === groupId ? { ...item, [key]: value } : item,
@@ -106,6 +109,7 @@ export function LimitModal({ userId }: { userId: string }) {
         const { code, message } = await updateGameOdds({
           gameId,
           list: changedItems,
+          userId,
         });
 
         if (code === 0) {
@@ -132,7 +136,13 @@ export function LimitModal({ userId }: { userId: string }) {
   };
 
   return (
-    <Dialog open={open} onOpenChange={(open) => setOpen(open)}>
+    <Dialog
+      open={open}
+      onOpenChange={(open) => {
+        setOpen(open);
+        setGameId(undefined);
+      }}
+    >
       <DialogContent
         className="max-w-5xl"
         onPointerDownOutside={(e) => e.preventDefault()}
@@ -172,15 +182,19 @@ export function LimitModal({ userId }: { userId: string }) {
                           className="inline-block max-w-32 min-w-28"
                           type="number"
                           disabled={!item.canEdit}
+                          required
                           min={1}
                           step={1}
                           onChange={(e) =>
                             handleLimitChange(
                               item.groupId ?? 0,
                               "minBet",
-                              Number(e.target.value),
+                              e.target.value,
                             )
                           }
+                          onBlur={(e) => {
+                            setIsValidataData(e.target.reportValidity());
+                          }}
                         />
                       </TableCell>
                       <TableCell className="w-[280px]">
@@ -188,20 +202,24 @@ export function LimitModal({ userId }: { userId: string }) {
                           value={item.maxBet?.toString() ?? ""}
                           className="inline-block max-w-32 min-w-28"
                           type="number"
+                          required
                           min={1}
-                          max={item.maxBet ?? 1}
+                          max={item.maxBetLimit ?? 1}
                           disabled={!item.canEdit}
                           step={1}
                           onChange={(e) =>
                             handleLimitChange(
                               item.groupId ?? 0,
                               "maxBet",
-                              Number(e.target.value),
+                              e.target.value,
                             )
                           }
+                          onBlur={(e) => {
+                            setIsValidataData(e.target.reportValidity());
+                          }}
                         />
-                        <span className="text-destructive">
-                          ({item.maxBet})
+                        <span className="text-destructive ml-2">
+                          ({item.maxBetLimit})
                         </span>
                       </TableCell>
                       <TableCell className="w-[300px]">
@@ -209,20 +227,24 @@ export function LimitModal({ userId }: { userId: string }) {
                           value={item.maxBetPeriod?.toString() ?? ""}
                           className="inline-block max-w-32 min-w-28"
                           type="number"
+                          required
                           min={1}
-                          max={item.maxBetPeriod ?? 1}
+                          max={item.maxBetPeriodLimit ?? 1}
                           disabled={!item.canEdit}
                           step={1}
                           onChange={(e) =>
                             handleLimitChange(
                               item.groupId ?? 0,
                               "maxBetPeriod",
-                              Number(e.target.value),
+                              e.target.value,
                             )
                           }
+                          onBlur={(e) => {
+                            setIsValidataData(e.target.reportValidity());
+                          }}
                         />
-                        <span className="text-destructive">
-                          ({item.maxBetPeriod})
+                        <span className="text-destructive ml-2">
+                          ({item.maxBetPeriodLimit})
                         </span>
                       </TableCell>
                     </TableRow>
@@ -245,7 +267,10 @@ export function LimitModal({ userId }: { userId: string }) {
           <Button variant="outline" onClick={() => setOpen(false)}>
             {translations("cancel")}
           </Button>
-          <Button disabled={isPending || !hasChanges()} onClick={handleSave}>
+          <Button
+            disabled={isPending || !hasChanges() || !isValidataData}
+            onClick={handleSave}
+          >
             {isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
             {translations("confirm")}
           </Button>

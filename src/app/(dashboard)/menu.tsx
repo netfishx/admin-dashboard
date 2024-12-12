@@ -275,36 +275,7 @@ function OpenedMenu({
           </CollapsibleContent>
         </Collapsible>
       )}
-      {permissions.some((v) =>
-        ["withdrawfee", "minerfee", "collection"].includes(v),
-      ) && (
-        <Collapsible
-          open={openedMenu.includes("fund")}
-          onOpenChange={(e) => handleOpenChange("fund", e)}
-        >
-          <CollapsibleTrigger asChild>
-            <MenuItem
-              label={t("fund.title")}
-              icon={<Scale className="size-4" />}
-              hasChildren
-            />
-          </CollapsibleTrigger>
-          <CollapsibleContent className="flex flex-col gap-1 px-6">
-            {permissions.includes("minerfee") && (
-              <MenuItem label={t("fund.minerfee")} href="/fund/minerfee" />
-            )}
-            {permissions.includes("collection") && (
-              <MenuItem label={t("fund.collection")} href="/fund/collection" />
-            )}
-            {permissions.includes("withdrawfee") && (
-              <MenuItem
-                label={t("fund.withdrawfee")}
-                href="/fund/withdrawfee"
-              />
-            )}
-          </CollapsibleContent>
-        </Collapsible>
-      )}
+
       {permissions.some((v) =>
         ["personal_info", "login_log", "edit_password"].includes(v),
       ) && (
@@ -371,6 +342,36 @@ function OpenedMenu({
                   "/system/announcement/all",
                   "/system/announcement/own",
                 ]}
+              />
+            )}
+          </CollapsibleContent>
+        </Collapsible>
+      )}
+      {permissions.some((v) =>
+        ["withdrawfee", "minerfee", "collection"].includes(v),
+      ) && (
+        <Collapsible
+          open={openedMenu.includes("fund")}
+          onOpenChange={(e) => handleOpenChange("fund", e)}
+        >
+          <CollapsibleTrigger asChild>
+            <MenuItem
+              label={t("fund.title")}
+              icon={<Scale className="size-4" />}
+              hasChildren
+            />
+          </CollapsibleTrigger>
+          <CollapsibleContent className="flex flex-col gap-1 px-6">
+            {permissions.includes("minerfee") && (
+              <MenuItem label={t("fund.minerfee")} href="/fund/minerfee" />
+            )}
+            {permissions.includes("collection") && (
+              <MenuItem label={t("fund.collection")} href="/fund/collection" />
+            )}
+            {permissions.includes("withdrawfee") && (
+              <MenuItem
+                label={t("fund.withdrawfee")}
+                href="/fund/withdrawfee"
               />
             )}
           </CollapsibleContent>
@@ -568,33 +569,6 @@ function ClosedMenu({
         </TooltipProvider>
       )}
       {permissions.some((v) =>
-        ["minerfee", "collection", "withdrawfee"].includes(v),
-      ) && (
-        <TooltipProvider>
-          <Tooltip>
-            <TooltipTrigger>
-              <div
-                className={cn([
-                  baseClass,
-                  pathname.startsWith("/fund") && "text-primary",
-                ])}
-              >
-                <MenuItemLink
-                  href="/fund/minerfee"
-                  isActive={pathname.startsWith("/fund")}
-                  className="px-0 w-full"
-                >
-                  <Scale className="size-4" />
-                </MenuItemLink>
-              </div>
-            </TooltipTrigger>
-            <TooltipContent side="right">
-              <p>{t("fund.title")}</p>
-            </TooltipContent>
-          </Tooltip>
-        </TooltipProvider>
-      )}
-      {permissions.some((v) =>
         ["personal_info", "login_log", "edit_password"].includes(v),
       ) && (
         <TooltipProvider>
@@ -644,6 +618,33 @@ function ClosedMenu({
             </TooltipTrigger>
             <TooltipContent side="right">
               <p>{t("system.title")}</p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
+      )}
+      {permissions.some((v) =>
+        ["minerfee", "collection", "withdrawfee"].includes(v),
+      ) && (
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger>
+              <div
+                className={cn([
+                  baseClass,
+                  pathname.startsWith("/fund") && "text-primary",
+                ])}
+              >
+                <MenuItemLink
+                  href="/fund/minerfee"
+                  isActive={pathname.startsWith("/fund")}
+                  className="px-0 w-full"
+                >
+                  <Scale className="size-4" />
+                </MenuItemLink>
+              </div>
+            </TooltipTrigger>
+            <TooltipContent side="right">
+              <p>{t("fund.title")}</p>
             </TooltipContent>
           </Tooltip>
         </TooltipProvider>
