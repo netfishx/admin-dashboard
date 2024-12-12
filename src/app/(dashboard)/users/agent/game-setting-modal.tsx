@@ -191,7 +191,7 @@ export function GameSettingModal() {
                       ?.filter((item) => item.gameType === 20)
                       .map((item) => (
                         <TableRow key={item.gameId}>
-                          <TableCell>{item.gameId}</TableCell>
+                          <TableCell>{item.gameName}</TableCell>
                           <TableCell>
                             <Switch
                               checked={item.status === 1}
