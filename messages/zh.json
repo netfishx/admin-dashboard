@@ -560,7 +560,8 @@
       "gameName": "游戏名称",
       "roomType": "房间类型",
       "betAmount": "下注金额",
-      "validBetAmount": "有效金额"
+      "validBetAmount": "有效金额",
+      "download": "生成下载任务"
     },
     "member": {
       "member_id": "会员ID",
@@ -585,7 +586,9 @@
       "superAgentId": "上级代理ID",
       "openTime": "开奖日期",
       "download": "生成下载任务",
-      "all": "全部"
+      "all": "全部",
+      "directMember": "直属会员",
+      "nonDirectMember": "非直属会员"
     },
     "change": {
       "userId": "用户ID",

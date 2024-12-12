@@ -11,11 +11,12 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import type { GameInfo } from "@/lib/types";
+import { makeDownload } from "@/lib/utils";
 import { orderListBaccaratAgentIdAtom } from "@/store";
 import { useAtom } from "jotai";
 import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import {
   parseAsInteger,
   parseAsString,
@@ -26,9 +27,11 @@ import { useEffect, useState, useTransition } from "react";
 import { toast } from "sonner";
 export function ListFilter({ gameList }: { gameList: GameInfo[] }) {
   const t = useTranslations("report.orderlist");
+  const searchParams = useSearchParams();
   const router = useRouter();
   const [isPending, startSearch] = useTransition();
   const [isReset, startReset] = useTransition();
+  const [isDownload, startDownload] = useTransition();
   const [dateRange] = useQueryStates({
     startTime: parseAsInteger,
     endTime: parseAsInteger,
@@ -273,7 +276,15 @@ export function ListFilter({ gameList }: { gameList: GameInfo[] }) {
             {isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
             {t("search")}
           </Button>
-          <Button>{t("download")}</Button>
+          <Button
+            onClick={() =>
+              startDownload(() => makeDownload(searchParams, 100005))
+            }
+            disabled={isDownload}
+          >
+            {isDownload && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+            {t("download")}
+          </Button>
         </div>
       </div>
     </div>
