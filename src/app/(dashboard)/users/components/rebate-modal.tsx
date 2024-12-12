@@ -26,7 +26,13 @@ import { useAtom } from "jotai";
 import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
-import { useEffect, useState, useTransition } from "react";
+import {
+  type Dispatch,
+  type SetStateAction,
+  useEffect,
+  useState,
+  useTransition,
+} from "react";
 import { toast } from "sonner";
 
 /**
@@ -43,6 +49,7 @@ export function RebateModal({ userId }: { userId: string }) {
   const [data, setData] = useState<GameConfig[] | undefined>();
   const router = useRouter();
   const [initialData, setInitialData] = useState<GameConfig[] | undefined>();
+  const [isValid, setIsValid] = useState<boolean>(false);
 
   useEffect(() => {
     if (userId && open) {
@@ -143,6 +150,7 @@ export function RebateModal({ userId }: { userId: string }) {
               <TableBodyWrapper
                 data={data ?? []}
                 handleChange={(gameId, value) => handleChange(gameId, value)}
+                setIsValid={setIsValid}
               />
             )}
           </ScrollableTable>
@@ -152,7 +160,7 @@ export function RebateModal({ userId }: { userId: string }) {
             {translations("cancel")}
           </Button>
           <Button
-            disabled={isPending || !hasChanges()}
+            disabled={isPending || !hasChanges() || !isValid}
             onClick={() => startTransition(handleConfirm)}
           >
             {isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
@@ -190,9 +198,11 @@ function RebateSkeleton() {
 function TableBodyWrapper({
   data,
   handleChange,
+  setIsValid,
 }: {
   data: GameConfig[] | [];
   handleChange: (gameId: number, value: string) => void;
+  setIsValid: Dispatch<SetStateAction<boolean>>;
 }) {
   const translations = useTranslations();
   return (
@@ -214,6 +224,9 @@ function TableBodyWrapper({
                     max={item.maxBackRate ?? 0}
                     onChange={(e) => {
                       handleChange(item.gameId, e.target.value);
+                    }}
+                    onBlur={(e) => {
+                      setIsValid(e.target.reportValidity());
                     }}
                   />
                   <span className="text-destructive">{`${item.maxBackRate ?? 0}%`}</span>

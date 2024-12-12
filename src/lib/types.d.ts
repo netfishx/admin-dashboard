@@ -925,8 +925,8 @@ export type RewardRecordRequestRecords = {
 // 注单列表-掼蛋-入参
 export type GameRecordRequestParams = {
   issueNumber?: string; // 投注期号 (Issue Number)
-  startTime: string; // 开始时间 必须 (Required)
-  endTime: string; // 结束时间 必须 (Required)
+  startTime: number; // 开始时间 必须 (Required)
+  endTime: number; // 结束时间 必须 (Required)
   pageNum: number; // 页码
   pageSize: number; // 条数
   agentId?: string; // 代理ID (Agent ID)
@@ -977,7 +977,7 @@ export type DownloadListRecords = {
   exportButtonCode: string; //操作编码
   exportFileName: string; //文件名
   operatorName: string; //操作人姓名
-  downloadTime: number; //最近下载时间
+  operateTime: number; //生成时间
   endTime: number; //结束时间
   status: number; //状态(0: 初始化，1：生成中 ，2：生成成功，99：生成失败)
   failReason: string; //错误原因

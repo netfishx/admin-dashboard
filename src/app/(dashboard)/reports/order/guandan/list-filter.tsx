@@ -12,12 +12,12 @@ import {
 } from "@/components/ui/select";
 import type { GameInfo } from "@/lib/types";
 import { makeDownload } from "@/lib/utils";
-import { endOfDay, startOfDay } from "date-fns";
 import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useQueryState } from "nuqs";
+import { parseAsInteger, useQueryState, useQueryStates } from "nuqs";
 import { useTransition } from "react";
+import { toast } from "sonner";
 
 export function ListFilter({
   hasSearchPermission,
@@ -28,6 +28,11 @@ export function ListFilter({
 }) {
   const t = useTranslations("report.orderlist");
   const [isDownload, startDownload] = useTransition();
+  const [isSearch, startSearch] = useTransition();
+  const [dateRange] = useQueryStates({
+    startTime: parseAsInteger,
+    endTime: parseAsInteger,
+  });
   const searchParams = useSearchParams();
   // 期号
   const [issuenumber, setIssuenumber] = useQueryState("issueNumber", {
@@ -44,12 +49,14 @@ export function ListFilter({
 
   const router = useRouter();
   const handleSearch = () => {
-    router.refresh();
+    if (dateRange.startTime && dateRange.endTime) {
+      router.refresh();
+    } else {
+      toast.error("请选择日期范围");
+    }
   };
   const handleReset = () => {
-    router.replace(
-      `/reports/order/guandan?startTime=${startOfDay(new Date()).getTime()}&endTime=${endOfDay(new Date()).getTime()}`,
-    );
+    router.replace("/reports/order/guandan");
   };
 
   return (
@@ -122,7 +129,10 @@ export function ListFilter({
           >
             {t("reset")}
           </Button>
-          <Button onClick={handleSearch}>{t("search")}</Button>
+          <Button onClick={() => startSearch(handleSearch)} disabled={isSearch}>
+            {isSearch && <Loader2 className="w-4 h-4 animate-spin" />}
+            {t("search")}
+          </Button>
           <Button
             onClick={() =>
               startDownload(() => makeDownload(searchParams, 100006))
