@@ -14,7 +14,7 @@ export function AddBtn() {
   const setContentModalData = useSetAtom(contentModalDataAtom);
   return (
     <>
-      <div className="flex justify-end bg-background">
+      <div className="flex justify-end bg-background px-2 pt-2">
         <Button
           className="self-end"
           onClick={() => {

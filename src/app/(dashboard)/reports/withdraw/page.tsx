@@ -27,10 +27,10 @@ export default async function Page({
     <div className="flex flex-col gap-2 w-full">
       <Suspense
         fallback={
-          <div className="bg-background py-2 flex flex-col gap-2">
-            <Skeleton className="w-full h-12" />
-            <Skeleton className="w-full h-12" />
-            <Skeleton className="w-full h-12" />
+          <div className="bg-background p-2 flex flex-col gap-2">
+            <Skeleton />
+            <Skeleton />
+            <Skeleton />
           </div>
         }
       >
@@ -106,7 +106,7 @@ async function TableWrapper({
   } = await searchParams;
   const params: WithdrawReportParams = {
     orderNo: (orderNo ?? null) as string,
-    operatorSymbol: Number(operatorSymbol),
+    operatorSymbol: operatorSymbol ? Number(operatorSymbol) : 3, // 默认大于
     withdrawMoney: withdrawMoney ? Number(withdrawMoney) : 0,
     requestStatus: requestStatus ? Number(requestStatus) : null,
     pageNum: Number(pageNum ?? 1),
