@@ -11,13 +11,28 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import type { GameInfo } from "@/lib/types";
-import { endOfDay, startOfDay } from "date-fns";
+import { orderListBaccaratAgentIdAtom } from "@/store";
+import { useAtom } from "jotai";
+import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
-import { parseAsString, useQueryState } from "nuqs";
+import {
+  parseAsInteger,
+  parseAsString,
+  useQueryState,
+  useQueryStates,
+} from "nuqs";
+import { useEffect, useState, useTransition } from "react";
+import { toast } from "sonner";
 export function ListFilter({ gameList }: { gameList: GameInfo[] }) {
   const t = useTranslations("report.orderlist");
   const router = useRouter();
+  const [isPending, startSearch] = useTransition();
+  const [isReset, startReset] = useTransition();
+  const [dateRange] = useQueryStates({
+    startTime: parseAsInteger,
+    endTime: parseAsInteger,
+  });
 
   const [gameName, setGameName] = useQueryState("gameId", {
     defaultValue: "all",
@@ -54,6 +69,8 @@ export function ListFilter({ gameList }: { gameList: GameInfo[] }) {
   const [leastlevelID, setLeastlevelID] = useQueryState("lastAgentId", {
     defaultValue: "",
   });
+  // 代理ID
+  const [, setOrderListBaccaratAgentId] = useAtom(orderListBaccaratAgentIdAtom);
   const [rechargeMoney, setRechargeMoney] = useQueryState(
     "betAmount",
     parseAsString.withDefault("0").withOptions({ clearOnDefault: false }),
@@ -62,6 +79,14 @@ export function ListFilter({ gameList }: { gameList: GameInfo[] }) {
     "operators",
     parseAsString.withDefault("0").withOptions({ clearOnDefault: false }),
   );
+
+  const [agentId, setAgentId] = useState("");
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+  useEffect(() => {
+    setOperatorSymbol("0");
+    setRechargeMoney("0");
+  }, []);
 
   const handleFilterChange = (filterType: string) => {
     setOperatorSymbol(filterType);
@@ -73,14 +98,23 @@ export function ListFilter({ gameList }: { gameList: GameInfo[] }) {
     setRechargeMoney(numberValue.toString());
   };
 
+  const handleAgentIdChange = (value: string) => {
+    setAgentId(value);
+  };
+
   const handleReset = () => {
-    router.replace(
-      `/reports/order/baccarat?startTime=${startOfDay(new Date()).getTime()}&endTime=${endOfDay(new Date()).getTime()}`,
-    );
+    startReset(() => {
+      router.replace("/reports/order/baccarat");
+    });
   };
 
   const handleSearch = () => {
-    router.refresh();
+    if (dateRange.startTime && dateRange.endTime) {
+      setOrderListBaccaratAgentId(agentId);
+      startSearch(router.refresh);
+    } else {
+      toast.error(t("selectDate"));
+    }
   };
 
   return (
@@ -214,24 +248,31 @@ export function ListFilter({ gameList }: { gameList: GameInfo[] }) {
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="all">{t("all")}</SelectItem>
-              <SelectItem value="0">{t("notCalculated")}</SelectItem>
               <SelectItem value="1">{t("notSettled")}</SelectItem>
               <SelectItem value="2">{t("settled")}</SelectItem>
             </SelectContent>
           </Select>
+        </div>
+        <div className="flex gap-2 items-center">
+          <Label className="shrink-0">{t("agentID")}</Label>
+          <Input
+            value={agentId ?? ""}
+            onChange={(e) => handleAgentIdChange(e.target.value)}
+            placeholder={t("placeholderinput")}
+          />
         </div>
       </div>
 
       {/* 第四行 */}
       <div className="flex gap-4 justify-end items-center">
         <div className="flex gap-2 items-center">
-          <Button
-            className="px-4 py-2 border rounded-md bg-white text-gray-700 border-gray-300 hover:bg-gray-100"
-            onClick={handleReset}
-          >
+          <Button variant="outline" disabled={isReset} onClick={handleReset}>
             {t("reset")}
           </Button>
-          <Button onClick={handleSearch}>{t("search")}</Button>
+          <Button onClick={handleSearch} disabled={isPending}>
+            {isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+            {t("search")}
+          </Button>
           <Button>{t("download")}</Button>
         </div>
       </div>

@@ -1054,12 +1054,13 @@ export async function lockCollectionAddress(data: {
 }
 
 // 注单详情
-export async function getOrderDetail(data: { id: string }) {
+export async function getOrderDetail(params: { id: string }) {
   const user = await getSession();
+  
   return await apiRequest<OrderItemDetailType>({
     url: "/agent/order/baccarat/detail",
     token: user?.token,
-    data,
+    params,
   });
 }
 // 矿工费
