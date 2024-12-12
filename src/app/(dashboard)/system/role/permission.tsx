@@ -2,7 +2,6 @@
 
 import { TreeSelect } from "@/components/ui/tree-select";
 import type { Permission, TreeNode } from "@/lib/types";
-import { useEffect, useState } from "react";
 
 function arrayToTree(
   permissions: Permission[],
@@ -131,20 +130,20 @@ export function PermissionTree({
   className?: string;
 }) {
   const [tree, checkedState] = arrayToTree(permissions, checked);
-  const [state, setState] = useState(checkedState);
-  useEffect(() => {
+
+  function handleChangeAction(checked: Map<number, boolean | "indeterminate">) {
     onChangeAction(
       permissions
-        .filter((item) => state.get(item.id) === true && item.permsType === 1)
+        .filter((item) => checked.get(item.id) === true && item.permsType === 1)
         .map((item) => item.id),
     );
-  }, [permissions, state, onChangeAction]);
+  }
   return (
     <TreeSelect
       className={className}
       data={tree}
-      checkedState={state}
-      handleChangeAction={setState}
+      checkedState={checkedState}
+      handleChangeAction={handleChangeAction}
     />
   );
 }

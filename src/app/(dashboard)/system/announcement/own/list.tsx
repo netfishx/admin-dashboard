@@ -39,7 +39,7 @@ export async function List({
           </Suspense>
         </Table>
       </div>
-      {Number(data?.total) > 0 && (
+      {!!data?.total && (
         <div className="pt-2">
           <CustomPagination
             total={data?.total ?? 0}

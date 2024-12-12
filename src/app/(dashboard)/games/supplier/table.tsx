@@ -46,7 +46,7 @@ export async function SupplierTable({
               <TableCell>{item.userId}</TableCell>
               <TableCell>{item.userName}</TableCell>
               <TableCell>{item.distributionAmount}</TableCell>
-              <TableCell>{item.distributionPercent}</TableCell>
+              <TableCell>{item.distributionPercent}%</TableCell>
               <TableCell className="w-24 text-center">
                 <EditButton data={item} />
               </TableCell>
