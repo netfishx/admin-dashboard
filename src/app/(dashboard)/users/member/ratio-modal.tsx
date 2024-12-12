@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/dialog";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
-  Table,
+  ScrollableTable,
   TableBody,
   TableCell,
   TableHead,
@@ -61,30 +61,26 @@ export function RatioModal() {
         </DialogHeader>
         <div className="flex flex-col gap-2">
           <span className="text-md font-medium">{t("baccarat")}</span>
-          <div className="border rounded-sm">
-            <Table>
-              <TableHeader className="table w-full">
-                <TableRow className="bg-muted">
-                  <TableHead className="w-[200px]">{t("name")}</TableHead>
-                  <TableHead className="w-[200px]">{t("ratio")}</TableHead>
+          <div className="border rounded-sm overflow-auto max-h-[50dvh]">
+            <ScrollableTable className="relative">
+              <TableHeader>
+                <TableRow className="bg-muted sticky top-0">
+                  <TableHead>{t("name")}</TableHead>
+                  <TableHead>{t("ratio")}</TableHead>
                 </TableRow>
               </TableHeader>
               {loading ? (
                 <RatioSkeleton />
               ) : (
-                <TableBody className="max-h-[370px] overflow-auto w-full block">
+                <TableBody>
                   {data &&
                   data?.filter((item) => item.gameType === 61).length > 0 ? (
                     data
                       ?.filter((item) => item.gameType === 61)
                       .map((item) => (
                         <TableRow key={item.gameId}>
-                          <TableCell className="w-[200px]">
-                            {item.gameName}
-                          </TableCell>
-                          <TableCell className="w-[200px]">
-                            {item.percent}%
-                          </TableCell>
+                          <TableCell>{item.gameName}</TableCell>
+                          <TableCell>{item.percent}%</TableCell>
                         </TableRow>
                       ))
                   ) : (
@@ -96,7 +92,7 @@ export function RatioModal() {
                   )}
                 </TableBody>
               )}
-            </Table>
+            </ScrollableTable>
           </div>
         </div>
         <DialogFooter>

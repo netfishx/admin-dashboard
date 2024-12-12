@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/dialog";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
-  Table,
+  ScrollableTable,
   TableBody,
   TableCell,
   TableHead,
@@ -87,41 +87,29 @@ export function LoginLogModal({
           <DialogTitle>{t("loginLog")}</DialogTitle>
           <DialogDescription />
         </DialogHeader>
-        <div className="border rounded-sm">
-          <Table>
-            <TableHeader className="table w-full">
-              <TableRow className="bg-muted">
-                <TableHead className="w-[150px] 2xl:w-[200px]">
-                  {t("loginTime")}
-                </TableHead>
-                <TableHead className="w-[150px] 2xl:w-[200px]">
-                  {t("ip")}
-                </TableHead>
-                <TableHead className="w-[120px] 2xl:w-[150px]">
-                  {t("address")}
-                </TableHead>
-                <TableHead className="w-[100px] 2xl:w-[120px]">
-                  {t("status")}
-                </TableHead>
+        <div className="border rounded-sm overflow-auto max-h-[50dvh]">
+          <ScrollableTable className="relative">
+            <TableHeader>
+              <TableRow className="bg-muted sticky top-0">
+                <TableHead>{t("loginTime")}</TableHead>
+                <TableHead>{t("ip")}</TableHead>
+                <TableHead>{t("address")}</TableHead>
+                <TableHead>{t("status")}</TableHead>
               </TableRow>
             </TableHeader>
             {loading ? (
               <LoginLogSkeleton />
             ) : (
-              <TableBody className="w-full max-h-[50dvh] overflow-auto flex flex-col">
+              <TableBody>
                 {data?.length > 0 ? (
                   data?.map((item: LoginLog) => (
                     <TableRow key={item.id + Math.random()}>
-                      <TableCell className="w-[150px] 2xl:w-[200px]">
+                      <TableCell>
                         <Time time={item.createTime} />
                       </TableCell>
-                      <TableCell className="w-[150px] 2xl:w-[200px]">
-                        {item.ip}
-                      </TableCell>
-                      <TableCell className="w-[120px] 2xl:w-[150px]">
-                        {item.region}
-                      </TableCell>
-                      <TableCell className="w-[100px] 2xl:w-[120px]">
+                      <TableCell>{item.ip}</TableCell>
+                      <TableCell>{item.region}</TableCell>
+                      <TableCell>
                         <StatusLabel status={Number(item.isSuccess)} />
                       </TableCell>
                     </TableRow>
@@ -138,7 +126,7 @@ export function LoginLogModal({
                 )}
               </TableBody>
             )}
-          </Table>
+          </ScrollableTable>
         </div>
         <ModalPagination
           total={total}
