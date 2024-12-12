@@ -61,7 +61,7 @@ export function EditButton({ data }: { data: Subaccount }) {
         setOpen(true);
       }}
     >
-      {t("edit")}
+      {t("info")}
     </Button>
   );
 }
