@@ -64,8 +64,14 @@ export function ChangeLogModal({
       });
     }
   }, [open, targetUserId, appType, pageNum, pageSize]);
+
+  const handleClose = () => {
+    setOpen(false);
+    setPageNum(1);
+    setPageSize(10);
+  };
   return (
-    <Dialog open={open} onOpenChange={(open) => setOpen(open)}>
+    <Dialog open={open} onOpenChange={handleClose}>
       <DialogContent
         className="max-w-5xl"
         onPointerDownOutside={(e) => e.preventDefault()}
@@ -106,11 +112,8 @@ export function ChangeLogModal({
                     </TableRow>
                   ))
                 ) : (
-                  <TableRow className="flex justify-center items-center">
-                    <TableCell
-                      colSpan={7}
-                      className="flex justify-center items-center h-40"
-                    >
+                  <TableRow>
+                    <TableCell colSpan={7} className="text-center h-40">
                       {translation("noData")}
                     </TableCell>
                   </TableRow>
@@ -127,7 +130,7 @@ export function ChangeLogModal({
           setSize={setPageSize}
         />
         <DialogFooter>
-          <Button variant="outline" onClick={() => setOpen(false)}>
+          <Button variant="outline" onClick={handleClose}>
             {translation("cancel")}
           </Button>
           <Button

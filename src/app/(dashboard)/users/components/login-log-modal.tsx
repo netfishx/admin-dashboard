@@ -76,6 +76,8 @@ export function LoginLogModal({
   const handleClose = () => {
     setOpen(false);
     setData([]);
+    setPage(1);
+    setSize(10);
   };
   return (
     <Dialog open={open} onOpenChange={handleClose}>
@@ -115,11 +117,8 @@ export function LoginLogModal({
                     </TableRow>
                   ))
                 ) : (
-                  <TableRow className="flex justify-center items-center">
-                    <TableCell
-                      colSpan={4}
-                      className="flex justify-center items-center h-40"
-                    >
+                  <TableRow>
+                    <TableCell colSpan={4} className="text-center h-40">
                       {translations("noData")}
                     </TableCell>
                   </TableRow>

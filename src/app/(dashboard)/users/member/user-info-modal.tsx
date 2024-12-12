@@ -60,6 +60,7 @@ export function UserInfoModal({
       setMemberId("");
       setUsername("");
       setMemberNickname("");
+      setAgentId("");
       setCreateTime(0);
       setStatus(1);
     };

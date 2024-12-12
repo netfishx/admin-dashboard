@@ -65,8 +65,8 @@ async function TableHeaderWrapper() {
     <TableHeader className="bg-muted">
       <TableRow>
         <TableHead>{t("name")}</TableHead>
+        <TableHead>{t("operateTime")}</TableHead>
         <TableHead>{t("exportTime")}</TableHead>
-        <TableHead>{t("downloadTime")}</TableHead>
         <TableHead>{t("status")}</TableHead>
         <TableHead>{t("failReason")}</TableHead>
         <TableHead className="text-center">{t("action")}</TableHead>
@@ -86,10 +86,10 @@ async function TableBodyWrapper({
           <TableRow key={item.id}>
             <TableCell>{item.exportFileName}</TableCell>
             <TableCell>
-              <Time time={item.endTime} />
+              <Time time={item.operateTime} />
             </TableCell>
             <TableCell>
-              <Time time={item.downloadTime} />
+              <Time time={item.endTime} />
             </TableCell>
             <TableCell>
               <ShowStatusLable status={item.status} />

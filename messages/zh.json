@@ -718,7 +718,7 @@
       "name": "报表名称",
       "applyTime": "申请时间",
       "exportTime": "导出完成时间",
-      "downloadTime": "最近下载时间",
+      "operateTime": "申请时间",
       "status": "生成状态",
       "failReason": "失败原因",
       "action": "操作",
