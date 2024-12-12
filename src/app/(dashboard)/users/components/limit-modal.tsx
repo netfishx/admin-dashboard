@@ -21,7 +21,7 @@ import {
 } from "@/components/ui/select";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
-  Table,
+  ScrollableTable,
   TableBody,
   TableCell,
   TableHead,
@@ -156,30 +156,27 @@ export function LimitModal({ userId }: { userId: string }) {
             <Form list={list} setGameId={setGameId} gameId={gameId} />
           </Suspense>
         </div>
-        <div className="border rounded-sm">
-          <Table>
-            <TableHeader className="w-full table">
-              <TableRow className="bg-muted">
-                <TableHead className="w-[160px]">{t("name")}</TableHead>
-                <TableHead className="w-[240px]">{t("min")}</TableHead>
-                <TableHead className="w-[280px]">{t("max")}</TableHead>
-                <TableHead className="w-[300px]">{t("total")}</TableHead>
+        <div className="border rounded-sm overflow-auto max-h-[50dvh]">
+          <ScrollableTable className="relative table-fixed">
+            <TableHeader>
+              <TableRow className="bg-muted sticky top-0">
+                <TableHead>{t("name")}</TableHead>
+                <TableHead>{t("min")}</TableHead>
+                <TableHead>{t("max")}</TableHead>
+                <TableHead>{t("total")}</TableHead>
               </TableRow>
             </TableHeader>
             {loading ? (
               <LimitSkeleton />
             ) : (
-              <TableBody className="max-h-[50dvh] overflow-auto w-full block">
+              <TableBody>
                 {data.length > 0 ? (
                   data.map((item) => (
                     <TableRow key={`${item.oddsType}-${item.betType}`}>
-                      <TableCell className="w-[160px]">
-                        {item.oddsLabel}
-                      </TableCell>
-                      <TableCell className="w-[240px]">
+                      <TableCell>{item.oddsLabel}</TableCell>
+                      <TableCell>
                         <Input
                           value={item.minBet?.toString() ?? ""}
-                          className="inline-block max-w-32 min-w-28"
                           type="number"
                           disabled={!item.canEdit}
                           required
@@ -197,71 +194,70 @@ export function LimitModal({ userId }: { userId: string }) {
                           }}
                         />
                       </TableCell>
-                      <TableCell className="w-[280px]">
-                        <Input
-                          value={item.maxBet?.toString() ?? ""}
-                          className="inline-block max-w-32 min-w-28"
-                          type="number"
-                          required
-                          min={1}
-                          max={item.maxBetLimit ?? 1}
-                          disabled={!item.canEdit}
-                          step={1}
-                          onChange={(e) =>
-                            handleLimitChange(
-                              item.groupId ?? 0,
-                              "maxBet",
-                              e.target.value,
-                            )
-                          }
-                          onBlur={(e) => {
-                            setIsValidataData(e.target.reportValidity());
-                          }}
-                        />
-                        <span className="text-destructive ml-2">
-                          ({item.maxBetLimit})
-                        </span>
+                      <TableCell>
+                        <div className="flex flex-row items-center gap-1">
+                          <Input
+                            value={item.maxBet?.toString() ?? ""}
+                            type="number"
+                            required
+                            min={1}
+                            max={item.maxBetLimit ?? 1}
+                            disabled={!item.canEdit}
+                            step={1}
+                            onChange={(e) =>
+                              handleLimitChange(
+                                item.groupId ?? 0,
+                                "maxBet",
+                                e.target.value,
+                              )
+                            }
+                            onBlur={(e) => {
+                              setIsValidataData(e.target.reportValidity());
+                            }}
+                          />
+                          <span className="text-destructive">
+                            ({item.maxBetLimit})
+                          </span>
+                        </div>
                       </TableCell>
-                      <TableCell className="w-[300px]">
-                        <Input
-                          value={item.maxBetPeriod?.toString() ?? ""}
-                          className="inline-block max-w-32 min-w-28"
-                          type="number"
-                          required
-                          min={1}
-                          max={item.maxBetPeriodLimit ?? 1}
-                          disabled={!item.canEdit}
-                          step={1}
-                          onChange={(e) =>
-                            handleLimitChange(
-                              item.groupId ?? 0,
-                              "maxBetPeriod",
-                              e.target.value,
-                            )
-                          }
-                          onBlur={(e) => {
-                            setIsValidataData(e.target.reportValidity());
-                          }}
-                        />
-                        <span className="text-destructive ml-2">
-                          ({item.maxBetPeriodLimit})
-                        </span>
+                      <TableCell>
+                        <div className="flex flex-row items-center gap-1">
+                          <Input
+                            value={item.maxBetPeriod?.toString() ?? ""}
+                            type="number"
+                            required
+                            min={1}
+                            max={item.maxBetPeriodLimit ?? 1}
+                            disabled={!item.canEdit}
+                            step={1}
+                            onChange={(e) =>
+                              handleLimitChange(
+                                item.groupId ?? 0,
+                                "maxBetPeriod",
+                                e.target.value,
+                              )
+                            }
+                            onBlur={(e) => {
+                              setIsValidataData(e.target.reportValidity());
+                            }}
+                          />
+                          <span className="text-destructive">
+                            ({item.maxBetPeriodLimit})
+                          </span>
+                        </div>
                       </TableCell>
                     </TableRow>
                   ))
                 ) : (
-                  <TableRow className="flex justify-center items-center">
-                    <TableCell
-                      colSpan={4}
-                      className="flex justify-center items-center text-center h-40"
-                    >
+                  <TableRow>
+                    <TableCell colSpan={4} className="text-center h-40">
                       {translations("noData")}
                     </TableCell>
                   </TableRow>
                 )}
               </TableBody>
             )}
-          </Table>
+          </ScrollableTable>
         </div>
         <DialogFooter>
           <Button variant="outline" onClick={() => setOpen(false)}>

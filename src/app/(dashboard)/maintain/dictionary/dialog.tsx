@@ -101,6 +101,7 @@ export function AddEditDialog() {
               className="flex-1"
               value={remark ?? ""}
               onChange={(e) => setRemark(e.target.value)}
+              maxLength={100}
             />
           </div>
         </div>

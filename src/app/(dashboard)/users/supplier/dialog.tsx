@@ -118,6 +118,7 @@ export function SupplierEditDialog() {
                 className="flex-1"
                 defaultValue={nickname}
                 name="nickname"
+                maxLength={20}
               />
             </div>
             <div className="flex gap-2 items-center">
@@ -140,7 +141,12 @@ export function SupplierEditDialog() {
             </div>
             <div className="flex gap-2 items-center">
               <Label className="w-32 text-end">{t("remark")}</Label>
-              <Input className="flex-1" defaultValue={remark} name="remark" />
+              <Input
+                className="flex-1"
+                defaultValue={remark}
+                name="remark"
+                maxLength={100}
+              />
             </div>
             <div className="flex gap-2 items-center">
               <Label className="w-32 text-end">{t("resetCount")}</Label>
