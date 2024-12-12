@@ -2,6 +2,7 @@
 
 import { getChangeLog } from "@/api";
 import { ModalPagination } from "@/components/modal-pagination";
+import { Time } from "@/components/time";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -62,7 +63,7 @@ export function ChangeLogModal({
         }
       });
     }
-  }, [open, targetUserId, setLoading]);
+  }, [open, targetUserId, appType, pageNum, pageSize]);
   return (
     <Dialog open={open} onOpenChange={(open) => setOpen(open)}>
       <DialogContent
@@ -94,7 +95,7 @@ export function ChangeLogModal({
                   data?.list?.map((item) => (
                     <TableRow key={item.id}>
                       <TableCell className="w-[150px]">
-                        {item.operateTime}
+                        <Time time={item.createTime} />
                       </TableCell>
                       <TableCell className="w-[100px]">
                         {item.userNickName}
