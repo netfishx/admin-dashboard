@@ -1560,14 +1560,6 @@ export async function getAllGames() {
   });
 }
 
-export async function getSupplierGames() {
-  const user = await getSession();
-  return await apiRequest<GameInfo[]>({
-    url: "/supplierConf/gameList",
-    token: user?.token,
-  });
-}
-
 export async function getBaccaratGames() {
   return await getAllGames().then((res) => ({
     ...res,

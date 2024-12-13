@@ -54,15 +54,15 @@ function TableWrapper({
       <TableHeader>
         <TableRow className="bg-muted">
           <TableHead className="w-32">{t("smallType")}</TableHead>
-          <TableHead className="text-center w-32">{t("odds")}</TableHead>
-          <TableHead className="text-center w-40">{t("min")}</TableHead>
-          <TableHead className="text-center w-72">
+          <TableHead className="w-32">{t("odds")}</TableHead>
+          <TableHead className="w-40">{t("min")}</TableHead>
+          <TableHead className="w-72">
             {t("max")}
             {!hasAdminPermission && (
               <span className="text-destructive">{t("tip")}</span>
             )}
           </TableHead>
-          <TableHead className="text-center w-72">
+          <TableHead className="w-72">
             {t("total")}
             {!hasAdminPermission && (
               <span className="text-destructive">{t("tip")}</span>

@@ -29,12 +29,12 @@ function SubaccountTableHeader() {
   return (
     <TableHeader>
       <TableRow className="bg-muted">
-        <TableHead className="text-center w-36">{t("name")}</TableHead>
-        <TableHead className="text-center w-48">{t("role")}</TableHead>
-        <TableHead className="text-center w-48">{t("createTime")}</TableHead>
-        <TableHead className="text-center w-36">{t("lastLoginIp")}</TableHead>
-        <TableHead className="text-center w-48">{t("lastLoginTime")}</TableHead>
-        <TableHead className="text-center w-24">{t("status")}</TableHead>
+        <TableHead className="w-36">{t("name")}</TableHead>
+        <TableHead className="w-48">{t("role")}</TableHead>
+        <TableHead className="w-48">{t("createTime")}</TableHead>
+        <TableHead className="w-36">{t("lastLoginIp")}</TableHead>
+        <TableHead className="w-48">{t("lastLoginTime")}</TableHead>
+        <TableHead className="w-24">{t("status")}</TableHead>
         <TableHead className="w-56 text-center sticky right-0 bg-muted">
           {t("action")}
         </TableHead>
@@ -81,24 +81,22 @@ async function SubaccountTableWrapper({
             ) : (
               res.data?.list.map((item) => (
                 <TableRow key={item.id}>
-                  <TableCell className="text-center">{item.username}</TableCell>
-                  <TableCell className="text-start break-all">
+                  <TableCell>{item.username}</TableCell>
+                  <TableCell className="break-all">
                     {item.roleList
                       ?.map(
                         (id) => roles.find((role) => role.id === id)?.roleName,
                       )
                       .join("，")}
                   </TableCell>
-                  <TableCell className="text-center">
+                  <TableCell>
                     {item.createTime && <Time time={item.createTime} />}
                   </TableCell>
-                  <TableCell className="text-center">
-                    {item.lastLoginIp}
-                  </TableCell>
-                  <TableCell className="text-center">
+                  <TableCell>{item.lastLoginIp}</TableCell>
+                  <TableCell>
                     {!!item.lastLoginTime && <Time time={item.lastLoginTime} />}
                   </TableCell>
-                  <TableCell className="text-center">
+                  <TableCell>
                     <span
                       className={cn([
                         "p-1 rounded-sm w-16 inline-block text-center",

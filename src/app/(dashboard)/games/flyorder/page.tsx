@@ -27,7 +27,7 @@ async function TableWrapper() {
       <TableHeader>
         <TableRow className="bg-muted">
           <TableHead>{t("name")}</TableHead>
-          <TableHead className="w-32 text-center">{t("switch")}</TableHead>
+          <TableHead className="w-32">{t("switch")}</TableHead>
         </TableRow>
       </TableHeader>
       <Suspense

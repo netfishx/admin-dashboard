@@ -33,7 +33,10 @@ import { toast } from "sonner";
 export function SupplierDialog({
   games,
   suppliers,
-}: { games: GameInfo[]; suppliers: Supplier[] }) {
+}: {
+  games: GameInfo[];
+  suppliers: Supplier[];
+}) {
   const translations = useTranslations();
   const t = useTranslations("games.supplier");
   const [open, setOpen] = useAtom(gamesSupplierDialogAtom);
@@ -105,6 +108,14 @@ export function SupplierDialog({
                       {item.gameName}
                     </SelectItem>
                   ))}
+                  {data && (
+                    <SelectItem
+                      key={data.gameId}
+                      value={`${data.gameType}-${data.gameId}`}
+                    >
+                      {data.gameName}
+                    </SelectItem>
+                  )}
                 </SelectContent>
               </Select>
             </div>

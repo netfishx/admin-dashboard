@@ -108,10 +108,10 @@ export function MaintainTableHeader({
           />
         </TableHead>
         <TableHead className="w-32">{t("name")}</TableHead>
-        <TableHead className="w-32 text-center">{t("status")}</TableHead>
+        <TableHead className="w-32">{t("status")}</TableHead>
         <TableHead className="w-48">{t("lastId")}</TableHead>
         <TableHead className="w-32">{t("lastTime")}</TableHead>
-        <TableHead className="w-32 text-center">{t("action")}</TableHead>
+        <TableHead className="w-32">{t("action")}</TableHead>
       </TableRow>
     </TableHeader>
   );

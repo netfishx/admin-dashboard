@@ -129,7 +129,7 @@ export function OddsForm({
   const [field, setField] = useState<
     "odds" | "minBet" | "maxBet" | "maxBetPeriod"
   >(permissions.includes("sync_odds") ? "odds" : "minBet");
-  const stepLimit = field === "odds" ? 3 : 0;
+  const stepLimit = field === "odds" ? 0.001 : 1;
   const [step, setStep] = useState(1);
 
   const [odds, setOdds] = useAtom(oddsAtom);
