@@ -8,7 +8,7 @@ export const createFormSchema = zfd
     username: zfd.text(usernameSchema),
     nickname: zfd.text(z.string().optional()),
     newPassword: zfd.text(passwordSchema),
-    confirmPassword: zfd.text(passwordSchema),
+    confirmPassword: zfd.text(z.string().nullable()),
     remark: zfd.text(z.string().optional()),
   })
   .refine((data) => data.newPassword === data.confirmPassword, {
