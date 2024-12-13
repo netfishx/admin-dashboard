@@ -49,7 +49,13 @@ export function SupplierDialog({
   const [isPending, startTransition] = useTransition();
   const router = useRouter();
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog
+      open={open}
+      onOpenChange={(o) => {
+        setOpen(o);
+        setSupplierId(undefined);
+      }}
+    >
       <DialogContent
         onInteractOutside={(e) => {
           e.preventDefault();
@@ -132,7 +138,7 @@ export function SupplierDialog({
             <div className="flex items-center gap-2">
               <Label className="w-20 text-end">{t("supplierId")}</Label>
               <Select
-                value={supplierId}
+                defaultValue={data?.userId}
                 onValueChange={setSupplierId}
                 name="userId"
                 required={true}
@@ -152,7 +158,7 @@ export function SupplierDialog({
             <div className="flex items-center gap-2">
               <Label className="w-20 text-end">{t("supplierName")}</Label>
               <span className="flex-1 flex h-9 items-center rounded-md border px-3 text-sm shadow-sm opacity-50 bg-muted">
-                {supplierName}
+                {supplierName || data?.userName}
               </span>
             </div>
             <div className="flex items-center gap-2">
