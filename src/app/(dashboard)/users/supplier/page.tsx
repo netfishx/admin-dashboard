@@ -29,7 +29,7 @@ export default async function Page({
       >
         <SupplierForm />
       </Suspense>
-      <div className="flex flex-1 flex-col gap-2 bg-background p-2">
+      <div className="p-4 bg-background flex-1 flex flex-col gap-2">
         <div className="flex justify-end">
           <Suspense>
             <Add />

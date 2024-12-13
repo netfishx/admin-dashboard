@@ -33,8 +33,8 @@ export default async function Page({
       >
         <Form />
       </Suspense>
-      <div className="flex-1 bg-background p-2">
-        <div className="flex justify-end pb-2">
+      <div className="p-4 bg-background flex-1">
+        <div className="pb-2 flex justify-end">
           <Add />
         </div>
         <Suspense
@@ -94,7 +94,7 @@ async function TableHeaderWrapper() {
         <TableHead>{t("dictCode")}</TableHead>
         <TableHead>{t("dictName")}</TableHead>
         <TableHead>{t("remark")}</TableHead>
-        <TableHead>{t("action")}</TableHead>
+        <TableHead className="text-center">{t("action")}</TableHead>
       </TableRow>
     </TableHeader>
   );
