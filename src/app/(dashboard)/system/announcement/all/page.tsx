@@ -9,7 +9,7 @@ export default async function All({
 }) {
   return (
     <div className="mt-2 flex h-full w-full flex-col gap-2">
-      <div className="flex flex-1 flex-col gap-2 bg-background p-2">
+      <div className="flex flex-1 flex-col gap-2 bg-background p-4">
         <Suspense
           fallback={
             <Table>

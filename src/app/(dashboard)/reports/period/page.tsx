@@ -23,7 +23,7 @@ export default async function Page({
     <div className="flex w-full flex-col gap-2">
       <Suspense
         fallback={
-          <div className="flex flex-col gap-2 bg-background p-2">
+          <div className="flex flex-col gap-2 bg-background p-4">
             <Skeleton />
             <Skeleton />
           </div>
@@ -32,7 +32,7 @@ export default async function Page({
         <FormWrapper searchParams={searchParams} />
       </Suspense>
 
-      <div className="flex-1 gap-2 bg-background p-2">
+      <div className="flex-1 gap-2 bg-background p-4">
         <Suspense
           fallback={
             <Table>
