@@ -1,24 +1,19 @@
-import { useTranslations } from "next-intl";
-
 // 提现状态
-export function getStatusDicts() {
-  const t = useTranslations("withdraw.apply");
-  return [
-    {
-      value: 0,
-      label: t("unprocessed"),
-    },
-    {
-      value: 1,
-      label: t("locked"),
-    },
-    {
-      value: 2,
-      label: t("rejected"),
-    },
-    {
-      value: 3,
-      label: t("passed"),
-    },
-  ];
-}
+export const WITHDRAW_STATUS = [
+  {
+    value: 0,
+    label: "unprocessed", // 未处理
+  },
+  {
+    value: 1,
+    label: "locked", // 锁定
+  },
+  {
+    value: 2,
+    label: "rejected", // 拒绝
+  },
+  {
+    value: 3,
+    label: "passed",
+  },
+];
