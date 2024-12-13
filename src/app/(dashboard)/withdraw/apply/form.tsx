@@ -11,45 +11,30 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { endOfDay, startOfDay } from "date-fns";
+import { getStatusDicts } from "@/lib/dicts";
 import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
-import { useSearchParams } from "next/navigation";
-import { useQueryState } from "nuqs";
+import { parseAsInteger, useQueryState, useQueryStates } from "nuqs";
 import { useTransition } from "react";
 import { toast } from "sonner";
 
 export function Form() {
+  const approverStatusDict = getStatusDicts();
   const t = useTranslations("withdraw.apply");
   const translations = useTranslations();
   const router = useRouter();
 
-  const searchParams = useSearchParams();
-  const startTime = searchParams.get("startTime");
-  const endTime = searchParams.get("endTime");
-
-  const approverStatusDict = [
-    {
-      value: 0,
-      label: t("unprocessed"),
-    },
-    {
-      value: 1,
-      label: t("locked"),
-    },
-    {
-      value: 2,
-      label: t("rejected"),
-    },
-    {
-      value: 3,
-      label: t("passed"),
-    },
-  ];
+  /**
+   * 审核状态
+   */
 
   const [isReset, startReset] = useTransition();
   const [isPending, startTransition] = useTransition();
+  const [dateRange] = useQueryStates({
+    startTime: parseAsInteger,
+    endTime: parseAsInteger,
+  });
 
   const [userId, setUserId] = useQueryState("userId", {
     defaultValue: "",
@@ -68,7 +53,7 @@ export function Form() {
   ];
 
   function search() {
-    if (startTime && endTime) {
+    if (dateRange.startTime && dateRange.endTime) {
       startTransition(router.refresh);
     } else {
       toast.error(t("selectDate"));
@@ -126,12 +111,11 @@ export function Form() {
           disabled={isReset}
           onClick={() => {
             startReset(() => {
-              router.replace(
-                `/withdraw/apply?startTime=${startOfDay(new Date()).getTime()}&endTime=${endOfDay(new Date()).getTime()}`,
-              );
+              router.replace("/withdraw/apply");
             });
           }}
         >
+          {isReset ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
           {t("reset")}
         </Button>
         <Button onClick={search} disabled={isPending}>

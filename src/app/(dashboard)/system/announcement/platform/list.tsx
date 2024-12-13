@@ -13,12 +13,11 @@ import {
 import type { PageData } from "@/lib/types";
 import type { AnnouncementList } from "@/lib/types";
 import { getTranslations } from "next-intl/server";
-import { Suspense } from "react";
 import { TruncatedCell } from "../truncated-cell";
 
 export async function List({
   searchParams,
-}: { searchParams: Promise<{ [key: string]: string | string[] }> }) {
+}: { searchParams: Promise<{ [key: string]: string }> }) {
   const { startTime, endTime, userId, pageNum, pageSize } = await searchParams;
   if (!(startTime && endTime)) {
     return (
@@ -33,7 +32,7 @@ export async function List({
     pageNum: Number(pageNum ?? 1),
     startLastTime: Number(startTime),
     endLastTime: Number(endTime),
-    userId: (userId ?? "") as string,
+    userId,
   });
 
   return (
@@ -41,9 +40,7 @@ export async function List({
       <div className="border rounded-sm">
         <Table>
           <TableHeaderWrapper />
-          <Suspense fallback={<TableBodySkeleton />}>
-            <TableBodyWrapper data={data} />
-          </Suspense>
+          <TableBodyWrapper data={data} />
         </Table>
       </div>
       {Number(data?.total) > 0 && (
@@ -95,6 +92,15 @@ export async function TableBodyWrapper({
   data,
 }: { data?: PageData<AnnouncementList> }) {
   const translations = await getTranslations();
+  const noticeTypeMap: { [key: number]: string } = {
+    1: "平台代理公告",
+    2: "平台会员公告",
+    3: "直属代理公告",
+    4: "直属会员公告",
+    5: "系统配置公告",
+    6: "代理占成变动通知",
+    7: "代理返水变动通知",
+  };
 
   return (
     <TableBody>
@@ -115,7 +121,9 @@ export async function TableBodyWrapper({
             </TableCell>
 
             {/* admin permission */}
-            <TableCell className="text-center">{item.type}</TableCell>
+            <TableCell className="text-center">
+              {noticeTypeMap[item.type]}
+            </TableCell>
 
             {/* admin permission */}
             <TableCell className="text-center">{item.userId}</TableCell>

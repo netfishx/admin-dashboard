@@ -190,7 +190,7 @@ export type Announcement = {
 export type AnnouncementListRequest = {
   pageSize: number;
   pageNum: number;
-  userId?: string;
+  userId?: string | null;
   startLastTime?: number;
   endLastTime?: number;
 };
@@ -241,6 +241,8 @@ export type PeriodReportList = WithPagination & {
   dataLink: [];
   gameId: number;
   gameType: number;
+  gameName: string;
+  gameTypeName: string;
   betNum: number;
   memberBetAmount: string; // 会员下注金额
   tieAmount: string; // 开和金额

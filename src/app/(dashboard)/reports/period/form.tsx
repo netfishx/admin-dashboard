@@ -6,7 +6,7 @@ import { Label } from "@/components/ui/label";
 import { Loader2 } from "lucide-react";
 import { useSearchParams } from "next/navigation";
 
-import { exportClick, getGameList } from "@/api";
+import { exportClick } from "@/api";
 import {
   Select,
   SelectContent,
@@ -14,24 +14,25 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { endOfDay, startOfDay } from "date-fns";
+import type { GameType } from "@/lib/types";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
-import { useQueryState } from "nuqs";
-import { useEffect, useState, useTransition } from "react";
+import { parseAsInteger, useQueryState, useQueryStates } from "nuqs";
+import { useState, useTransition } from "react";
 import { toast } from "sonner";
 
-export function Form() {
+export function Form({ list }: { list: GameType[] }) {
   const t = useTranslations("report.periodlist");
   const searchParams = useSearchParams();
-  const startTime = searchParams.get("startTime");
-  const endTime = searchParams.get("endTime");
 
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
   const [isReset, startReset] = useTransition();
   const [isSearch, startSearch] = useTransition();
-
+  const [dateRange] = useQueryStates({
+    startTime: parseAsInteger,
+    endTime: parseAsInteger,
+  });
   // const [gameType, setGameType] = useQueryState(
   //   "gameType",
   //   parseAsString.withDefault("61").withOptions({ clearOnDefault: false }),
@@ -51,31 +52,23 @@ export function Form() {
 
   const [gameIdList, setGameIdList] = useState<
     { gameId: number; gameIdLabel: string }[]
-  >([]);
+  >(
+    list?.[0]?.list?.map((item) => ({
+      gameId: item.gameId,
+      gameIdLabel: item.gameIdLabel,
+    })),
+  );
 
-  const [gameTypeList, setGameTypeList] = useState<
-    { gameType: number; gameTypeLabel: string }[]
-  >([]);
+  const [gameTypeList, setGameTypeList] =
+    useState<{ gameType: number; gameTypeLabel: string }[]>(list);
 
   function search() {
-    if (!startTime || !endTime) {
+    if (!dateRange.startTime || !dateRange.endTime) {
       toast.error(t("selectDateRange"));
     } else {
       startSearch(router.refresh);
     }
   }
-
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
-  useEffect(() => {
-    getGameList(1).then((res) => {
-      setGameTypeList(res.data ?? []);
-      const gameIdList = res.data?.[0]?.list?.map((item) => ({
-        gameId: item.gameId,
-        gameIdLabel: item.gameIdLabel,
-      }));
-      setGameIdList(gameIdList ?? []);
-    });
-  }, []);
 
   return (
     <div className="flex flex-col gap-2 w-full">
@@ -146,9 +139,7 @@ export function Form() {
             disabled={isReset}
             onClick={() => {
               startReset(() => {
-                router.replace(
-                  `/reports/period?startTime=${startOfDay(new Date()).getTime()}&endTime=${endOfDay(new Date()).getTime()}`,
-                );
+                router.replace("/reports/period");
               });
             }}
           >

@@ -583,11 +583,29 @@ export async function getRatioReport(params: RatioReportRequestParams) {
 // 按期汇总报表
 export async function getPeriodReport(params: PeriodReportParams) {
   const user = await getSession();
-  return await apiRequest<PageData<PeriodReportList>>({
-    url: "/report/agent/baccarat/issue",
-    params,
-    token: user?.token,
-  });
+  const [res, res2] = await Promise.all([
+    getGameList(1),
+    apiRequest<PageData<PeriodReportList>>({
+      url: "/report/agent/baccarat/issue",
+      params,
+      token: user?.token,
+    }),
+  ]);
+  return {
+    ...res2,
+    data: {
+      ...res2.data,
+      list: res2.data?.list.map((item) => ({
+        ...item,
+        gameName: res.data
+          ?.find((i) => i.gameType === item.gameType)
+          ?.list.find((i) => i.gameId === item.gameId)?.gameIdLabel,
+        gameTypeName: res.data?.find((i) => i.gameType === item.gameType)
+          ?.gameTypeLabel,
+      })),
+      gameList: res.data,
+    },
+  };
 }
 
 export async function getBaccaratGameConfig(userId?: string) {

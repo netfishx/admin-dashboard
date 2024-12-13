@@ -11,7 +11,14 @@ import { useState } from "react";
 import { CartesianGrid, Line, LineChart, XAxis, YAxis } from "recharts";
 
 // 定义配置对象
-const chartConfigs = {
+const chartConfigs: {
+  [key: string]: {
+    value: {
+      label: string;
+      color: string;
+    };
+  };
+} = {
   "0": {
     value: {
       label: "Value",
@@ -104,7 +111,7 @@ export function WeekChart({
       <div className="flex-1 flex items-center justify-center">
         {data.length > 0 ? (
           <ChartContainer
-            config={chartConfigs[activeTab as keyof typeof chartConfigs]}
+            config={chartConfigs[activeTab]}
             className="w-[40dvw] lg:w-[50dvw] xl:w-[55dvw] 2xl:w-[60dvw] mx-auto h-60"
           >
             <LineChart
