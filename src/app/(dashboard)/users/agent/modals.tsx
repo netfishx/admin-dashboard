@@ -3,7 +3,6 @@
 import { agentIdAtom } from "@/store";
 import { useAtomValue } from "jotai";
 import { ChangeLogModal } from "../components/change-log-modal";
-import { LimitModal } from "../components/limit-modal";
 import { LoginLogModal } from "../components/login-log-modal";
 import { RebateModal } from "../components/rebate-modal";
 import { GameSettingModal } from "./game-setting-modal";
@@ -17,7 +16,6 @@ export function Modals() {
       <LoginLogModal id={agentId} type="AGENT" />
       <UserInfoModal />
       <GameSettingModal />
-      <LimitModal userId={agentId} />
       <RebateModal userId={agentId} />
       <ChangeLogModal targetUserId={agentId} appType="AGENT" />
       <TransferMoneyModal />
