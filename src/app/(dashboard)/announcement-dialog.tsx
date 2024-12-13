@@ -55,6 +55,11 @@ export function AnnouncementDialog({
                     {t("agent")}
                   </span>
                 )}
+                {(item.type === 6 || item.type === 7) && (
+                  <span className="mr-2 inline-block rounded-sm bg-green/10 px-2 py-1 text-green">
+                    {t("systemLabel")}
+                  </span>
+                )}
                 {item.contentOfLanguage}
               </div>
             );
