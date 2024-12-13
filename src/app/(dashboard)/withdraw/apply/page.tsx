@@ -37,7 +37,7 @@ export default async function Page({
       >
         <Form key={`${startTime}-${endTime}`} />
       </Suspense>
-      <div className="flex flex-1 flex-col gap-2 bg-background p-2">
+      <div className="flex flex-1 flex-col gap-2 bg-background p-4">
         <Suspense
           fallback={
             <Table className="rounded-sm border">

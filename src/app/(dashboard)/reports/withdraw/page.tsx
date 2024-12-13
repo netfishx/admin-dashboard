@@ -27,7 +27,7 @@ export default async function Page({
     <div className="flex w-full flex-col gap-2">
       <Suspense
         fallback={
-          <div className="flex flex-col gap-2 bg-background p-2">
+          <div className="flex flex-col gap-2 bg-background p-4">
             <Skeleton />
             <Skeleton />
             <Skeleton />
@@ -36,7 +36,7 @@ export default async function Page({
       >
         <Form key={`${startTime}-${endTime}`} />
       </Suspense>
-      <div className="flex flex-1 flex-col gap-2 bg-background p-2">
+      <div className="flex flex-1 flex-col gap-2 bg-background p-4">
         <Suspense
           fallback={
             <Table className="table-fixed">
@@ -110,7 +110,7 @@ async function TableWrapper({
 
   const { data } = await getWithdrawReportList(params);
   return (
-    <div className="bg-background flex-1 w-full ">
+    <div className="bg-background flex-1 w-full">
       <div className="relative overflow-y-auto overflow-x-auto border rounded-sm">
         <Table className="table-fixed">
           <TableHeaderWrapper />

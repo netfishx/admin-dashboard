@@ -17,7 +17,7 @@ export default function TabsItem({
   const permissions = sessionData?.permissions;
   return (
     <div className="flex w-full flex-col gap-2">
-      <div className="gap-2 bg-background p-2">
+      <div className="gap-2 bg-background p-4">
         <Tabs defaultValue="own" value={pathname.split("/").pop()}>
           <TabsList>
             {permissions?.includes("own_announcement") && (
