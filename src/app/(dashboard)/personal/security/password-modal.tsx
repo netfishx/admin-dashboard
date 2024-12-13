@@ -70,7 +70,7 @@ export function PasswordModal({
         >
           <div className="flex flex-col gap-4">
             <div className="flex items-center gap-2">
-              <Label className="w-[100px] shrink-0 text-right text-muted-foreground before:text-destructive before:content-['*']">
+              <Label className="w-[100px] shrink-0 text-right text-muted-foreground before:text-destructive before:content-['*'] before:mr-1">
                 {t("oldPassword")}
               </Label>
               <Password
@@ -81,7 +81,7 @@ export function PasswordModal({
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <Label className="w-[100px] shrink-0 text-right text-muted-foreground before:text-destructive before:content-['*']">
+                <Label className="w-[100px] shrink-0 text-right text-muted-foreground before:text-destructive before:content-['*'] before:mr-1">
                   {t("newPassword")}
                 </Label>
                 <Password
@@ -95,7 +95,7 @@ export function PasswordModal({
               </div>
             </div>
             <div className="flex items-center gap-2">
-              <Label className="w-[100px] shrink-0 text-right text-muted-foreground before:text-destructive before:content-['*']">
+              <Label className="w-[100px] shrink-0 text-right text-muted-foreground before:text-destructive before:content-['*'] before:mr-1">
                 {t("confirmPassword")}
               </Label>
               <Password
