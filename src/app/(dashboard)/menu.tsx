@@ -50,7 +50,6 @@ export function Menu({ permissions }: { permissions: string[] }) {
   );
 }
 
-// biome-ignore lint/complexity/noExcessiveCognitiveComplexity: <explanation>
 function OpenedMenu({
   pathname,
   permissions,

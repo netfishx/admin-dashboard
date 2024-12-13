@@ -1,6 +1,5 @@
 import crypto from "node:crypto";
 
-// biome-ignore lint/complexity/noExcessiveCognitiveComplexity: <explanation>
 function stringify(obj: unknown) {
   if (typeof obj === "string") {
     return JSON.stringify(obj);
