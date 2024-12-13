@@ -62,7 +62,7 @@ export function MultiSelect({ options, onChange }: MultiSelectProps) {
             {selectedIndices.slice(0, visibleTags).map((index) => (
               <div
                 key={index}
-                className="bg-muted rounded-sm px-1 py-0.5 text-sm flex items-center gap-1 max-w-[100px]"
+                className="flex max-w-[100px] items-center gap-1 rounded-sm bg-muted px-1 py-0.5 text-sm"
               >
                 <span className="truncate">{options[index].label}</span>
                 {/* biome-ignore lint/a11y/useKeyWithClickEvents: <explanation> */}
@@ -82,7 +82,7 @@ export function MultiSelect({ options, onChange }: MultiSelectProps) {
               <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger asChild>
-                    <div className="bg-muted rounded-sm px-1 py-0.5 text-sm flex items-center">
+                    <div className="flex items-center rounded-sm bg-muted px-1 py-0.5 text-sm">
                       <MoreHorizontal className="h-3 w-3" />
                       <span className="ml-1">+{hiddenTags}</span>
                     </div>
@@ -99,7 +99,7 @@ export function MultiSelect({ options, onChange }: MultiSelectProps) {
               </TooltipProvider>
             )}
             {selectedIndices.length === 0 && (
-              <span className="text-muted-foreground font-normal text-sm">
+              <span className="text-sm font-normal text-muted-foreground">
                 {translations("placeholderSelect")}
               </span>
             )}
@@ -116,7 +116,7 @@ export function MultiSelect({ options, onChange }: MultiSelectProps) {
               <div
                 key={option.value}
                 className={cn(
-                  "flex items-center justify-between px-4 py-2 cursor-pointer hover:bg-muted",
+                  "flex cursor-pointer items-center justify-between px-4 py-2 hover:bg-muted",
                   isSelected && "bg-muted",
                 )}
                 onClick={() => toggleOption(index)}

@@ -4,10 +4,12 @@ import { List, TableBodySkeleton, TableHeaderWrapper } from "./list";
 // 上级公告
 export default async function All({
   searchParams,
-}: { searchParams: Promise<{ [key: string]: string | string[] }> }) {
+}: {
+  searchParams: Promise<{ [key: string]: string | string[] }>;
+}) {
   return (
-    <div className="flex flex-col gap-2 w-full h-full mt-2">
-      <div className="p-2 bg-background flex-1 flex flex-col gap-2">
+    <div className="mt-2 flex h-full w-full flex-col gap-2">
+      <div className="flex flex-1 flex-col gap-2 bg-background p-2">
         <Suspense
           fallback={
             <Table>

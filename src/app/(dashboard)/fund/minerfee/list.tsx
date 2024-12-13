@@ -17,8 +17,8 @@ export async function List() {
   const { data } = await getOreFeeList();
 
   return (
-    <div className="p-2  bg-background gap-2 flex flex-col h-full">
-      <div className="border rounded-sm">
+    <div className="flex h-full flex-col gap-2 bg-background p-2">
+      <div className="rounded-sm border">
         <Table>
           <TableHeaderWrapper />
           <Suspense fallback={<TableBodySkeleton />}>
@@ -42,7 +42,7 @@ export async function List() {
                 ))
               ) : (
                 <TableRow>
-                  <TableCell colSpan={10} className="text-center h-40">
+                  <TableCell colSpan={10} className="h-40 text-center">
                     {translations("noData")}
                   </TableCell>
                 </TableRow>

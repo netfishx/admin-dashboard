@@ -60,13 +60,13 @@ export function Form() {
     }
   }
   return (
-    <div className="flex flex-col gap-2  bg-background p-4">
-      <div className="flex gap-2 items-center">
-        <div className="flex gap-2 items-center">
+    <div className="flex flex-col gap-2 bg-background p-4">
+      <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2">
           <Label className="shrink-0">{t("dateRange")}</Label>
           <DateRangeFilter quickSetBtn={[]} enableTimeSelect={false} />
         </div>
-        <div className="flex gap-2 items-center">
+        <div className="flex items-center gap-2">
           <Label className="shrink-0">{t("auditStatus")}</Label>
           <Select
             defaultValue={approverStatusOptions[0]?.value}
@@ -88,7 +88,7 @@ export function Form() {
             </SelectContent>
           </Select>
         </div>
-        <div className="flex gap-2 items-center">
+        <div className="flex items-center gap-2">
           <Label className="shrink-0">{t("userId")}</Label>
           <Input
             placeholder={t("placeholder")}
@@ -96,7 +96,7 @@ export function Form() {
             onChange={(e) => setUserId(e.target.value)}
           />
         </div>
-        <div className="flex gap-2 items-center">
+        <div className="flex items-center gap-2">
           <Label className="shrink-0">{t("parentAccount")}</Label>
           <Input
             placeholder={t("placeholder")}
@@ -105,7 +105,7 @@ export function Form() {
           />
         </div>
       </div>
-      <div className="flex gap-2 justify-end items-start">
+      <div className="flex items-start justify-end gap-2">
         <Button
           variant="outline"
           disabled={isReset}

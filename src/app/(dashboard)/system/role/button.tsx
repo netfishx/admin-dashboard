@@ -34,7 +34,7 @@ export function DeleteButton({ id }: { id: string }) {
     <Button
       variant="ghost"
       size="sm"
-      className="text-destructive hover:text-destructive/80 text-sm"
+      className="text-sm text-destructive hover:text-destructive/80"
       onClick={() => {
         setData(id);
         setOpen(true);
@@ -52,7 +52,7 @@ export function EditButton({ data }: { data: Role }) {
     <Button
       variant="ghost"
       size="sm"
-      className="text-primary hover:text-primary/80 text-sm"
+      className="text-sm text-primary hover:text-primary/80"
       onClick={() => {
         setData(data);
         setOpen(true);

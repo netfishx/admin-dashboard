@@ -52,13 +52,13 @@ export function Toolbar({
   const firstPath = pathname.split("/")[1];
   const t = useTranslations();
   return (
-    <div className="w-full h-10 flex justify-between border-b px-2 shrink-0">
-      <div className="flex flex-row gap-2 items-center text-sm">
+    <div className="flex h-10 w-full shrink-0 justify-between border-b px-2">
+      <div className="flex flex-row items-center gap-2 text-sm">
         <TitleIcon title={firstPath} />
         <span>/</span>
         <TitleText pathname={pathname} />
       </div>
-      <div className="flex flex-row gap-2 items-center">
+      <div className="flex flex-row items-center gap-2">
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button
@@ -94,7 +94,7 @@ export function Toolbar({
             </PopoverTrigger>
             <PopoverContent className="w-fit">
               <QRCodeSVG value={inviteCode} />
-              <div className="text-xs pt-2 flex flex-row items-center justify-center">
+              <div className="flex flex-row items-center justify-center pt-2 text-xs">
                 <span>{t("inviteCode")}:</span>
                 <span>{inviteCode}</span>
                 <Button

@@ -97,7 +97,10 @@ function RestoreButton({ onClick }: { onClick: () => void }) {
 function SaveButton({
   onClick,
   disabled,
-}: { onClick: () => void; disabled: boolean }) {
+}: {
+  onClick: () => void;
+  disabled: boolean;
+}) {
   const t = useTranslations("games.odds");
   const [isPending, startTransition] = useTransition();
   return (
@@ -115,7 +118,11 @@ export function OddsForm({
   list,
   dict,
   permissions,
-}: { list: GameConfig[]; dict: GameType[]; permissions: string[] }) {
+}: {
+  list: GameConfig[];
+  dict: GameType[];
+  permissions: string[];
+}) {
   const t = useTranslations("games.odds");
   const router = useRouter();
 
@@ -226,10 +233,10 @@ export function OddsForm({
   return (
     <>
       <div className="flex flex-wrap gap-2">
-        <div className="flex gap-2 items-center">
+        <div className="flex items-center gap-2">
           <Label className="shrink-0">{t("type")}</Label>
           {dict.length === 0 ? (
-            <Skeleton className="w-36 h-9" />
+            <Skeleton className="h-9 w-36" />
           ) : (
             <Select defaultValue={dict[0]?.gameType.toString()} disabled>
               <SelectTrigger className="w-36">
@@ -248,10 +255,10 @@ export function OddsForm({
             </Select>
           )}
         </div>
-        <div className="flex gap-2 items-center">
+        <div className="flex items-center gap-2">
           <Label className="shrink-0">{t("name")}</Label>
           {dict.length === 0 ? (
-            <Skeleton className="w-36 h-9" />
+            <Skeleton className="h-9 w-36" />
           ) : (
             <Select
               value={game?.gameId ?? undefined}
@@ -275,10 +282,10 @@ export function OddsForm({
             </Select>
           )}
         </div>
-        <div className="flex gap-2 items-center">
+        <div className="flex items-center gap-2">
           <Label className="shrink-0">{t("batch")}</Label>
           {permissions.length === 0 ? (
-            <Skeleton className="w-40 h-9" />
+            <Skeleton className="h-9 w-40" />
           ) : (
             <Select
               value={field}
@@ -300,7 +307,7 @@ export function OddsForm({
             </Select>
           )}
         </div>
-        <div className="flex gap-2 items-center">
+        <div className="flex items-center gap-2">
           <Label className="shrink-0">{t("column")}</Label>
           <EditNumber
             step={step}
@@ -310,8 +317,8 @@ export function OddsForm({
           />
         </div>
       </div>
-      <div className="flex gap-2 ml-auto">
-        {permissions.length === 0 && <Skeleton className="w-80 h-9" />}
+      <div className="ml-auto flex gap-2">
+        {permissions.length === 0 && <Skeleton className="h-9 w-80" />}
         {permissions.includes("sync_odds") && (
           <SyncButton onClick={handleSync} />
         )}

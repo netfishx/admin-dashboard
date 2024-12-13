@@ -37,15 +37,15 @@ export function Form() {
 
   return (
     <>
-      <div className="flex flex-col gap-2 w-full">
+      <div className="flex w-full flex-col gap-2">
         <div className="bg-background">
-          <div className="flex justify-between items-center  py-2 px-4">
-            <div className="flex gap-2 items-center">
-              <div className="flex gap-2 items-center">
+          <div className="flex items-center justify-between px-4 py-2">
+            <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2">
                 <Label className="shrink-0">{t("endTime")}</Label>
                 <DateRangeFilter quickSetBtn={[]} />
               </div>
-              <div className="flex gap-2 items-center">
+              <div className="flex items-center gap-2">
                 <Label className="shrink-0">{t("userId")}</Label>
                 <Input
                   placeholder={t("placeholder")}
@@ -55,7 +55,7 @@ export function Form() {
               </div>
             </div>
           </div>
-          <div className="flex gap-2 items-center float-right p-2">
+          <div className="float-right flex items-center gap-2 p-2">
             <Button
               variant="outline"
               disabled={isReset}
@@ -65,7 +65,7 @@ export function Form() {
                 });
               }}
             >
-              {isReset && <Loader2 className="w-4 h-4 animate-spin" />}
+              {isReset && <Loader2 className="h-4 w-4 animate-spin" />}
               {t("reset")}
             </Button>
             <Button onClick={search} disabled={isPending}>

@@ -81,7 +81,7 @@ export function SupplierDialog({
         >
           <input type="hidden" name="id" value={data?.id} />
           <div className="flex flex-col gap-4">
-            <div className="flex gap-2 items-center">
+            <div className="flex items-center gap-2">
               <Label className="w-20 text-end">{t("name")}</Label>
               {data && (
                 <input
@@ -119,7 +119,7 @@ export function SupplierDialog({
                 </SelectContent>
               </Select>
             </div>
-            <div className="flex gap-2 items-center">
+            <div className="flex items-center gap-2">
               <Label className="w-20 text-end">{t("video")}</Label>
               <Input
                 className="flex-1"
@@ -129,7 +129,7 @@ export function SupplierDialog({
                 name="videoLink"
               />
             </div>
-            <div className="flex gap-2 items-center">
+            <div className="flex items-center gap-2">
               <Label className="w-20 text-end">{t("supplierId")}</Label>
               <Select
                 value={supplierId}
@@ -149,11 +149,11 @@ export function SupplierDialog({
                 </SelectContent>
               </Select>
             </div>
-            <div className="flex gap-2 items-center">
+            <div className="flex items-center gap-2">
               <Label className="w-20 text-end">{t("supplierName")}</Label>
               <Input disabled className="flex-1" value={supplierName} />
             </div>
-            <div className="flex gap-2 items-center">
+            <div className="flex items-center gap-2">
               <Label className="w-20 text-end">{t("quota")}</Label>
               <Input
                 type="number"
@@ -166,7 +166,7 @@ export function SupplierDialog({
                 name="distributionAmount"
               />
             </div>
-            <div className="flex gap-2 items-center">
+            <div className="flex items-center gap-2">
               <Label className="w-20 text-end">{t("percent")}</Label>
               <div className="relative flex-1">
                 <Input
@@ -200,7 +200,7 @@ export function SupplierDialog({
             }}
             disabled={isPending}
           >
-            {isPending && <Loader2 className="w-4 h-4 animate-spin" />}
+            {isPending && <Loader2 className="h-4 w-4 animate-spin" />}
             {translations("confirm")}
           </Button>
         </DialogFooter>

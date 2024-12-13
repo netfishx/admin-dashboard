@@ -36,7 +36,7 @@ export function Actions({ data }: { data: DictionaryList }) {
       <Button
         variant="ghost"
         size="sm"
-        className="text-primary hover:text-primary/80 text-sm px-2"
+        className="px-2 text-sm text-primary hover:text-primary/80"
         onClick={() => {
           setData(data);
           setOpen(true);
@@ -47,7 +47,7 @@ export function Actions({ data }: { data: DictionaryList }) {
       <Button
         variant="ghost"
         size="sm"
-        className="text-primary hover:text-primary/80 text-sm px-2"
+        className="px-2 text-sm text-primary hover:text-primary/80"
         onClick={() => {
           setData(data);
           setOpenItem(true);
@@ -71,7 +71,7 @@ function DeleteBtn({ data }: { data: DictionaryList }) {
         <Button
           variant="ghost"
           size="sm"
-          className="text-primary hover:text-primary/80 text-sm px-2"
+          className="px-2 text-sm text-primary hover:text-primary/80"
           disabled={isPending}
         >
           {isPending ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}

@@ -24,7 +24,7 @@ export default function DetailButton({
       <Button
         variant="ghost"
         size="sm"
-        className="text-primary hover:text-primary/80 text-sm px-2"
+        className="px-2 text-sm text-primary hover:text-primary/80"
         onClick={() => handleDialogOpenChanged(true)}
       >
         {t("more")}

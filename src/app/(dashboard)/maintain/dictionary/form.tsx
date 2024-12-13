@@ -21,9 +21,9 @@ export function Form() {
     defaultValue: "",
   });
   return (
-    <div className="flex justify-between items-center bg-background py-2 px-4">
-      <div className="flex gap-2 items-center">
-        <div className="flex gap-2 items-center">
+    <div className="flex items-center justify-between bg-background px-4 py-2">
+      <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2">
           <Label className="shrink-0">{t("dictName")}</Label>
           <Input
             placeholder={t("placeholder")}
@@ -31,7 +31,7 @@ export function Form() {
             onChange={(e) => setDictName(e.target.value)}
           />
         </div>
-        <div className="flex gap-2 items-center">
+        <div className="flex items-center gap-2">
           <Label className="shrink-0">{t("dictCode")}</Label>
           <Input
             placeholder={t("placeholder")}
@@ -40,7 +40,7 @@ export function Form() {
           />
         </div>
       </div>
-      <div className="flex gap-2 items-center">
+      <div className="flex items-center gap-2">
         <Button
           variant="outline"
           disabled={isReset}
@@ -48,14 +48,14 @@ export function Form() {
             startResetTransition(() => router.replace("/maintain/dictionary"))
           }
         >
-          {isReset && <Loader2 className="w-4 h-4 animate-spin" />}
+          {isReset && <Loader2 className="h-4 w-4 animate-spin" />}
           {t("reset")}
         </Button>
         <Button
           disabled={isPending}
           onClick={() => startTransition(() => router.refresh())}
         >
-          {isPending && <Loader2 className="w-4 h-4 animate-spin" />}
+          {isPending && <Loader2 className="h-4 w-4 animate-spin" />}
           {t("search")}
         </Button>
       </div>

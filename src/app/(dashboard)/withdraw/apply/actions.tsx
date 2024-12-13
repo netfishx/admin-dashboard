@@ -29,14 +29,20 @@ import { toast } from "sonner";
 export function Actions({
   data,
   currentUserId,
-}: { data: ApplyData; currentUserId: string }) {
+}: {
+  data: ApplyData;
+  currentUserId: string;
+}) {
   return <ActionButtons data={data} currentUserId={currentUserId} />;
 }
 
 function ActionButtons({
   data,
   currentUserId,
-}: { data: ApplyData; currentUserId: string }) {
+}: {
+  data: ApplyData;
+  currentUserId: string;
+}) {
   const t = useTranslations("withdraw.apply");
   // 审核状态 0未处理 1锁定中 2拒绝 3通过
   // 资金状态 0转账中 1到账 2异常
@@ -69,7 +75,7 @@ function ActionButtons({
         <Button
           variant="ghost"
           size="sm"
-          className="text-primary hover:text-primary/80 text-sm px-2"
+          className="px-2 text-sm text-primary hover:text-primary/80"
         >
           {t("flow")}
         </Button>
@@ -115,9 +121,9 @@ function LockButton({ data }: { data: ApplyData }) {
           disabled={isPending}
           variant="ghost"
           size="sm"
-          className="text-primary hover:text-primary/80 text-sm px-2"
+          className="px-2 text-sm text-primary hover:text-primary/80"
         >
-          {isPending && <Loader2 className="w-4 h-4 animate-spin" />}
+          {isPending && <Loader2 className="h-4 w-4 animate-spin" />}
           {t("lock")}
         </Button>
       </AlertDialogTrigger>
@@ -156,7 +162,10 @@ function LockButton({ data }: { data: ApplyData }) {
 function PassButton({
   data,
   isCurrentAuditor,
-}: { data: ApplyData; isCurrentAuditor: boolean }) {
+}: {
+  data: ApplyData;
+  isCurrentAuditor: boolean;
+}) {
   const t = useTranslations("withdraw.apply");
   const translations = useTranslations();
   const [isPending, startTransition] = useTransition();
@@ -169,9 +178,9 @@ function PassButton({
           disabled={isPending || !isCurrentAuditor}
           variant="ghost"
           size="sm"
-          className="text-primary hover:text-primary/80 text-sm px-2"
+          className="px-2 text-sm text-primary hover:text-primary/80"
         >
-          {isPending && <Loader2 className="w-4 h-4 animate-spin" />}
+          {isPending && <Loader2 className="h-4 w-4 animate-spin" />}
           {t("pass")}
         </Button>
       </AlertDialogTrigger>
@@ -181,7 +190,7 @@ function PassButton({
           <AlertDialogDescription />
         </AlertDialogHeader>
         <div className="flex items-center py-4">
-          <Label className="w-20 text-right mr-4">
+          <Label className="mr-4 w-20 text-right">
             <span className="text-destructive">*</span>
             {t("withdrawMode")}
           </Label>
@@ -233,7 +242,10 @@ function PassButton({
 function RejectButton({
   data,
   isCurrentAuditor,
-}: { data: ApplyData; isCurrentAuditor: boolean }) {
+}: {
+  data: ApplyData;
+  isCurrentAuditor: boolean;
+}) {
   const t = useTranslations("withdraw.apply");
   const translations = useTranslations();
   const [isPending, startTransition] = useTransition();
@@ -245,9 +257,9 @@ function RejectButton({
           disabled={isPending || !isCurrentAuditor}
           variant="ghost"
           size="sm"
-          className="text-primary hover:text-primary/80 text-sm px-2"
+          className="px-2 text-sm text-primary hover:text-primary/80"
         >
-          {isPending && <Loader2 className="w-4 h-4 animate-spin" />}
+          {isPending && <Loader2 className="h-4 w-4 animate-spin" />}
           {t("reject")}
         </Button>
       </AlertDialogTrigger>
@@ -296,9 +308,9 @@ function AgainButton({ data }: { data: ApplyData }) {
           disabled={isPending}
           variant="ghost"
           size="sm"
-          className="text-primary hover:text-primary/80 text-sm px-2"
+          className="px-2 text-sm text-primary hover:text-primary/80"
         >
-          {isPending && <Loader2 className="w-4 h-4 animate-spin" />}
+          {isPending && <Loader2 className="h-4 w-4 animate-spin" />}
           {t("again")}
         </Button>
       </AlertDialogTrigger>
@@ -346,9 +358,9 @@ function ConfirmButton({ data }: { data: ApplyData }) {
           disabled={isPending}
           variant="ghost"
           size="sm"
-          className="text-primary hover:text-primary/80 text-sm px-2"
+          className="px-2 text-sm text-primary hover:text-primary/80"
         >
-          {isPending && <Loader2 className="w-4 h-4 animate-spin" />}
+          {isPending && <Loader2 className="h-4 w-4 animate-spin" />}
           {t("confirm")}
         </Button>
       </AlertDialogTrigger>

@@ -50,7 +50,7 @@ export async function ListHeader() {
         <TableHead className="min-w-24 text-center">
           {t("totalProfitLossAmount")}
         </TableHead>
-        <TableHead className="w-24 text-center sticky right-0 z-10 bg-muted">
+        <TableHead className="sticky right-0 z-10 w-24 bg-muted text-center">
           {t("more")}
         </TableHead>
       </TableRow>
@@ -61,7 +61,10 @@ export async function ListHeader() {
 async function ListBody({
   list,
   gameList,
-}: { list: RatioReportRequestRecords[]; gameList: GameInfo[] }) {
+}: {
+  list: RatioReportRequestRecords[];
+  gameList: GameInfo[];
+}) {
   const translate = await getTranslations();
   const t = await getTranslations("report.agent");
   return (
@@ -98,14 +101,14 @@ async function ListBody({
             <TableCell className="w-24 text-center">
               {item.totalProfitLossAmount}
             </TableCell>
-            <TableCell className="w-24 text-center sticky right-0 z-10 bg-background">
+            <TableCell className="sticky right-0 z-10 w-24 bg-background text-center">
               <DetailButton item={item} />
             </TableCell>
           </TableRow>
         ))
       ) : (
         <TableRow>
-          <TableCell colSpan={15} className="text-center h-40">
+          <TableCell colSpan={15} className="h-40 text-center">
             {translate("noData")}
           </TableCell>
         </TableRow>
@@ -117,7 +120,10 @@ async function ListBody({
 export async function RatioList({
   gameList,
   searchParams,
-}: { gameList: GameInfo[]; searchParams: Promise<RatioReportRequestParams> }) {
+}: {
+  gameList: GameInfo[];
+  searchParams: Promise<RatioReportRequestParams>;
+}) {
   const params = await searchParams;
   const p = {
     ...params,
@@ -128,8 +134,8 @@ export async function RatioList({
   };
   if (!(params?.startTime && params?.endTime)) {
     return (
-      <div className="p-2 bg-background flex-1">
-        <div className="border rounded-sm relative">
+      <div className="flex-1 bg-background p-2">
+        <div className="relative rounded-sm border">
           <Table>
             <ListHeader />
             <ListBody list={[]} gameList={gameList} />
@@ -141,8 +147,8 @@ export async function RatioList({
   const { data } = await getRatioReport(p);
 
   return (
-    <div className="p-2 bg-background flex-1">
-      <div className="border rounded-sm relative">
+    <div className="flex-1 bg-background p-2">
+      <div className="relative rounded-sm border">
         <Table>
           <ListHeader />
           <Suspense fallback={<TableSkeleton length={5} colSpan={11} />}>

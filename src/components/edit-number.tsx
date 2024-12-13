@@ -25,7 +25,7 @@ export function EditNumber({
         -
       </Button>
       <Input
-        className="rounded-none w-14 text-center [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+        className="w-14 rounded-none text-center [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
         defaultValue={1}
         onChange={(e) => {
           try {

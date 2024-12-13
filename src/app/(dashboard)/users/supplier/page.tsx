@@ -19,23 +19,23 @@ export default async function Page({
     username: username as string,
   });
   return (
-    <div className="flex flex-col gap-2 w-full">
+    <div className="flex w-full flex-col gap-2">
       <Suspense
         fallback={
-          <div className="flex justify-between items-center bg-background p-4">
+          <div className="flex items-center justify-between bg-background p-4">
             <Skeleton />
           </div>
         }
       >
         <SupplierForm />
       </Suspense>
-      <div className="p-2 bg-background flex-1 flex flex-col gap-2">
+      <div className="flex flex-1 flex-col gap-2 bg-background p-2">
         <div className="flex justify-end">
           <Suspense>
             <Add />
           </Suspense>
         </div>
-        <div className="border rounded-sm">
+        <div className="rounded-sm border">
           <Table className="table-fixed">
             <SupplierTableHeader />
             <Suspense fallback={<TbodySkeleton />}>

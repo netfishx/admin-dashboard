@@ -1,7 +1,7 @@
 .progress {
-  @apply rounded-2xl bg-primary/20 h-2 w-1/2;
+  @apply h-2 w-1/2 rounded-2xl bg-primary/20;
   &::-moz-progress-bar {
-    @apply bg-primary rounded-2xl;
+    @apply rounded-2xl bg-primary;
   }
 
   &:indeterminate {
@@ -12,7 +12,7 @@
     @apply rounded-2xl bg-transparent;
   }
   &::-webkit-progress-value {
-    @apply bg-primary rounded-2xl;
+    @apply rounded-2xl bg-primary;
   }
 }
 

@@ -27,32 +27,32 @@ export function AddDialog(props: Dialogprops) {
           <DialogHeader>
             <DialogTitle>{t("recharge")}</DialogTitle>
           </DialogHeader>
-          <div className="max-w-xl w-full mx-auto p-4">
-            <div className="text-center flex gap-2 items-start mb-6">
-              <div className="min-w-[80px] text-muted-foreground text-end">
+          <div className="mx-auto w-full max-w-xl p-4">
+            <div className="mb-6 flex items-start gap-2 text-center">
+              <div className="min-w-[80px] text-end text-muted-foreground">
                 {t("mainNet")}
               </div>
               <div>{data?.majorNetwork}</div>
             </div>
-            <div className="text-center flex gap-2 items-start mb-6">
-              <div className="min-w-[80px] text-muted-foreground text-end">
+            <div className="mb-6 flex items-start gap-2 text-center">
+              <div className="min-w-[80px] text-end text-muted-foreground">
                 {t("qrCode")}
               </div>
               <div>
                 <QRCodeSVG value={data?.rechargeAddress} />
               </div>
             </div>
-            <div className="text-center flex gap-2 items-start mb-6">
-              <div className="min-w-[80px] text-muted-foreground text-end">
+            <div className="mb-6 flex items-start gap-2 text-center">
+              <div className="min-w-[80px] text-end text-muted-foreground">
                 {t("depositAddress")}
               </div>
-              <div className="flex items-center gap-2 w-[300px]">
+              <div className="flex w-[300px] items-center gap-2">
                 {data?.rechargeAddress}
                 <CopyButton address={data?.rechargeAddress} />
               </div>
             </div>
-            <div className="text-center flex gap-2 items-start mb-6">
-              <div className="min-w-[80px] text-muted-foreground text-end">
+            <div className="mb-6 flex items-start gap-2 text-center">
+              <div className="min-w-[80px] text-end text-muted-foreground">
                 {t("tips03")}
               </div>
               <div className="text-left">{t("tips04")}</div>

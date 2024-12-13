@@ -44,7 +44,10 @@ export function Add() {
 function AddDialog({
   open,
   setOpen,
-}: { open: boolean; setOpen: (open: boolean) => void }) {
+}: {
+  open: boolean;
+  setOpen: (open: boolean) => void;
+}) {
   const t = useTranslations("users.supplier");
   const translation = useTranslations();
   const ref = useRef<HTMLFormElement>(null);
@@ -93,8 +96,8 @@ function AddDialog({
         <Form ref={ref} action="" onSubmit={handleConfirm}>
           <div className="flex flex-col gap-4">
             <div className="flex flex-col gap-1">
-              <div className="flex gap-2 items-center">
-                <Label className="w-32 text-end shrink-0">
+              <div className="flex items-center gap-2">
+                <Label className="w-32 shrink-0 text-end">
                   {t("supplierUsername")}
                 </Label>
                 <Input
@@ -108,14 +111,14 @@ function AddDialog({
                   }}
                 />
               </div>
-              <div className="flex gap-2 items-center">
-                <Label className="w-32 text-end shrink-0" />
+              <div className="flex items-center gap-2">
+                <Label className="w-32 shrink-0 text-end" />
                 <div className="flex-1 text-xs text-destructive">
                   {t("usernameWarning")}
                 </div>
               </div>
             </div>
-            <div className="flex gap-2 items-center">
+            <div className="flex items-center gap-2">
               <Label className="w-32 text-end">{t("supplierName")}</Label>
               <Input
                 className="flex-1"
@@ -130,7 +133,7 @@ function AddDialog({
               />
             </div>
             <div className="flex flex-col gap-1">
-              <div className="flex gap-2 items-center">
+              <div className="flex items-center gap-2">
                 <Label className="w-32 text-end">{t("password")}</Label>
                 <Password
                   type="password"
@@ -144,14 +147,14 @@ function AddDialog({
                   }}
                 />
               </div>
-              <div className="flex gap-2 items-center">
-                <Label className="w-32 text-end shrink-0" />
+              <div className="flex items-center gap-2">
+                <Label className="w-32 shrink-0 text-end" />
                 <div className="flex-1 text-xs text-destructive">
                   {t("passwordWarning")}
                 </div>
               </div>
             </div>
-            <div className="flex gap-2 items-center">
+            <div className="flex items-center gap-2">
               <Label className="w-32 text-end">{t("confirmPassword")}</Label>
               <Password
                 type="password"
@@ -165,7 +168,7 @@ function AddDialog({
                 }}
               />
             </div>
-            <div className="flex gap-2 items-center">
+            <div className="flex items-center gap-2">
               <Label className="w-32 text-end">{t("remark")}</Label>
               <Input
                 className="flex-1"
@@ -193,7 +196,7 @@ function AddDialog({
               }
             }}
           >
-            {isLoading ? <Loader2 className="w-4 h-4 animate-spin" /> : null}
+            {isLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : null}
             {translation("confirm")}
           </Button>
         </DialogFooter>

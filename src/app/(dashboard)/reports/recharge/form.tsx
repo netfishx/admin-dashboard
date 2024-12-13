@@ -61,13 +61,13 @@ export function Form() {
   }
 
   return (
-    <div className="flex flex-col bg-background py-4 px-4 gap-4">
-      <div className="flex gap-4 items-center">
-        <div className="flex gap-2 items-center">
+    <div className="flex flex-col gap-4 bg-background px-4 py-4">
+      <div className="flex items-center gap-4">
+        <div className="flex items-center gap-2">
           <Label className="shrink-0">{t("finishTime")}</Label>
           <DateRangeFilter quickSetBtn={[]} enableTimeSelect={false} />
         </div>
-        <div className="flex gap-2 items-center">
+        <div className="flex items-center gap-2">
           <Label className="shrink-0">{t("orderNo")}</Label>
           <Input
             placeholder={t("placeholder")}
@@ -76,8 +76,8 @@ export function Form() {
           />
         </div>
       </div>
-      <div className="flex gap-4 items-center">
-        <div className="flex gap-2 items-center">
+      <div className="flex items-center gap-4">
+        <div className="flex items-center gap-2">
           <Label className="shrink-0">{t("rechargeMoneyFilter")}</Label>
           <Select
             onValueChange={(value) => handleFilterChange(value)}
@@ -101,7 +101,7 @@ export function Form() {
             placeholder={t("placeholder")}
           />
         </div>
-        <div className="flex gap-2 items-center">
+        <div className="flex items-center gap-2">
           <Label className="shrink-0">{t("userType")}</Label>
           <Select
             value={userType ?? ""}
@@ -117,7 +117,7 @@ export function Form() {
             </SelectContent>
           </Select>
         </div>
-        <div className="flex gap-2 items-center">
+        <div className="flex items-center gap-2">
           <Label className="shrink-0">{t("userId")}</Label>
           <Input
             placeholder={t("placeholder")}
@@ -126,7 +126,7 @@ export function Form() {
           />
         </div>
       </div>
-      <div className="flex gap-2 justify-end items-start">
+      <div className="flex items-start justify-end gap-2">
         <Button
           variant="outline"
           disabled={isReset}

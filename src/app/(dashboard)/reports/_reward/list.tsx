@@ -65,7 +65,7 @@ async function ListBody({ list }: { list: RewardRecordRequestRecords[] }) {
         ))
       ) : (
         <TableRow>
-          <TableCell colSpan={7} className="text-center h-40">
+          <TableCell colSpan={7} className="h-40 text-center">
             {translate("noData")}
           </TableCell>
         </TableRow>
@@ -76,12 +76,14 @@ async function ListBody({ list }: { list: RewardRecordRequestRecords[] }) {
 
 export async function List({
   searchParams,
-}: { searchParams: Promise<RewardRecordRequestParams> }) {
+}: {
+  searchParams: Promise<RewardRecordRequestParams>;
+}) {
   const params = await searchParams;
   const { data } = await postGetRewardRecordList(params);
   return (
-    <div className="p-2 bg-background flex-1">
-      <div className="border rounded-sm relative">
+    <div className="flex-1 bg-background p-2">
+      <div className="relative rounded-sm border">
         <Table>
           <ListHeader />
           <Suspense fallback={<TableSkeleton length={5} colSpan={6} />}>

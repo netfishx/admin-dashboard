@@ -12,7 +12,7 @@ export function Actions({ item }: { item: WithdrawReport }) {
         <Button
           variant="link"
           size="icon"
-          className="block w-[100px] truncate overflow-hidden whitespace-nowrap"
+          className="block w-[100px] overflow-hidden truncate whitespace-nowrap"
           onClick={() => {
             router.push(
               `https://tronscan.org/#/transaction/${item.withdrawHash}`,

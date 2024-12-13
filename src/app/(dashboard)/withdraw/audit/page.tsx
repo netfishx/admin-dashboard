@@ -19,13 +19,15 @@ import { Form } from "./form";
 
 export default async function Page({
   searchParams,
-}: { searchParams: Promise<{ [key: string]: string | string[] }> }) {
+}: {
+  searchParams: Promise<{ [key: string]: string | string[] }>;
+}) {
   const { startTime, endTime } = await searchParams;
   return (
-    <div className="flex flex-col gap-2 w-full">
+    <div className="flex w-full flex-col gap-2">
       <Suspense
         fallback={
-          <div className="bg-background p-2 flex flex-col gap-2">
+          <div className="flex flex-col gap-2 bg-background p-2">
             <Skeleton />
             <Skeleton />
             <Skeleton />
@@ -34,7 +36,7 @@ export default async function Page({
       >
         <Form key={`${startTime}-${endTime}`} />
       </Suspense>
-      <div className="bg-background flex-1">
+      <div className="flex-1 bg-background">
         <Suspense
           fallback={
             <Table>
@@ -52,12 +54,14 @@ export default async function Page({
 
 async function TableWrapper({
   searchParams,
-}: { searchParams: Promise<{ [key: string]: string | string[] }> }) {
+}: {
+  searchParams: Promise<{ [key: string]: string | string[] }>;
+}) {
   const { startTime, endTime, id, userId, pageNum, pageSize } =
     await searchParams;
   if (!(startTime && endTime)) {
     return (
-      <Table className="border rounded-sm">
+      <Table className="rounded-sm border">
         <TableHeaderWrapper />
         <TableBodySkeleton />
       </Table>
@@ -75,8 +79,8 @@ async function TableWrapper({
   // temp dict
   // 稽核状态
   return (
-    <div className="p-2 bg-background flex-1 w-full ">
-      <div className="relative overflow-y-auto overflow-x-auto border rounded-sm">
+    <div className="w-full flex-1 bg-background p-2">
+      <div className="relative overflow-x-auto overflow-y-auto rounded-sm border">
         <Table>
           <TableHeaderWrapper />
           <Suspense fallback={<TableBodySkeleton />}>
@@ -117,7 +121,7 @@ async function TableHeaderWrapper() {
         </TableHead>
         <TableHead className="w-32 text-center">{t("status")}</TableHead>
 
-        <TableHead className="w-48 text-center sticky right-0 bg-muted">
+        <TableHead className="sticky right-0 w-48 bg-muted text-center">
           {translations("action")}
         </TableHead>
       </TableRow>
@@ -147,28 +151,26 @@ async function TableBodyWrapper({ list }: { list: AuditList[] }) {
               <Time time={item.createTime} />
             </TableCell>
 
-            <TableCell className=" text-center">
+            <TableCell className="text-center">
               {orderTypeList[item.orderType as keyof typeof orderTypeList]}
             </TableCell>
-            <TableCell className=" text-center">{item.userId}</TableCell>
+            <TableCell className="text-center">{item.userId}</TableCell>
             <TableCell className="text-center">{item.orderAmount}</TableCell>
-            <TableCell className=" text-center">{item.auditMultiple}</TableCell>
-            <TableCell className=" text-center">
-              {item.availableAudit}
-            </TableCell>
+            <TableCell className="text-center">{item.auditMultiple}</TableCell>
+            <TableCell className="text-center">{item.availableAudit}</TableCell>
             <TableCell className="text-center">{item.remainingAudit}</TableCell>
-            <TableCell className=" text-center">
+            <TableCell className="text-center">
               {statusList[item.status as keyof typeof statusList]}
             </TableCell>
 
-            <TableCell className="text-center sticky right-0 bg-background">
+            <TableCell className="sticky right-0 bg-background text-center">
               <CleanBtn data={item} />
             </TableCell>
           </TableRow>
         ))
       ) : (
         <TableRow>
-          <TableCell colSpan={10} className="text-center h-40">
+          <TableCell colSpan={10} className="h-40 text-center">
             {translations("noData")}
           </TableCell>
         </TableRow>

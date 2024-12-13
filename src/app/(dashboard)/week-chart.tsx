@@ -86,7 +86,7 @@ export function WeekChart({
     setData(getData(value));
   };
   return (
-    <div className="flex-1 flex flex-col pt-2">
+    <div className="flex flex-1 flex-col pt-2">
       <div className="flex items-center justify-between">
         <div className="pb-2">
           {chartConfig.title}
@@ -108,11 +108,11 @@ export function WeekChart({
           </Tabs>
         </div>
       </div>
-      <div className="flex-1 flex items-center justify-center">
+      <div className="flex flex-1 items-center justify-center">
         {data.length > 0 ? (
           <ChartContainer
             config={chartConfigs[activeTab]}
-            className="w-[40dvw] lg:w-[50dvw] xl:w-[55dvw] 2xl:w-[60dvw] mx-auto h-60"
+            className="mx-auto h-60 w-[40dvw] lg:w-[50dvw] xl:w-[55dvw] 2xl:w-[60dvw]"
           >
             <LineChart
               data={data.map((item) => ({
@@ -147,7 +147,7 @@ export function WeekChart({
           </ChartContainer>
         ) : (
           <div className="h-60">
-            <div className="text-muted-foreground h-full flex items-center justify-center">
+            <div className="flex h-full items-center justify-center text-muted-foreground">
               {t("noData")}
             </div>
           </div>

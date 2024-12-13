@@ -79,7 +79,7 @@ export function AddEditDialog() {
           <DialogDescription />
         </DialogHeader>
         <div className="flex flex-col gap-4">
-          <div className="flex gap-4 items-center">
+          <div className="flex items-center gap-4">
             <Label className="w-20 text-end">{t("dictName")}</Label>
             <Input
               className="flex-1"
@@ -87,7 +87,7 @@ export function AddEditDialog() {
               onChange={(e) => setDictName(e.target.value)}
             />
           </div>
-          <div className="flex gap-4 items-center">
+          <div className="flex items-center gap-4">
             <Label className="w-20 text-end">{t("dictCode")}</Label>
             <Input
               className="flex-1"
@@ -95,7 +95,7 @@ export function AddEditDialog() {
               onChange={(e) => setDictCode(e.target.value)}
             />
           </div>
-          <div className="flex gap-4 items-center">
+          <div className="flex items-center gap-4">
             <Label className="w-20 text-end">{t("remark")}</Label>
             <Input
               className="flex-1"
@@ -110,7 +110,7 @@ export function AddEditDialog() {
             {translation("cancel")}
           </Button>
           <Button disabled={isPending} onClick={handleConfirm}>
-            {isPending ? <Loader2 className="w-4 h-4 animate-spin" /> : null}
+            {isPending ? <Loader2 className="h-4 w-4 animate-spin" /> : null}
             {translation("confirm")}
           </Button>
         </DialogFooter>

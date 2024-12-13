@@ -65,7 +65,7 @@ export function ModalPagination({
           </Button>
         </PaginationItem>
         <PaginationItem>
-          <span className="text-sm px-2">{currentPage}</span>
+          <span className="px-2 text-sm">{currentPage}</span>
         </PaginationItem>
         <PaginationItem>
           <Button
@@ -92,7 +92,7 @@ export function ModalPagination({
             defaultValue={size?.toString() ?? "10"}
             onValueChange={(value) => handleChangeSize(Number(value))}
           >
-            <SelectTrigger className="w-28 h-7 text-sm">
+            <SelectTrigger className="h-7 w-28 text-sm">
               <SelectValue />
             </SelectTrigger>
             <SelectContent>

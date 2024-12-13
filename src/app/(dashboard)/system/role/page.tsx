@@ -29,7 +29,7 @@ function RoleTableHeader() {
         <TableHead>{t("id")}</TableHead>
         <TableHead>{t("name")}</TableHead>
         <TableHead>{t("updateTime")}</TableHead>
-        <TableHead className="text-center sticky right-0 bg-muted">
+        <TableHead className="sticky right-0 bg-muted text-center">
           {t("action")}
         </TableHead>
       </TableRow>
@@ -50,13 +50,13 @@ async function RoleTableWrapper({
   const t = await getTranslations();
   return (
     <>
-      <div className="border rounded-sm">
+      <div className="rounded-sm border">
         <Table>
           <RoleTableHeader />
           <TableBody>
             {!res.data?.list || res.data?.list.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={5} className="text-center h-32">
+                <TableCell colSpan={5} className="h-32 text-center">
                   {t("noData")}
                 </TableCell>
               </TableRow>
@@ -68,7 +68,7 @@ async function RoleTableWrapper({
                   <TableCell>
                     {item.updateTime && <Time time={item.updateTime} />}
                   </TableCell>
-                  <TableCell className="text-center sticky right-0 bg-background">
+                  <TableCell className="sticky right-0 bg-background text-center">
                     <div className="flex justify-center">
                       <EditButton data={item} />
                       <DeleteButton id={item.id ?? ""} />
@@ -100,8 +100,8 @@ export default function RolePage({
   const permissions = getPermissionList();
 
   return (
-    <div className="flex flex-col w-full gap-2">
-      <div className="flex justify-between items-center bg-background p-4">
+    <div className="flex w-full flex-col gap-2">
+      <div className="flex items-center justify-between bg-background p-4">
         <div className="text-sm font-medium">{t("list")}</div>
         <AddButton />
         <Suspense>
@@ -109,10 +109,10 @@ export default function RolePage({
           <RoleDelete />
         </Suspense>
       </div>
-      <div className="bg-background flex-1 p-4 flex flex-col gap-4">
+      <div className="flex flex-1 flex-col gap-4 bg-background p-4">
         <Suspense
           fallback={
-            <div className="border rounded-sm">
+            <div className="rounded-sm border">
               <Table>
                 <RoleTableHeader />
                 <TableBody>

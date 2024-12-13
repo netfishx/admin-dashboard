@@ -129,17 +129,17 @@ export function RebateModal({ userId }: { userId: string }) {
   return (
     <Dialog open={open} onOpenChange={(open) => setOpen(open)}>
       <DialogContent
-        className="2xl:max-w-lg lg:max-w-md"
+        className="lg:max-w-md 2xl:max-w-lg"
         onPointerDownOutside={(e) => e.preventDefault()}
       >
         <DialogHeader>
           <DialogTitle>{t("rebateSetting")}</DialogTitle>
           <DialogDescription />
         </DialogHeader>
-        <div className="border rounded-sm overflow-auto max-h-[50dvh]">
+        <div className="max-h-[50dvh] overflow-auto rounded-sm border">
           <ScrollableTable className="relative">
             <TableHeader>
-              <TableRow className="bg-muted sticky top-0">
+              <TableRow className="sticky top-0 bg-muted">
                 <TableHead>{t("name")}</TableHead>
                 <TableHead>{t("rebate")}</TableHead>
               </TableRow>
@@ -236,10 +236,10 @@ function TableBodyWrapper({
           ))
       ) : (
         // 无数据显示
-        <TableRow className="flex justify-center items-center">
+        <TableRow className="flex items-center justify-center">
           <TableCell
             colSpan={2}
-            className="flex justify-center items-center h-20"
+            className="flex h-20 items-center justify-center"
           >
             {translations("noData")}
           </TableCell>

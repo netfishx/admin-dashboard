@@ -73,11 +73,11 @@ export default async function DashboardPage({
   return (
     <>
       <TimeWrapper />
-      <ScrollArea className="flex-1 h-[calc(100dvh-3.5rem)]">
+      <ScrollArea className="h-[calc(100dvh-3.5rem)] flex-1">
         <div className="flex flex-col gap-2">
           {permissions?.includes("admin_stat") && (
             <div className="grid gap-2">
-              <Suspense fallback={<div className="p-4 rounded bg-card h-24" />}>
+              <Suspense fallback={<div className="h-24 rounded bg-card p-4" />}>
                 <SalutationsWrapper start={start} end={todayEnd} />
               </Suspense>
             </div>
@@ -86,7 +86,7 @@ export default async function DashboardPage({
             fallback={
               <>
                 <div className="grid grid-cols-2 gap-2">
-                  <div className="rounded bg-card ">
+                  <div className="rounded bg-card">
                     <div className="p-4">{t("chart.todayCashflow")}</div>
                     <div className="h-40 lg:h-48 xl:h-72" />
                   </div>
@@ -96,11 +96,11 @@ export default async function DashboardPage({
                   </div>
                 </div>
                 <div className="grid gap-2">
-                  <div className="p-4 rounded bg-card">
+                  <div className="rounded bg-card p-4">
                     <div className="p-4">{t("chart.bjlDataTrending")}</div>
                     <div className="h-40 lg:h-48 xl:h-72" />
                   </div>
-                  <div className="p-4 rounded bg-card">
+                  <div className="rounded bg-card p-4">
                     <div className="p-4">{t("chart.gdDataTrending")}</div>
                     <div className="h-40 lg:h-48 xl:h-72" />
                   </div>
@@ -112,11 +112,11 @@ export default async function DashboardPage({
           </Suspense>
         </div>
       </ScrollArea>
-      <div className="flex flex-col gap-2 w-[280px] min-[2400px]:w-[560px] shrink-0">
+      <div className="flex w-[280px] shrink-0 flex-col gap-2 min-[2400px]:w-[560px]">
         <Suspense
           fallback={
-            <div className="rounded bg-card h-48 shrink-0">
-              <div className="text-base p-4">
+            <div className="h-48 shrink-0 rounded bg-card">
+              <div className="p-4 text-base">
                 {permissions?.includes("admin_stat")
                   ? t("dataOverview")
                   : t("walletData")}
@@ -134,8 +134,8 @@ export default async function DashboardPage({
         <QuickAccess />
         <Suspense
           fallback={
-            <div className="bg-background p-4 rounded flex-1 relative">
-              <div className="text-base mb-4 p-4">{t("announcement")}</div>
+            <div className="relative flex-1 rounded bg-background p-4">
+              <div className="mb-4 p-4 text-base">{t("announcement")}</div>
               <div className="h-48" />
             </div>
           }
@@ -155,7 +155,10 @@ export default async function DashboardPage({
 async function SalutationsWrapper({
   start,
   end,
-}: { start: number; end: number }) {
+}: {
+  start: number;
+  end: number;
+}) {
   const { data: todayWinLossData } = await getTodayWinLoss({
     startTime: start,
     endTime: end,
@@ -167,7 +170,11 @@ async function DayChartWrapper({
   start,
   end,
   oneWeekAgo,
-}: { start: number; end: number; oneWeekAgo: number }) {
+}: {
+  start: number;
+  end: number;
+  oneWeekAgo: number;
+}) {
   const t = await getTranslations();
   const {
     data: { agentBaccaratAmountReport, agentBaccaratBetNumReport },
@@ -239,7 +246,11 @@ async function ChartWrapper({
   start,
   end,
   oneWeekAgo,
-}: { start: number; end: number; oneWeekAgo: number }) {
+}: {
+  start: number;
+  end: number;
+  oneWeekAgo: number;
+}) {
   const session = await getSession();
   const permissions = session?.permissions;
 
@@ -262,7 +273,10 @@ async function ChartWrapper({
 async function DataOverviewFlowWrapper({
   start,
   end,
-}: { start: number; end: number }) {
+}: {
+  start: number;
+  end: number;
+}) {
   const { data } = await getTodayFundList({
     startTime: start,
     endTime: end,
@@ -346,7 +360,11 @@ async function GameWeekChartWrapper({
   start,
   end,
   oneWeekAgo,
-}: { start: number; end: number; oneWeekAgo: number }) {
+}: {
+  start: number;
+  end: number;
+  oneWeekAgo: number;
+}) {
   const t = await getTranslations();
   const {
     data: { dailyBaccaratReport: baccaratData, dailyPokerReport: pokerData },
@@ -407,7 +425,7 @@ async function GameWeekChartWrapper({
 
   return (
     <>
-      <div className="flex-1 flex flex-col gap-2">
+      <div className="flex flex-1 flex-col gap-2">
         <div className="grid gap-2 rounded bg-card p-4">
           <Suspense>
             <WeekChart chartConfig={weekChart1Config} />
@@ -426,7 +444,10 @@ async function GameWeekChartWrapper({
 async function MemberWeekChartWrapper({
   end,
   oneWeekAgo,
-}: { end: number; oneWeekAgo: number }) {
+}: {
+  end: number;
+  oneWeekAgo: number;
+}) {
   const t = await getTranslations();
 
   const { data: memberData } = await getMemberChartList({
@@ -461,7 +482,7 @@ async function MemberWeekChartWrapper({
 
   return (
     <>
-      <div className="flex-1 flex flex-col gap-2">
+      <div className="flex flex-1 flex-col gap-2">
         <div className="grid gap-2 rounded bg-card p-4">
           <Suspense>
             <WeekChart chartConfig={weekChart3Config} />
@@ -475,7 +496,11 @@ async function MemberWeekChartWrapper({
 async function FundWeekChartWrapper({
   end,
   oneWeekAgo,
-}: { start: number; end: number; oneWeekAgo: number }) {
+}: {
+  start: number;
+  end: number;
+  oneWeekAgo: number;
+}) {
   const t = await getTranslations();
 
   const { data: fundData } = await getFundList({
@@ -508,7 +533,7 @@ async function FundWeekChartWrapper({
 
   return (
     <>
-      <div className="flex-1 flex flex-col gap-2">
+      <div className="flex flex-1 flex-col gap-2">
         <div className="grid gap-2 rounded bg-card p-4">
           <Suspense>
             <WeekChart chartConfig={weekChart4Config} />

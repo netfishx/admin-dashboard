@@ -55,7 +55,7 @@ export async function ListHeader() {
         <TableHead className="min-w-24 text-center">
           {t("proxystatus")}
         </TableHead>
-        <TableHead className="w-24 text-center sticky right-0 z-10 bg-muted">
+        <TableHead className="sticky right-0 z-10 w-24 bg-muted text-center">
           {t("action")}
         </TableHead>
       </TableRow>
@@ -66,7 +66,10 @@ export async function ListHeader() {
 async function ListBody({
   list,
   gameList,
-}: { list: OrderReportsRecord[]; gameList: GameInfo[] }) {
+}: {
+  list: OrderReportsRecord[];
+  gameList: GameInfo[];
+}) {
   const translate = await getTranslations();
   const t = await getTranslations("report.orderlist");
   const session = await getSession();
@@ -91,7 +94,7 @@ async function ListBody({
             <TableCell className="w-24 text-center">
               {item.lastAgentId}
             </TableCell>
-            <TableCell className="w-24 text-center whitespace-nowrap">
+            <TableCell className="w-24 whitespace-nowrap text-center">
               {gameList.find((game) => game.gameId === item.gameId)?.gameName}
             </TableCell>
             <TableCell className="w-24 text-center">{item.betType}</TableCell>
@@ -111,23 +114,23 @@ async function ListBody({
             <TableCell className="w-24 text-center">
               <AgentId session={session as SessionData} />
             </TableCell>
-            <TableCell className="text-center whitespace-nowrap">
+            <TableCell className="whitespace-nowrap text-center">
               <Time time={item.betTime} />
             </TableCell>
-            <TableCell className="text-center whitespace-nowrap">
+            <TableCell className="whitespace-nowrap text-center">
               <Time time={item.settleTime} />
             </TableCell>
             <TableCell className="w-24 text-center">
               {typeMap[item.orderStatus]}
             </TableCell>
-            <TableCell className="w-24 text-center sticky right-0 z-10 bg-background">
+            <TableCell className="sticky right-0 z-10 w-24 bg-background text-center">
               <DetailButton item={item} />
             </TableCell>
           </TableRow>
         ))
       ) : (
         <TableRow>
-          <TableCell colSpan={15} className="text-center h-40">
+          <TableCell colSpan={15} className="h-40 text-center">
             {translate("noData")}
           </TableCell>
         </TableRow>
@@ -139,7 +142,10 @@ async function ListBody({
 export async function List({
   searchParams,
   gameList,
-}: { searchParams: Promise<OrderReportsRequestParams>; gameList: GameInfo[] }) {
+}: {
+  searchParams: Promise<OrderReportsRequestParams>;
+  gameList: GameInfo[];
+}) {
   const params = await searchParams;
   const p = {
     ...params,
@@ -151,8 +157,8 @@ export async function List({
 
   if (!(params?.startTime && params?.endTime)) {
     return (
-      <div className="p-2 bg-background flex-1">
-        <div className="border rounded-sm relative">
+      <div className="flex-1 bg-background p-2">
+        <div className="relative rounded-sm border">
           <Table>
             <ListHeader />
             <TableSkeleton length={5} colSpan={16} />
@@ -164,8 +170,8 @@ export async function List({
   const { data } = await getOrderReportList(p);
 
   return (
-    <div className="p-2 bg-background flex-1">
-      <div className="border rounded-sm relative">
+    <div className="flex-1 bg-background p-2">
+      <div className="relative rounded-sm border">
         <Table>
           <ListHeader />
           <ListBody list={data?.list ?? []} gameList={gameList} />

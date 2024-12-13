@@ -18,7 +18,7 @@ export default function DetailButton({ id }: { id: string }) {
     <div>
       <Button
         variant="ghost"
-        className="hover:no-underline hover:text-primary/80 text-primary"
+        className="text-primary hover:text-primary/80 hover:no-underline"
         onClick={() => handleDetail()}
       >
         {t("more")}

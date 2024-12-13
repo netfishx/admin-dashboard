@@ -84,7 +84,7 @@ export function AddItemDialog() {
           <DialogDescription />
         </DialogHeader>
         <div className="flex flex-col gap-4">
-          <div className="flex gap-4 items-center">
+          <div className="flex items-center gap-4">
             <Label className="w-20 text-end">{t("itemName")}</Label>
             <Input
               className="flex-1"
@@ -92,7 +92,7 @@ export function AddItemDialog() {
               onChange={(e) => setItemName(e.target.value)}
             />
           </div>
-          <div className="flex gap-4 items-center">
+          <div className="flex items-center gap-4">
             <Label className="w-20 text-end">{t("itemValue")}</Label>
             <Input
               className="flex-1"
@@ -100,7 +100,7 @@ export function AddItemDialog() {
               onChange={(e) => setItemValue(e.target.value)}
             />
           </div>
-          <div className="flex gap-4 items-center">
+          <div className="flex items-center gap-4">
             <Label className="w-20 text-end">{t("remark")}</Label>
             <Input
               className="flex-1"

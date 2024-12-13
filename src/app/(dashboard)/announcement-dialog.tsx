@@ -38,20 +38,20 @@ export function AnnouncementDialog({
         <DialogHeader>
           <DialogTitle>{t("announcement")}</DialogTitle>
         </DialogHeader>
-        <div className="flex flex-col gap-2 w-full text-sm overflow-y-auto max-h-[500px]">
+        <div className="flex max-h-[500px] w-full flex-col gap-2 overflow-y-auto text-sm">
           {data?.list.map((item) => {
             return (
               <div
                 key={item.id}
-                className="text-ellipsis whitespace-nowrap overflow-hidden"
+                className="overflow-hidden text-ellipsis whitespace-nowrap"
               >
                 {item.type === 1 && (
-                  <span className="mr-2 px-2 py-1 inline-block rounded-sm text-primary bg-primary/10">
+                  <span className="mr-2 inline-block rounded-sm bg-primary/10 px-2 py-1 text-primary">
                     {t("platform")}
                   </span>
                 )}
                 {item.type === 3 && (
-                  <span className="mr-2 px-2 py-1 inline-block rounded-sm text-orange bg-orange/10">
+                  <span className="mr-2 inline-block rounded-sm bg-orange/10 px-2 py-1 text-orange">
                     {t("agent")}
                   </span>
                 )}

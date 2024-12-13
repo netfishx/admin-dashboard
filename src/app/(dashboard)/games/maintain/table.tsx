@@ -34,7 +34,10 @@ import { toast } from "sonner";
 function EditButton({
   children,
   data,
-}: { children: ReactNode; data: MaintainGame }) {
+}: {
+  children: ReactNode;
+  data: MaintainGame;
+}) {
   const [isPending, startTransition] = useTransition();
   const router = useRouter();
   const t = useTranslations();
@@ -53,7 +56,7 @@ function EditButton({
           ])}
           disabled={isPending}
         >
-          {isPending ? <Loader2 className="w-4 h-4 animate-spin" /> : children}
+          {isPending ? <Loader2 className="h-4 w-4 animate-spin" /> : children}
         </Button>
       </AlertDialogTrigger>
       <AlertDialogContent>
@@ -117,11 +120,7 @@ export function MaintainTableHeader({
   );
 }
 
-export function MaintainTable({
-  data,
-}: {
-  data: MaintainGame[];
-}) {
+export function MaintainTable({ data }: { data: MaintainGame[] }) {
   const t = useTranslations("games.maintain");
   const translations = useTranslations();
   const [checked, setChecked] = useQueryState(
@@ -161,10 +160,10 @@ export function MaintainTable({
               <TableCell className="text-center">
                 <span
                   className={cn([
-                    "p-1 rounded-sm w-24 inline-block",
+                    "inline-block w-24 rounded-sm p-1",
                     item.status
-                      ? "text-destructive bg-destructive/20"
-                      : "text-primary bg-primary/20",
+                      ? "bg-destructive/20 text-destructive"
+                      : "bg-primary/20 text-primary",
                   ])}
                 >
                   {item.status ? t("maintaining") : t("normal")}
@@ -183,7 +182,7 @@ export function MaintainTable({
           ))
         ) : (
           <TableRow>
-            <TableCell colSpan={6} className="text-center h-40">
+            <TableCell colSpan={6} className="h-40 text-center">
               {translations("noData")}
             </TableCell>
           </TableRow>

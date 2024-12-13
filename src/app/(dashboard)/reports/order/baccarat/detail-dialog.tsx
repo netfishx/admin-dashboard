@@ -66,7 +66,7 @@ export function Detaildialog(props: Dialogprops) {
           const value = card.slice(1);
           return (
             // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
-            <span key={index} className="inline-block mr-1">
+            <span key={index} className="mr-1 inline-block">
               <span className={suit.color}>{suit.symbol}</span>
               {value}
             </span>
@@ -94,7 +94,7 @@ export function Detaildialog(props: Dialogprops) {
         <div className="flex justify-center">{t("shareDetail")}</div>
         <ScrollArea className="w-[450px]">
           <Suspense fallback={<Skeleton />}>
-            <div className="whitespace-nowrap mb-1">
+            <div className="mb-1 whitespace-nowrap">
               {data?.revenueShare.map(
                 (item) => `${item.accountId} - ${item.percent * 100}%；`,
               )}

@@ -37,7 +37,7 @@ export async function List() {
   return (
     <>
       <SecurityProgress value={percent} />
-      <div className="flex-1 flex flex-col gap-4 bg-background py-2 px-4">
+      <div className="flex flex-1 flex-col gap-4 bg-background px-4 py-2">
         {permissions.includes("edit_password") && (
           <div className="flex items-center justify-between">
             <div className="flex-1">
@@ -46,7 +46,7 @@ export async function List() {
                   {t("loginPassword")}
                 </span>
                 <CheckCircle2 className="h-5 w-5 text-chart-5" />
-                <span className="text-sm text-muted-foreground mt-1">
+                <span className="mt-1 text-sm text-muted-foreground">
                   {t("loginPasswordDes")}
                 </span>
               </div>
@@ -72,7 +72,7 @@ export async function List() {
                       : "text-muted-foreground",
                   )}
                 />
-                <span className="text-sm text-muted-foreground mt-1">
+                <span className="mt-1 text-sm text-muted-foreground">
                   {t("googleVerificationDes")}
                 </span>
               </div>
@@ -100,7 +100,7 @@ export async function List() {
                       : "text-muted-foreground",
                   )}
                 />
-                <span className="text-sm text-muted-foreground mt-1">
+                <span className="mt-1 text-sm text-muted-foreground">
                   {t("fundPasswordDes")}
                 </span>
               </div>

@@ -3,11 +3,9 @@ import { type ReactNode, Suspense } from "react";
 
 export default function layout({ children }: { children: ReactNode }) {
   return (
-    <Suspense fallback={null}>
-      <div className="flex flex-col gap-2 w-full h-full">
-        <TopTabs />
-        <Suspense>{children}</Suspense>
-      </div>
-    </Suspense>
+    <div className="flex h-full w-full flex-col gap-2">
+      <TopTabs />
+      <Suspense>{children}</Suspense>
+    </div>
   );
 }

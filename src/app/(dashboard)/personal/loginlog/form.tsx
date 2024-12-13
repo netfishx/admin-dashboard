@@ -24,11 +24,11 @@ export function Form() {
   return (
     <>
       <div className="flex gap-2">
-        <div className="flex gap-2 items-center">
+        <div className="flex items-center gap-2">
           <Label className="shrink-0">登录时间</Label>
           <DateRangeFilter quickSetBtn={[]} enableTimeSelect={false} />
         </div>
-        <div className="flex gap-2 items-center">
+        <div className="flex items-center gap-2">
           <Label className="shrink-0">登录IP</Label>
           <Input value={ip} onChange={(e) => setIp(e.target.value)} />
         </div>
@@ -45,11 +45,11 @@ export function Form() {
             });
           }}
         >
-          {isReset && <Loader2 className="w-4 h-4 animate-spin" />}
+          {isReset && <Loader2 className="h-4 w-4 animate-spin" />}
           {t("reset")}
         </Button>
         <Button onClick={() => startTransition(handleSearch)}>
-          {isPending && <Loader2 className="w-4 h-4 animate-spin" />}
+          {isPending && <Loader2 className="h-4 w-4 animate-spin" />}
           {t("search")}
         </Button>
       </div>

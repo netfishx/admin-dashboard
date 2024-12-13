@@ -116,13 +116,13 @@ export function TimeRange({
   };
 
   return (
-    <div className="flex items-center gap-2 ">
+    <div className="flex items-center gap-2">
       <Popover>
         <PopoverTrigger asChild>
           <Button
             variant="outline"
             className={cn(
-              "justify-start text-left font-normal w-[360px]",
+              "w-[360px] justify-start text-left font-normal",
               !dateRange && "text-muted-foreground",
             )}
             disabled={disabled}

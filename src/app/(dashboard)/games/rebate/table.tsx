@@ -70,7 +70,7 @@ export function RebateTable({ data }: { data: GameConfig[] }) {
                 </span>
               </div>
               {item.maxBackRate ? (
-                <span className="text-destructive w-16">
+                <span className="w-16 text-destructive">
                   ({item.maxBackRate}%)
                 </span>
               ) : null}
@@ -79,7 +79,7 @@ export function RebateTable({ data }: { data: GameConfig[] }) {
         ))
       ) : (
         <TableRow>
-          <TableCell colSpan={2} className="text-center h-40">
+          <TableCell colSpan={2} className="h-40 text-center">
             {t("noData")}
           </TableCell>
         </TableRow>

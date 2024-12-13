@@ -27,9 +27,11 @@ async function FormWrapper() {
 
 export default function Page({
   searchParams,
-}: { searchParams: Promise<{ [key: string]: string | string[] }> }) {
+}: {
+  searchParams: Promise<{ [key: string]: string | string[] }>;
+}) {
   return (
-    <div className="flex flex-col gap-2 w-full">
+    <div className="flex w-full flex-col gap-2">
       <Suspense
         fallback={
           <div className="bg-background p-4">
@@ -39,10 +41,10 @@ export default function Page({
       >
         <FormWrapper />
       </Suspense>
-      <div className="p-2 bg-background flex-1 gap-2">
+      <div className="flex-1 gap-2 bg-background p-2">
         <Suspense
           fallback={
-            <div className="border rounded-sm">
+            <div className="rounded-sm border">
               <Table className="table-fixed">
                 <TableHeaderWrapper total={1} />
                 <TableBodySkeleton />
@@ -60,7 +62,9 @@ export default function Page({
 
 async function TableWrapper({
   searchParams,
-}: { searchParams: Promise<{ [key: string]: string | string[] }> }) {
+}: {
+  searchParams: Promise<{ [key: string]: string | string[] }>;
+}) {
   const params = await searchParams;
   const requestParams = {
     pageNum: Number(params.pageNum ?? 1),
@@ -73,7 +77,7 @@ async function TableWrapper({
   return (
     <>
       <UserInfoModal permissions={permissions} />
-      <div className="border rounded-sm relative">
+      <div className="relative rounded-sm border">
         <Table className="table-fixed">
           <TableHeaderWrapper total={data?.total ?? 0} />
           <Suspense fallback={<TableBodySkeleton />}>
@@ -114,7 +118,7 @@ async function TableHeaderWrapper({ total }: { total: number }) {
         <TableHead className="w-28">{t("creditAmount")}</TableHead>
         <TableHead className="w-20">{t("status")}</TableHead>
         {total > 0 && (
-          <TableHead className="w-[630px] text-center sticky right-0 bg-muted">
+          <TableHead className="sticky right-0 w-[630px] bg-muted text-center">
             {t("action")}
           </TableHead>
         )}
@@ -125,7 +129,10 @@ async function TableHeaderWrapper({ total }: { total: number }) {
 async function TableBodyWrapper({
   list,
   permissions,
-}: { list: MemberList[] | undefined; permissions: string[] | undefined }) {
+}: {
+  list: MemberList[] | undefined;
+  permissions: string[] | undefined;
+}) {
   const t = await getTranslations("users.members");
   const translations = await getTranslations();
   return (
@@ -148,22 +155,22 @@ async function TableBodyWrapper({
             <TableCell>
               <div
                 className={cn(
-                  "px-2 rounded-sm w-fit",
-                  item.status === 0 && "text-green bg-green/10",
-                  item.status === 1 && "text-destructive bg-destructive/10",
+                  "w-fit rounded-sm px-2",
+                  item.status === 0 && "bg-green/10 text-green",
+                  item.status === 1 && "bg-destructive/10 text-destructive",
                 )}
               >
                 {t(`statusLabel.${item.status}`)}
               </div>
             </TableCell>
-            <TableCell className="text-center sticky right-0 bg-background">
+            <TableCell className="sticky right-0 bg-background text-center">
               <Actions data={item} permissions={permissions} />
             </TableCell>
           </TableRow>
         ))
       ) : (
         <TableRow>
-          <TableCell colSpan={10} className="text-center h-40">
+          <TableCell colSpan={10} className="h-40 text-center">
             {translations("noData")}
           </TableCell>
         </TableRow>

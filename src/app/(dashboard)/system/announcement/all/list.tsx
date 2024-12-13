@@ -18,7 +18,9 @@ import { TruncatedCell } from "../truncated-cell";
 
 export async function List({
   searchParams,
-}: { searchParams: Promise<{ [key: string]: string | string[] }> }) {
+}: {
+  searchParams: Promise<{ [key: string]: string | string[] }>;
+}) {
   const search = await searchParams;
 
   const { data } = await getSameOrSeniorAnno({
@@ -29,7 +31,7 @@ export async function List({
 
   return (
     <div>
-      <div className="border rounded-sm">
+      <div className="rounded-sm border">
         <Table>
           <TableHeaderWrapper />
           <Suspense fallback={<TableBodySkeleton />}>
@@ -64,7 +66,9 @@ export async function TableHeaderWrapper() {
 
 export async function TableBodyWrapper({
   data,
-}: { data?: PageData<AnnouncementList> }) {
+}: {
+  data?: PageData<AnnouncementList>;
+}) {
   const translations = await getTranslations();
   const noticeTypeMap: { [key: number]: string } = {
     1: "平台代理公告",
@@ -98,7 +102,7 @@ export async function TableBodyWrapper({
         ))
       ) : (
         <TableRow>
-          <TableCell colSpan={3} className="text-center h-40">
+          <TableCell colSpan={3} className="h-40 text-center">
             {translations("noData")}
           </TableCell>
         </TableRow>

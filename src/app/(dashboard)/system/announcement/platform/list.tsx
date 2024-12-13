@@ -17,11 +17,13 @@ import { TruncatedCell } from "../truncated-cell";
 
 export async function List({
   searchParams,
-}: { searchParams: Promise<{ [key: string]: string }> }) {
+}: {
+  searchParams: Promise<{ [key: string]: string }>;
+}) {
   const { startTime, endTime, userId, pageNum, pageSize } = await searchParams;
   if (!(startTime && endTime)) {
     return (
-      <Table className="border rounded-sm">
+      <Table className="rounded-sm border">
         <TableHeaderWrapper />
         <TableBodySkeleton />
       </Table>
@@ -37,7 +39,7 @@ export async function List({
 
   return (
     <div>
-      <div className="border rounded-sm">
+      <div className="rounded-sm border">
         <Table>
           <TableHeaderWrapper />
           <TableBodyWrapper data={data} />
@@ -82,7 +84,9 @@ export async function TableHeaderWrapper() {
 
 export async function TableBodyWrapper({
   data,
-}: { data?: PageData<AnnouncementList> }) {
+}: {
+  data?: PageData<AnnouncementList>;
+}) {
   const translations = await getTranslations();
   const noticeTypeMap: { [key: number]: string } = {
     1: "平台代理公告",
@@ -129,7 +133,7 @@ export async function TableBodyWrapper({
         ))
       ) : (
         <TableRow>
-          <TableCell colSpan={10} className="text-center h-40">
+          <TableCell colSpan={10} className="h-40 text-center">
             {translations("noData")}
           </TableCell>
         </TableRow>

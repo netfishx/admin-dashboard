@@ -21,13 +21,15 @@ import { MoneyBtn } from "./money-btn";
 
 export default async function Page({
   searchParams,
-}: { searchParams: Promise<{ [key: string]: string | string[] }> }) {
+}: {
+  searchParams: Promise<{ [key: string]: string | string[] }>;
+}) {
   const { startTime, endTime } = await searchParams;
   return (
-    <div className="flex flex-col gap-2 w-full">
+    <div className="flex w-full flex-col gap-2">
       <Suspense
         fallback={
-          <div className="bg-background p-4 flex flex-col gap-2">
+          <div className="flex flex-col gap-2 bg-background p-4">
             <Skeleton />
             <Skeleton />
           </div>
@@ -35,10 +37,10 @@ export default async function Page({
       >
         <Form key={`${startTime}-${endTime}`} />
       </Suspense>
-      <div className="p-2 bg-background flex-1 flex flex-col gap-2">
+      <div className="flex flex-1 flex-col gap-2 bg-background p-2">
         <Suspense
           fallback={
-            <Table className="border rounded-sm">
+            <Table className="rounded-sm border">
               <TableHeaderWrapper />
               <TableBodySkeleton />
             </Table>
@@ -53,13 +55,15 @@ export default async function Page({
 
 async function TableWrapper({
   searchParams,
-}: { searchParams: Promise<{ [key: string]: string | string[] }> }) {
+}: {
+  searchParams: Promise<{ [key: string]: string | string[] }>;
+}) {
   const { startTime, endTime, approverStatus, pageNum, pageSize } =
     await searchParams;
 
   if (!(startTime && endTime)) {
     return (
-      <Table className="border rounded-sm">
+      <Table className="rounded-sm border">
         <TableHeaderWrapper />
         <TableBodySkeleton />
       </Table>
@@ -76,8 +80,8 @@ async function TableWrapper({
 
   console.info("apply list:", data);
   return (
-    <div className="bg-background flex-1 w-full ">
-      <div className="relative overflow-y-auto overflow-x-auto border rounded-sm">
+    <div className="w-full flex-1 bg-background">
+      <div className="relative overflow-x-auto overflow-y-auto rounded-sm border">
         <Table>
           <TableHeaderWrapper />
           <Suspense fallback={<TableBodySkeleton />}>
@@ -122,7 +126,7 @@ async function TableHeaderWrapper() {
         <TableHead className="min-w-32 text-center">
           {t("moneyStatus")}
         </TableHead>
-        <TableHead className="min-w-48 text-center sticky right-0 bg-muted">
+        <TableHead className="sticky right-0 min-w-48 bg-muted text-center">
           {t("action")}
         </TableHead>
       </TableRow>
@@ -216,7 +220,7 @@ async function TableBodyWrapper({ list }: { list: ApplyData[] }) {
             <TableCell className="text-center">{item.account}</TableCell>
             <TableCell className="text-center">{item.nickname}</TableCell>
             <TableCell className="text-center">{item.parentAccount}</TableCell>
-            <TableCell className="min-w-32 text-center text-primary font-bold">
+            <TableCell className="min-w-32 text-center font-bold text-primary">
               <MoneyBtn data={item} />
             </TableCell>
             <TableCell className="min-w-32 text-center">
@@ -226,13 +230,13 @@ async function TableBodyWrapper({ list }: { list: ApplyData[] }) {
             <TableCell className="min-w-32 text-center">
               <div
                 className={cn(
-                  "px-2 rounded-sm w-fit text-center inline-block",
-                  item.approverStatus === 0 && "text-primary bg-primary/10",
+                  "inline-block w-fit rounded-sm px-2 text-center",
+                  item.approverStatus === 0 && "bg-primary/10 text-primary",
                   item.approverStatus === 1 &&
-                    "text-muted-foreground bg-muted-foreground/10",
+                    "bg-muted-foreground/10 text-muted-foreground",
                   item.approverStatus === 2 &&
-                    "text-destructive bg-destructive/10",
-                  item.approverStatus === 3 && "text-green bg-green/10",
+                    "bg-destructive/10 text-destructive",
+                  item.approverStatus === 3 && "bg-green/10 text-green",
                 )}
               >
                 {translateValue(item.approverStatus, approverStatusDict)}
@@ -241,9 +245,9 @@ async function TableBodyWrapper({ list }: { list: ApplyData[] }) {
             <TableCell className="min-w-32 text-center">
               <div
                 className={cn(
-                  "px-2 rounded-sm w-fit text-center inline-block",
-                  item.withdrawMode === 0 && "text-green bg-green/10",
-                  item.withdrawMode === 1 && "text-orange bg-orange/10",
+                  "inline-block w-fit rounded-sm px-2 text-center",
+                  item.withdrawMode === 0 && "bg-green/10 text-green",
+                  item.withdrawMode === 1 && "bg-orange/10 text-orange",
                 )}
               >
                 {translateValue(item.withdrawMode, withdrawModeDict)}
@@ -252,24 +256,24 @@ async function TableBodyWrapper({ list }: { list: ApplyData[] }) {
             <TableCell className="min-w-32 text-center">
               <div
                 className={cn(
-                  "px-2 rounded-sm w-fit text-center inline-block",
-                  item.moneyStatus === 0 && "text-primary bg-primary/10",
-                  item.moneyStatus === 1 && "text-green bg-green/10",
+                  "inline-block w-fit rounded-sm px-2 text-center",
+                  item.moneyStatus === 0 && "bg-primary/10 text-primary",
+                  item.moneyStatus === 1 && "bg-green/10 text-green",
                   item.moneyStatus === 2 &&
-                    "text-destructive bg-destructive/10",
+                    "bg-destructive/10 text-destructive",
                 )}
               >
                 {translateValue(item.moneyStatus, moneyStatusDict)}
               </div>
             </TableCell>
-            <TableCell className="min-w-48 text-center sticky right-0 bg-background">
+            <TableCell className="sticky right-0 min-w-48 bg-background text-center">
               <Actions data={item} currentUserId={userInfo?.id ?? "0"} />
             </TableCell>
           </TableRow>
         ))
       ) : (
         <TableRow>
-          <TableCell colSpan={12} className="text-center h-40">
+          <TableCell colSpan={12} className="h-40 text-center">
             {translations("noData")}
           </TableCell>
         </TableRow>

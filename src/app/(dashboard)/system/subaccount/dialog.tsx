@@ -95,8 +95,8 @@ export function SubaccountDialog({ roles }: { roles: Role[] }) {
           <input type="hidden" name="id" value={data?.id} />
           <div className="flex flex-col gap-4">
             <div className="flex flex-col gap-1">
-              <div className="flex gap-2 items-center">
-                <Label className="w-20 text-end shrink-0">{t("name")}</Label>
+              <div className="flex items-center gap-2">
+                <Label className="w-20 shrink-0 text-end">{t("name")}</Label>
                 <Input
                   className="flex-1"
                   placeholder={t("name")}
@@ -106,16 +106,16 @@ export function SubaccountDialog({ roles }: { roles: Role[] }) {
                   name="username"
                 />
               </div>
-              <div className="flex gap-2 items-center">
-                <Label className="w-20 text-end shrink-0" />
+              <div className="flex items-center gap-2">
+                <Label className="w-20 shrink-0 text-end" />
                 <div className="flex-1 text-xs text-destructive">
                   {t("usernameWarning")}
                 </div>
               </div>
             </div>
             <div className="flex flex-col gap-1">
-              <div className="flex gap-2 items-center">
-                <Label className="w-20 text-end shrink-0">
+              <div className="flex items-center gap-2">
+                <Label className="w-20 shrink-0 text-end">
                   {t("password")}
                 </Label>
                 <Password
@@ -125,15 +125,15 @@ export function SubaccountDialog({ roles }: { roles: Role[] }) {
                   type="password"
                 />
               </div>
-              <div className="flex gap-2 items-center">
-                <Label className="w-20 text-end shrink-0" />
+              <div className="flex items-center gap-2">
+                <Label className="w-20 shrink-0 text-end" />
                 <div className="flex-1 text-xs text-destructive">
                   {t("passwordWarning")}
                 </div>
               </div>
             </div>
-            <div className="flex gap-2 items-center">
-              <Label className="w-20 text-end shrink-0">
+            <div className="flex items-center gap-2">
+              <Label className="w-20 shrink-0 text-end">
                 {t("confirmPassword")}
               </Label>
               <Password
@@ -144,9 +144,9 @@ export function SubaccountDialog({ roles }: { roles: Role[] }) {
               />
             </div>
             {data && (
-              <div className="flex gap-2 items-center">
-                <Label className="w-20 text-end shrink-0">{t("status")}</Label>
-                <div className="flex-1 flex gap-2">
+              <div className="flex items-center gap-2">
+                <Label className="w-20 shrink-0 text-end">{t("status")}</Label>
+                <div className="flex flex-1 gap-2">
                   <div>
                     <RadioGroup
                       className="flex gap-4"
@@ -173,10 +173,10 @@ export function SubaccountDialog({ roles }: { roles: Role[] }) {
               </div>
             )}
             <div className="flex gap-2">
-              <Label className="w-20 text-end shrink-0">
+              <Label className="w-20 shrink-0 text-end">
                 {t("chooseRole")}
               </Label>
-              <div className="flex-1 flex gap-4 flex-wrap">
+              <div className="flex flex-1 flex-wrap gap-4">
                 {roles.map((role) => (
                   <div key={role.id} className="flex gap-2">
                     <Checkbox
@@ -212,7 +212,7 @@ export function SubaccountDialog({ roles }: { roles: Role[] }) {
             }}
             disabled={isPending}
           >
-            {isPending && <Loader2 className="w-4 h-4 animate-spin" />}
+            {isPending && <Loader2 className="h-4 w-4 animate-spin" />}
             {translations("confirm")}
           </Button>
         </DialogFooter>

@@ -15,20 +15,23 @@ async function CommonWrapper({ searchParams }: CommonWrapperProps) {
   const gameListResp = await getBaccaratGames();
   const { startTime, endTime } = await searchParams;
   return (
-    <div className="flex flex-col gap-2 w-full">
+    <div className="flex w-full flex-col gap-2">
       <Suspense
         fallback={
-          <div className="flex justify-between items-center bg-background p-4">
+          <div className="flex items-center justify-between bg-background p-4">
             <Skeleton />
           </div>
         }
       >
-        <ListFilter gameList={gameListResp?.data ?? []} key={`${startTime}-${endTime}`} />
+        <ListFilter
+          gameList={gameListResp?.data ?? []}
+          key={`${startTime}-${endTime}`}
+        />
       </Suspense>
       <Suspense
         fallback={
-          <div className="p-2 bg-background flex-1">
-            <div className="border rounded-sm relative">
+          <div className="flex-1 bg-background p-2">
+            <div className="relative rounded-sm border">
               <Table>
                 <ListHeader />
                 <TableSkeleton length={5} colSpan={16} />
@@ -47,7 +50,7 @@ export default function Page({ searchParams }: CommonWrapperProps) {
   return (
     <Suspense
       fallback={
-        <div className="flex flex-col gap-2 w-full">
+        <div className="flex w-full flex-col gap-2">
           <Skeleton />
           <Skeleton />
           <Skeleton />

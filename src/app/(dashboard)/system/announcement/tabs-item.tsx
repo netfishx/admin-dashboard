@@ -8,14 +8,16 @@ import { use } from "react";
 
 export default function TabsItem({
   session,
-}: { session: Promise<SessionData | null> }) {
+}: {
+  session: Promise<SessionData | null>;
+}) {
   const t = useTranslations("system.announcement");
   const pathname = usePathname();
   const sessionData = use(session);
   const permissions = sessionData?.permissions;
   return (
-    <div className="flex flex-col gap-2 w-full">
-      <div className="p-2 bg-background gap-2">
+    <div className="flex w-full flex-col gap-2">
+      <div className="gap-2 bg-background p-2">
         <Tabs defaultValue="own" value={pathname.split("/").pop()}>
           <TabsList>
             {permissions?.includes("own_announcement") && (

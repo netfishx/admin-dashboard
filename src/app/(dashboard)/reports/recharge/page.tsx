@@ -22,13 +22,15 @@ import { Form } from "./form";
 
 export default async function Page({
   searchParams,
-}: { searchParams: Promise<{ [key: string]: string | string[] }> }) {
+}: {
+  searchParams: Promise<{ [key: string]: string | string[] }>;
+}) {
   const { startTime, endTime } = await searchParams;
   return (
-    <div className="flex flex-col gap-2 w-full">
+    <div className="flex w-full flex-col gap-2">
       <Suspense
         fallback={
-          <div className="bg-background p-2 flex flex-col gap-2">
+          <div className="flex flex-col gap-2 bg-background p-2">
             <Skeleton />
             <Skeleton />
             <Skeleton />
@@ -37,7 +39,7 @@ export default async function Page({
       >
         <Form key={`${startTime}-${endTime}`} />
       </Suspense>
-      <div className="p-2 bg-background flex-1 flex flex-col gap-2">
+      <div className="flex flex-1 flex-col gap-2 bg-background p-2">
         <Suspense
           fallback={
             <Table>
@@ -60,10 +62,8 @@ async function TableHeaderWrapper() {
       <TableRow className="bg-muted">
         <TableHead className="w-24 text-center">{t("orderNo")}</TableHead>
         <TableHead className="w-24 text-center">{t("userId")}</TableHead>
-        <TableHead className="w-24  text-center">{t("currency")}</TableHead>
-        <TableHead className="w-24  text-center">
-          {t("rechargeMoney")}
-        </TableHead>
+        <TableHead className="w-24 text-center">{t("currency")}</TableHead>
+        <TableHead className="w-24 text-center">{t("rechargeMoney")}</TableHead>
         <TableHead className="w-32 text-center">{t("finishTime")}</TableHead>
         <TableHead className="w-24 text-center">{t("rechargeHash")}</TableHead>
       </TableRow>
@@ -73,7 +73,9 @@ async function TableHeaderWrapper() {
 
 async function TableWrapper({
   searchParams,
-}: { searchParams: Promise<{ [key: string]: string | string[] }> }) {
+}: {
+  searchParams: Promise<{ [key: string]: string | string[] }>;
+}) {
   const {
     userId,
     orderNo,
@@ -88,7 +90,7 @@ async function TableWrapper({
 
   if (!((startTime && endTime) || orderNo)) {
     return (
-      <Table className="border rounded-sm">
+      <Table className="rounded-sm border">
         <TableHeaderWrapper />
         <TableBodySkeleton />
       </Table>
@@ -108,8 +110,8 @@ async function TableWrapper({
 
   const { data } = await getRechargeReportList(params);
   return (
-    <div className="bg-background flex-1 w-full ">
-      <div className="relative overflow-y-auto overflow-x-auto border rounded-sm">
+    <div className="w-full flex-1 bg-background">
+      <div className="relative overflow-x-auto overflow-y-auto rounded-sm border">
         <Table>
           <TableHeaderWrapper />
           <Suspense fallback={<TableBodySkeleton />}>
@@ -144,14 +146,14 @@ async function TableBodyWrapper({ data }: { data?: PageData<RechargeReport> }) {
             <TableCell className="text-center">
               <Time time={item.finishTime} />
             </TableCell>
-            <TableCell className="text-center flex justify-center items-center h-full">
+            <TableCell className="flex h-full items-center justify-center text-center">
               <Actions item={item} />
             </TableCell>
           </TableRow>
         ))
       ) : (
         <TableRow>
-          <TableCell colSpan={7} className="text-center h-40">
+          <TableCell colSpan={7} className="h-40 text-center">
             {t("noData")}
           </TableCell>
         </TableRow>

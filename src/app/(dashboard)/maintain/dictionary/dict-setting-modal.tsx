@@ -94,9 +94,9 @@ export function DictSettingModal() {
               {t("add")}
             </Button>
           </div>
-          <div className="border rounded-md mt-4">
+          <div className="mt-4 rounded-md border">
             <Table>
-              <TableHeader className="bg-muted table w-full">
+              <TableHeader className="table w-full bg-muted">
                 <TableRow>
                   <TableHead className="w-26">{t("itemName")}</TableHead>
                   <TableHead className="w-26">{t("itemValue")}</TableHead>
@@ -104,14 +104,14 @@ export function DictSettingModal() {
                   <TableHead className="w-26">{t("action")}</TableHead>
                 </TableRow>
               </TableHeader>
-              <TableBody className="block overflow-auto max-h-[370px]">
+              <TableBody className="block max-h-[370px] overflow-auto">
                 {loading
                   ? Array.from({ length: 5 }).map((_, index) => (
                       // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
-                      <TableRow key={index} className="w-full block">
+                      <TableRow key={index} className="block w-full">
                         <TableCell
                           colSpan={4}
-                          className="text-center w-full block"
+                          className="block w-full text-center"
                         >
                           <Skeleton />
                         </TableCell>
@@ -127,7 +127,7 @@ export function DictSettingModal() {
                             <Button
                               variant="ghost"
                               size="sm"
-                              className="text-primary hover:text-primary/80 text-sm px-2"
+                              className="px-2 text-sm text-primary hover:text-primary/80"
                               onClick={() => {
                                 setAddOpen(true);
                                 setAddData({
@@ -168,7 +168,10 @@ export function DictSettingModal() {
 function DeleteBtn({
   id,
   setDeleteLoading,
-}: { id: string; setDeleteLoading: (loading: boolean) => void }) {
+}: {
+  id: string;
+  setDeleteLoading: (loading: boolean) => void;
+}) {
   const translation = useTranslations();
   const t = useTranslations("maintain.dictionary");
   const [isPending, startTransition] = useTransition();
@@ -178,7 +181,7 @@ function DeleteBtn({
         <Button
           variant="ghost"
           size="sm"
-          className="text-primary hover:text-primary/80 text-sm px-2"
+          className="px-2 text-sm text-primary hover:text-primary/80"
           disabled={isPending}
         >
           {isPending ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}

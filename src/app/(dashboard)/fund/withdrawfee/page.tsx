@@ -4,11 +4,11 @@ import { List } from "./list";
 import { TableBodySkeleton, TableHeaderWrapper } from "./list";
 export default async function Page() {
   return (
-    <div className="flex flex-col gap-2 w-full h-full ">
-      <div className="flex-1 flex flex-col gap-2">
+    <div className="flex h-full w-full flex-col gap-2">
+      <div className="flex flex-1 flex-col gap-2">
         <Suspense
           fallback={
-            <Table className="border rounded-sm ">
+            <Table className="rounded-sm border">
               <TableHeaderWrapper />
               <TableBodySkeleton />
             </Table>

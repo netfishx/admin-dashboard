@@ -8,11 +8,13 @@ import Image from "next/image";
 
 export async function Salutations({
   data,
-}: { data: TodayWinLoss | undefined }) {
+}: {
+  data: TodayWinLoss | undefined;
+}) {
   const t = await getTranslations();
   return (
-    <div className="flex flex-col p-4 rounded bg-card">
-      <div className="pb-2 flex items-center justify-around">
+    <div className="flex flex-col rounded bg-card p-4">
+      <div className="flex items-center justify-around pb-2">
         <Item
           name={t("baccaratShareAmount")}
           value={data?.baccaratShareAmount || "0"}
@@ -52,11 +54,11 @@ const Item = ({
 }) => {
   return (
     <div
-      className={`w-1/4 flex items-center ${unShowBorder ? "" : "border-r"} mr-4`}
+      className={`flex w-1/4 items-center ${unShowBorder ? "" : "border-r"} mr-4`}
     >
       <Image src={icon} alt="Icon" className="size-14" />
       <div className="pl-3">
-        <div className="text-xs pb-2">{name}</div>
+        <div className="pb-2 text-xs">{name}</div>
         <div className="text-xl font-bold">{value}</div>
       </div>
     </div>

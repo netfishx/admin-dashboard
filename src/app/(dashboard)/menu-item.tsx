@@ -34,7 +34,7 @@ export function MenuItem({
     <Button
       variant="ghost"
       className={cn([
-        "w-full justify-start font-normal group",
+        "group w-full justify-start font-normal",
         isActive && "bg-accent text-primary !opacity-100",
       ])}
       disabled={isActive}

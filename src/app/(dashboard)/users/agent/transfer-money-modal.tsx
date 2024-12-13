@@ -100,16 +100,16 @@ export function TransferMoneyModal() {
           </DialogHeader>
           <Form ref={ref} action="" onSubmit={handleClickTransferMoney}>
             <input type="hidden" name="id" value={data?.id} />
-            <div className="flex flex-col gap-4 w-full px-4">
-              <div className="flex gap-4 items-center">
-                <Label className="shrink-0 w-20 text-right text-muted-foreground">
+            <div className="flex w-full flex-col gap-4 px-4">
+              <div className="flex items-center gap-4">
+                <Label className="w-20 shrink-0 text-right text-muted-foreground">
                   {t("username")}
                 </Label>
                 <span>{data?.username}</span>
               </div>
               <div className="flex flex-col gap-1">
-                <div className="flex gap-4 items-center">
-                  <Label className="shrink-0 w-20 text-right text-muted-foreground">
+                <div className="flex items-center gap-4">
+                  <Label className="w-20 shrink-0 text-right text-muted-foreground">
                     {t("amount")}
                   </Label>
                   <Input
@@ -124,20 +124,20 @@ export function TransferMoneyModal() {
                     }}
                   />
                 </div>
-                <div className="flex gap-4 items-center">
-                  <Label className="shrink-0 w-20 text-right text-muted-foreground" />
-                  <div className="flex-1 text-xs text-destructive flex flex-row">
+                <div className="flex items-center gap-4">
+                  <Label className="w-20 shrink-0 text-right text-muted-foreground" />
+                  <div className="flex flex-1 flex-row text-xs text-destructive">
                     {t("availableAmount")}:
                     {fetching ? (
-                      <Loader2 className="w-4 h-4 animate-spin" />
+                      <Loader2 className="h-4 w-4 animate-spin" />
                     ) : (
                       availableAmount
                     )}
                   </div>
                 </div>
               </div>
-              <div className="flex gap-4 items-center">
-                <Label className="shrink-0 w-20 text-right text-muted-foreground">
+              <div className="flex items-center gap-4">
+                <Label className="w-20 shrink-0 text-right text-muted-foreground">
                   {t("moneyPassword")}
                 </Label>
                 <Password
@@ -162,7 +162,7 @@ export function TransferMoneyModal() {
                 }
               }}
             >
-              {isPeding && <Loader2 className="w-4 h-4 animate-spin" />}
+              {isPeding && <Loader2 className="h-4 w-4 animate-spin" />}
               {translation("confirm")}
             </Button>
           </DialogFooter>

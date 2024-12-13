@@ -40,7 +40,7 @@ export async function ListHeader() {
         <TableHead className="min-w-24 text-center">
           {t("settledAmount")}
         </TableHead>
-        <TableHead className="w-24 text-center sticky right-0 z-10 bg-muted">
+        <TableHead className="sticky right-0 z-10 w-24 bg-muted text-center">
           {t("more")}
         </TableHead>
       </TableRow>
@@ -51,7 +51,10 @@ export async function ListHeader() {
 async function ListBody({
   list,
   gameList = [],
-}: { list: PokerReportRequestRecords[]; gameList: GameInfo[] }) {
+}: {
+  list: PokerReportRequestRecords[];
+  gameList: GameInfo[];
+}) {
   const translate = await getTranslations();
   const t = await getTranslations("report.agent");
   const session = await getSession();
@@ -90,14 +93,14 @@ async function ListBody({
             <TableCell className="w-24 text-center">
               {item.settledAmount}
             </TableCell>
-            <TableCell className="w-24 text-center sticky right-0 z-10 bg-background">
+            <TableCell className="sticky right-0 z-10 w-24 bg-background text-center">
               <DetailButton />
             </TableCell>
           </TableRow>
         ))
       ) : (
         <TableRow>
-          <TableCell colSpan={15} className="text-center h-40">
+          <TableCell colSpan={15} className="h-40 text-center">
             {translate("noData")}
           </TableCell>
         </TableRow>
@@ -109,14 +112,17 @@ async function ListBody({
 export async function List({
   searchParams,
   gameList,
-}: { searchParams: Promise<PokerReportRequestParams>; gameList: GameInfo[] }) {
+}: {
+  searchParams: Promise<PokerReportRequestParams>;
+  gameList: GameInfo[];
+}) {
   const t = await getTranslations("report.agent");
   const params = await searchParams;
   if (!(params?.startTime && params?.endTime)) {
     return (
-      <div className="p-2 bg-background flex-1">
+      <div className="flex-1 bg-background p-2">
         <div className="h-6" />
-        <div className="border rounded-sm relative">
+        <div className="relative rounded-sm border">
           <Table>
             <ListHeader />
             <ListBody list={[]} gameList={gameList} />
@@ -134,7 +140,7 @@ export async function List({
   };
   const { data } = await getPokerReport(p);
   return (
-    <div className="p-2 bg-background flex-1">
+    <div className="flex-1 bg-background p-2">
       <div className="h-6">
         {data?.list && data.list.length > 0 && (
           <>
@@ -153,7 +159,7 @@ export async function List({
           </>
         )}
       </div>
-      <div className="border rounded-sm relative">
+      <div className="relative rounded-sm border">
         <Table>
           <ListHeader />
           <Suspense fallback={<TableSkeleton length={5} colSpan={14} />}>

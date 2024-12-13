@@ -5,7 +5,9 @@ import { useRouter } from "next/navigation";
 
 export function Actions({
   searchParams,
-}: { searchParams: { [key: string]: string | string[] } }) {
+}: {
+  searchParams: { [key: string]: string | string[] };
+}) {
   const t = useTranslations("report.orderlist");
   const router = useRouter();
   const searchParamsStr = new URLSearchParams(
@@ -15,7 +17,7 @@ export function Actions({
     <Button
       variant="ghost"
       size="sm"
-      className="text-primary hover:text-primary/80 text-sm px-2"
+      className="px-2 text-sm text-primary hover:text-primary/80"
       onClick={() => {
         router.push(
           `/reports/order/baccarat?${new URLSearchParams(searchParamsStr).toString()}`,

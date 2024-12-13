@@ -26,15 +26,15 @@ export default async function ResourcePage({
 }) {
   const t = await getTranslations("maintain.resource");
   return (
-    <div className="flex flex-col w-full gap-2">
-      <div className="flex justify-between items-center bg-background p-4">
+    <div className="flex w-full flex-col gap-2">
+      <div className="flex items-center justify-between bg-background p-4">
         <div className="text-sm font-medium">{t("title")}</div>
         <Add />
       </div>
-      <div className="bg-background flex-1 p-2 flex flex-col gap-2">
+      <div className="flex flex-1 flex-col gap-2 bg-background p-2">
         <Suspense
           fallback={
-            <div className="border rounded-sm">
+            <div className="rounded-sm border">
               <Table>
                 <TableHeaderWrapper />
                 <TableBodySkeleton />
@@ -59,7 +59,7 @@ async function TableWrapper({
   const { data } = await getBackgroundImageList({ pageNum, pageSize });
   return (
     <>
-      <div className="border rounded-sm">
+      <div className="rounded-sm border">
         <Table>
           <TableHeaderWrapper />
           <TableBodyWrapper list={data?.list ?? []} />
@@ -74,7 +74,9 @@ async function TableWrapper({
 
 async function TableBodyWrapper({
   list,
-}: { list: BackgroundImageList[] | [] }) {
+}: {
+  list: BackgroundImageList[] | [];
+}) {
   const translations = await getTranslations();
   const t = await getTranslations("maintain.resource");
   return (
@@ -100,22 +102,22 @@ async function TableBodyWrapper({
             <TableCell className="text-center">
               <span
                 className={cn([
-                  "p-1 rounded-sm w-24 inline-block text-center",
+                  "inline-block w-24 rounded-sm p-1 text-center",
                   item.status === 0
-                    ? "text-green bg-green/20"
-                    : "text-destructive bg-destructive/20",
+                    ? "bg-green/20 text-green"
+                    : "bg-destructive/20 text-destructive",
                 ])}
               >
                 {item.status === 0 ? t("enable") : t("disable")}
               </span>
             </TableCell>
-            <TableCell className="w-40 text-center sticky right-0 bg-background">
+            <TableCell className="sticky right-0 w-40 bg-background text-center">
               <Actions data={item} />
             </TableCell>
           </TableRow>
         ))
       ) : (
-        <TableRow className="text-center h-40">
+        <TableRow className="h-40 text-center">
           <TableCell colSpan={10}>{translations("noData")}</TableCell>
         </TableRow>
       )}
@@ -137,7 +139,7 @@ async function TableHeaderWrapper() {
         <TableHead>{t("sort")}</TableHead>
         <TableHead>{t("updateTime")}</TableHead>
         <TableHead>{t("status")}</TableHead>
-        <TableHead className="text-center sticky right-0 bg-muted">
+        <TableHead className="sticky right-0 bg-muted text-center">
           {t("action")}
         </TableHead>
       </TableRow>

@@ -9,7 +9,11 @@ export function GoogleBtn({
   secret,
   qrcode,
   isOpen,
-}: { secret: string; qrcode: string; isOpen: boolean }) {
+}: {
+  secret: string;
+  qrcode: string;
+  isOpen: boolean;
+}) {
   const t = useTranslations("personal.security");
   const [open, setOpen] = useState(false);
   return (

@@ -64,7 +64,7 @@ async function ListBody({ list }: { list: CreditRecordRequestRecords[] }) {
         ))
       ) : (
         <TableRow>
-          <TableCell colSpan={7} className="text-center h-40">
+          <TableCell colSpan={7} className="h-40 text-center">
             {translate("noData")}
           </TableCell>
         </TableRow>
@@ -75,12 +75,14 @@ async function ListBody({ list }: { list: CreditRecordRequestRecords[] }) {
 
 export async function List({
   searchParams,
-}: { searchParams: Promise<CreditRecordRequestParams> }) {
+}: {
+  searchParams: Promise<CreditRecordRequestParams>;
+}) {
   const params = await searchParams;
   if (!(params?.startTime && params?.endTime)) {
     return (
-      <div className="p-2 bg-background flex-1">
-        <div className="border rounded-sm relative">
+      <div className="flex-1 bg-background p-2">
+        <div className="relative rounded-sm border">
           <Table>
             <ListHeader />
             <ListBody list={[]} />
@@ -100,8 +102,8 @@ export async function List({
   const { data } = await postGetCreditLogList(p);
 
   return (
-    <div className="p-2 bg-background flex-1">
-      <div className="border rounded-sm relative">
+    <div className="flex-1 bg-background p-2">
+      <div className="relative rounded-sm border">
         <Table>
           <ListHeader />
           <Suspense fallback={<TableSkeleton length={5} colSpan={6} />}>

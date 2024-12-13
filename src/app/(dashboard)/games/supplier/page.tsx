@@ -28,26 +28,28 @@ async function DialogWrapper() {
 
 export default function Page({
   searchParams,
-}: { searchParams: Promise<{ [key: string]: string | undefined }> }) {
+}: {
+  searchParams: Promise<{ [key: string]: string | undefined }>;
+}) {
   return (
-    <div className="flex flex-col gap-2 w-full">
+    <div className="flex w-full flex-col gap-2">
       <Suspense>
         <DialogWrapper />
       </Suspense>
       <Suspense
         fallback={
-          <div className="flex justify-between items-center bg-background p-4">
-            <Skeleton className="w-full h-9" />
+          <div className="flex items-center justify-between bg-background p-4">
+            <Skeleton className="h-9 w-full" />
           </div>
         }
       >
         <SupplierForm />
       </Suspense>
-      <div className="p-4 bg-background flex-1 flex flex-col gap-4">
+      <div className="flex flex-1 flex-col gap-4 bg-background p-4">
         <div className="flex justify-end">
           <Add />
         </div>
-        <div className="border rounded-sm">
+        <div className="rounded-sm border">
           <Suspense
             fallback={
               <Table className="table-fixed">

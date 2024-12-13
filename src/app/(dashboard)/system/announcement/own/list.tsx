@@ -17,7 +17,9 @@ import { TruncatedCell } from "../truncated-cell";
 
 export async function List({
   searchParams,
-}: { searchParams: Promise<{ [key: string]: string | string[] }> }) {
+}: {
+  searchParams: Promise<{ [key: string]: string | string[] }>;
+}) {
   const { pageSize, pageNum } = await searchParams;
 
   const { data } = await getSameOrSeniorAnno({
@@ -27,8 +29,8 @@ export async function List({
   });
 
   return (
-    <div className="p-2 gap-2 flex flex-col h-full bg-background">
-      <div className="border rounded-sm">
+    <div className="flex h-full flex-col gap-2 bg-background p-2">
+      <div className="rounded-sm border">
         <Table>
           <TableHeaderWrapper />
           <TableBodyWrapper data={data} />
@@ -53,10 +55,10 @@ export async function TableHeaderWrapper() {
   return (
     <TableHeader>
       <TableRow className="bg-muted">
-        <TableHead className="w-32  text-center">{t("startTime")}</TableHead>
-        <TableHead className="w-32  text-center">{t("endTime")}</TableHead>
-        <TableHead className="w-32  text-center">{t("createTime")}</TableHead>
-        <TableHead className="w-[450px]  text-center">{t("content")}</TableHead>
+        <TableHead className="w-32 text-center">{t("startTime")}</TableHead>
+        <TableHead className="w-32 text-center">{t("endTime")}</TableHead>
+        <TableHead className="w-32 text-center">{t("createTime")}</TableHead>
+        <TableHead className="w-[450px] text-center">{t("content")}</TableHead>
         <TableHead className="text-center">{t("type")}</TableHead>
         <TableHead className="min-w-24 text-center">{t("action")}</TableHead>
       </TableRow>
@@ -79,7 +81,9 @@ export function TableBodySkeleton() {
 }
 export async function TableBodyWrapper({
   data,
-}: { data?: PageData<AnnouncementList> }) {
+}: {
+  data?: PageData<AnnouncementList>;
+}) {
   const translations = await getTranslations();
 
   const noticeTypeMap: { [key: number]: string } = {
@@ -122,7 +126,7 @@ export async function TableBodyWrapper({
         ))
       ) : (
         <TableRow>
-          <TableCell colSpan={6} className="text-center h-40">
+          <TableCell colSpan={6} className="h-40 text-center">
             {translations("noData")}
           </TableCell>
         </TableRow>

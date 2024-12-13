@@ -30,7 +30,9 @@ export async function SupplierTableHeader() {
 
 export async function SupplierTable({
   searchParams,
-}: { searchParams: Promise<{ [key: string]: string | undefined }> }) {
+}: {
+  searchParams: Promise<{ [key: string]: string | undefined }>;
+}) {
   const { userId } = await searchParams;
   const res = await getSupplierConfigs(userId);
   const t = await getTranslations();
@@ -54,7 +56,7 @@ export async function SupplierTable({
           ))
         ) : (
           <TableRow>
-            <TableCell colSpan={7} className="text-center h-40">
+            <TableCell colSpan={7} className="h-40 text-center">
               {t("noData")}
             </TableCell>
           </TableRow>

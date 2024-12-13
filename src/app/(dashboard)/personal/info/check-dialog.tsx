@@ -52,12 +52,12 @@ function FormField({
 }: FormField) {
   return (
     <div className="flex items-center gap-4">
-      <Label className="flex items-center justify-end gap-1 min-w-[120px] flex-shrink-0">
+      <Label className="flex min-w-[120px] flex-shrink-0 items-center justify-end gap-1">
         {required && <span className="text-red-500">*</span>}
         <span className="text-gray-600">{label}</span>
       </Label>
       {readOnly ? (
-        <div className="flex-1 bg-gray-50 px-3 py-2 rounded-md text-gray-700">
+        <div className="flex-1 rounded-md bg-gray-50 px-3 py-2 text-gray-700">
           {value}
         </div>
       ) : label === "资金密码" ? (
@@ -120,8 +120,8 @@ function WithdrawForm(props: {
   const warningNotes = [t("tips01"), t("tips02")];
 
   return (
-    <div className="max-w-2xl w-full mx-auto">
-      <div className="p-6 space-y-4">
+    <div className="mx-auto w-full max-w-2xl">
+      <div className="space-y-4 p-6">
         <FormField
           label={translations("availableAmount")}
           value={formData.availableAmount}
@@ -138,10 +138,10 @@ function WithdrawForm(props: {
             placeholder={t("withdrawAmount")}
             type="number"
           />
-          <div className="ml-[140px] text-sm space-y-1">
+          <div className="ml-[140px] space-y-1 text-sm">
             <div className="text-red-500">{t("tips03")}:</div>
             {warningNotes.map((note, index) => (
-              <div key={note} className="text-red-500 pl-4">
+              <div key={note} className="pl-4 text-red-500">
                 {`${index + 1}.${note}`}
               </div>
             ))}
@@ -249,7 +249,7 @@ export function CheckDialog(props: Dialogprops) {
             <DialogHeader>
               <DialogTitle>{t("withdraw")}</DialogTitle>
             </DialogHeader>
-            <div className="gap-2 items-center">
+            <div className="items-center gap-2">
               <WithdrawForm getFormData={handleChange} data={data} />
             </div>
             <DialogFooter>
@@ -260,7 +260,7 @@ export function CheckDialog(props: Dialogprops) {
                 onClick={() => handleNext()}
                 disabled={loading || !isAllow}
               >
-                {loading && <Loader2 className="w-4 h-4 animate-spin" />}
+                {loading && <Loader2 className="h-4 w-4 animate-spin" />}
                 {translations("confirm")}
               </Button>
             </DialogFooter>
@@ -271,9 +271,9 @@ export function CheckDialog(props: Dialogprops) {
             <DialogHeader>
               <DialogTitle>{t("google2fa")}</DialogTitle>
             </DialogHeader>
-            <div className="max-w-xl w-full mx-auto p-4">
+            <div className="mx-auto w-full max-w-xl p-4">
               <div className="text-center text-lg font-bold">
-                <Label className="flex items-center gap-1 min-w-[120px] flex-shrink-0 mb-4">
+                <Label className="mb-4 flex min-w-[120px] flex-shrink-0 items-center gap-1">
                   {t("google2faCode")}
                 </Label>
                 <Input
@@ -288,7 +288,7 @@ export function CheckDialog(props: Dialogprops) {
                 {translations("cancel")}
               </Button>
               <Button onClick={() => handleVerify()} disabled={loading}>
-                {loading && <Loader2 className="w-4 h-4 animate-spin" />}
+                {loading && <Loader2 className="h-4 w-4 animate-spin" />}
                 {t("verify")}
               </Button>
             </DialogFooter>

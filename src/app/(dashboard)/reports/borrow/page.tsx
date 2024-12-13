@@ -15,7 +15,7 @@ async function CommonWrapper({ searchParams }: CommonWrapperProps) {
     <>
       <Suspense
         fallback={
-          <div className="flex justify-between items-center bg-background p-4">
+          <div className="flex items-center justify-between bg-background p-4">
             <Skeleton />
           </div>
         }
@@ -24,8 +24,8 @@ async function CommonWrapper({ searchParams }: CommonWrapperProps) {
       </Suspense>
       <Suspense
         fallback={
-          <div className="p-2 bg-background flex-1">
-            <div className="border rounded-sm relative">
+          <div className="flex-1 bg-background p-2">
+            <div className="relative rounded-sm border">
               <Table>
                 <ListHeader />
                 <TableSkeleton length={5} colSpan={6} />
@@ -42,7 +42,7 @@ async function CommonWrapper({ searchParams }: CommonWrapperProps) {
 
 export default function Page({ searchParams }: CommonWrapperProps) {
   return (
-    <div className="flex flex-col gap-2 w-full">
+    <div className="flex w-full flex-col gap-2">
       <Suspense>
         <CommonWrapper searchParams={searchParams} />
       </Suspense>

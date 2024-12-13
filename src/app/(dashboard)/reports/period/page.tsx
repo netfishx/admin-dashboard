@@ -18,12 +18,14 @@ import { Actions } from "./actions";
 import { Form } from "./form";
 export default async function Page({
   searchParams,
-}: { searchParams: Promise<{ [key: string]: string | string[] }> }) {
+}: {
+  searchParams: Promise<{ [key: string]: string | string[] }>;
+}) {
   return (
-    <div className="flex flex-col gap-2 w-full">
+    <div className="flex w-full flex-col gap-2">
       <Suspense
         fallback={
-          <div className="bg-background p-2 flex flex-col gap-2">
+          <div className="flex flex-col gap-2 bg-background p-2">
             <Skeleton />
             <Skeleton />
           </div>
@@ -32,7 +34,7 @@ export default async function Page({
         <FormWrapper searchParams={searchParams} />
       </Suspense>
 
-      <div className="p-2 bg-background flex-1 gap-2">
+      <div className="flex-1 gap-2 bg-background p-2">
         <Suspense
           fallback={
             <Table>
@@ -66,8 +68,8 @@ async function PeriodTableHeader() {
         <TableHead className="w-32 text-center">
           {t("availableBetAmount")}
         </TableHead>
-        <TableHead className="text-center w-24">{t("backIncome")}</TableHead>
-        <TableHead className="w-24 text-center sticky right-0 bg-muted">
+        <TableHead className="w-24 text-center">{t("backIncome")}</TableHead>
+        <TableHead className="sticky right-0 w-24 bg-muted text-center">
           {t("action")}
         </TableHead>
       </TableRow>
@@ -76,7 +78,9 @@ async function PeriodTableHeader() {
 }
 async function PeriodTable({
   searchParams,
-}: { searchParams: Promise<{ [key: string]: string | string[] }> }) {
+}: {
+  searchParams: Promise<{ [key: string]: string | string[] }>;
+}) {
   const {
     startTime,
     endTime,
@@ -89,7 +93,7 @@ async function PeriodTable({
 
   if (!(startTime && endTime)) {
     return (
-      <Table className="border rounded-sm">
+      <Table className="rounded-sm border">
         <PeriodTableHeader />
         <TableBodySkeleton />
       </Table>
@@ -109,9 +113,9 @@ async function PeriodTable({
   };
   const { data } = await getPeriodReport(params);
   return (
-    <div className="flex flex-col gap-2 w-full">
-      <div className="bg-background flex-1">
-        <div className="h-full border rounded-sm relative">
+    <div className="flex w-full flex-col gap-2">
+      <div className="flex-1 bg-background">
+        <div className="relative h-full rounded-sm border">
           <Table>
             <PeriodTableHeader />
             <Suspense fallback={<TableBodySkeleton />}>
@@ -174,7 +178,7 @@ async function TableBodyWrapper({
         ))
       ) : (
         <TableRow>
-          <TableCell colSpan={12} className="text-center h-40">
+          <TableCell colSpan={12} className="h-40 text-center">
             {translations("noData")}
           </TableCell>
         </TableRow>
@@ -199,7 +203,9 @@ function TableBodySkeleton() {
 
 async function FormWrapper({
   searchParams,
-}: { searchParams: Promise<{ [key: string]: string | string[] }> }) {
+}: {
+  searchParams: Promise<{ [key: string]: string | string[] }>;
+}) {
   const { startTime, endTime } = await searchParams;
   const res = await getGameList(1);
   return <Form list={res.data ?? []} key={`${startTime}-${endTime}`} />;

@@ -48,7 +48,7 @@ export function MoneyDialog({
 
           <DialogDescription />
         </DialogHeader>
-        <div className="flex flex-col gap-4 text-muted-foreground text-sm">
+        <div className="flex flex-col gap-4 text-sm text-muted-foreground">
           <p className="flex items-center gap-2">
             <span>{t("applyWithdrawMoney")}</span>
             <span>{data.withdrawMoney}</span>

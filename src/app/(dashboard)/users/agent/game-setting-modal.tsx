@@ -105,10 +105,10 @@ export function GameSettingModal() {
         </DialogHeader>
         <div className="flex flex-col gap-2">
           <span className="text-md font-medium">{t("baccarat")}</span>
-          <div className="border rounded-sm overflow-auto max-h-[50dvh]">
+          <div className="max-h-[50dvh] overflow-auto rounded-sm border">
             <ScrollableTable className="relative">
               <TableHeader>
-                <TableRow className="bg-muted sticky top-0">
+                <TableRow className="sticky top-0 bg-muted">
                   <TableHead>{t("name")}</TableHead>
                   <TableHead>{t("switch")}</TableHead>
                   <TableHead>{t("ratio")}</TableHead>
@@ -159,10 +159,10 @@ export function GameSettingModal() {
                         </TableRow>
                       ))
                   ) : (
-                    <TableRow className="flex justify-center items-center">
+                    <TableRow className="flex items-center justify-center">
                       <TableCell
                         colSpan={3}
-                        className="flex justify-center items-center h-20"
+                        className="flex h-20 items-center justify-center"
                       >
                         {translations("noData")}
                       </TableCell>
@@ -175,7 +175,7 @@ export function GameSettingModal() {
         </div>
         <div className="flex flex-col gap-2">
           <span className="text-md font-medium">{t("guandan")}</span>
-          <div className="border rounded-sm">
+          <div className="rounded-sm border">
             <Table>
               <TableHeader>
                 <TableRow className="bg-muted">
@@ -209,7 +209,7 @@ export function GameSettingModal() {
                       ))
                   ) : (
                     <TableRow>
-                      <TableCell colSpan={2} className="text-center h-6">
+                      <TableCell colSpan={2} className="h-6 text-center">
                         {translations("noData")}
                       </TableCell>
                     </TableRow>
@@ -239,7 +239,10 @@ export function GameSettingModal() {
 function GameSettingSkeleton({
   length,
   colSpan,
-}: { length: number; colSpan: number }) {
+}: {
+  length: number;
+  colSpan: number;
+}) {
   return (
     <TableBody>
       {Array.from({ length }).map((_, index) => (
