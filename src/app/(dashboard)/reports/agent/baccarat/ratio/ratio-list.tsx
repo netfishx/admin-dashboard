@@ -24,32 +24,16 @@ export async function ListHeader() {
   return (
     <TableHeader>
       <TableRow className="bg-muted">
-        <TableHead className="min-w-24 text-center">
-          {t("agentOrOwnerId")}
-        </TableHead>
-        <TableHead className="min-w-24 text-center">{t("gameName")}</TableHead>
-        <TableHead className="min-w-24 text-center">
-          {t("shareAmount")}
-        </TableHead>
-        <TableHead className="min-w-24 text-center">
-          {t("blockAmount")}
-        </TableHead>
-        <TableHead className="min-w-24 text-center">
-          {t("throwAmount")}
-        </TableHead>
-        <TableHead className="min-w-24 text-center">
-          {t("shareProfitLoss")}
-        </TableHead>
-        <TableHead className="min-w-24 text-center">
-          {t("rebateIncome")}
-        </TableHead>
-        <TableHead className="min-w-24 text-center">
-          {t("rebateExpense")}
-        </TableHead>
-        <TableHead className="min-w-24 text-center">{t("netRebate")}</TableHead>
-        <TableHead className="min-w-24 text-center">
-          {t("totalProfitLossAmount")}
-        </TableHead>
+        <TableHead className="w-40">{t("agentOrOwnerId")}</TableHead>
+        <TableHead className="w-40">{t("gameName")}</TableHead>
+        <TableHead className="w-40">{t("shareAmount")}</TableHead>
+        <TableHead className="w-40">{t("blockAmount")}</TableHead>
+        <TableHead className="w-40">{t("throwAmount")}</TableHead>
+        <TableHead className="w-40">{t("shareProfitLoss")}</TableHead>
+        <TableHead className="w-40">{t("rebateIncome")}</TableHead>
+        <TableHead className="w-40">{t("rebateExpense")}</TableHead>
+        <TableHead className="w-40">{t("netRebate")}</TableHead>
+        <TableHead className="w-40">{t("totalProfitLossAmount")}</TableHead>
         <TableHead className="w-24 text-center sticky right-0 z-10 bg-muted">
           {t("more")}
         </TableHead>
@@ -69,35 +53,19 @@ async function ListBody({
       {list?.length > 0 ? (
         list?.map((item: RatioReportRequestRecords) => (
           <TableRow key={`${item.userId}`}>
-            <TableCell className="w-24 text-center">{item.userId}</TableCell>
-            <TableCell className="w-24 text-center">
+            <TableCell>{item.userId}</TableCell>
+            <TableCell>
               {gameList.find((game) => game.gameId === item.gameId)?.gameName ||
                 t("all")}
             </TableCell>
-            <TableCell className="w-24 text-center">
-              {item.expectedShareAmount}
-            </TableCell>
-            <TableCell className="w-24 text-center">
-              {item.interceptAmount}
-            </TableCell>
-            <TableCell className="w-24 text-center">
-              {item.throwAmount}
-            </TableCell>
-            <TableCell className="w-24 text-center">
-              {item.actualShareWinLoss}
-            </TableCell>
-            <TableCell className="w-24 text-center">
-              {item.backIncome}
-            </TableCell>
-            <TableCell className="w-24 text-center">
-              {item.backOutcome}
-            </TableCell>
-            <TableCell className="w-24 text-center">
-              {item.pureBackAmount}
-            </TableCell>
-            <TableCell className="w-24 text-center">
-              {item.totalProfitLossAmount}
-            </TableCell>
+            <TableCell>{item.expectedShareAmount}</TableCell>
+            <TableCell>{item.interceptAmount}</TableCell>
+            <TableCell>{item.throwAmount}</TableCell>
+            <TableCell>{item.actualShareWinLoss}</TableCell>
+            <TableCell>{item.backIncome}</TableCell>
+            <TableCell>{item.backOutcome}</TableCell>
+            <TableCell>{item.pureBackAmount}</TableCell>
+            <TableCell>{item.totalProfitLossAmount}</TableCell>
             <TableCell className="w-24 text-center sticky right-0 z-10 bg-background">
               <DetailButton item={item} />
             </TableCell>
@@ -128,8 +96,8 @@ export async function RatioList({
   };
   if (!(params?.startTime && params?.endTime)) {
     return (
-      <div className="p-2 bg-background flex-1">
-        <div className="border rounded-sm relative">
+      <div className="p-4 bg-background flex-1">
+        <div className="border rounded-sm">
           <Table>
             <ListHeader />
             <ListBody list={[]} gameList={gameList} />
@@ -141,9 +109,9 @@ export async function RatioList({
   const { data } = await getRatioReport(p);
 
   return (
-    <div className="p-2 bg-background flex-1">
-      <div className="border rounded-sm relative">
-        <Table>
+    <div className="p-4 bg-background flex-1">
+      <div className="border rounded-sm">
+        <Table className="table-fixed">
           <ListHeader />
           <Suspense fallback={<TableSkeleton length={5} colSpan={11} />}>
             <ListBody list={data?.list || []} gameList={gameList} />
@@ -151,13 +119,13 @@ export async function RatioList({
         </Table>
       </div>
       <div className="pt-2">
-        {!!data?.total && (
+        {!!data?.total && data?.total > 0 ? (
           <CustomPagination
             total={data?.total ?? 0}
             currentPage={p.pageNum}
             pageSize={p.pageSize}
           />
-        )}
+        ) : null}
       </div>
     </div>
   );

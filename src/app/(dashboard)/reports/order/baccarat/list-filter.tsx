@@ -23,7 +23,7 @@ import {
   useQueryState,
   useQueryStates,
 } from "nuqs";
-import { useEffect, useState, useTransition } from "react";
+import { useTransition } from "react";
 import { toast } from "sonner";
 
 export function ListFilter({ gameList }: { gameList: GameInfo[] }) {
@@ -75,6 +75,11 @@ export function ListFilter({ gameList }: { gameList: GameInfo[] }) {
   });
   // 代理ID
   const [, setOrderListBaccaratAgentId] = useAtom(orderListBaccaratAgentIdAtom);
+  const [agentId, setAgentId] = useQueryState(
+    "agentId",
+    parseAsString.withDefault(""),
+  );
+
   const [rechargeMoney, setRechargeMoney] = useQueryState(
     "betAmount",
     parseAsString.withDefault("0").withOptions({ clearOnDefault: false }),
@@ -83,14 +88,6 @@ export function ListFilter({ gameList }: { gameList: GameInfo[] }) {
     "operators",
     parseAsString.withDefault("0").withOptions({ clearOnDefault: false }),
   );
-
-  const [agentId, setAgentId] = useState("");
-
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
-  useEffect(() => {
-    setOperatorSymbol("0");
-    setRechargeMoney("0");
-  }, []);
 
   const handleFilterChange = (filterType: string) => {
     setOperatorSymbol(filterType);

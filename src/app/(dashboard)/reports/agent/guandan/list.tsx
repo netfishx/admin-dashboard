@@ -30,16 +30,12 @@ export async function ListHeader() {
     <TableHeader>
       <TableRow className="bg-muted">
         {hasSearchPermission && (
-          <TableHead className="min-w-24 text-center">{t("agentID")}</TableHead>
+          <TableHead className="w-40">{t("agentID")}</TableHead>
         )}
-        <TableHead className="min-w-24 text-center">{t("gameName")}</TableHead>
-        <TableHead className="min-w-24 text-center">{t("roomType")}</TableHead>
-        <TableHead className="min-w-24 text-center">
-          {t("issueNumber")}
-        </TableHead>
-        <TableHead className="min-w-24 text-center">
-          {t("settledAmount")}
-        </TableHead>
+        <TableHead className="w-40">{t("gameName")}</TableHead>
+        <TableHead className="w-40">{t("roomType")}</TableHead>
+        <TableHead className="w-40">{t("issueNumber")}</TableHead>
+        <TableHead className="w-40">{t("settledAmount")}</TableHead>
         <TableHead className="w-24 text-center sticky right-0 z-10 bg-muted">
           {t("more")}
         </TableHead>
@@ -75,21 +71,13 @@ async function ListBody({
       {list?.length > 0 ? (
         list?.map((item: PokerReportRequestRecords) => (
           <TableRow key={`${item.agentId}`}>
-            {hasSearchPermission && (
-              <TableCell className="w-24 text-center">{item.agentId}</TableCell>
-            )}
-            <TableCell className="w-24 text-center">
+            {hasSearchPermission && <TableCell>{item.agentId}</TableCell>}
+            <TableCell>
               {gameList.find((i) => i.gameType === item.gameType)?.gameName}
             </TableCell>
-            <TableCell className="w-24 text-center">
-              {handleRoomType(Number(item.roomType))}
-            </TableCell>
-            <TableCell className="w-24 text-center">
-              {item.issueAmount}
-            </TableCell>
-            <TableCell className="w-24 text-center">
-              {item.settledAmount}
-            </TableCell>
+            <TableCell>{handleRoomType(Number(item.roomType))}</TableCell>
+            <TableCell>{item.issueAmount}</TableCell>
+            <TableCell>{item.settledAmount}</TableCell>
             <TableCell className="w-24 text-center sticky right-0 z-10 bg-background">
               <DetailButton />
             </TableCell>
@@ -154,7 +142,7 @@ export async function List({
         )}
       </div>
       <div className="border rounded-sm relative">
-        <Table>
+        <Table className="table-fixed">
           <ListHeader />
           <Suspense fallback={<TableSkeleton length={5} colSpan={14} />}>
             <ListBody list={data?.list || []} gameList={gameList} />
@@ -162,11 +150,13 @@ export async function List({
         </Table>
       </div>
       <div className="pt-2">
-        <CustomPagination
-          total={data?.total || 0}
-          currentPage={data?.pageNum || 1}
-          pageSize={data?.pageSize || 10}
-        />
+        {data?.total && data?.total > 0 ? (
+          <CustomPagination
+            total={data?.total || 0}
+            currentPage={data?.pageNum || 1}
+            pageSize={data?.pageSize || 10}
+          />
+        ) : null}
       </div>
     </div>
   );

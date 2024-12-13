@@ -26,11 +26,11 @@ export default async function Page({ searchParams }: CommonWrapperProps) {
       </Suspense>
       <Suspense
         fallback={
-          <div className="p-2 bg-background flex-1">
-            <div className="border rounded-sm relative">
+          <div className="p-4 bg-background flex-1">
+            <div className="border rounded-sm">
               <Table>
                 <ListHeader />
-                <TableSkeleton length={5} colSpan={11} />
+                <TableSkeleton length={5} colSpan={14} />
               </Table>
             </div>
           </div>
