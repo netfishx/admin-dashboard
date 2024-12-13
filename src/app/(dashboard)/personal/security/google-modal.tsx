@@ -230,7 +230,7 @@ export function GoogleModal({
               </div>
             )}
             <div className="flex items-center justify-center gap-4 text-center">
-              <Label className="flex gap-1 text-xs before:text-destructive before:content-['*']">
+              <Label className="flex gap-1 text-xs before:text-destructive before:content-['*'] before:mr-1">
                 <span className="text-muted-foreground">
                   {t("googleCodeLabel")}
                 </span>
