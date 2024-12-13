@@ -11,7 +11,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { getStatusDicts } from "@/lib/dict";
+import { WITHDRAW_STATUS } from "@/lib/dicts";
 import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
@@ -20,7 +20,6 @@ import { useTransition } from "react";
 import { toast } from "sonner";
 
 export function Form() {
-  const approverStatusDict = getStatusDicts();
   const t = useTranslations("withdraw.apply");
   const translations = useTranslations();
   const router = useRouter();
@@ -46,9 +45,10 @@ export function Form() {
     defaultValue: "all",
   });
   const approverStatusOptions = [
-    ...approverStatusDict.map((item) => ({
+    ...WITHDRAW_STATUS.map((item) => ({
+      ...item,
       value: item.value.toString(),
-      label: item.label,
+      label: t(item.label),
     })),
   ];
 

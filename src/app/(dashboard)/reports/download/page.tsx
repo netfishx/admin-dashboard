@@ -86,10 +86,10 @@ async function TableBodyWrapper({
           <TableRow key={item.id}>
             <TableCell>{item.exportFileName}</TableCell>
             <TableCell>
-              <Time time={item.operateTime} />
+              {item.operateTime ? <Time time={item.operateTime} /> : null}
             </TableCell>
             <TableCell>
-              <Time time={item.endTime} />
+              {item.endTime ? <Time time={item.endTime} /> : null}
             </TableCell>
             <TableCell>
               <ShowStatusLable status={item.status} />

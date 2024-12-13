@@ -70,27 +70,15 @@ async function TableHeaderWrapper() {
   return (
     <TableHeader>
       <TableRow className="bg-muted">
-        <TableHead className="w-24 min-w-24 text-center">
-          {t("userId")}
-        </TableHead>
-        <TableHead className="w-24 min-w-24 text-center">
-          {t("transactionId")}
-        </TableHead>
-        <TableHead className="w-24 min-w-24 text-center">
-          {t("createdTime")}
-        </TableHead>
-        <TableHead className="w-24 min-w-24 text-center">
-          {t("oldBalance")}
-        </TableHead>
-        <TableHead className="w-24 min-w-24 text-center">
+        <TableHead className="w-24 text-center">{t("userId")}</TableHead>
+        <TableHead className="w-24 text-center">{t("transactionId")}</TableHead>
+        <TableHead className="w-32 text-center">{t("createdTime")}</TableHead>
+        <TableHead className="w-24 text-center">{t("oldBalance")}</TableHead>
+        <TableHead className="w-24 text-center">
           {t("transactionAmount")}
         </TableHead>
-        <TableHead className="w-24 min-w-24 text-center">
-          {t("newBalance")}
-        </TableHead>
-        <TableHead className="w-24 min-w-24 text-center">
-          {t("operateType")}
-        </TableHead>
+        <TableHead className="w-24 text-center">{t("newBalance")}</TableHead>
+        <TableHead className="w-24 text-center">{t("operateType")}</TableHead>
       </TableRow>
     </TableHeader>
   );
@@ -187,25 +175,17 @@ async function TableBodyWrapper({
       {data && data.list.length > 0 ? (
         data.list.map((item) => (
           <TableRow key={item.id}>
-            <TableCell className="w-24 min-w-24 text-center">
-              {item.userId}
-            </TableCell>
-            <TableCell className="w-24 min-w-24 text-center">
-              {item.transactionId}
-            </TableCell>
-            <TableCell className="w-24 min-w-24 text-center">
+            <TableCell className="text-center">{item.userId}</TableCell>
+            <TableCell className="text-center">{item.transactionId}</TableCell>
+            <TableCell className="text-center">
               <Time time={item.createdTime} />
             </TableCell>
-            <TableCell className="w-24 min-w-24 text-center">
-              {item.oldBalance}
-            </TableCell>
-            <TableCell className="w-24 min-w-24 text-center">
+            <TableCell className="text-center">{item.oldBalance}</TableCell>
+            <TableCell className="text-center">
               {item.transactionAmount}
             </TableCell>
-            <TableCell className="w-24 min-w-24 text-center">
-              {item.newBalance}
-            </TableCell>
-            <TableCell className="w-24 min-w-24 text-center">
+            <TableCell className="text-center">{item.newBalance}</TableCell>
+            <TableCell className="text-center">
               {operateTypeMap[item.operateType as keyof typeof operateTypeMap]}
             </TableCell>
           </TableRow>

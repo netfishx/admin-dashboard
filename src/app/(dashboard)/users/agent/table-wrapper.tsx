@@ -32,8 +32,8 @@ export function TableBodyWrapper({
             )}
             <TableCell>{item.id}</TableCell>
             <TableCell>{item.username}</TableCell>
-            <TableCell>{item.nickname}</TableCell>
-            <TableCell className="">
+            <TableCell className="break-all">{item.nickname}</TableCell>
+            <TableCell>
               <div
                 className={cn(
                   "px-2 rounded-sm w-fit",
