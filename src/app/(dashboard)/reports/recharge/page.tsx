@@ -58,21 +58,13 @@ async function TableHeaderWrapper() {
   return (
     <TableHeader>
       <TableRow className="bg-muted">
-        <TableHead className="w-24 min-w-24 text-center">
-          {t("orderNo")}
-        </TableHead>
-        <TableHead className="w-24 min-w-24 text-center">
-          {t("userId")}
-        </TableHead>
-        <TableHead className="w-24 min-w-24 text-center">
-          {t("currency")}
-        </TableHead>
-        <TableHead className="w-24 min-w-24 text-center">
+        <TableHead className="w-24 text-center">{t("orderNo")}</TableHead>
+        <TableHead className="w-24 text-center">{t("userId")}</TableHead>
+        <TableHead className="w-24  text-center">{t("currency")}</TableHead>
+        <TableHead className="w-24  text-center">
           {t("rechargeMoney")}
         </TableHead>
-        <TableHead className="w-32 min-w-32 text-center">
-          {t("finishTime")}
-        </TableHead>
+        <TableHead className="w-32 text-center">{t("finishTime")}</TableHead>
         <TableHead className="w-24 text-center">{t("rechargeHash")}</TableHead>
       </TableRow>
     </TableHeader>
@@ -145,19 +137,11 @@ async function TableBodyWrapper({ data }: { data?: PageData<RechargeReport> }) {
       {data && data.list.length > 0 ? (
         data.list.map((item) => (
           <TableRow key={item.id}>
-            <TableCell className="w-24 min-w-24 text-center">
-              {item.orderNo}
-            </TableCell>
-            <TableCell className="w-24 min-w-24 text-center">
-              {item.userId}
-            </TableCell>
-            <TableCell className="w-24 min-w-24 text-center">
-              {item.currency}
-            </TableCell>
-            <TableCell className="w-24 min-w-24 text-center">
-              {item.rechargeMoney}
-            </TableCell>
-            <TableCell className="w-32 min-w-32 text-center">
+            <TableCell className="text-center">{item.orderNo}</TableCell>
+            <TableCell className="text-center">{item.userId}</TableCell>
+            <TableCell className="text-center">{item.currency}</TableCell>
+            <TableCell className="text-center">{item.rechargeMoney}</TableCell>
+            <TableCell className="text-center">
               <Time time={item.finishTime} />
             </TableCell>
             <TableCell className="text-center flex justify-center items-center h-full">

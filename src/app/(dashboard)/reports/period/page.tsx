@@ -52,24 +52,21 @@ async function PeriodTableHeader() {
   return (
     <TableHeader>
       <TableRow className="bg-muted">
-        <TableHead className="min-w-32 text-center">
-          {t("issueNumber")}
-        </TableHead>
-        <TableHead className="min-w-32 text-center">{t("openTime")}</TableHead>
-        <TableHead className="min-w-32 text-center">{t("gameType")}</TableHead>
-        <TableHead className="min-w-32 text-center">{t("gameId")}</TableHead>
-        <TableHead className="min-w-32 text-center">{t("betNum")}</TableHead>
-        <TableHead className="min-w-32 text-center">
+        <TableHead className="w-24 text-center">{t("issueNumber")}</TableHead>
+        <TableHead className="w-48 text-center">{t("openTime")}</TableHead>
+
+        <TableHead className="w-24 text-center">{t("gameType")}</TableHead>
+        <TableHead className="w-32 text-center">{t("gameId")}</TableHead>
+        <TableHead className="w-24 text-center">{t("betNum")}</TableHead>
+        <TableHead className="w-24 text-center">
           {t("memberBetAmount")}
         </TableHead>
-        <TableHead className="min-w-32 text-center">{t("tieAmount")}</TableHead>
-        <TableHead className="min-w-32 text-center">
-          {t("pairBetAmount")}
-        </TableHead>
-        <TableHead className="min-w-32 text-center">
+        <TableHead className="w-24 text-center">{t("tieAmount")}</TableHead>
+        <TableHead className="w-24 text-center">{t("pairBetAmount")}</TableHead>
+        <TableHead className="w-32 text-center">
           {t("availableBetAmount")}
         </TableHead>
-        <TableHead className="text-center">{t("backIncome")}</TableHead>
+        <TableHead className="text-center w-24">{t("backIncome")}</TableHead>
         <TableHead className="w-24 text-center sticky right-0 bg-muted">
           {t("action")}
         </TableHead>
@@ -154,29 +151,23 @@ async function TableBodyWrapper({
       {data && data.list.length > 0 ? (
         data?.list?.map((item) => (
           <TableRow key={item.issueNumber}>
-            <TableCell className="w-24 text-center">
-              {item.issueNumber}
-            </TableCell>
-            <TableCell className="w-24 text-center">
+            <TableCell className="text-center">{item.issueNumber}</TableCell>
+            <TableCell className="text-center">
               <Time time={Number(item.openTime)} />
             </TableCell>
-            <TableCell className="w-24 text-center">
-              {item.gameTypeName}
-            </TableCell>
-            <TableCell className="w-24 text-center">{item.gameName}</TableCell>
-            <TableCell className="w-24 text-center">{item.betNum}</TableCell>
-            <TableCell className="w-24 text-center">
+            <TableCell className="text-center">{item.gameTypeName}</TableCell>
+            <TableCell className="text-center">{item.gameName}</TableCell>
+            <TableCell className="text-center">{item.betNum}</TableCell>
+            <TableCell className="text-center">
               {item.memberBetAmount}
             </TableCell>
-            <TableCell className="w-24 text-center">{item.tieAmount}</TableCell>
-            <TableCell className="w-24 text-center">
-              {item.pairBetAmount}
-            </TableCell>
-            <TableCell className="w-24 text-center">
+            <TableCell className="text-center">{item.tieAmount}</TableCell>
+            <TableCell className="text-center">{item.pairBetAmount}</TableCell>
+            <TableCell className="text-center">
               {item.availableBetAmount}
             </TableCell>
             <TableCell className="text-center">{item.backIncome}</TableCell>
-            <TableCell className="sticky right-0 bg-background w-24 text-center">
+            <TableCell className="sticky right-0 bg-background text-center">
               <Actions searchParams={urlParams} />
             </TableCell>
           </TableRow>

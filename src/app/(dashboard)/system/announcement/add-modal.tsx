@@ -36,8 +36,6 @@ import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { use, useEffect, useState, useTransition } from "react";
 import { toast } from "sonner";
-
-// import { TimeRange } from "./time-range";
 export function AddModal({
   session,
 }: { session: Promise<SessionData | null> }) {
@@ -78,7 +76,6 @@ export function AddModal({
       startTime: startTime,
       endTime: endTime,
     };
-
     const { valid, message } = validateParams(addParams);
 
     if (valid) {
@@ -298,11 +295,7 @@ export function AddModal({
             <Label className="shrink-0 w-24 text-right text-muted-foreground before:content-['*'] before:text-destructive">
               {t("announcementTime")}
             </Label>
-            {/* <TimeRange
-              onDateRangeChange={handleDateRangeChange}
-              range={[startTime, endTime]}
-              disabled={!!data?.id && Date.now() > data?.startTime}
-            /> */}
+            {/* <TimeRange disabled={!!data?.id && Date.now() > data?.startTime} /> */}
             <DateRangeFilter
               quickSetBtn={[]}
               isSearch={false}

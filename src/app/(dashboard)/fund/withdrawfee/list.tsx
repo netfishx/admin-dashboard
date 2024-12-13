@@ -12,6 +12,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import type { WithdrawFeeList } from "@/lib/types";
+import Big from "big.js";
 import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
@@ -101,7 +102,10 @@ export function List() {
                       <TableCell className="text-center">
                         <Input
                           type="number"
-                          value={Number(item.percentageFee * 100).toFixed(2)}
+                          value={Big(item.percentageFee)
+                            .times(100)
+                            .round(2)
+                            .toNumber()}
                           min={0}
                           step={0.01}
                           onChange={(e) => {

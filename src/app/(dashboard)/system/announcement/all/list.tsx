@@ -54,13 +54,9 @@ export async function TableHeaderWrapper() {
   return (
     <TableHeader>
       <TableRow className="bg-muted">
-        <TableHead className="w-32 min-w-32 text-center">
-          {t("endTime")}
-        </TableHead>
+        <TableHead className="w-32 text-center">{t("endTime")}</TableHead>
         <TableHead className="text-center">{t("type")}</TableHead>
-        <TableHead className="w-[450px] min-w-24 text-center">
-          {t("content")}
-        </TableHead>
+        <TableHead className="w-[450px]text-center">{t("content")}</TableHead>
       </TableRow>
     </TableHeader>
   );
@@ -86,7 +82,7 @@ export async function TableBodyWrapper({
       {data && data.list.length > 0 ? (
         data.list.map((item) => (
           <TableRow key={item.id}>
-            <TableCell className="w-24 text-center">
+            <TableCell className="text-center">
               <Time time={item.endTime} />
             </TableCell>
             <TableCell className="text-center">
