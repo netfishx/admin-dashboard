@@ -7,7 +7,6 @@ import {
   agentIdAtom,
   changeLogModalAtom,
   gameSettingModalAtom,
-  limitModalAtom,
   loginLogModalAtom,
   rebateModalAtom,
   transferMoneyModalAtom,
@@ -31,8 +30,6 @@ export default function Action({
   const setTransferMoneyModal = useSetAtom(transferMoneyModalAtom);
   // 游戏设置 弹窗
   const setGameSettingModal = useSetAtom(gameSettingModalAtom);
-  // 限额设置 弹窗
-  const setLimitModal = useSetAtom(limitModalAtom);
   // 返水设置 弹窗
   const setRebateModal = useSetAtom(rebateModalAtom);
   // 登录日志 弹窗
@@ -80,17 +77,6 @@ export default function Action({
         }}
       >
         {t("gamesSetting")}
-      </Button>
-      <Button
-        variant="ghost"
-        size="sm"
-        className="px-2 text-sm text-primary hover:text-primary/80"
-        onClick={() => {
-          setAgentId(data.id);
-          setLimitModal(true);
-        }}
-      >
-        {t("limitSetting")}
       </Button>
       <Button
         variant="ghost"

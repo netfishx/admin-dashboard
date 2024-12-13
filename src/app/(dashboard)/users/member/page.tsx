@@ -41,7 +41,7 @@ export default function Page({
       >
         <FormWrapper />
       </Suspense>
-      <div className="flex-1 gap-2 bg-background p-2">
+      <div className="p-4 bg-background flex-1 gap-2">
         <Suspense
           fallback={
             <div className="rounded-sm border">

@@ -27,8 +27,8 @@ export default async function Page({
       >
         <Form session={session} />
       </Suspense>
-      <div className="flex-1 gap-2 bg-background p-2">
-        <div className="flex justify-end pb-2">
+      <div className="p-4 bg-background flex-1 gap-2">
+        <div className="pb-2 flex justify-end">
           <AddAgent />
         </div>
         <Suspense
