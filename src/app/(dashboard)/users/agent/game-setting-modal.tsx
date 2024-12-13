@@ -141,6 +141,7 @@ export function GameSettingModal() {
                               value={item.percent}
                               type="number"
                               min={0}
+                              step={0.01}
                               max={item.maxPercent}
                               onChange={(e) => {
                                 handleChangePercent(

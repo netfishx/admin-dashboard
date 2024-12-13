@@ -2,12 +2,10 @@
 import { getAgentLoginLog, getMemberLoginLog } from "@/api";
 import { ModalPagination } from "@/components/modal-pagination";
 import { Time } from "@/components/time";
-import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
   DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
@@ -137,12 +135,6 @@ export function LoginLogModal({
           setPage={setPage}
           setSize={setSize}
         />
-        <DialogFooter>
-          <Button variant="outline" onClick={handleClose}>
-            {translations("cancel")}
-          </Button>
-          <Button onClick={handleClose}>{translations("confirm")}</Button>
-        </DialogFooter>
       </DialogContent>
     </Dialog>
   );
