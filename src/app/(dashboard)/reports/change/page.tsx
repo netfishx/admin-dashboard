@@ -19,9 +19,7 @@ import { Form } from "./form";
 
 export default async function Page({
   searchParams,
-}: {
-  searchParams: Promise<{ [key: string]: string | string[] }>;
-}) {
+}: { searchParams: Promise<{ [key: string]: string | undefined }> }) {
   const { startTime, endTime } = await searchParams;
   return (
     <div className="flex w-full flex-col gap-2">
@@ -72,15 +70,13 @@ async function TableHeaderWrapper() {
   return (
     <TableHeader>
       <TableRow className="bg-muted">
-        <TableHead className="w-24 text-center">{t("userId")}</TableHead>
-        <TableHead className="w-24 text-center">{t("transactionId")}</TableHead>
-        <TableHead className="w-32 text-center">{t("createdTime")}</TableHead>
-        <TableHead className="w-24 text-center">{t("oldBalance")}</TableHead>
-        <TableHead className="w-24 text-center">
-          {t("transactionAmount")}
-        </TableHead>
-        <TableHead className="w-24 text-center">{t("newBalance")}</TableHead>
-        <TableHead className="w-24 text-center">{t("operateType")}</TableHead>
+        <TableHead className="w-24">{t("userId")}</TableHead>
+        <TableHead className="w-24">{t("transactionId")}</TableHead>
+        <TableHead className="w-32">{t("createdTime")}</TableHead>
+        <TableHead className="w-24">{t("oldBalance")}</TableHead>
+        <TableHead className="w-24">{t("transactionAmount")}</TableHead>
+        <TableHead className="w-24">{t("newBalance")}</TableHead>
+        <TableHead className="w-24">{t("operateType")}</TableHead>
       </TableRow>
     </TableHeader>
   );
@@ -88,9 +84,7 @@ async function TableHeaderWrapper() {
 
 async function TableWrapper({
   searchParams,
-}: {
-  searchParams: Promise<{ [key: string]: string | string[] }>;
-}) {
+}: { searchParams: Promise<{ [key: string]: string | undefined }> }) {
   const {
     userId,
     transactionID,
@@ -111,8 +105,8 @@ async function TableWrapper({
     );
   }
   const params: WalletLogRequestParams = {
-    userId: (userId ?? null) as string,
-    transactionID: (transactionID ?? null) as string,
+    userId: userId || null,
+    transactionID: transactionID || null,
     operateCode: operateCode ? Number(operateCode) : null,
     userType: userType ? Number(userType) : 0,
     pageNum: Number(pageNum ?? 1),
@@ -126,9 +120,9 @@ async function TableWrapper({
 
   const { data } = await getWalletLog(params);
   return (
-    <div className="w-full flex-1 bg-background">
-      <div className="relative overflow-x-auto overflow-y-auto rounded-sm border">
-        <Table>
+    <div className="bg-background flex-1 w-full ">
+      <div className="relative overflow-y-auto overflow-x-auto border rounded-sm">
+        <Table className="table-fixed">
           <TableHeaderWrapper />
           <Suspense fallback={<TableBodySkeleton />}>
             <TableBodyWrapper data={data} />
@@ -181,17 +175,15 @@ async function TableBodyWrapper({
       {data && data.list.length > 0 ? (
         data.list.map((item) => (
           <TableRow key={item.id}>
-            <TableCell className="text-center">{item.userId}</TableCell>
-            <TableCell className="text-center">{item.transactionId}</TableCell>
-            <TableCell className="text-center">
+            <TableCell>{item.userId}</TableCell>
+            <TableCell>{item.transactionId}</TableCell>
+            <TableCell>
               <Time time={item.createdTime} />
             </TableCell>
-            <TableCell className="text-center">{item.oldBalance}</TableCell>
-            <TableCell className="text-center">
-              {item.transactionAmount}
-            </TableCell>
-            <TableCell className="text-center">{item.newBalance}</TableCell>
-            <TableCell className="text-center">
+            <TableCell>{item.oldBalance}</TableCell>
+            <TableCell>{item.transactionAmount}</TableCell>
+            <TableCell>{item.newBalance}</TableCell>
+            <TableCell>
               {operateTypeMap[item.operateType as keyof typeof operateTypeMap]}
             </TableCell>
           </TableRow>

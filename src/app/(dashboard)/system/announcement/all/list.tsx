@@ -56,9 +56,9 @@ export async function TableHeaderWrapper() {
   return (
     <TableHeader>
       <TableRow className="bg-muted">
-        <TableHead className="w-32 text-center">{t("endTime")}</TableHead>
-        <TableHead className="text-center">{t("type")}</TableHead>
-        <TableHead className="w-[450px]text-center">{t("content")}</TableHead>
+        <TableHead className="w-32">{t("endTime")}</TableHead>
+        <TableHead className="w-32">{t("type")}</TableHead>
+        <TableHead className="w-[450px]">{t("content")}</TableHead>
       </TableRow>
     </TableHeader>
   );
@@ -76,9 +76,8 @@ export async function TableBodyWrapper({
     3: "直属代理公告",
     4: "直属会员公告",
     5: "系统配置公告",
-    // todo
-    6: "占成公告",
-    7: "退水公告",
+    6: "代理占成变动通知",
+    7: "代理返水变动通知",
   };
 
   return (
@@ -86,12 +85,10 @@ export async function TableBodyWrapper({
       {data && data.list.length > 0 ? (
         data.list.map((item) => (
           <TableRow key={item.id}>
-            <TableCell className="text-center">
+            <TableCell>
               <Time time={item.endTime} />
             </TableCell>
-            <TableCell className="text-center">
-              {noticeTypeMap[item.type]}
-            </TableCell>
+            <TableCell>{noticeTypeMap[item.type]}</TableCell>
 
             <TruncatedCell
               type={item.type}

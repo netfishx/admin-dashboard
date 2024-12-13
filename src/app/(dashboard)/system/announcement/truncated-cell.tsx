@@ -25,7 +25,7 @@ export function TruncatedCell({
     return (
       <td
         className={cn(
-          "px-4 py-2 text-center",
+          "px-4 py-2",
           className,
           (type === 6 || type === 7) && "text-destructive",
         )}
@@ -58,8 +58,8 @@ export function TruncatedCell({
   }
 
   return (
-    <td className="border-b px-4 py-2">
-      <div className="flex items-center gap-2">
+    <td className="px-4 py-2 border-b">
+      <div className="flex gap-2">
         <span
           className={cn(
             "inline whitespace-pre-wrap",

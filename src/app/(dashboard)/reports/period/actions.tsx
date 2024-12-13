@@ -5,9 +5,7 @@ import { useRouter } from "next/navigation";
 
 export function Actions({
   searchParams,
-}: {
-  searchParams: { [key: string]: string | string[] };
-}) {
+}: { searchParams: { [key: string]: string | undefined } }) {
   const t = useTranslations("report.orderlist");
   const router = useRouter();
   const searchParamsStr = new URLSearchParams(

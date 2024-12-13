@@ -263,7 +263,7 @@ export function AddModal({
             {/* 公告类型 根据管理员和代理角色 展示的也不一样 */}
             {/* 
               类型：平台代理公告（对象：所有代理），平台会员公告（对象：所有会员），直属代理公告（对象：直属下级），直属会员公告（对象：直属会员）
-              代理只展示直属代理公告和直属会员公告，admin展示所有
+              代理只展示直属代理公告和直属会员公告，admin展示前三项
             */}
             <Select
               defaultValue=""
@@ -306,6 +306,7 @@ export function AddModal({
                 from: Number(startTime),
                 to: Number(endTime),
               }}
+              disabled={!!data?.id && Date.now() > data?.startTime}
             />
           </div>
           <div className="flex items-center gap-4">

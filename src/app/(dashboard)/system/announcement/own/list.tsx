@@ -29,9 +29,9 @@ export async function List({
   });
 
   return (
-    <div className="flex h-full flex-col gap-2 bg-background p-2">
-      <div className="rounded-sm border">
-        <Table>
+    <div className="p-2 gap-2 flex flex-col h-full bg-background">
+      <div className="border rounded-sm">
+        <Table className="table-fixed">
           <TableHeaderWrapper />
           <TableBodyWrapper data={data} />
         </Table>
@@ -55,12 +55,12 @@ export async function TableHeaderWrapper() {
   return (
     <TableHeader>
       <TableRow className="bg-muted">
-        <TableHead className="w-32 text-center">{t("startTime")}</TableHead>
-        <TableHead className="w-32 text-center">{t("endTime")}</TableHead>
-        <TableHead className="w-32 text-center">{t("createTime")}</TableHead>
-        <TableHead className="w-[450px] text-center">{t("content")}</TableHead>
-        <TableHead className="text-center">{t("type")}</TableHead>
-        <TableHead className="min-w-24 text-center">{t("action")}</TableHead>
+        <TableHead className="w-48">{t("startTime")}</TableHead>
+        <TableHead className="w-48">{t("endTime")}</TableHead>
+        <TableHead className="w-48">{t("createTime")}</TableHead>
+        <TableHead className="w-[450px]">{t("content")}</TableHead>
+        <TableHead className="w-32">{t("type")}</TableHead>
+        <TableHead className="w-24 text-center">{t("action")}</TableHead>
       </TableRow>
     </TableHeader>
   );
@@ -101,13 +101,13 @@ export async function TableBodyWrapper({
       {data && data.list.length > 0 ? (
         data.list.map((item) => (
           <TableRow key={Math.random()}>
-            <TableCell className="text-center">
+            <TableCell>
               <Time time={Number(item.startTime)} />
             </TableCell>
-            <TableCell className="text-center">
+            <TableCell>
               <Time time={Number(item.endTime)} />
             </TableCell>
-            <TableCell className="text-center">
+            <TableCell>
               <Time time={Number(item.createTime)} />
             </TableCell>
             <TruncatedCell
@@ -116,9 +116,7 @@ export async function TableBodyWrapper({
               content={item.contentOfLanguage}
               maxLength={50}
             />
-            <TableCell className="text-center">
-              {noticeTypeMap[item.type]}
-            </TableCell>
+            <TableCell>{noticeTypeMap[item.type]}</TableCell>
             <TableCell className="text-center">
               <EditBtn data={item} />
             </TableCell>
