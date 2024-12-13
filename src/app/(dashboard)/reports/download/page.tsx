@@ -25,8 +25,8 @@ export default async function Page({
       <div className="flex items-center bg-background p-4 text-sm font-medium">
         {t("list")}
       </div>
-      <div className="flex-1 bg-background p-2">
-        <div className="rounded-sm border">
+      <div className="p-4 bg-background flex-1">
+        <div className="border rounded-sm">
           <Suspense
             fallback={
               <Table>

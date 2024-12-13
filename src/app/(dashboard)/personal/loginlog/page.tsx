@@ -25,7 +25,7 @@ export default async function Page({
       <div className="flex items-center justify-between bg-background p-4">
         <Form />
       </div>
-      <div className="flex-1 bg-background p-2">
+      <div className="p-4 bg-background flex-1">
         <Suspense fallback={<TableSkeleton />}>
           <TableWrapper searchParams={searchParams} />
         </Suspense>

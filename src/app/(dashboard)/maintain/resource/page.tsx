@@ -31,7 +31,7 @@ export default async function ResourcePage({
         <div className="text-sm font-medium">{t("title")}</div>
         <Add />
       </div>
-      <div className="flex flex-1 flex-col gap-2 bg-background p-2">
+      <div className="bg-background flex-1 p-4 flex flex-col gap-2">
         <Suspense
           fallback={
             <div className="rounded-sm border">
@@ -66,7 +66,13 @@ async function TableWrapper({
         </Table>
       </div>
       <div className="pt-2">
-        <CustomPagination total={100} currentPage={1} pageSize={10} />
+        {!!data?.total && (
+          <CustomPagination
+            total={data?.total ?? 0}
+            currentPage={pageNum ?? 1}
+            pageSize={pageSize ?? 10}
+          />
+        )}
       </div>
     </>
   );
