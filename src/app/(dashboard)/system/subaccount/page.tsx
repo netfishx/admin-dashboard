@@ -34,7 +34,7 @@ function SubaccountTableHeader() {
         <TableHead className="w-48">{t("createTime")}</TableHead>
         <TableHead className="w-36">{t("lastLoginIp")}</TableHead>
         <TableHead className="w-48">{t("lastLoginTime")}</TableHead>
-        <TableHead className="w-24">{t("status")}</TableHead>
+        <TableHead className="w-24 text-center">{t("status")}</TableHead>
         <TableHead className="sticky right-0 w-56 bg-muted text-center">
           {t("action")}
         </TableHead>
@@ -96,7 +96,7 @@ async function SubaccountTableWrapper({
                   <TableCell>
                     {!!item.lastLoginTime && <Time time={item.lastLoginTime} />}
                   </TableCell>
-                  <TableCell>
+                  <TableCell className="text-center">
                     <span
                       className={cn([
                         "inline-block w-16 rounded-sm p-1 text-center",
