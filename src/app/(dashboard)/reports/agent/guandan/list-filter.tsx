@@ -19,7 +19,9 @@ import { useQueryState } from "nuqs";
 import { useTransition } from "react";
 export function ListFilter({
   hasSearchPermission,
-}: { hasSearchPermission: boolean }) {
+}: {
+  hasSearchPermission: boolean;
+}) {
   const t = useTranslations("report.agent");
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
@@ -39,13 +41,13 @@ export function ListFilter({
   return (
     <div className="flex flex-col gap-2 bg-background p-4">
       {/* First row */}
-      <div className="flex gap-4 items-center">
-        <div className="flex gap-2 items-center">
+      <div className="flex items-center gap-4">
+        <div className="flex items-center gap-2">
           <Label>{t("pickdate")}</Label>
           <DateRangeFilter enableTimeSelect />
         </div>
         {hasSearchPermission && (
-          <div className="flex gap-4 items-center">
+          <div className="flex items-center gap-4">
             <Label className="shrink-0">{t("agentID")}</Label>
             <Input
               value={agentId || ""}
@@ -57,8 +59,8 @@ export function ListFilter({
       </div>
 
       {/* Second row */}
-      <div className="flex gap-4 items-center">
-        <div className="flex gap-2 items-center">
+      <div className="flex items-center gap-4">
+        <div className="flex items-center gap-2">
           <Label className="shrink-0">{t("roomType")}</Label>
           <Select
             value={roomId || ""}
@@ -78,10 +80,10 @@ export function ListFilter({
       </div>
 
       {/* Last row */}
-      <div className="flex gap-4 justify-end items-center">
-        <div className="flex gap-2 items-center">
+      <div className="flex items-center justify-end gap-4">
+        <div className="flex items-center gap-2">
           <Button
-            className="px-4 py-2 border rounded-md bg-white text-gray-700 border-gray-300 hover:bg-gray-100"
+            className="rounded-md border border-gray-300 bg-white px-4 py-2 text-gray-700 hover:bg-gray-100"
             onClick={handleReset}
           >
             {t("reset")}
@@ -94,7 +96,7 @@ export function ListFilter({
             }}
             disabled={isPending}
           >
-            {isPending && <Loader2 className="w-4 h-4 animate-spin" />}
+            {isPending && <Loader2 className="h-4 w-4 animate-spin" />}
             {t("search")}
           </Button>
           {/* <Button disabled={isPending}>{t("download")}</Button> */}

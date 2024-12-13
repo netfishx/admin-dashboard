@@ -45,7 +45,10 @@ export async function ListHeader() {
 async function ListBody({
   list,
   gameList,
-}: { list: RatioReportRequestRecords[]; gameList: GameInfo[] }) {
+}: {
+  list: RatioReportRequestRecords[];
+  gameList: GameInfo[];
+}) {
   const translate = await getTranslations();
   const t = await getTranslations("report.agent");
   return (
@@ -73,7 +76,7 @@ async function ListBody({
         ))
       ) : (
         <TableRow>
-          <TableCell colSpan={15} className="text-center h-40">
+          <TableCell colSpan={15} className="h-40 text-center">
             {translate("noData")}
           </TableCell>
         </TableRow>
@@ -85,7 +88,10 @@ async function ListBody({
 export async function RatioList({
   gameList,
   searchParams,
-}: { gameList: GameInfo[]; searchParams: Promise<RatioReportRequestParams> }) {
+}: {
+  gameList: GameInfo[];
+  searchParams: Promise<RatioReportRequestParams>;
+}) {
   const params = await searchParams;
   const p = {
     ...params,

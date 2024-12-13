@@ -14,7 +14,7 @@ export default function MinimalStepIndicator({
   return (
     <nav
       aria-label="Progress"
-      className={cn("w-full max-w-xs mx-auto pb-4", className)}
+      className={cn("mx-auto w-full max-w-xs pb-4", className)}
     >
       <ol className="flex items-center">
         {steps.map((step, index) => (
@@ -25,10 +25,10 @@ export default function MinimalStepIndicator({
               index !== steps.length - 1 && "w-full",
             )}
           >
-            <div className="w-20 flex flex-col items-center relative">
+            <div className="relative flex w-20 flex-col items-center">
               <div
                 className={cn(
-                  "size-8 rounded-full flex items-center justify-center",
+                  "flex size-8 items-center justify-center rounded-full",
                   index + 1 <= currentStep
                     ? "bg-primary text-background"
                     : "bg-muted text-muted-foreground",

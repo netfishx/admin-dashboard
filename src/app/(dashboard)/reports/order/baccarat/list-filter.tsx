@@ -121,8 +121,8 @@ export function ListFilter({ gameList }: { gameList: GameInfo[] }) {
   return (
     <div className="flex flex-col gap-2 bg-background p-4">
       {/* 第一行 */}
-      <div className="flex gap-4 items-center">
-        <div className="flex gap-2 items-center">
+      <div className="flex items-center gap-4">
+        <div className="flex items-center gap-2">
           <Select
             value={bettingtime ?? ""}
             onValueChange={(value) => setBettingtime(value)}
@@ -141,8 +141,8 @@ export function ListFilter({ gameList }: { gameList: GameInfo[] }) {
       </div>
 
       {/* 第二行 */}
-      <div className="flex gap-y-2 gap-x-4 items-center flex-wrap">
-        <div className="flex gap-2 items-center">
+      <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
+        <div className="flex items-center gap-2">
           <Label className="shrink-0">{t("ordernumber")}</Label>
           <Input
             value={ordernumber ?? ""}
@@ -150,7 +150,7 @@ export function ListFilter({ gameList }: { gameList: GameInfo[] }) {
             placeholder={t("placeholderinput")}
           />
         </div>
-        <div className="flex gap-2 items-center">
+        <div className="flex items-center gap-2">
           <Label className="shrink-0">{t("gamename")}</Label>
           <Select
             value={gameName ?? ""}
@@ -172,7 +172,7 @@ export function ListFilter({ gameList }: { gameList: GameInfo[] }) {
             </SelectContent>
           </Select>
         </div>
-        <div className="flex gap-2 items-center">
+        <div className="flex items-center gap-2">
           <Label className="shrink-0">{t("issuenumber")}</Label>
           <Input
             value={issuenumber ?? ""}
@@ -181,7 +181,7 @@ export function ListFilter({ gameList }: { gameList: GameInfo[] }) {
           />
         </div>
 
-        <div className="flex gap-2 items-center">
+        <div className="flex items-center gap-2">
           <Label className="shrink-0">{t("memberID")}</Label>
           <Input
             value={memberID ?? ""}
@@ -189,7 +189,7 @@ export function ListFilter({ gameList }: { gameList: GameInfo[] }) {
             placeholder={t("placeholderinput")}
           />
         </div>
-        <div className="flex gap-2 items-center">
+        <div className="flex items-center gap-2">
           <Label className="shrink-0">{t("roomeownerID")}</Label>
           <Input
             value={roomeownerID ?? ""}
@@ -197,7 +197,7 @@ export function ListFilter({ gameList }: { gameList: GameInfo[] }) {
             placeholder={t("placeholderinput")}
           />
         </div>
-        <div className="flex gap-2 items-center">
+        <div className="flex items-center gap-2">
           <Label className="shrink-0">{t("ministerID")}</Label>
           <Input
             value={ministerID ?? ""}
@@ -205,7 +205,7 @@ export function ListFilter({ gameList }: { gameList: GameInfo[] }) {
             placeholder={t("placeholderinput")}
           />
         </div>
-        <div className="flex gap-2 items-center">
+        <div className="flex items-center gap-2">
           <Label className="shrink-0">{t("leastlevelID")}</Label>
           <Input
             value={leastlevelID ?? ""}
@@ -213,7 +213,7 @@ export function ListFilter({ gameList }: { gameList: GameInfo[] }) {
             placeholder={t("placeholderinput")}
           />
         </div>
-        <div className="flex gap-2 items-center">
+        <div className="flex items-center gap-2">
           <Label className="shrink-0">{t("amountfilter")}</Label>
           <Select
             onValueChange={(value) => handleFilterChange(value)}
@@ -237,7 +237,7 @@ export function ListFilter({ gameList }: { gameList: GameInfo[] }) {
             placeholder={t("placeholderselect")}
           />
         </div>
-        <div className="flex gap-2 items-center">
+        <div className="flex items-center gap-2">
           <Label className="shrink-0">{t("settlementstatus")}</Label>
           <Select
             value={settlementstatus ?? ""}
@@ -254,7 +254,7 @@ export function ListFilter({ gameList }: { gameList: GameInfo[] }) {
             </SelectContent>
           </Select>
         </div>
-        <div className="flex gap-2 items-center">
+        <div className="flex items-center gap-2">
           <Label className="shrink-0">{t("agentID")}</Label>
           <Input
             value={agentId ?? ""}
@@ -265,8 +265,8 @@ export function ListFilter({ gameList }: { gameList: GameInfo[] }) {
       </div>
 
       {/* 第四行 */}
-      <div className="flex gap-4 justify-end items-center">
-        <div className="flex gap-2 items-center">
+      <div className="flex items-center justify-end gap-4">
+        <div className="flex items-center gap-2">
           <Button variant="outline" disabled={isReset} onClick={handleReset}>
             {t("reset")}
           </Button>

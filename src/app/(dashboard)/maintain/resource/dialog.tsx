@@ -191,7 +191,7 @@ export function AddOrEditDialog() {
             <Button variant="outline">{translation("cancel")}</Button>
           </DialogClose>
           <Button disabled={isPending} onClick={handleSubmit}>
-            {isPending && <Loader2 className="w-4 h-4 animate-spin" />}
+            {isPending && <Loader2 className="h-4 w-4 animate-spin" />}
             {translation("confirm")}
           </Button>
         </DialogFooter>

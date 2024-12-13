@@ -82,7 +82,7 @@ async function ListBody({
         ))
       ) : (
         <TableRow>
-          <TableCell colSpan={15} className="text-center h-40">
+          <TableCell colSpan={15} className="h-40 text-center">
             {translate("noData")}
           </TableCell>
         </TableRow>

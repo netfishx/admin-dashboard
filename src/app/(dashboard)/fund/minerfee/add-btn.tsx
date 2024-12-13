@@ -22,10 +22,10 @@ export function AddBtn() {
   const t = useTranslations("fund.orefee");
 
   return (
-    <div className="flex flex-col gap-2 bg-background py-2 px-4">
-      <div className="flex gap-4 justify-between items-center">
+    <div className="flex flex-col gap-2 bg-background p-4">
+      <div className="flex items-center justify-between gap-4">
         {t("feeManagement")}
-        <div className="flex gap-2 items-center">
+        <div className="flex items-center gap-2">
           <AddButton />
         </div>
       </div>
@@ -44,7 +44,7 @@ function AddButton() {
     <AlertDialog>
       <AlertDialogTrigger asChild>
         <Button disabled={isPending}>
-          {isPending && <Loader2 className="w-4 h-4 animate-spin" />}
+          {isPending && <Loader2 className="h-4 w-4 animate-spin" />}
           {t("add")}
         </Button>
       </AlertDialogTrigger>
@@ -70,7 +70,7 @@ function AddButton() {
               });
             }}
           >
-            {isPending && <Loader2 className="w-4 h-4 animate-spin" />}
+            {isPending && <Loader2 className="h-4 w-4 animate-spin" />}
             {translations("confirm")}
           </AlertDialogAction>
         </AlertDialogFooter>

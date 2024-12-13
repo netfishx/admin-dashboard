@@ -36,12 +36,7 @@
       },
       "complexity": {
         "noForEach": "off",
-        "noExcessiveCognitiveComplexity": {
-          "level": "warn",
-          "options": {
-            "maxAllowedComplexity": 20
-          }
-        }
+        "noExcessiveCognitiveComplexity": "off"
       }
     }
   },

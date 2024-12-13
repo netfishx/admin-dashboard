@@ -24,9 +24,9 @@ export function SupplierForm() {
   }, [isReset, isPending, setLoading]);
 
   return (
-    <div className="flex justify-between items-center bg-background p-4">
-      <div className="flex gap-2 items-center">
-        <div className="flex gap-2 items-center">
+    <div className="flex items-center justify-between bg-background p-4">
+      <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2">
           <Label className="shrink-0">{t("username")}</Label>
           <Input
             placeholder={t("placeholder")}
@@ -34,7 +34,7 @@ export function SupplierForm() {
             onChange={(e) => setUsername(e.target.value)}
           />
         </div>
-        <div className="flex gap-2 items-center">
+        <div className="flex items-center gap-2">
           <Label className="shrink-0">{t("supplierId")}</Label>
           <Input
             placeholder={t("placeholder")}

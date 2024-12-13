@@ -56,7 +56,7 @@ export function CheckDialog(props: Dialogprops) {
             <DialogHeader>
               <DialogTitle>{t("checkStep1Title")}</DialogTitle>
             </DialogHeader>
-            <div className="gap-2 items-center">
+            <div className="items-center gap-2">
               <Label className="shrink-0">{t("passwordCheckTips")}</Label>
               <Password
                 type="password"
@@ -70,7 +70,7 @@ export function CheckDialog(props: Dialogprops) {
                 {translations("cancel")}
               </Button>
               <Button onClick={() => handleNext()} disabled={isPending}>
-                {isPending && <Loader2 className="w-4 h-4 animate-spin" />}
+                {isPending && <Loader2 className="h-4 w-4 animate-spin" />}
                 {translations("confirm")}
               </Button>
             </DialogFooter>
@@ -81,15 +81,15 @@ export function CheckDialog(props: Dialogprops) {
             <DialogHeader>
               <DialogTitle>{t("checkStep2Title")}</DialogTitle>
             </DialogHeader>
-            <div className="max-w-xl w-full mx-auto p-4">
+            <div className="mx-auto w-full max-w-xl p-4">
               <Card className="border border-gray-200 shadow-sm">
                 {/* Header row */}
                 <div className="flex divide-x divide-gray-200">
-                  <div className="py-2.5 px-4 text-gray-600 bg-gray-50 w-24 text-sm flex items-center justify-center">
+                  <div className="flex w-24 items-center justify-center bg-gray-50 px-4 py-2.5 text-sm text-gray-600">
                     {t("secretInfo")}
                   </div>
-                  <div className="py-2.5 px-4 flex-1 flex justify-between items-center bg-card">
-                    <span className="text-gray-800 font-mono text-sm break-all">
+                  <div className="flex flex-1 items-center justify-between bg-card px-4 py-2.5">
+                    <span className="break-all font-mono text-sm text-gray-800">
                       {item?.privateKey}
                     </span>
                     <CopyButton address={item?.privateKey} />
@@ -97,8 +97,8 @@ export function CheckDialog(props: Dialogprops) {
                 </div>
 
                 {/* Warning message */}
-                <div className="px-4 py-2 border-t border-gray-200">
-                  <div className="flex items-center gap-1.5 text-red-500 text-sm">
+                <div className="border-t border-gray-200 px-4 py-2">
+                  <div className="flex items-center gap-1.5 text-sm text-red-500">
                     <AlertTriangle className="h-4 w-4" />
                     <span>{t("secretWarning")}</span>
                   </div>

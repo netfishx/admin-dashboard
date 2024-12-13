@@ -80,36 +80,36 @@ export function UserInfoModal() {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent
-        className="2xl:max-w-lg lg:max-w-md"
+        className="lg:max-w-md 2xl:max-w-lg"
         onPointerDownOutside={(e) => e.preventDefault()}
       >
         <DialogHeader>
           <DialogTitle>{t("userInfo")}</DialogTitle>
           <DialogDescription />
         </DialogHeader>
-        <div className="flex flex-col gap-4 w-full px-4">
+        <div className="flex w-full flex-col gap-4 px-4">
           {upUsername && (
-            <div className="flex gap-4 items-center">
-              <Label className="shrink-0 w-1/4 text-right text-muted-foreground">
+            <div className="flex items-center gap-4">
+              <Label className="w-1/4 shrink-0 text-right text-muted-foreground">
                 {t("upUsername")}
               </Label>
               <span>{upUsername}</span>
             </div>
           )}
-          <div className="flex gap-4 items-center">
-            <Label className="shrink-0 w-1/4 text-right text-muted-foreground">
+          <div className="flex items-center gap-4">
+            <Label className="w-1/4 shrink-0 text-right text-muted-foreground">
               {t("username")}
             </Label>
             <span>{username}</span>
           </div>
-          <div className="flex gap-4 items-center">
-            <Label className="shrink-0 w-1/4 text-right text-muted-foreground">
+          <div className="flex items-center gap-4">
+            <Label className="w-1/4 shrink-0 text-right text-muted-foreground">
               {t("nickname")}
             </Label>
             <span>{nickname}</span>
           </div>
-          <div className="flex gap-4 items-center">
-            <Label className="shrink-0 w-1/4 text-right text-muted-foreground">
+          <div className="flex items-center gap-4">
+            <Label className="w-1/4 shrink-0 text-right text-muted-foreground">
               {t("restCount")}
             </Label>
             <div>{remainLoginTime}</div>
@@ -117,8 +117,8 @@ export function UserInfoModal() {
               {t("reset")}
             </Button>
           </div>
-          <div className="flex gap-4 items-center">
-            <Label className="shrink-0 w-1/4 text-right text-muted-foreground">
+          <div className="flex items-center gap-4">
+            <Label className="w-1/4 shrink-0 text-right text-muted-foreground">
               {t("status")}
             </Label>
             <RadioGroup
@@ -151,7 +151,7 @@ export function UserInfoModal() {
               startTransition(handleClickUpdateUserInfo);
             }}
           >
-            {isPending && <Loader2 className="w-4 h-4 animate-spin" />}
+            {isPending && <Loader2 className="h-4 w-4 animate-spin" />}
             {translation("confirm")}
           </Button>
         </DialogFooter>

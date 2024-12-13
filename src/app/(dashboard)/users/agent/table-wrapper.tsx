@@ -12,7 +12,10 @@ import Action from "./action-buttons";
 export function TableBodyWrapper({
   list,
   permissions,
-}: { list: AgentData[] | undefined; permissions: string[] | undefined }) {
+}: {
+  list: AgentData[] | undefined;
+  permissions: string[] | undefined;
+}) {
   const t = useTranslations("users.agents");
   const translations = useTranslations();
   const addAgentLoading = useAtomValue(addAgentLoadingAtom);
@@ -32,27 +35,27 @@ export function TableBodyWrapper({
             )}
             <TableCell>{item.id}</TableCell>
             <TableCell>{item.username}</TableCell>
-            <TableCell>{item.nickname}</TableCell>
-            <TableCell className="">
+            <TableCell className="break-all">{item.nickname}</TableCell>
+            <TableCell>
               <div
                 className={cn(
-                  "px-2 rounded-sm w-fit",
-                  item.status === 0 && "text-green bg-green/10",
-                  item.status === 1 && "text-destructive bg-destructive/10",
-                  item.status === 2 && "text-orange bg-orange/10",
+                  "w-fit rounded-sm px-2",
+                  item.status === 0 && "bg-green/10 text-green",
+                  item.status === 1 && "bg-destructive/10 text-destructive",
+                  item.status === 2 && "bg-orange/10 text-orange",
                 )}
               >
                 {t(`statusLabel.${item.status}`)}
               </div>
             </TableCell>
-            <TableCell className="text-center sticky right-0 bg-background">
+            <TableCell className="sticky right-0 bg-background text-center">
               <Action data={item} permissions={permissions ?? []} />
             </TableCell>
           </TableRow>
         ))
       ) : (
         <TableRow>
-          <TableCell colSpan={7} className="text-center h-40">
+          <TableCell colSpan={7} className="h-40 text-center">
             {translations("noData")}
           </TableCell>
         </TableRow>

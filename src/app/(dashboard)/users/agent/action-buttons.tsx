@@ -7,7 +7,6 @@ import {
   agentIdAtom,
   changeLogModalAtom,
   gameSettingModalAtom,
-  limitModalAtom,
   loginLogModalAtom,
   rebateModalAtom,
   transferMoneyModalAtom,
@@ -19,7 +18,10 @@ import { useTranslations } from "next-intl";
 export default function Action({
   data,
   permissions,
-}: { data: AgentData; permissions: string[] }) {
+}: {
+  data: AgentData;
+  permissions: string[];
+}) {
   const t = useTranslations("users.agents");
 
   // 用户信息 弹窗
@@ -28,8 +30,6 @@ export default function Action({
   const setTransferMoneyModal = useSetAtom(transferMoneyModalAtom);
   // 游戏设置 弹窗
   const setGameSettingModal = useSetAtom(gameSettingModalAtom);
-  // 限额设置 弹窗
-  const setLimitModal = useSetAtom(limitModalAtom);
   // 返水设置 弹窗
   const setRebateModal = useSetAtom(rebateModalAtom);
   // 登录日志 弹窗
@@ -45,7 +45,7 @@ export default function Action({
       <Button
         variant="ghost"
         size="sm"
-        className="text-primary hover:text-primary/80 text-sm px-2"
+        className="px-2 text-sm text-primary hover:text-primary/80"
         onClick={() => {
           setAgentData(data);
           setAgentId(data.id);
@@ -58,7 +58,7 @@ export default function Action({
         <Button
           variant="ghost"
           size="sm"
-          className="text-primary hover:text-primary/80 text-sm px-2"
+          className="px-2 text-sm text-primary hover:text-primary/80"
           onClick={() => {
             setAgentData(data);
             setTransferMoneyModal(true);
@@ -70,7 +70,7 @@ export default function Action({
       <Button
         variant="ghost"
         size="sm"
-        className="text-primary hover:text-primary/80 text-sm px-2"
+        className="px-2 text-sm text-primary hover:text-primary/80"
         onClick={() => {
           setAgentId(data.id);
           setGameSettingModal(true);
@@ -81,18 +81,7 @@ export default function Action({
       <Button
         variant="ghost"
         size="sm"
-        className="text-primary hover:text-primary/80 text-sm px-2"
-        onClick={() => {
-          setAgentId(data.id);
-          setLimitModal(true);
-        }}
-      >
-        {t("limitSetting")}
-      </Button>
-      <Button
-        variant="ghost"
-        size="sm"
-        className="text-primary hover:text-primary/80 text-sm px-2"
+        className="px-2 text-sm text-primary hover:text-primary/80"
         onClick={() => {
           setAgentId(data.id);
           setRebateModal(true);
@@ -103,7 +92,7 @@ export default function Action({
       <Button
         variant="ghost"
         size="sm"
-        className="text-primary hover:text-primary/80 text-sm px-2"
+        className="px-2 text-sm text-primary hover:text-primary/80"
         onClick={() => {
           setAgentId(data.id);
           setLoginLogModal(true);
@@ -114,7 +103,7 @@ export default function Action({
       <Button
         variant="ghost"
         size="sm"
-        className="text-primary hover:text-primary/80 text-sm px-2"
+        className="px-2 text-sm text-primary hover:text-primary/80"
         onClick={() => {
           setAgentId(data.id);
           setChangeLogModal(true);

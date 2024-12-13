@@ -22,7 +22,10 @@ import { toast } from "sonner";
 function BatchButton({
   status,
   children,
-}: { status: number; children: ReactNode }) {
+}: {
+  status: number;
+  children: ReactNode;
+}) {
   const [isPending, startTransition] = useTransition();
   const router = useRouter();
   const [checked] = useQueryState(

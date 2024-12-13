@@ -24,7 +24,7 @@ import {
 } from "@/components/ui/dialog";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
-  Table,
+  ScrollableTable,
   TableBody,
   TableCell,
   TableHead,
@@ -94,40 +94,34 @@ export function DictSettingModal() {
               {t("add")}
             </Button>
           </div>
-          <div className="border rounded-md mt-4">
-            <Table>
-              <TableHeader className="bg-muted table w-full">
-                <TableRow>
+          <div className="mt-4 rounded-md border overflow-auto max-h-[50dvh]">
+            <ScrollableTable className="w-full relative">
+              <TableHeader>
+                <TableRow className="bg-muted">
                   <TableHead className="w-26">{t("itemName")}</TableHead>
                   <TableHead className="w-26">{t("itemValue")}</TableHead>
                   <TableHead className="w-40">{t("remark")}</TableHead>
-                  <TableHead className="w-26">{t("action")}</TableHead>
+                  <TableHead className="w-26 text-center">
+                    {t("action")}
+                  </TableHead>
                 </TableRow>
               </TableHeader>
-              <TableBody className="block overflow-auto max-h-[370px]">
-                {loading
-                  ? Array.from({ length: 5 }).map((_, index) => (
-                      // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
-                      <TableRow key={index} className="w-full block">
-                        <TableCell
-                          colSpan={4}
-                          className="text-center w-full block"
-                        >
-                          <Skeleton />
-                        </TableCell>
-                      </TableRow>
-                    ))
-                  : list.map((item) => (
+              {loading ? (
+                <TableBodySkeleton />
+              ) : (
+                <TableBody>
+                  {list.length > 0 ? (
+                    list.map((item) => (
                       <TableRow key={item.id}>
-                        <TableCell className="w-26">{item.label}</TableCell>
-                        <TableCell className="w-26">{item.value}</TableCell>
-                        <TableCell className="w-40">{item.remark}</TableCell>
-                        <TableCell className="w-26">
+                        <TableCell>{item.label}</TableCell>
+                        <TableCell>{item.value}</TableCell>
+                        <TableCell>{item.remark}</TableCell>
+                        <TableCell>
                           <div className="flex gap-2">
                             <Button
                               variant="ghost"
                               size="sm"
-                              className="text-primary hover:text-primary/80 text-sm px-2"
+                              className="px-2 text-sm text-primary hover:text-primary/80"
                               onClick={() => {
                                 setAddOpen(true);
                                 setAddData({
@@ -146,9 +140,17 @@ export function DictSettingModal() {
                           </div>
                         </TableCell>
                       </TableRow>
-                    ))}
-              </TableBody>
-            </Table>
+                    ))
+                  ) : (
+                    <TableRow>
+                      <TableCell colSpan={4} className="text-center h-20">
+                        {translation("noData")}
+                      </TableCell>
+                    </TableRow>
+                  )}
+                </TableBody>
+              )}
+            </ScrollableTable>
           </div>
         </div>
         <AddItemDialog />
@@ -168,7 +170,10 @@ export function DictSettingModal() {
 function DeleteBtn({
   id,
   setDeleteLoading,
-}: { id: string; setDeleteLoading: (loading: boolean) => void }) {
+}: {
+  id: string;
+  setDeleteLoading: (loading: boolean) => void;
+}) {
   const translation = useTranslations();
   const t = useTranslations("maintain.dictionary");
   const [isPending, startTransition] = useTransition();
@@ -178,7 +183,7 @@ function DeleteBtn({
         <Button
           variant="ghost"
           size="sm"
-          className="text-primary hover:text-primary/80 text-sm px-2"
+          className="px-2 text-sm text-primary hover:text-primary/80"
           disabled={isPending}
         >
           {isPending ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
@@ -212,5 +217,20 @@ function DeleteBtn({
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
+  );
+}
+
+function TableBodySkeleton() {
+  return (
+    <TableBody>
+      {Array.from({ length: 5 }).map((_, index) => (
+        // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
+        <TableRow key={index}>
+          <TableCell colSpan={4} className="text-center">
+            <Skeleton />
+          </TableCell>
+        </TableRow>
+      ))}
+    </TableBody>
   );
 }

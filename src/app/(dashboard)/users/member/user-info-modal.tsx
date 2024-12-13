@@ -24,7 +24,9 @@ import { toast } from "sonner";
 
 export function UserInfoModal({
   permissions,
-}: { permissions: string[] | undefined }) {
+}: {
+  permissions: string[] | undefined;
+}) {
   const translation = useTranslations();
   const t = useTranslations("users.members");
   const open = useAtomValue(memberInfoModalAtom);
@@ -124,12 +126,12 @@ export function UserInfoModal({
           <DialogTitle>{t("userInfo")}</DialogTitle>
           <DialogDescription />
         </DialogHeader>
-        <div className="flex flex-col gap-4 w-full px-4">
+        <div className="flex w-full flex-col gap-4 px-4">
           {permissions?.includes("member_search") &&
           memberInfoData?.agentId === "-2" ? (
             <>
-              <div className="flex gap-4 items-center">
-                <Label className="shrink-0 w-1/4 text-right text-muted-foreground">
+              <div className="flex items-center gap-4">
+                <Label className="w-1/4 shrink-0 text-right text-muted-foreground">
                   {t("agentUsername")}
                 </Label>
                 <Input
@@ -150,8 +152,8 @@ export function UserInfoModal({
                   {t("check")}
                 </Button>
               </div>
-              <div className="flex gap-4 items-center">
-                <Label className="shrink-0 w-1/4 text-right text-muted-foreground">
+              <div className="flex items-center gap-4">
+                <Label className="w-1/4 shrink-0 text-right text-muted-foreground">
                   {t("agentNickname")}
                 </Label>
                 <Input
@@ -164,38 +166,38 @@ export function UserInfoModal({
             </>
           ) : (
             <>
-              <div className="flex gap-4 items-center text-muted-foreground">
-                <Label className="shrink-0 w-1/4 text-right text-muted-foreground">
+              <div className="flex items-center gap-4 text-muted-foreground">
+                <Label className="w-1/4 shrink-0 text-right text-muted-foreground">
                   {t("agentUsername")}
                 </Label>
                 <span>{upUsername}</span>
               </div>
-              <div className="flex gap-4 items-center text-muted-foreground">
-                <Label className="shrink-0 w-1/4 text-right text-muted-foreground">
+              <div className="flex items-center gap-4 text-muted-foreground">
+                <Label className="w-1/4 shrink-0 text-right text-muted-foreground">
                   {t("agentNickname")}
                 </Label>
                 <span>{upNickname}</span>
               </div>
             </>
           )}
-          <div className="flex gap-4 items-center text-muted-foreground">
-            <Label className="shrink-0 w-1/4 text-right">{t("memberId")}</Label>
+          <div className="flex items-center gap-4 text-muted-foreground">
+            <Label className="w-1/4 shrink-0 text-right">{t("memberId")}</Label>
             <span>{username}</span>
           </div>
-          <div className="flex gap-4 items-center text-muted-foreground">
-            <Label className="shrink-0 w-1/4 text-right">
+          <div className="flex items-center gap-4 text-muted-foreground">
+            <Label className="w-1/4 shrink-0 text-right">
               {t("memberUsername")}
             </Label>
             <span>{memberNickname}</span>
           </div>
-          <div className="flex gap-4 items-center text-muted-foreground">
-            <Label className="shrink-0 w-1/4 text-right">
+          <div className="flex items-center gap-4 text-muted-foreground">
+            <Label className="w-1/4 shrink-0 text-right">
               {t("createTime")}
             </Label>
             <span>{createTime && <Time time={createTime} />}</span>
           </div>
-          <div className="flex gap-4 items-center">
-            <Label className="shrink-0 w-1/4 text-right text-muted-foreground">
+          <div className="flex items-center gap-4">
+            <Label className="w-1/4 shrink-0 text-right text-muted-foreground">
               {t("status")}
             </Label>
             <RadioGroup

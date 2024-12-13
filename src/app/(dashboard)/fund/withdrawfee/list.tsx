@@ -12,6 +12,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import type { WithdrawFeeList } from "@/lib/types";
+import Big from "big.js";
 import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
@@ -59,20 +60,20 @@ export function List() {
   }
 
   return (
-    <div className="flex flex-col h-full gap-2">
-      <div className="flex flex-col gap-2 bg-background py-2 px-4">
-        <div className="flex gap-4 justify-between items-center">
+    <div className="flex h-full flex-col gap-2">
+      <div className="flex flex-col gap-2 bg-background p-4">
+        <div className="flex items-center justify-between gap-4">
           {t("title")}
-          <div className="flex gap-2 items-center">
+          <div className="flex items-center gap-2">
             <Button onClick={handleSave} disabled={loading}>
-              {loading && <Loader2 className="w-4 h-4 animate-spin" />}
+              {loading && <Loader2 className="h-4 w-4 animate-spin" />}
               {t("save")}
             </Button>
           </div>
         </div>
       </div>
-      <div className="p-2  bg-background gap-2 flex flex-col h-full">
-        <div className="border rounded-sm">
+      <div className="flex h-full flex-col gap-2 bg-background p-4">
+        <div className="rounded-sm border">
           <Table>
             <TableHeaderWrapper />
             <Suspense fallback={<TableBodySkeleton />}>
@@ -80,11 +81,9 @@ export function List() {
                 {feeList && feeList.length > 0 ? (
                   feeList.map((item, index) => (
                     <TableRow key={item.currency}>
-                      <TableCell className="w-24 text-center">
-                        {item.currency}
-                      </TableCell>
+                      <TableCell>{item.currency}</TableCell>
 
-                      <TableCell className="w-24 text-center">
+                      <TableCell className="text-center">
                         <Input
                           type="number"
                           value={Number(item.fixedFee).toFixed(2)}
@@ -101,7 +100,10 @@ export function List() {
                       <TableCell className="text-center">
                         <Input
                           type="number"
-                          value={Number(item.percentageFee * 100).toFixed(2)}
+                          value={Big(item.percentageFee)
+                            .times(100)
+                            .round(2)
+                            .toNumber()}
                           min={0}
                           step={0.01}
                           onChange={(e) => {
@@ -116,7 +118,7 @@ export function List() {
                   ))
                 ) : (
                   <TableRow>
-                    <TableCell colSpan={3} className="text-center h-40">
+                    <TableCell colSpan={3} className="h-40 text-center">
                       {translations("noData")}
                     </TableCell>
                   </TableRow>
@@ -134,13 +136,9 @@ export function TableHeaderWrapper() {
   return (
     <TableHeader>
       <TableRow className="bg-muted">
-        <TableHead className="w-24 min-w-24 text-center">
-          {t("currency")}
-        </TableHead>
-        <TableHead className="text-center">{t("fixedFee")}</TableHead>
-        <TableHead className="w-24 min-w-24 text-center">
-          {t("percentageFee")}
-        </TableHead>
+        <TableHead className="w-24">{t("currency")}</TableHead>
+        <TableHead className="w-48 text-center">{t("fixedFee")}</TableHead>
+        <TableHead className="w-48 text-center">{t("percentageFee")}</TableHead>
       </TableRow>
     </TableHeader>
   );

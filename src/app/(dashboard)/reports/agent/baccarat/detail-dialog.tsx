@@ -30,7 +30,7 @@ export default function Detaildialog(props: Dialogprops) {
         </DialogHeader>
         <div className="flex justify-center">占成明细</div>
         <ScrollArea className="w-[450px]">
-          <div className="whitespace-nowrap mb-1">
+          <div className="mb-1 whitespace-nowrap">
             DL123123 30% - DL213445 10% - DL29123 10% - HY29123(房主) 5%DL123123
             30% - DL213445 10% - DL29123 10% - HY29123(房主) 5%DL123123 30% -
             DL213445 10% - DL29123 10% - HY29123(房主) 5%

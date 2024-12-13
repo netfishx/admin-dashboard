@@ -93,7 +93,7 @@ export function GoogleModal({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent
         onPointerDownOutside={(e) => e.preventDefault()}
-        className="sm:max-w-[600px] max-h-[80dvh] h-[80dvh]"
+        className="h-[80dvh] max-h-[80dvh] sm:max-w-[600px]"
       >
         <DialogHeader>
           <DialogTitle>
@@ -102,10 +102,10 @@ export function GoogleModal({
           <DialogDescription />
         </DialogHeader>
 
-        <div className="space-y-8 py-4 overflow-y-auto">
+        <div className="space-y-8 overflow-y-auto py-4">
           {/* Step 1 */}
           {isEdit ? null : (
-            <div className="flex gap-8 justify-between">
+            <div className="flex justify-between gap-8">
               <div className="space-y-4">
                 <div className="flex items-center gap-2">
                   <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary text-background">
@@ -131,7 +131,7 @@ export function GoogleModal({
                       </Button>
                       <Button
                         variant="outline"
-                        className="gap-2 text-background bg-accent-foreground"
+                        className="gap-2 bg-accent-foreground text-background"
                       >
                         <GooglePlay className="size-4" />
                         Google Play
@@ -141,30 +141,30 @@ export function GoogleModal({
                 </div>
               </div>
               {/* QR Code */}
-              <div className="flex gap-4 mt-10">
+              <div className="mt-10 flex gap-4">
                 <div className="text-center">
-                  <span className="border p-4 inline-block">
+                  <span className="inline-block border p-4">
                     <QRCodeSVG
                       value={
                         "https://apps.apple.com/jp/app/google-authenticator/id388497605"
                       }
-                      className="w-20 h-20"
+                      className="h-20 w-20"
                     />
                   </span>
-                  <p className="text-xs text-muted-foreground mt-2">
+                  <p className="mt-2 text-xs text-muted-foreground">
                     {t("iosQRCode")}
                   </p>
                 </div>
                 <div className="text-center">
-                  <span className="border p-4 inline-block">
+                  <span className="inline-block border p-4">
                     <QRCodeSVG
                       value={
                         "https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2"
                       }
-                      className="w-20 h-20"
+                      className="h-20 w-20"
                     />
                   </span>
-                  <p className="text-xs text-muted-foreground mt-2">
+                  <p className="mt-2 text-xs text-muted-foreground">
                     {t("androidQRCode")}
                   </p>
                 </div>
@@ -189,7 +189,7 @@ export function GoogleModal({
                   <p className="text-xs text-chart-4">{t("step2Warning")}</p>
                 </div>
                 <div className="mt-4 flex justify-center">
-                  <span className="border p-4 inline-block">
+                  <span className="inline-block border p-4">
                     {qrcode ? (
                       <Image
                         src={qrcode}
@@ -229,8 +229,8 @@ export function GoogleModal({
                 <span className="text-sm">{t("step3Title")}</span>
               </div>
             )}
-            <div className="flex items-center gap-4 justify-center text-center">
-              <Label className="text-xs flex gap-1 before:content-['*'] before:text-destructive">
+            <div className="flex items-center justify-center gap-4 text-center">
+              <Label className="flex gap-1 text-xs before:text-destructive before:content-['*'] before:mr-1">
                 <span className="text-muted-foreground">
                   {t("googleCodeLabel")}
                 </span>
@@ -252,7 +252,7 @@ export function GoogleModal({
             {translations("cancel")}
           </Button>
           <Button type="submit" onClick={submit} disabled={isPending}>
-            {isPending && <Loader2 className="w-4 h-4 animate-spin" />}
+            {isPending && <Loader2 className="h-4 w-4 animate-spin" />}
             {translations("confirm")}
           </Button>
         </DialogFooter>

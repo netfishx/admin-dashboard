@@ -84,7 +84,7 @@ export function OrderDetailDialog() {
           <DialogTitle>{t("orderListDetail")}</DialogTitle>
           <DialogDescription />
         </DialogHeader>
-        <div className="border rounded-sm">
+        <div className="rounded-sm border">
           <Table>
             <TableHeader className="table w-full">
               <TableRow className="bg-muted">
@@ -114,7 +114,7 @@ export function OrderDetailDialog() {
                         <Button
                           variant="ghost"
                           size="sm"
-                          className="text-primary hover:text-primary/80 text-sm px-2"
+                          className="px-2 text-sm text-primary hover:text-primary/80"
                           onClick={() => handleBombDetail(item)}
                         >
                           {t("more")}
@@ -123,8 +123,8 @@ export function OrderDetailDialog() {
                     </TableRow>
                   ))
                 ) : (
-                  <TableRow className="w-full justify-center flex items-center">
-                    <TableCell className="text-center h-40 flex items-center justify-center">
+                  <TableRow className="flex w-full items-center justify-center">
+                    <TableCell className="flex h-40 items-center justify-center text-center">
                       {translation("noData")}
                     </TableCell>
                   </TableRow>

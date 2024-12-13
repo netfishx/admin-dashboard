@@ -40,10 +40,10 @@ function CleanButton({ data }: { data: AuditList }) {
           disabled={isPending}
           variant="ghost"
           size="sm"
-          className="text-primary hover:text-primary/80 text-sm px-2"
+          className="px-2 text-sm text-primary hover:text-primary/80"
         >
           {isPending ? (
-            <Loader2 className="w-4 h-4 animate-spin" />
+            <Loader2 className="h-4 w-4 animate-spin" />
           ) : (
             t("clear")
           )}

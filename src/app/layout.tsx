@@ -15,11 +15,7 @@ async function Title() {
   return <title>{t("title")}</title>;
 }
 
-export default function RootLayout({
-  children,
-}: {
-  children: ReactNode;
-}) {
+export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <ViewTransitions>
       <html lang="en">

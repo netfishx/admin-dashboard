@@ -1,5 +1,5 @@
 diff --git a/dist/server/lib/start-server.js b/dist/server/lib/start-server.js
-index 849c6039110c41b0ad3afcd328f2fffa7402b193..7bd1c8217f2a3ced941eedec4cbb33315fa4c9e2 100644
+index 07e4491e349b808468ccba7d73d7d43f6d0e94b0..3471d4f4b6e8bc361c329c174664d4a98fb39e51 100644
 --- a/dist/server/lib/start-server.js
 +++ b/dist/server/lib/start-server.js
 @@ -42,6 +42,7 @@ const _trace = require("../../trace");
@@ -10,8 +10,8 @@ index 849c6039110c41b0ad3afcd328f2fffa7402b193..7bd1c8217f2a3ced941eedec4cbb3331
  function _interop_require_default(obj) {
      return obj && obj.__esModule ? obj : {
          default: obj
-@@ -138,6 +139,7 @@ async function startServer(serverOptions) {
-         throw new Error('Using a self signed certificate is only supported with `next dev`.');
+@@ -147,6 +148,7 @@ async function startServer(serverOptions) {
+         });
      }
      async function requestListener(req, res) {
 +        if (!/^(\/_next\/static|\/_next\/image|\/__nextjs_original-stack-frame|\/__nextjs_source-map|\/icon.svg)/.test(req.url)) _logger(req, res);

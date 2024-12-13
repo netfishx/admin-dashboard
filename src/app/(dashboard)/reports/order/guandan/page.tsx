@@ -29,10 +29,10 @@ export default async function Page({ searchParams }: CommonWrapperProps) {
   const gameListResp = await getGuandanGames();
   const { startTime, endTime } = await searchParams;
   return (
-    <div className="flex flex-col gap-2 w-full">
+    <div className="flex w-full flex-col gap-2">
       <Suspense
         fallback={
-          <div className="flex justify-between items-center bg-background p-4">
+          <div className="flex items-center justify-between bg-background p-4">
             <Skeleton />
           </div>
         }

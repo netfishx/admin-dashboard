@@ -37,7 +37,7 @@ export function FlyOrderTable({ data }: { data: GameConfig[] }) {
         data.map((item) => (
           <TableRow key={item.gameId}>
             <TableCell>{item.gameName}</TableCell>
-            <TableCell className="w-32 flex justify-center items-center h-10">
+            <TableCell className="flex h-10 w-32 items-center justify-center">
               <Switch
                 defaultChecked={item.holdStatus === 1}
                 onCheckedChange={(checked) => {
@@ -49,7 +49,7 @@ export function FlyOrderTable({ data }: { data: GameConfig[] }) {
         ))
       ) : (
         <TableRow>
-          <TableCell colSpan={2} className="text-center h-40">
+          <TableCell colSpan={2} className="h-40 text-center">
             {t("noData")}
           </TableCell>
         </TableRow>

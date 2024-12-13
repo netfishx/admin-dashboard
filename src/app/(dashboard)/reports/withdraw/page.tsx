@@ -21,13 +21,13 @@ import { getTranslations } from "next-intl/server";
 
 export default async function Page({
   searchParams,
-}: { searchParams: Promise<{ [key: string]: string | string[] }> }) {
+}: { searchParams: Promise<{ [key: string]: string | undefined }> }) {
   const { startTime, endTime } = await searchParams;
   return (
-    <div className="flex flex-col gap-2 w-full">
+    <div className="flex w-full flex-col gap-2">
       <Suspense
         fallback={
-          <div className="bg-background p-2 flex flex-col gap-2">
+          <div className="flex flex-col gap-2 bg-background p-4">
             <Skeleton />
             <Skeleton />
             <Skeleton />
@@ -36,10 +36,10 @@ export default async function Page({
       >
         <Form key={`${startTime}-${endTime}`} />
       </Suspense>
-      <div className="p-2 bg-background flex-1 flex flex-col gap-2">
+      <div className="flex flex-1 flex-col gap-2 bg-background p-4">
         <Suspense
           fallback={
-            <Table>
+            <Table className="table-fixed">
               <TableHeaderWrapper />
               <TableBodySkeleton />
             </Table>
@@ -57,41 +57,23 @@ async function TableHeaderWrapper() {
   return (
     <TableHeader>
       <TableRow className="bg-muted">
-        <TableHead className="w-24 min-w-24 text-center">
-          {t("orderNo")}
-        </TableHead>
-        <TableHead className="w-24 min-w-24 text-center">
-          {t("userId")}
-        </TableHead>
-        <TableHead className="w-24 min-w-24 text-center">
-          {t("currency")}
-        </TableHead>
-        <TableHead className="w-24 min-w-24 text-center">
-          {t("withdrawMoney")}
-        </TableHead>
-        <TableHead className="w-24 min-w-24 text-center">
-          {t("withdrawFee")}
-        </TableHead>
-        <TableHead className="w-24 min-w-24 text-center">
-          {t("status")}
-        </TableHead>
-        <TableHead className="w-32 min-w-32 text-center">
-          {t("applyTime")}
-        </TableHead>
-        <TableHead className="w-24 min-w-24 text-center">
-          {t("approverTime")}
-        </TableHead>
-        <TableHead className="w-24 min-w-24 text-center">
-          {t("finishTime")}
-        </TableHead>
-        <TableHead className="w-24 text-center">{t("withdrawHash")}</TableHead>
+        <TableHead className="w-56">{t("orderNo")}</TableHead>
+        <TableHead className="w-56">{t("userId")}</TableHead>
+        <TableHead className="w-32">{t("currency")}</TableHead>
+        <TableHead className="w-32">{t("withdrawMoney")}</TableHead>
+        <TableHead className="w-32">{t("withdrawFee")}</TableHead>
+        <TableHead className="w-32">{t("status")}</TableHead>
+        <TableHead className="w-48">{t("applyTime")}</TableHead>
+        <TableHead className="w-48">{t("approverTime")}</TableHead>
+        <TableHead className="w-48">{t("finishTime")}</TableHead>
+        <TableHead className="w-48">{t("withdrawHash")}</TableHead>
       </TableRow>
     </TableHeader>
   );
 }
 async function TableWrapper({
   searchParams,
-}: { searchParams: Promise<{ [key: string]: string | string[] }> }) {
+}: { searchParams: Promise<{ [key: string]: string | undefined }> }) {
   const {
     orderNo,
     operatorSymbol,
@@ -105,7 +87,7 @@ async function TableWrapper({
     userType,
   } = await searchParams;
   const params: WithdrawReportParams = {
-    orderNo: (orderNo ?? null) as string,
+    orderNo: orderNo || null,
     operatorSymbol: operatorSymbol ? Number(operatorSymbol) : 3, // 默认大于
     withdrawMoney: withdrawMoney ? Number(withdrawMoney) : 0,
     requestStatus: requestStatus ? Number(requestStatus) : null,
@@ -113,13 +95,13 @@ async function TableWrapper({
     pageSize: Number(pageSize ?? 10),
     startTime: Number(startTime),
     endTime: Number(endTime),
-    userId: (userId ?? null) as string,
+    userId: userId || null,
     userType: userType ? Number(userType) : null,
   };
 
   if (!((startTime && endTime) || orderNo)) {
     return (
-      <Table className="border rounded-sm">
+      <Table className="rounded-sm border">
         <TableHeaderWrapper />
         <TableBodySkeleton />
       </Table>
@@ -128,9 +110,9 @@ async function TableWrapper({
 
   const { data } = await getWithdrawReportList(params);
   return (
-    <div className="bg-background flex-1 w-full ">
+    <div className="bg-background flex-1 w-full">
       <div className="relative overflow-y-auto overflow-x-auto border rounded-sm">
-        <Table>
+        <Table className="table-fixed">
           <TableHeaderWrapper />
           <Suspense fallback={<TableBodySkeleton />}>
             <TableBodyWrapper data={data} />
@@ -163,41 +145,31 @@ async function TableBodyWrapper({ data }: { data?: PageData<WithdrawReport> }) {
       {data && data.list.length > 0 ? (
         data.list.map((item) => (
           <TableRow key={item.id}>
-            <TableCell className="w-24 min-w-24 text-center">
-              {item.orderNo}
-            </TableCell>
-            <TableCell className="w-24 min-w-24 text-center">
-              {item.userId}
-            </TableCell>
-            <TableCell className="w-24 min-w-24 text-center">
-              {item.currency}
-            </TableCell>
-            <TableCell className="w-24 min-w-24 text-center">
-              {item.withdrawMoney}
-            </TableCell>
-            <TableCell className="w-24 min-w-24 text-center">
-              {item.withdrawFee}
-            </TableCell>
-            <TableCell className="w-24 min-w-24 text-center">
+            <TableCell>{item.orderNo}</TableCell>
+            <TableCell>{item.userId}</TableCell>
+            <TableCell>{item.currency}</TableCell>
+            <TableCell>{item.withdrawMoney}</TableCell>
+            <TableCell>{item.withdrawFee}</TableCell>
+            <TableCell>
               {statusMap[item.status as keyof typeof statusMap]}
             </TableCell>
-            <TableCell className="w-32 min-w-32 text-center">
+            <TableCell>
               <Time time={item.applyTime} />
             </TableCell>
-            <TableCell className="w-24 min-w-24 text-center">
+            <TableCell>
               {!!item.approverTime && <Time time={item.approverTime} />}
             </TableCell>
-            <TableCell className="w-24 min-w-24 text-center">
+            <TableCell>
               {!!item.finishTime && <Time time={item.finishTime} />}
             </TableCell>
-            <TableCell className="min-w-24 text-center">
+            <TableCell>
               <Actions item={item} />
             </TableCell>
           </TableRow>
         ))
       ) : (
         <TableRow>
-          <TableCell colSpan={10} className="text-center h-40">
+          <TableCell colSpan={10} className="h-40 text-center">
             {t("noData")}
           </TableCell>
         </TableRow>

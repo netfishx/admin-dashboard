@@ -28,7 +28,7 @@ async function TableBodyWrapper() {
         ))
       ) : (
         <TableRow>
-          <TableCell colSpan={2} className="text-center h-40">
+          <TableCell colSpan={2} className="h-40 text-center">
             {t("noData")}
           </TableCell>
         </TableRow>
@@ -44,7 +44,7 @@ async function TableWrapper() {
       <TableHeader>
         <TableRow className="bg-muted">
           <TableHead>{t("name")}</TableHead>
-          <TableHead className="min-w-32 w-1/2">{t("ratio")}</TableHead>
+          <TableHead className="w-1/2 min-w-32">{t("ratio")}</TableHead>
         </TableRow>
       </TableHeader>
       <Suspense
@@ -69,13 +69,11 @@ async function TableWrapper() {
 
 export default function Page() {
   return (
-    <div className="flex flex-col gap-2 w-full">
-      <div className="p-2 bg-background flex-1">
-        <div className="border rounded-sm">
-          <Suspense>
-            <TableWrapper />
-          </Suspense>
-        </div>
+    <div className="flex w-full flex-1 flex-col bg-background p-4">
+      <div className="rounded-sm border">
+        <Suspense>
+          <TableWrapper />
+        </Suspense>
       </div>
     </div>
   );

@@ -33,7 +33,7 @@ export function ToggleSidebar({
   return (
     <div
       className={cn([
-        "flex h-12 py-4 items-center",
+        "flex h-12 items-center py-4",
         isOpened ? "px-4" : "px-3",
         hasReceiveOrderPermission ? "justify-between" : "justify-end",
       ])}

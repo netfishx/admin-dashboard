@@ -39,7 +39,7 @@ export function Menu({ permissions }: { permissions: string[] }) {
     <ScrollArea className="h-[calc(100dvh-8.5rem)]">
       <div className="flex flex-col gap-1 px-2" suppressHydrationWarning={true}>
         {isOpened ? (
-          <Suspense fallback={null}>
+          <Suspense>
             <OpenedMenu pathname={pathname} permissions={permissions} />
           </Suspense>
         ) : (
@@ -50,11 +50,13 @@ export function Menu({ permissions }: { permissions: string[] }) {
   );
 }
 
-// biome-ignore lint/complexity/noExcessiveCognitiveComplexity: <explanation>
 function OpenedMenu({
   pathname,
   permissions,
-}: { pathname: string; permissions: string[] }) {
+}: {
+  pathname: string;
+  permissions: string[];
+}) {
   const t = useTranslations("menu");
   const [openedMenu, setOpenedMenu] = useQueryState<string[]>(
     "openedMenu",
@@ -414,7 +416,10 @@ function OpenedMenu({
 function ClosedMenu({
   pathname,
   permissions,
-}: { pathname: string; permissions: string[] }) {
+}: {
+  pathname: string;
+  permissions: string[];
+}) {
   const t = useTranslations("menu");
   const baseClass = "flex flex-col items-center justify-center h-9";
   return (
@@ -429,7 +434,7 @@ function ClosedMenu({
                 <MenuItemLink
                   href="/"
                   isActive={pathname === "/"}
-                  className="px-0 w-full"
+                  className="w-full px-0"
                 >
                   <Home className="size-4" />
                 </MenuItemLink>
@@ -463,7 +468,7 @@ function ClosedMenu({
                 <MenuItemLink
                   href="/games/flyorder"
                   isActive={pathname.startsWith("/games")}
-                  className="px-0 w-full"
+                  className="w-full px-0"
                 >
                   <Gamepad2 className="size-4" />
                 </MenuItemLink>
@@ -490,7 +495,7 @@ function ClosedMenu({
                 <MenuItemLink
                   href="/users/agent"
                   isActive={pathname.startsWith("/users")}
-                  className="px-0 w-full"
+                  className="w-full px-0"
                 >
                   <Users className="size-4" />
                 </MenuItemLink>
@@ -531,7 +536,7 @@ function ClosedMenu({
                 <MenuItemLink
                   href="/reports/order/baccarat"
                   isActive={pathname.startsWith("/reports")}
-                  className="px-0 w-full"
+                  className="w-full px-0"
                 >
                   <FileText className="size-4" />
                 </MenuItemLink>
@@ -556,7 +561,7 @@ function ClosedMenu({
                 <MenuItemLink
                   href="/withdraw/apply"
                   isActive={pathname.startsWith("/withdraw")}
-                  className="px-0 w-full"
+                  className="w-full px-0"
                 >
                   <ClipboardCheck className="size-4" />
                 </MenuItemLink>
@@ -583,7 +588,7 @@ function ClosedMenu({
                 <MenuItemLink
                   href="/personal/info"
                   isActive={pathname.startsWith("/personal")}
-                  className="px-0 w-full"
+                  className="w-full px-0"
                 >
                   <UserSquare className="size-4" />
                 </MenuItemLink>
@@ -610,7 +615,7 @@ function ClosedMenu({
                 <MenuItemLink
                   href="/system/role"
                   isActive={pathname.startsWith("/system")}
-                  className="px-0 w-full"
+                  className="w-full px-0"
                 >
                   <Tv2 className="size-4" />
                 </MenuItemLink>
@@ -637,7 +642,7 @@ function ClosedMenu({
                 <MenuItemLink
                   href="/fund/minerfee"
                   isActive={pathname.startsWith("/fund")}
-                  className="px-0 w-full"
+                  className="w-full px-0"
                 >
                   <Scale className="size-4" />
                 </MenuItemLink>
@@ -664,7 +669,7 @@ function ClosedMenu({
                 <MenuItemLink
                   href="/maintain/dictionary"
                   isActive={pathname.startsWith("/maintain")}
-                  className="px-0 w-full"
+                  className="w-full px-0"
                 >
                   <Cog className="size-4" />
                 </MenuItemLink>

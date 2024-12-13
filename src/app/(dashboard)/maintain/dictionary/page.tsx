@@ -19,9 +19,11 @@ import { Form } from "./form";
 
 export default async function Page({
   searchParams,
-}: { searchParams: Promise<{ [key: string]: string | undefined }> }) {
+}: {
+  searchParams: Promise<{ [key: string]: string | undefined }>;
+}) {
   return (
-    <div className="flex flex-col gap-2 w-full">
+    <div className="flex w-full flex-col gap-2">
       <Suspense
         fallback={
           <div className="bg-background py-2">
@@ -31,13 +33,13 @@ export default async function Page({
       >
         <Form />
       </Suspense>
-      <div className="p-2 bg-background flex-1">
+      <div className="p-4 bg-background flex-1">
         <div className="pb-2 flex justify-end">
           <Add />
         </div>
         <Suspense
           fallback={
-            <Table className="border rounded-sm">
+            <Table className="rounded-sm border">
               <TableHeaderWrapper />
               <TableBodySkeleton />
             </Table>
@@ -53,7 +55,9 @@ export default async function Page({
 
 async function TableWrapper({
   searchParams,
-}: { searchParams: Promise<{ [key: string]: string | undefined }> }) {
+}: {
+  searchParams: Promise<{ [key: string]: string | undefined }>;
+}) {
   const { pageNum = "1", pageSize = "10", ...rest } = await searchParams;
   const { data } = await getDictionaryList({
     ...rest,
@@ -62,7 +66,7 @@ async function TableWrapper({
   });
   return (
     <>
-      <div className="border rounded-sm">
+      <div className="rounded-sm border">
         <Table>
           <TableHeaderWrapper />
           <TableBodyWrapper list={data?.list ?? []} />
@@ -90,7 +94,7 @@ async function TableHeaderWrapper() {
         <TableHead>{t("dictCode")}</TableHead>
         <TableHead>{t("dictName")}</TableHead>
         <TableHead>{t("remark")}</TableHead>
-        <TableHead>{t("action")}</TableHead>
+        <TableHead className="text-center">{t("action")}</TableHead>
       </TableRow>
     </TableHeader>
   );
@@ -113,7 +117,7 @@ async function TableBodyWrapper({ list }: { list: DictionaryList[] }) {
         ))
       ) : (
         <TableRow>
-          <TableCell colSpan={4} className="text-center h-40">
+          <TableCell colSpan={4} className="h-40 text-center">
             {translations("noData")}
           </TableCell>
         </TableRow>
@@ -129,7 +133,7 @@ function TableBodySkeleton() {
         // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
         <TableRow key={i}>
           <TableCell colSpan={4}>
-            <Skeleton className="w-full h-6" />
+            <Skeleton className="h-6 w-full" />
           </TableCell>
         </TableRow>
       ))}

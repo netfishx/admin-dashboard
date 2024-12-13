@@ -26,7 +26,7 @@ export function DayChart({
   }));
   const t = useTranslations();
   return (
-    <div className="flex flex-col p-4 rounded bg-card">
+    <div className="flex flex-col rounded bg-card p-4">
       <div>{title}</div>
       <div className="flex items-center justify-center">
         {data.length > 0 ? (
@@ -80,7 +80,7 @@ export function DayChart({
           </ChartContainer>
         ) : (
           <div className="h-40 lg:h-48 xl:h-72">
-            <div className="text-muted-foreground h-full flex items-center justify-center">
+            <div className="flex h-full items-center justify-center text-muted-foreground">
               {t("noData")}
             </div>
           </div>
@@ -103,9 +103,9 @@ const CustomTooltip = ({
     return null;
   }
   return (
-    <div className="bg-card p-2 rounded shadow-lg border">
+    <div className="rounded border bg-card p-2 shadow-lg">
       <p className="text-sm">
-        <span className="text-muted-foreground pr-2">{payload?.[0].name}:</span>
+        <span className="pr-2 text-muted-foreground">{payload?.[0].name}:</span>
         <span className="font-medium">{payload?.[0].value}</span>
       </p>
     </div>

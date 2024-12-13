@@ -13,10 +13,10 @@ interface CommonWrapperProps {
 export default async function Page({ searchParams }: CommonWrapperProps) {
   const gameListResp = await getBaccaratGames();
   return (
-    <div className="flex flex-col gap-2 w-full h-full">
+    <div className="flex h-full w-full flex-col gap-2">
       <Suspense
         fallback={
-          <div className="flex justify-between items-center bg-background p-4">
+          <div className="flex items-center justify-between bg-background p-4">
             <Skeleton />
           </div>
         }

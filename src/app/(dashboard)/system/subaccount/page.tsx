@@ -29,13 +29,13 @@ function SubaccountTableHeader() {
   return (
     <TableHeader>
       <TableRow className="bg-muted">
-        <TableHead className="text-center w-36">{t("name")}</TableHead>
-        <TableHead className="text-center w-48">{t("role")}</TableHead>
-        <TableHead className="text-center w-48">{t("createTime")}</TableHead>
-        <TableHead className="text-center w-36">{t("lastLoginIp")}</TableHead>
-        <TableHead className="text-center w-48">{t("lastLoginTime")}</TableHead>
-        <TableHead className="text-center w-24">{t("status")}</TableHead>
-        <TableHead className="w-56 text-center sticky right-0 bg-muted">
+        <TableHead className="w-36">{t("name")}</TableHead>
+        <TableHead className="w-48">{t("role")}</TableHead>
+        <TableHead className="w-48">{t("createTime")}</TableHead>
+        <TableHead className="w-36">{t("lastLoginIp")}</TableHead>
+        <TableHead className="w-48">{t("lastLoginTime")}</TableHead>
+        <TableHead className="w-24 text-center">{t("status")}</TableHead>
+        <TableHead className="sticky right-0 w-56 bg-muted text-center">
           {t("action")}
         </TableHead>
       </TableRow>
@@ -68,43 +68,41 @@ async function SubaccountTableWrapper({
     <>
       <SubaccountDialog roles={roles} />
       <SubaccountDelete />
-      <div className="border rounded-sm">
+      <div className="rounded-sm border">
         <Table className="table-fixed">
           <SubaccountTableHeader />
           <TableBody>
             {!res.data?.list || res.data?.list.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={7} className="text-center h-32">
+                <TableCell colSpan={7} className="h-32 text-center">
                   {t("noData")}
                 </TableCell>
               </TableRow>
             ) : (
               res.data?.list.map((item) => (
                 <TableRow key={item.id}>
-                  <TableCell className="text-center">{item.username}</TableCell>
-                  <TableCell className="text-start break-all">
+                  <TableCell>{item.username}</TableCell>
+                  <TableCell className="break-all">
                     {item.roleList
                       ?.map(
                         (id) => roles.find((role) => role.id === id)?.roleName,
                       )
                       .join("，")}
                   </TableCell>
-                  <TableCell className="text-center">
+                  <TableCell>
                     {item.createTime && <Time time={item.createTime} />}
                   </TableCell>
-                  <TableCell className="text-center">
-                    {item.lastLoginIp}
-                  </TableCell>
-                  <TableCell className="text-center">
+                  <TableCell>{item.lastLoginIp}</TableCell>
+                  <TableCell>
                     {!!item.lastLoginTime && <Time time={item.lastLoginTime} />}
                   </TableCell>
                   <TableCell className="text-center">
                     <span
                       className={cn([
-                        "p-1 rounded-sm w-16 inline-block text-center",
+                        "inline-block w-16 rounded-sm p-1 text-center",
                         item.status === 0
-                          ? "text-green bg-green/20"
-                          : "text-destructive bg-destructive/20",
+                          ? "bg-green/20 text-green"
+                          : "bg-destructive/20 text-destructive",
                       ])}
                     >
                       {item.status === 0
@@ -112,7 +110,7 @@ async function SubaccountTableWrapper({
                         : translations("disable")}
                     </span>
                   </TableCell>
-                  <TableCell className="text-center sticky right-0 bg-background">
+                  <TableCell className="sticky right-0 bg-background text-center">
                     <div className="flex justify-center">
                       <EditButton data={item} />
                       <LoginLogButton id={item.id ?? ""} />
@@ -143,15 +141,15 @@ export default function SubaccountPage({
 }) {
   const t = useTranslations("system.subaccount");
   return (
-    <div className="flex flex-col w-full gap-2">
-      <div className="flex justify-between items-center bg-background p-4">
+    <div className="flex w-full flex-col gap-2">
+      <div className="flex items-center justify-between bg-background p-4">
         <div className="text-sm font-medium">{t("list")}</div>
         <AddButton />
       </div>
-      <div className="bg-background flex-1 p-2 flex flex-col gap-2">
+      <div className="flex flex-1 flex-col gap-4 bg-background p-4">
         <Suspense
           fallback={
-            <div className="border rounded-sm">
+            <div className="rounded-sm border">
               <Table>
                 <SubaccountTableHeader />
                 <TableBody>

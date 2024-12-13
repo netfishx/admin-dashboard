@@ -30,7 +30,7 @@ export function Actions({ data }: { data: BackgroundImageList }) {
     <>
       <Button
         variant="ghost"
-        className="text-primary hover:text-primary/80 text-sm"
+        className="text-sm text-primary hover:text-primary/80"
         size="sm"
         onClick={() => {
           setOpen(true);
@@ -55,7 +55,7 @@ function DeleteBtn({ id }: { id: string }) {
         <Button
           variant="ghost"
           size="sm"
-          className="text-primary hover:text-primary/80 text-sm px-2"
+          className="px-2 text-sm text-primary hover:text-primary/80"
           disabled={isPending}
         >
           {isPending ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}

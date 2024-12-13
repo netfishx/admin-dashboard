@@ -34,7 +34,7 @@ export function RoleDelete() {
             <span className="text-base">
               {translations("deleteModalDescription")}
             </span>
-            <span className="text-destructive text-xs">
+            <span className="text-xs text-destructive">
               {translations("deleteModalDescriptionWarning")}
             </span>
           </AlertDialogDescription>
@@ -59,7 +59,7 @@ export function RoleDelete() {
               });
             }}
           >
-            {isPending && <Loader2 className="w-4 h-4 animate-spin" />}
+            {isPending && <Loader2 className="h-4 w-4 animate-spin" />}
             {t("confirm")}
           </AlertDialogAction>
         </AlertDialogFooter>

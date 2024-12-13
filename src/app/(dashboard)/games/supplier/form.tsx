@@ -23,9 +23,9 @@ export function SupplierForm() {
   const [isPending, startTransition] = useTransition();
 
   return (
-    <div className="flex justify-between items-center bg-background p-4">
-      <div className="flex gap-2 items-center">
-        <div className="flex gap-2 items-center">
+    <div className="flex items-center justify-between bg-background p-4">
+      <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2">
           <Label className="shrink-0">{t("type")}</Label>
           <Select defaultValue="1" disabled>
             <SelectTrigger className="w-28">
@@ -36,7 +36,7 @@ export function SupplierForm() {
             </SelectContent>
           </Select>
         </div>
-        <div className="flex gap-2 items-center">
+        <div className="flex items-center gap-2">
           <Label className="shrink-0">{t("supplierId")}</Label>
           <Input
             placeholder={t("placeholder")}

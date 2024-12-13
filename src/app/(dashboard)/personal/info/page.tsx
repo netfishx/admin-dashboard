@@ -14,24 +14,24 @@ export default function Page() {
   const session = use(getSession());
   const t = useTranslations("personal.info");
   return (
-    <div className="flex flex-col gap-2 w-full h-full">
+    <div className="flex h-full w-full flex-col gap-2">
       <div className="flex flex-col gap-2 bg-background p-4">
         <div className="text-sm font-medium">{t("userInfo")}</div>
         <div className="flex items-center gap-2">
-          <div className="text-muted-foreground text-sm w-[100px] text-right">
+          <div className="w-[100px] text-right text-sm text-muted-foreground">
             {t("account")}:
           </div>
-          <div className="text-sm flex items-center">
+          <div className="flex items-center text-sm">
             {session?.username}
             <CopyButton address={session?.username ?? ""} />
           </div>
         </div>
         {session?.inviteCode && (
           <div className="flex items-center gap-2">
-            <div className="text-muted-foreground text-sm w-[100px] text-right">
+            <div className="w-[100px] text-right text-sm text-muted-foreground">
               {t("inviteCode")}:
             </div>
-            <div className="text-sm flex items-center">
+            <div className="flex items-center text-sm">
               {session?.inviteCode}
               <CopyButton address={session?.inviteCode ?? ""} />
             </div>

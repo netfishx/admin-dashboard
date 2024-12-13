@@ -47,21 +47,21 @@ export function LoginForm() {
   const [code, setCode] = useState(nanoid());
   return (
     <Form action="" onSubmit={handleSubmit} ref={ref}>
-      <div className="relative w-full h-screen overflow-hidden bg-accent flex flex-col gap-4 items-center justify-center">
+      <div className="relative flex h-screen w-full flex-col items-center justify-center gap-4 overflow-hidden bg-accent">
         <Image src={bg} alt="background image" className="object-cover" fill />
-        <div className="w-[400px] flex items-center justify-center gap-4">
+        <div className="flex w-[400px] items-center justify-center gap-4">
           <Image src={logo} alt="Icon" className="size-8" />
           <span className="text-xl font-medium">{t("title")}</span>
         </div>
-        <div className="w-[400px] bg-background p-10 border rounded-lg flex flex-col gap-6 z-10">
+        <div className="z-10 flex w-[400px] flex-col gap-6 rounded-lg border bg-background p-10">
           <div className="flex flex-col gap-2">
-            <Label className="text-sm font-medium flex gap-1 after:content-['*'] after:text-destructive">
+            <Label className="flex gap-1 text-sm font-medium after:text-destructive after:content-['*']">
               {t("username.label")}
             </Label>
             <Input placeholder={t("username.placeholder")} name="username" />
           </div>
           <div className="flex flex-col gap-2">
-            <Label className="text-sm font-medium flex gap-1 after:content-['*'] after:text-destructive">
+            <Label className="flex gap-1 text-sm font-medium after:text-destructive after:content-['*']">
               {t("password.label")}
             </Label>
             <Password
@@ -71,7 +71,7 @@ export function LoginForm() {
             />
           </div>
           <div className="flex flex-col gap-2">
-            <Label className="text-sm font-medium flex gap-1 after:content-['*'] after:text-destructive">
+            <Label className="flex gap-1 text-sm font-medium after:text-destructive after:content-['*']">
               {t("code.label")}
             </Label>
             <div className="flex gap-2">

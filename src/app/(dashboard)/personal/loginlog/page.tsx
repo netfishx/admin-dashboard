@@ -21,11 +21,11 @@ export default async function Page({
   searchParams: Promise<{ [key: string]: string }>;
 }) {
   return (
-    <div className="flex flex-col gap-2 w-full">
-      <div className="flex justify-between items-center bg-background p-4">
+    <div className="flex w-full flex-col gap-2">
+      <div className="flex items-center justify-between bg-background p-4">
         <Form />
       </div>
-      <div className="p-2 bg-background flex-1">
+      <div className="p-4 bg-background flex-1">
         <Suspense fallback={<TableSkeleton />}>
           <TableWrapper searchParams={searchParams} />
         </Suspense>
@@ -35,7 +35,7 @@ export default async function Page({
 }
 function TableSkeleton() {
   return (
-    <Table className="table-fixed border rounded-sm">
+    <Table className="table-fixed rounded-sm border">
       <TableHeaderWrapper />
       <TableBodySkeleton />
     </Table>
@@ -44,7 +44,9 @@ function TableSkeleton() {
 
 async function TableWrapper({
   searchParams,
-}: { searchParams: Promise<{ [key: string]: string }> }) {
+}: {
+  searchParams: Promise<{ [key: string]: string }>;
+}) {
   const {
     pageNum = "1",
     pageSize = "10",
@@ -64,7 +66,7 @@ async function TableWrapper({
   });
   return (
     <>
-      <div className="border rounded-sm mb-2">
+      <div className="mb-2 rounded-sm border">
         <Table className="table-fixed">
           <TableHeaderWrapper />
           <TableBodyWrapper list={data?.list ?? []} />
@@ -117,7 +119,7 @@ async function TableBodyWrapper({ list }: { list: MySelfLoginLog[] }) {
         ))
       ) : (
         <TableRow>
-          <TableCell colSpan={5} className="text-center h-40">
+          <TableCell colSpan={5} className="h-40 text-center">
             {t("noData")}
           </TableCell>
         </TableRow>
@@ -130,14 +132,14 @@ async function StatusCell({ status }: { status: string }) {
   const t = await getTranslations("users.agents");
   if (status === "0") {
     return (
-      <span className="p-1 rounded-sm inline-block text-center text-primary bg-primary/20">
+      <span className="inline-block rounded-sm bg-primary/20 p-1 text-center text-primary">
         {t("success")}
       </span>
     );
   }
   if (status === "1") {
     return (
-      <span className="p-1 rounded-sm inline-block text-center text-destructive bg-destructive/20">
+      <span className="inline-block rounded-sm bg-destructive/20 p-1 text-center text-destructive">
         {t("failed")}
       </span>
     );

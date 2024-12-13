@@ -31,7 +31,11 @@ export function CustomPagination({
   total,
   currentPage,
   pageSize,
-}: { total: number; currentPage: number; pageSize: number }) {
+}: {
+  total: number;
+  currentPage: number;
+  pageSize: number;
+}) {
   const pathname = usePathname();
   const totalPage = Math.ceil(total / pageSize);
   const t = useTranslations("pagination");
@@ -47,7 +51,7 @@ export function CustomPagination({
       <Pagination className="flex justify-end">
         <PaginationContent>
           <PaginationItem>
-            <span className="text-muted-foreground text-sm">
+            <span className="text-sm text-muted-foreground">
               {t("total", { total })}
             </span>
           </PaginationItem>
@@ -55,7 +59,7 @@ export function CustomPagination({
             {currentPage === 1 ? (
               <div
                 className={cn(
-                  "w-6 flex items-center justify-center px-1 text-muted-foreground pointer-events-none opacity-50",
+                  "pointer-events-none flex w-6 items-center justify-center px-1 text-muted-foreground opacity-50",
                 )}
               >
                 <ChevronFirst className="size-4" />
@@ -68,7 +72,7 @@ export function CustomPagination({
                 }}
                 className={cn(
                   buttonVariants({ variant: "ghost", size: "icon" }),
-                  "w-6 flex items-center justify-center px-1",
+                  "flex w-6 items-center justify-center px-1",
                 )}
               >
                 <ChevronFirst className="size-4" />
@@ -79,7 +83,7 @@ export function CustomPagination({
             {currentPage === 1 ? (
               <div
                 className={cn(
-                  "w-6 flex items-center justify-center px-1 text-muted-foreground pointer-events-none opacity-50",
+                  "pointer-events-none flex w-6 items-center justify-center px-1 text-muted-foreground opacity-50",
                 )}
               >
                 <ChevronLeftIcon className="size-4" />
@@ -98,7 +102,7 @@ export function CustomPagination({
             )}
           </PaginationItem>
           <PaginationItem>
-            <span className="w-6 inline-block text-center text-sm">
+            <span className="inline-block w-6 text-center text-sm">
               {currentPage}
             </span>
           </PaginationItem>
@@ -106,7 +110,7 @@ export function CustomPagination({
             {currentPage === totalPage ? (
               <div
                 className={cn(
-                  "w-6 flex items-center justify-center px-1 pointer-events-none opacity-50 text-muted-foreground",
+                  "pointer-events-none flex w-6 items-center justify-center px-1 text-muted-foreground opacity-50",
                 )}
               >
                 <ChevronRightIcon className="size-4" />
@@ -128,7 +132,7 @@ export function CustomPagination({
             {currentPage === totalPage ? (
               <div
                 className={cn(
-                  "w-6 flex items-center justify-center px-1 pointer-events-none opacity-50 text-muted-foreground",
+                  "pointer-events-none flex w-6 items-center justify-center px-1 text-muted-foreground opacity-50",
                 )}
               >
                 <ChevronLast className="size-4" />
@@ -144,7 +148,7 @@ export function CustomPagination({
                 }}
                 className={cn(
                   buttonVariants({ variant: "ghost", size: "icon" }),
-                  "w-6 flex items-center justify-center px-1",
+                  "flex w-6 items-center justify-center px-1",
                 )}
               >
                 <ChevronLast className="size-4" />
@@ -156,7 +160,7 @@ export function CustomPagination({
               value={pageSize.toString()}
               onValueChange={(value) => handlePageSizeChange(value)}
             >
-              <SelectTrigger className="w-28 h-7 text-muted-foreground text-sm">
+              <SelectTrigger className="h-7 w-28 text-sm text-muted-foreground">
                 <SelectValue
                   defaultValue={pageSize ?? 10}
                   placeholder={t("pageSize")}

@@ -7,7 +7,9 @@ import TabsItem from "./tabs-item";
 
 export default async function DashboardLayout({
   children,
-}: { children: ReactNode }) {
+}: {
+  children: ReactNode;
+}) {
   return (
     <div className="w-full">
       <Suspense>

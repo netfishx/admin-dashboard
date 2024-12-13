@@ -280,8 +280,8 @@
       "loginUsername": "登录账号",
       "success": "成功",
       "failed": "失败",
-      "usernameWarning": "以小写字母开头,长度6到16位,包含数字、小写字母,不能包含“admin”的字样",
-      "passwordWarning": "8-16位的密码,包含大写字母、小写字母、数字",
+      "usernameWarning": "以小写字母开头，长度6到16位，包含数字、小写字母，不能包含“admin”的字样",
+      "passwordWarning": "8-16位的密码，包含大写字母、小写字母、数字",
       "availableAmount": "当前可用余额"
     },
     "members": {
@@ -686,7 +686,7 @@
       "passed": "已通过",
       "auditing": "审核中",
       "withdrawing": "提现中",
-      "failed": "审核失败",
+      "failed": "审核拒绝",
       "success": "提现成功"
     },
     "borrow": {

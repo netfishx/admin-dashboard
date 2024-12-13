@@ -17,24 +17,18 @@ export async function List() {
   const { data } = await getOreFeeList();
 
   return (
-    <div className="p-2  bg-background gap-2 flex flex-col h-full">
-      <div className="border rounded-sm">
-        <Table>
+    <div className="flex h-full flex-col gap-2 bg-background">
+      <div className="rounded-sm border">
+        <Table className="table-fixed">
           <TableHeaderWrapper />
           <Suspense fallback={<TableBodySkeleton />}>
             <TableBody>
               {data && data.length > 0 ? (
                 data.map((item) => (
                   <TableRow key={item.id}>
-                    <TableCell className="w-24 text-center">
-                      {item.address}
-                    </TableCell>
-                    <TableCell className="w-24 text-center">
-                      {item.coin}
-                    </TableCell>
-                    <TableCell className="text-center">
-                      {item.usdtBalance}
-                    </TableCell>
+                    <TableCell className="w-24">{item.address}</TableCell>
+                    <TableCell className="w-24 ">{item.coin}</TableCell>
+                    <TableCell className="w-24">{item.usdtBalance}</TableCell>
                     <TableCell className="w-24 text-center">
                       <RemoveBtn data={item} />
                     </TableCell>
@@ -42,7 +36,7 @@ export async function List() {
                 ))
               ) : (
                 <TableRow>
-                  <TableCell colSpan={10} className="text-center h-40">
+                  <TableCell colSpan={4} className="h-40 text-center">
                     {translations("noData")}
                   </TableCell>
                 </TableRow>
@@ -61,7 +55,7 @@ export function TableBodySkeleton() {
       {Array.from({ length: 5 }).map((_, index) => (
         // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
         <TableRow key={index}>
-          <TableCell colSpan={10}>
+          <TableCell colSpan={4}>
             <Skeleton />
           </TableCell>
         </TableRow>
@@ -75,16 +69,10 @@ export async function TableHeaderWrapper() {
   return (
     <TableHeader>
       <TableRow className="bg-muted">
-        <TableHead className="w-24 min-w-24 text-center">
-          {t("address")}
-        </TableHead>
-        <TableHead className="text-center">{t("coin")}</TableHead>
-        <TableHead className="w-24 min-w-24 text-center">
-          {t("usdtBalance")}
-        </TableHead>
-        <TableHead className="w-24 min-w-24 text-center">
-          {t("actions")}
-        </TableHead>
+        <TableHead>{t("address")}</TableHead>
+        <TableHead>{t("coin")}</TableHead>
+        <TableHead>{t("usdtBalance")}</TableHead>
+        <TableHead className="text-center">{t("actions")}</TableHead>
       </TableRow>
     </TableHeader>
   );

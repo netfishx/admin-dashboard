@@ -17,7 +17,10 @@ import { useLayoutEffect } from "react";
 export function OddsTable({
   list,
   hasAdminPermission,
-}: { list: GameOdds[]; hasAdminPermission: boolean }) {
+}: {
+  list: GameOdds[];
+  hasAdminPermission: boolean;
+}) {
   const [odds, setOdds] = useAtom(oddsAtom);
   const [changedList, setChangedList] = useAtom(changedOddsLimitAtom);
   const [limit, setLimit] = useAtom(limitAtom);
@@ -83,7 +86,7 @@ export function OddsTable({
     <TableBody>
       {list.length === 0 ? (
         <TableRow>
-          <TableCell colSpan={5} className="text-center h-40">
+          <TableCell colSpan={5} className="h-40 text-center">
             {translations("noData")}
           </TableCell>
         </TableRow>
@@ -154,7 +157,7 @@ export function OddsTable({
                   }}
                 />
                 {item.maxBetLimit ? (
-                  <span className="text-destructive w-20 shrink-0">
+                  <span className="w-20 shrink-0 text-destructive">
                     ({item.maxBetLimit})
                   </span>
                 ) : null}
@@ -186,7 +189,7 @@ export function OddsTable({
                   }}
                 />
                 {item.maxBetPeriodLimit ? (
-                  <span className="text-destructive w-20 shrink-0">
+                  <span className="w-20 shrink-0 text-destructive">
                     ({item.maxBetPeriodLimit})
                   </span>
                 ) : null}

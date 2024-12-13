@@ -52,7 +52,10 @@ export async function ListHeader() {
 async function ListBody({
   list,
   gameList,
-}: { list: OrderReportsRecord[]; gameList: GameInfo[] }) {
+}: {
+  list: OrderReportsRecord[];
+  gameList: GameInfo[];
+}) {
   const translate = await getTranslations();
   const t = await getTranslations("report.orderlist");
   const session = await getSession();
@@ -113,7 +116,10 @@ async function ListBody({
 export async function List({
   searchParams,
   gameList,
-}: { searchParams: Promise<OrderReportsRequestParams>; gameList: GameInfo[] }) {
+}: {
+  searchParams: Promise<OrderReportsRequestParams>;
+  gameList: GameInfo[];
+}) {
   const params = await searchParams;
   const p = {
     ...params,

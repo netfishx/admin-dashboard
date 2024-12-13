@@ -1,5 +1,6 @@
-import { getSupplierGames, getSupplierList } from "@/api";
+import { getBaccaratGames, getSupplierConfigs, getSupplierList } from "@/api";
 import { Add } from "@/app/(dashboard)/games/supplier/add";
+import { SupplierDialog } from "@/app/(dashboard)/games/supplier/dialog";
 import { SupplierForm } from "@/app/(dashboard)/games/supplier/form";
 import {
   SupplierTable,
@@ -9,33 +10,46 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
 import { Suspense } from "react";
 
-async function AddButtonWrapper() {
-  const res = await getSupplierGames();
+async function DialogWrapper() {
+  const games = await getBaccaratGames();
   const suppliers = await getSupplierList();
-  return <Add games={res.data ?? []} suppliers={suppliers.data ?? []} />;
+  const supplierConfigs = await getSupplierConfigs();
+  return (
+    <SupplierDialog
+      games={
+        games.data?.filter(
+          (i) => !supplierConfigs.data?.some((j) => j.gameId === i.gameId),
+        ) ?? []
+      }
+      suppliers={suppliers.data ?? []}
+    />
+  );
 }
 
 export default function Page({
   searchParams,
-}: { searchParams: Promise<{ [key: string]: string | undefined }> }) {
+}: {
+  searchParams: Promise<{ [key: string]: string | undefined }>;
+}) {
   return (
-    <div className="flex flex-col gap-2 w-full">
+    <div className="flex w-full flex-col gap-2">
+      <Suspense>
+        <DialogWrapper />
+      </Suspense>
       <Suspense
         fallback={
-          <div className="flex justify-between items-center bg-background p-4">
-            <Skeleton className="w-full h-9" />
+          <div className="flex items-center justify-between bg-background p-4">
+            <Skeleton className="h-9 w-full" />
           </div>
         }
       >
         <SupplierForm />
       </Suspense>
-      <div className="p-2 bg-background flex-1 flex flex-col gap-2">
+      <div className="flex flex-1 flex-col gap-4 bg-background p-4">
         <div className="flex justify-end">
-          <Suspense>
-            <AddButtonWrapper />
-          </Suspense>
+          <Add />
         </div>
-        <div className="border rounded-sm">
+        <div className="rounded-sm border">
           <Suspense
             fallback={
               <Table className="table-fixed">

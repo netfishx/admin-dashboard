@@ -6,14 +6,16 @@ import { List, TableBodySkeleton, TableHeaderWrapper } from "./list";
 
 export default async function Platform({
   searchParams,
-}: { searchParams: Promise<{ [key: string]: string }> }) {
+}: {
+  searchParams: Promise<{ [key: string]: string }>;
+}) {
   const { startTime, endTime } = await searchParams;
   return (
-    <div className="flex flex-col gap-2 w-full h-full">
+    <div className="flex h-full w-full flex-col gap-2">
       {/* form: admin permission */}
       <Suspense
         fallback={
-          <div className="flex justify-between items-center bg-background p-2">
+          <div className="flex items-center justify-between bg-background p-4">
             <Skeleton />
             <Skeleton />
             <Skeleton />
@@ -22,10 +24,10 @@ export default async function Platform({
       >
         <Form key={`${startTime}-${endTime}`} />
       </Suspense>
-      <div className="p-2 bg-background flex-1 flex flex-col gap-2">
+      <div className="flex flex-1 flex-col gap-2 bg-background p-4">
         <Suspense
           fallback={
-            <Table className="border rounded-sm">
+            <Table className="rounded-sm border">
               <TableHeaderWrapper />
               <TableBodySkeleton />
             </Table>

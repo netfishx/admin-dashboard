@@ -25,7 +25,7 @@ export function TruncatedCell({
     return (
       <td
         className={cn(
-          "px-4 py-2 text-center",
+          "text-sm",
           className,
           (type === 6 || type === 7) && "text-destructive",
         )}
@@ -37,7 +37,7 @@ export function TruncatedCell({
             onClick={() => {
               router.replace("/games/ratio");
             }}
-            className="inline text-destructive hover:text-destructive/80 text-xs ml-1 underline"
+            className="text-sm inline text-destructive underline hover:text-destructive/80"
           >
             {t("view")}
           </Button>
@@ -48,7 +48,7 @@ export function TruncatedCell({
             onClick={() => {
               router.replace("/games/rebate");
             }}
-            className="inline text-destructive hover:text-destructive/80 text-xs ml-1 underline"
+            className="text-sm inline text-destructive underline hover:text-destructive/80"
           >
             {t("view")}
           </Button>
@@ -59,9 +59,10 @@ export function TruncatedCell({
 
   return (
     <td className="px-4 py-2 border-b">
-      <div className="flex items-center gap-2">
+      <div className="flex gap-2">
         <span
           className={cn(
+            "text-sm",
             "inline whitespace-pre-wrap",
             (type === 6 || type === 7) && "text-destructive",
           )}
@@ -73,7 +74,7 @@ export function TruncatedCell({
               <Button
                 variant="link"
                 onClick={() => setIsExpanded(true)}
-                className="inline text-primary hover:text-primary/80 text-xs ml-1 underline"
+                className="inline text-sm text-primary underline hover:text-primary/80"
               >
                 {t("viewMore")}
               </Button>
@@ -87,7 +88,7 @@ export function TruncatedCell({
                   onClick={() => {
                     router.replace("/games/ratio");
                   }}
-                  className="inline text-destructive hover:text-destructive/80 text-xs ml-1 underline"
+                  className="text-sm inline text-destructive underline hover:text-destructive/80"
                 >
                   {t("view")}
                 </Button>
@@ -98,7 +99,7 @@ export function TruncatedCell({
                   onClick={() => {
                     router.replace("/games/rebate");
                   }}
-                  className="inline text-destructive hover:text-destructive/80 text-xs ml-1 underline"
+                  className="text-sm inline text-destructive underline hover:text-destructive/80"
                 >
                   {t("view")}
                 </Button>
@@ -106,7 +107,7 @@ export function TruncatedCell({
               <Button
                 variant="link"
                 onClick={() => setIsExpanded(false)}
-                className="inline text-primary hover:text-primary/80 text-xs ml-1 underline"
+                className="inline text-sm text-primary underline hover:text-primary/80"
               >
                 {t("collapse")}
               </Button>

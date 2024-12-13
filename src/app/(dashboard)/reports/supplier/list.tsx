@@ -48,7 +48,10 @@ export async function ListHeader() {
 async function ListBody({
   list,
   gameList = [],
-}: { list: SupplierReportRecords[]; gameList?: GameInfo[] }) {
+}: {
+  list: SupplierReportRecords[];
+  gameList?: GameInfo[];
+}) {
   const translate = await getTranslations();
 
   return (
@@ -75,7 +78,7 @@ async function ListBody({
         ))
       ) : (
         <TableRow>
-          <TableCell colSpan={7} className="text-center h-40">
+          <TableCell colSpan={7} className="h-40 text-center">
             {translate("noData")}
           </TableCell>
         </TableRow>
@@ -102,9 +105,9 @@ export async function List({
   };
   if (!(params?.startTime && params?.endTime)) {
     return (
-      <div className="p-2 bg-background flex-1">
+      <div className="flex-1 bg-background p-2">
         <div className="h-6" />
-        <div className="border rounded-sm relative">
+        <div className="relative rounded-sm border">
           <Table>
             <ListHeader />
             <ListBody list={[]} />
@@ -116,7 +119,7 @@ export async function List({
   const { data } = await getSupplierReportList(p);
 
   return (
-    <div className="p-2 bg-background flex-1">
+    <div className="flex-1 bg-background p-2">
       <div className="h-6">
         {data?.list && data?.list?.length > 0 && (
           <>
@@ -142,12 +145,12 @@ export async function List({
         )}
       </div>
 
-      <div className="border rounded-sm relative">
+      <div className="relative rounded-sm border">
         <Table>
           <ListHeader />
           <Suspense
             fallback={
-              <div className="flex justify-between items-center bg-background p-4">
+              <div className="flex items-center justify-between bg-background p-4">
                 <Skeleton />
                 <Skeleton />
                 <Skeleton />

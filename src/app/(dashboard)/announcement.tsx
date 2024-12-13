@@ -7,18 +7,21 @@ import { useRouter } from "next/navigation";
 export function Announcement({
   data,
   permissions,
-}: { data: { list: AnnouncementList[] }; permissions: string[] }) {
+}: {
+  data: { list: AnnouncementList[] };
+  permissions: string[];
+}) {
   const t = useTranslations();
   const router = useRouter();
 
   return (
     <>
-      <div className="bg-background p-4 rounded flex-1 relative">
-        <div className="flex justify-between mb-4">
+      <div className="relative flex-1 rounded bg-background p-4">
+        <div className="mb-4 flex justify-between">
           <div>{t("announcement")}</div>
           <button
             type="button"
-            className="text-primary text-sm"
+            className="text-sm text-primary"
             onClick={() => {
               router.push("/system/announcement/own");
             }}
@@ -26,23 +29,23 @@ export function Announcement({
             {data?.list?.length > 0 && t("more")}
           </button>
         </div>
-        <div className="flex flex-col gap-2 w-full text-sm">
+        <div className="flex w-full flex-col gap-2 text-sm">
           {data && data.list.length > 0 ? (
             data?.list.map((item) => {
               return (
                 <div
                   key={item.id}
-                  className="text-ellipsis text-muted-foreground whitespace-nowrap overflow-hidden"
+                  className="overflow-hidden text-ellipsis whitespace-nowrap text-muted-foreground"
                 >
                   {!permissions?.includes("admin_stat") && (
                     <>
                       {item.type === 1 && (
-                        <span className="mr-2 px-2 py-1 inline-block rounded-sm text-primary bg-primary/10">
+                        <span className="mr-2 inline-block rounded-sm bg-primary/10 px-2 py-1 text-primary">
                           {t("platform")}
                         </span>
                       )}
                       {item.type === 3 && (
-                        <span className="mr-2 px-2 py-1 inline-block rounded-sm text-orange bg-orange/10">
+                        <span className="mr-2 inline-block rounded-sm bg-orange/10 px-2 py-1 text-orange">
                           {t("agent")}
                         </span>
                       )}
@@ -54,7 +57,7 @@ export function Announcement({
             })
           ) : (
             <div className="h-20 lg:h-48 xl:h-72">
-              <div className="text-muted-foreground h-full flex items-center justify-center">
+              <div className="flex h-full items-center justify-center text-muted-foreground">
                 {t("noData")}
               </div>
             </div>

@@ -25,7 +25,9 @@ import { toast } from "sonner";
 
 export function RoleDialog({
   permissions,
-}: { permissions: Promise<Res<Permission[]>> }) {
+}: {
+  permissions: Promise<Res<Permission[]>>;
+}) {
   const translations = useTranslations();
   const router = useRouter();
   const t = useTranslations("system.role");
@@ -80,8 +82,8 @@ export function RoleDialog({
         >
           <input type="hidden" name="id" value={data?.id} />
           <div className="flex flex-col gap-4">
-            <div className="flex gap-2 items-center">
-              <Label className="w-20 text-end shrink-0">{t("name")}</Label>
+            <div className="flex items-center gap-2">
+              <Label className="w-20 shrink-0 text-end">{t("name")}</Label>
               <Input
                 className="flex-1"
                 placeholder={t("name")}
@@ -90,8 +92,8 @@ export function RoleDialog({
                 name="roleName"
               />
             </div>
-            <div className="flex gap-2 items-center">
-              <Label className="w-20 text-end shrink-0">
+            <div className="flex items-center gap-2">
+              <Label className="w-20 shrink-0 text-end">
                 {t("permissions")}
               </Label>
               <PermissionTree
@@ -116,7 +118,7 @@ export function RoleDialog({
             }}
             disabled={isPending}
           >
-            {isPending && <Loader2 className="w-4 h-4 animate-spin" />}
+            {isPending && <Loader2 className="h-4 w-4 animate-spin" />}
             {translations("confirm")}
           </Button>
         </DialogFooter>

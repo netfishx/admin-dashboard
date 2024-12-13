@@ -19,13 +19,15 @@ import { Form } from "./form";
 
 export default async function Page({
   searchParams,
-}: { searchParams: Promise<{ [key: string]: string | string[] }> }) {
+}: {
+  searchParams: Promise<{ [key: string]: string | string[] }>;
+}) {
   const { startTime, endTime } = await searchParams;
   return (
-    <div className="flex flex-col gap-2 w-full">
+    <div className="flex w-full flex-col gap-2">
       <Suspense
         fallback={
-          <div className="bg-background p-2 flex flex-col gap-2">
+          <div className="flex flex-col gap-2 bg-background p-4">
             <Skeleton />
             <Skeleton />
             <Skeleton />
@@ -34,7 +36,7 @@ export default async function Page({
       >
         <Form key={`${startTime}-${endTime}`} />
       </Suspense>
-      <div className="bg-background flex-1">
+      <div className="flex-1 bg-background p-4">
         <Suspense
           fallback={
             <Table>
@@ -52,12 +54,14 @@ export default async function Page({
 
 async function TableWrapper({
   searchParams,
-}: { searchParams: Promise<{ [key: string]: string | string[] }> }) {
+}: {
+  searchParams: Promise<{ [key: string]: string | string[] }>;
+}) {
   const { startTime, endTime, id, userId, pageNum, pageSize } =
     await searchParams;
   if (!(startTime && endTime)) {
     return (
-      <Table className="border rounded-sm">
+      <Table className="rounded-sm border">
         <TableHeaderWrapper />
         <TableBodySkeleton />
       </Table>
@@ -75,9 +79,9 @@ async function TableWrapper({
   // temp dict
   // 稽核状态
   return (
-    <div className="p-2 bg-background flex-1 w-full ">
+    <div className="bg-background flex-1 w-full">
       <div className="relative overflow-y-auto overflow-x-auto border rounded-sm">
-        <Table>
+        <Table className="table-fixed">
           <TableHeaderWrapper />
           <Suspense fallback={<TableBodySkeleton />}>
             <TableBodyWrapper list={data?.list ?? []} />
@@ -103,25 +107,16 @@ async function TableHeaderWrapper() {
   return (
     <TableHeader>
       <TableRow className="bg-muted">
-        <TableHead className="min-w-32 text-center">{t("id")}</TableHead>
-        <TableHead className="min-w-32 text-center">
-          {t("createTime")}
-        </TableHead>
-        <TableHead className="min-w-32 text-center">{t("orderType")}</TableHead>
-        <TableHead className="min-w-32 text-center">{t("userId")}</TableHead>
-        <TableHead className="min-w-32 text-center">
-          {t("orderAmount")}
-        </TableHead>
-        <TableHead className="min-w-32 text-center">
-          {t("auditMultiple")}
-        </TableHead>
-        <TableHead className="min-w-32 text-center">
-          {t("availableAudit")}
-        </TableHead>
-        <TableHead className="text-center">{t("remainingAudit")}</TableHead>
-        <TableHead className="min-w-32 text-center">{t("status")}</TableHead>
-
-        <TableHead className="min-w-48 text-center sticky right-0 bg-muted">
+        <TableHead className="w-48">{t("id")}</TableHead>
+        <TableHead className="w-48">{t("createTime")}</TableHead>
+        <TableHead className="w-32">{t("orderType")}</TableHead>
+        <TableHead className="w-48">{t("userId")}</TableHead>
+        <TableHead className="w-48">{t("orderAmount")}</TableHead>
+        <TableHead className="w-24">{t("auditMultiple")}</TableHead>
+        <TableHead className="w-48">{t("availableAudit")}</TableHead>
+        <TableHead className="w-48">{t("remainingAudit")}</TableHead>
+        <TableHead className="w-32">{t("status")}</TableHead>
+        <TableHead className="w-48 text-center sticky right-0 bg-muted">
           {translations("action")}
         </TableHead>
       </TableRow>
@@ -146,39 +141,31 @@ async function TableBodyWrapper({ list }: { list: AuditList[] }) {
       {list && list.length > 0 ? (
         list.map((item) => (
           <TableRow key={item.id}>
-            <TableCell className="min-w-32 text-center">{item.id}</TableCell>
-            <TableCell className="min-w-32 text-center">
+            <TableCell>{item.id}</TableCell>
+            <TableCell>
               <Time time={item.createTime} />
             </TableCell>
 
-            <TableCell className="min-w-32 text-center">
+            <TableCell>
               {orderTypeList[item.orderType as keyof typeof orderTypeList]}
             </TableCell>
-            <TableCell className="min-w-32 text-center">
-              {item.userId}
-            </TableCell>
-            <TableCell className="min-w-32 text-center">
-              {item.orderAmount}
-            </TableCell>
-            <TableCell className="min-w-32 text-center">
-              {item.auditMultiple}
-            </TableCell>
-            <TableCell className="min-w-32 text-center">
-              {item.availableAudit}
-            </TableCell>
-            <TableCell className="text-center">{item.remainingAudit}</TableCell>
-            <TableCell className="min-w-32 text-center">
+            <TableCell>{item.userId}</TableCell>
+            <TableCell>{item.orderAmount}</TableCell>
+            <TableCell>{item.auditMultiple}</TableCell>
+            <TableCell>{item.availableAudit}</TableCell>
+            <TableCell>{item.remainingAudit}</TableCell>
+            <TableCell>
               {statusList[item.status as keyof typeof statusList]}
             </TableCell>
 
-            <TableCell className="min-w-48 text-center sticky right-0 bg-background">
+            <TableCell className="text-center sticky right-0 bg-background">
               <CleanBtn data={item} />
             </TableCell>
           </TableRow>
         ))
       ) : (
         <TableRow>
-          <TableCell colSpan={10} className="text-center h-40">
+          <TableCell colSpan={10} className="h-40 text-center">
             {translations("noData")}
           </TableCell>
         </TableRow>

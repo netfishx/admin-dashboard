@@ -27,7 +27,7 @@ function TableWrapper() {
       <TableHeader>
         <TableRow className="bg-muted">
           <TableHead>{t("name")}</TableHead>
-          <TableHead className="min-w-32 w-1/2">
+          <TableHead className="w-1/2 min-w-32">
             {t("rebate")}
             <span className="text-destructive">{t("tip")}</span>
           </TableHead>
@@ -56,17 +56,17 @@ function TableWrapper() {
 export default function Page() {
   const t = useTranslations("games.rebate");
   return (
-    <div className="flex flex-col gap-2 w-full">
-      <div className="flex justify-between items-center bg-background p-4">
+    <div className="flex w-full flex-col gap-2">
+      <div className="flex items-center justify-between bg-background p-4">
         <RebateForm />
       </div>
-      <div className="p-2 bg-background flex-1 flex flex-col gap-2">
-        <div className="border rounded-sm">
+      <div className="flex flex-1 flex-col gap-4 bg-background p-4">
+        <div className="rounded-sm border">
           <Suspense>
             <TableWrapper />
           </Suspense>
         </div>
-        <div className="text-sm text-primary/80 before:content-['*'] before:mr-1">
+        <div className="text-sm text-primary/80 before:mr-1 before:content-['*']">
           {t("tips")}
         </div>
       </div>

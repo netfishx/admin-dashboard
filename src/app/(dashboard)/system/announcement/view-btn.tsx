@@ -14,7 +14,7 @@ export function ViewBtn({ data }: { data: AnnouncementList }) {
     <>
       <Button
         variant="link"
-        className="hover:no-underline hover:text-primary/80"
+        className="hover:text-primary/80 hover:no-underline"
         onClick={() => {
           setContentModal(true);
           setContentModalData(data);

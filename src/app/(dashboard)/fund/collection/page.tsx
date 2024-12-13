@@ -7,7 +7,7 @@ import { List, ListHeader } from "./list";
 
 export default async function Page() {
   return (
-    <div className="flex flex-col gap-2 w-full h-full">
+    <div className="flex h-full w-full flex-col gap-2">
       <Suspense
         fallback={
           <div className="bg-background p-4">

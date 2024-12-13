@@ -121,7 +121,9 @@ async function ListBody({ list }: { list: GameRecordRequestRecords[] }) {
 
 export async function List({
   searchParams,
-}: { searchParams: Promise<GameRecordRequestParams> }) {
+}: {
+  searchParams: Promise<GameRecordRequestParams>;
+}) {
   const params = await searchParams;
   if (!(params?.startTime && params?.endTime)) {
     return (

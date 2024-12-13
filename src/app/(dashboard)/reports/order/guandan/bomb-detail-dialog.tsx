@@ -96,7 +96,7 @@ export function BombDetailDialog() {
           <DialogTitle>{t("bombDetail")}</DialogTitle>
           <DialogDescription />
         </DialogHeader>
-        <div className="border rounded-sm">
+        <div className="rounded-sm border">
           <Table>
             <TableHeader className="table w-full">
               <TableRow className="bg-muted">
@@ -117,7 +117,7 @@ export function BombDetailDialog() {
                     <TableCell className="w-[150px]">{item.score}</TableCell>
                     <TableCell className="w-[150px]">{item.rank}</TableCell>
                     <TableCell className="w-[150px]">{item.tribute}</TableCell>
-                    <TableCell className="w-[200px] max-w-[200px] no-wrap">
+                    <TableCell className="no-wrap w-[200px] max-w-[200px]">
                       <ScrollArea className="h-20">
                         {processAndSortCards(item.hand)}
                         <ScrollBar orientation="vertical" />
@@ -126,8 +126,8 @@ export function BombDetailDialog() {
                   </TableRow>
                 ))
               ) : (
-                <TableRow className="w-full justify-center flex items-center">
-                  <TableCell className="text-center h-40 flex items-center justify-center">
+                <TableRow className="flex w-full items-center justify-center">
+                  <TableCell className="flex h-40 items-center justify-center text-center">
                     {translation("noData")}
                   </TableCell>
                 </TableRow>

@@ -33,7 +33,7 @@ export function DetailButton({ item }: { item: CollectionAddressListRecords }) {
       {item.status === 2 && (
         <Button
           variant="ghost"
-          className="hover:no-underline hover:text-primary/80 text-primary"
+          className="text-primary hover:text-primary/80 hover:no-underline"
           onClick={() => handleDetail("UNLOCK")}
         >
           {t("unlock")}
@@ -42,7 +42,7 @@ export function DetailButton({ item }: { item: CollectionAddressListRecords }) {
       {(item.status === 2 || item.status === 0) && (
         <Button
           variant="ghost"
-          className="hover:no-underline hover:text-primary/80 text-primary"
+          className="text-primary hover:text-primary/80 hover:no-underline"
           onClick={() => handleDetail("CHECK")}
         >
           {t("check")}
@@ -51,7 +51,7 @@ export function DetailButton({ item }: { item: CollectionAddressListRecords }) {
       {item.status === 1 && (
         <Button
           variant="ghost"
-          className="hover:no-underline hover:text-primary/80 text-primary"
+          className="text-primary hover:text-primary/80 hover:no-underline"
           onClick={() => handleDetail("LOCK")}
         >
           {t("lock")}
@@ -60,7 +60,7 @@ export function DetailButton({ item }: { item: CollectionAddressListRecords }) {
       {item.status === 2 && (
         <Button
           variant="link"
-          className="hover:no-underline hover:text-primary/80 text-red-500"
+          className="text-red-500 hover:text-primary/80 hover:no-underline"
           onClick={() => handleDetail("STOP")}
         >
           {t("stop")}

@@ -17,7 +17,7 @@ export default async function Page({ searchParams }: CommonWrapperProps) {
     <>
       <Suspense
         fallback={
-          <div className="flex justify-between items-center bg-background p-4">
+          <div className="flex items-center justify-between bg-background p-4">
             <Skeleton />
           </div>
         }

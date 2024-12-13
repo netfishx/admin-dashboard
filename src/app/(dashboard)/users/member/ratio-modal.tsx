@@ -52,7 +52,7 @@ export function RatioModal() {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent
-        className="2xl:max-w-lg lg:max-w-md"
+        className="lg:max-w-md 2xl:max-w-lg"
         onPointerDownOutside={(e) => e.preventDefault()}
       >
         <DialogHeader>
@@ -61,10 +61,10 @@ export function RatioModal() {
         </DialogHeader>
         <div className="flex flex-col gap-2">
           <span className="text-md font-medium">{t("baccarat")}</span>
-          <div className="border rounded-sm overflow-auto max-h-[50dvh]">
+          <div className="max-h-[50dvh] overflow-auto rounded-sm border">
             <ScrollableTable className="relative">
               <TableHeader>
-                <TableRow className="bg-muted sticky top-0">
+                <TableRow className="sticky top-0 bg-muted">
                   <TableHead>{t("name")}</TableHead>
                   <TableHead>{t("ratio")}</TableHead>
                 </TableRow>
@@ -85,7 +85,7 @@ export function RatioModal() {
                       ))
                   ) : (
                     <TableRow>
-                      <TableCell colSpan={2} className="text-center h-40">
+                      <TableCell colSpan={2} className="h-40 text-center">
                         {translations("noData")}
                       </TableCell>
                     </TableRow>

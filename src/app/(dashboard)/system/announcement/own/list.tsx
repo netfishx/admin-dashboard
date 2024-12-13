@@ -17,7 +17,9 @@ import { TruncatedCell } from "../truncated-cell";
 
 export async function List({
   searchParams,
-}: { searchParams: Promise<{ [key: string]: string | string[] }> }) {
+}: {
+  searchParams: Promise<{ [key: string]: string | string[] }>;
+}) {
   const { pageSize, pageNum } = await searchParams;
 
   const { data } = await getSameOrSeniorAnno({
@@ -29,7 +31,7 @@ export async function List({
   return (
     <div className="p-2 gap-2 flex flex-col h-full bg-background">
       <div className="border rounded-sm">
-        <Table>
+        <Table className="table-fixed">
           <TableHeaderWrapper />
           <TableBodyWrapper data={data} />
         </Table>
@@ -53,20 +55,12 @@ export async function TableHeaderWrapper() {
   return (
     <TableHeader>
       <TableRow className="bg-muted">
-        <TableHead className="w-32 min-w-32 text-center">
-          {t("startTime")}
-        </TableHead>
-        <TableHead className="w-32 min-w-32 text-center">
-          {t("endTime")}
-        </TableHead>
-        <TableHead className="w-32 min-w-32 text-center">
-          {t("createTime")}
-        </TableHead>
-        <TableHead className="w-[450px] min-w-24 text-center">
-          {t("content")}
-        </TableHead>
-        <TableHead className="text-center">{t("type")}</TableHead>
-        <TableHead className="min-w-24 text-center">{t("action")}</TableHead>
+        <TableHead className="w-48">{t("startTime")}</TableHead>
+        <TableHead className="w-48">{t("endTime")}</TableHead>
+        <TableHead className="w-48">{t("createTime")}</TableHead>
+        <TableHead className="w-[450px]">{t("content")}</TableHead>
+        <TableHead className="w-32">{t("type")}</TableHead>
+        <TableHead className="w-24 text-center">{t("action")}</TableHead>
       </TableRow>
     </TableHeader>
   );
@@ -87,7 +81,9 @@ export function TableBodySkeleton() {
 }
 export async function TableBodyWrapper({
   data,
-}: { data?: PageData<AnnouncementList> }) {
+}: {
+  data?: PageData<AnnouncementList>;
+}) {
   const translations = await getTranslations();
 
   const noticeTypeMap: { [key: number]: string } = {
@@ -105,13 +101,13 @@ export async function TableBodyWrapper({
       {data && data.list.length > 0 ? (
         data.list.map((item) => (
           <TableRow key={Math.random()}>
-            <TableCell className="w-24 text-center">
+            <TableCell>
               <Time time={Number(item.startTime)} />
             </TableCell>
-            <TableCell className="w-24 text-center">
+            <TableCell>
               <Time time={Number(item.endTime)} />
             </TableCell>
-            <TableCell className="w-24 text-center">
+            <TableCell>
               <Time time={Number(item.createTime)} />
             </TableCell>
             <TruncatedCell
@@ -120,17 +116,15 @@ export async function TableBodyWrapper({
               content={item.contentOfLanguage}
               maxLength={50}
             />
+            <TableCell>{noticeTypeMap[item.type]}</TableCell>
             <TableCell className="text-center">
-              {noticeTypeMap[item.type]}
-            </TableCell>
-            <TableCell className="w-24 text-center">
               <EditBtn data={item} />
             </TableCell>
           </TableRow>
         ))
       ) : (
         <TableRow>
-          <TableCell colSpan={6} className="text-center h-40">
+          <TableCell colSpan={6} className="h-40 text-center">
             {translations("noData")}
           </TableCell>
         </TableRow>

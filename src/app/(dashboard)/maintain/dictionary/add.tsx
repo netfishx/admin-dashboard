@@ -14,7 +14,6 @@ export function Add() {
     <>
       <AddEditDialog />
       <Button
-        size="sm"
         onClick={() => {
           setData(null);
           setOpen(true);

@@ -38,6 +38,8 @@ export function GameSettingModal() {
   const [isPeding, startTransition] = useTransition();
   const [open, setOpen] = useAtom(gameSettingModalAtom);
   const [data, setData] = useState<GameConfig[] | undefined>();
+  // 是否验证
+  const [isValidate, setIsValidate] = useState(true);
   useEffect(() => {
     if (userId && open) {
       setLoading(true);
@@ -51,16 +53,13 @@ export function GameSettingModal() {
       });
     }
   }, [userId, open]);
-  const handleChangePercent = (gameId: number, percent: number) => {
+  const handleChangePercent = (gameId: number, percent: string) => {
     if (data) {
       const newList = data.map((item) =>
         item.gameId === gameId
           ? {
               ...item,
-              percent:
-                Number(percent) > (Number(item.maxPercent) ?? 0)
-                  ? item.maxPercent
-                  : percent.toString(),
+              percent,
             }
           : item,
       );
@@ -106,10 +105,10 @@ export function GameSettingModal() {
         </DialogHeader>
         <div className="flex flex-col gap-2">
           <span className="text-md font-medium">{t("baccarat")}</span>
-          <div className="border rounded-sm overflow-auto max-h-[50dvh]">
+          <div className="max-h-[50dvh] overflow-auto rounded-sm border">
             <ScrollableTable className="relative">
               <TableHeader>
-                <TableRow className="bg-muted sticky top-0">
+                <TableRow className="sticky top-0 bg-muted">
                   <TableHead>{t("name")}</TableHead>
                   <TableHead>{t("switch")}</TableHead>
                   <TableHead>{t("ratio")}</TableHead>
@@ -141,12 +140,17 @@ export function GameSettingModal() {
                             <Input
                               value={item.percent}
                               type="number"
+                              min={0}
+                              step={0.01}
                               max={item.maxPercent}
                               onChange={(e) => {
                                 handleChangePercent(
                                   item.gameId,
-                                  Number(e.target.value),
+                                  e.target.value,
                                 );
+                              }}
+                              onBlur={(e) => {
+                                setIsValidate(e.target.reportValidity());
                               }}
                             />
                             <span className="text-destructive">
@@ -156,10 +160,10 @@ export function GameSettingModal() {
                         </TableRow>
                       ))
                   ) : (
-                    <TableRow className="flex justify-center items-center">
+                    <TableRow className="flex items-center justify-center">
                       <TableCell
                         colSpan={3}
-                        className="flex justify-center items-center h-20"
+                        className="flex h-20 items-center justify-center"
                       >
                         {translations("noData")}
                       </TableCell>
@@ -172,7 +176,7 @@ export function GameSettingModal() {
         </div>
         <div className="flex flex-col gap-2">
           <span className="text-md font-medium">{t("guandan")}</span>
-          <div className="border rounded-sm">
+          <div className="rounded-sm border">
             <Table>
               <TableHeader>
                 <TableRow className="bg-muted">
@@ -206,7 +210,7 @@ export function GameSettingModal() {
                       ))
                   ) : (
                     <TableRow>
-                      <TableCell colSpan={2} className="text-center h-6">
+                      <TableCell colSpan={2} className="h-6 text-center">
                         {translations("noData")}
                       </TableCell>
                     </TableRow>
@@ -220,7 +224,10 @@ export function GameSettingModal() {
           <Button variant="outline" onClick={() => setOpen(false)}>
             {translations("cancel")}
           </Button>
-          <Button disabled={isPeding} onClick={handleClickUpdate}>
+          <Button
+            disabled={isPeding || !isValidate}
+            onClick={handleClickUpdate}
+          >
             {isPeding && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
             {translations("confirm")}
           </Button>
@@ -233,7 +240,10 @@ export function GameSettingModal() {
 function GameSettingSkeleton({
   length,
   colSpan,
-}: { length: number; colSpan: number }) {
+}: {
+  length: number;
+  colSpan: number;
+}) {
   return (
     <TableBody>
       {Array.from({ length }).map((_, index) => (

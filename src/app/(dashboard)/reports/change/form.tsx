@@ -28,7 +28,9 @@ export function Form() {
     endTime: parseAsInteger,
   });
 
-  const [userId, setUserId] = useQueryState("userId");
+  const [userId, setUserId] = useQueryState("userId", {
+    defaultValue: "",
+  });
   const [transactionID, setTransactionID] = useQueryState("transactionID");
   const [userType, setUserType] = useQueryState("userType", {
     defaultValue: "0",
@@ -46,13 +48,13 @@ export function Form() {
     }
   }
   return (
-    <div className="flex flex-col bg-background py-4 px-4 gap-4">
-      <div className="flex gap-4 items-center">
-        <div className="flex gap-2 items-center">
+    <div className="flex flex-col gap-4 bg-background p-4">
+      <div className="flex items-center gap-4">
+        <div className="flex items-center gap-2">
           <Label className="shrink-0">{t("createdTime")}</Label>
           <DateRangeFilter />
         </div>
-        <div className="flex gap-2 items-center">
+        <div className="flex items-center gap-2">
           <Label className="shrink-0">{t("operateType")}</Label>
           {/* 百家乐代理结算、百家乐会员结算、掼蛋会员结算、返水、充值、提现、借款、还款、授信、减少授信、转出、转入、投注、打赏 */}
           <Select
@@ -88,8 +90,8 @@ export function Form() {
           </Select>
         </div>
       </div>
-      <div className="flex gap-4 items-center">
-        <div className="flex gap-2 items-center">
+      <div className="flex items-center gap-4">
+        <div className="flex items-center gap-2">
           <Label className="shrink-0">{t("transactionId")}</Label>
           <Input
             placeholder={t("placeholder")}
@@ -98,7 +100,7 @@ export function Form() {
           />
         </div>
         {/* todo admin permission */}
-        <div className="flex gap-2 items-center">
+        <div className="flex items-center gap-2">
           <Label className="shrink-0">{t("userType")}</Label>
           <Select
             value={userType ?? ""}
@@ -116,7 +118,7 @@ export function Form() {
           </Select>
         </div>
         {/* todo admin permission */}
-        <div className="flex gap-2 items-center">
+        <div className="flex items-center gap-2">
           <Label className="shrink-0">{t("userId")}</Label>
           <Input
             placeholder={t("placeholder")}
@@ -125,7 +127,7 @@ export function Form() {
           />
         </div>
       </div>
-      <div className="flex gap-2 justify-end items-start">
+      <div className="flex items-start justify-end gap-2">
         <Button
           variant="outline"
           disabled={isReset}

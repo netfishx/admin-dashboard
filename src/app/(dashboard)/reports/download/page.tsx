@@ -21,11 +21,11 @@ export default async function Page({
 }) {
   const t = await getTranslations("report.download");
   return (
-    <div className="flex flex-col gap-2 w-full">
+    <div className="flex w-full flex-col gap-2">
       <div className="flex items-center bg-background p-4 text-sm font-medium">
         {t("list")}
       </div>
-      <div className="p-2 bg-background flex-1">
+      <div className="p-4 bg-background flex-1">
         <div className="border rounded-sm">
           <Suspense
             fallback={
@@ -45,7 +45,9 @@ export default async function Page({
 
 async function TableWrapper({
   searchParams,
-}: { searchParams: Promise<{ [key: string]: string | undefined }> }) {
+}: {
+  searchParams: Promise<{ [key: string]: string | undefined }>;
+}) {
   const { pageNum = "1", pageSize = "10" } = await searchParams;
   const { data } = await getDownloadList({
     pageNum: Number(pageNum),
@@ -77,7 +79,9 @@ async function TableHeaderWrapper() {
 
 async function TableBodyWrapper({
   list,
-}: { list: DownloadListRecords[] | undefined }) {
+}: {
+  list: DownloadListRecords[] | undefined;
+}) {
   const translation = await getTranslations();
   return (
     <TableBody>
@@ -86,10 +90,10 @@ async function TableBodyWrapper({
           <TableRow key={item.id}>
             <TableCell>{item.exportFileName}</TableCell>
             <TableCell>
-              <Time time={item.operateTime} />
+              {item.operateTime ? <Time time={item.operateTime} /> : null}
             </TableCell>
             <TableCell>
-              <Time time={item.endTime} />
+              {item.endTime ? <Time time={item.endTime} /> : null}
             </TableCell>
             <TableCell>
               <ShowStatusLable status={item.status} />
@@ -115,28 +119,28 @@ async function ShowStatusLable({ status }: { status: number }) {
   const t = await getTranslations("report.download");
   if (status === 0) {
     return (
-      <span className="p-1 rounded-sm w-20 inline-block text-center text-primary bg-primary/20">
+      <span className="inline-block w-20 rounded-sm bg-primary/20 p-1 text-center text-primary">
         {t("initializing")}
       </span>
     );
   }
   if (status === 1) {
     return (
-      <span className="p-1 rounded-sm w-20 inline-block text-center text-primary bg-primary/20">
+      <span className="inline-block w-20 rounded-sm bg-primary/20 p-1 text-center text-primary">
         {t("exporting")}
       </span>
     );
   }
   if (status === 2) {
     return (
-      <span className="p-1 rounded-sm w-20 inline-block text-center text-green bg-green/20">
+      <span className="inline-block w-20 rounded-sm bg-green/20 p-1 text-center text-green">
         {t("exported")}
       </span>
     );
   }
   if (status === 99) {
     return (
-      <span className="p-1 rounded-sm w-20 inline-block text-center text-destructive bg-destructive/20">
+      <span className="inline-block w-20 rounded-sm bg-destructive/20 p-1 text-center text-destructive">
         {t("failed")}
       </span>
     );

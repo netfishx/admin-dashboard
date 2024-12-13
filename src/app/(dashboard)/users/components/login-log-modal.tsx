@@ -2,12 +2,10 @@
 import { getAgentLoginLog, getMemberLoginLog } from "@/api";
 import { ModalPagination } from "@/components/modal-pagination";
 import { Time } from "@/components/time";
-import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
   DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
@@ -29,7 +27,10 @@ import { startTransition, useEffect, useState } from "react";
 export function LoginLogModal({
   id,
   type,
-}: { id: string; type: "AGENT" | "MEMBER" }) {
+}: {
+  id: string;
+  type: "AGENT" | "MEMBER";
+}) {
   const translations = useTranslations();
   const t = useTranslations("users.agents");
   const [data, setData] = useState<LoginLog[]>([]);
@@ -82,17 +83,17 @@ export function LoginLogModal({
   return (
     <Dialog open={open} onOpenChange={handleClose}>
       <DialogContent
-        className="2xl:max-w-2xl lg:max-w-xl"
+        className="lg:max-w-xl 2xl:max-w-2xl"
         onPointerDownOutside={(e) => e.preventDefault()}
       >
         <DialogHeader>
           <DialogTitle>{t("loginLog")}</DialogTitle>
           <DialogDescription />
         </DialogHeader>
-        <div className="border rounded-sm overflow-auto max-h-[50dvh]">
+        <div className="max-h-[50dvh] overflow-auto rounded-sm border">
           <ScrollableTable className="relative">
             <TableHeader>
-              <TableRow className="bg-muted sticky top-0">
+              <TableRow className="sticky top-0 bg-muted">
                 <TableHead>{t("loginTime")}</TableHead>
                 <TableHead>{t("ip")}</TableHead>
                 <TableHead>{t("address")}</TableHead>
@@ -118,7 +119,7 @@ export function LoginLogModal({
                   ))
                 ) : (
                   <TableRow>
-                    <TableCell colSpan={4} className="text-center h-40">
+                    <TableCell colSpan={4} className="h-40 text-center">
                       {translations("noData")}
                     </TableCell>
                   </TableRow>
@@ -134,12 +135,6 @@ export function LoginLogModal({
           setPage={setPage}
           setSize={setSize}
         />
-        <DialogFooter>
-          <Button variant="outline" onClick={handleClose}>
-            {translations("cancel")}
-          </Button>
-          <Button onClick={handleClose}>{translations("confirm")}</Button>
-        </DialogFooter>
       </DialogContent>
     </Dialog>
   );
@@ -164,13 +159,13 @@ function StatusLabel({ status }: { status: number }) {
   const t = useTranslations("users.agents");
   if (status === 0) {
     return (
-      <div className="text-primary bg-primary/10 px-2 rounded-sm w-fit">
+      <div className="w-fit rounded-sm bg-primary/10 px-2 text-primary">
         {t("success")}
       </div>
     );
   }
   return (
-    <div className="text-destructive bg-destructive/10 px-2 rounded-sm w-fit">
+    <div className="w-fit rounded-sm bg-destructive/10 px-2 text-destructive">
       {t("failed")}
     </div>
   );

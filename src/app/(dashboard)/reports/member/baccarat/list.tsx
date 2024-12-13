@@ -47,7 +47,7 @@ export async function ListHeader() {
         <TableHead className="min-w-24 text-center">
           {t("profit_loss_result")}
         </TableHead>
-        <TableHead className="w-24 text-center sticky right-0 z-10 bg-muted">
+        <TableHead className="sticky right-0 z-10 w-24 bg-muted text-center">
           {t("details")}
         </TableHead>
       </TableRow>
@@ -58,7 +58,10 @@ export async function ListHeader() {
 async function ListBody({
   list,
   gameList,
-}: { list: MemberReportsRecord[]; gameList?: GameInfo[] }) {
+}: {
+  list: MemberReportsRecord[];
+  gameList?: GameInfo[];
+}) {
   const translate = await getTranslations();
 
   return (
@@ -92,14 +95,14 @@ async function ListBody({
             <TableCell className="w-24 text-center">
               {item.profitLossAmount}
             </TableCell>
-            <TableCell className="w-24 text-center sticky right-0 z-10 bg-background">
+            <TableCell className="sticky right-0 z-10 w-24 bg-background text-center">
               <DetailButton item={item} />
             </TableCell>
           </TableRow>
         ))
       ) : (
         <TableRow>
-          <TableCell colSpan={10} className="text-center h-40">
+          <TableCell colSpan={10} className="h-40 text-center">
             {translate("noData")}
           </TableCell>
         </TableRow>
@@ -126,9 +129,9 @@ export async function List({
   };
   if (!(params?.startTime && params?.endTime)) {
     return (
-      <div className="p-2 bg-background flex-1">
+      <div className="flex-1 bg-background p-2">
         <div className="h-6" />
-        <div className="border rounded-sm relative">
+        <div className="relative rounded-sm border">
           <Table>
             <ListHeader />
             <ListBody list={[]} />
@@ -140,7 +143,7 @@ export async function List({
   const { data } = await getMemberReportList(p);
 
   return (
-    <div className="p-2 bg-background flex-1">
+    <div className="flex-1 bg-background p-2">
       <div className="h-6">
         {data?.list && data?.list?.length > 0 && (
           <>
@@ -189,7 +192,7 @@ export async function List({
         )}
       </div>
 
-      <div className="border rounded-sm relative">
+      <div className="relative rounded-sm border">
         <Table>
           <ListHeader />
           <Suspense fallback={<TableSkeleton length={5} colSpan={10} />}>

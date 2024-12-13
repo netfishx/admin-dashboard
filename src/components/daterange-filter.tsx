@@ -154,6 +154,7 @@ export function DateRangeFilter({
   isSearch = true, // true： 来自于搜索组件， false： 来自于表单
   formDateRange, // 表单里传过来的日期范围
   onDateRangeChange,
+  disabled = false,
 }: {
   quickSetBtn?: rangeType[];
   enableTimeSelect?: boolean;
@@ -162,6 +163,7 @@ export function DateRangeFilter({
   isSearch?: boolean;
   formDateRange?: { from: number; to: number };
   onDateRangeChange?: (startTime: number, endTime: number) => void;
+  disabled?: boolean;
 }) {
   const t = useTranslations("report.orderlist");
   const today = new Date();
@@ -181,7 +183,7 @@ export function DateRangeFilter({
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     startTransition(async () => {
-      if (!(dateRange[startTimeText] && dateRange[endTimeText])) {
+      if (!(dateRange[startTimeText] && dateRange[endTimeText]) && isSearch) {
         const today = new Date();
         await setDateRange({
           [startTimeText]: startOfDay(today).getTime(),
@@ -271,6 +273,13 @@ export function DateRangeFilter({
     if (range) {
       let from = range.from;
       let to = range.to;
+      // 如果开始时间和结束时间相同，则设置为当天的00:00:00到23:59:59
+      if (from && to && from.getTime() === to.getTime()) {
+        return setDateRange({
+          [startTimeText]: startOfDay(from).getTime(),
+          [endTimeText]: endOfDay(to).getTime(),
+        });
+      }
 
       if (from?.getTime() === 0) {
         from = today;
@@ -345,6 +354,7 @@ export function DateRangeFilter({
               !dateRange && "text-muted-foreground",
               enableTimeSelect ? "w-[361px]" : "w-[241px]",
             )}
+            disabled={disabled}
           >
             <CalendarIcon className="mr-2 h-4 w-4" />
             {formattedDateRange()}
@@ -356,7 +366,7 @@ export function DateRangeFilter({
               autoFocus
               mode="range"
               selected={
-                dateRange
+                dateRange[startTimeText] && dateRange[endTimeText]
                   ? {
                       from: new Date(dateRange[startTimeText]),
                       to: new Date(dateRange[endTimeText]),

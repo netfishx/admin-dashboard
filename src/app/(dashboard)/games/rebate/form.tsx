@@ -62,7 +62,7 @@ export function RebateForm() {
   return (
     <>
       <div className="flex gap-2">
-        <div className="flex gap-2 items-center">
+        <div className="flex items-center gap-2">
           <Label className="shrink-0">{t("type")}</Label>
           <Select defaultValue="1" disabled>
             <SelectTrigger className="w-28">
@@ -73,7 +73,7 @@ export function RebateForm() {
             </SelectContent>
           </Select>
         </div>
-        <div className="flex gap-2 items-center">
+        <div className="flex items-center gap-2">
           <Label className="shrink-0">{t("column")}</Label>
           <EditNumber
             step={step}

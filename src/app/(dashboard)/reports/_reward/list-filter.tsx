@@ -59,18 +59,18 @@ export function ListFilter() {
   };
 
   return (
-    <div className="flex flex-col gap-2 bg-background py-2 px-4">
+    <div className="flex flex-col gap-2 bg-background px-4 py-2">
       {/* First row */}
-      <div className="flex gap-4 items-center">
-        <div className="flex gap-2 items-center">
+      <div className="flex items-center gap-4">
+        <div className="flex items-center gap-2">
           <Label>{t("dateRange")}</Label>
           <DateRangeFilter enableTimeSelect={false} />
         </div>
       </div>
 
       {/* Last row */}
-      <div className="flex gap-4 items-center">
-        <div className="flex gap-4 items-center">
+      <div className="flex items-center gap-4">
+        <div className="flex items-center gap-4">
           <Label className="shrink-0">{t("orderNumber")}</Label>
           <Input
             value={orderNumber ?? ""}
@@ -78,7 +78,7 @@ export function ListFilter() {
             placeholder={t("placeholderinput")}
           />
         </div>
-        <div className="flex gap-4 items-center">
+        <div className="flex items-center gap-4">
           <Label className="shrink-0">{t("memberId")}</Label>
           <Input
             value={memberId ?? ""}
@@ -86,7 +86,7 @@ export function ListFilter() {
             placeholder={t("placeholderinput")}
           />
         </div>
-        <div className="flex gap-4 items-center">
+        <div className="flex items-center gap-4">
           <Label className="shrink-0">{t("roomOwnerId")}</Label>
           <Input
             value={houseOwnerId ?? ""}
@@ -94,7 +94,7 @@ export function ListFilter() {
             placeholder={t("placeholderinput")}
           />
         </div>
-        <div className="flex gap-4 items-center">
+        <div className="flex items-center gap-4">
           <Label className="shrink-0">{t("ministerId")}</Label>
           <Input
             value={ministerId ?? ""}
@@ -102,7 +102,7 @@ export function ListFilter() {
             placeholder={t("placeholderinput")}
           />
         </div>
-        <div className="flex gap-4 items-center">
+        <div className="flex items-center gap-4">
           <Label className="shrink-0">{t("amountfilter")}</Label>
           <Select
             onValueChange={(value) => handleFilterChange(value)}
@@ -128,10 +128,10 @@ export function ListFilter() {
         </div>
       </div>
       {/* Last row */}
-      <div className="flex gap-4 justify-end items-center">
-        <div className="flex gap-2 items-center ">
+      <div className="flex items-center justify-end gap-4">
+        <div className="flex items-center gap-2">
           <Button
-            className="px-4 py-2 border rounded-md bg-white text-gray-700 border-gray-300 hover:bg-gray-100"
+            className="rounded-md border border-gray-300 bg-white px-4 py-2 text-gray-700 hover:bg-gray-100"
             onClick={handleReset}
           >
             {t("reset")}

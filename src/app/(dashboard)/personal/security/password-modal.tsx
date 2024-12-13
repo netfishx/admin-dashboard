@@ -69,8 +69,8 @@ export function PasswordModal({
           ref={ref}
         >
           <div className="flex flex-col gap-4">
-            <div className="flex gap-2 items-center">
-              <Label className="shrink-0 w-[100px] text-right text-muted-foreground before:content-['*'] before:text-destructive">
+            <div className="flex items-center gap-2">
+              <Label className="w-[100px] shrink-0 text-right text-muted-foreground before:text-destructive before:content-['*'] before:mr-1">
                 {t("oldPassword")}
               </Label>
               <Password
@@ -80,8 +80,8 @@ export function PasswordModal({
               />
             </div>
             <div>
-              <div className="flex gap-2 items-center">
-                <Label className="shrink-0 w-[100px] text-right text-muted-foreground before:content-['*'] before:text-destructive">
+              <div className="flex items-center gap-2">
+                <Label className="w-[100px] shrink-0 text-right text-muted-foreground before:text-destructive before:content-['*'] before:mr-1">
                   {t("newPassword")}
                 </Label>
                 <Password
@@ -90,12 +90,12 @@ export function PasswordModal({
                   name="newPassword"
                 />
               </div>
-              <div className="text-xs text-destructive ml-[110px] mt-2">
+              <div className="ml-[110px] mt-2 text-xs text-destructive">
                 {t("passwordWarning")}
               </div>
             </div>
-            <div className="flex gap-2 items-center">
-              <Label className="w-[100px] text-right shrink-0  text-muted-foreground before:content-['*'] before:text-destructive">
+            <div className="flex items-center gap-2">
+              <Label className="w-[100px] shrink-0 text-right text-muted-foreground before:text-destructive before:content-['*'] before:mr-1">
                 {t("confirmPassword")}
               </Label>
               <Password
@@ -119,7 +119,7 @@ export function PasswordModal({
             }}
             disabled={isPending}
           >
-            {isPending && <Loader2 className="w-4 h-4 animate-spin" />}
+            {isPending && <Loader2 className="h-4 w-4 animate-spin" />}
             {translations("confirm")}
           </Button>
         </DialogFooter>

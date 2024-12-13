@@ -35,7 +35,7 @@ export function SupplierTable({ data }: { data: Supplier[] | undefined }) {
         ))
       ) : (
         <TableRow>
-          <TableCell colSpan={6} className="text-center h-40">
+          <TableCell colSpan={6} className="h-40 text-center">
             {translation("noData")}
           </TableCell>
         </TableRow>
@@ -63,13 +63,13 @@ function ShowStatus({ status }: { status: number }) {
   const t = useTranslations("users.supplier");
   if (status === 0) {
     return (
-      <div className="px-2 rounded-sm text-green bg-green/10 w-fit">
+      <div className="w-fit rounded-sm bg-green/10 px-2 text-green">
         {t("enable")}
       </div>
     );
   }
   return (
-    <div className="px-2 rounded-sm text-destructive bg-destructive/10 w-fit">
+    <div className="w-fit rounded-sm bg-destructive/10 px-2 text-destructive">
       {t("disable")}
     </div>
   );

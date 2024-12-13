@@ -36,11 +36,11 @@ import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { use, useEffect, useState, useTransition } from "react";
 import { toast } from "sonner";
-
-// import { TimeRange } from "./time-range";
 export function AddModal({
   session,
-}: { session: Promise<SessionData | null> }) {
+}: {
+  session: Promise<SessionData | null>;
+}) {
   const translations = useTranslations();
 
   const sessionData = use(session);
@@ -78,7 +78,6 @@ export function AddModal({
       startTime: startTime,
       endTime: endTime,
     };
-
     const { valid, message } = validateParams(addParams);
 
     if (valid) {
@@ -248,7 +247,7 @@ export function AddModal({
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent
-        className="max-w-5xl max-h-[60dvh] h-[60dvh]"
+        className="h-[60dvh] max-h-[60dvh] max-w-5xl"
         onPointerDownOutside={(e) => e.preventDefault()}
       >
         <DialogHeader>
@@ -256,15 +255,15 @@ export function AddModal({
           <DialogDescription />
         </DialogHeader>
 
-        <div className="flex flex-col gap-4 w-full p-4 overflow-y-auto">
-          <div className="flex gap-4 items-center">
-            <Label className="shrink-0 w-24 text-right text-muted-foreground before:content-['*'] before:text-destructive">
+        <div className="flex w-full flex-col gap-4 overflow-y-auto p-4">
+          <div className="flex items-center gap-4">
+            <Label className="w-24 shrink-0 text-right text-muted-foreground before:text-destructive before:content-['*'] before:mr-1">
               {t("announcementType")}
             </Label>
             {/* 公告类型 根据管理员和代理角色 展示的也不一样 */}
             {/* 
               类型：平台代理公告（对象：所有代理），平台会员公告（对象：所有会员），直属代理公告（对象：直属下级），直属会员公告（对象：直属会员）
-              代理只展示直属代理公告和直属会员公告，admin展示所有
+              代理只展示直属代理公告和直属会员公告，admin展示前三项
             */}
             <Select
               defaultValue=""
@@ -294,15 +293,11 @@ export function AddModal({
               </SelectContent>
             </Select>
           </div>
-          <div className="flex gap-4 items-center">
-            <Label className="shrink-0 w-24 text-right text-muted-foreground before:content-['*'] before:text-destructive">
+          <div className="flex items-center gap-4">
+            <Label className="w-24 shrink-0 text-right text-muted-foreground before:text-destructive before:content-['*'] before:mr-1">
               {t("announcementTime")}
             </Label>
-            {/* <TimeRange
-              onDateRangeChange={handleDateRangeChange}
-              range={[startTime, endTime]}
-              disabled={!!data?.id && Date.now() > data?.startTime}
-            /> */}
+            {/* <TimeRange disabled={!!data?.id && Date.now() > data?.startTime} /> */}
             <DateRangeFilter
               quickSetBtn={[]}
               isSearch={false}
@@ -311,10 +306,11 @@ export function AddModal({
                 from: Number(startTime),
                 to: Number(endTime),
               }}
+              disabled={!!data?.id && Date.now() > data?.startTime}
             />
           </div>
-          <div className="flex gap-4 items-center">
-            <Label className="shrink-0 w-24 text-right text-muted-foreground before:content-['*'] before:text-destructive">
+          <div className="flex items-center gap-4">
+            <Label className="w-24 shrink-0 text-right text-muted-foreground before:text-destructive before:content-['*'] before:mr-1">
               {t("language")}
             </Label>
             <ToggleGroup
@@ -328,8 +324,8 @@ export function AddModal({
             </ToggleGroup>
           </div>
           {(type === "2" || type === "4") && (
-            <div className="flex gap-4 items-center">
-              <Label className="shrink-0 w-24 text-right text-muted-foreground before:content-['*'] before:text-destructive">
+            <div className="flex items-center gap-4">
+              <Label className="w-24 shrink-0 text-right text-muted-foreground before:text-destructive before:content-['*'] before:mr-1">
                 {t("title")}
               </Label>
               <Input
@@ -341,20 +337,20 @@ export function AddModal({
               />
             </div>
           )}
-          <div className="flex gap-4 items-center">
-            <Label className="shrink-0 w-24 text-right text-muted-foreground before:content-['*'] before:text-destructive">
+          <div className="flex items-center gap-4">
+            <Label className="w-24 shrink-0 text-right text-muted-foreground before:text-destructive before:content-['*'] before:mr-1">
               {t("announcementContent")}
             </Label>
             <Textarea
               placeholder={t("placeholder")}
-              className="w-2/3 h-32 resize-none"
+              className="h-32 w-2/3 resize-none"
               value={contentOfLanguage}
               maxLength={200}
               onChange={(e) => handleContentChange(e.target.value)}
             />
           </div>
-          <div className="flex gap-4 items-center">
-            <Label className="shrink-0 w-24 text-right text-muted-foreground before:content-['*'] before:text-destructive">
+          <div className="flex items-center gap-4">
+            <Label className="w-24 shrink-0 text-right text-muted-foreground before:text-destructive before:content-['*'] before:mr-1">
               {t("status")}
             </Label>
             <RadioGroup
@@ -380,7 +376,7 @@ export function AddModal({
             {translations("cancel")}
           </Button>
           <Button onClick={handleClickAdd} disabled={isPending}>
-            {isPending && <Loader2 className="w-4 h-4 animate-spin" />}
+            {isPending && <Loader2 className="h-4 w-4 animate-spin" />}
             {translations("confirm")}
           </Button>
         </DialogFooter>

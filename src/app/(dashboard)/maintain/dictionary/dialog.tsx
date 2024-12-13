@@ -17,7 +17,8 @@ import { dictionaryDataAtom, editDictionaryDialogAtom } from "@/store";
 import { useAtom, useAtomValue } from "jotai";
 import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { useEffect, useState, useTransition } from "react";
+import Form from "next/form";
+import { type FormEvent, useRef, useState, useTransition } from "react";
 import { toast } from "sonner";
 
 export function AddEditDialog() {
@@ -26,24 +27,21 @@ export function AddEditDialog() {
   const [isPending, startTransition] = useTransition();
   const data = useAtomValue(dictionaryDataAtom);
   const [open, setOpen] = useAtom(editDictionaryDialogAtom);
-  const [id, setId] = useState("");
-  const [dictName, setDictName] = useState("");
-  const [dictCode, setDictCode] = useState("");
-  const [remark, setRemark] = useState("");
-  useEffect(() => {
-    if (open) {
-      setId(data ? data.id : "");
-      setDictName(data ? data.dictName : "");
-      setDictCode(data ? data.dictCode : "");
-      setRemark(data ? data.remark : "");
-    }
-  }, [open, data]);
-  const handleConfirm = () => {
+  const formRef = useRef<HTMLFormElement>(null);
+  // 验证
+  const [isValidate, setIsValidate] = useState(false);
+  const handleConfirm = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    const id = formData.get("id") as string;
+    const dictName = formData.get("dictName") as string;
+    const dictCode = formData.get("dictCode") as string;
+    const remark = formData.get("remark") as string;
     startTransition(async () => {
       let response: Res<{ code: number; message: string }>;
       if (data) {
         // Editing an existing dictionary entry
-        const request = { id, dictName, dictCode, remark };
+        const request = { id: id as string, dictName, dictCode, remark };
         response = await editDictionary(request);
       } else {
         // Adding a new dictionary entry
@@ -53,13 +51,8 @@ export function AddEditDialog() {
 
       const { code, message } = response;
       if (code === 0) {
-        // router.refresh();
         toast.success(message);
-        setDictName("");
-        setDictCode("");
-        setRemark("");
         window.location.reload();
-        // router.refresh();
         setOpen(false);
       } else {
         toast.error(message);
@@ -78,39 +71,63 @@ export function AddEditDialog() {
           <DialogTitle>{data ? t("edit") : t("add")}</DialogTitle>
           <DialogDescription />
         </DialogHeader>
-        <div className="flex flex-col gap-4">
-          <div className="flex gap-4 items-center">
-            <Label className="w-20 text-end">{t("dictName")}</Label>
-            <Input
-              className="flex-1"
-              value={dictName ?? ""}
-              onChange={(e) => setDictName(e.target.value)}
-            />
+        <Form ref={formRef} action="" onSubmit={handleConfirm}>
+          <input type="hidden" name="id" value={data?.id} />
+          <div className="flex flex-col gap-4">
+            <div className="flex items-center gap-4">
+              <Label className="w-20 text-end before:content-['*'] before:text-destructive before:mr-1">
+                {t("dictName")}
+              </Label>
+              <Input
+                className="flex-1"
+                name="dictName"
+                defaultValue={data?.dictName ?? ""}
+                required
+                onBlur={(e) => {
+                  setIsValidate(e.target.reportValidity());
+                }}
+              />
+            </div>
+            <div className="flex items-center gap-4">
+              <Label className="w-20 text-end before:content-['*'] before:text-destructive before:mr-1">
+                {t("dictCode")}
+              </Label>
+              <Input
+                className="flex-1"
+                name="dictCode"
+                defaultValue={data?.dictCode ?? ""}
+                required
+                onBlur={(e) => {
+                  setIsValidate(e.target.reportValidity());
+                }}
+              />
+            </div>
+            <div className="flex items-center gap-4">
+              <Label className="w-20 text-end">{t("remark")}</Label>
+              <Input
+                className="flex-1"
+                name="remark"
+                defaultValue={data?.remark ?? ""}
+                maxLength={100}
+                onBlur={(e) => {
+                  setIsValidate(e.target.reportValidity());
+                }}
+              />
+            </div>
           </div>
-          <div className="flex gap-4 items-center">
-            <Label className="w-20 text-end">{t("dictCode")}</Label>
-            <Input
-              className="flex-1"
-              value={dictCode ?? ""}
-              onChange={(e) => setDictCode(e.target.value)}
-            />
-          </div>
-          <div className="flex gap-4 items-center">
-            <Label className="w-20 text-end">{t("remark")}</Label>
-            <Input
-              className="flex-1"
-              value={remark ?? ""}
-              onChange={(e) => setRemark(e.target.value)}
-              maxLength={100}
-            />
-          </div>
-        </div>
+        </Form>
         <DialogFooter>
           <Button variant="outline" onClick={() => setOpen(false)}>
             {translation("cancel")}
           </Button>
-          <Button disabled={isPending} onClick={handleConfirm}>
-            {isPending ? <Loader2 className="w-4 h-4 animate-spin" /> : null}
+          <Button
+            disabled={isPending || !isValidate}
+            onClick={(e) => {
+              e.preventDefault();
+              formRef.current?.requestSubmit();
+            }}
+          >
+            {isPending ? <Loader2 className="h-4 w-4 animate-spin" /> : null}
             {translation("confirm")}
           </Button>
         </DialogFooter>

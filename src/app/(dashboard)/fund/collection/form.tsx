@@ -15,9 +15,9 @@ export function Form() {
 
   return (
     <div className="flex flex-col gap-2 bg-background p-4">
-      <div className="flex gap-4 justify-between items-center">
+      <div className="flex items-center justify-between gap-4">
         {t("title")}
-        <div className="flex gap-2 items-center">
+        <div className="flex items-center gap-2">
           <Button onClick={() => handleAdd()}>{t("add")}</Button>
         </div>
       </div>

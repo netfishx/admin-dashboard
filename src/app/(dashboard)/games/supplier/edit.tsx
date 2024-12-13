@@ -14,7 +14,7 @@ export function EditButton({ data }: { data: SupplierConfig }) {
     <Button
       variant="ghost"
       size="sm"
-      className="text-primary hover:text-primary/80 text-sm"
+      className="text-sm text-primary hover:text-primary/80"
       onClick={() => {
         setData(data);
         setOpen(true);

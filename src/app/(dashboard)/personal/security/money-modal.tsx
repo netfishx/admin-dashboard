@@ -108,8 +108,8 @@ export function MoneyModal({
           <div className="flex flex-col gap-4">
             {isEdit ? (
               <div className="flex flex-col gap-1">
-                <div className="flex gap-2 items-center">
-                  <Label className="w-[100px] text-right shrink-0 text-muted-foreground before:content-['*'] before:text-destructive">
+                <div className="flex items-center gap-2">
+                  <Label className="w-[100px] shrink-0 text-right text-muted-foreground before:text-destructive before:content-['*'] before:mr-1">
                     {t("oldPassword")}
                   </Label>
                   <Password
@@ -120,8 +120,8 @@ export function MoneyModal({
                 </div>
               </div>
             ) : null}
-            <div className="flex gap-2 items-center">
-              <Label className="w-[100px] text-right shrink-0 text-muted-foreground before:content-['*'] before:text-destructive">
+            <div className="flex items-center gap-2">
+              <Label className="w-[100px] shrink-0 text-right text-muted-foreground before:text-destructive before:content-['*'] before:mr-1">
                 {isEdit ? t("newPassword") : t("fundPassword")}
               </Label>
               <Password
@@ -130,8 +130,8 @@ export function MoneyModal({
                 name="newPassword"
               />
             </div>
-            <div className="flex gap-2 items-center">
-              <Label className="w-[100px] text-right shrink-0 text-muted-foreground before:content-['*'] before:text-destructive">
+            <div className="flex items-center gap-2">
+              <Label className="w-[100px] shrink-0 text-right text-muted-foreground before:text-destructive before:content-['*'] before:mr-1">
                 {t("confirmPassword")}
               </Label>
               <Password
@@ -156,7 +156,7 @@ export function MoneyModal({
             }}
             disabled={isPending}
           >
-            {isPending && <Loader2 className="w-4 h-4 animate-spin" />}
+            {isPending && <Loader2 className="h-4 w-4 animate-spin" />}
             {translations("confirm")}
           </Button>
         </DialogFooter>

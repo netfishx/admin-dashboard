@@ -9,7 +9,7 @@ export default function DetailButton() {
     <div>
       <Button
         variant="link"
-        className="hover:no-underline hover:text-primary/80"
+        className="hover:text-primary/80 hover:no-underline"
       >
         {t("more")}
       </Button>

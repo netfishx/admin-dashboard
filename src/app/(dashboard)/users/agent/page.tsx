@@ -12,10 +12,12 @@ import { TableBodySkeleton, TableBodyWrapper } from "./table-wrapper";
 
 export default async function Page({
   searchParams,
-}: { searchParams: Promise<{ [key: string]: string | string[] }> }) {
+}: {
+  searchParams: Promise<{ [key: string]: string | string[] }>;
+}) {
   const session = getSession();
   return (
-    <div className="flex flex-col gap-2 w-full">
+    <div className="flex w-full flex-col gap-2">
       <Suspense
         fallback={
           <div className="bg-background p-4">
@@ -25,13 +27,13 @@ export default async function Page({
       >
         <Form session={session} />
       </Suspense>
-      <div className="p-2 bg-background flex-1 gap-2">
+      <div className="p-4 bg-background flex-1 gap-2">
         <div className="pb-2 flex justify-end">
           <AddAgent />
         </div>
         <Suspense
           fallback={
-            <Table className="border rounded-sm table-fixed">
+            <Table className="table-fixed rounded-sm border">
               <TableHeaderWrapper total={0} />
               <TableBodySkeleton />
             </Table>
@@ -47,7 +49,9 @@ export default async function Page({
 
 async function TableWrapper({
   searchParams,
-}: { searchParams: Promise<{ [key: string]: string | string[] }> }) {
+}: {
+  searchParams: Promise<{ [key: string]: string | string[] }>;
+}) {
   const { pageNum = "1", pageSize = "10", ...rest } = await searchParams;
   const { data } = await getAgents({
     ...rest,
@@ -58,7 +62,7 @@ async function TableWrapper({
   const permissions = session?.permissions;
   return (
     <>
-      <div className="border rounded-sm">
+      <div className="rounded-sm border">
         <Table className="table-fixed">
           <TableHeaderWrapper total={1} />
           <Suspense fallback={<TableBodySkeleton />}>
@@ -96,7 +100,7 @@ async function TableHeaderWrapper({ total }: { total: number }) {
         <TableHead className="w-20">{t("nickname")}</TableHead>
         <TableHead className="w-20">{t("status")}</TableHead>
         {total > 0 && (
-          <TableHead className="w-[480px] text-center sticky right-0 bg-muted">
+          <TableHead className="sticky right-0 w-[480px] bg-muted text-center">
             {t("action")}
           </TableHead>
         )}

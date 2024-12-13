@@ -21,7 +21,10 @@ import { useTranslations } from "next-intl";
 export default function Action({
   data,
   permissions,
-}: { data: MemberList; permissions: string[] | undefined }) {
+}: {
+  data: MemberList;
+  permissions: string[] | undefined;
+}) {
   const t = useTranslations("users.members");
   // 会员ID
   const setMemberId = useSetAtom(memberIdAtom);
@@ -51,7 +54,7 @@ export default function Action({
       <Button
         variant="ghost"
         size="sm"
-        className="text-primary hover:text-primary/80 text-sm px-2"
+        className="px-2 text-sm text-primary hover:text-primary/80"
         onClick={() => {
           setMemberInfoData(data);
           setMemberInfoModal(true);
@@ -63,7 +66,7 @@ export default function Action({
       <Button
         variant="ghost"
         size="sm"
-        className="text-primary hover:text-primary/80 text-sm px-2"
+        className="px-2 text-sm text-primary hover:text-primary/80"
         onClick={() => {
           setMemberId(data.id);
           setRatioModal(true);
@@ -77,7 +80,7 @@ export default function Action({
           <Button
             variant="ghost"
             size="sm"
-            className="text-primary hover:text-primary/80 text-sm px-2"
+            className="px-2 text-sm text-primary hover:text-primary/80"
             onClick={() => {
               setMemberId(data.id);
               setMemberInfoData(data);
@@ -90,7 +93,7 @@ export default function Action({
           <Button
             variant="ghost"
             size="sm"
-            className="text-primary hover:text-primary/80 text-sm px-2"
+            className="px-2 text-sm text-primary hover:text-primary/80"
             onClick={() => {
               setMemberId(data.id);
               setMemberInfoData(data);
@@ -103,7 +106,7 @@ export default function Action({
           <Button
             variant="ghost"
             size="sm"
-            className="text-primary hover:text-primary/80 text-sm px-2"
+            className="px-2 text-sm text-primary hover:text-primary/80"
             onClick={() => {
               setMemberId(data.id);
               setMemberInfoData(data);
@@ -118,7 +121,7 @@ export default function Action({
       <Button
         variant="ghost"
         size="sm"
-        className="text-primary hover:text-primary/80 text-sm px-2"
+        className="px-2 text-sm text-primary hover:text-primary/80"
         onClick={() => {
           setMemberId(data.id);
           setLimitModal(true);
@@ -130,7 +133,7 @@ export default function Action({
       <Button
         variant="ghost"
         size="sm"
-        className="text-primary hover:text-primary/80 text-sm px-2"
+        className="px-2 text-sm text-primary hover:text-primary/80"
         onClick={() => {
           setMemberId(data.id);
           setRebateModal(true);
@@ -142,7 +145,7 @@ export default function Action({
       <Button
         variant="ghost"
         size="sm"
-        className="text-primary hover:text-primary/80 text-sm px-2"
+        className="px-2 text-sm text-primary hover:text-primary/80"
         onClick={() => {
           setMemberId(data.id);
           setLoginLogModal(true);
@@ -154,7 +157,7 @@ export default function Action({
       <Button
         variant="ghost"
         size="sm"
-        className="text-primary hover:text-primary/80 text-sm px-2"
+        className="px-2 text-sm text-primary hover:text-primary/80"
         onClick={() => {
           setMemberId(data.id);
           setChangeLogModal(true);

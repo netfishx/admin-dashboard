@@ -32,7 +32,10 @@ async function FormWrapper() {
 async function TableBodyWrapper({
   gameId,
   hasAdminPermission,
-}: { gameId?: number; hasAdminPermission: boolean }) {
+}: {
+  gameId?: number;
+  hasAdminPermission: boolean;
+}) {
   if (!gameId) {
     const res = await getBaccaratGameConfig();
     gameId = res.data?.filter((item) => item.status === 1)?.[0]?.gameId ?? 0;
@@ -45,7 +48,9 @@ async function TableBodyWrapper({
 
 function TableWrapper({
   searchParams,
-}: { searchParams: Promise<{ [key: string]: string | undefined }> }) {
+}: {
+  searchParams: Promise<{ [key: string]: string | undefined }>;
+}) {
   const t = useTranslations("games.odds");
   const { gameId } = use(searchParams);
   const hasAdminPermission = use(hasPermission("sync_odds"));
@@ -54,15 +59,15 @@ function TableWrapper({
       <TableHeader>
         <TableRow className="bg-muted">
           <TableHead className="w-32">{t("smallType")}</TableHead>
-          <TableHead className="text-center w-32">{t("odds")}</TableHead>
-          <TableHead className="text-center w-40">{t("min")}</TableHead>
-          <TableHead className="text-center w-72">
+          <TableHead className="w-32">{t("odds")}</TableHead>
+          <TableHead className="w-40">{t("min")}</TableHead>
+          <TableHead className="w-72">
             {t("max")}
             {!hasAdminPermission && (
               <span className="text-destructive">{t("tip")}</span>
             )}
           </TableHead>
-          <TableHead className="text-center w-72">
+          <TableHead className="w-72">
             {t("total")}
             {!hasAdminPermission && (
               <span className="text-destructive">{t("tip")}</span>
@@ -95,16 +100,18 @@ function TableWrapper({
 
 export default function Page({
   searchParams,
-}: { searchParams: Promise<{ [key: string]: string | undefined }> }) {
+}: {
+  searchParams: Promise<{ [key: string]: string | undefined }>;
+}) {
   return (
-    <div className="flex flex-col gap-2 w-full">
+    <div className="flex w-full flex-col gap-2">
       <div className="flex flex-col gap-2 bg-background p-4">
         <Suspense fallback={<OddsForm list={[]} dict={[]} permissions={[]} />}>
           <FormWrapper />
         </Suspense>
       </div>
-      <div className="p-2 bg-background flex-1">
-        <div className="border rounded-sm">
+      <div className="flex-1 bg-background p-4">
+        <div className="rounded-sm border">
           <Suspense>
             <TableWrapper searchParams={searchParams} />
           </Suspense>

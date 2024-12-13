@@ -20,7 +20,7 @@ export function MoneyBtn({ data }: { data: ApplyData }) {
   };
   return (
     <div>
-      <Button variant="link" className="px-2" onClick={openDialog}>
+      <Button variant="link" onClick={openDialog} className="px-0">
         {data.withdrawMoney}
       </Button>
       <MoneyDialog data={data} open={open} onOpenChange={setOpen} />
@@ -48,7 +48,7 @@ export function MoneyDialog({
 
           <DialogDescription />
         </DialogHeader>
-        <div className="flex flex-col gap-4 text-muted-foreground text-sm">
+        <div className="flex flex-col gap-4 text-sm text-muted-foreground">
           <p className="flex items-center gap-2">
             <span>{t("applyWithdrawMoney")}</span>
             <span>{data.withdrawMoney}</span>

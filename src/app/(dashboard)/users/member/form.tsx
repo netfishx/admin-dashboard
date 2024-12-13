@@ -18,7 +18,9 @@ import { useTransition } from "react";
 
 export default function Form({
   permissions,
-}: { permissions: string[] | undefined }) {
+}: {
+  permissions: string[] | undefined;
+}) {
   const t = useTranslations("users.members");
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
@@ -36,9 +38,9 @@ export default function Form({
     defaultValue: "all",
   });
   return (
-    <div className="flex justify-between items-center bg-background p-4">
-      <div className="flex gap-2 items-center">
-        <div className="flex gap-2 items-center">
+    <div className="flex items-center justify-between bg-background p-4">
+      <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2">
           <Label className="shrink-0">{t("username")}</Label>
           <Input
             placeholder={t("placeholder")}
@@ -46,7 +48,7 @@ export default function Form({
             onChange={(e) => setUsername(e.target.value)}
           />
         </div>
-        <div className="flex gap-2 items-center">
+        <div className="flex items-center gap-2">
           <Label className="shrink-0">{t("userId")}</Label>
           <Input
             placeholder={t("placeholder")}
@@ -55,7 +57,7 @@ export default function Form({
           />
         </div>
         {permissions?.includes("member_search") && (
-          <div className="flex gap-2 items-center">
+          <div className="flex items-center gap-2">
             <Label className="shrink-0">{t("upUsername")}</Label>
             <Input
               placeholder={t("placeholder")}
@@ -64,7 +66,7 @@ export default function Form({
             />
           </div>
         )}
-        <div className="flex gap-2 items-center">
+        <div className="flex items-center gap-2">
           <Label className="shrink-0">{t("status")}</Label>
           <Select
             value={status ?? ""}
@@ -82,7 +84,7 @@ export default function Form({
           </Select>
         </div>
       </div>
-      <div className="flex gap-2 items-center">
+      <div className="flex items-center gap-2">
         <Button
           variant="outline"
           disabled={isReset}
@@ -90,14 +92,14 @@ export default function Form({
             startResetTransition(() => router.replace("/users/member"))
           }
         >
-          {isReset && <Loader2 className="w-4 h-4 animate-spin" />}
+          {isReset && <Loader2 className="h-4 w-4 animate-spin" />}
           {t("reset")}
         </Button>
         <Button
           onClick={() => startTransition(() => router.refresh())}
           disabled={isPending}
         >
-          {isPending && <Loader2 className="w-4 h-4 animate-spin" />}
+          {isPending && <Loader2 className="h-4 w-4 animate-spin" />}
           {t("search")}
         </Button>
       </div>

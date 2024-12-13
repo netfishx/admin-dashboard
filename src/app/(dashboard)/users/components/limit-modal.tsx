@@ -151,15 +151,15 @@ export function LimitModal({ userId }: { userId: string }) {
           <DialogTitle>{t("limitSetting")}</DialogTitle>
           <DialogDescription />
         </DialogHeader>
-        <div className="py-2 px-4 bg-background">
+        <div className="bg-background px-4 py-2">
           <Suspense fallback={<Skeleton />}>
             <Form list={list} setGameId={setGameId} gameId={gameId} />
           </Suspense>
         </div>
-        <div className="border rounded-sm overflow-auto max-h-[50dvh]">
+        <div className="max-h-[50dvh] overflow-auto rounded-sm border">
           <ScrollableTable className="relative table-fixed">
             <TableHeader>
-              <TableRow className="bg-muted sticky top-0">
+              <TableRow className="sticky top-0 bg-muted">
                 <TableHead>{t("name")}</TableHead>
                 <TableHead>{t("min")}</TableHead>
                 <TableHead>{t("max")}</TableHead>
@@ -250,7 +250,7 @@ export function LimitModal({ userId }: { userId: string }) {
                   ))
                 ) : (
                   <TableRow>
-                    <TableCell colSpan={4} className="text-center h-40">
+                    <TableCell colSpan={4} className="h-40 text-center">
                       {translations("noData")}
                     </TableCell>
                   </TableRow>
@@ -288,7 +288,7 @@ function Form({
   const t = useTranslations("users.agents");
   return (
     <>
-      <div className="flex gap-2 items-center">
+      <div className="flex items-center gap-2">
         <Label>{t("name")}</Label>
         <Select
           value={gameId?.toString() ?? ""}

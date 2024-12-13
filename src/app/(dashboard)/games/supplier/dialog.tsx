@@ -33,7 +33,10 @@ import { toast } from "sonner";
 export function SupplierDialog({
   games,
   suppliers,
-}: { games: GameInfo[]; suppliers: Supplier[] }) {
+}: {
+  games: GameInfo[];
+  suppliers: Supplier[];
+}) {
   const translations = useTranslations();
   const t = useTranslations("games.supplier");
   const [open, setOpen] = useAtom(gamesSupplierDialogAtom);
@@ -46,7 +49,13 @@ export function SupplierDialog({
   const [isPending, startTransition] = useTransition();
   const router = useRouter();
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog
+      open={open}
+      onOpenChange={(o) => {
+        setOpen(o);
+        setSupplierId(undefined);
+      }}
+    >
       <DialogContent
         onInteractOutside={(e) => {
           e.preventDefault();
@@ -78,7 +87,7 @@ export function SupplierDialog({
         >
           <input type="hidden" name="id" value={data?.id} />
           <div className="flex flex-col gap-4">
-            <div className="flex gap-2 items-center">
+            <div className="flex items-center gap-2">
               <Label className="w-20 text-end">{t("name")}</Label>
               {data && (
                 <input
@@ -105,10 +114,18 @@ export function SupplierDialog({
                       {item.gameName}
                     </SelectItem>
                   ))}
+                  {data && (
+                    <SelectItem
+                      key={data.gameId}
+                      value={`${data.gameType}-${data.gameId}`}
+                    >
+                      {data.gameName}
+                    </SelectItem>
+                  )}
                 </SelectContent>
               </Select>
             </div>
-            <div className="flex gap-2 items-center">
+            <div className="flex items-center gap-2">
               <Label className="w-20 text-end">{t("video")}</Label>
               <Input
                 className="flex-1"
@@ -118,10 +135,10 @@ export function SupplierDialog({
                 name="videoLink"
               />
             </div>
-            <div className="flex gap-2 items-center">
+            <div className="flex items-center gap-2">
               <Label className="w-20 text-end">{t("supplierId")}</Label>
               <Select
-                value={supplierId}
+                defaultValue={data?.userId}
                 onValueChange={setSupplierId}
                 name="userId"
                 required={true}
@@ -138,11 +155,13 @@ export function SupplierDialog({
                 </SelectContent>
               </Select>
             </div>
-            <div className="flex gap-2 items-center">
+            <div className="flex items-center gap-2">
               <Label className="w-20 text-end">{t("supplierName")}</Label>
-              <Input disabled className="flex-1" value={supplierName} />
+              <span className="flex-1 flex h-9 items-center rounded-md border px-3 text-sm shadow-sm opacity-50 bg-muted">
+                {supplierName || data?.userName}
+              </span>
             </div>
-            <div className="flex gap-2 items-center">
+            <div className="flex items-center gap-2">
               <Label className="w-20 text-end">{t("quota")}</Label>
               <Input
                 type="number"
@@ -155,7 +174,7 @@ export function SupplierDialog({
                 name="distributionAmount"
               />
             </div>
-            <div className="flex gap-2 items-center">
+            <div className="flex items-center gap-2">
               <Label className="w-20 text-end">{t("percent")}</Label>
               <div className="relative flex-1">
                 <Input
@@ -189,7 +208,7 @@ export function SupplierDialog({
             }}
             disabled={isPending}
           >
-            {isPending && <Loader2 className="w-4 h-4 animate-spin" />}
+            {isPending && <Loader2 className="h-4 w-4 animate-spin" />}
             {translations("confirm")}
           </Button>
         </DialogFooter>

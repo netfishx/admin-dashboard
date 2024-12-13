@@ -42,8 +42,8 @@ export function MemberForm({ gameList }: { gameList: GameInfo[] }) {
   return (
     <div className="flex flex-col gap-2 bg-background p-4">
       {/* 第一行 */}
-      <div className="flex gap-4 items-center">
-        <div className="flex gap-2 items-center">
+      <div className="flex items-center gap-4">
+        <div className="flex items-center gap-2">
           <Label className="shrink-0">{t("gameName")}</Label>
           <Select
             value={gameName ?? ""}
@@ -63,13 +63,13 @@ export function MemberForm({ gameList }: { gameList: GameInfo[] }) {
             </SelectContent>
           </Select>
         </div>
-        <div className="flex gap-2 items-center">
+        <div className="flex items-center gap-2">
           <Label className="shrink-0">{t("drawtime")}</Label>
           <DateRangeFilter />
         </div>
       </div>
-      <div className="flex gap-4 items-center">
-        <div className="flex gap-2 items-center">
+      <div className="flex items-center gap-4">
+        <div className="flex items-center gap-2">
           <Label className="shrink-0">{t("agentID")}</Label>
           <Input
             value={leastlevelID ?? ""}
@@ -79,10 +79,10 @@ export function MemberForm({ gameList }: { gameList: GameInfo[] }) {
         </div>
       </div>
 
-      <div className="flex gap-4 justify-end items-center">
-        <div className="flex gap-2 items-center">
+      <div className="flex items-center justify-end gap-4">
+        <div className="flex items-center gap-2">
           <Button
-            className="px-4 py-2 border rounded-md bg-white text-gray-700 border-gray-300 hover:bg-gray-100"
+            className="rounded-md border border-gray-300 bg-white px-4 py-2 text-gray-700 hover:bg-gray-100"
             onClick={handleReset}
           >
             {t("reset")}
@@ -102,7 +102,7 @@ export function MemberForm({ gameList }: { gameList: GameInfo[] }) {
               startDownload(() => makeDownload(searchParams, 100002))
             }
           >
-            {isDownload && <Loader2 className="w-4 h-4 animate-spin" />}
+            {isDownload && <Loader2 className="h-4 w-4 animate-spin" />}
             {t("download")}
           </Button>
         </div>

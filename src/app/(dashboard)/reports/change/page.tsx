@@ -19,13 +19,13 @@ import { Form } from "./form";
 
 export default async function Page({
   searchParams,
-}: { searchParams: Promise<{ [key: string]: string | string[] }> }) {
+}: { searchParams: Promise<{ [key: string]: string | undefined }> }) {
   const { startTime, endTime } = await searchParams;
   return (
-    <div className="flex flex-col gap-2 w-full">
+    <div className="flex w-full flex-col gap-2">
       <Suspense
         fallback={
-          <div className="bg-background p-2 flex flex-col gap-2">
+          <div className="flex flex-col gap-2 bg-background p-4">
             <Skeleton />
             <Skeleton />
             <Skeleton />
@@ -34,7 +34,7 @@ export default async function Page({
       >
         <Form key={`${startTime}-${endTime}`} />
       </Suspense>
-      <div className="p-2 bg-background flex-1 flex flex-col gap-2">
+      <div className="flex flex-1 flex-col gap-2 bg-background">
         <Suspense
           fallback={
             <Table>
@@ -70,27 +70,13 @@ async function TableHeaderWrapper() {
   return (
     <TableHeader>
       <TableRow className="bg-muted">
-        <TableHead className="w-24 min-w-24 text-center">
-          {t("userId")}
-        </TableHead>
-        <TableHead className="w-24 min-w-24 text-center">
-          {t("transactionId")}
-        </TableHead>
-        <TableHead className="w-24 min-w-24 text-center">
-          {t("createdTime")}
-        </TableHead>
-        <TableHead className="w-24 min-w-24 text-center">
-          {t("oldBalance")}
-        </TableHead>
-        <TableHead className="w-24 min-w-24 text-center">
-          {t("transactionAmount")}
-        </TableHead>
-        <TableHead className="w-24 min-w-24 text-center">
-          {t("newBalance")}
-        </TableHead>
-        <TableHead className="w-24 min-w-24 text-center">
-          {t("operateType")}
-        </TableHead>
+        <TableHead className="w-24">{t("userId")}</TableHead>
+        <TableHead className="w-24">{t("transactionId")}</TableHead>
+        <TableHead className="w-32">{t("createdTime")}</TableHead>
+        <TableHead className="w-24">{t("oldBalance")}</TableHead>
+        <TableHead className="w-24">{t("transactionAmount")}</TableHead>
+        <TableHead className="w-24">{t("newBalance")}</TableHead>
+        <TableHead className="w-24">{t("operateType")}</TableHead>
       </TableRow>
     </TableHeader>
   );
@@ -98,7 +84,7 @@ async function TableHeaderWrapper() {
 
 async function TableWrapper({
   searchParams,
-}: { searchParams: Promise<{ [key: string]: string | string[] }> }) {
+}: { searchParams: Promise<{ [key: string]: string | undefined }> }) {
   const {
     userId,
     transactionID,
@@ -112,15 +98,15 @@ async function TableWrapper({
 
   if (!((startTime && endTime) || transactionID)) {
     return (
-      <Table className="border rounded-sm">
+      <Table className="rounded-sm border">
         <TableHeaderWrapper />
         <TableBodySkeleton />
       </Table>
     );
   }
   const params: WalletLogRequestParams = {
-    userId: (userId ?? null) as string,
-    transactionID: (transactionID ?? null) as string,
+    userId: userId || null,
+    transactionID: transactionID || null,
     operateCode: operateCode ? Number(operateCode) : null,
     userType: userType ? Number(userType) : 0,
     pageNum: Number(pageNum ?? 1),
@@ -134,9 +120,9 @@ async function TableWrapper({
 
   const { data } = await getWalletLog(params);
   return (
-    <div className="bg-background flex-1 w-full ">
+    <div className="bg-background flex-1 w-full p-4">
       <div className="relative overflow-y-auto overflow-x-auto border rounded-sm">
-        <Table>
+        <Table className="table-fixed">
           <TableHeaderWrapper />
           <Suspense fallback={<TableBodySkeleton />}>
             <TableBodyWrapper data={data} />
@@ -157,7 +143,9 @@ async function TableWrapper({
 }
 async function TableBodyWrapper({
   data,
-}: { data?: PageData<WalletLogRecords> }) {
+}: {
+  data?: PageData<WalletLogRecords>;
+}) {
   const translations = await getTranslations("");
   const t = await getTranslations("report.change");
 
@@ -187,32 +175,22 @@ async function TableBodyWrapper({
       {data && data.list.length > 0 ? (
         data.list.map((item) => (
           <TableRow key={item.id}>
-            <TableCell className="w-24 min-w-24 text-center">
-              {item.userId}
-            </TableCell>
-            <TableCell className="w-24 min-w-24 text-center">
-              {item.transactionId}
-            </TableCell>
-            <TableCell className="w-24 min-w-24 text-center">
+            <TableCell>{item.userId}</TableCell>
+            <TableCell>{item.transactionId}</TableCell>
+            <TableCell>
               <Time time={item.createdTime} />
             </TableCell>
-            <TableCell className="w-24 min-w-24 text-center">
-              {item.oldBalance}
-            </TableCell>
-            <TableCell className="w-24 min-w-24 text-center">
-              {item.transactionAmount}
-            </TableCell>
-            <TableCell className="w-24 min-w-24 text-center">
-              {item.newBalance}
-            </TableCell>
-            <TableCell className="w-24 min-w-24 text-center">
+            <TableCell>{item.oldBalance}</TableCell>
+            <TableCell>{item.transactionAmount}</TableCell>
+            <TableCell>{item.newBalance}</TableCell>
+            <TableCell>
               {operateTypeMap[item.operateType as keyof typeof operateTypeMap]}
             </TableCell>
           </TableRow>
         ))
       ) : (
         <TableRow>
-          <TableCell colSpan={7} className="text-center h-40">
+          <TableCell colSpan={7} className="h-40 text-center">
             {translations("noData")}
           </TableCell>
         </TableRow>

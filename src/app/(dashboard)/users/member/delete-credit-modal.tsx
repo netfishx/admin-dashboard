@@ -79,20 +79,20 @@ export function DeleteCreditModal() {
           <DialogTitle>{t("deleteCredit")}</DialogTitle>
           <DialogDescription />
         </DialogHeader>
-        <div className="rounded-lg border divide-y indent-4">
+        <div className="divide-y rounded-lg border indent-4">
           <div className="grid grid-cols-3">
-            <div className="border-r py-2 bg-muted text-muted-foreground">
+            <div className="border-r bg-muted py-2 text-muted-foreground">
               {t("membershipArrears")}
             </div>
             <div className="py-2">{memberInfoData?.debtAmount ?? 0}</div>
           </div>
           <div className="grid grid-cols-3">
-            <div className="border-r py-2 bg-muted text-muted-foreground">
+            <div className="border-r bg-muted py-2 text-muted-foreground">
               {t("availableBalance")}
             </div>
             <div className="py-2">
               {fetching ? (
-                <Loader2 className="w-4 h-4 animate-spin" />
+                <Loader2 className="h-4 w-4 animate-spin" />
               ) : (
                 availableAmount
               )}
@@ -102,22 +102,22 @@ export function DeleteCreditModal() {
 
         <Form ref={ref} action="" onSubmit={handleConfirm}>
           <input type="hidden" name="userId" value={memberId} />
-          <div className="rounded-lg border p-4 text-center flex flex-col gap-2">
-            <div className="flex gap-4 items-center">
-              <Label className="shrink-0 w-1/4 text-right text-muted-foreground">
+          <div className="flex flex-col gap-2 rounded-lg border p-4 text-center">
+            <div className="flex items-center gap-4">
+              <Label className="w-1/4 shrink-0 text-right text-muted-foreground">
                 {t("writeOffAmount")}
               </Label>
               <Input className="flex-1" type="number" name="amount" />
             </div>
             <div className="flex flex-col gap-1">
-              <div className="flex gap-4 items-center">
-                <Label className="shrink-0 w-1/4 text-right text-muted-foreground">
+              <div className="flex items-center gap-4">
+                <Label className="w-1/4 shrink-0 text-right text-muted-foreground">
                   {t("moneyPassword")}
                 </Label>
                 <Password type="password" className="flex-1" name="secret" />
               </div>
               <div className="flex gap-4 text-start">
-                <Label className="shrink-0 w-1/4 text-right text-muted-foreground" />
+                <Label className="w-1/4 shrink-0 text-right text-muted-foreground" />
                 <span className="flex-1 text-xs text-destructive">
                   {t("deleteCreditWarning")}
                 </span>

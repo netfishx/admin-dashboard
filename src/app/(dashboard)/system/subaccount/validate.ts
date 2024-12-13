@@ -9,7 +9,7 @@ const createFormSchema = zfd
   .formData({
     username: zfd.text(usernameSchema),
     newPassword: zfd.text(passwordSchema),
-    confirmPassword: zfd.text(passwordSchema),
+    confirmPassword: zfd.text(z.string().nullish()),
     roleList: zfd.repeatableOfType(z.string()),
   })
   .refine((data) => data.newPassword === data.confirmPassword, {

@@ -108,11 +108,11 @@ export function SupplierEditDialog() {
         <Form ref={ref} action="" onSubmit={handleConfirm}>
           <input type="hidden" name="id" value={data?.id} />
           <div className="flex flex-col gap-4">
-            <div className="flex gap-2 items-center">
+            <div className="flex items-center gap-2">
               <Label className="w-32 text-end">{t("supplierUsername")}</Label>
               <Input className="flex-1" defaultValue={username} disabled />
             </div>
-            <div className="flex gap-2 items-center">
+            <div className="flex items-center gap-2">
               <Label className="w-32 text-end">{t("supplierName")}</Label>
               <Input
                 className="flex-1"
@@ -121,7 +121,7 @@ export function SupplierEditDialog() {
                 maxLength={20}
               />
             </div>
-            <div className="flex gap-2 items-center">
+            <div className="flex items-center gap-2">
               <Label className="w-32 text-end">{t("password")}</Label>
               <Password
                 type="password"
@@ -130,7 +130,7 @@ export function SupplierEditDialog() {
                 name="newPassword"
               />
             </div>
-            <div className="flex gap-2 items-center">
+            <div className="flex items-center gap-2">
               <Label className="w-32 text-end">{t("confirmPassword")}</Label>
               <Password
                 type="password"
@@ -139,7 +139,7 @@ export function SupplierEditDialog() {
                 name="confirmPassword"
               />
             </div>
-            <div className="flex gap-2 items-center">
+            <div className="flex items-center gap-2">
               <Label className="w-32 text-end">{t("remark")}</Label>
               <Input
                 className="flex-1"
@@ -148,7 +148,7 @@ export function SupplierEditDialog() {
                 maxLength={100}
               />
             </div>
-            <div className="flex gap-2 items-center">
+            <div className="flex items-center gap-2">
               <Label className="w-32 text-end">{t("resetCount")}</Label>
               <span>{remainLoginTime}</span>
               <Button
@@ -156,11 +156,11 @@ export function SupplierEditDialog() {
                 disabled={isResetPending}
                 onClick={handleResetRestCount}
               >
-                {isResetPending && <Loader2 className="w-4 h-4 animate-spin" />}
+                {isResetPending && <Loader2 className="h-4 w-4 animate-spin" />}
                 {t("reset")}
               </Button>
             </div>
-            <div className="flex gap-2 items-center">
+            <div className="flex items-center gap-2">
               <Label className="w-32 text-end">{t("status")}</Label>
               <RadioGroup
                 defaultValue={status.toString()}
@@ -192,7 +192,7 @@ export function SupplierEditDialog() {
               }
             }}
           >
-            {isPending ? <Loader2 className="w-4 h-4 animate-spin" /> : null}
+            {isPending ? <Loader2 className="h-4 w-4 animate-spin" /> : null}
             {translation("confirm")}
           </Button>
         </DialogFooter>

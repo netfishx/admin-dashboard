@@ -21,14 +21,14 @@ export function SideBar({
   return (
     <div
       className={cn([
-        "flex flex-col shrink-0 transition-all border-r",
+        "flex shrink-0 flex-col border-r transition-all",
         isOpened ? "w-56 min-[2400px]:w-96" : "w-12",
       ])}
     >
-      <div className="flex-1 flex flex-col gap-2">
+      <div className="flex flex-1 flex-col gap-2">
         <div
           className={cn([
-            "w-full h-16 py-4 gap-4 flex items-center",
+            "flex h-16 w-full items-center gap-4 py-4",
             isOpened ? "px-4" : "px-3",
           ])}
         >

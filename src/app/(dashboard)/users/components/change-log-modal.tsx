@@ -3,12 +3,10 @@
 import { getChangeLog } from "@/api";
 import { ModalPagination } from "@/components/modal-pagination";
 import { Time } from "@/components/time";
-import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
   DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
@@ -24,20 +22,21 @@ import {
 import type { ChangeLog } from "@/lib/types";
 import { changeLogModalAtom } from "@/store";
 import { useAtom } from "jotai";
-import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { useEffect, useState, useTransition } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
 export function ChangeLogModal({
   targetUserId,
   appType,
-}: { targetUserId: string; appType: "AGENT" | "MEMBER" }) {
+}: {
+  targetUserId: string;
+  appType: "AGENT" | "MEMBER";
+}) {
   const translation = useTranslations();
   const t = useTranslations("users.agents");
   const [open, setOpen] = useAtom(changeLogModalAtom);
   const [loading, setLoading] = useState(true);
-  const [isPending, startTransition] = useTransition();
   const [pageNum, setPageNum] = useState<number>(1);
   const [pageSize, setPageSize] = useState<number>(10);
   const [total, setTotal] = useState<number>(0);
@@ -80,10 +79,10 @@ export function ChangeLogModal({
           <DialogTitle>{t("changeLog")}</DialogTitle>
           <DialogDescription />
         </DialogHeader>
-        <div className="border rounded-sm overflow-auto max-h-[50dvh]">
+        <div className="max-h-[50dvh] overflow-auto rounded-sm border">
           <ScrollableTable className="relative">
             <TableHeader>
-              <TableRow className="bg-muted sticky top-0">
+              <TableRow className="sticky top-0 bg-muted">
                 <TableHead>{t("operateTime")}</TableHead>
                 <TableHead>{t("operater")}</TableHead>
                 <TableHead>{t("username")}</TableHead>
@@ -113,7 +112,7 @@ export function ChangeLogModal({
                   ))
                 ) : (
                   <TableRow>
-                    <TableCell colSpan={7} className="text-center h-40">
+                    <TableCell colSpan={7} className="h-40 text-center">
                       {translation("noData")}
                     </TableCell>
                   </TableRow>
@@ -129,18 +128,6 @@ export function ChangeLogModal({
           setPage={setPageNum}
           setSize={setPageSize}
         />
-        <DialogFooter>
-          <Button variant="outline" onClick={handleClose}>
-            {translation("cancel")}
-          </Button>
-          <Button
-            disabled={isPending}
-            onClick={() => startTransition(() => setOpen(false))}
-          >
-            {isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-            {translation("confirm")}
-          </Button>
-        </DialogFooter>
       </DialogContent>
     </Dialog>
   );
