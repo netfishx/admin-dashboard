@@ -28,7 +28,9 @@ export function Form() {
     endTime: parseAsInteger,
   });
 
-  const [userId, setUserId] = useQueryState("userId");
+  const [userId, setUserId] = useQueryState("userId", {
+    defaultValue: "",
+  });
   const [transactionID, setTransactionID] = useQueryState("transactionID");
   const [userType, setUserType] = useQueryState("userType", {
     defaultValue: "0",

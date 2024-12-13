@@ -20,7 +20,7 @@ export function MoneyBtn({ data }: { data: ApplyData }) {
   };
   return (
     <div>
-      <Button variant="link" className="px-2" onClick={openDialog}>
+      <Button variant="link" onClick={openDialog} className="px-0">
         {data.withdrawMoney}
       </Button>
       <MoneyDialog data={data} open={open} onOpenChange={setOpen} />

@@ -18,9 +18,7 @@ import { Actions } from "./actions";
 import { Form } from "./form";
 export default async function Page({
   searchParams,
-}: {
-  searchParams: Promise<{ [key: string]: string | string[] }>;
-}) {
+}: { searchParams: Promise<{ [key: string]: string | undefined }> }) {
   return (
     <div className="flex w-full flex-col gap-2">
       <Suspense
@@ -54,22 +52,17 @@ async function PeriodTableHeader() {
   return (
     <TableHeader>
       <TableRow className="bg-muted">
-        <TableHead className="w-24 text-center">{t("issueNumber")}</TableHead>
-        <TableHead className="w-48 text-center">{t("openTime")}</TableHead>
-
-        <TableHead className="w-24 text-center">{t("gameType")}</TableHead>
-        <TableHead className="w-32 text-center">{t("gameId")}</TableHead>
-        <TableHead className="w-24 text-center">{t("betNum")}</TableHead>
-        <TableHead className="w-24 text-center">
-          {t("memberBetAmount")}
-        </TableHead>
-        <TableHead className="w-24 text-center">{t("tieAmount")}</TableHead>
-        <TableHead className="w-24 text-center">{t("pairBetAmount")}</TableHead>
-        <TableHead className="w-32 text-center">
-          {t("availableBetAmount")}
-        </TableHead>
-        <TableHead className="w-24 text-center">{t("backIncome")}</TableHead>
-        <TableHead className="sticky right-0 w-24 bg-muted text-center">
+        <TableHead className="w-32">{t("issueNumber")}</TableHead>
+        <TableHead className="w-48">{t("openTime")}</TableHead>
+        <TableHead className="w-24">{t("gameType")}</TableHead>
+        <TableHead className="w-32">{t("gameId")}</TableHead>
+        <TableHead className="w-24">{t("betNum")}</TableHead>
+        <TableHead className="w-24">{t("memberBetAmount")}</TableHead>
+        <TableHead className="w-24">{t("tieAmount")}</TableHead>
+        <TableHead className="w-24">{t("pairBetAmount")}</TableHead>
+        <TableHead className="w-24">{t("availableBetAmount")}</TableHead>
+        <TableHead className="w-24">{t("backIncome")}</TableHead>
+        <TableHead className="w-32 text-center sticky right-0 bg-muted">
           {t("action")}
         </TableHead>
       </TableRow>
@@ -78,9 +71,7 @@ async function PeriodTableHeader() {
 }
 async function PeriodTable({
   searchParams,
-}: {
-  searchParams: Promise<{ [key: string]: string | string[] }>;
-}) {
+}: { searchParams: Promise<{ [key: string]: string | undefined }> }) {
   const {
     startTime,
     endTime,
@@ -109,14 +100,14 @@ async function PeriodTable({
     // endTime: 1730504000000,
     gameType: gameType ? Number(gameType) : 61, // 第一期先写死
     gameId: gameId ? Number(gameId) : null,
-    issueNumber: issueNumber?.toString() ?? null,
+    issueNumber: issueNumber || null,
   };
   const { data } = await getPeriodReport(params);
   return (
-    <div className="flex w-full flex-col gap-2">
-      <div className="flex-1 bg-background">
-        <div className="relative h-full rounded-sm border">
-          <Table>
+    <div className="flex flex-col gap-2 w-full">
+      <div className="bg-background flex-1">
+        <div className="h-full border rounded-sm relative">
+          <Table className="table-fixed">
             <PeriodTableHeader />
             <Suspense fallback={<TableBodySkeleton />}>
               <TableBodyWrapper
@@ -145,7 +136,7 @@ async function TableBodyWrapper({
   searchParams,
 }: {
   data?: PageData<PeriodReportList>;
-  searchParams: Promise<{ [key: string]: string | string[] }>;
+  searchParams: Promise<{ [key: string]: string | undefined }>;
 }) {
   const translations = await getTranslations();
   const urlParams = await searchParams;
@@ -155,22 +146,18 @@ async function TableBodyWrapper({
       {data && data.list.length > 0 ? (
         data?.list?.map((item) => (
           <TableRow key={item.issueNumber}>
-            <TableCell className="text-center">{item.issueNumber}</TableCell>
-            <TableCell className="text-center">
+            <TableCell>{item.issueNumber}</TableCell>
+            <TableCell>
               <Time time={Number(item.openTime)} />
             </TableCell>
-            <TableCell className="text-center">{item.gameTypeName}</TableCell>
-            <TableCell className="text-center">{item.gameName}</TableCell>
-            <TableCell className="text-center">{item.betNum}</TableCell>
-            <TableCell className="text-center">
-              {item.memberBetAmount}
-            </TableCell>
-            <TableCell className="text-center">{item.tieAmount}</TableCell>
-            <TableCell className="text-center">{item.pairBetAmount}</TableCell>
-            <TableCell className="text-center">
-              {item.availableBetAmount}
-            </TableCell>
-            <TableCell className="text-center">{item.backIncome}</TableCell>
+            <TableCell>{item.gameTypeName}</TableCell>
+            <TableCell>{item.gameName}</TableCell>
+            <TableCell>{item.betNum}</TableCell>
+            <TableCell>{item.memberBetAmount}</TableCell>
+            <TableCell>{item.tieAmount}</TableCell>
+            <TableCell>{item.pairBetAmount}</TableCell>
+            <TableCell>{item.availableBetAmount}</TableCell>
+            <TableCell>{item.backIncome}</TableCell>
             <TableCell className="sticky right-0 bg-background text-center">
               <Actions searchParams={urlParams} />
             </TableCell>
@@ -178,7 +165,7 @@ async function TableBodyWrapper({
         ))
       ) : (
         <TableRow>
-          <TableCell colSpan={12} className="h-40 text-center">
+          <TableCell colSpan={11} className="text-center h-40">
             {translations("noData")}
           </TableCell>
         </TableRow>
@@ -203,9 +190,7 @@ function TableBodySkeleton() {
 
 async function FormWrapper({
   searchParams,
-}: {
-  searchParams: Promise<{ [key: string]: string | string[] }>;
-}) {
+}: { searchParams: Promise<{ [key: string]: string | undefined }> }) {
   const { startTime, endTime } = await searchParams;
   const res = await getGameList(1);
   return <Form list={res.data ?? []} key={`${startTime}-${endTime}`} />;

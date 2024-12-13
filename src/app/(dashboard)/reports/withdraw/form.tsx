@@ -21,7 +21,9 @@ import { toast } from "sonner";
 
 export function Form() {
   const t = useTranslations("report.withdraw");
-  const [orderNo, setOrderNo] = useQueryState("orderNo");
+  const [orderNo, setOrderNo] = useQueryState("orderNo", {
+    defaultValue: "",
+  });
   const router = useRouter();
   const [isPending, startSearch] = useTransition();
   const [isReset, startReset] = useTransition();
@@ -49,7 +51,9 @@ export function Form() {
     const numberValue = Math.max(0, Number(value));
     setWithdrawMoney(numberValue.toString());
   };
-  const [userId, setUserId] = useQueryState("userId");
+  const [userId, setUserId] = useQueryState("userId", {
+    defaultValue: "",
+  });
   const [userType, setUserType] = useQueryState("userType", {
     defaultValue: "all",
   });
