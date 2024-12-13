@@ -10,7 +10,6 @@ export function Add() {
   const setData = useSetAtom(supplierConfigAtom);
   return (
     <Button
-      size="sm"
       onClick={() => {
         setData(undefined);
         setOpen(true);

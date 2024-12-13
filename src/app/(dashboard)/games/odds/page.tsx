@@ -103,7 +103,7 @@ export default function Page({
           <FormWrapper />
         </Suspense>
       </div>
-      <div className="p-2 bg-background flex-1">
+      <div className="p-4 bg-background flex-1">
         <div className="border rounded-sm">
           <Suspense>
             <TableWrapper searchParams={searchParams} />

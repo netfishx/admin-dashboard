@@ -60,7 +60,7 @@ export default function Page() {
       <div className="flex justify-between items-center bg-background p-4">
         <RebateForm />
       </div>
-      <div className="p-2 bg-background flex-1 flex flex-col gap-2">
+      <div className="p-4 bg-background flex-1 flex flex-col gap-4">
         <div className="border rounded-sm">
           <Suspense>
             <TableWrapper />

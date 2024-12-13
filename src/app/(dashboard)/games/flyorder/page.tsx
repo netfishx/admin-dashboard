@@ -56,7 +56,7 @@ export default function Page() {
       <div className="flex justify-between items-center bg-background p-4">
         <FlyOrderForm />
       </div>
-      <div className="p-2 bg-background flex-1">
+      <div className="p-4 bg-background flex-1">
         <div className="border rounded-sm">
           <Suspense fallback={null}>
             <TableWrapper />

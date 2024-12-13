@@ -146,7 +146,7 @@ export default function SubaccountPage({
         <div className="text-sm font-medium">{t("list")}</div>
         <AddButton />
       </div>
-      <div className="bg-background flex-1 p-2 flex flex-col gap-2">
+      <div className="bg-background flex-1 p-4 flex flex-col gap-4">
         <Suspense
           fallback={
             <div className="border rounded-sm">
