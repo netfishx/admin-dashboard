@@ -1,4 +1,5 @@
 import { getPeriodReport } from "@/api";
+import { getGameList } from "@/api";
 import { CustomPagination } from "@/components/custom-pagination";
 import { Time } from "@/components/time";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -15,7 +16,6 @@ import { getTranslations } from "next-intl/server";
 import { Suspense } from "react";
 import { Actions } from "./actions";
 import { Form } from "./form";
-
 export default async function Page({
   searchParams,
 }: { searchParams: Promise<{ [key: string]: string | string[] }> }) {
@@ -23,13 +23,13 @@ export default async function Page({
     <div className="flex flex-col gap-2 w-full">
       <Suspense
         fallback={
-          <div className="bg-background py-2 flex flex-col gap-2">
-            <Skeleton className="w-full h-11" />
-            <Skeleton className="w-full h-11" />
+          <div className="bg-background p-2 flex flex-col gap-2">
+            <Skeleton />
+            <Skeleton />
           </div>
         }
       >
-        <Form />
+        <FormWrapper searchParams={searchParams} />
       </Suspense>
 
       <div className="p-2 bg-background flex-1 gap-2">
@@ -118,7 +118,10 @@ async function PeriodTable({
           <Table>
             <PeriodTableHeader />
             <Suspense fallback={<TableBodySkeleton />}>
-              <TableBodyWrapper data={data} searchParams={searchParams} />
+              <TableBodyWrapper
+                data={data as PageData<PeriodReportList>}
+                searchParams={searchParams}
+              />
             </Suspense>
           </Table>
         </div>
@@ -157,8 +160,10 @@ async function TableBodyWrapper({
             <TableCell className="w-24 text-center">
               <Time time={Number(item.openTime)} />
             </TableCell>
-            <TableCell className="w-24 text-center">{item.gameType}</TableCell>
-            <TableCell className="w-24 text-center">{item.gameId}</TableCell>
+            <TableCell className="w-24 text-center">
+              {item.gameTypeName}
+            </TableCell>
+            <TableCell className="w-24 text-center">{item.gameName}</TableCell>
             <TableCell className="w-24 text-center">{item.betNum}</TableCell>
             <TableCell className="w-24 text-center">
               {item.memberBetAmount}
@@ -199,4 +204,12 @@ function TableBodySkeleton() {
       ))}
     </TableBody>
   );
+}
+
+async function FormWrapper({
+  searchParams,
+}: { searchParams: Promise<{ [key: string]: string | string[] }> }) {
+  const { startTime, endTime } = await searchParams;
+  const res = await getGameList(1);
+  return <Form list={res.data ?? []} key={`${startTime}-${endTime}`} />;
 }

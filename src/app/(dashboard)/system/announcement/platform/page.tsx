@@ -6,20 +6,21 @@ import { List, TableBodySkeleton, TableHeaderWrapper } from "./list";
 
 export default async function Platform({
   searchParams,
-}: { searchParams: Promise<{ [key: string]: string | string[] }> }) {
+}: { searchParams: Promise<{ [key: string]: string }> }) {
+  const { startTime, endTime } = await searchParams;
   return (
     <div className="flex flex-col gap-2 w-full h-full">
       {/* form: admin permission */}
       <Suspense
         fallback={
-          <div className="flex justify-between items-center bg-background py-2 px-4">
+          <div className="flex justify-between items-center bg-background p-2">
             <Skeleton />
             <Skeleton />
             <Skeleton />
           </div>
         }
       >
-        <Form />
+        <Form key={`${startTime}-${endTime}`} />
       </Suspense>
       <div className="p-2 bg-background flex-1 flex flex-col gap-2">
         <Suspense

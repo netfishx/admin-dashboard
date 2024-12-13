@@ -12,12 +12,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { endOfDay, startOfDay } from "date-fns";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
-import { useSearchParams } from "next/navigation";
-import { parseAsString, useQueryState } from "nuqs";
-import { useEffect, useTransition } from "react";
+import { parseAsInteger, useQueryState, useQueryStates } from "nuqs";
+import { useTransition } from "react";
 import { toast } from "sonner";
 
 export function Form() {
@@ -30,20 +28,21 @@ export function Form() {
   const [isPending, startTransition] = useTransition();
   const [isReset, startReset] = useTransition();
 
-  const searchParams = useSearchParams();
-  const startTime = searchParams.get("startTime");
-  const endTime = searchParams.get("endTime");
+  const [dateRange] = useQueryStates({
+    startTime: parseAsInteger,
+    endTime: parseAsInteger,
+  });
+
   const [userType, setUserType] = useQueryState("userType", {
     defaultValue: "all",
   });
-  const [rechargeMoney, setRechargeMoney] = useQueryState(
-    "rechargeMoney",
-    parseAsString.withDefault("0").withOptions({ clearOnDefault: false }),
-  );
-  const [operatorSymbol, setOperatorSymbol] = useQueryState(
-    "operatorSymbol",
-    parseAsString.withDefault("3").withOptions({ clearOnDefault: false }),
-  );
+  const [rechargeMoney, setRechargeMoney] = useQueryState("rechargeMoney", {
+    defaultValue: "0",
+  });
+  const [operatorSymbol, setOperatorSymbol] = useQueryState("operatorSymbol", {
+    defaultValue: "3",
+  });
+
   const handleFilterChange = (filterType: string) => {
     setOperatorSymbol(filterType);
   };
@@ -54,18 +53,13 @@ export function Form() {
   };
 
   function search() {
-    if (!(startTime && endTime) && !orderNo) {
-      toast.error(t("selectDateOrId"));
-    } else {
+    if ((dateRange.startTime && dateRange.endTime) || orderNo) {
       startTransition(router.refresh);
+    } else {
+      toast.error(t("selectDateOrId"));
     }
   }
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
-  useEffect(() => {
-    setOperatorSymbol("3");
-    setRechargeMoney("0");
-  }, []);
   return (
     <div className="flex flex-col bg-background py-4 px-4 gap-4">
       <div className="flex gap-4 items-center">
@@ -138,12 +132,11 @@ export function Form() {
           disabled={isReset}
           onClick={() => {
             startReset(() => {
-              router.replace(
-                `/reports/recharge?startTime=${startOfDay(new Date()).getTime()}&endTime=${endOfDay(new Date()).getTime()}`,
-              );
+              router.replace("/reports/recharge");
             });
           }}
         >
+          {isReset ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
           {t("reset")}
         </Button>
         <Button onClick={search} disabled={isPending}>

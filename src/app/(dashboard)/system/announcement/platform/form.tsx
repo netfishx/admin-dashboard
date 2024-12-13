@@ -4,12 +4,11 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
-import { endOfDay, startOfDay } from "date-fns";
+import {} from "date-fns";
 import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
-import { useSearchParams } from "next/navigation";
-import { useQueryState } from "nuqs";
+import { parseAsInteger, useQueryState, useQueryStates } from "nuqs";
 import { useTransition } from "react";
 import { toast } from "sonner";
 
@@ -20,16 +19,17 @@ export function Form() {
 
   const router = useRouter();
 
-  const searchParams = useSearchParams();
-  const startTime = searchParams.get("startTime");
-  const endTime = searchParams.get("endTime");
+  const [dateRange] = useQueryStates({
+    startTime: parseAsInteger,
+    endTime: parseAsInteger,
+  });
 
   const [userId, setAgentId] = useQueryState("userId", {
     defaultValue: "",
   });
 
   function search() {
-    if (startTime && endTime) {
+    if (dateRange.startTime && dateRange.endTime) {
       startTransition(router.refresh);
     } else {
       toast.error(t("selectDateRange"));
@@ -62,9 +62,7 @@ export function Form() {
               disabled={isReset}
               onClick={() => {
                 startReset(() => {
-                  router.replace(
-                    `/system/announcement/platform?startTime=${startOfDay(new Date()).getTime()}&endTime=${endOfDay(new Date()).getTime()}`,
-                  );
+                  router.replace("/system/announcement/platform");
                 });
               }}
             >

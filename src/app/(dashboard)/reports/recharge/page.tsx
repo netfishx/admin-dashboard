@@ -23,18 +23,19 @@ import { Form } from "./form";
 export default async function Page({
   searchParams,
 }: { searchParams: Promise<{ [key: string]: string | string[] }> }) {
+  const { startTime, endTime } = await searchParams;
   return (
     <div className="flex flex-col gap-2 w-full">
       <Suspense
         fallback={
-          <div className="bg-background py-2 flex flex-col gap-2">
-            <Skeleton className="w-full h-9" />
-            <Skeleton className="w-full h-9" />
-            <Skeleton className="w-full h-9" />
+          <div className="bg-background p-2 flex flex-col gap-2">
+            <Skeleton />
+            <Skeleton />
+            <Skeleton />
           </div>
         }
       >
-        <Form />
+        <Form key={`${startTime}-${endTime}`} />
       </Suspense>
       <div className="p-2 bg-background flex-1 flex flex-col gap-2">
         <Suspense
@@ -104,7 +105,7 @@ async function TableWrapper({
   const params: RechargeReportParams = {
     userId: (userId ?? null) as string,
     orderNo: (orderNo ?? null) as string,
-    operatorSymbol: Number(operatorSymbol),
+    operatorSymbol: operatorSymbol ? Number(operatorSymbol) : 3, // 默认大于
     rechargeMoney: rechargeMoney ? Number(rechargeMoney) : 0,
     userType: userType ? Number(userType) : undefined,
     pageNum: Number(pageNum ?? 1),

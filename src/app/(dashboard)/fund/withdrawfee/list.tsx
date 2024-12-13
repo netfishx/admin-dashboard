@@ -87,9 +87,9 @@ export function List() {
                       <TableCell className="w-24 text-center">
                         <Input
                           type="number"
-                          value={item.fixedFee}
+                          value={Number(item.fixedFee).toFixed(2)}
                           min={0}
-                          step={0.0001}
+                          step={0.01}
                           onChange={(e) => {
                             handleFixedChange(index, Number(e.target.value));
                           }}
@@ -101,9 +101,9 @@ export function List() {
                       <TableCell className="text-center">
                         <Input
                           type="number"
-                          value={item.percentageFee}
+                          value={Number(item.percentageFee * 100).toFixed(2)}
                           min={0}
-                          step={0.0001}
+                          step={0.01}
                           onChange={(e) => {
                             handlePercentageChange(
                               index,

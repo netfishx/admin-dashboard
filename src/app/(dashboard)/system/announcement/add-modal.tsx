@@ -21,6 +21,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 
 import { saveAnnouncement } from "@/api";
+import { DateRangeFilter } from "@/components/daterange-filter";
 import { Label } from "@/components/ui/label";
 import type { Announcement } from "@/lib/types";
 import type { SessionData } from "@/session";
@@ -35,7 +36,8 @@ import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { use, useEffect, useState, useTransition } from "react";
 import { toast } from "sonner";
-import { TimeRange } from "./time-range";
+
+// import { TimeRange } from "./time-range";
 export function AddModal({
   session,
 }: { session: Promise<SessionData | null> }) {
@@ -53,8 +55,8 @@ export function AddModal({
   const [contentOfLanguage, setContentOfLanguage] = useState("");
   const [status, setStatus] = useState("1");
   const [open, setOpen] = useAtom(contentEditModalAtom);
-  const [startTime, setStartTime] = useState("");
-  const [endTime, setEndTime] = useState("");
+  const [startTime, setStartTime] = useState(0);
+  const [endTime, setEndTime] = useState(0);
   const editModalTitle = useAtomValue(editModalTitleAtom);
   const data = useAtomValue(contentModalDataAtom);
   const [contentData, setContentData] = useState<
@@ -73,8 +75,8 @@ export function AddModal({
       content: contentData,
       contentId: data?.contentId || null,
       status: Number(status),
-      startTime: new Date(startTime).getTime(),
-      endTime: new Date(endTime).getTime(),
+      startTime: startTime,
+      endTime: endTime,
     };
 
     const { valid, message } = validateParams(addParams);
@@ -143,9 +145,9 @@ export function AddModal({
     return { valid: true };
   }
   // 回调函数，用于接收子组件传递的时间数据
-  const handleDateRangeChange = (start: string, end: string) => {
-    setStartTime(start);
-    setEndTime(end);
+  const handleDateRangeChange = (startTime: number, endTime: number) => {
+    setStartTime(startTime);
+    setEndTime(endTime);
   };
 
   const resetFields = () => {
@@ -155,8 +157,8 @@ export function AddModal({
     setContentOfLanguage("");
     setTitleOfLanguage("");
     setStatus("1");
-    setStartTime("");
-    setEndTime("");
+    setStartTime(0);
+    setEndTime(0);
   };
 
   // 语言选择变化时更新内容
@@ -238,8 +240,8 @@ export function AddModal({
       setType(data.type.toString() || "");
       setLanguage("zh-CN");
       setStatus(data.status.toString() || "1");
-      setStartTime(data.startTime.toString() || "");
-      setEndTime(data.endTime.toString() || "");
+      setStartTime(data.startTime || 0);
+      setEndTime(data.endTime || 0);
     }
   }, [open]);
 
@@ -270,7 +272,7 @@ export function AddModal({
               onValueChange={(value) => setType(value)}
               disabled={!!data?.id && Date.now() > data?.startTime}
             >
-              <SelectTrigger className="w-[280px]">
+              <SelectTrigger className="w-[361px]">
                 <SelectValue placeholder={t("placeholderselect")} />
               </SelectTrigger>
               <SelectContent>
@@ -296,10 +298,19 @@ export function AddModal({
             <Label className="shrink-0 w-24 text-right text-muted-foreground before:content-['*'] before:text-destructive">
               {t("announcementTime")}
             </Label>
-            <TimeRange
+            {/* <TimeRange
               onDateRangeChange={handleDateRangeChange}
               range={[startTime, endTime]}
               disabled={!!data?.id && Date.now() > data?.startTime}
+            /> */}
+            <DateRangeFilter
+              quickSetBtn={[]}
+              isSearch={false}
+              onDateRangeChange={handleDateRangeChange}
+              formDateRange={{
+                from: Number(startTime),
+                to: Number(endTime),
+              }}
             />
           </div>
           <div className="flex gap-4 items-center">
@@ -313,7 +324,7 @@ export function AddModal({
               defaultValue="zh-CN"
             >
               <ToggleGroupItem value="zh-CN">{t("chinese")}</ToggleGroupItem>
-              <ToggleGroupItem value="en-US">{t("english")}</ToggleGroupItem>
+              {/* <ToggleGroupItem value="en-US">{t("english")}</ToggleGroupItem> */}
             </ToggleGroup>
           </div>
           {(type === "2" || type === "4") && (

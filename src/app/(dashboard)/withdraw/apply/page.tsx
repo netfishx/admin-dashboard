@@ -22,6 +22,7 @@ import { MoneyBtn } from "./money-btn";
 export default async function Page({
   searchParams,
 }: { searchParams: Promise<{ [key: string]: string | string[] }> }) {
+  const { startTime, endTime } = await searchParams;
   return (
     <div className="flex flex-col gap-2 w-full">
       <Suspense
@@ -32,7 +33,7 @@ export default async function Page({
           </div>
         }
       >
-        <Form />
+        <Form key={`${startTime}-${endTime}`} />
       </Suspense>
       <div className="p-2 bg-background flex-1 flex flex-col gap-2">
         <Suspense
