@@ -26,38 +26,22 @@ export async function ListHeader() {
   return (
     <TableHeader>
       <TableRow className="bg-muted">
-        <TableHead className="min-w-24 text-center">
-          {t("issuenumber")}
-        </TableHead>
-        <TableHead className="min-w-24 text-center">
-          {t("roomeownerID")}
-        </TableHead>
-        <TableHead className="min-w-24 text-center">
-          {t("ministerID")}
-        </TableHead>
+        <TableHead className="w-60">{t("issuenumber")}</TableHead>
+        <TableHead className="w-60">{t("roomeownerID")}</TableHead>
+        <TableHead className="w-60">{t("ministerID")}</TableHead>
         {hasSearchPermission && (
-          <TableHead className="min-w-24 text-center">{t("agentID")}</TableHead>
+          <TableHead className="w-60">{t("agentID")}</TableHead>
         )}
-        <TableHead className="min-w-24 text-center">{t("bottomBet")}</TableHead>
-        <TableHead className="min-w-24 text-center">{t("topBet")}</TableHead>
-        <TableHead className="min-w-24 text-center">{t("level")}</TableHead>
-        <TableHead className="min-w-24 text-center">
-          {t("settlementAmount")}
-        </TableHead>
-        <TableHead className="min-w-24 text-center">
-          {t("bombNumber")}
-        </TableHead>
-        <TableHead className="min-w-24 text-center">
-          {t("multiplier")}
-        </TableHead>
-        <TableHead className="min-w-24 text-center">{t("winPlayer")}</TableHead>
-        <TableHead className="min-w-24 text-center">
-          {t("gameStartTime")}
-        </TableHead>
-        <TableHead className="min-w-24 text-center">
-          {t("settlementFinishTime")}
-        </TableHead>
-        <TableHead className="sticky right-0 z-10 w-24 bg-muted text-center">
+        <TableHead className="w-40">{t("bottomBet")}</TableHead>
+        <TableHead className="w-40">{t("topBet")}</TableHead>
+        <TableHead className="w-40">{t("level")}</TableHead>
+        <TableHead className="w-40">{t("settlementAmount")}</TableHead>
+        <TableHead className="w-24">{t("bombNumber")}</TableHead>
+        <TableHead className="w-24">{t("multiplier")}</TableHead>
+        <TableHead className="w-40">{t("winPlayer")}</TableHead>
+        <TableHead className="w-[180px]">{t("gameStartTime")}</TableHead>
+        <TableHead className="w-[180px]">{t("settlementFinishTime")}</TableHead>
+        <TableHead className="w-24 sticky right-0 z-10 bg-muted text-center">
           {t("action")}
         </TableHead>
       </TableRow>
@@ -66,17 +50,14 @@ export async function ListHeader() {
 }
 
 function generateResultString(players: GameRecordRequestRecords["result"]) {
-  // 分组赢和输的玩家
   const winners = players.filter(
     (player) => Number.parseInt(player.result) > 0,
   );
   const losers = players.filter((player) => Number.parseInt(player.result) < 0);
 
-  // 格式化输出字符串
   const winString = `赢: ${winners.map((player) => `HY${player.memberId}`).join(", ")}`;
   const loseString = `输: ${losers.map((player) => `HY${player.memberId}`).join(", ")}`;
 
-  // 返回拼接后的结果
   return (
     <div className="flex flex-col gap-2">
       <div className="whitespace-nowrap text-gray-800">{winString}</div>
@@ -95,40 +76,34 @@ async function ListBody({ list }: { list: GameRecordRequestRecords[] }) {
       {list && list?.length > 0 ? (
         list?.map((item: GameRecordRequestRecords) => (
           <TableRow key={item.id}>
-            <TableCell className="w-24 text-center">{item.id}</TableCell>
-            <TableCell className="w-24 text-center">
-              {item.roomOwnerId}
-            </TableCell>
-            <TableCell className="w-24 text-center">
-              {item.clubOwnerId}
-            </TableCell>
+            <TableCell className="text-center">{item.id}</TableCell>
+            <TableCell className="text-center">{item.roomOwnerId}</TableCell>
+            <TableCell className="text-center">{item.clubOwnerId}</TableCell>
             {hasSearchPermission && (
-              <TableCell className="w-24 text-center">
+              <TableCell className="text-center">
                 {item.parentClubOwnerAgentId}
               </TableCell>
             )}
-            <TableCell className="w-24 text-center">{item.bet}</TableCell>
-            <TableCell className="w-24 text-center">{item.settleCap}</TableCell>
-            <TableCell className="w-24 text-center">
-              {item.upgradeMode}
-            </TableCell>
-            <TableCell className="w-24 text-center">
+            <TableCell className="text-center">{item.bet}</TableCell>
+            <TableCell className="text-center">{item.settleCap}</TableCell>
+            <TableCell className="text-center">{item.upgradeMode}</TableCell>
+            <TableCell className="text-center">
               {item.result?.[0]?.result}
             </TableCell>
-            <TableCell className="w-24 text-center">{item.bombCount}</TableCell>
-            <TableCell className="w-24 text-center">
+            <TableCell className="text-center">{item.bombCount}</TableCell>
+            <TableCell className="text-center">
               {item.multiplierCount}
             </TableCell>
-            <TableCell className="w-24 text-center">
+            <TableCell className="text-center">
               {generateResultString(item?.result)}
             </TableCell>
-            <TableCell className="w-24 whitespace-nowrap text-center">
+            <TableCell className="text-center">
               <Time time={item.gameStartTime} />
             </TableCell>
-            <TableCell className="w-24 whitespace-nowrap text-center">
+            <TableCell className="text-center">
               <Time time={item.gameEndTime} />
             </TableCell>
-            <TableCell className="sticky right-0 z-10 w-24 bg-background text-center">
+            <TableCell className="sticky right-0 z-10 bg-background text-center">
               <DetailButton item={item} />
             </TableCell>
           </TableRow>
@@ -152,8 +127,8 @@ export async function List({
   const params = await searchParams;
   if (!(params?.startTime && params?.endTime)) {
     return (
-      <div className="flex-1 bg-background p-2">
-        <div className="relative rounded-sm border">
+      <div className="p-4 bg-background flex-1">
+        <div className="border rounded-sm">
           <Table>
             <ListHeader />
             <TableSkeleton length={5} colSpan={14} />
@@ -171,19 +146,21 @@ export async function List({
   };
   const { data } = await getGuandanReportList(p);
   return (
-    <div className="flex-1 bg-background p-2">
-      <div className="relative rounded-sm border">
-        <Table>
+    <div className="p-4 bg-background flex-1">
+      <div className="border rounded-sm relative">
+        <Table className="table-fixed">
           <ListHeader />
           <ListBody list={data?.list ?? []} />
         </Table>
       </div>
       <div className="pt-2">
-        <CustomPagination
-          total={data?.total ?? 0}
-          currentPage={Number(data?.pageNum ?? 1)}
-          pageSize={Number(data?.pageSize ?? 10)}
-        />
+        {data?.total && data?.total > 0 ? (
+          <CustomPagination
+            total={data?.total ?? 0}
+            currentPage={Number(data?.pageNum ?? 1)}
+            pageSize={Number(data?.pageSize ?? 10)}
+          />
+        ) : null}
       </div>
     </div>
   );

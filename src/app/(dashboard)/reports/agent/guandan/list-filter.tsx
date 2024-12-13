@@ -39,7 +39,7 @@ export function ListFilter({
   };
 
   return (
-    <div className="flex flex-col gap-2 bg-background px-4 py-2">
+    <div className="flex flex-col gap-2 bg-background p-4">
       {/* First row */}
       <div className="flex items-center gap-4">
         <div className="flex items-center gap-2">
