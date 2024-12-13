@@ -181,7 +181,7 @@ export function DateRangeFilter({
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     startTransition(async () => {
-      if (!(dateRange[startTimeText] && dateRange[endTimeText])) {
+      if (!(dateRange[startTimeText] && dateRange[endTimeText]) && isSearch) {
         const today = new Date();
         await setDateRange({
           [startTimeText]: startOfDay(today).getTime(),
@@ -271,6 +271,13 @@ export function DateRangeFilter({
     if (range) {
       let from = range.from;
       let to = range.to;
+      // 如果开始时间和结束时间相同，则设置为今天00:00:00到23:59:59
+      if (from?.getTime() === to?.getTime()) {
+        return setDateRange({
+          [startTimeText]: startOfDay(today).getTime(),
+          [endTimeText]: endOfDay(today).getTime(),
+        });
+      }
 
       if (from?.getTime() === 0) {
         from = today;
@@ -356,7 +363,7 @@ export function DateRangeFilter({
               autoFocus
               mode="range"
               selected={
-                dateRange
+                dateRange[startTimeText] && dateRange[endTimeText]
                   ? {
                       from: new Date(dateRange[startTimeText]),
                       to: new Date(dateRange[endTimeText]),

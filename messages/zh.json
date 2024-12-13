@@ -685,7 +685,7 @@
       "passed": "已通过",
       "auditing": "审核中",
       "withdrawing": "提现中",
-      "failed": "审核失败",
+      "failed": "审核拒绝",
       "success": "提现成功"
     },
     "borrow": {

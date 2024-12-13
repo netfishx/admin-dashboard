@@ -39,7 +39,7 @@ export default async function Page({
       <div className="p-2 bg-background flex-1 flex flex-col gap-2">
         <Suspense
           fallback={
-            <Table>
+            <Table className="table-fixed">
               <TableHeaderWrapper />
               <TableBodySkeleton />
             </Table>
@@ -57,34 +57,16 @@ async function TableHeaderWrapper() {
   return (
     <TableHeader>
       <TableRow className="bg-muted">
-        <TableHead className="w-24 min-w-24 text-center">
-          {t("orderNo")}
-        </TableHead>
-        <TableHead className="w-24 min-w-24 text-center">
-          {t("userId")}
-        </TableHead>
-        <TableHead className="w-24 min-w-24 text-center">
-          {t("currency")}
-        </TableHead>
-        <TableHead className="w-24 min-w-24 text-center">
-          {t("withdrawMoney")}
-        </TableHead>
-        <TableHead className="w-24 min-w-24 text-center">
-          {t("withdrawFee")}
-        </TableHead>
-        <TableHead className="w-24 min-w-24 text-center">
-          {t("status")}
-        </TableHead>
-        <TableHead className="w-32 min-w-32 text-center">
-          {t("applyTime")}
-        </TableHead>
-        <TableHead className="w-24 min-w-24 text-center">
-          {t("approverTime")}
-        </TableHead>
-        <TableHead className="w-24 min-w-24 text-center">
-          {t("finishTime")}
-        </TableHead>
-        <TableHead className="w-24 text-center">{t("withdrawHash")}</TableHead>
+        <TableHead className="w-56 text-center">{t("orderNo")}</TableHead>
+        <TableHead className="w-32 text-center">{t("userId")}</TableHead>
+        <TableHead className="w-32 text-center">{t("currency")}</TableHead>
+        <TableHead className="w-32 text-center">{t("withdrawMoney")}</TableHead>
+        <TableHead className="w-32 text-center">{t("withdrawFee")}</TableHead>
+        <TableHead className="w-32 text-center">{t("status")}</TableHead>
+        <TableHead className="w-48 text-center">{t("applyTime")}</TableHead>
+        <TableHead className="w-48 text-center">{t("approverTime")}</TableHead>
+        <TableHead className="w-96 text-center">{t("finishTime")}</TableHead>
+        <TableHead className="w-32 text-center">{t("withdrawHash")}</TableHead>
       </TableRow>
     </TableHeader>
   );
@@ -163,34 +145,24 @@ async function TableBodyWrapper({ data }: { data?: PageData<WithdrawReport> }) {
       {data && data.list.length > 0 ? (
         data.list.map((item) => (
           <TableRow key={item.id}>
-            <TableCell className="w-24 min-w-24 text-center">
-              {item.orderNo}
-            </TableCell>
-            <TableCell className="w-24 min-w-24 text-center">
-              {item.userId}
-            </TableCell>
-            <TableCell className="w-24 min-w-24 text-center">
-              {item.currency}
-            </TableCell>
-            <TableCell className="w-24 min-w-24 text-center">
-              {item.withdrawMoney}
-            </TableCell>
-            <TableCell className="w-24 min-w-24 text-center">
-              {item.withdrawFee}
-            </TableCell>
-            <TableCell className="w-24 min-w-24 text-center">
+            <TableCell className="text-center">{item.orderNo}</TableCell>
+            <TableCell className="text-center">{item.userId}</TableCell>
+            <TableCell className="text-center">{item.currency}</TableCell>
+            <TableCell className="text-center">{item.withdrawMoney}</TableCell>
+            <TableCell className="text-center">{item.withdrawFee}</TableCell>
+            <TableCell className="text-center">
               {statusMap[item.status as keyof typeof statusMap]}
             </TableCell>
-            <TableCell className="w-32 min-w-32 text-center">
+            <TableCell className="text-center">
               <Time time={item.applyTime} />
             </TableCell>
-            <TableCell className="w-24 min-w-24 text-center">
+            <TableCell className="text-center">
               {!!item.approverTime && <Time time={item.approverTime} />}
             </TableCell>
-            <TableCell className="w-24 min-w-24 text-center">
+            <TableCell className="text-center">
               {!!item.finishTime && <Time time={item.finishTime} />}
             </TableCell>
-            <TableCell className="min-w-24 text-center">
+            <TableCell className="text-center">
               <Actions item={item} />
             </TableCell>
           </TableRow>

@@ -61,18 +61,12 @@ export async function TableHeaderWrapper() {
     <TableHeader>
       <TableRow className="bg-muted">
         {/* admin permission */}
-        <TableHead className="w-32 min-w-32 text-center">
-          {t("startTime")}
-        </TableHead>
+        <TableHead className="w-32 text-center">{t("startTime")}</TableHead>
 
-        <TableHead className="w-32 min-w-32 text-center">
-          {t("endTime")}
-        </TableHead>
+        <TableHead className="w-32 text-center">{t("endTime")}</TableHead>
 
         {/* admin permission */}
-        <TableHead className="w-32 min-w-32 text-center">
-          {t("createTime")}
-        </TableHead>
+        <TableHead className="w-32 text-center">{t("createTime")}</TableHead>
 
         {/* admin permission */}
         <TableHead className="text-center">{t("type")}</TableHead>
@@ -80,9 +74,7 @@ export async function TableHeaderWrapper() {
         {/* admin permission */}
         <TableHead className="text-center">{t("userId")}</TableHead>
 
-        <TableHead className="w-[450px] min-w-24 text-center">
-          {t("content")}
-        </TableHead>
+        <TableHead className="w-[450px] text-center">{t("content")}</TableHead>
       </TableRow>
     </TableHeader>
   );

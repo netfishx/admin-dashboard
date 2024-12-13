@@ -103,25 +103,21 @@ async function TableHeaderWrapper() {
   return (
     <TableHeader>
       <TableRow className="bg-muted">
-        <TableHead className="min-w-32 text-center">{t("id")}</TableHead>
-        <TableHead className="min-w-32 text-center">
-          {t("createTime")}
-        </TableHead>
-        <TableHead className="min-w-32 text-center">{t("orderType")}</TableHead>
-        <TableHead className="min-w-32 text-center">{t("userId")}</TableHead>
-        <TableHead className="min-w-32 text-center">
-          {t("orderAmount")}
-        </TableHead>
-        <TableHead className="min-w-32 text-center">
-          {t("auditMultiple")}
-        </TableHead>
-        <TableHead className="min-w-32 text-center">
+        <TableHead className="w-32 text-center">{t("id")}</TableHead>
+        <TableHead className="w-32 text-center">{t("createTime")}</TableHead>
+        <TableHead className="w-32 text-center">{t("orderType")}</TableHead>
+        <TableHead className="w-32 text-center">{t("userId")}</TableHead>
+        <TableHead className="w-32 text-center">{t("orderAmount")}</TableHead>
+        <TableHead className="w-32 text-center">{t("auditMultiple")}</TableHead>
+        <TableHead className="w-32 text-center">
           {t("availableAudit")}
         </TableHead>
-        <TableHead className="text-center">{t("remainingAudit")}</TableHead>
-        <TableHead className="min-w-32 text-center">{t("status")}</TableHead>
+        <TableHead className="w-32 text-center">
+          {t("remainingAudit")}
+        </TableHead>
+        <TableHead className="w-32 text-center">{t("status")}</TableHead>
 
-        <TableHead className="min-w-48 text-center sticky right-0 bg-muted">
+        <TableHead className="w-48 text-center sticky right-0 bg-muted">
           {translations("action")}
         </TableHead>
       </TableRow>
@@ -146,32 +142,26 @@ async function TableBodyWrapper({ list }: { list: AuditList[] }) {
       {list && list.length > 0 ? (
         list.map((item) => (
           <TableRow key={item.id}>
-            <TableCell className="min-w-32 text-center">{item.id}</TableCell>
-            <TableCell className="min-w-32 text-center">
+            <TableCell className="text-center">{item.id}</TableCell>
+            <TableCell className="text-center">
               <Time time={item.createTime} />
             </TableCell>
 
-            <TableCell className="min-w-32 text-center">
+            <TableCell className=" text-center">
               {orderTypeList[item.orderType as keyof typeof orderTypeList]}
             </TableCell>
-            <TableCell className="min-w-32 text-center">
-              {item.userId}
-            </TableCell>
-            <TableCell className="min-w-32 text-center">
-              {item.orderAmount}
-            </TableCell>
-            <TableCell className="min-w-32 text-center">
-              {item.auditMultiple}
-            </TableCell>
-            <TableCell className="min-w-32 text-center">
+            <TableCell className=" text-center">{item.userId}</TableCell>
+            <TableCell className="text-center">{item.orderAmount}</TableCell>
+            <TableCell className=" text-center">{item.auditMultiple}</TableCell>
+            <TableCell className=" text-center">
               {item.availableAudit}
             </TableCell>
             <TableCell className="text-center">{item.remainingAudit}</TableCell>
-            <TableCell className="min-w-32 text-center">
+            <TableCell className=" text-center">
               {statusList[item.status as keyof typeof statusList]}
             </TableCell>
 
-            <TableCell className="min-w-48 text-center sticky right-0 bg-background">
+            <TableCell className="text-center sticky right-0 bg-background">
               <CleanBtn data={item} />
             </TableCell>
           </TableRow>
