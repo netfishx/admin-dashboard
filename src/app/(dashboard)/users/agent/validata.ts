@@ -8,7 +8,7 @@ export const createFormSchema = zfd
     username: zfd.text(usernameSchema),
     nickname: zfd.text(z.string().optional()),
     password: zfd.text(passwordSchema),
-    confirmPassword: zfd.text(passwordSchema),
+    confirmPassword: zfd.text(z.string().nullable()),
   })
   .refine((data) => data.password === data.confirmPassword, {
     message: "两次输入的密码不一致",

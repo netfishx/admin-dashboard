@@ -24,7 +24,7 @@ import {
 } from "@/components/ui/dialog";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
-  Table,
+  ScrollableTable,
   TableBody,
   TableCell,
   TableHead,
@@ -94,35 +94,29 @@ export function DictSettingModal() {
               {t("add")}
             </Button>
           </div>
-          <div className="mt-4 rounded-md border">
-            <Table>
-              <TableHeader className="table w-full bg-muted">
-                <TableRow>
+          <div className="mt-4 rounded-md border overflow-auto max-h-[50dvh]">
+            <ScrollableTable className="w-full relative">
+              <TableHeader>
+                <TableRow className="bg-muted">
                   <TableHead className="w-26">{t("itemName")}</TableHead>
                   <TableHead className="w-26">{t("itemValue")}</TableHead>
                   <TableHead className="w-40">{t("remark")}</TableHead>
-                  <TableHead className="w-26">{t("action")}</TableHead>
+                  <TableHead className="w-26 text-center">
+                    {t("action")}
+                  </TableHead>
                 </TableRow>
               </TableHeader>
-              <TableBody className="block max-h-[370px] overflow-auto">
-                {loading
-                  ? Array.from({ length: 5 }).map((_, index) => (
-                      // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
-                      <TableRow key={index} className="block w-full">
-                        <TableCell
-                          colSpan={4}
-                          className="block w-full text-center"
-                        >
-                          <Skeleton />
-                        </TableCell>
-                      </TableRow>
-                    ))
-                  : list.map((item) => (
+              {loading ? (
+                <TableBodySkeleton />
+              ) : (
+                <TableBody>
+                  {list.length > 0 ? (
+                    list.map((item) => (
                       <TableRow key={item.id}>
-                        <TableCell className="w-26">{item.label}</TableCell>
-                        <TableCell className="w-26">{item.value}</TableCell>
-                        <TableCell className="w-40">{item.remark}</TableCell>
-                        <TableCell className="w-26">
+                        <TableCell>{item.label}</TableCell>
+                        <TableCell>{item.value}</TableCell>
+                        <TableCell>{item.remark}</TableCell>
+                        <TableCell>
                           <div className="flex gap-2">
                             <Button
                               variant="ghost"
@@ -146,9 +140,17 @@ export function DictSettingModal() {
                           </div>
                         </TableCell>
                       </TableRow>
-                    ))}
-              </TableBody>
-            </Table>
+                    ))
+                  ) : (
+                    <TableRow>
+                      <TableCell colSpan={4} className="text-center h-20">
+                        {translation("noData")}
+                      </TableCell>
+                    </TableRow>
+                  )}
+                </TableBody>
+              )}
+            </ScrollableTable>
           </div>
         </div>
         <AddItemDialog />
@@ -215,5 +217,20 @@ function DeleteBtn({
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
+  );
+}
+
+function TableBodySkeleton() {
+  return (
+    <TableBody>
+      {Array.from({ length: 5 }).map((_, index) => (
+        // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
+        <TableRow key={index}>
+          <TableCell colSpan={4} className="text-center">
+            <Skeleton />
+          </TableCell>
+        </TableRow>
+      ))}
+    </TableBody>
   );
 }
