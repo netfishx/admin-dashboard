@@ -26,36 +26,22 @@ export async function ListHeader() {
   return (
     <TableHeader>
       <TableRow className="bg-muted">
-        <TableHead className="min-w-24 text-center">
-          {t("ordernumber")}
-        </TableHead>
-        <TableHead className="min-w-24 text-center">
-          {t("issuenumber")}
-        </TableHead>
-        <TableHead className="min-w-24 text-center">{t("memberID")}</TableHead>
-        <TableHead className="min-w-24 text-center">
-          {t("roomeownerID")}
-        </TableHead>
-        <TableHead className="min-w-24 text-center">
-          {t("ministerID")}
-        </TableHead>
-        <TableHead className="min-w-24 text-center">
-          {t("leastlevelID")}
-        </TableHead>
-        <TableHead className="min-w-24 text-center">{t("gamename")}</TableHead>
-        <TableHead className="min-w-24 text-center">{t("smallType")}</TableHead>
-        <TableHead className="min-w-24 text-center">{t("odds")}</TableHead>
-        <TableHead className="min-w-24 text-center">{t("betamount")}</TableHead>
-        <TableHead className="min-w-24 text-center">{t("winamount")}</TableHead>
-        <TableHead className="min-w-24 text-center">{t("agentID")}</TableHead>
-        <TableHead className="min-w-24 text-center">{t("bettime")}</TableHead>
-        <TableHead className="min-w-24 text-center">
-          {t("membersettlementtime")}
-        </TableHead>
-        <TableHead className="min-w-24 text-center">
-          {t("proxystatus")}
-        </TableHead>
-        <TableHead className="w-24 text-center sticky right-0 z-10 bg-muted">
+        <TableHead className="w-40">{t("ordernumber")}</TableHead>
+        <TableHead className="w-40">{t("issuenumber")}</TableHead>
+        <TableHead className="w-60">{t("memberID")}</TableHead>
+        <TableHead className="w-60">{t("roomeownerID")}</TableHead>
+        <TableHead className="w-60">{t("ministerID")}</TableHead>
+        <TableHead className="w-60">{t("leastlevelID")}</TableHead>
+        <TableHead className="w-40">{t("gamename")}</TableHead>
+        <TableHead className="w-40">{t("smallType")}</TableHead>
+        <TableHead className="w-40">{t("odds")}</TableHead>
+        <TableHead className="w-40">{t("betamount")}</TableHead>
+        <TableHead className="w-40">{t("winamount")}</TableHead>
+        <TableHead className="w-60">{t("agentID")}</TableHead>
+        <TableHead className="w-[180px]">{t("bettime")}</TableHead>
+        <TableHead className="w-[180px]">{t("membersettlementtime")}</TableHead>
+        <TableHead className="w-40">{t("proxystatus")}</TableHead>
+        <TableHead className="w-24 sticky right-0 z-10 bg-muted text-center">
           {t("action")}
         </TableHead>
       </TableRow>
@@ -79,55 +65,43 @@ async function ListBody({
       {list && list?.length > 0 ? (
         list?.map((item: OrderReportsRecord) => (
           <TableRow key={item.id}>
-            <TableCell className="w-24 text-center">{item.id}</TableCell>
-            <TableCell className="w-24 text-center">
-              {item.issueNumber}
-            </TableCell>
-            <TableCell className="w-24 text-center">{item.memberId}</TableCell>
-            <TableCell className="w-24 text-center">
-              {item.roomOwnerId}
-            </TableCell>
-            <TableCell className="w-24 text-center">{item.minister}</TableCell>
-            <TableCell className="w-24 text-center">
-              {item.lastAgentId}
-            </TableCell>
-            <TableCell className="w-24 text-center whitespace-nowrap">
+            <TableCell className="">{item.id}</TableCell>
+            <TableCell>{item.issueNumber}</TableCell>
+            <TableCell>{item.memberId}</TableCell>
+            <TableCell>{item.roomOwnerId}</TableCell>
+            <TableCell>{item.minister}</TableCell>
+            <TableCell>{item.lastAgentId}</TableCell>
+            <TableCell className="whitespace-nowrap">
               {gameList.find((game) => game.gameId === item.gameId)?.gameName}
             </TableCell>
-            <TableCell className="w-24 text-center">{item.betType}</TableCell>
-            <TableCell className="w-24 text-center">
+            <TableCell>{item.betType}</TableCell>
+            <TableCell>
               {
                 Object.entries(item.odds || {})[
                   Object.entries(item.odds || {}).length - 1
                 ]
               }
             </TableCell>
-            <TableCell className="w-24 text-center">
-              {item?.betAmount}
-            </TableCell>
-            <TableCell className="w-24 text-center">
-              {item.winLossAmount}
-            </TableCell>
-            <TableCell className="w-24 text-center">
+            <TableCell>{item?.betAmount}</TableCell>
+            <TableCell>{item.winLossAmount}</TableCell>
+            <TableCell>
               <AgentId session={session as SessionData} />
             </TableCell>
-            <TableCell className="text-center whitespace-nowrap">
+            <TableCell>
               <Time time={item.betTime} />
             </TableCell>
-            <TableCell className="text-center whitespace-nowrap">
+            <TableCell>
               <Time time={item.settleTime} />
             </TableCell>
-            <TableCell className="w-24 text-center">
-              {typeMap[item.orderStatus]}
-            </TableCell>
-            <TableCell className="w-24 text-center sticky right-0 z-10 bg-background">
+            <TableCell>{typeMap[item.orderStatus]}</TableCell>
+            <TableCell className="sticky right-0 z-10 bg-background text-center">
               <DetailButton item={item} />
             </TableCell>
           </TableRow>
         ))
       ) : (
         <TableRow>
-          <TableCell colSpan={15} className="text-center h-40">
+          <TableCell colSpan={15} className="h-40 text-center">
             {translate("noData")}
           </TableCell>
         </TableRow>
@@ -164,22 +138,21 @@ export async function List({
   const { data } = await getOrderReportList(p);
 
   return (
-    <div className="p-2 bg-background flex-1">
+    <div className="p-4 bg-background flex-1">
       <div className="border rounded-sm relative">
-        <Table>
+        <Table className="table-fixed">
           <ListHeader />
           <ListBody list={data?.list ?? []} gameList={gameList} />
         </Table>
       </div>
       <div className="pt-2">
-        {/* biome-ignore lint/style/useExplicitLengthCheck: <explanation> */}
-        {!!data?.list?.length && (
+        {data?.total && data?.total > 0 ? (
           <CustomPagination
             total={data?.total ?? 0}
             currentPage={Number(params?.pageNum) || 1}
             pageSize={Number(params?.pageSize) || 10}
           />
-        )}
+        ) : null}
       </div>
     </div>
   );

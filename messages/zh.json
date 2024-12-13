@@ -469,7 +469,8 @@
       "shoe": "靴数",
       "play": "局数",
       "resultp": "牌局结果",
-      "all": "全部"
+      "all": "全部",
+      "selectDateRange": "请选择日期范围"
     },
     "periodlist": {
       "today": "今天",

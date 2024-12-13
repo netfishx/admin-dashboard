@@ -52,7 +52,7 @@ export function ListFilter({
     if (dateRange.startTime && dateRange.endTime) {
       router.refresh();
     } else {
-      toast.error("请选择日期范围");
+      toast.error(t("selectDateRange"));
     }
   };
   const handleReset = () => {
@@ -60,7 +60,7 @@ export function ListFilter({
   };
 
   return (
-    <div className="flex flex-col gap-2 bg-background py-2 px-4">
+    <div className="flex flex-col gap-2 bg-background p-4">
       {/* 第一行 */}
       <div className="flex gap-4 items-center">
         <DateRangeFilter />

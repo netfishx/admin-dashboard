@@ -25,6 +25,7 @@ import {
 } from "nuqs";
 import { useEffect, useState, useTransition } from "react";
 import { toast } from "sonner";
+
 export function ListFilter({ gameList }: { gameList: GameInfo[] }) {
   const t = useTranslations("report.orderlist");
   const searchParams = useSearchParams();
@@ -121,7 +122,7 @@ export function ListFilter({ gameList }: { gameList: GameInfo[] }) {
   };
 
   return (
-    <div className="flex flex-col gap-2 bg-background py-2 px-4">
+    <div className="flex flex-col gap-2 bg-background p-4">
       {/* 第一行 */}
       <div className="flex gap-4 items-center">
         <div className="flex gap-2 items-center">

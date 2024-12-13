@@ -18,6 +18,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import type { OrderItemDetailType, OrderReportsRecord } from "@/lib/types";
+import Big from "big.js";
 import { useTranslations } from "next-intl";
 import { Suspense, useEffect, useState } from "react";
 
@@ -96,7 +97,8 @@ export function Detaildialog(props: Dialogprops) {
           <Suspense fallback={<Skeleton />}>
             <div className="whitespace-nowrap mb-1">
               {data?.revenueShare.map(
-                (item) => `${item.accountId} - ${item.percent * 100}%；`,
+                (item) =>
+                  `${item.accountId} - ${Big(item.percent * 100).toFixed(2)}%；`,
               )}
             </div>
           </Suspense>
