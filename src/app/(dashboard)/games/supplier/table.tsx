@@ -44,7 +44,7 @@ export async function SupplierTable({
           res.data.map((item) => (
             <TableRow key={item.id}>
               <TableCell>{item.gameName}</TableCell>
-              <TableCell>{item.videoLink}</TableCell>
+              <TableCell className="break-all">{item.videoLink}</TableCell>
               <TableCell>{item.userId}</TableCell>
               <TableCell>{item.userName}</TableCell>
               <TableCell>{item.distributionAmount}</TableCell>
