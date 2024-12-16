@@ -172,8 +172,8 @@ async function DayChartWrapper({
       dailyPokerReport: pokerData,
     },
   } = await getTodayWinLossChart({
-    startTime: start,
-    endTime: end,
+    startTime: end,
+    endTime: start,
     beforeEndTime: oneWeekAgo,
     size: 6,
   });
