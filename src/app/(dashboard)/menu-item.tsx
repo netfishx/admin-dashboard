@@ -35,7 +35,7 @@ export function MenuItem({
       variant="ghost"
       className={cn([
         "group w-full justify-start font-normal",
-        isActive && "bg-accent text-primary !opacity-100",
+        isActive && "bg-accent text-primary opacity-100!",
       ])}
       disabled={isActive}
       {...props}
@@ -43,7 +43,7 @@ export function MenuItem({
     >
       <MenuItemLink href={href} isActive={isActive}>
         {icon}
-        <span className="flex-grow text-left">{label}</span>
+        <span className="grow text-left">{label}</span>
         {hasChildren && (
           <ChevronRight className="h-4 w-4 transition-transform group-data-[state='open']:rotate-90" />
         )}

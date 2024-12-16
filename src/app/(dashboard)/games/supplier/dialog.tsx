@@ -157,7 +157,7 @@ export function SupplierDialog({
             </div>
             <div className="flex items-center gap-2">
               <Label className="w-20 text-end">{t("supplierName")}</Label>
-              <span className="flex-1 flex h-9 items-center rounded-md border px-3 text-sm shadow-sm opacity-50 bg-muted">
+              <span className="flex-1 flex h-9 items-center rounded-md border px-3 text-sm shadow-xs opacity-50 bg-muted">
                 {supplierName || data?.userName}
               </span>
             </div>

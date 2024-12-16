@@ -82,7 +82,7 @@ export function CheckDialog(props: Dialogprops) {
               <DialogTitle>{t("checkStep2Title")}</DialogTitle>
             </DialogHeader>
             <div className="mx-auto w-full max-w-xl p-4">
-              <Card className="border border-gray-200 shadow-sm">
+              <Card className="border border-gray-200 shadow-xs">
                 {/* Header row */}
                 <div className="flex divide-x divide-gray-200">
                   <div className="flex w-24 items-center justify-center bg-gray-50 px-4 py-2.5 text-sm text-gray-600">

@@ -52,7 +52,7 @@ function FormField({
 }: FormField) {
   return (
     <div className="flex items-center gap-4">
-      <Label className="flex min-w-[120px] flex-shrink-0 items-center justify-end gap-1">
+      <Label className="flex min-w-[120px] shrink-0 items-center justify-end gap-1">
         {required && <span className="text-red-500">*</span>}
         <span className="text-gray-600">{label}</span>
       </Label>
@@ -273,7 +273,7 @@ export function CheckDialog(props: Dialogprops) {
             </DialogHeader>
             <div className="mx-auto w-full max-w-xl p-4">
               <div className="text-center text-lg font-bold">
-                <Label className="mb-4 flex min-w-[120px] flex-shrink-0 items-center gap-1">
+                <Label className="mb-4 flex min-w-[120px] shrink-0 items-center gap-1">
                   {t("google2faCode")}
                 </Label>
                 <Input
