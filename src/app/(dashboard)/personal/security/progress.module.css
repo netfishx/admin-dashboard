@@ -1,18 +1,17 @@
-.progress {
-  @apply h-2 w-1/2 rounded-2xl bg-primary/20;
-  &::-moz-progress-bar {
-    @apply rounded-2xl bg-primary;
-  }
+@import "tailwindcss/theme" theme(reference);
 
-  &:indeterminate {
-    --progress-color: theme(colors.primary.DEFAULT);
+.progress {
+  --progress-color: hsl(var(--primary));
+  @apply h-2 w-1/2 rounded-2xl bg-(--progress-color)/20;
+  &::-moz-progress-bar {
+    @apply rounded-2xl bg-(--progress-color);
   }
 
   &::-webkit-progress-bar {
     @apply rounded-2xl bg-transparent;
   }
   &::-webkit-progress-value {
-    @apply rounded-2xl bg-primary;
+    @apply rounded-2xl bg-(--progress-color);
   }
 }
 
