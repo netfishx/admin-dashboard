@@ -24,7 +24,7 @@ export async function ListHeader() {
   return (
     <TableHeader>
       <TableRow className="bg-muted">
-        <TableHead className="w-40">{t("agentOrOwnerId")}</TableHead>
+        <TableHead className="w-60">{t("agentOrOwnerId")}</TableHead>
         <TableHead className="w-40">{t("gameName")}</TableHead>
         <TableHead className="w-40">{t("shareAmount")}</TableHead>
         <TableHead className="w-40">{t("blockAmount")}</TableHead>
@@ -53,7 +53,7 @@ async function ListBody({
   const t = await getTranslations("report.agent");
   return (
     <TableBody>
-      {list?.length > 0 ? (
+      {list && list?.length > 0 ? (
         list?.map((item: RatioReportRequestRecords) => (
           <TableRow key={`${item.userId}`}>
             <TableCell>{item.userId}</TableCell>
@@ -106,7 +106,7 @@ export async function RatioList({
         <div className="border rounded-sm">
           <Table>
             <ListHeader />
-            <ListBody list={[]} gameList={gameList} />
+            <TableSkeleton length={5} colSpan={11} />
           </Table>
         </div>
       </div>

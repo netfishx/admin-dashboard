@@ -24,7 +24,7 @@ export async function ListHeader() {
   return (
     <TableHeader>
       <TableRow className="bg-muted">
-        <TableHead className="w-40">{t("leastlevelID")}</TableHead>
+        <TableHead className="w-60">{t("leastlevelID")}</TableHead>
         <TableHead className="w-40">{t("gameName")}</TableHead>
         <TableHead className="w-40">{t("betNum")}</TableHead>
         <TableHead className="w-40">{t("memberBetting")}</TableHead>
@@ -113,7 +113,7 @@ export async function MemberList({
         <div className="border rounded-sm">
           <Table>
             <ListHeader />
-            <ListBody list={[]} gameList={gameList} />
+            <TableSkeleton length={5} colSpan={14} />
           </Table>
         </div>
       </div>

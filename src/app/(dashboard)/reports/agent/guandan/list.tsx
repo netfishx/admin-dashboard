@@ -30,7 +30,7 @@ export async function ListHeader() {
     <TableHeader>
       <TableRow className="bg-muted">
         {hasSearchPermission && (
-          <TableHead className="w-40">{t("agentID")}</TableHead>
+          <TableHead className="w-60">{t("agentID")}</TableHead>
         )}
         <TableHead className="w-40">{t("gameName")}</TableHead>
         <TableHead className="w-40">{t("roomType")}</TableHead>
@@ -82,7 +82,7 @@ async function ListBody({
             <TableCell>{item.issueAmount}</TableCell>
             <TableCell>{item.settledAmount}</TableCell>
             <TableCell className="w-24 text-center sticky right-0 z-10 bg-background">
-              <DetailButton />
+              <DetailButton agentId={item.agentId} />
             </TableCell>
           </TableRow>
         ))
@@ -113,7 +113,7 @@ export async function List({
         <div className="relative rounded-sm border">
           <Table>
             <ListHeader />
-            <ListBody list={[]} gameList={gameList} />
+            <TableSkeleton length={5} colSpan={6} />
           </Table>
         </div>
       </div>
@@ -127,6 +127,7 @@ export async function List({
     endTime: Number(params?.endTime || 0),
   };
   const { data } = await getPokerReport(p);
+
   return (
     <div className="flex-1 bg-background p-2">
       <div className="h-6">
@@ -150,7 +151,7 @@ export async function List({
       <div className="border rounded-sm relative">
         <Table className="table-fixed">
           <ListHeader />
-          <Suspense fallback={<TableSkeleton length={5} colSpan={14} />}>
+          <Suspense fallback={<TableSkeleton length={5} colSpan={6} />}>
             <ListBody list={data?.list || []} gameList={gameList} />
           </Suspense>
         </Table>
