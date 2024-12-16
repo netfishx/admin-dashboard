@@ -1,6 +1,9 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import Big from "big.js";
+import { useState } from "react";
 
 export function EditNumber({
   step,
@@ -13,6 +16,7 @@ export function EditNumber({
   handleEdit: (num: number) => void;
   limit?: number;
 }) {
+  const [isValid, setIsValid] = useState(true);
   return (
     <div className="flex gap-[1px]">
       <Button
@@ -21,6 +25,7 @@ export function EditNumber({
         onClick={() => {
           handleEdit(-step);
         }}
+        disabled={!isValid}
       >
         -
       </Button>
@@ -29,6 +34,7 @@ export function EditNumber({
         defaultValue={1}
         onChange={(e) => {
           try {
+            setIsValid(e.target.validity.valid);
             setStep(e.target.value ? Big(e.target.value).toNumber() : 0);
           } catch (e) {
             console.error(e);
@@ -47,6 +53,7 @@ export function EditNumber({
         onClick={() => {
           handleEdit(step);
         }}
+        disabled={!isValid}
       >
         +
       </Button>
