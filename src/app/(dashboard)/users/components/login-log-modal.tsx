@@ -23,6 +23,7 @@ import { loginLogModalAtom } from "@/store";
 import { useAtom } from "jotai";
 import { useTranslations } from "next-intl";
 import { startTransition, useEffect, useState } from "react";
+import { toast } from "sonner";
 
 export function LoginLogModal({
   id,
@@ -43,34 +44,39 @@ export function LoginLogModal({
     if (!open) {
       return;
     }
+    setLoading(true);
     startTransition(async () => {
-      setLoading(true);
       if (id && type === "AGENT") {
-        const { data } = await getAgentLoginLog({
+        const { code, data, message } = await getAgentLoginLog({
           userId: id,
           pageNum: page,
           pageSize: size,
         });
-        if (data) {
+        setLoading(false);
+        if (code === 0 && data) {
           setData(data.list);
           setTotal(data.total);
           setPage(data.pageNum);
           setSize(data.pageSize);
+        } else {
+          toast.error(message);
         }
       } else if (id && type === "MEMBER") {
-        const { data } = await getMemberLoginLog({
+        const { code, data, message } = await getMemberLoginLog({
           memberId: id,
           pageNum: page,
           pageSize: size,
         });
-        if (data) {
+        setLoading(false);
+        if (code === 0 && data) {
           setData(data.list);
           setTotal(data.total);
           setPage(data.pageNum);
           setSize(data.pageSize);
+        } else {
+          toast.error(message);
         }
       }
-      setLoading(false);
     });
   }, [id, page, size, type, open]);
 
@@ -106,7 +112,7 @@ export function LoginLogModal({
               <TableBody>
                 {data?.length > 0 ? (
                   data?.map((item: LoginLog) => (
-                    <TableRow key={item.id + Math.random()}>
+                    <TableRow key={item.id}>
                       <TableCell>
                         <Time time={item.createTime} />
                       </TableCell>
@@ -128,13 +134,15 @@ export function LoginLogModal({
             )}
           </ScrollableTable>
         </div>
-        <ModalPagination
-          total={total}
-          currentPage={page}
-          size={size}
-          setPage={setPage}
-          setSize={setSize}
-        />
+        {data?.length > 0 && (
+          <ModalPagination
+            total={total}
+            currentPage={page}
+            size={size}
+            setPage={setPage}
+            setSize={setSize}
+          />
+        )}
       </DialogContent>
     </Dialog>
   );

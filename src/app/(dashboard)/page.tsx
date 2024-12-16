@@ -84,28 +84,16 @@ export default async function DashboardPage({
           )}
           <Suspense
             fallback={
-              <>
-                <div className="grid grid-cols-2 gap-2">
-                  <div className="rounded bg-card">
-                    <div className="p-4">{t("chart.todayCashflow")}</div>
-                    <div className="h-40 lg:h-48 xl:h-72" />
-                  </div>
-                  <div className="rounded bg-card">
-                    <div className="p-4">{t("chart.todayActiveUsers")}</div>
-                    <div className="h-40 lg:h-48 xl:h-72" />
-                  </div>
+              <div className="grid grid-cols-2 gap-2">
+                <div className="rounded bg-card">
+                  <div className="p-4">{t("chart.todayCashflow")}</div>
+                  <div className="h-40 lg:h-48 xl:h-72" />
                 </div>
-                <div className="grid gap-2">
-                  <div className="rounded bg-card p-4">
-                    <div className="p-4">{t("chart.bjlDataTrending")}</div>
-                    <div className="h-40 lg:h-48 xl:h-72" />
-                  </div>
-                  <div className="rounded bg-card p-4">
-                    <div className="p-4">{t("chart.gdDataTrending")}</div>
-                    <div className="h-40 lg:h-48 xl:h-72" />
-                  </div>
+                <div className="rounded bg-card">
+                  <div className="p-4">{t("chart.todayActiveUsers")}</div>
+                  <div className="h-40 lg:h-48 xl:h-72" />
                 </div>
-              </>
+              </div>
             }
           >
             <ChartWrapper start={start} end={end} oneWeekAgo={oneWeekAgo} />
@@ -177,17 +165,18 @@ async function DayChartWrapper({
 }) {
   const t = await getTranslations();
   const {
-    data: { agentBaccaratAmountReport, agentBaccaratBetNumReport },
+    data: {
+      agentBaccaratAmountReport,
+      agentBaccaratBetNumReport,
+      dailyBaccaratReport: baccaratData,
+      dailyPokerReport: pokerData,
+    },
   } = await getTodayWinLossChart({
-    startTime: start,
-    endTime: end,
+    startTime: end,
+    endTime: start,
     beforeEndTime: oneWeekAgo,
-    // startTime: 1730304000000,
-    // endTime: 1730748805000,
-    // beforeEndTime: 1730748805000,
     size: 6,
   });
-
   const chartConfig = {
     bjl01: {
       color: "hsl(var(--chart-1))",
@@ -224,20 +213,79 @@ async function DayChartWrapper({
       fill: Object.values(chartConfig)[index]?.color,
     })) || [];
 
+  // 百家乐数据
+  const bjlTrendingBetAmountData =
+    baccaratData?.map(({ day, memberBetAmount }) => ({
+      name: day,
+      data: Number(memberBetAmount),
+    })) || [];
+
+  const bjlTrendingBetNumData =
+    baccaratData?.map(({ day, betNum }) => ({
+      name: day,
+      data: Number(betNum),
+    })) || [];
+
+  // 掼蛋数据
+  const gdTrendingBetAmountData =
+    pokerData?.map(({ day, totaSettledAmount }) => ({
+      name: day,
+      data: Number(totaSettledAmount),
+    })) || [];
+
+  const gdTrendingBetNumData =
+    pokerData?.map(({ day, issueAmount }) => ({
+      name: day,
+      data: Number(issueAmount),
+    })) || [];
+
+  const weekChart1Config = {
+    title: t("chart.bjlDataTrending"),
+    tab: [t("chart.cashflow"), t("chart.headcount")],
+    type: "game",
+    data: {
+      mainData: bjlTrendingBetAmountData || [],
+      subData: bjlTrendingBetNumData || [],
+    },
+  };
+  const weekChart2Config = {
+    title: t("chart.gdDataTrending"),
+    tab: [t("chart.cashflow"), t("chart.headcount")],
+    type: "game",
+    data: {
+      mainData: gdTrendingBetAmountData || [],
+      subData: gdTrendingBetNumData || [],
+    },
+  };
+
   return (
     <>
-      <DayChart
-        title={t("chart.todayCashflow")}
-        subTitle={t("chart.bettingAmount")}
-        data={bjlBetAmountData || []}
-        chartConfig={chartConfig}
-      />
-      <DayChart
-        title={t("chart.todayActiveUsers")}
-        subTitle={t("chart.bettingTimes")}
-        data={bjlActiveUsersData || []}
-        chartConfig={chartConfig}
-      />
+      <div className="grid grid-cols-2 gap-2">
+        <DayChart
+          title={t("chart.todayCashflow")}
+          subTitle={t("chart.bettingAmount")}
+          data={bjlBetAmountData || []}
+          chartConfig={chartConfig}
+        />
+        <DayChart
+          title={t("chart.todayActiveUsers")}
+          subTitle={t("chart.bettingTimes")}
+          data={bjlActiveUsersData || []}
+          chartConfig={chartConfig}
+        />
+      </div>
+      <div className="flex flex-1 flex-col gap-2">
+        <div className="grid gap-2 rounded bg-card p-4">
+          <Suspense>
+            <WeekChart chartConfig={weekChart1Config} />
+          </Suspense>
+        </div>
+        <div className="grid gap-2 rounded bg-card p-4">
+          <Suspense>
+            <WeekChart chartConfig={weekChart2Config} />
+          </Suspense>
+        </div>
+      </div>
     </>
   );
 }
@@ -256,10 +304,7 @@ async function ChartWrapper({
 
   return (
     <>
-      <div className="grid grid-cols-2 gap-2">
-        <DayChartWrapper start={start} end={end} oneWeekAgo={oneWeekAgo} />
-      </div>
-      <GameWeekChartWrapper start={start} end={end} oneWeekAgo={oneWeekAgo} />
+      <DayChartWrapper start={start} end={end} oneWeekAgo={oneWeekAgo} />
       {permissions?.includes("admin_stat") && (
         <MemberWeekChartWrapper end={end} oneWeekAgo={oneWeekAgo} />
       )}
@@ -352,91 +397,6 @@ async function AnnouncementDialogWrapper() {
           isFirstLogin={isFirstLogin ?? "false"}
         />
       )}
-    </>
-  );
-}
-
-async function GameWeekChartWrapper({
-  start,
-  end,
-  oneWeekAgo,
-}: {
-  start: number;
-  end: number;
-  oneWeekAgo: number;
-}) {
-  const t = await getTranslations();
-  const {
-    data: { dailyBaccaratReport: baccaratData, dailyPokerReport: pokerData },
-  } = await getTodayWinLossChart({
-    startTime: start,
-    endTime: end,
-    beforeEndTime: oneWeekAgo,
-    // startTime: 1730304000000,
-    // endTime: 1730748805000,
-    // beforeEndTime: 1730748805000,
-    size: 6,
-  });
-
-  // 百家乐数据
-  const bjlTrendingBetAmountData =
-    baccaratData?.map(({ day, memberBetAmount }) => ({
-      name: day,
-      data: Number(memberBetAmount),
-    })) || [];
-
-  const bjlTrendingBetNumData =
-    baccaratData?.map(({ day, betNum }) => ({
-      name: day,
-      data: Number(betNum),
-    })) || [];
-
-  // 掼蛋数据
-  const gdTrendingBetAmountData =
-    pokerData?.map(({ day, totaSettledAmount }) => ({
-      name: day,
-      data: Number(totaSettledAmount),
-    })) || [];
-
-  const gdTrendingBetNumData =
-    pokerData?.map(({ day, issueAmount }) => ({
-      name: day,
-      data: Number(issueAmount),
-    })) || [];
-
-  const weekChart1Config = {
-    title: t("chart.bjlDataTrending"),
-    tab: [t("chart.cashflow"), t("chart.headcount")],
-    type: "game",
-    data: {
-      mainData: bjlTrendingBetAmountData || [],
-      subData: bjlTrendingBetNumData || [],
-    },
-  };
-  const weekChart2Config = {
-    title: t("chart.gdDataTrending"),
-    tab: [t("chart.cashflow"), t("chart.headcount")],
-    type: "game",
-    data: {
-      mainData: gdTrendingBetAmountData || [],
-      subData: gdTrendingBetNumData || [],
-    },
-  };
-
-  return (
-    <>
-      <div className="flex flex-1 flex-col gap-2">
-        <div className="grid gap-2 rounded bg-card p-4">
-          <Suspense>
-            <WeekChart chartConfig={weekChart1Config} />
-          </Suspense>
-        </div>
-        <div className="grid gap-2 rounded bg-card p-4">
-          <Suspense>
-            <WeekChart chartConfig={weekChart2Config} />
-          </Suspense>
-        </div>
-      </div>
     </>
   );
 }

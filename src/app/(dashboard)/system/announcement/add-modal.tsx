@@ -297,7 +297,7 @@ export function AddModal({
             <Label className="w-24 shrink-0 text-right text-muted-foreground before:text-destructive before:content-['*'] before:mr-1">
               {t("announcementTime")}
             </Label>
-            {/* <TimeRange disabled={!!data?.id && Date.now() > data?.startTime} /> */}
+
             <DateRangeFilter
               quickSetBtn={[]}
               isSearch={false}

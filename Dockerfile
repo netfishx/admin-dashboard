@@ -1,4 +1,4 @@
-FROM oven/bun:1-alpine AS base
+FROM imbios/bun-node:1-22-alpine AS base
 
 WORKDIR /app
 

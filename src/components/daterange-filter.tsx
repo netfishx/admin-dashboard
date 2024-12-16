@@ -196,7 +196,7 @@ export function DateRangeFilter({
 
   useEffect(() => {
     onDateRangeChange?.(dateRange[startTimeText], dateRange[endTimeText]);
-  }, [dateRange, onDateRangeChange]);
+  }, [dateRange, onDateRangeChange, startTimeText, endTimeText]);
 
   const handleQuickSelect = (type: string) => {
     let from: Date;

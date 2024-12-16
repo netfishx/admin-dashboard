@@ -107,6 +107,12 @@ export function OddsTable({
                   setVerifyLimit(e.target.reportValidity());
                   handleOddsChange(item.oddsType, item.betType, e.target.value);
                 }}
+                onBlur={(e) => {
+                  const state = e.target.reportValidity();
+                  if (!state) {
+                    e.target.focus();
+                  }
+                }}
               />
             </TableCell>
             <TableCell>
@@ -128,6 +134,12 @@ export function OddsTable({
                     "minBet",
                     Number(e.target.value),
                   );
+                }}
+                onBlur={(e) => {
+                  const state = e.target.reportValidity();
+                  if (!state) {
+                    e.target.focus();
+                  }
                 }}
               />
             </TableCell>
@@ -154,6 +166,12 @@ export function OddsTable({
                       "maxBet",
                       Number(e.target.value),
                     );
+                  }}
+                  onBlur={(e) => {
+                    const state = e.target.reportValidity();
+                    if (!state) {
+                      e.target.focus();
+                    }
                   }}
                 />
                 {item.maxBetLimit ? (
@@ -186,6 +204,12 @@ export function OddsTable({
                       "maxBetPeriod",
                       Number(e.target.value),
                     );
+                  }}
+                  onBlur={(e) => {
+                    const state = e.target.reportValidity();
+                    if (!state) {
+                      e.target.focus();
+                    }
                   }}
                 />
                 {item.maxBetPeriodLimit ? (
