@@ -82,7 +82,7 @@ async function ListBody({
         ))
       ) : (
         <TableRow>
-          <TableCell colSpan={15} className="h-40 text-center">
+          <TableCell colSpan={14} className="h-40 text-center">
             {translate("noData")}
           </TableCell>
         </TableRow>
@@ -121,7 +121,6 @@ export async function MemberList({
   }
 
   const { data } = await getMemberBetReport(p);
-  console.info(data, "data");
 
   return (
     <div className="p-4 bg-background flex-1">

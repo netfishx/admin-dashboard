@@ -352,6 +352,7 @@
       "status": "状态",
       "action": "操作",
       "edit": "修改",
+
       "statusLabel": {
         "0": "启用",
         "1": "停用"
@@ -545,10 +546,11 @@
       "totalIssueAmount": "总期数",
       "gameHall": "游戏大厅",
       "club": "俱乐部",
-      "all": "全部"
+      "all": "全部",
+      "selectDate": "请选择日期"
     },
     "supplier": {
-      "supplierID": "供应商ID",
+      "supplierId": "供应商ID",
       "supplierName": "供应商名称",
       "date": "日期",
       "game": "游戏",
@@ -713,7 +715,8 @@
       "orderType": "类型",
       "borrow": "借款",
       "repayment": "还款",
-      "writeOff": "销账"
+      "writeOff": "销账",
+      "selectDate": "请选择日期"
     },
     "download": {
       "list": "仅保留近7天内下载数据",
@@ -751,7 +754,8 @@
       "roomOwnerId": "房主ID",
       "ministerId": "部长ID",
       "addCredit": "增加授信",
-      "reduceCredit": "减少授信"
+      "reduceCredit": "减少授信",
+      "selectDate": "请选择日期"
     },
     "reward": {
       "agentID": "代理ID",
@@ -795,7 +799,8 @@
       "roomOwnerId": "房主ID",
       "ministerId": "部长ID",
       "transferOut": "转出",
-      "transferIn": "转入"
+      "transferIn": "转入",
+      "selectDate": "请选择日期"
     }
   },
   "pagination": {

@@ -88,7 +88,10 @@ async function ListBody({
         ))
       ) : (
         <TableRow>
-          <TableCell colSpan={15} className="h-40 text-center">
+          <TableCell
+            colSpan={hasSearchPermission ? 6 : 5}
+            className="h-40 text-center"
+          >
             {translate("noData")}
           </TableCell>
         </TableRow>
@@ -108,7 +111,7 @@ export async function List({
   const params = await searchParams;
   if (!(params?.startTime && params?.endTime)) {
     return (
-      <div className="flex-1 bg-background p-2">
+      <div className="flex-1 bg-background p-4">
         <div className="h-6" />
         <div className="relative rounded-sm border">
           <Table>
@@ -129,7 +132,7 @@ export async function List({
   const { data } = await getPokerReport(p);
 
   return (
-    <div className="flex-1 bg-background p-2">
+    <div className="flex-1 bg-background p-4">
       <div className="h-6">
         {data?.list && data.list.length > 0 && (
           <>

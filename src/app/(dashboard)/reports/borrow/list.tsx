@@ -23,14 +23,12 @@ export async function ListHeader() {
   return (
     <TableHeader>
       <TableRow className="bg-muted">
-        <TableHead className="min-w-24 text-center">
-          {t("orderNumber")}
-        </TableHead>
-        <TableHead className="min-w-24 text-center">{t("agentID")}</TableHead>
-        <TableHead className="min-w-24 text-center">{t("memberID")}</TableHead>
-        <TableHead className="min-w-24 text-center">{t("amount")}</TableHead>
-        <TableHead className="min-w-24 text-center">{t("type")}</TableHead>
-        <TableHead className="min-w-24 text-center">{t("applyTime")}</TableHead>
+        <TableHead className="w-40">{t("orderNumber")}</TableHead>
+        <TableHead className="w-40">{t("agentID")}</TableHead>
+        <TableHead className="w-40">{t("memberID")}</TableHead>
+        <TableHead className="w-40">{t("amount")}</TableHead>
+        <TableHead className="w-40">{t("type")}</TableHead>
+        <TableHead className="w-40">{t("applyTime")}</TableHead>
       </TableRow>
     </TableHeader>
   );
@@ -49,23 +47,21 @@ async function ListBody({ list }: { list: BorrowRecordRequestRecords[] }) {
       {list?.length > 0 ? (
         list?.map((item) => (
           <TableRow key={item.id}>
-            <TableCell className="w-24 text-center">{item.orderNo}</TableCell>
-            <TableCell className="w-24 text-center">{item.agentId}</TableCell>
-            <TableCell className="w-24 text-center">{item.memberId}</TableCell>
-            <TableCell className="w-24 text-center">
-              {item.operateMoney}
-            </TableCell>
-            <TableCell className="w-24 text-center">
+            <TableCell>{item.orderNo}</TableCell>
+            <TableCell>{item.agentId}</TableCell>
+            <TableCell>{item.memberId}</TableCell>
+            <TableCell>{item.operateMoney}</TableCell>
+            <TableCell>
               {typeMap[item.orderType as keyof typeof typeMap]}
             </TableCell>
-            <TableCell className="w-24 text-center">
+            <TableCell>
               <Time time={item.createTime} />
             </TableCell>
           </TableRow>
         ))
       ) : (
         <TableRow>
-          <TableCell colSpan={7} className="h-40 text-center">
+          <TableCell colSpan={6} className="h-40 text-center">
             {translate("noData")}
           </TableCell>
         </TableRow>
@@ -89,11 +85,11 @@ export async function List({
   };
   if (!(params?.startTime && params?.endTime)) {
     return (
-      <div className="flex-1 bg-background p-2">
+      <div className="flex-1 bg-background p-4">
         <div className="relative rounded-sm border">
           <Table>
             <ListHeader />
-            <ListBody list={[]} />
+            <TableSkeleton length={5} colSpan={6} />
           </Table>
         </div>
       </div>
@@ -103,9 +99,9 @@ export async function List({
   const { data } = await postGetBorrowLogList(p);
 
   return (
-    <div className="flex-1 bg-background p-2">
+    <div className="flex-1 bg-background p-4">
       <div className="relative rounded-sm border">
-        <Table>
+        <Table className="table-fixed">
           <ListHeader />
           <Suspense fallback={<TableSkeleton length={5} colSpan={6} />}>
             <ListBody list={data?.list || []} />

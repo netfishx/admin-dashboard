@@ -12,6 +12,7 @@ interface CommonWrapperProps {
 }
 
 export default async function Page({ searchParams }: CommonWrapperProps) {
+  const { startTime, endTime } = await searchParams;
   const gameListResp = await getBaccaratGames();
   return (
     <>
@@ -22,7 +23,10 @@ export default async function Page({ searchParams }: CommonWrapperProps) {
           </div>
         }
       >
-        <MemberForm gameList={gameListResp?.data ?? []} />
+        <MemberForm
+          gameList={gameListResp?.data ?? []}
+          key={`${startTime}-${endTime}`}
+        />
       </Suspense>
       <Suspense
         fallback={

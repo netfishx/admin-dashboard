@@ -22,6 +22,7 @@ async function ListFilterWrapper() {
 }
 
 export default async function Page({ searchParams }: CommonWrapperProps) {
+  const { startTime, endTime } = await searchParams;
   const gameListResp = await getGuandanGames();
   return (
     <div className="flex w-full flex-col gap-2">
@@ -32,7 +33,7 @@ export default async function Page({ searchParams }: CommonWrapperProps) {
           </div>
         }
       >
-        <ListFilterWrapper />
+        <ListFilterWrapper key={`${startTime}-${endTime}`} />
       </Suspense>
       <Suspense
         fallback={

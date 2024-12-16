@@ -11,6 +11,7 @@ interface CommonWrapperProps {
 }
 
 async function CommonWrapper({ searchParams }: CommonWrapperProps) {
+  const { startTime, endTime } = await searchParams;
   return (
     <>
       <Suspense
@@ -20,11 +21,11 @@ async function CommonWrapper({ searchParams }: CommonWrapperProps) {
           </div>
         }
       >
-        <ListFilter />
+        <ListFilter key={`${startTime}-${endTime}`} />
       </Suspense>
       <Suspense
         fallback={
-          <div className="flex-1 bg-background p-2">
+          <div className="flex-1 bg-background p-4">
             <div className="relative rounded-sm border">
               <Table>
                 <ListHeader />

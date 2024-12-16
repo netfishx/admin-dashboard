@@ -4,12 +4,13 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { makeDownload } from "@/lib/utils";
-import { endOfDay, startOfDay } from "date-fns";
+import {} from "date-fns";
 import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useQueryState } from "nuqs";
+import { parseAsInteger, useQueryState, useQueryStates } from "nuqs";
 import { useTransition } from "react";
+import { toast } from "sonner";
 export function ListFilter({
   hasSearchPermission,
 }: {
@@ -25,9 +26,20 @@ export function ListFilter({
   const router = useRouter();
 
   const handleReset = () => {
-    router.replace(
-      `/reports/supplier?startTime=${startOfDay(new Date()).getTime()}&endTime=${endOfDay(new Date()).getTime()}`,
-    );
+    router.replace("/reports/supplier");
+  };
+
+  const [dateRange] = useQueryStates({
+    startTime: parseAsInteger,
+    endTime: parseAsInteger,
+  });
+
+  const handleSearch = () => {
+    if (dateRange.startTime && dateRange.endTime) {
+      startTransition(() => router.refresh());
+    } else {
+      toast.error(t("selectDate"));
+    }
   };
 
   return (
@@ -40,7 +52,7 @@ export function ListFilter({
         </div>
         {hasSearchPermission && (
           <div className="flex items-center gap-4">
-            <Label className="shrink-0">供应商ID</Label>
+            <Label className="shrink-0">{t("supplierId")}</Label>
             <Input
               value={supplierId ?? ""}
               onChange={(e) => setSupplierId(e.target.value)}
@@ -59,10 +71,7 @@ export function ListFilter({
           >
             {t("reset")}
           </Button>
-          <Button
-            disabled={isPending}
-            onClick={() => startTransition(() => router.refresh())}
-          >
+          <Button disabled={isPending} onClick={handleSearch}>
             {isPending && <Loader2 className="h-4 w-4 animate-spin" />}
             {t("search")}
           </Button>

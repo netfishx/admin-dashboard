@@ -10,13 +10,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { startOfDay } from "date-fns";
-import { endOfDay } from "date-fns";
 import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
-import { useQueryState } from "nuqs";
+import { parseAsInteger, useQueryState, useQueryStates } from "nuqs";
 import { useTransition } from "react";
+import { toast } from "sonner";
 export function ListFilter({
   hasSearchPermission,
 }: {
@@ -32,10 +31,21 @@ export function ListFilter({
     defaultValue: "all",
   });
 
+  const [dateRange] = useQueryStates({
+    startTime: parseAsInteger,
+    endTime: parseAsInteger,
+  });
+
   const handleReset = () => {
-    router.replace(
-      `/reports/agent/guandan?startTime=${startOfDay(new Date()).getTime()}&endTime=${endOfDay(new Date()).getTime()}`,
-    );
+    router.replace("/reports/agent/guandan");
+  };
+
+  const handleSearch = () => {
+    if (dateRange.startTime && dateRange.endTime) {
+      startTransition(() => router.refresh());
+    } else {
+      toast.error(t("selectDate"));
+    }
   };
 
   return (
@@ -88,14 +98,7 @@ export function ListFilter({
           >
             {t("reset")}
           </Button>
-          <Button
-            onClick={() => {
-              startTransition(() => {
-                router.refresh();
-              });
-            }}
-            disabled={isPending}
-          >
+          <Button onClick={handleSearch} disabled={isPending}>
             {isPending && <Loader2 className="h-4 w-4 animate-spin" />}
             {t("search")}
           </Button>

@@ -28,6 +28,7 @@ async function ListFilterWrapper({ gameList }: { gameList: GameInfo[] }) {
 
 export default async function Page({ searchParams }: CommonWrapperProps) {
   const gameListResp = await getBaccaratGames();
+  const { startTime, endTime } = await searchParams;
 
   return (
     <div className="flex h-full w-full flex-col gap-2">
@@ -38,7 +39,10 @@ export default async function Page({ searchParams }: CommonWrapperProps) {
           </div>
         }
       >
-        <ListFilterWrapper gameList={gameListResp?.data ?? []} />
+        <ListFilterWrapper
+          gameList={gameListResp?.data ?? []}
+          key={`${startTime}-${endTime}`}
+        />
       </Suspense>
       <Suspense
         fallback={

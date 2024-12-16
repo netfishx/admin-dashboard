@@ -26,27 +26,15 @@ export async function ListHeader() {
   return (
     <TableHeader>
       <TableRow className="bg-muted">
-        <TableHead className="min-w-24 text-center">{t("member_id")}</TableHead>
-        <TableHead className="min-w-24 text-center">
-          {t("member_type")}
-        </TableHead>
-        <TableHead className="min-w-24 text-center">{t("game_name")}</TableHead>
-        <TableHead className="min-w-24 text-center">{t("bet_count")}</TableHead>
-        <TableHead className="min-w-24 text-center">
-          {t("bet_amount")}
-        </TableHead>
-        <TableHead className="min-w-24 text-center">
-          {t("valid_amount")}
-        </TableHead>
-        <TableHead className="min-w-24 text-center">
-          {t("win_loss_amount")}
-        </TableHead>
-        <TableHead className="min-w-24 text-center">
-          {t("cashback_amount")}
-        </TableHead>
-        <TableHead className="min-w-24 text-center">
-          {t("profit_loss_result")}
-        </TableHead>
+        <TableHead className="w-40">{t("member_id")}</TableHead>
+        <TableHead className="w-40">{t("member_type")}</TableHead>
+        <TableHead className="w-40">{t("game_name")}</TableHead>
+        <TableHead className="w-40">{t("bet_count")}</TableHead>
+        <TableHead className="w-40">{t("bet_amount")}</TableHead>
+        <TableHead className="w-40">{t("valid_amount")}</TableHead>
+        <TableHead className="w-40">{t("win_loss_amount")}</TableHead>
+        <TableHead className="w-40">{t("cashback_amount")}</TableHead>
+        <TableHead className="w-40">{t("profit_loss_result")}</TableHead>
         <TableHead className="sticky right-0 z-10 w-24 bg-muted text-center">
           {t("details")}
         </TableHead>
@@ -69,32 +57,20 @@ async function ListBody({
       {list && list?.length > 0 ? (
         list?.map((item: MemberReportsRecord) => (
           <TableRow key={nanoid()}>
-            <TableCell className="w-24 text-center">{item.memberId}</TableCell>
-            <TableCell className="w-24 text-center">
-              {item.memberTypeName}
-            </TableCell>
-            <TableCell className="w-24 text-center">
+            <TableCell>{item.memberId}</TableCell>
+            <TableCell>{item.memberTypeName}</TableCell>
+            <TableCell>
               {
                 gameList?.find((game) => game.gameType === item.gameType)
                   ?.gameName
               }
             </TableCell>
-            <TableCell className="w-24 text-center">{item.betNum}</TableCell>
-            <TableCell className="w-24 text-center">
-              {item.memberBetAmount}
-            </TableCell>
-            <TableCell className="w-24 text-center">
-              {item.availableBetAmount}
-            </TableCell>
-            <TableCell className="w-24 text-center">
-              {item.winLossAmount}
-            </TableCell>
-            <TableCell className="w-24 text-center">
-              {item.pureBackAmount}
-            </TableCell>
-            <TableCell className="w-24 text-center">
-              {item.profitLossAmount}
-            </TableCell>
+            <TableCell>{item.betNum}</TableCell>
+            <TableCell>{item.memberBetAmount}</TableCell>
+            <TableCell>{item.availableBetAmount}</TableCell>
+            <TableCell>{item.winLossAmount}</TableCell>
+            <TableCell>{item.pureBackAmount}</TableCell>
+            <TableCell>{item.profitLossAmount}</TableCell>
             <TableCell className="sticky right-0 z-10 w-24 bg-background text-center">
               <DetailButton item={item} />
             </TableCell>
@@ -129,12 +105,12 @@ export async function List({
   };
   if (!(params?.startTime && params?.endTime)) {
     return (
-      <div className="flex-1 bg-background p-2">
+      <div className="flex-1 bg-background p-4">
         <div className="h-6" />
         <div className="relative rounded-sm border">
           <Table>
             <ListHeader />
-            <ListBody list={[]} />
+            <TableSkeleton length={5} colSpan={10} />
           </Table>
         </div>
       </div>
@@ -143,7 +119,7 @@ export async function List({
   const { data } = await getMemberReportList(p);
 
   return (
-    <div className="flex-1 bg-background p-2">
+    <div className="flex-1 bg-background p-4">
       <div className="h-6">
         {data?.list && data?.list?.length > 0 && (
           <>
@@ -193,7 +169,7 @@ export async function List({
       </div>
 
       <div className="relative rounded-sm border">
-        <Table>
+        <Table className="table-fixed">
           <ListHeader />
           <Suspense fallback={<TableSkeleton length={5} colSpan={10} />}>
             <ListBody list={data?.list ?? []} gameList={gameList || []} />

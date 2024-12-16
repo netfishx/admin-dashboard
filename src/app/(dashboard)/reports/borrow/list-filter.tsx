@@ -10,12 +10,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { endOfDay, startOfDay } from "date-fns";
+import {} from "date-fns";
 import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
-import { useQueryState } from "nuqs";
+import { parseAsInteger, useQueryState, useQueryStates } from "nuqs";
 import { useTransition } from "react";
+import { toast } from "sonner";
 
 export function ListFilter() {
   const t = useTranslations("report.borrow");
@@ -34,17 +35,24 @@ export function ListFilter() {
     defaultValue: "all",
   });
 
+  const [dateRange] = useQueryStates({
+    startTime: parseAsInteger,
+    endTime: parseAsInteger,
+  });
+
   const handleReset = () => {
-    router.replace(
-      `/reports/borrow?startTime=${startOfDay(new Date()).getTime()}&endTime=${endOfDay(new Date()).getTime()}`,
-    );
+    router.replace("/reports/borrow");
   };
   const handleSearch = () => {
-    router.refresh();
+    if (dateRange.startTime && dateRange.endTime) {
+      startTransition(() => router.refresh());
+    } else {
+      toast.error(t("selectDate"));
+    }
   };
 
   return (
-    <div className="flex flex-col gap-2 bg-background px-4 py-2">
+    <div className="flex flex-col gap-2 bg-background p-4">
       {/* First row */}
       <div className="flex items-center gap-4">
         <div className="flex items-center gap-2">
@@ -107,10 +115,7 @@ export function ListFilter() {
           >
             {t("reset")}
           </Button>
-          <Button
-            onClick={() => startTransition(handleSearch)}
-            disabled={isPending}
-          >
+          <Button onClick={handleSearch} disabled={isPending}>
             {isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
             {t("search")}
           </Button>
