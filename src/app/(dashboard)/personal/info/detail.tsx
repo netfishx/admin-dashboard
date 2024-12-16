@@ -1,16 +1,11 @@
 import { Skeleton } from "@/components/ui/skeleton";
 import type { UserBasicInfo } from "@/lib/types";
+import { formatNumber } from "@/lib/utils";
 import { getTranslations } from "next-intl/server";
 import { DetailButton } from "./detail-button";
 
 export async function Detail({ data }: { data?: UserBasicInfo }) {
   const t = await getTranslations("personal.info");
-  const formatNumber = (num: number) => {
-    return new Intl.NumberFormat("zh-CN", {
-      minimumFractionDigits: 2,
-      maximumFractionDigits: 2,
-    }).format(num);
-  };
 
   return (
     <div className="flex flex-1 flex-col gap-2 bg-background p-4">

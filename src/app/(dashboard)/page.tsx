@@ -265,13 +265,11 @@ async function DayChartWrapper({
           title={t("chart.todayCashflow")}
           subTitle={t("chart.bettingAmount")}
           data={bjlBetAmountData || []}
-          chartConfig={chartConfig}
         />
         <DayChart
           title={t("chart.todayActiveUsers")}
           subTitle={t("chart.bettingTimes")}
           data={bjlActiveUsersData || []}
-          chartConfig={chartConfig}
         />
       </div>
       <div className="flex flex-1 flex-col gap-2">

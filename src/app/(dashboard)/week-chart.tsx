@@ -5,6 +5,7 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { formatNumber } from "@/lib/utils";
 import { format } from "date-fns";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
@@ -78,7 +79,7 @@ export function WeekChart({
     return `${label} ${labelText}`;
   }
   function formatTooltipValue(value: number) {
-    return [`${value}`];
+    return [`${formatNumber(value)}`];
   }
 
   const onTabChange = (value: string) => {
@@ -127,7 +128,12 @@ export function WeekChart({
                 tickLine={false}
                 tickMargin={8}
               />
-              <YAxis axisLine={false} tickLine={false} tickMargin={8} />
+              <YAxis
+                axisLine={false}
+                tickLine={false}
+                tickMargin={8}
+                tickFormatter={(value) => formatNumber(value)}
+              />
               <ChartTooltip
                 cursor={false}
                 content={<ChartTooltipContent indicator="dot" />}

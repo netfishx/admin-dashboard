@@ -1,11 +1,11 @@
 "use client";
 import {
-  type ChartConfig,
   ChartContainer,
   ChartTooltip,
+  ChartTooltipContent,
 } from "@/components/ui/chart";
+import { formatNumber } from "@/lib/utils";
 import { useTranslations } from "next-intl";
-import type { ReactNode } from "react";
 import { Label, Legend, Pie, PieChart } from "recharts";
 export const description = "A stacked area chart";
 
@@ -13,26 +13,35 @@ export function DayChart({
   title,
   subTitle,
   data,
-  chartConfig,
 }: {
   title: string;
   subTitle: string;
   data: { game: string; data: number }[];
-  chartConfig: ChartConfig;
 }) {
-  const chartData = data.map(({ game, data }) => ({
-    game,
-    data,
-  }));
   const t = useTranslations();
   return (
     <div className="flex flex-col rounded bg-card p-4">
       <div>{title}</div>
       <div className="flex items-center justify-center">
         {data.length > 0 ? (
-          <ChartContainer config={chartConfig} className="h-40 lg:h-48 xl:h-72">
+          <ChartContainer
+            config={Object.fromEntries(
+              data.map(({ game }, i) => [
+                game,
+                {
+                  label: game,
+                  fill: `var(--color-${i + 1})`,
+                },
+              ]),
+            )}
+            className="h-40 lg:h-48 xl:h-72"
+          >
             <PieChart>
-              <ChartTooltip cursor={true} content={<CustomTooltip />} />
+              <ChartTooltip
+                cursor={false}
+                content={<ChartTooltipContent labelKey="game" />}
+                formatter={(value) => formatNumber(value as number)}
+              />
               <Pie
                 data={data}
                 dataKey="data"
@@ -40,7 +49,21 @@ export function DayChart({
                 innerRadius="60%"
                 outerRadius="80%"
                 strokeWidth={1}
-                label
+                label={({ payload, ...props }) => {
+                  return (
+                    <text
+                      x={props.x}
+                      y={props.y}
+                      cx={props.cx}
+                      cy={props.cy}
+                      textAnchor={props.textAnchor}
+                      dominantBaseline={props.dominantBaseline}
+                      fill={props.fill}
+                    >
+                      {formatNumber(payload.data)}
+                    </text>
+                  );
+                }}
               >
                 <Label
                   content={({ viewBox }) => {
@@ -64,9 +87,8 @@ export function DayChart({
                             y={(viewBox.cy || 0) + 10}
                             className="fill-foreground text-base"
                           >
-                            {chartData.reduce(
-                              (acc, curr) => acc + curr.data,
-                              0,
+                            {formatNumber(
+                              data.reduce((acc, curr) => acc + curr.data, 0),
                             )}
                           </tspan>
                         </text>
@@ -89,25 +111,3 @@ export function DayChart({
     </div>
   );
 }
-const CustomTooltip = ({
-  active,
-  payload,
-}: {
-  active?: boolean;
-  payload?: {
-    name: ReactNode;
-    value: ReactNode;
-  }[];
-}) => {
-  if (!active || payload?.length === 0) {
-    return null;
-  }
-  return (
-    <div className="rounded border bg-card p-2 shadow-lg">
-      <p className="text-sm">
-        <span className="pr-2 text-muted-foreground">{payload?.[0].name}:</span>
-        <span className="font-medium">{payload?.[0].value}</span>
-      </p>
-    </div>
-  );
-};

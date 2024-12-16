@@ -86,7 +86,7 @@ export function List() {
                       <TableCell className="text-center">
                         <Input
                           type="number"
-                          value={Number(item.fixedFee).toFixed(2)}
+                          value={Big(item.fixedFee).round(2).toString()}
                           min={0}
                           step={0.01}
                           onChange={(e) => {

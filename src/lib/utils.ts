@@ -25,3 +25,20 @@ export const makeDownload = async (
     toast.error(message);
   }
 };
+
+export function formatNumber(
+  num: number,
+  {
+    minimumFractionDigits,
+    maximumFractionDigits = 2,
+  }: {
+    minimumFractionDigits?: number;
+    maximumFractionDigits?: number;
+  } = {},
+) {
+  return new Intl.NumberFormat("en", {
+    minimumFractionDigits,
+    maximumFractionDigits,
+    roundingMode: "floor",
+  }).format(num);
+}
