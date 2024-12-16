@@ -24,7 +24,7 @@ export function SupplierTable({ data }: { data: Supplier[] | undefined }) {
             <TableCell>{item.id}</TableCell>
             <TableCell>{item.username}</TableCell>
             <TableCell>{item.nickname}</TableCell>
-            <TableCell>{item.remark}</TableCell>
+            <TableCell className="break-all">{item.remark}</TableCell>
             <TableCell>
               <ShowStatus status={item.status} />
             </TableCell>

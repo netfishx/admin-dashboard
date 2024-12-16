@@ -72,10 +72,7 @@ export function RebateModal({ userId }: { userId: string }) {
         if (item.gameId === gameId) {
           return {
             ...item,
-            backRate:
-              Number(value) > (Number(item.maxBackRate) ?? 0)
-                ? item.maxBackRate
-                : value,
+            backRate: value,
           };
         }
         return item;
@@ -217,10 +214,11 @@ function TableBodyWrapper({
                 <div className="flex flex-row items-center gap-2">
                   <Input
                     className="w-32"
-                    value={item.backRate}
+                    value={item.backRate?.toString() ?? ""}
                     type="number"
                     step={0.01}
                     min={0}
+                    required
                     max={item.maxBackRate ?? 0}
                     onChange={(e) => {
                       handleChange(item.gameId, e.target.value);
