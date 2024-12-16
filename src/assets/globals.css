@@ -1,4 +1,4 @@
-@import 'tailwindcss';
+@import "tailwindcss";
 
 @variant dark (&:is(.dark *));
 
@@ -99,6 +99,15 @@
   ::file-selector-button {
     border-color: var(--color-gray-200, currentColor);
   }
+
+  button,
+  [role="button"] {
+    cursor: pointer;
+  }
+
+  :disabled {
+    cursor: default;
+  }
 }
 
 @layer base {
@@ -108,7 +117,6 @@
   body {
     @apply bg-background text-foreground;
   }
-
 }
 
 @layer base {
