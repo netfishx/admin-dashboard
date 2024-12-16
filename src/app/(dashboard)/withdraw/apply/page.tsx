@@ -37,7 +37,7 @@ export default async function Page({
       >
         <Form key={`${startTime}-${endTime}`} />
       </Suspense>
-      <div className="flex flex-1 flex-col gap-2 bg-background p-2">
+      <div className="flex flex-1 flex-col gap-2 bg-background p-4">
         <Suspense
           fallback={
             <Table className="rounded-sm border">
@@ -80,9 +80,9 @@ async function TableWrapper({
 
   console.info("apply list:", data);
   return (
-    <div className="w-full flex-1 bg-background">
-      <div className="relative overflow-x-auto overflow-y-auto rounded-sm border">
-        <Table>
+    <div className="bg-background flex-1 w-full ">
+      <div className="relative overflow-y-auto overflow-x-auto border rounded-sm">
+        <Table className="table-fixed">
           <TableHeaderWrapper />
           <Suspense fallback={<TableBodySkeleton />}>
             <TableBodyWrapper list={data?.list ?? []} />
@@ -106,27 +106,21 @@ async function TableHeaderWrapper() {
   return (
     <TableHeader>
       <TableRow className="bg-muted">
-        <TableHead className="min-w-32 text-center">{t("orderNo")}</TableHead>
-        <TableHead className="min-w-32 text-center">{t("userId")}</TableHead>
-        <TableHead className="min-w-32 text-center">{t("userType")}</TableHead>
-        <TableHead className="text-center">{t("account")}</TableHead>
-        <TableHead className="text-center">{t("nickname")}</TableHead>
-        <TableHead className="text-center">{t("parentAccount")}</TableHead>
-        <TableHead className="min-w-32 text-center">
-          {t("withdrawMoney")}
-        </TableHead>
-        <TableHead className="min-w-32 text-center">{t("applyTime")}</TableHead>
-        <TableHead className="text-center">{t("approverName")}</TableHead>
-        <TableHead className="min-w-32 text-center">
+        <TableHead className="w-48">{t("orderNo")}</TableHead>
+        <TableHead className="w-48">{t("userId")}</TableHead>
+        <TableHead className="w-24">{t("userType")}</TableHead>
+        <TableHead className="w-32">{t("account")}</TableHead>
+        <TableHead className="w-32">{t("nickname")}</TableHead>
+        <TableHead className="w-32">{t("parentAccount")}</TableHead>
+        <TableHead className="w-48">{t("withdrawMoney")}</TableHead>
+        <TableHead className="w-56">{t("applyTime")}</TableHead>
+        <TableHead className="w-32">{t("approverName")}</TableHead>
+        <TableHead className="w-32 text-center">
           {t("approverStatus")}
         </TableHead>
-        <TableHead className="min-w-32 text-center">
-          {t("withdrawMode")}
-        </TableHead>
-        <TableHead className="min-w-32 text-center">
-          {t("moneyStatus")}
-        </TableHead>
-        <TableHead className="sticky right-0 min-w-48 bg-muted text-center">
+        <TableHead className="w-32 text-center">{t("withdrawMode")}</TableHead>
+        <TableHead className="w-32 text-center">{t("moneyStatus")}</TableHead>
+        <TableHead className="w-48 text-center sticky right-0 bg-muted">
           {t("action")}
         </TableHead>
       </TableRow>
@@ -208,26 +202,20 @@ async function TableBodyWrapper({ list }: { list: ApplyData[] }) {
       {list && list.length > 0 ? (
         list.map((item) => (
           <TableRow key={item.id}>
-            <TableCell className="min-w-32 text-center">
-              {item.orderNo}
-            </TableCell>
-            <TableCell className="min-w-32 text-center">
-              {item.userId}
-            </TableCell>
-            <TableCell className="min-w-32 text-center">
-              {translateValue(item.userType, userTypeDict)}
-            </TableCell>
-            <TableCell className="text-center">{item.account}</TableCell>
-            <TableCell className="text-center">{item.nickname}</TableCell>
-            <TableCell className="text-center">{item.parentAccount}</TableCell>
-            <TableCell className="min-w-32 text-center font-bold text-primary">
+            <TableCell>{item.orderNo}</TableCell>
+            <TableCell>{item.userId}</TableCell>
+            <TableCell>{translateValue(item.userType, userTypeDict)}</TableCell>
+            <TableCell>{item.account}</TableCell>
+            <TableCell>{item.nickname}</TableCell>
+            <TableCell>{item.parentAccount}</TableCell>
+            <TableCell>
               <MoneyBtn data={item} />
             </TableCell>
-            <TableCell className="min-w-32 text-center">
+            <TableCell>
               <Time time={item.applyTime} />
             </TableCell>
-            <TableCell className="text-center">{item.approverName}</TableCell>
-            <TableCell className="min-w-32 text-center">
+            <TableCell>{item.approverName}</TableCell>
+            <TableCell className="text-center">
               <div
                 className={cn(
                   "inline-block w-fit rounded-sm px-2 text-center",
@@ -242,7 +230,7 @@ async function TableBodyWrapper({ list }: { list: ApplyData[] }) {
                 {translateValue(item.approverStatus, approverStatusDict)}
               </div>
             </TableCell>
-            <TableCell className="min-w-32 text-center">
+            <TableCell className="text-center">
               <div
                 className={cn(
                   "inline-block w-fit rounded-sm px-2 text-center",
@@ -253,7 +241,7 @@ async function TableBodyWrapper({ list }: { list: ApplyData[] }) {
                 {translateValue(item.withdrawMode, withdrawModeDict)}
               </div>
             </TableCell>
-            <TableCell className="min-w-32 text-center">
+            <TableCell className="text-center">
               <div
                 className={cn(
                   "inline-block w-fit rounded-sm px-2 text-center",
@@ -266,14 +254,14 @@ async function TableBodyWrapper({ list }: { list: ApplyData[] }) {
                 {translateValue(item.moneyStatus, moneyStatusDict)}
               </div>
             </TableCell>
-            <TableCell className="sticky right-0 min-w-48 bg-background text-center">
+            <TableCell className="text-center sticky right-0 bg-background">
               <Actions data={item} currentUserId={userInfo?.id ?? "0"} />
             </TableCell>
           </TableRow>
         ))
       ) : (
         <TableRow>
-          <TableCell colSpan={12} className="h-40 text-center">
+          <TableCell colSpan={13} className="text-center h-40">
             {translations("noData")}
           </TableCell>
         </TableRow>

@@ -22,15 +22,13 @@ import { Form } from "./form";
 
 export default async function Page({
   searchParams,
-}: {
-  searchParams: Promise<{ [key: string]: string | string[] }>;
-}) {
+}: { searchParams: Promise<{ [key: string]: string | undefined }> }) {
   const { startTime, endTime } = await searchParams;
   return (
     <div className="flex w-full flex-col gap-2">
       <Suspense
         fallback={
-          <div className="flex flex-col gap-2 bg-background p-2">
+          <div className="flex flex-col gap-2 bg-background p-4">
             <Skeleton />
             <Skeleton />
             <Skeleton />
@@ -39,7 +37,7 @@ export default async function Page({
       >
         <Form key={`${startTime}-${endTime}`} />
       </Suspense>
-      <div className="flex flex-1 flex-col gap-2 bg-background p-2">
+      <div className="flex flex-1 flex-col gap-2 bg-background p-4">
         <Suspense
           fallback={
             <Table>
@@ -60,12 +58,12 @@ async function TableHeaderWrapper() {
   return (
     <TableHeader>
       <TableRow className="bg-muted">
-        <TableHead className="w-24 text-center">{t("orderNo")}</TableHead>
-        <TableHead className="w-24 text-center">{t("userId")}</TableHead>
-        <TableHead className="w-24 text-center">{t("currency")}</TableHead>
-        <TableHead className="w-24 text-center">{t("rechargeMoney")}</TableHead>
-        <TableHead className="w-32 text-center">{t("finishTime")}</TableHead>
-        <TableHead className="w-24 text-center">{t("rechargeHash")}</TableHead>
+        <TableHead className="w-32">{t("orderNo")}</TableHead>
+        <TableHead className="w-32">{t("userId")}</TableHead>
+        <TableHead className="w-24">{t("currency")}</TableHead>
+        <TableHead className="w-24">{t("rechargeMoney")}</TableHead>
+        <TableHead className="w-48">{t("finishTime")}</TableHead>
+        <TableHead className="w-24">{t("rechargeHash")}</TableHead>
       </TableRow>
     </TableHeader>
   );
@@ -73,9 +71,7 @@ async function TableHeaderWrapper() {
 
 async function TableWrapper({
   searchParams,
-}: {
-  searchParams: Promise<{ [key: string]: string | string[] }>;
-}) {
+}: { searchParams: Promise<{ [key: string]: string | undefined }> }) {
   const {
     userId,
     orderNo,
@@ -97,8 +93,8 @@ async function TableWrapper({
     );
   }
   const params: RechargeReportParams = {
-    userId: (userId ?? null) as string,
-    orderNo: (orderNo ?? null) as string,
+    userId: userId || null,
+    orderNo: orderNo || null,
     operatorSymbol: operatorSymbol ? Number(operatorSymbol) : 3, // 默认大于
     rechargeMoney: rechargeMoney ? Number(rechargeMoney) : 0,
     userType: userType ? Number(userType) : undefined,
@@ -110,9 +106,9 @@ async function TableWrapper({
 
   const { data } = await getRechargeReportList(params);
   return (
-    <div className="w-full flex-1 bg-background">
-      <div className="relative overflow-x-auto overflow-y-auto rounded-sm border">
-        <Table>
+    <div className="bg-background flex-1 w-full ">
+      <div className="relative overflow-y-auto overflow-x-auto border rounded-sm">
+        <Table className="table-fixed">
           <TableHeaderWrapper />
           <Suspense fallback={<TableBodySkeleton />}>
             <TableBodyWrapper data={data} />
@@ -139,21 +135,21 @@ async function TableBodyWrapper({ data }: { data?: PageData<RechargeReport> }) {
       {data && data.list.length > 0 ? (
         data.list.map((item) => (
           <TableRow key={item.id}>
-            <TableCell className="text-center">{item.orderNo}</TableCell>
-            <TableCell className="text-center">{item.userId}</TableCell>
-            <TableCell className="text-center">{item.currency}</TableCell>
-            <TableCell className="text-center">{item.rechargeMoney}</TableCell>
-            <TableCell className="text-center">
+            <TableCell>{item.orderNo}</TableCell>
+            <TableCell>{item.userId}</TableCell>
+            <TableCell>{item.currency}</TableCell>
+            <TableCell>{item.rechargeMoney}</TableCell>
+            <TableCell>
               <Time time={item.finishTime} />
             </TableCell>
-            <TableCell className="flex h-full items-center justify-center text-center">
+            <TableCell>
               <Actions item={item} />
             </TableCell>
           </TableRow>
         ))
       ) : (
         <TableRow>
-          <TableCell colSpan={7} className="h-40 text-center">
+          <TableCell colSpan={6} className="text-center h-40">
             {t("noData")}
           </TableCell>
         </TableRow>
@@ -168,7 +164,7 @@ function TableBodySkeleton() {
       {Array.from({ length: 5 }).map((_, index) => (
         // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
         <TableRow key={index}>
-          <TableCell colSpan={12}>
+          <TableCell colSpan={6}>
             <Skeleton />
           </TableCell>
         </TableRow>

@@ -61,7 +61,7 @@ export function List() {
 
   return (
     <div className="flex h-full flex-col gap-2">
-      <div className="flex flex-col gap-2 bg-background px-4 py-2">
+      <div className="flex flex-col gap-2 bg-background p-4">
         <div className="flex items-center justify-between gap-4">
           {t("title")}
           <div className="flex items-center gap-2">
@@ -72,7 +72,7 @@ export function List() {
           </div>
         </div>
       </div>
-      <div className="flex h-full flex-col gap-2 bg-background p-2">
+      <div className="flex h-full flex-col gap-2 bg-background p-4">
         <div className="rounded-sm border">
           <Table>
             <TableHeaderWrapper />
@@ -81,11 +81,9 @@ export function List() {
                 {feeList && feeList.length > 0 ? (
                   feeList.map((item, index) => (
                     <TableRow key={item.currency}>
-                      <TableCell className="w-24 text-center">
-                        {item.currency}
-                      </TableCell>
+                      <TableCell>{item.currency}</TableCell>
 
-                      <TableCell className="w-24 text-center">
+                      <TableCell className="text-center">
                         <Input
                           type="number"
                           value={Number(item.fixedFee).toFixed(2)}
@@ -138,13 +136,9 @@ export function TableHeaderWrapper() {
   return (
     <TableHeader>
       <TableRow className="bg-muted">
-        <TableHead className="w-24 min-w-24 text-center">
-          {t("currency")}
-        </TableHead>
-        <TableHead className="text-center">{t("fixedFee")}</TableHead>
-        <TableHead className="w-24 min-w-24 text-center">
-          {t("percentageFee")}
-        </TableHead>
+        <TableHead className="w-24">{t("currency")}</TableHead>
+        <TableHead className="w-48 text-center">{t("fixedFee")}</TableHead>
+        <TableHead className="w-48 text-center">{t("percentageFee")}</TableHead>
       </TableRow>
     </TableHeader>
   );

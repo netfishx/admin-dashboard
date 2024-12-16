@@ -38,8 +38,8 @@ export function Form() {
   return (
     <>
       <div className="flex w-full flex-col gap-2">
-        <div className="bg-background">
-          <div className="flex items-center justify-between px-4 py-2">
+        <div className="bg-background p-4">
+          <div className="flex items-center justify-between ">
             <div className="flex items-center gap-2">
               <div className="flex items-center gap-2">
                 <Label className="shrink-0">{t("endTime")}</Label>
@@ -55,7 +55,7 @@ export function Form() {
               </div>
             </div>
           </div>
-          <div className="float-right flex items-center gap-2 p-2">
+          <div className="float-right flex items-center gap-2">
             <Button
               variant="outline"
               disabled={isReset}

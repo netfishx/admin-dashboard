@@ -257,13 +257,13 @@ export function AddModal({
 
         <div className="flex w-full flex-col gap-4 overflow-y-auto p-4">
           <div className="flex items-center gap-4">
-            <Label className="w-24 shrink-0 text-right text-muted-foreground before:text-destructive before:content-['*']">
+            <Label className="w-24 shrink-0 text-right text-muted-foreground before:text-destructive before:content-['*'] before:mr-1">
               {t("announcementType")}
             </Label>
             {/* 公告类型 根据管理员和代理角色 展示的也不一样 */}
             {/* 
               类型：平台代理公告（对象：所有代理），平台会员公告（对象：所有会员），直属代理公告（对象：直属下级），直属会员公告（对象：直属会员）
-              代理只展示直属代理公告和直属会员公告，admin展示所有
+              代理只展示直属代理公告和直属会员公告，admin展示前三项
             */}
             <Select
               defaultValue=""
@@ -294,7 +294,7 @@ export function AddModal({
             </Select>
           </div>
           <div className="flex items-center gap-4">
-            <Label className="w-24 shrink-0 text-right text-muted-foreground before:text-destructive before:content-['*']">
+            <Label className="w-24 shrink-0 text-right text-muted-foreground before:text-destructive before:content-['*'] before:mr-1">
               {t("announcementTime")}
             </Label>
             {/* <TimeRange disabled={!!data?.id && Date.now() > data?.startTime} /> */}
@@ -306,10 +306,11 @@ export function AddModal({
                 from: Number(startTime),
                 to: Number(endTime),
               }}
+              disabled={!!data?.id && Date.now() > data?.startTime}
             />
           </div>
           <div className="flex items-center gap-4">
-            <Label className="w-24 shrink-0 text-right text-muted-foreground before:text-destructive before:content-['*']">
+            <Label className="w-24 shrink-0 text-right text-muted-foreground before:text-destructive before:content-['*'] before:mr-1">
               {t("language")}
             </Label>
             <ToggleGroup
@@ -324,7 +325,7 @@ export function AddModal({
           </div>
           {(type === "2" || type === "4") && (
             <div className="flex items-center gap-4">
-              <Label className="w-24 shrink-0 text-right text-muted-foreground before:text-destructive before:content-['*']">
+              <Label className="w-24 shrink-0 text-right text-muted-foreground before:text-destructive before:content-['*'] before:mr-1">
                 {t("title")}
               </Label>
               <Input
@@ -337,7 +338,7 @@ export function AddModal({
             </div>
           )}
           <div className="flex items-center gap-4">
-            <Label className="w-24 shrink-0 text-right text-muted-foreground before:text-destructive before:content-['*']">
+            <Label className="w-24 shrink-0 text-right text-muted-foreground before:text-destructive before:content-['*'] before:mr-1">
               {t("announcementContent")}
             </Label>
             <Textarea
@@ -349,7 +350,7 @@ export function AddModal({
             />
           </div>
           <div className="flex items-center gap-4">
-            <Label className="w-24 shrink-0 text-right text-muted-foreground before:text-destructive before:content-['*']">
+            <Label className="w-24 shrink-0 text-right text-muted-foreground before:text-destructive before:content-['*'] before:mr-1">
               {t("status")}
             </Label>
             <RadioGroup

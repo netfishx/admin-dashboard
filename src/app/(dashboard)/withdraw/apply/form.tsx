@@ -11,7 +11,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { WITHDRAW_STATUS } from "@/lib/dict";
+import { WITHDRAW_STATUS } from "@/lib/dicts";
 import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";

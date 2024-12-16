@@ -229,7 +229,7 @@ export type PeriodReportParams = {
   pageNum: number;
   startTime: number;
   endTime: number;
-  issueNumber: string;
+  issueNumber: string | null;
   gameType: number | null;
   gameId: number | null;
 };
@@ -521,11 +521,11 @@ export type RechargeReport = {
 };
 // 充值报表请求入参
 export type RechargeReportParams = {
-  userId?: string;
+  userId?: string | null;
   startTime?: number;
   endTime?: number;
-  orderNo?: string;
-  userType?: number;
+  orderNo?: string | null;
+  userType?: number | null;
   operatorSymbol?: number;
   rechargeMoney?: number;
   requestStatus?: number;
@@ -563,10 +563,10 @@ export type WithdrawReport = {
 export type WithdrawReportParams = {
   startTime?: number;
   endTime?: number;
-  orderNo?: string;
+  orderNo?: string | null;
   operatorSymbol?: number;
   userType?: number | null;
-  userId?: string;
+  userId?: string | null;
   withdrawMoney?: number;
   pageNum: number;
   pageSize: number;
@@ -880,8 +880,8 @@ export type WalletLogRequestParams = {
   pageNum: number;
   pageSize: number;
   userType: number; //用户类型
-  userId: string; //用户id
-  transactionID: string; //订单号
+  userId: string | null; //用户id
+  transactionID: string | null; //订单号
   operateCode: number | null; //类型
   pageNum: number; // 页数从1开始
   pageSize: number; // 页面大小

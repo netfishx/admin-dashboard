@@ -23,8 +23,9 @@ import {
   useQueryState,
   useQueryStates,
 } from "nuqs";
-import { useEffect, useState, useTransition } from "react";
+import { useTransition } from "react";
 import { toast } from "sonner";
+
 export function ListFilter({ gameList }: { gameList: GameInfo[] }) {
   const t = useTranslations("report.orderlist");
   const searchParams = useSearchParams();
@@ -74,6 +75,11 @@ export function ListFilter({ gameList }: { gameList: GameInfo[] }) {
   });
   // 代理ID
   const [, setOrderListBaccaratAgentId] = useAtom(orderListBaccaratAgentIdAtom);
+  const [agentId, setAgentId] = useQueryState(
+    "agentId",
+    parseAsString.withDefault(""),
+  );
+
   const [rechargeMoney, setRechargeMoney] = useQueryState(
     "betAmount",
     parseAsString.withDefault("0").withOptions({ clearOnDefault: false }),
@@ -82,14 +88,6 @@ export function ListFilter({ gameList }: { gameList: GameInfo[] }) {
     "operators",
     parseAsString.withDefault("0").withOptions({ clearOnDefault: false }),
   );
-
-  const [agentId, setAgentId] = useState("");
-
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
-  useEffect(() => {
-    setOperatorSymbol("0");
-    setRechargeMoney("0");
-  }, []);
 
   const handleFilterChange = (filterType: string) => {
     setOperatorSymbol(filterType);
@@ -121,7 +119,7 @@ export function ListFilter({ gameList }: { gameList: GameInfo[] }) {
   };
 
   return (
-    <div className="flex flex-col gap-2 bg-background px-4 py-2">
+    <div className="flex flex-col gap-2 bg-background p-4">
       {/* 第一行 */}
       <div className="flex items-center gap-4">
         <div className="flex items-center gap-2">

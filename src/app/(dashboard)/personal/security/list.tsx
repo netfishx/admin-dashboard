@@ -37,7 +37,7 @@ export async function List() {
   return (
     <>
       <SecurityProgress value={percent} />
-      <div className="flex flex-1 flex-col gap-4 bg-background px-4 py-2">
+      <div className="flex flex-1 flex-col gap-4 bg-background p-4">
         {permissions.includes("edit_password") && (
           <div className="flex items-center justify-between">
             <div className="flex-1">
