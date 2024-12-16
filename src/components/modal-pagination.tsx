@@ -99,6 +99,7 @@ export function ModalPagination({
               <SelectItem value="10">{t("perPage", { size: 10 })}</SelectItem>
               <SelectItem value="20">{t("perPage", { size: 20 })}</SelectItem>
               <SelectItem value="50">{t("perPage", { size: 50 })}</SelectItem>
+              <SelectItem value="100">{t("perPage", { size: 100 })}</SelectItem>
             </SelectContent>
           </Select>
         </PaginationItem>
