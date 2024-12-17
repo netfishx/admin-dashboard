@@ -20,11 +20,12 @@ import type {
   WithdrawFeeList,
   WithdrawFormData,
 } from "@/lib/types";
-import { cn } from "@/lib/utils";
+import Big from "big.js";
 import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
+import Form from "next/form";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 
 interface Dialogprops {
@@ -32,174 +33,36 @@ interface Dialogprops {
   onOpenChange: (open: boolean) => void;
   data: UserBasicInfo;
 }
-interface FormField {
-  label: string;
-  value: string;
-  onChange: (value: string) => void;
-  required?: boolean;
-  placeholder?: string;
-  type?: string;
-  readOnly?: boolean;
-}
-function FormField({
-  label,
-  value,
-  onChange,
-  required = false,
-  placeholder = "",
-  type = "text",
-  readOnly = false,
-}: FormField) {
-  return (
-    <div className="flex items-center gap-4">
-      <Label className="flex min-w-[120px] shrink-0 items-center justify-end gap-1">
-        {required && <span className="text-red-500">*</span>}
-        <span className="text-gray-600">{label}</span>
-      </Label>
-      {readOnly ? (
-        <div className="flex-1 rounded-md bg-gray-50 px-3 py-2 text-gray-700">
-          {value}
-        </div>
-      ) : label === "资金密码" ? (
-        <Password
-          type="password"
-          value={value}
-          onChange={(e) => onChange(e.target.value)}
-          placeholder={placeholder}
-          className={cn("flex-1 bg-gray-50", readOnly && "cursor-not-allowed")}
-        />
-      ) : (
-        <Input
-          type={type}
-          value={value}
-          onChange={(e) => onChange(e.target.value)}
-          placeholder={placeholder}
-          className={cn("flex-1 bg-gray-50", readOnly && "cursor-not-allowed")}
-          readOnly={readOnly}
-        />
-      )}
-    </div>
-  );
-}
-
-function WithdrawForm(props: {
-  getFormData: (data: WithdrawFormData) => void;
-  data: UserBasicInfo;
-}) {
-  const { getFormData } = props;
-  const t = useTranslations("personal.info");
-  const translations = useTranslations();
-  const [fee, setFee] = useState<WithdrawFeeList>();
-  const [formData, setFormData] = useState({
-    availableAmount: props?.data?.usableBalanceMoney?.toString(),
-    withdrawMoney: "0",
-    withdrawFee: "0",
-    withdrawWay: "",
-    secret: "",
-  });
-
-  useEffect(() => {
-    getWithdrawFeeList().then((res) => {
-      setFee(res.data?.[0]);
-    });
-  }, []);
-
-  const handleChange = (field: keyof typeof formData) => (value: string) => {
-    let newData = { ...formData };
-
-    if (field === "withdrawMoney") {
-      const _fee =
-        Number(fee?.percentageFee) * Number(value) + Number(fee?.fixedFee);
-      newData = { ...newData, withdrawFee: _fee.toFixed(2) };
-    }
-    newData[field] = value;
-    setFormData(newData);
-    getFormData(newData);
-  };
-
-  const warningNotes = [t("tips01"), t("tips02")];
-
-  return (
-    <div className="mx-auto w-full max-w-2xl">
-      <div className="space-y-4 p-6">
-        <FormField
-          label={translations("availableAmount")}
-          value={formData.availableAmount}
-          onChange={handleChange("availableAmount")}
-          readOnly
-        />
-
-        <div className="space-y-4">
-          <FormField
-            label={t("withdrawAmount")}
-            value={formData.withdrawMoney}
-            onChange={handleChange("withdrawMoney")}
-            required
-            placeholder={t("withdrawAmount")}
-            type="number"
-          />
-          <div className="ml-[140px] space-y-1 text-sm">
-            <div className="text-red-500">{t("tips03")}:</div>
-            {warningNotes.map((note, index) => (
-              <div key={note} className="pl-4 text-red-500">
-                {`${index + 1}.${note}`}
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <FormField
-          label={t("withdrawFee")}
-          value={formData.withdrawFee}
-          onChange={handleChange("withdrawFee")}
-          readOnly
-        />
-
-        <FormField
-          label={t("withdrawWay")}
-          value={formData.withdrawWay}
-          onChange={handleChange("withdrawWay")}
-          required
-          placeholder={t("withdrawWay")}
-        />
-
-        <FormField
-          label={t("secret")}
-          value={formData.secret}
-          onChange={handleChange("secret")}
-          required
-          type="secret"
-          placeholder={t("secret")}
-        />
-      </div>
-    </div>
-  );
-}
 
 export function CheckDialog(props: Dialogprops) {
   const { open = true, onOpenChange, data } = props;
   const t = useTranslations("personal.info");
   const translations = useTranslations();
-  const [isAllow, setIsAllow] = useState(false);
   const [step, setStep] = useState(1);
   const router = useRouter();
-  const [formData, setFormData] = useState<WithdrawFormData>({
-    availableAmount: "0 ",
-    withdrawMoney: "0",
-    withdrawFee: "0",
-    withdrawWay: "",
-    secret: "",
-  });
+  const ref = useRef<HTMLFormElement>(null);
+  const [withDrawFee, setWithDrawFee] = useState("0");
+  const [fees, setFees] = useState<WithdrawFeeList>();
+
   const [googleCode, setGoogleCode] = useState("");
   const [verifyId, setVerifyId] = useState("");
   const [loading, setLoading] = useState(false);
-  const handleNext = async () => {
-    if (Number(formData.withdrawMoney) > Number(formData.availableAmount)) {
-      toast.error(t("tips01"));
+
+  useEffect(() => {
+    if (open) {
+      getWithdrawFeeList().then((res) => {
+        setFees(res.data?.[0]);
+      });
+    }
+  }, [open]);
+
+  const handleNext = async (f: WithdrawFormData) => {
+    if (Number(f.withdrawMoney) > Number(f.availableAmount)) {
+      toast.error(t("notAllowWithdraw"));
       return;
     }
     setLoading(true);
-    const _res = await postUserInfoWithdraw(formData);
+    const _res = await postUserInfoWithdraw(f);
     if (_res.code === 0) {
       if (_res?.data?.check && _res?.data?.validationType === "GOOGLE") {
         setVerifyId(_res?.data?.id);
@@ -213,16 +76,6 @@ export function CheckDialog(props: Dialogprops) {
       toast.error(_res.message);
     }
     setLoading(false);
-  };
-
-  const handleChange = (data: WithdrawFormData) => {
-    if (data.secret && data.withdrawWay && data.withdrawMoney) {
-      setIsAllow(true);
-    } else {
-      setIsAllow(false);
-    }
-
-    setFormData(data);
   };
 
   const handleVerify = async () => {
@@ -241,6 +94,26 @@ export function CheckDialog(props: Dialogprops) {
     setLoading(false);
   };
 
+  const handleWithdrawFee = (value: number) => {
+    const percentageFee = fees?.percentageFee || 0;
+    const fixedFee = fees?.fixedFee || 0;
+    const inputValue = value || 0;
+
+    const _fee = Big(percentageFee)
+      .times(inputValue) // 乘法
+      .plus(fixedFee); // 加法
+    setWithDrawFee(_fee.toString());
+  };
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (ref.current) {
+      const f = new FormData(e.currentTarget);
+      const formDataObj = Object.fromEntries(f.entries());
+      handleNext(formDataObj as WithdrawFormData);
+    }
+  };
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="w-[500px]">
@@ -250,15 +123,123 @@ export function CheckDialog(props: Dialogprops) {
               <DialogTitle>{t("withdraw")}</DialogTitle>
             </DialogHeader>
             <div className="items-center gap-2">
-              <WithdrawForm getFormData={handleChange} data={data} />
+              <div className="mx-auto w-full max-w-2xl">
+                <Form
+                  className="space-y-4 p-6"
+                  action=""
+                  onSubmit={handleSubmit}
+                  ref={ref}
+                >
+                  <div className="flex items-center gap-4">
+                    <Label className="flex min-w-[120px] shrink-0 items-center justify-end gap-1">
+                      <span className="text-gray-600">
+                        {translations("availableAmount")}
+                      </span>
+                    </Label>
+                    <Input
+                      type="text"
+                      className="flex-1 bg-gray-50 cursor-not-allowed"
+                      required
+                      name="availableAmount"
+                      placeholder={translations("availableAmount")}
+                      defaultValue={data?.usableBalanceMoney}
+                      readOnly
+                    />
+                  </div>
+
+                  <div className="flex items-center gap-4">
+                    <Label className="flex min-w-[120px] shrink-0 items-center justify-end gap-1">
+                      <span className="text-red-500">*</span>
+                      <span className="text-gray-600">
+                        {t("withdrawAmount")}
+                      </span>
+                    </Label>
+                    <Input
+                      type="number"
+                      className="flex-1 bg-gray-50"
+                      required
+                      name="withdrawMoney"
+                      placeholder={t("withdrawAmount")}
+                      max={Number(data?.usableBalanceMoney)}
+                      min={0}
+                      step={0.01}
+                      onBlur={(e) => {
+                        e.target.reportValidity();
+                      }}
+                      onChange={(e) => {
+                        handleWithdrawFee(Number(e.target.value));
+                      }}
+                    />
+                  </div>
+                  <div className="ml-[140px] space-y-1 text-sm">
+                    <div className="text-red-500">{t("notice")}:</div>
+                    <div className="pl-4 text-red-500">
+                      {t("notAllowWithdraw")}
+                    </div>
+                    <div className="pl-4 text-red-500">{t("stopAccept")}</div>
+                  </div>
+
+                  <div className="flex items-center gap-4">
+                    <Label className="flex min-w-[120px] shrink-0 items-center justify-end gap-1">
+                      <span className="text-gray-600">{t("withdrawFee")}</span>
+                    </Label>
+                    <Input
+                      type="text"
+                      className="flex-1 bg-gray-50 cursor-not-allowed"
+                      required
+                      name="withdrawFee"
+                      defaultValue={0}
+                      readOnly
+                      value={withDrawFee}
+                    />
+                  </div>
+
+                  <div className="flex items-center gap-4">
+                    <Label className="flex min-w-[120px] shrink-0 items-center justify-end gap-1">
+                      <span className="text-gray-600">{t("withdrawWay")}</span>
+                    </Label>
+                    <Input
+                      type="text"
+                      className="flex-1 bg-gray-50"
+                      required
+                      name="withdrawWay"
+                      onBlur={(e) => {
+                        e.target.reportValidity();
+                      }}
+                      placeholder={t("withdrawWay")}
+                    />
+                  </div>
+
+                  <div className="flex items-center gap-4">
+                    <Label className="flex min-w-[120px] shrink-0 items-center justify-end gap-1">
+                      <span className="text-gray-600">{t("secret")}</span>
+                    </Label>
+                    <Password
+                      type="password"
+                      className="flex-1 bg-gray-50"
+                      required
+                      name="secret"
+                      onBlur={(e) => {
+                        e.target.reportValidity();
+                      }}
+                      placeholder={t("secret")}
+                    />
+                  </div>
+                </Form>
+              </div>
             </div>
             <DialogFooter>
               <Button variant="outline" onClick={() => onOpenChange(false)}>
                 {translations("cancel")}
               </Button>
               <Button
-                onClick={() => handleNext()}
-                disabled={loading || !isAllow}
+                onClick={(e) => {
+                  e.preventDefault();
+                  if (ref.current) {
+                    ref.current.requestSubmit();
+                  }
+                }}
+                disabled={loading}
               >
                 {loading && <Loader2 className="h-4 w-4 animate-spin" />}
                 {translations("confirm")}
