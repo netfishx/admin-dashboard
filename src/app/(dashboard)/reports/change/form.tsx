@@ -2,6 +2,7 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { CHANGE_TYPE, USER_TYPE } from "@/lib/dict";
 import { Loader2 } from "lucide-react";
 
 import { DateRangeFilter } from "@/components/daterange-filter";
@@ -67,25 +68,11 @@ export function Form() {
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="all">{t("all")}</SelectItem>
-              <SelectItem value="1">{t("lotteryBet")}</SelectItem>
-              <SelectItem value="3">{t("deposit")}</SelectItem>
-              <SelectItem value="4">{t("withdrawal")}</SelectItem>
-              <SelectItem value="5">{t("withdrawalCompleted")}</SelectItem>
-              <SelectItem value="6">{t("withdrawalReturned")}</SelectItem>
-              <SelectItem value="7">{t("createWallet")}</SelectItem>
-              <SelectItem value="8">{t("issueRebate")}</SelectItem>
-              <SelectItem value="9">{t("lotterySettlement")}</SelectItem>
-              <SelectItem value="10">{t("guandanSettlement")}</SelectItem>
-              <SelectItem value="11">{t("closeRoom")}</SelectItem>
-              <SelectItem value="12">{t("roomRecharge")}</SelectItem>
-              <SelectItem value="13">{t("receiveRebate")}</SelectItem>
-              <SelectItem value="15">{t("borrow")}</SelectItem>
-              <SelectItem value="16">{t("repayment")}</SelectItem>
-              <SelectItem value="17">{t("createRoom")}</SelectItem>
-              <SelectItem value="18">{t("increaseCredit")}</SelectItem>
-              <SelectItem value="19">{t("decreaseCredit")}</SelectItem>
-              <SelectItem value="20">{t("transfer")}</SelectItem>
-              <SelectItem value="21">{t("writeOff")}</SelectItem>
+              {CHANGE_TYPE.map((item) => (
+                <SelectItem key={item.value} value={item.value.toString()}>
+                  {t(item.label)}
+                </SelectItem>
+              ))}
             </SelectContent>
           </Select>
         </div>
@@ -111,9 +98,11 @@ export function Form() {
               <SelectValue placeholder={t("placeholderselect")} />
             </SelectTrigger>
             <SelectContent>
-              {/* <SelectItem value="all">{t("all")}</SelectItem> */}
-              <SelectItem value="0">{t("agent")}</SelectItem>
-              <SelectItem value="2">{t("member")}</SelectItem>
+              {USER_TYPE.map((item) => (
+                <SelectItem key={item.value} value={item.value.toString()}>
+                  {t(item.label)}
+                </SelectItem>
+              ))}
             </SelectContent>
           </Select>
         </div>

@@ -1,4 +1,4 @@
-import { getWithdrawApplyList } from "@/api";
+import { getBaccaratGames, getWithdrawApplyList } from "@/api";
 import { CustomPagination } from "@/components/custom-pagination";
 import { Time } from "@/components/time";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -10,12 +10,19 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import {
+  MONEY_STATUS,
+  USER_TYPE,
+  WITHDRAW_MODE,
+  WITHDRAW_STATUS,
+} from "@/lib/dict";
 import type { ApplyData } from "@/lib/types";
 import { cn } from "@/lib/utils";
 import { getSession } from "@/session";
 import { getTranslations } from "next-intl/server";
 import { Suspense } from "react";
 import { Actions } from "./actions";
+import { FlowDialog } from "./flow-dialog";
 import { Form } from "./form";
 import { MoneyBtn } from "./money-btn";
 
@@ -25,6 +32,7 @@ export default async function Page({
   searchParams: Promise<{ [key: string]: string | string[] }>;
 }) {
   const { startTime, endTime } = await searchParams;
+
   return (
     <div className="flex w-full flex-col gap-2">
       <Suspense
@@ -49,6 +57,7 @@ export default async function Page({
           <TableWrapper searchParams={searchParams} />
         </Suspense>
       </div>
+      <FlowDialogWrapper />
     </div>
   );
 }
@@ -101,7 +110,7 @@ async function TableWrapper({
     </div>
   );
 }
-async function TableHeaderWrapper() {
+export async function TableHeaderWrapper() {
   const t = await getTranslations("withdraw.apply");
   return (
     <TableHeader>
@@ -144,58 +153,6 @@ async function TableBodyWrapper({ list }: { list: ApplyData[] }) {
   ): string {
     return map.find((item) => item.value === value)?.label || "--";
   }
-  const approverStatusDict = [
-    {
-      value: 0,
-      label: t("unprocessed"),
-    },
-    {
-      value: 1,
-      label: t("locked"),
-    },
-    {
-      value: 2,
-      label: t("rejected"),
-    },
-    {
-      value: 3,
-      label: t("passed"),
-    },
-  ];
-  const withdrawModeDict = [
-    {
-      value: 0,
-      label: t("auto"),
-    },
-    {
-      value: 1,
-      label: t("manual"),
-    },
-  ];
-  const moneyStatusDict = [
-    {
-      value: 0,
-      label: t("transferred"),
-    },
-    {
-      value: 1,
-      label: t("received"),
-    },
-    {
-      value: 2,
-      label: t("exception"),
-    },
-  ];
-  const userTypeDict = [
-    {
-      value: 0,
-      label: t("agent"),
-    },
-    {
-      value: 1,
-      label: t("member"),
-    },
-  ];
 
   return (
     <TableBody>
@@ -204,7 +161,12 @@ async function TableBodyWrapper({ list }: { list: ApplyData[] }) {
           <TableRow key={item.id}>
             <TableCell>{item.orderNo}</TableCell>
             <TableCell>{item.userId}</TableCell>
-            <TableCell>{translateValue(item.userType, userTypeDict)}</TableCell>
+            <TableCell>
+              {(() => {
+                const status = USER_TYPE.find((s) => s.value === item.userType);
+                return status ? t(status.label) : item.userType;
+              })()}
+            </TableCell>
             <TableCell>{item.account}</TableCell>
             <TableCell>{item.nickname}</TableCell>
             <TableCell>{item.parentAccount}</TableCell>
@@ -227,7 +189,12 @@ async function TableBodyWrapper({ list }: { list: ApplyData[] }) {
                   item.approverStatus === 3 && "bg-green/10 text-green",
                 )}
               >
-                {translateValue(item.approverStatus, approverStatusDict)}
+                {(() => {
+                  const status = WITHDRAW_STATUS.find(
+                    (s) => s.value === item.approverStatus,
+                  );
+                  return status ? t(status.label) : item.approverStatus;
+                })()}
               </div>
             </TableCell>
             <TableCell className="text-center">
@@ -238,7 +205,12 @@ async function TableBodyWrapper({ list }: { list: ApplyData[] }) {
                   item.withdrawMode === 1 && "bg-orange/10 text-orange",
                 )}
               >
-                {translateValue(item.withdrawMode, withdrawModeDict)}
+                {(() => {
+                  const status = WITHDRAW_MODE.find(
+                    (s) => s.value === item.withdrawMode,
+                  );
+                  return status ? t(status.label) : item.withdrawMode;
+                })()}
               </div>
             </TableCell>
             <TableCell className="text-center">
@@ -251,7 +223,12 @@ async function TableBodyWrapper({ list }: { list: ApplyData[] }) {
                     "bg-destructive/10 text-destructive",
                 )}
               >
-                {translateValue(item.moneyStatus, moneyStatusDict)}
+                {(() => {
+                  const status = MONEY_STATUS.find(
+                    (s) => s.value === item.moneyStatus,
+                  );
+                  return status ? t(status.label) : item.moneyStatus;
+                })()}
               </div>
             </TableCell>
             <TableCell className="text-center sticky right-0 bg-background">
@@ -282,4 +259,9 @@ function TableBodySkeleton() {
       ))}
     </TableBody>
   );
+}
+async function FlowDialogWrapper() {
+  const gameListResp = await getBaccaratGames();
+
+  return <FlowDialog gameList={gameListResp?.data ?? []} />;
 }

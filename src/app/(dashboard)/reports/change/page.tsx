@@ -10,6 +10,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { CHANGE_TYPE } from "@/lib/dict";
 import type { WalletLogRequestParams } from "@/lib/types";
 import type { PageData } from "@/lib/types";
 import type { WalletLogRecords } from "@/lib/types";
@@ -108,7 +109,7 @@ async function TableWrapper({
     userId: userId || null,
     transactionID: transactionID || null,
     operateCode: operateCode ? Number(operateCode) : null,
-    userType: userType ? Number(userType) : 0,
+    userType: userType ? Number(userType) : 0, // 0 代理 2 会员 默认代理
     pageNum: Number(pageNum ?? 1),
     pageSize: Number(pageSize ?? 10),
     startTime: Number(startTime),
@@ -149,27 +150,6 @@ async function TableBodyWrapper({
   const translations = await getTranslations("");
   const t = await getTranslations("report.change");
 
-  const operateTypeMap = {
-    1: t("lotteryBet"),
-    3: t("deposit"),
-    4: t("withdrawal"),
-    5: t("withdrawalCompleted"),
-    6: t("withdrawalReturned"),
-    7: t("createWallet"),
-    8: t("issueRebate"),
-    9: t("lotterySettlement"),
-    10: t("guandanSettlement"),
-    11: t("closeRoom"),
-    12: t("roomRecharge"),
-    13: t("receiveRebate"),
-    15: t("borrow"),
-    16: t("repayment"),
-    17: t("createRoom"),
-    18: t("increaseCredit"),
-    19: t("decreaseCredit"),
-    20: t("transfer"),
-    21: t("writeOff"),
-  };
   return (
     <TableBody>
       {data && data.list.length > 0 ? (
@@ -184,7 +164,12 @@ async function TableBodyWrapper({
             <TableCell>{item.transactionAmount}</TableCell>
             <TableCell>{item.newBalance}</TableCell>
             <TableCell>
-              {operateTypeMap[item.operateType as keyof typeof operateTypeMap]}
+              {(() => {
+                const status = CHANGE_TYPE.find(
+                  (s) => s.value === item.operateType,
+                );
+                return status ? t(status.label) : item.operateType;
+              })()}
             </TableCell>
           </TableRow>
         ))
