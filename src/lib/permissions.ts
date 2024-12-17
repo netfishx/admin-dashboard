@@ -1,53 +1,165 @@
 export const urlPermissions: {
-  [key: string]: string;
-} = {
-  "/": "agent_stat",
-  "/games/flyorder": "fly_config",
-  "/games/odds": "edit_odds",
-  "/games/ratio": "edit_radio",
-  "/games/rebate": "edit_rebate",
-  "/games/supplier": "supplier_config",
-  "/games/maintain": "game_maintain",
-  "/users/agent": "agent_config",
-  "/users/member": "member_config",
-  "/users/supplier": "users_supplier",
-  "/reports/order/baccarat": "detail_baccarat",
-  "/reports/order/guandan": "detail_guandan",
-  "/reports/agent/guandan": "agent_report_guandan",
-  "/reports/agent/baccarat/member": "agent_report_baccarat",
-  "/reports/agent/baccarat/ratio": "agent_report_baccarat",
-  "/reports/period": "period_report",
-  "/reports/member/baccarat": "member_report_baccarat",
-  "/reports/change": "change_report",
-  "/reports/recharge": "recharge_report",
-  "/reports/withdraw": "withdraw_report",
-  "/reports/borrow": "borrow_report",
-  "/reports/reward": "reward_report",
-  "/reports/credit": "credit_report",
-  "/reports/transfer": "transfer_report",
-  "/reports/download": "report_download",
-  "/reports/supplier": "supplier_report",
-  "/withdraw/apply": "withdraw_apply",
-  "/withdraw/audit": "audit",
-  "/personal/security": "edit_password",
-  "/personal/info": "personal_info",
-  "/personal/loginlog": "login_log",
-  "/system/subaccount": "sub_account",
-  "/system/role": "system_role",
-  "/system/announcement/own": "own_announcement",
-  "/system/announcement/all": "super_announcement",
-  "/system/announcement/platform": "platform_announcement",
-  "/fund/withdrawfee": "withdrawfee",
-  "/fund/minerfee": "minerfee",
-  "/fund/collection": "collection",
-  "/maintain/dictionary": "dictionary",
-  "/maintain/resource": "resource_config",
-};
+  permission: string;
+  url: string;
+}[] = [
+  {
+    permission: "agent_stat",
+    url: "/",
+  },
+  {
+    permission: "fly_config",
+    url: "/games/flyorder",
+  },
+  {
+    permission: "game_maintain",
+    url: "/games/maintain",
+  },
+  {
+    permission: "agent_config",
+    url: "/users/agent",
+  },
+  {
+    permission: "member_config",
+    url: "/users/member",
+  },
+  {
+    permission: "users_supplier",
+    url: "/users/supplier",
+  },
+  {
+    permission: "detail_baccarat",
+    url: "/reports/order/baccarat",
+  },
+  {
+    permission: "detail_guandan",
+    url: "/reports/order/guandan",
+  },
+  {
+    permission: "agent_report_guandan",
+    url: "/reports/agent/guandan",
+  },
+  {
+    permission: "agent_report_baccarat",
+    url: "/reports/agent/baccarat/member",
+  },
+  {
+    permission: "agent_report_baccarat",
+    url: "/reports/agent/baccarat/ratio",
+  },
+  {
+    permission: "period_report",
+    url: "/reports/period",
+  },
+  {
+    permission: "member_report_baccarat",
+    url: "/reports/member/baccarat",
+  },
+  {
+    permission: "change_report",
+    url: "/reports/change",
+  },
+  {
+    permission: "recharge_report",
+    url: "/reports/recharge",
+  },
+  {
+    permission: "withdraw_report",
+    url: "/reports/withdraw",
+  },
+  {
+    permission: "borrow_report",
+    url: "/reports/borrow",
+  },
+  {
+    permission: "reward_report",
+    url: "/reports/reward",
+  },
+  {
+    permission: "credit_report",
+    url: "/reports/credit",
+  },
+  {
+    permission: "transfer_report",
+    url: "/reports/transfer",
+  },
+  {
+    permission: "report_download",
+    url: "/reports/download",
+  },
+  {
+    permission: "supplier_report",
+    url: "/reports/supplier",
+  },
+  {
+    permission: "withdraw_apply",
+    url: "/withdraw/apply",
+  },
+  {
+    permission: "audit",
+    url: "/withdraw/audit",
+  },
+  {
+    permission: "edit_password",
+    url: "/personal/security",
+  },
+  {
+    permission: "money_password",
+    url: "/personal/security",
+  },
+  {
+    permission: "personal_info",
+    url: "/personal/info",
+  },
+  {
+    permission: "login_log",
+    url: "/personal/loginlog",
+  },
+  {
+    permission: "sub_account",
+    url: "/system/subaccount",
+  },
+  {
+    permission: "system_role",
+    url: "/system/role",
+  },
+  {
+    permission: "own_announcement",
+    url: "/system/announcement/own",
+  },
+  {
+    permission: "super_announcement",
+    url: "/system/announcement/all",
+  },
+  {
+    permission: "platform_announcement",
+    url: "/system/announcement/platform",
+  },
+  {
+    permission: "withdrawfee",
+    url: "/fund/withdrawfee",
+  },
+  {
+    permission: "minerfee",
+    url: "/fund/minerfee",
+  },
+  {
+    permission: "collection",
+    url: "/fund/collection",
+  },
+  {
+    permission: "dictionary",
+    url: "/maintain/dictionary",
+  },
+  {
+    permission: "resource_config",
+    url: "/maintain/resource",
+  },
+];
 
 export function getRedirectUrl(permissions: string[]) {
-  for (const [key, value] of Object.entries(urlPermissions)) {
-    if (permissions.includes(value)) {
-      return key;
+  for (const permission of urlPermissions) {
+    if (permissions.includes(permission.permission)) {
+      return permission.url;
     }
   }
   return "/login";

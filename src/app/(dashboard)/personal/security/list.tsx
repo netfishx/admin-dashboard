@@ -21,11 +21,9 @@ export async function List() {
 
   // 已开启的安全项数量
   const enabledCount =
-    Number(showGoogle?.isOpen && permissions.includes("google_code") ? 1 : 0) +
-    Number(
-      showMoney?.isOpen && permissions.includes("money_password") ? 1 : 0,
-    ) +
-    1;
+    (showGoogle?.isOpen && permissions.includes("google_code") ? 1 : 0) +
+    (showMoney?.isOpen && permissions.includes("money_password") ? 1 : 0) +
+    (permissions.includes("edit_password") ? 1 : 0);
 
   // 总的安全项数量
   const totalCount = ["google_code", "money_password", "edit_password"].filter(

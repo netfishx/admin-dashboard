@@ -2,32 +2,29 @@ import { getRedirectUrl, urlPermissions } from "@/lib/permissions";
 import { getSession } from "@/session";
 import { type NextRequest, NextResponse } from "next/server";
 
+function needAuth(url: string) {
+  return urlPermissions.some(({ url: permUrl }) => permUrl === url);
+}
+
 export async function middleware(request: NextRequest) {
-  if (
-    request.nextUrl.pathname === "/landing" ||
-    request.nextUrl.pathname === "/login"
-  ) {
+  if (!needAuth(request.nextUrl.pathname)) {
     return NextResponse.next();
   }
   const user = await getSession();
-  if (!user && request.nextUrl.pathname !== "/login") {
+  if (!user) {
     return Response.redirect(new URL("/login", request.url));
   }
-  if (user) {
-    if (
-      Object.keys(urlPermissions).some((key) => {
-        return (
-          !user.permissions.includes(urlPermissions[key]) &&
-          request.nextUrl.pathname === key
-        );
-      })
-    ) {
-      return Response.redirect(
-        new URL(getRedirectUrl(user.permissions), request.url),
-      );
-    }
+  const permissions = urlPermissions.filter(
+    ({ url }) => url === request.nextUrl.pathname,
+  );
+  if (
+    permissions.some(({ permission }) => user.permissions.includes(permission))
+  ) {
+    return NextResponse.next();
   }
-  return NextResponse.next();
+  return Response.redirect(
+    new URL(getRedirectUrl(user.permissions), request.url),
+  );
 }
 
 export const config = {

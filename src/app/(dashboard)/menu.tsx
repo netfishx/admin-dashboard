@@ -279,7 +279,12 @@ function OpenedMenu({
       )}
 
       {permissions.some((v) =>
-        ["personal_info", "login_log", "edit_password"].includes(v),
+        [
+          "personal_info",
+          "login_log",
+          "edit_password",
+          "money_password",
+        ].includes(v),
       ) && (
         <Collapsible
           open={openedMenu.includes("personal")}
@@ -302,7 +307,8 @@ function OpenedMenu({
                 href="/personal/loginlog"
               />
             )}
-            {permissions.includes("edit_password") && (
+            {(permissions.includes("edit_password") ||
+              permissions.includes("money_password")) && (
               <MenuItem
                 label={t("personal.security")}
                 href="/personal/security"
@@ -574,7 +580,12 @@ function ClosedMenu({
         </TooltipProvider>
       )}
       {permissions.some((v) =>
-        ["personal_info", "login_log", "edit_password"].includes(v),
+        [
+          "personal_info",
+          "login_log",
+          "edit_password",
+          "money_password",
+        ].includes(v),
       ) && (
         <TooltipProvider>
           <Tooltip>
