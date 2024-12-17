@@ -22,7 +22,7 @@ import {
 } from "react-day-picker";
 import { zhCN } from "react-day-picker/locale";
 
-function Calendar({
+export function Calendar({
   className,
   classNames,
   showOutsideDays = true,
@@ -180,6 +180,3 @@ function Calendar({
     />
   );
 }
-Calendar.displayName = "Calendar";
-
-export { Calendar };

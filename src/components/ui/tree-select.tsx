@@ -1,7 +1,7 @@
 "use client";
 
 import { Checkbox } from "@/components/ui/checkbox";
-import type { TreeNode } from "@/lib/types";
+import type { TreeNode as TreeNodeType } from "@/lib/types";
 import { cn } from "@/lib/utils";
 import { ChevronDown, ChevronRight } from "lucide-react";
 import { useState } from "react";
@@ -12,7 +12,7 @@ function TreeNode({
   onCheck,
   checkedState,
 }: {
-  node: TreeNode;
+  node: TreeNodeType;
   level?: number;
   onCheck: (id: number, checked: boolean | "indeterminate") => void;
   checkedState: Map<number, boolean | "indeterminate">;
@@ -31,6 +31,7 @@ function TreeNode({
         <div className="flex items-center">
           {hasChildren && (
             <button
+              type="button"
               onClick={(e) => {
                 e.preventDefault();
                 setIsOpen(!isOpen);
@@ -76,7 +77,7 @@ function TreeNode({
   );
 }
 
-function getDescendants(node: TreeNode): number[] {
+function getDescendants(node: TreeNodeType): number[] {
   let descendants: number[] = [node.id];
   if (node.children) {
     node.children.forEach((child) => {
@@ -86,7 +87,7 @@ function getDescendants(node: TreeNode): number[] {
   return descendants;
 }
 
-function getAncestors(id: number, nodes: TreeNode[]): number[] {
+function getAncestors(id: number, nodes: TreeNodeType[]): number[] {
   for (const node of nodes) {
     if (node.id === id) {
       return [node.id];
@@ -101,7 +102,7 @@ function getAncestors(id: number, nodes: TreeNode[]): number[] {
   return [];
 }
 
-function findNode(id: number, nodes: TreeNode[]): TreeNode | null {
+function findNode(id: number, nodes: TreeNodeType[]): TreeNodeType | null {
   for (const node of nodes) {
     if (node.id === id) {
       return node;
@@ -122,7 +123,7 @@ export function TreeSelect({
   handleChangeAction,
   className,
 }: {
-  data: TreeNode[];
+  data: TreeNodeType[];
   checkedState: Map<number, boolean | "indeterminate">;
   handleChangeAction: (
     checkedState: Map<number, boolean | "indeterminate">,

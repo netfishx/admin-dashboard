@@ -1,7 +1,6 @@
 "use client";
 import { postCheckMoneySecret } from "@/api";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
 import {
   Dialog,
   DialogContent,
@@ -81,7 +80,7 @@ export function CheckDialog(props: Dialogprops) {
               <DialogTitle>{t("checkStep2Title")}</DialogTitle>
             </DialogHeader>
             <div className="mx-auto w-full max-w-xl p-4">
-              <Card className="border border-gray-200 shadow-xs">
+              <div className="rounded-xl border bg-card text-card-foreground shadow-sm">
                 {/* Header row */}
                 <div className="flex divide-x divide-gray-200">
                   <div className="flex w-24 items-center justify-center bg-gray-50 px-4 py-2.5 text-sm text-gray-600">
@@ -102,7 +101,7 @@ export function CheckDialog(props: Dialogprops) {
                     <span>{t("secretWarning")}</span>
                   </div>
                 </div>
-              </Card>
+              </div>
             </div>
             <DialogFooter>
               <Button variant="outline" onClick={() => onOpenChange(false)}>

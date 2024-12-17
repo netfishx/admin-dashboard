@@ -16,7 +16,13 @@ import type { ComponentProps, HTMLAttributes } from "react";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
-function AlertDialogOverlay({
+export {
+  Root as AlertDialog,
+  Portal as AlertDialogPortal,
+  Trigger as AlertDialogTrigger,
+};
+
+export function AlertDialogOverlay({
   className,
   ref,
   ...props
@@ -33,7 +39,7 @@ function AlertDialogOverlay({
   );
 }
 
-function AlertDialogContent({
+export function AlertDialogContent({
   className,
   ref,
   ...props
@@ -53,7 +59,7 @@ function AlertDialogContent({
   );
 }
 
-const AlertDialogHeader = ({
+export const AlertDialogHeader = ({
   className,
   ...props
 }: HTMLAttributes<HTMLDivElement>) => (
@@ -66,7 +72,7 @@ const AlertDialogHeader = ({
   />
 );
 
-const AlertDialogFooter = ({
+export const AlertDialogFooter = ({
   className,
   ...props
 }: HTMLAttributes<HTMLDivElement>) => (
@@ -79,7 +85,7 @@ const AlertDialogFooter = ({
   />
 );
 
-function AlertDialogTitle({
+export function AlertDialogTitle({
   className,
   ref,
   ...props
@@ -93,7 +99,7 @@ function AlertDialogTitle({
   );
 }
 
-function AlertDialogDescription({
+export function AlertDialogDescription({
   className,
   ref,
   ...props
@@ -107,7 +113,7 @@ function AlertDialogDescription({
   );
 }
 
-function AlertDialogAction({
+export function AlertDialogAction({
   className,
   ref,
   ...props
@@ -117,7 +123,7 @@ function AlertDialogAction({
   );
 }
 
-function AlertDialogCancel({
+export function AlertDialogCancel({
   className,
   ref,
   ...props
@@ -134,17 +140,3 @@ function AlertDialogCancel({
     />
   );
 }
-
-export {
-  Root as AlertDialog,
-  Portal as AlertDialogPortal,
-  AlertDialogOverlay,
-  Trigger as AlertDialogTrigger,
-  AlertDialogContent,
-  AlertDialogHeader,
-  AlertDialogFooter,
-  AlertDialogTitle,
-  AlertDialogDescription,
-  AlertDialogAction,
-  AlertDialogCancel,
-};
