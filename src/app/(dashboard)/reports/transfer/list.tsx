@@ -23,18 +23,12 @@ export async function ListHeader() {
   return (
     <TableHeader>
       <TableRow className="bg-muted">
-        <TableHead className="min-w-24 text-center">
-          {t("orderNumber")}
-        </TableHead>
-        <TableHead className="min-w-24 text-center">
-          {t("senderAgentId")}
-        </TableHead>
-        <TableHead className="min-w-24 text-center">
-          {t("recipientAgentId")}
-        </TableHead>
-        <TableHead className="min-w-24 text-center">{t("amount")}</TableHead>
-        <TableHead className="min-w-24 text-center">{t("type")}</TableHead>
-        <TableHead className="min-w-24 text-center">{t("applyTime")}</TableHead>
+        <TableHead className="w-40">{t("orderNumber")}</TableHead>
+        <TableHead className="w-40">{t("senderAgentId")}</TableHead>
+        <TableHead className="w-40">{t("recipientAgentId")}</TableHead>
+        <TableHead className="w-40">{t("amount")}</TableHead>
+        <TableHead className="w-40">{t("type")}</TableHead>
+        <TableHead className="w-40">{t("applyTime")}</TableHead>
       </TableRow>
     </TableHeader>
   );
@@ -48,27 +42,21 @@ async function ListBody({ list }: { list: TransferRecordRequestRecords[] }) {
       {list?.length > 0 ? (
         list?.map((item) => (
           <TableRow key={item.transactionID}>
-            <TableCell className="w-24 text-center">
-              {item.transactionID}
-            </TableCell>
-            <TableCell className="w-24 text-center">
-              {item.senderAgentId}
-            </TableCell>
-            <TableCell className="w-24 text-center">
-              {item.recipientAgentId}
-            </TableCell>
-            <TableCell className="w-24 text-center">{item.amount}</TableCell>
-            <TableCell className="w-24 text-center">
+            <TableCell>{item.transactionID}</TableCell>
+            <TableCell>{item.senderAgentId}</TableCell>
+            <TableCell>{item.recipientAgentId}</TableCell>
+            <TableCell>{item.amount}</TableCell>
+            <TableCell>
               {item.operateCode === -1 ? t("transferOut") : t("transferIn")}
             </TableCell>
-            <TableCell className="w-24 text-center">
+            <TableCell>
               <Time time={item.createTime} />
             </TableCell>
           </TableRow>
         ))
       ) : (
         <TableRow>
-          <TableCell colSpan={7} className="h-40 text-center">
+          <TableCell colSpan={6} className="h-40 text-center">
             {translate("noData")}
           </TableCell>
         </TableRow>
@@ -92,7 +80,7 @@ export async function List({
   };
   if (!(params?.startTime && params?.endTime)) {
     return (
-      <div className="flex-1 bg-background p-2">
+      <div className="flex-1 bg-background p-4">
         <div className="relative rounded-sm border">
           <Table>
             <ListHeader />
@@ -105,7 +93,7 @@ export async function List({
   const { data } = await postGetTransferLogList(p);
 
   return (
-    <div className="flex-1 bg-background p-2">
+    <div className="flex-1 bg-background p-4">
       <div className="relative rounded-sm border">
         <Table>
           <ListHeader />

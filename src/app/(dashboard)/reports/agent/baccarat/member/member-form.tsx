@@ -12,13 +12,12 @@ import {
 } from "@/components/ui/select";
 import type { GameInfo } from "@/lib/types";
 import { makeDownload } from "@/lib/utils";
-import { endOfDay } from "date-fns";
-import { startOfDay } from "date-fns";
 import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useQueryState } from "nuqs";
+import { parseAsInteger, useQueryState, useQueryStates } from "nuqs";
 import { useTransition } from "react";
+import { toast } from "sonner";
 
 export function MemberForm({ gameList }: { gameList: GameInfo[] }) {
   const t = useTranslations("report.agent");
@@ -33,10 +32,21 @@ export function MemberForm({ gameList }: { gameList: GameInfo[] }) {
   const [isDownload, startDownload] = useTransition();
   const searchParams = useSearchParams();
 
+  const [dateRange] = useQueryStates({
+    startTime: parseAsInteger,
+    endTime: parseAsInteger,
+  });
+
   const handleReset = () => {
-    router.replace(
-      `/reports/agent/baccarat/member?startTime=${startOfDay(new Date()).getTime()}&endTime=${endOfDay(new Date()).getTime()}`,
-    );
+    router.replace("/reports/agent/baccarat/member");
+  };
+
+  const handleSearch = () => {
+    if (dateRange.startTime && dateRange.endTime) {
+      startTransition(() => router.refresh());
+    } else {
+      toast.error(t("selectDate"));
+    }
   };
 
   return (
@@ -87,10 +97,7 @@ export function MemberForm({ gameList }: { gameList: GameInfo[] }) {
           >
             {t("reset")}
           </Button>
-          <Button
-            disabled={isPending}
-            onClick={() => startTransition(() => router.refresh())}
-          >
+          <Button disabled={isPending} onClick={handleSearch}>
             {isPending ? (
               <Loader2 className="mr-2 h-4 w-4 animate-spin" />
             ) : null}

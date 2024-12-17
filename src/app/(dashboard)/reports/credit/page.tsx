@@ -11,6 +11,7 @@ interface CommonWrapperProps {
 }
 
 async function CommonWrapper({ searchParams }: CommonWrapperProps) {
+  const { startTime, endTime } = await searchParams;
   return (
     <>
       <Suspense
@@ -20,7 +21,7 @@ async function CommonWrapper({ searchParams }: CommonWrapperProps) {
           </div>
         }
       >
-        <ListFilter />
+        <ListFilter key={`${startTime}-${endTime}`} />
       </Suspense>
       <Suspense
         fallback={

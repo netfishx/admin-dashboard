@@ -23,14 +23,12 @@ export async function ListHeader() {
   return (
     <TableHeader>
       <TableRow className="bg-muted">
-        <TableHead className="min-w-24 text-center">
-          {t("orderNumber")}
-        </TableHead>
-        <TableHead className="min-w-24 text-center">{t("agentID")}</TableHead>
-        <TableHead className="min-w-24 text-center">{t("memberID")}</TableHead>
-        <TableHead className="min-w-24 text-center">{t("amount")}</TableHead>
-        <TableHead className="min-w-24 text-center">{t("type")}</TableHead>
-        <TableHead className="min-w-24 text-center">{t("applyTime")}</TableHead>
+        <TableHead className="w-40">{t("orderNumber")}</TableHead>
+        <TableHead className="w-40">{t("agentID")}</TableHead>
+        <TableHead className="w-40">{t("memberID")}</TableHead>
+        <TableHead className="w-40">{t("amount")}</TableHead>
+        <TableHead className="w-24">{t("type")}</TableHead>
+        <TableHead className="w-40">{t("applyTime")}</TableHead>
       </TableRow>
     </TableHeader>
   );
@@ -48,23 +46,21 @@ async function ListBody({ list }: { list: CreditRecordRequestRecords[] }) {
       {list?.length > 0 ? (
         list?.map((item) => (
           <TableRow key={item.transactionID}>
-            <TableCell className="w-24 text-center">
-              {item.transactionID}
-            </TableCell>
-            <TableCell className="w-24 text-center">{item.agentId}</TableCell>
-            <TableCell className="w-24 text-center">{item.memberId}</TableCell>
-            <TableCell className="w-24 text-center">{item.amount}</TableCell>
-            <TableCell className="w-24 text-center">
+            <TableCell>{item.transactionID}</TableCell>
+            <TableCell>{item.agentId}</TableCell>
+            <TableCell>{item.memberId}</TableCell>
+            <TableCell>{item.amount}</TableCell>
+            <TableCell>
               {typeMap[item.operateCode as keyof typeof typeMap]}
             </TableCell>
-            <TableCell className="w-24 text-center">
+            <TableCell>
               <Time time={item.createTime} />
             </TableCell>
           </TableRow>
         ))
       ) : (
         <TableRow>
-          <TableCell colSpan={7} className="h-40 text-center">
+          <TableCell colSpan={6} className="h-40 text-center">
             {translate("noData")}
           </TableCell>
         </TableRow>
@@ -81,7 +77,7 @@ export async function List({
   const params = await searchParams;
   if (!(params?.startTime && params?.endTime)) {
     return (
-      <div className="flex-1 bg-background p-2">
+      <div className="flex-1 bg-background p-4">
         <div className="relative rounded-sm border">
           <Table>
             <ListHeader />
@@ -102,7 +98,7 @@ export async function List({
   const { data } = await postGetCreditLogList(p);
 
   return (
-    <div className="flex-1 bg-background p-2">
+    <div className="flex-1 bg-background p-4">
       <div className="relative rounded-sm border">
         <Table>
           <ListHeader />
