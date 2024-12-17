@@ -1,7 +1,7 @@
 @import "tailwindcss/theme" theme(reference);
 
 .progress {
-  --progress-color: hsl(var(--primary));
+  --progress-color: var(--primary);
   @apply h-2 w-1/2 rounded-2xl bg-(--progress-color)/20;
   &::-moz-progress-bar {
     @apply rounded-2xl bg-(--progress-color);

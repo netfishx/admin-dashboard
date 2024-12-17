@@ -352,7 +352,7 @@ export function DateRangeFilter({
             className={cn(
               "justify-start text-left font-normal",
               !dateRange && "text-muted-foreground",
-              enableTimeSelect ? "w-[361px]" : "w-[241px]",
+              enableTimeSelect ? "w-100" : "w-70",
             )}
             disabled={disabled}
           >

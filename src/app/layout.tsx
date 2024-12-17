@@ -19,7 +19,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <ViewTransitions>
       <html lang="en">
-        <body>
+        <body className="bg-background text-foreground">
           <NuqsAdapter>
             <ThemeProvider
               attribute="class"

@@ -179,22 +179,22 @@ async function DayChartWrapper({
   });
   const chartConfig = {
     bjl01: {
-      color: "hsl(var(--chart-1))",
+      color: "var(--chart-1)",
     },
     bjl02: {
-      color: "hsl(var(--chart-2))",
+      color: "var(--chart-2)",
     },
     bjl03: {
-      color: "hsl(var(--chart-3))",
+      color: "var(--chart-3)",
     },
     bjl04: {
-      color: "hsl(var(--chart-4))",
+      color: "var(--chart-4)",
     },
     bjl05: {
-      color: "hsl(var(--chart-5))",
+      color: "var(--chart-5)",
     },
     bjl06: {
-      color: "hsl(var(--chart-6))",
+      color: "var(--chart-6)",
     },
   } satisfies ChartConfig;
   // 今日流水

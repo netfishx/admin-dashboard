@@ -247,7 +247,7 @@ export function AddModal({
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent
-        className="h-[60dvh] max-h-[60dvh] max-w-5xl"
+        className="h-[60dvh] max-h-[60dvh] max-w-3xl"
         onPointerDownOutside={(e) => e.preventDefault()}
       >
         <DialogHeader>
@@ -271,7 +271,7 @@ export function AddModal({
               onValueChange={(value) => setType(value)}
               disabled={!!data?.id && Date.now() > data?.startTime}
             >
-              <SelectTrigger className="w-[361px]">
+              <SelectTrigger className="w-100">
                 <SelectValue placeholder={t("placeholderselect")} />
               </SelectTrigger>
               <SelectContent>
@@ -330,7 +330,7 @@ export function AddModal({
               </Label>
               <Input
                 placeholder={t("placeholder")}
-                className="w-2/3 resize-none"
+                className="w-100"
                 value={labelOfLanguage}
                 maxLength={20}
                 onChange={(e) => handleTitleChange(e.target.value)}
@@ -343,7 +343,7 @@ export function AddModal({
             </Label>
             <Textarea
               placeholder={t("placeholder")}
-              className="h-32 w-2/3 resize-none"
+              className="h-32 resize-none"
               value={contentOfLanguage}
               maxLength={200}
               onChange={(e) => handleContentChange(e.target.value)}

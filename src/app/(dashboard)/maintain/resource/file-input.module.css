@@ -1,6 +1,6 @@
 .file {
-  --muted-foreground: hsl(215.4 16.3% 46.9%);
-  --muted: hsl(210 40% 96.1%);
+  --muted: oklch(97% 0.005 260);
+  --muted-foreground: oklch(55% 0.04 260);
   --color-base-content: var(--muted-foreground);
   border: 1px solid var(--input-color);
   width: 100%;
