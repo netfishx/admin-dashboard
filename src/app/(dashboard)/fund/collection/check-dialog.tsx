@@ -35,7 +35,7 @@ export function CheckDialog(props: Dialogprops) {
       const res = await postCheckMoneySecret({
         secret: password,
       });
-      if (res.code === 0) {
+      if (res.code === 0 && res.data) {
         setStep(2);
       } else {
         toast.error(res.message);
