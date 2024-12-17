@@ -1480,7 +1480,6 @@ export async function postGetRewardRecordList(data: RewardRecordRequestParams) {
 
 // 验证资金密码
 export async function postCheckMoneySecret(data: {
-  userId: string;
   secret: string;
 }) {
   const user = await getSession();
