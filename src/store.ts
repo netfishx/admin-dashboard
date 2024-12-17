@@ -1,6 +1,7 @@
 import type {
   AgentData,
   AnnouncementList,
+  ApplyData,
   BackgroundImageList,
   BombDetailPlayerDetails,
   DictionaryList,
@@ -164,3 +165,8 @@ export const orderListGuandanDetailItemAtom =
 export const orderListBombDetailRecordAtom = atom<
   BombDetailPlayerDetails[] | null
 >(null);
+
+// 提现-申请-流水弹窗
+export const withdrawFlowDialogAtom = atom<boolean>(false);
+// 提现-申请-流水弹窗-数据
+export const withdrawFlowDataAtom = atom<ApplyData | null>(null);

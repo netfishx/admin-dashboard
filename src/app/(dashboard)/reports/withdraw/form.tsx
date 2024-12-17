@@ -12,7 +12,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import {} from "date-fns";
+import { STATUS, USER_TYPE } from "@/lib/dict";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { parseAsInteger, useQueryState, useQueryStates } from "nuqs";
@@ -92,10 +92,11 @@ export function Form() {
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="all">{t("all")}</SelectItem>
-              <SelectItem value="0">{t("auditing")}</SelectItem>
-              <SelectItem value="1">{t("withdrawing")}</SelectItem>
-              <SelectItem value="2">{t("failed")}</SelectItem>
-              <SelectItem value="3">{t("success")}</SelectItem>
+              {STATUS.map((item) => (
+                <SelectItem key={item.value} value={item.value.toString()}>
+                  {t(item.label)}
+                </SelectItem>
+              ))}
             </SelectContent>
           </Select>
         </div>
@@ -137,8 +138,11 @@ export function Form() {
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="all">{t("all")}</SelectItem>
-              <SelectItem value="0">{t("agent")}</SelectItem>
-              <SelectItem value="2">{t("member")}</SelectItem>
+              {USER_TYPE.map((item) => (
+                <SelectItem key={item.value} value={item.value.toString()}>
+                  {t(item.label)}
+                </SelectItem>
+              ))}
             </SelectContent>
           </Select>
         </div>

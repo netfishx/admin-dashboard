@@ -389,8 +389,8 @@ export type OrderReportsRequestParams = {
   id?: string; // 订单id
   memberId?: string; // 会员id
   gameId?: string; // 游戏id
-  startTime: number; // 开始时间 as a long integer
-  endTime: number; // 结束时间 as a long integer
+  startTime?: number; // 开始时间 as a long integer
+  endTime?: number; // 结束时间 as a long integer
   issueNumber?: string; // 期号
   minister?: string; // 部长id
   roomOwnerId?: string; // 房主
@@ -401,6 +401,7 @@ export type OrderReportsRequestParams = {
   pageNum: number; // 页码, e.g., 1
   pageSize: number; // 每页大小, e.g., 10
   key?: string; // Key (Description not provided)
+  agentId?: string; // 代理ID
 };
 
 // 注单报表出参

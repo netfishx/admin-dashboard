@@ -20,6 +20,8 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import type { ApplyData } from "@/lib/types";
+import { withdrawFlowDataAtom, withdrawFlowDialogAtom } from "@/store";
+import { useAtom } from "jotai";
 import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
@@ -54,6 +56,8 @@ function ActionButtons({
   // 到账失败——[再次发起]
 
   const { approverStatus, withdrawMode, moneyStatus, approverId } = data;
+  const [, setOpen] = useAtom(withdrawFlowDialogAtom);
+  const [, setFlowData] = useAtom(withdrawFlowDataAtom);
 
   // 未处理 - 显示锁定按钮
   if (approverStatus === 0) {
@@ -76,6 +80,10 @@ function ActionButtons({
           variant="ghost"
           size="sm"
           className="px-2 text-sm text-primary hover:text-primary/80"
+          onClick={() => {
+            setFlowData(data);
+            setOpen(true);
+          }}
         >
           {t("flow")}
         </Button>

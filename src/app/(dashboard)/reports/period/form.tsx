@@ -3,10 +3,6 @@ import { DateRangeFilter } from "@/components/daterange-filter";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Loader2 } from "lucide-react";
-import { useSearchParams } from "next/navigation";
-
-import { exportClick } from "@/api";
 import {
   Select,
   SelectContent,
@@ -15,7 +11,10 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import type { GameType } from "@/lib/types";
+import { makeDownload } from "@/lib/utils";
+import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
 import { parseAsInteger, useQueryState, useQueryStates } from "nuqs";
 import { useTransition } from "react";
@@ -26,9 +25,11 @@ export function Form({ list }: { list: GameType[] }) {
   const searchParams = useSearchParams();
 
   const router = useRouter();
-  const [isPending, startTransition] = useTransition();
+
   const [isReset, startReset] = useTransition();
   const [isSearch, startSearch] = useTransition();
+  const [isDownload, startDownload] = useTransition();
+
   const [dateRange] = useQueryStates({
     startTime: parseAsInteger,
     endTime: parseAsInteger,
@@ -121,6 +122,18 @@ export function Form({ list }: { list: GameType[] }) {
         <div className="float-right flex items-center gap-2 p-2">
           <Button
             variant="outline"
+            onClick={() => {
+              startDownload(() => makeDownload(searchParams, 100001));
+            }}
+            disabled={isDownload}
+          >
+            {isDownload ? (
+              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+            ) : null}
+            {t("download")}
+          </Button>
+          <Button
+            variant="outline"
             disabled={isReset}
             onClick={() => {
               startReset(() => {
@@ -136,32 +149,6 @@ export function Form({ list }: { list: GameType[] }) {
               <Loader2 className="mr-2 h-4 w-4 animate-spin" />
             ) : null}
             {t("search")}
-          </Button>
-          <Button
-            onClick={() => {
-              startTransition(async () => {
-                const params = {
-                  exportButtonCode: 100001,
-                  queryParams: JSON.stringify(
-                    Object.fromEntries(
-                      new URLSearchParams(searchParams.toString()),
-                    ),
-                  ),
-                };
-                const { code, message } = await exportClick(params);
-                if (code === 0) {
-                  toast.success(message);
-                } else {
-                  toast.error(message);
-                }
-              });
-            }}
-            disabled={isPending}
-          >
-            {isPending ? (
-              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-            ) : null}
-            {t("download")}
           </Button>
         </div>
       </div>

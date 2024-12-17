@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/table";
 
 import { Time } from "@/components/time";
+import { AUDIT_STATUS, ORDER_TYPE } from "@/lib/dict";
 import type { AuditList } from "@/lib/types";
 import { getTranslations } from "next-intl/server";
 import { Suspense } from "react";
@@ -127,15 +128,6 @@ async function TableBodyWrapper({ list }: { list: AuditList[] }) {
   const translations = await getTranslations();
   const t = await getTranslations("withdraw.audit");
 
-  const orderTypeList = {
-    0: t("deposit"),
-    1: t("issueRebate"),
-  };
-  const statusList = {
-    0: t("uncompleted"),
-    1: t("completed"),
-    2: t("manualCleared"),
-  };
   return (
     <TableBody>
       {list && list.length > 0 ? (
@@ -147,7 +139,12 @@ async function TableBodyWrapper({ list }: { list: AuditList[] }) {
             </TableCell>
 
             <TableCell>
-              {orderTypeList[item.orderType as keyof typeof orderTypeList]}
+              {(() => {
+                const status = ORDER_TYPE.find(
+                  (s) => s.value === item.orderType,
+                );
+                return status ? t(status.label) : item.orderType;
+              })()}
             </TableCell>
             <TableCell>{item.userId}</TableCell>
             <TableCell>{item.orderAmount}</TableCell>
@@ -155,7 +152,12 @@ async function TableBodyWrapper({ list }: { list: AuditList[] }) {
             <TableCell>{item.availableAudit}</TableCell>
             <TableCell>{item.remainingAudit}</TableCell>
             <TableCell>
-              {statusList[item.status as keyof typeof statusList]}
+              {(() => {
+                const status = AUDIT_STATUS.find(
+                  (s) => s.value === item.status,
+                );
+                return status ? t(status.label) : item.status;
+              })()}
             </TableCell>
 
             <TableCell className="text-center sticky right-0 bg-background">
