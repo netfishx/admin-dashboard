@@ -121,7 +121,7 @@ const Carousel = React.forwardRef<
     }, [api, onSelect]);
 
     return (
-      <CarouselContext.Provider
+      <CarouselContext
         value={{
           carouselRef,
           api: api,
@@ -134,17 +134,16 @@ const Carousel = React.forwardRef<
           canScrollNext,
         }}
       >
-        <div
+        <section
           ref={ref}
           onKeyDownCapture={handleKeyDown}
           className={cn("relative", className)}
-          role="region"
           aria-roledescription="carousel"
           {...props}
         >
           {children}
-        </div>
-      </CarouselContext.Provider>
+        </section>
+      </CarouselContext>
     );
   },
 );
