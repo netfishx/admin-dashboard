@@ -110,7 +110,7 @@ async function TableWrapper({
     </div>
   );
 }
-export async function TableHeaderWrapper() {
+async function TableHeaderWrapper() {
   const t = await getTranslations("withdraw.apply");
   return (
     <TableHeader>
@@ -144,15 +144,6 @@ async function TableBodyWrapper({ list }: { list: ApplyData[] }) {
   // 资金状态 0转账中 1到账 2异常
   // 出金模式 0自动 1手动
   // 用户类型 0代理 1会员
-  function translateValue(
-    value: number,
-    map: Array<{
-      value: number;
-      label: string;
-    }>,
-  ): string {
-    return map.find((item) => item.value === value)?.label || "--";
-  }
 
   return (
     <TableBody>
