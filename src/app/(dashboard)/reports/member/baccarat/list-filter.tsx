@@ -12,14 +12,12 @@ import {
 } from "@/components/ui/select";
 import type { GameInfo } from "@/lib/types";
 import { makeDownload } from "@/lib/utils";
-
-import { startOfDay } from "date-fns";
-import { endOfDay } from "date-fns";
 import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useQueryState } from "nuqs";
+import { parseAsInteger, useQueryState, useQueryStates } from "nuqs";
 import { useTransition } from "react";
+import { toast } from "sonner";
 
 export function ListFilter({
   hasSearchPermission,
@@ -32,6 +30,8 @@ export function ListFilter({
   const [isPending, startTransition] = useTransition();
   const [isDownload, startDownload] = useTransition();
   const searchParams = useSearchParams();
+  const router = useRouter();
+
   const [parentAgentId, setParentAgentId] = useQueryState("parentAgentId", {
     defaultValue: "",
   });
@@ -46,15 +46,21 @@ export function ListFilter({
     defaultValue: "all",
   });
 
+  const [dateRange] = useQueryStates({
+    startTime: parseAsInteger,
+    endTime: parseAsInteger,
+  });
+
   const handleReset = () => {
-    router.replace(
-      `/reports/member/baccarat?startTime=${startOfDay(new Date()).getTime()}&endTime=${endOfDay(new Date()).getTime()}`,
-    );
+    router.replace("/reports/member/baccarat");
   };
 
-  const router = useRouter();
   const handleSearch = () => {
-    router.refresh();
+    if (dateRange.startTime && dateRange.endTime) {
+      startTransition(() => router.refresh());
+    } else {
+      toast.error(t("selectDate"));
+    }
   };
 
   return (
@@ -135,10 +141,7 @@ export function ListFilter({
           >
             {t("reset")}
           </Button>
-          <Button
-            onClick={() => startTransition(handleSearch)}
-            disabled={isPending}
-          >
+          <Button onClick={handleSearch} disabled={isPending}>
             {isPending && <Loader2 className="animate-spin" />}
             {t("search")}
           </Button>

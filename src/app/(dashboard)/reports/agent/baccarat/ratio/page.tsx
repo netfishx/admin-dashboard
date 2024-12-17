@@ -12,6 +12,7 @@ interface CommonWrapperProps {
 
 export default async function Page({ searchParams }: CommonWrapperProps) {
   const gameListResp = await getBaccaratGames();
+  const { startTime, endTime } = await searchParams;
   return (
     <div className="flex h-full w-full flex-col gap-2">
       <Suspense
@@ -21,7 +22,10 @@ export default async function Page({ searchParams }: CommonWrapperProps) {
           </div>
         }
       >
-        <RatioForm gameList={gameListResp?.data ?? []} />
+        <RatioForm
+          gameList={gameListResp?.data ?? []}
+          key={`${startTime}-${endTime}`}
+        />
       </Suspense>
       <Suspense
         fallback={

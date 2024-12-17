@@ -12,19 +12,22 @@ import {
 } from "@/components/ui/select";
 import type { GameInfo } from "@/lib/types";
 import { makeDownload } from "@/lib/utils";
-import { endOfDay } from "date-fns";
-import { startOfDay } from "date-fns";
 import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useQueryState } from "nuqs";
+import { parseAsInteger, useQueryState, useQueryStates } from "nuqs";
 import { useTransition } from "react";
+import { toast } from "sonner";
 
 export function RatioForm({ gameList }: { gameList: GameInfo[] }) {
   const t = useTranslations("report.agent");
   const [isPending, startTransition] = useTransition();
   const [isDownload, startDownload] = useTransition();
   const searchParams = useSearchParams();
+  const [dateRange] = useQueryStates({
+    startTime: parseAsInteger,
+    endTime: parseAsInteger,
+  });
   const [gameId, setGameId] = useQueryState("gameId", {
     defaultValue: "all",
   });
@@ -39,10 +42,16 @@ export function RatioForm({ gameList }: { gameList: GameInfo[] }) {
   });
   const router = useRouter();
 
+  const handleSearch = () => {
+    if (dateRange.startTime && dateRange.endTime) {
+      startTransition(() => router.refresh());
+    } else {
+      toast.error(t("selectDate"));
+    }
+  };
+
   const handleReset = () => {
-    router.replace(
-      `/reports/agent/baccarat/ratio?startTime=${startOfDay(new Date()).getTime()}&endTime=${endOfDay(new Date()).getTime()}`,
-    );
+    router.replace("/reports/agent/baccarat/ratio");
   };
 
   return (
@@ -110,10 +119,7 @@ export function RatioForm({ gameList }: { gameList: GameInfo[] }) {
           >
             {t("reset")}
           </Button>
-          <Button
-            onClick={() => startTransition(() => router.refresh())}
-            disabled={isPending}
-          >
+          <Button onClick={handleSearch} disabled={isPending}>
             {isPending && <Loader2 className="h-4 w-4 animate-spin" />}
             {t("search")}
           </Button>

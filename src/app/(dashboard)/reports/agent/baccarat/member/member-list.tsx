@@ -24,7 +24,7 @@ export async function ListHeader() {
   return (
     <TableHeader>
       <TableRow className="bg-muted">
-        <TableHead className="w-40">{t("leastlevelID")}</TableHead>
+        <TableHead className="w-60">{t("leastlevelID")}</TableHead>
         <TableHead className="w-40">{t("gameName")}</TableHead>
         <TableHead className="w-40">{t("betNum")}</TableHead>
         <TableHead className="w-40">{t("memberBetting")}</TableHead>
@@ -82,7 +82,7 @@ async function ListBody({
         ))
       ) : (
         <TableRow>
-          <TableCell colSpan={15} className="h-40 text-center">
+          <TableCell colSpan={14} className="h-40 text-center">
             {translate("noData")}
           </TableCell>
         </TableRow>
@@ -113,7 +113,7 @@ export async function MemberList({
         <div className="border rounded-sm">
           <Table>
             <ListHeader />
-            <ListBody list={[]} gameList={gameList} />
+            <TableSkeleton length={5} colSpan={14} />
           </Table>
         </div>
       </div>
@@ -121,7 +121,6 @@ export async function MemberList({
   }
 
   const { data } = await getMemberBetReport(p);
-  console.info(data, "data");
 
   return (
     <div className="p-4 bg-background flex-1">

@@ -1,7 +1,7 @@
 import { getSupplierReportList } from "@/api";
 import { CustomPagination } from "@/components/custom-pagination";
+import TableSkeleton from "@/components/table-skeleton";
 import { Label } from "@/components/ui/label";
-import { Skeleton } from "@/components/ui/skeleton";
 import {
   Table,
   TableBody,
@@ -17,7 +17,6 @@ import type {
 } from "@/lib/types";
 import { nanoid } from "nanoid";
 import { getTranslations } from "next-intl/server";
-import { Suspense } from "react";
 
 export async function ListHeader() {
   "use cache";
@@ -25,21 +24,13 @@ export async function ListHeader() {
   return (
     <TableHeader>
       <TableRow className="bg-muted">
-        <TableHead className="min-w-24 text-center">
-          {t("supplierID")}
-        </TableHead>
-        <TableHead className="min-w-24 text-center">
-          {t("supplierName")}
-        </TableHead>
-        <TableHead className="min-w-24 text-center">{t("date")}</TableHead>
-        <TableHead className="min-w-24 text-center">{t("game")}</TableHead>
-        <TableHead className="min-w-24 text-center">{t("betNum")}</TableHead>
-        <TableHead className="min-w-24 text-center">
-          {t("validAmount")}
-        </TableHead>
-        <TableHead className="min-w-24 text-center">
-          {t("proportionAmount")}
-        </TableHead>
+        <TableHead className="w-40">{t("supplierId")}</TableHead>
+        <TableHead className="w-40">{t("supplierName")}</TableHead>
+        <TableHead className="w-40">{t("date")}</TableHead>
+        <TableHead className="w-40">{t("game")}</TableHead>
+        <TableHead className="w-40">{t("betNum")}</TableHead>
+        <TableHead className="w-40">{t("validAmount")}</TableHead>
+        <TableHead className="w-40">{t("proportionAmount")}</TableHead>
       </TableRow>
     </TableHeader>
   );
@@ -53,27 +44,20 @@ async function ListBody({
   gameList?: GameInfo[];
 }) {
   const translate = await getTranslations();
-
   return (
     <TableBody>
       {list?.length > 0 ? (
         list?.map((item) => (
           <TableRow key={nanoid()}>
-            <TableCell className="w-24 text-center">{item.supplyId}</TableCell>
-            <TableCell className="w-24 text-center">
-              {item.supplyName}
-            </TableCell>
-            <TableCell className="w-24 text-center">{item.openDay}</TableCell>
-            <TableCell className="w-24 text-center">
+            <TableCell>{item.supplyId}</TableCell>
+            <TableCell>{item.supplyName}</TableCell>
+            <TableCell>{item.openDay}</TableCell>
+            <TableCell>
               {gameList?.find((i) => i.gameId === item.gameId)?.gameName}
             </TableCell>
-            <TableCell className="w-24 text-center">{item.betNum}</TableCell>
-            <TableCell className="w-24 text-center">
-              {item.availableBetAmount}
-            </TableCell>
-            <TableCell className="w-24 text-center">
-              {item.percentAmount}
-            </TableCell>
+            <TableCell>{item.betNum}</TableCell>
+            <TableCell>{item.availableBetAmount}</TableCell>
+            <TableCell>{item.percentAmount}</TableCell>
           </TableRow>
         ))
       ) : (
@@ -110,7 +94,7 @@ export async function List({
         <div className="relative rounded-sm border">
           <Table>
             <ListHeader />
-            <ListBody list={[]} />
+            <TableSkeleton length={5} colSpan={7} />
           </Table>
         </div>
       </div>
@@ -146,21 +130,9 @@ export async function List({
       </div>
 
       <div className="relative rounded-sm border">
-        <Table>
+        <Table className="table-fixed">
           <ListHeader />
-          <Suspense
-            fallback={
-              <div className="flex items-center justify-between bg-background p-4">
-                <Skeleton />
-                <Skeleton />
-                <Skeleton />
-                <Skeleton />
-                <Skeleton />
-              </div>
-            }
-          >
-            <ListBody list={data?.list || []} gameList={gameList || []} />
-          </Suspense>
+          <ListBody list={data?.list || []} gameList={gameList || []} />
         </Table>
       </div>
       <div className="pt-2">

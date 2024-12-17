@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { useTranslations } from "next-intl";
 import { useRouter, useSearchParams } from "next/navigation";
 
-export default function DetailButton() {
+export default function DetailButton({ agentId }: { agentId: string }) {
   const t = useTranslations("report.orderlist");
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -17,7 +17,7 @@ export default function DetailButton() {
           const startTime = searchParams.get("startTime");
           const endTime = searchParams.get("endTime");
           router.push(
-            `/reports/order/baccarat?startTime=${startTime}&endTime=${endTime}`,
+            `/reports/order/guandan?startTime=${startTime}&endTime=${endTime}&agentId=${agentId}`,
           );
         }}
       >

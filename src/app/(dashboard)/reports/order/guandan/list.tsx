@@ -76,31 +76,23 @@ async function ListBody({ list }: { list: GameRecordRequestRecords[] }) {
       {list && list?.length > 0 ? (
         list?.map((item: GameRecordRequestRecords) => (
           <TableRow key={item.id}>
-            <TableCell className="text-center">{item.id}</TableCell>
-            <TableCell className="text-center">{item.roomOwnerId}</TableCell>
-            <TableCell className="text-center">{item.clubOwnerId}</TableCell>
+            <TableCell>{item.id}</TableCell>
+            <TableCell>{item.roomOwnerId}</TableCell>
+            <TableCell>{item.clubOwnerId}</TableCell>
             {hasSearchPermission && (
-              <TableCell className="text-center">
-                {item.parentClubOwnerAgentId}
-              </TableCell>
+              <TableCell>{item.parentClubOwnerAgentId}</TableCell>
             )}
-            <TableCell className="text-center">{item.bet}</TableCell>
-            <TableCell className="text-center">{item.settleCap}</TableCell>
-            <TableCell className="text-center">{item.upgradeMode}</TableCell>
-            <TableCell className="text-center">
-              {item.result?.[0]?.result}
-            </TableCell>
-            <TableCell className="text-center">{item.bombCount}</TableCell>
-            <TableCell className="text-center">
-              {item.multiplierCount}
-            </TableCell>
-            <TableCell className="text-center">
-              {generateResultString(item?.result)}
-            </TableCell>
-            <TableCell className="text-center">
+            <TableCell>{item.bet}</TableCell>
+            <TableCell>{item.settleCap}</TableCell>
+            <TableCell>{item.upgradeMode}</TableCell>
+            <TableCell>{item.result?.[0]?.result}</TableCell>
+            <TableCell>{item.bombCount}</TableCell>
+            <TableCell>{item.multiplierCount}</TableCell>
+            <TableCell>{generateResultString(item?.result)}</TableCell>
+            <TableCell>
               <Time time={item.gameStartTime} />
             </TableCell>
-            <TableCell className="text-center">
+            <TableCell>
               <Time time={item.gameEndTime} />
             </TableCell>
             <TableCell className="sticky right-0 z-10 bg-background text-center">

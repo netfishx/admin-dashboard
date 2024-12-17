@@ -15,6 +15,7 @@ interface CommonWrapperProps {
 export default async function Page({ searchParams }: CommonWrapperProps) {
   const hasSearchPermission = await hasPermission("admin_supplier_report");
   const resp = await getAllGames();
+  const { startTime, endTime } = await searchParams;
   return (
     <div className="flex w-full flex-col gap-2">
       <Suspense
@@ -24,7 +25,10 @@ export default async function Page({ searchParams }: CommonWrapperProps) {
           </div>
         }
       >
-        <ListFilter hasSearchPermission={hasSearchPermission} />
+        <ListFilter
+          hasSearchPermission={hasSearchPermission}
+          key={`${startTime}-${endTime}`}
+        />
       </Suspense>
       <Suspense
         fallback={

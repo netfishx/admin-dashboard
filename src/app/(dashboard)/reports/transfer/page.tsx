@@ -10,7 +10,8 @@ interface CommonWrapperProps {
   searchParams: Promise<TransferRecordRequestParams>;
 }
 
-export default function Page({ searchParams }: CommonWrapperProps) {
+export default async function Page({ searchParams }: CommonWrapperProps) {
+  const { startTime, endTime } = await searchParams;
   return (
     <div className="flex w-full flex-col gap-2">
       <Suspense
@@ -20,7 +21,7 @@ export default function Page({ searchParams }: CommonWrapperProps) {
           </div>
         }
       >
-        <ListFilter />
+        <ListFilter key={`${startTime}-${endTime}`} />
       </Suspense>
       <Suspense
         fallback={
