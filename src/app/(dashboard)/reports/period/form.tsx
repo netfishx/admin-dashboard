@@ -120,24 +120,7 @@ export function Form({ list }: { list: GameType[] }) {
         </div>
         <div className="float-right flex items-center gap-2 p-2">
           <Button
-            variant="outline"
-            disabled={isReset}
-            onClick={() => {
-              startReset(() => {
-                router.replace("/reports/period");
-              });
-            }}
-          >
-            {isReset && <Loader2 className="h-4 w-4 animate-spin" />}
-            {t("reset")}
-          </Button>
-          <Button onClick={search} disabled={isSearch}>
-            {isSearch ? (
-              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-            ) : null}
-            {t("search")}
-          </Button>
-          <Button
+            className="rounded-md border border-gray-300 bg-white px-4 py-2 text-gray-700 hover:bg-gray-100"
             onClick={() => {
               startTransition(async () => {
                 const params = {
@@ -162,6 +145,24 @@ export function Form({ list }: { list: GameType[] }) {
               <Loader2 className="mr-2 h-4 w-4 animate-spin" />
             ) : null}
             {t("download")}
+          </Button>
+          <Button
+            variant="outline"
+            disabled={isReset}
+            onClick={() => {
+              startReset(() => {
+                router.replace("/reports/period");
+              });
+            }}
+          >
+            {isReset && <Loader2 className="h-4 w-4 animate-spin" />}
+            {t("reset")}
+          </Button>
+          <Button onClick={search} disabled={isSearch}>
+            {isSearch ? (
+              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+            ) : null}
+            {t("search")}
           </Button>
         </div>
       </div>

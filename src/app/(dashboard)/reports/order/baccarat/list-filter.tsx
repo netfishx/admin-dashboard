@@ -267,21 +267,22 @@ export function ListFilter({ gameList }: { gameList: GameInfo[] }) {
       {/* 第四行 */}
       <div className="flex items-center justify-end gap-4">
         <div className="flex items-center gap-2">
+          <Button
+            onClick={() =>
+              startDownload(() => makeDownload(searchParams, 100005))
+            }
+            className="rounded-md border border-gray-300 bg-white px-4 py-2 text-gray-700 hover:bg-gray-100"
+            disabled={isDownload}
+          >
+            {isDownload && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+            {t("download")}
+          </Button>
           <Button variant="outline" disabled={isReset} onClick={handleReset}>
             {t("reset")}
           </Button>
           <Button onClick={handleSearch} disabled={isPending}>
             {isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
             {t("search")}
-          </Button>
-          <Button
-            onClick={() =>
-              startDownload(() => makeDownload(searchParams, 100005))
-            }
-            disabled={isDownload}
-          >
-            {isDownload && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-            {t("download")}
           </Button>
         </div>
       </div>

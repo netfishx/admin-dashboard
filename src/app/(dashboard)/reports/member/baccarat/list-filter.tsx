@@ -136,6 +136,16 @@ export function ListFilter({
       <div className="flex items-center justify-end gap-4">
         <div className="flex items-center gap-2">
           <Button
+            disabled={isDownload}
+            onClick={() =>
+              startDownload(() => makeDownload(searchParams, 100004))
+            }
+            className="rounded-md border border-gray-300 bg-white px-4 py-2 text-gray-700 hover:bg-gray-100"
+          >
+            {isDownload && <Loader2 className="h-4 w-4 animate-spin" />}
+            {t("download")}
+          </Button>
+          <Button
             className="rounded-md border border-gray-300 bg-white px-4 py-2 text-gray-700 hover:bg-gray-100"
             onClick={handleReset}
           >
@@ -144,15 +154,6 @@ export function ListFilter({
           <Button onClick={handleSearch} disabled={isPending}>
             {isPending && <Loader2 className="animate-spin" />}
             {t("search")}
-          </Button>
-          <Button
-            disabled={isDownload}
-            onClick={() =>
-              startDownload(() => makeDownload(searchParams, 100004))
-            }
-          >
-            {isDownload && <Loader2 className="h-4 w-4 animate-spin" />}
-            {t("download")}
           </Button>
         </div>
       </div>
