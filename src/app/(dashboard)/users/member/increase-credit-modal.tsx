@@ -139,7 +139,7 @@ export function IncreaseCreditModal() {
                     name="amount"
                     min={0}
                     step={0.01}
-                    max={100000000}
+                    max={availableAmount}
                     onChange={(e) => {
                       const value = e.target.value;
                       if (value) {

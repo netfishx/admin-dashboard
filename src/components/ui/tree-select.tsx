@@ -1,9 +1,9 @@
 "use client";
 
 import { Checkbox } from "@/components/ui/checkbox";
-import { ChevronDown, ChevronRight } from "lucide-react";
 import type { TreeNode } from "@/lib/types";
 import { cn } from "@/lib/utils";
+import { ChevronDown, ChevronRight } from "lucide-react";
 import { useState } from "react";
 
 function TreeNode({
@@ -124,12 +124,13 @@ export function TreeSelect({
 }: {
   data: TreeNode[];
   checkedState: Map<number, boolean | "indeterminate">;
-  handleChangeAction: (checkedState: Map<number, boolean | "indeterminate">) => void;
+  handleChangeAction: (
+    checkedState: Map<number, boolean | "indeterminate">,
+  ) => void;
   className?: string;
 }) {
-  const [checkedState, setCheckedState] = useState<
-    Map<number, boolean | "indeterminate">
-  >(state);
+  const [checkedState, setCheckedState] =
+    useState<Map<number, boolean | "indeterminate">>(state);
 
   const updateCheckedState = (
     id: number,

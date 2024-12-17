@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
-import type { Transition, Variants } from 'motion/react';
-import { motion, useAnimation } from 'motion/react';
+import type { Transition, Variants } from "motion/react";
+import { motion, useAnimation } from "motion/react";
 
 const defaultTransition: Transition = {
   duration: 0.6,
@@ -25,8 +25,8 @@ const HomeIcon = () => {
   return (
     <div
       className="select-none hover:bg-accent rounded-md transition-colors duration-200 flex items-center justify-center"
-      onMouseEnter={() => controls.start('animate')}
-      onMouseLeave={() => controls.start('normal')}
+      onMouseEnter={() => controls.start("animate")}
+      onMouseLeave={() => controls.start("normal")}
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"

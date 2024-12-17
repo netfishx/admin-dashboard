@@ -18,7 +18,7 @@ import type { GameType } from "@/lib/types";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { parseAsInteger, useQueryState, useQueryStates } from "nuqs";
-import { useState, useTransition } from "react";
+import { useTransition } from "react";
 import { toast } from "sonner";
 
 export function Form({ list }: { list: GameType[] }) {
@@ -33,14 +33,7 @@ export function Form({ list }: { list: GameType[] }) {
     startTime: parseAsInteger,
     endTime: parseAsInteger,
   });
-  // const [gameType, setGameType] = useQueryState(
-  //   "gameType",
-  //   parseAsString.withDefault("61").withOptions({ clearOnDefault: false }),
-  // );
-
-  const [gameType, setGameType] = useQueryState("gameType", {
-    defaultValue: "61",
-  });
+  const gameType = "61";
 
   const [gameId, setGameId] = useQueryState("gameId", {
     defaultValue: "all",
@@ -49,24 +42,16 @@ export function Form({ list }: { list: GameType[] }) {
   const [issueNumber, setIssueNumber] = useQueryState("issueNumber", {
     defaultValue: "",
   });
-
-  const [gameIdList, setGameIdList] = useState<
-    { gameId: number; gameIdLabel: string }[]
-  >(
-    list?.[0]?.list?.map((item) => ({
-      gameId: item.gameId,
-      gameIdLabel: item.gameIdLabel,
-    })),
-  );
-
-  const [gameTypeList, setGameTypeList] =
-    useState<{ gameType: number; gameTypeLabel: string }[]>(list);
+  const gameIdList = list?.[0]?.list?.map((item) => ({
+    gameId: item.gameId,
+    gameIdLabel: item.gameIdLabel,
+  }));
 
   function search() {
-    if (!dateRange.startTime || !dateRange.endTime) {
-      toast.error(t("selectDateRange"));
-    } else {
+    if (dateRange.startTime && dateRange.endTime) {
       startSearch(router.refresh);
+    } else {
+      toast.error(t("selectDateRange"));
     }
   }
 
@@ -82,7 +67,7 @@ export function Form({ list }: { list: GameType[] }) {
                   <SelectValue placeholder={t("placeholderselect")} />
                 </SelectTrigger>
                 <SelectContent>
-                  {gameTypeList?.map((item) => (
+                  {list?.map((item) => (
                     <SelectItem
                       key={item.gameType}
                       value={item.gameType.toString()}

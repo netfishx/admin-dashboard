@@ -102,12 +102,14 @@ export function AddModal({
     // debugger;
     // 基础必填验证
     if (
-      !params.type ||
-      !params.status ||
-      !params.startTime ||
-      !params.endTime ||
-      !Array.isArray(params.content) ||
-      !params.content.some((item) => item.content) // 至少一个语言有内容
+      !(
+        params.type &&
+        params.status &&
+        params.startTime &&
+        params.endTime &&
+        Array.isArray(params.content) &&
+        params.content.some((item) => item.content)
+      )
     ) {
       return { valid: false, message: t("allRequired") };
     }
@@ -162,7 +164,9 @@ export function AddModal({
 
   // 语言选择变化时更新内容
   const handleLanguageChange = (value: string) => {
-    if (!value) return;
+    if (!value) {
+      return;
+    }
     setLanguage(value);
     // 根据选择的语言，更新内容框的内容
     const currentContent = contentData.find((item) => item.language === value);
@@ -247,7 +251,7 @@ export function AddModal({
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent
-        className="h-[60dvh] max-h-[60dvh] max-w-5xl"
+        className="h-[60dvh] max-h-[60dvh] max-w-3xl"
         onPointerDownOutside={(e) => e.preventDefault()}
       >
         <DialogHeader>
@@ -271,7 +275,7 @@ export function AddModal({
               onValueChange={(value) => setType(value)}
               disabled={!!data?.id && Date.now() > data?.startTime}
             >
-              <SelectTrigger className="w-[361px]">
+              <SelectTrigger className="w-100">
                 <SelectValue placeholder={t("placeholderselect")} />
               </SelectTrigger>
               <SelectContent>
@@ -330,7 +334,7 @@ export function AddModal({
               </Label>
               <Input
                 placeholder={t("placeholder")}
-                className="w-2/3 resize-none"
+                className="w-100"
                 value={labelOfLanguage}
                 maxLength={20}
                 onChange={(e) => handleTitleChange(e.target.value)}
@@ -343,7 +347,7 @@ export function AddModal({
             </Label>
             <Textarea
               placeholder={t("placeholder")}
-              className="h-32 w-2/3 resize-none"
+              className="h-32 resize-none"
               value={contentOfLanguage}
               maxLength={200}
               onChange={(e) => handleContentChange(e.target.value)}

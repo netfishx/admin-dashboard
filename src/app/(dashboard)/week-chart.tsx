@@ -23,13 +23,13 @@ const chartConfigs: {
   "0": {
     value: {
       label: "Value",
-      color: "hsl(var(--chart-1))",
+      color: "var(--chart-1)",
     },
   },
   "1": {
     value: {
       label: "Value",
-      color: "hsl(var(--chart-4))",
+      color: "var(--chart-4)",
     },
   },
 } as const;

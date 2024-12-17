@@ -37,6 +37,9 @@
       "complexity": {
         "noForEach": "off",
         "noExcessiveCognitiveComplexity": "off"
+      },
+      "security": {
+        "noDangerouslySetInnerHtml": "off"
       }
     }
   },
