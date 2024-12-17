@@ -1,18 +1,26 @@
-"use client"
+"use client";
 
 import "react-day-picker/style.css";
 
-import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react"
-import { zhCN } from "react-day-picker/locale"
+import { Button, buttonVariants } from "@/components/ui/button";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { cn } from "@/lib/utils";
+import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
+import type { ComponentProps } from "react";
 import {
   DayPicker,
   labelNext,
   labelPrevious,
   useDayPicker,
-} from "react-day-picker"
-import { cn } from "@/lib/utils"
-import { Button, buttonVariants } from "@/components/ui/button"
-import { Select, SelectTrigger, SelectContent, SelectItem, SelectValue, SelectGroup } from '@/components/ui/select'
+} from "react-day-picker";
+import { zhCN } from "react-day-picker/locale";
 
 function Calendar({
   className,
@@ -20,8 +28,7 @@ function Calendar({
   showOutsideDays = true,
   numberOfMonths,
   ...props
-}: React.ComponentProps<typeof DayPicker>) {
-
+}: ComponentProps<typeof DayPicker>) {
   return (
     <DayPicker
       locale={zhCN}
@@ -40,14 +47,14 @@ function Calendar({
             variant: "outline",
             className:
               "absolute right-0 h-7 w-7 bg-transparent p-0 opacity-50 hover:opacity-100",
-          })
+          }),
         ),
         button_previous: cn(
           buttonVariants({
             variant: "outline",
             className:
               "absolute left-0 h-7 w-7 bg-transparent p-0 opacity-50 hover:opacity-100",
-          })
+          }),
         ),
         nav: "flex items-start",
         month_grid: "my-2 mx-2",
@@ -55,7 +62,7 @@ function Calendar({
         day: "flex h-9 w-9 flex-1 items-center justify-center rounded-md p-0 text-sm [&:has(button)]:hover:bg-accent! [&:has(button)]:hover:text-accent-foreground [&:has(button)]:hover:aria-selected:bg-primary! [&:has(button)]:hover:aria-selected:text-primary-foreground",
         day_button: cn(
           buttonVariants({ variant: "ghost" }),
-          "h-9 w-9 p-0 font-normal transition-none hover:bg-transparent hover:text-inherit aria-selected:opacity-100"
+          "h-9 w-9 p-0 font-normal transition-none hover:bg-transparent hover:text-inherit aria-selected:opacity-100",
         ),
         range_start: "day-range-start rounded-s-md",
         range_end: "day-range-end rounded-e-md",
@@ -68,7 +75,7 @@ function Calendar({
         range_middle:
           "rounded-none aria-selected:bg-accent aria-selected:text-accent-foreground hover:aria-selected:bg-accent! hover:aria-selected:text-accent-foreground",
         hidden: "invisible hidden",
-        chevron: `inline-block fill-muted-foreground`,
+        chevron: "inline-block fill-muted-foreground",
         ...classNames,
       }}
       components={{
@@ -85,9 +92,9 @@ function Calendar({
           const updateDayPickerState = (value: string) => {
             const newDate = new Date(currentShown);
             if (className === "rdp-years_dropdown") {
-              newDate.setFullYear(parseInt(value));
+              newDate.setFullYear(Number.parseInt(value));
             } else if (className === "rdp-months_dropdown") {
-              newDate.setMonth(parseInt(value));
+              newDate.setMonth(Number.parseInt(value));
             }
             goToMonth(newDate);
           };
@@ -113,25 +120,26 @@ function Calendar({
                   ))}
                 </SelectGroup>
               </SelectContent>
-
             </Select>
           );
         },
         YearsDropdown: (props) => {
-          const { components } = useDayPicker()
+          const { components } = useDayPicker();
           // sort years in descending order
-          const sortedOptions = props.options?.sort((a, b) => b.value - a.value)
-          return <components.Dropdown {...props} options={sortedOptions} />
+          const sortedOptions = props.options?.sort(
+            (a, b) => b.value - a.value,
+          );
+          return <components.Dropdown {...props} options={sortedOptions} />;
         },
         PreviousMonthButton: ({ className, ...props }) => {
-          const previousMonth = useDayPicker().previousMonth
+          const previousMonth = useDayPicker().previousMonth;
           return (
             <Button
               variant="outline"
               className={cn(
                 buttonVariants({ variant: "outline" }),
                 "absolute left-0 h-7 w-7 bg-transparent p-0 opacity-50 hover:opacity-100 ml-2",
-                className
+                className,
               )}
               type="button"
               tabIndex={previousMonth ? -1 : undefined}
@@ -143,17 +151,17 @@ function Calendar({
             >
               <ChevronLeftIcon className="h-4 w-4" />
             </Button>
-          )
+          );
         },
         NextMonthButton: ({ className, children, ...props }) => {
-          const nextMonth = useDayPicker().nextMonth
+          const nextMonth = useDayPicker().nextMonth;
           return (
             <Button
               variant="outline"
               className={cn(
                 buttonVariants({ variant: "outline" }),
                 "absolute right-0 h-7 w-7 bg-transparent p-0 opacity-50 hover:opacity-100 mr-2",
-                className
+                className,
               )}
               type="button"
               tabIndex={nextMonth ? -1 : undefined}
@@ -165,13 +173,13 @@ function Calendar({
             >
               <ChevronRightIcon className="h-4 w-4" />
             </Button>
-          )
+          );
         },
       }}
       {...props}
     />
-  )
+  );
 }
-Calendar.displayName = "Calendar"
+Calendar.displayName = "Calendar";
 
-export { Calendar }
+export { Calendar };

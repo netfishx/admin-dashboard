@@ -1,7 +1,7 @@
 "use client";
 
 import * as CheckboxPrimitive from "@radix-ui/react-checkbox";
-import * as React from "react";
+import React from "react";
 
 import { cn } from "@/lib/utils";
 import { Check, Minus } from "lucide-react";
@@ -24,7 +24,9 @@ const Checkbox = React.forwardRef<
     >
       {checked === "indeterminate" ? (
         <Minus className="h-4 w-4" />
-      ) : <Check className="h-4 w-4" />}
+      ) : (
+        <Check className="h-4 w-4" />
+      )}
     </CheckboxPrimitive.Indicator>
   </CheckboxPrimitive.Root>
 ));
