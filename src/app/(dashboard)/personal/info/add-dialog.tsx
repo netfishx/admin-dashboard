@@ -53,9 +53,9 @@ export function AddDialog(props: Dialogprops) {
             </div>
             <div className="mb-6 flex items-start gap-2 text-center">
               <div className="min-w-[80px] text-end text-muted-foreground">
-                {t("tips03")}
+                {t("notice")}
               </div>
-              <div className="text-left">{t("tips04")}</div>
+              <div className="text-left">{t("onlyAK")}</div>
             </div>
           </div>
         </div>
