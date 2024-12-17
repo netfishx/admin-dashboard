@@ -120,7 +120,7 @@ export function Form({ list }: { list: GameType[] }) {
         </div>
         <div className="float-right flex items-center gap-2 p-2">
           <Button
-            className="rounded-md border border-gray-300 bg-white px-4 py-2 text-gray-700 hover:bg-gray-100"
+            variant="outline"
             onClick={() => {
               startTransition(async () => {
                 const params = {
