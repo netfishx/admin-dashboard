@@ -174,11 +174,12 @@ async function DayChartWrapper({
       dailyPokerReport: pokerData,
     },
   } = await getTodayWinLossChart({
-    startTime: end,
+    startTime: end, // 这个接口后端要求反着传
     endTime: start,
     beforeEndTime: oneWeekAgo,
     size: 6,
   });
+
   const chartConfig = {
     bjl01: {
       color: "var(--chart-1)",

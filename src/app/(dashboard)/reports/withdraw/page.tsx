@@ -15,6 +15,7 @@ import { Actions } from "./actions";
 import { Form } from "./form";
 
 import { Time } from "@/components/time";
+import { STATUS } from "@/lib/dict";
 import type { WithdrawReport } from "@/lib/types";
 import type { PageData } from "@/lib/types";
 import { getTranslations } from "next-intl/server";
@@ -134,12 +135,8 @@ async function TableWrapper({
 
 async function TableBodyWrapper({ data }: { data?: PageData<WithdrawReport> }) {
   const t = await getTranslations("");
-  const statusMap = {
-    0: "审核中",
-    1: "提现中",
-    2: "审核拒绝",
-    3: "提现成功",
-  };
+  const translate = await getTranslations("report.withdraw");
+
   return (
     <TableBody>
       {data && data.list.length > 0 ? (
@@ -151,7 +148,10 @@ async function TableBodyWrapper({ data }: { data?: PageData<WithdrawReport> }) {
             <TableCell>{item.withdrawMoney}</TableCell>
             <TableCell>{item.withdrawFee}</TableCell>
             <TableCell>
-              {statusMap[item.status as keyof typeof statusMap]}
+              {(() => {
+                const status = STATUS.find((s) => s.value === item.status);
+                return status ? translate(status.label) : item.status;
+              })()}
             </TableCell>
             <TableCell>
               <Time time={item.applyTime} />

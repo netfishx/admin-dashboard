@@ -10,6 +10,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { NOTICE_TYPE } from "@/lib/dict";
 import type { PageData } from "@/lib/types";
 import type { AnnouncementList } from "@/lib/types";
 import { getTranslations } from "next-intl/server";
@@ -70,15 +71,7 @@ export async function TableBodyWrapper({
   data?: PageData<AnnouncementList>;
 }) {
   const translations = await getTranslations();
-  const noticeTypeMap: { [key: number]: string } = {
-    1: "平台代理公告",
-    2: "平台会员公告",
-    3: "直属代理公告",
-    4: "直属会员公告",
-    5: "系统配置公告",
-    6: "代理占成变动通知",
-    7: "代理返水变动通知",
-  };
+  const t = await getTranslations("system.announcement");
 
   return (
     <TableBody>
@@ -88,7 +81,12 @@ export async function TableBodyWrapper({
             <TableCell>
               <Time time={item.endTime} />
             </TableCell>
-            <TableCell>{noticeTypeMap[item.type]}</TableCell>
+            <TableCell>
+              {(() => {
+                const status = NOTICE_TYPE.find((s) => s.value === item.type);
+                return status ? t(status.label) : item.type;
+              })()}
+            </TableCell>
 
             <TruncatedCell
               type={item.type}

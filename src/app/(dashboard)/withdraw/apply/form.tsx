@@ -24,10 +24,6 @@ export function Form() {
   const translations = useTranslations();
   const router = useRouter();
 
-  /**
-   * 审核状态
-   */
-
   const [isReset, startReset] = useTransition();
   const [isPending, startTransition] = useTransition();
   const [dateRange] = useQueryStates({
@@ -44,6 +40,8 @@ export function Form() {
   const [approverStatus, setApproverStatus] = useQueryState("approverStatus", {
     defaultValue: "all",
   });
+
+  // 审核状态
   const approverStatusOptions = [
     ...WITHDRAW_STATUS.map((item) => ({
       ...item,
