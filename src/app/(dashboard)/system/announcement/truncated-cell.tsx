@@ -25,7 +25,7 @@ export function TruncatedCell({
     return (
       <td
         className={cn(
-          "text-sm",
+          "text-sm px-4",
           className,
           (type === 6 || type === 7) && "text-destructive",
         )}
