@@ -20,7 +20,7 @@ export function DayChart({
 }) {
   const t = useTranslations();
   return (
-    <div className="flex flex-col rounded bg-card p-4">
+    <div className="flex flex-col rounded-sm bg-card p-4">
       <div>{title}</div>
       <div className="flex items-center justify-center">
         {data.length > 0 ? (

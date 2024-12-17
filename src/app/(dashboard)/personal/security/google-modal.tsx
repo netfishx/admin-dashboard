@@ -241,7 +241,7 @@ export function GoogleModal({
                 onChange={(e) => setAuthCode(e.target.value)}
                 value={authCode}
                 placeholder={t("placeholder")}
-                className="max-w-[240px] placeholder:text-xs"
+                className="max-w-[240px]"
               />
             </div>
           </div>

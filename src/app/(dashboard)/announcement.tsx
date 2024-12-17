@@ -16,7 +16,7 @@ export function Announcement({
 
   return (
     <>
-      <div className="relative flex-1 rounded bg-background p-4">
+      <div className="relative flex-1 rounded-sm bg-background p-4">
         <div className="mb-4 flex justify-between">
           <div>{t("announcement")}</div>
           <button

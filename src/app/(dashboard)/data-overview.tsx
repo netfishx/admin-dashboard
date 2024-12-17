@@ -12,7 +12,7 @@ export function DataOverview({ data }: { data: UserBasicInfo }) {
 
   return (
     <>
-      <div className="h-48 shrink-0 rounded bg-card">
+      <div className="h-48 shrink-0 rounded-sm bg-card">
         <div className="flex items-center justify-between p-4">
           <div>{t("walletData")}</div>
           <Button
