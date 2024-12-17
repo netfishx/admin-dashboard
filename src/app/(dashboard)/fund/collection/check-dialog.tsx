@@ -33,7 +33,6 @@ export function CheckDialog(props: Dialogprops) {
   const handleNext = () => {
     startTransition(async () => {
       const res = await postCheckMoneySecret({
-        userId: item.id,
         secret: password,
       });
       if (res.code === 0) {
