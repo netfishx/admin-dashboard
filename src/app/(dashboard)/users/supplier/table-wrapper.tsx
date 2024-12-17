@@ -10,7 +10,6 @@ import { EditButton } from "./edit";
 
 export function SupplierTable({ data }: { data: Supplier[] | undefined }) {
   const translation = useTranslations();
-  const t = useTranslations("users.supplier");
   const supplierLoading = useAtomValue(supplierLoadingAtom);
   if (supplierLoading) {
     return <TbodySkeleton />;

@@ -102,12 +102,14 @@ export function AddModal({
     // debugger;
     // 基础必填验证
     if (
-      !params.type ||
-      !params.status ||
-      !params.startTime ||
-      !params.endTime ||
-      !Array.isArray(params.content) ||
-      !params.content.some((item) => item.content) // 至少一个语言有内容
+      !(
+        params.type &&
+        params.status &&
+        params.startTime &&
+        params.endTime &&
+        Array.isArray(params.content) &&
+        params.content.some((item) => item.content)
+      )
     ) {
       return { valid: false, message: t("allRequired") };
     }
@@ -162,7 +164,9 @@ export function AddModal({
 
   // 语言选择变化时更新内容
   const handleLanguageChange = (value: string) => {
-    if (!value) return;
+    if (!value) {
+      return;
+    }
     setLanguage(value);
     // 根据选择的语言，更新内容框的内容
     const currentContent = contentData.find((item) => item.language === value);
