@@ -132,7 +132,7 @@ export function CheckDialog(props: Dialogprops) {
                 >
                   <div className="flex items-center gap-4">
                     <Label className="flex min-w-[120px] shrink-0 items-center justify-end gap-1">
-                      <span className="text-gray-600">
+                      <span className="text-muted-foreground">
                         {translations("availableAmount")}
                       </span>
                     </Label>
@@ -149,8 +149,8 @@ export function CheckDialog(props: Dialogprops) {
 
                   <div className="flex items-center gap-4">
                     <Label className="flex min-w-[120px] shrink-0 items-center justify-end gap-1">
-                      <span className="text-red-500">*</span>
-                      <span className="text-gray-600">
+                      <span className="text-destructive">*</span>
+                      <span className="text-muted-foreground">
                         {t("withdrawAmount")}
                       </span>
                     </Label>
@@ -172,16 +172,20 @@ export function CheckDialog(props: Dialogprops) {
                     />
                   </div>
                   <div className="ml-[140px] space-y-1 text-sm">
-                    <div className="text-red-500">{t("notice")}:</div>
-                    <div className="pl-4 text-red-500">
+                    <div className="text-destructive">{t("notice")}:</div>
+                    <div className="pl-4 text-destructive">
                       {t("notAllowWithdraw")}
                     </div>
-                    <div className="pl-4 text-red-500">{t("stopAccept")}</div>
+                    <div className="pl-4 text-destructive">
+                      {t("stopAccept")}
+                    </div>
                   </div>
 
                   <div className="flex items-center gap-4">
                     <Label className="flex min-w-[120px] shrink-0 items-center justify-end gap-1">
-                      <span className="text-gray-600">{t("withdrawFee")}</span>
+                      <span className="text-muted-foreground">
+                        {t("withdrawFee")}
+                      </span>
                     </Label>
                     <Input
                       type="text"
@@ -196,7 +200,9 @@ export function CheckDialog(props: Dialogprops) {
 
                   <div className="flex items-center gap-4">
                     <Label className="flex min-w-[120px] shrink-0 items-center justify-end gap-1">
-                      <span className="text-gray-600">{t("withdrawWay")}</span>
+                      <span className="text-muted-foreground">
+                        {t("withdrawWay")}
+                      </span>
                     </Label>
                     <Input
                       type="text"
@@ -212,7 +218,9 @@ export function CheckDialog(props: Dialogprops) {
 
                   <div className="flex items-center gap-4">
                     <Label className="flex min-w-[120px] shrink-0 items-center justify-end gap-1">
-                      <span className="text-gray-600">{t("secret")}</span>
+                      <span className="text-muted-foreground">
+                        {t("secret")}
+                      </span>
                     </Label>
                     <Password
                       type="password"
