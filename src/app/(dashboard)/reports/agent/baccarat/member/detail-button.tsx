@@ -14,7 +14,7 @@ export default function DetailButton({
   const endTime = searchParams.get("endTime");
   function handleDetail() {
     router.push(
-      `/reports/order/baccarat?lastAgentId=${item.agentId}&page=1&size=10&startTime=${startTime}&endTime=${endTime}`,
+      `/reports/order/baccarat?lastAgentId=${item.agentId}&startTime=${startTime}&endTime=${endTime}`,
     );
   }
   return (
