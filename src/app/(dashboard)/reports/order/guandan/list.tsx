@@ -14,6 +14,7 @@ import type {
   GameRecordRequestParams,
   GameRecordRequestRecords,
 } from "@/lib/types";
+import { formatNumber } from "@/lib/utils";
 import { getSession } from "@/session";
 import { getTranslations } from "next-intl/server";
 import DetailButton from "./detail-button";
@@ -85,7 +86,9 @@ async function ListBody({ list }: { list: GameRecordRequestRecords[] }) {
             <TableCell>{item.bet}</TableCell>
             <TableCell>{item.settleCap}</TableCell>
             <TableCell>{item.upgradeMode}</TableCell>
-            <TableCell>{item.result?.[0]?.result}</TableCell>
+            <TableCell>
+              {formatNumber(Number(item.result?.[0]?.result || 0))}
+            </TableCell>
             <TableCell>{item.bombCount}</TableCell>
             <TableCell>{item.multiplierCount}</TableCell>
             <TableCell>{generateResultString(item?.result)}</TableCell>

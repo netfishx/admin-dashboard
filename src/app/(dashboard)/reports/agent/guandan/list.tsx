@@ -130,6 +130,7 @@ export async function List({
     endTime: Number(params?.endTime || 0),
   };
   const { data } = await getPokerReport(p);
+  console.log(data, "data");
 
   return (
     <div className="flex-1 bg-background p-4">

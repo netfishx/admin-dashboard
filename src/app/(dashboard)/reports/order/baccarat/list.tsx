@@ -15,6 +15,7 @@ import type {
   OrderReportsRecord,
   OrderReportsRequestParams,
 } from "@/lib/types";
+import { formatNumber } from "@/lib/utils";
 import { type SessionData, getSession } from "@/session";
 import { getTranslations } from "next-intl/server";
 import AgentId from "./agentId";
@@ -85,8 +86,10 @@ async function ListBody({
                 ]
               }
             </TableCell>
-            <TableCell>{item?.betAmount}</TableCell>
-            <TableCell>{item.winLossAmount}</TableCell>
+            <TableCell>{formatNumber(Number(item?.betAmount || 0))}</TableCell>
+            <TableCell>
+              {formatNumber(Number(item.winLossAmount || 0))}
+            </TableCell>
             <TableCell>
               <AgentId session={session as SessionData} />
             </TableCell>

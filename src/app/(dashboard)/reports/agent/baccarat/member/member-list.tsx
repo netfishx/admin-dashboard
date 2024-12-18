@@ -15,6 +15,7 @@ import type {
   MemberBetReportRequestParams,
   MemberBetReportRequestRecords,
 } from "@/lib/types";
+import { formatNumber } from "@/lib/utils";
 import { getTranslations } from "next-intl/server";
 import { Suspense } from "react";
 
@@ -65,16 +66,30 @@ async function ListBody({
                 t("all")}
             </TableCell>
             <TableCell>{item.betNum}</TableCell>
-            <TableCell>{item.memberBetAmount}</TableCell>
-            <TableCell>{item.memberProfitLossAmount}</TableCell>
-            <TableCell>{item.expectedShareAmount}</TableCell>
-            <TableCell>{item.interceptAmount}</TableCell>
-            <TableCell>{item.throwAmount}</TableCell>
-            <TableCell>{item.actualShareWinLoss}</TableCell>
-            <TableCell>{item.backIncome}</TableCell>
-            <TableCell>{item.backOutcome}</TableCell>
-            <TableCell>{item.pureBackAmount}</TableCell>
-            <TableCell>{item.totalProfitLossAmount}</TableCell>
+            <TableCell>
+              {formatNumber(Number(item.memberBetAmount || 0))}
+            </TableCell>
+            <TableCell>
+              {formatNumber(Number(item.memberProfitLossAmount || 0))}
+            </TableCell>
+            <TableCell>
+              {formatNumber(Number(item.expectedShareAmount || 0))}
+            </TableCell>
+            <TableCell>
+              {formatNumber(Number(item.interceptAmount || 0))}
+            </TableCell>
+            <TableCell>{formatNumber(Number(item.throwAmount || 0))}</TableCell>
+            <TableCell>
+              {formatNumber(Number(item.actualShareWinLoss || 0))}
+            </TableCell>
+            <TableCell>{formatNumber(Number(item.backIncome || 0))}</TableCell>
+            <TableCell>{formatNumber(Number(item.backOutcome || 0))}</TableCell>
+            <TableCell>
+              {formatNumber(Number(item.pureBackAmount || 0))}
+            </TableCell>
+            <TableCell>
+              {formatNumber(Number(item.totalProfitLossAmount || 0))}
+            </TableCell>
             <TableCell className="w-24 text-center sticky right-0 z-10 bg-background">
               <DetailButton item={item} />
             </TableCell>
