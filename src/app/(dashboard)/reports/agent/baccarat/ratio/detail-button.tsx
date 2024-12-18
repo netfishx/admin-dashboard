@@ -15,7 +15,7 @@ export default function DetailButton(props: { item: RatioReportListTypes }) {
   const ut = item?.userType === 1 ? "houseOwnerId" : "parentAgentId";
   function handleDetail() {
     router.push(
-      `/reports/agent/baccarat/ratio?${ut}=${item?.userId}&page=1&size=10&startTime=${startTime}&endTime=${endTime}`,
+      `/reports/agent/baccarat/ratio?${ut}=${item?.userId}&startTime=${startTime}&endTime=${endTime}`,
     );
   }
   return (

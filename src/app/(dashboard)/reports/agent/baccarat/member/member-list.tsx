@@ -76,7 +76,7 @@ async function ListBody({
             <TableCell>{item.pureBackAmount}</TableCell>
             <TableCell>{item.totalProfitLossAmount}</TableCell>
             <TableCell className="w-24 text-center sticky right-0 z-10 bg-background">
-              <DetailButton id={item.agentId} />
+              <DetailButton item={item} />
             </TableCell>
           </TableRow>
         ))
