@@ -182,8 +182,8 @@ export function GoogleModal({
               </div>
 
               <div className="rounded-lg bg-muted/50 p-4">
-                <div className="flex items-start gap-2">
-                  <div className="mt-1 h-4 w-4 rounded-full">
+                <div className="flex items-center gap-2">
+                  <div className="h-4 w-4 rounded-full">
                     <InfoFilled className="size-4 text-chart-4" />
                   </div>
                   <p className="text-xs text-chart-4">{t("step2Warning")}</p>
@@ -200,7 +200,7 @@ export function GoogleModal({
                     ) : null}
                   </span>
                 </div>
-                <div className="mt-4 text-center">
+                <div className="mt-4 flex items-center gap-2 text-center justify-center">
                   <span className="text-xs text-muted-foreground">
                     {t("secretLabel")}
                   </span>
@@ -210,7 +210,7 @@ export function GoogleModal({
                     className="size-4"
                     onClick={() => {
                       copyToClipboard(secret);
-                      toast.success("复制成功");
+                      toast.success(t("copySuccess"));
                     }}
                   >
                     <Copy className="size-4" />

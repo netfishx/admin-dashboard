@@ -1059,7 +1059,8 @@
       "editMoneyPasswordTitle": "修改资金密码",
       "resetSuccess": "重置成功",
       "bindSuccess": "设置成功",
-      "inputGoogleCode": "请输入谷歌验证码"
+      "inputGoogleCode": "请输入谷歌验证码",
+      "copySuccess": "复制成功"
     }
   },
   "withdraw": {
