@@ -147,17 +147,6 @@ export function AddModal({
     setEndTime(endTime);
   };
 
-  const resetFields = () => {
-    setType("");
-    setLanguage("zh-CN");
-    setContentData([]);
-    setContentOfLanguage("");
-    setTitleOfLanguage("");
-    setStatus("1");
-    setStartTime(0);
-    setEndTime(0);
-  };
-
   // 语言选择变化时更新内容
   const handleLanguageChange = (value: string) => {
     if (!value) {
@@ -230,19 +219,16 @@ export function AddModal({
   };
 
   useEffect(() => {
-    if (!open) {
-      resetFields();
-    } else if (open && data?.id) {
-      setContentData(data.contentList || []);
-      setContentOfLanguage(data.contentOfLanguage || "");
-      setTitleOfLanguage(data.labelOfLanguage || "");
-      setType(data.type.toString() || "");
-      setLanguage("zh-CN");
-      setStatus(data.status.toString() || "1");
-      setStartTime(data.startTime || 0);
-      setEndTime(data.endTime || 0);
-    }
-  }, [open]);
+    open;
+    setContentData(data?.contentList || []);
+    setContentOfLanguage(data?.contentOfLanguage || "");
+    setTitleOfLanguage(data?.labelOfLanguage || "");
+    setType(data?.type.toString() || "");
+    setLanguage("zh-CN");
+    setStatus(data?.status.toString() || "1");
+    setStartTime(data?.startTime || 0);
+    setEndTime(data?.endTime || 0);
+  }, [open, data]);
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
