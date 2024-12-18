@@ -1250,8 +1250,8 @@ export async function addBackgroundImage(data: {
   id?: string;
   pictureUri: string;
   pictureName: string;
-  port: number;
-  position: number;
+  port: string;
+  position: string;
   language: string;
   status: number;
   sort: number;
@@ -1523,10 +1523,18 @@ export async function uploadImage(data: FormData) {
     headers: {
       "Content-Type": "multipart/form-data",
       Authorization: `Bearer ${user?.token}`,
+      "Accept-Language": "zh-CN",
     },
     maxBodyLength: 10 * 1024 * 1024,
   });
-  return res.data;
+  console.group("uploadImage");
+  console.dir(res.data, { depth: null });
+  console.groupEnd();
+  return res.data as {
+    code: number;
+    data: string;
+    message: string;
+  };
 }
 
 export async function getDownloadList(params: {

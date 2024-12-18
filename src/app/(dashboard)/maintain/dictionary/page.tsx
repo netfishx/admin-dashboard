@@ -110,7 +110,7 @@ async function TableBodyWrapper({ list }: { list: DictionaryList[] }) {
             <TableCell>{item.dictCode}</TableCell>
             <TableCell>{item.dictName}</TableCell>
             <TableCell>{item.remark}</TableCell>
-            <TableCell>
+            <TableCell className="text-center">
               <Actions data={item} />
             </TableCell>
           </TableRow>
