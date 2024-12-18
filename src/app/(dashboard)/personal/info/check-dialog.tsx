@@ -25,7 +25,7 @@ import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Form from "next/form";
 import { useRouter } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import { type FormEvent, useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 
 interface Dialogprops {
@@ -105,7 +105,7 @@ export function CheckDialog(props: Dialogprops) {
     setWithDrawFee(_fee.toString());
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (ref.current) {
       const f = new FormData(e.currentTarget);

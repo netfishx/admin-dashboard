@@ -178,6 +178,7 @@ export function ChartTooltipContent({
     labelKey,
   ]);
 
+  // biome-ignore lint/style/useExplicitLengthCheck: <explanation>
   if (!(active && payload?.length)) {
     return null;
   }

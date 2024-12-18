@@ -53,7 +53,7 @@
     "lz-string": "^1.5.0",
     "motion": "12.0.0-alpha.2",
     "nanoid": "^5.0.9",
-    "next": "^15.1.1-canary.6",
+    "next": "^15.1.1-canary.11",
     "next-intl": "^3.26.1",
     "next-themes": "^0.4.4",
     "next-view-transitions": "^0.3.4",
@@ -79,7 +79,7 @@
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
     "@playwright/test": "^1.49.1",
-    "@tailwindcss/postcss": "^4.0.0-beta.7",
+    "@tailwindcss/postcss": "^4.0.0-beta.8",
     "@tailwindcss/typography": "^0.5.15",
     "@types/big.js": "^6.2.2",
     "@types/node": "^22.10.2",
@@ -88,19 +88,19 @@
     "babel-plugin-react-compiler": "^19.0.0-beta-201e55d-20241215",
     "pino-pretty": "^13.0.0",
     "postcss": "^8",
-    "tailwindcss": "^4.0.0-beta.7",
+    "tailwindcss": "^4.0.0-beta.8",
     "typescript": "^5"
   },
   "overrides": {
-    "next": "15.1.1-canary.6",
+    "next": "15.1.1-canary.11",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-is": "^19.0.0",
-    "tailwindcss": "4.0.0-beta.7"
+    "tailwindcss": "4.0.0-beta.8"
   },
   "trustedDependencies": ["@biomejs/biome", "sharp"],
   "patchedDependencies": {
     "jotai@2.10.4": "patches/jotai@2.10.4.patch",
-    "next@15.1.1-canary.6": "patches/next@15.1.1-canary.6.patch"
+    "next@15.1.1-canary.11": "patches/next@15.1.1-canary.11.patch"
   }
 }
