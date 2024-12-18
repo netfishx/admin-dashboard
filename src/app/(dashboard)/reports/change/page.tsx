@@ -11,9 +11,9 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { CHANGE_TYPE } from "@/lib/dict";
-import type { WalletLogRequestParams } from "@/lib/types";
-import type { PageData } from "@/lib/types";
 import type { WalletLogRecords } from "@/lib/types";
+import type { PageData } from "@/lib/types";
+import type { WalletLogRequestParams } from "@/lib/types";
 import { getTranslations } from "next-intl/server";
 import { Suspense } from "react";
 import { Form } from "./form";
@@ -35,10 +35,10 @@ export default async function Page({
       >
         <Form key={`${startTime}-${endTime}`} />
       </Suspense>
-      <div className="flex flex-1 flex-col gap-2 bg-background">
+      <div className="flex flex-1 flex-col gap-2 bg-background p-4">
         <Suspense
           fallback={
-            <Table>
+            <Table className="table-fixed">
               <TableHeaderWrapper />
               <TableBodySkeleton />
             </Table>
@@ -71,8 +71,8 @@ async function TableHeaderWrapper() {
   return (
     <TableHeader>
       <TableRow className="bg-muted">
-        <TableHead className="w-24">{t("userId")}</TableHead>
-        <TableHead className="w-24">{t("transactionId")}</TableHead>
+        <TableHead className="w-32">{t("userId")}</TableHead>
+        <TableHead className="w-32">{t("transactionId")}</TableHead>
         <TableHead className="w-32">{t("createdTime")}</TableHead>
         <TableHead className="w-24">{t("oldBalance")}</TableHead>
         <TableHead className="w-24">{t("transactionAmount")}</TableHead>
@@ -99,7 +99,7 @@ async function TableWrapper({
 
   if (!((startTime && endTime) || transactionID)) {
     return (
-      <Table className="rounded-sm border">
+      <Table className="rounded-sm border table-fixed">
         <TableHeaderWrapper />
         <TableBodySkeleton />
       </Table>
@@ -121,7 +121,7 @@ async function TableWrapper({
 
   const { data } = await getWalletLog(params);
   return (
-    <div className="bg-background flex-1 w-full p-4">
+    <div className="bg-background flex-1 w-full">
       <div className="relative overflow-y-auto overflow-x-auto border rounded-sm">
         <Table className="table-fixed">
           <TableHeaderWrapper />

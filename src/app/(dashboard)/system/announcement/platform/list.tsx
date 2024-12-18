@@ -24,7 +24,7 @@ export async function List({
   const { startTime, endTime, userId, pageNum, pageSize } = await searchParams;
   if (!(startTime && endTime)) {
     return (
-      <Table className="rounded-sm border">
+      <Table className="rounded-sm border table-fixed">
         <TableHeaderWrapper />
         <TableBodySkeleton />
       </Table>
@@ -41,7 +41,7 @@ export async function List({
   return (
     <div>
       <div className="rounded-sm border">
-        <Table>
+        <Table className="table-fixed">
           <TableHeaderWrapper />
           <TableBodyWrapper data={data} />
         </Table>

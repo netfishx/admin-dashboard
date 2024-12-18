@@ -33,7 +33,7 @@ export async function List({
   return (
     <div>
       <div className="rounded-sm border">
-        <Table>
+        <Table className="table-fixed">
           <TableHeaderWrapper />
           <Suspense fallback={<TableBodySkeleton />}>
             <TableBodyWrapper data={data} />

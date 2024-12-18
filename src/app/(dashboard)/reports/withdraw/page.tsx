@@ -87,6 +87,7 @@ async function TableWrapper({
     userId,
     userType,
   } = await searchParams;
+
   const params: WithdrawReportParams = {
     orderNo: orderNo || null,
     operatorSymbol: operatorSymbol ? Number(operatorSymbol) : 3, // 默认大于
@@ -97,12 +98,12 @@ async function TableWrapper({
     startTime: Number(startTime),
     endTime: Number(endTime),
     userId: userId || null,
-    userType: userType ? Number(userType) : null,
+    userType: userType ? Number(userType) : 0,
   };
 
   if (!((startTime && endTime) || orderNo)) {
     return (
-      <Table className="rounded-sm border">
+      <Table className="rounded-sm border table-fixed">
         <TableHeaderWrapper />
         <TableBodySkeleton />
       </Table>

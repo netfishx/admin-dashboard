@@ -49,10 +49,10 @@ export function Form({ list }: { list: GameType[] }) {
   }));
 
   function search() {
-    if (dateRange.startTime && dateRange.endTime) {
+    if ((dateRange.startTime && dateRange.endTime) || issueNumber) {
       startSearch(router.refresh);
     } else {
-      toast.error(t("selectDateRange"));
+      toast.error(t("selectIssueOrDateRange"));
     }
   }
 
