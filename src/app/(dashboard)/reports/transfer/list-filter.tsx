@@ -10,7 +10,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import {} from "date-fns";
+
 import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
@@ -58,7 +58,6 @@ export function ListFilter({
 
   return (
     <div className="flex flex-col gap-2 bg-background p-4">
-      {/* First row */}
       <div className="flex items-center gap-4">
         <div className="flex items-center gap-2">
           <Label>{t("dateRange")}</Label>
@@ -66,7 +65,6 @@ export function ListFilter({
         </div>
       </div>
 
-      {/* Last row */}
       <div className="flex items-center gap-4">
         <div className="flex items-center gap-4">
           <Label className="shrink-0">{t("orderNumber")}</Label>
@@ -112,7 +110,6 @@ export function ListFilter({
           </div>
         )}
       </div>
-      {/* Last row */}
       <div className="flex items-center justify-end gap-4">
         <div className="flex items-center gap-2">
           <Button
@@ -125,7 +122,6 @@ export function ListFilter({
             {isPending && <Loader2 className="h-4 w-4 animate-spin" />}
             {t("search")}
           </Button>
-          {/* <Button disabled={isPending}>{t("download")}</Button> */}
         </div>
       </div>
     </div>
