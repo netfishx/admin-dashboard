@@ -48,7 +48,7 @@ export default async function Page({
       <div className="flex flex-1 flex-col gap-2 bg-background p-4">
         <Suspense
           fallback={
-            <Table className="rounded-sm border">
+            <Table className="rounded-sm border table-fixed">
               <TableHeaderWrapper />
               <TableBodySkeleton />
             </Table>
@@ -72,7 +72,7 @@ async function TableWrapper({
 
   if (!(startTime && endTime)) {
     return (
-      <Table className="rounded-sm border">
+      <Table className="rounded-sm border table-fixed">
         <TableHeaderWrapper />
         <TableBodySkeleton />
       </Table>
@@ -87,9 +87,8 @@ async function TableWrapper({
     pageSize: Number(pageSize ?? 10),
   });
 
-  console.info("apply list:", data);
   return (
-    <div className="bg-background flex-1 w-full ">
+    <div className="bg-background flex-1 w-full">
       <div className="relative overflow-y-auto overflow-x-auto border rounded-sm">
         <Table className="table-fixed">
           <TableHeaderWrapper />
@@ -186,6 +185,7 @@ async function TableBodyWrapper({ list }: { list: ApplyData[] }) {
                   );
                   return status ? t(status.label) : item.approverStatus;
                 })()}
+                {item.approverStatus === null && <span>--</span>}
               </div>
             </TableCell>
             <TableCell className="text-center">
@@ -202,6 +202,7 @@ async function TableBodyWrapper({ list }: { list: ApplyData[] }) {
                   );
                   return status ? t(status.label) : item.withdrawMode;
                 })()}
+                {item.withdrawMode === null && <span>--</span>}
               </div>
             </TableCell>
             <TableCell className="text-center">
@@ -220,6 +221,7 @@ async function TableBodyWrapper({ list }: { list: ApplyData[] }) {
                   );
                   return status ? t(status.label) : item.moneyStatus;
                 })()}
+                {item.moneyStatus === null && <span>--</span>}
               </div>
             </TableCell>
             <TableCell className="text-center sticky right-0 bg-background">

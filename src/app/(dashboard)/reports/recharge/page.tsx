@@ -40,7 +40,7 @@ export default async function Page({
       <div className="flex flex-1 flex-col gap-2 bg-background p-4">
         <Suspense
           fallback={
-            <Table>
+            <Table className="table-fixed">
               <TableHeaderWrapper />
               <TableBodySkeleton />
             </Table>
@@ -86,7 +86,7 @@ async function TableWrapper({
 
   if (!((startTime && endTime) || orderNo)) {
     return (
-      <Table className="rounded-sm border">
+      <Table className="rounded-sm border table-fixed">
         <TableHeaderWrapper />
         <TableBodySkeleton />
       </Table>
@@ -97,7 +97,7 @@ async function TableWrapper({
     orderNo: orderNo || null,
     operatorSymbol: operatorSymbol ? Number(operatorSymbol) : 3, // 默认大于
     rechargeMoney: rechargeMoney ? Number(rechargeMoney) : 0,
-    userType: userType ? Number(userType) : undefined,
+    userType: userType ? Number(userType) : 0, // 默认代理
     pageNum: Number(pageNum ?? 1),
     pageSize: Number(pageSize ?? 10),
     startTime: Number(startTime),

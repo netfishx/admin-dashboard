@@ -74,7 +74,7 @@ export function List() {
       </div>
       <div className="flex h-full flex-col gap-2 bg-background p-4">
         <div className="rounded-sm border">
-          <Table>
+          <Table className="table-fixed">
             <TableHeaderWrapper />
             <Suspense fallback={<TableBodySkeleton />}>
               <TableBody>
