@@ -28,7 +28,9 @@ export async function ListHeader() {
         <TableHead className="w-60">{t("senderAgentId")}</TableHead>
         <TableHead className="w-60">{t("recipientAgentId")}</TableHead>
         <TableHead className="w-60">{t("amount")}</TableHead>
-        <TableHead className="w-60">{t("type")}</TableHead>
+        {hasTransferTypePermission && (
+          <TableHead className="w-40">{t("type")}</TableHead>
+        )}
         <TableHead className="w-[240px]">{t("applyTime")}</TableHead>
       </TableRow>
     </TableHeader>
