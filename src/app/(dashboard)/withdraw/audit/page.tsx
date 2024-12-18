@@ -40,7 +40,7 @@ export default async function Page({
       <div className="flex-1 bg-background p-4">
         <Suspense
           fallback={
-            <Table>
+            <Table className="table-fixed">
               <TableHeaderWrapper />
               <TableBodySkeleton />
             </Table>
@@ -62,7 +62,7 @@ async function TableWrapper({
     await searchParams;
   if (!(startTime && endTime)) {
     return (
-      <Table className="rounded-sm border">
+      <Table className="rounded-sm border table-fixed">
         <TableHeaderWrapper />
         <TableBodySkeleton />
       </Table>

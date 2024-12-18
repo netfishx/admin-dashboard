@@ -99,12 +99,10 @@ export function AddModal({
 
   // 验证参数 已确认： 有其中一个语言的完整内容即可 新增的时候id可以为空，编辑的时候id和content（会员公告的话还需要有label）必须同时存在，
   function validateParams(params: Announcement) {
-    // debugger;
     // 基础必填验证
     if (
       !(
         params.type &&
-        params.status &&
         params.startTime &&
         params.endTime &&
         Array.isArray(params.content) &&
@@ -120,26 +118,24 @@ export function AddModal({
     ) {
       return { valid: false, message: t("timeError") };
     }
-
+    // 如果是会员公告类型
+    if (params.type === 2 || params.type === 4) {
+      // label和content必须同时存在或都不存在
+      if (
+        params.content.some(
+          (item) =>
+            (!item.label && item.content) || (item.label && !item.content),
+        )
+      ) {
+        return { valid: false, message: t("allRequired") };
+      }
+    }
     // 编辑状态验证
     if (params.id) {
       const contentWithId = params.content.filter((item) => item.id);
       // 有id的内容项中至少有一个content不为空
       if (!contentWithId.some((item) => item.content)) {
         return { valid: false, message: t("allRequired") };
-      }
-
-      // 如果是会员公告类型
-      if (params.type === 2 || params.type === 4) {
-        // label和content必须同时存在或都不存在
-        if (
-          params.content.some(
-            (item) =>
-              (!item.label && item.content) || (item.label && !item.content),
-          )
-        ) {
-          return { valid: false, message: t("allRequired") };
-        }
       }
     }
 
@@ -149,17 +145,6 @@ export function AddModal({
   const handleDateRangeChange = (startTime: number, endTime: number) => {
     setStartTime(startTime);
     setEndTime(endTime);
-  };
-
-  const resetFields = () => {
-    setType("");
-    setLanguage("zh-CN");
-    setContentData([]);
-    setContentOfLanguage("");
-    setTitleOfLanguage("");
-    setStatus("1");
-    setStartTime(0);
-    setEndTime(0);
   };
 
   // 语言选择变化时更新内容
@@ -234,19 +219,16 @@ export function AddModal({
   };
 
   useEffect(() => {
-    if (!open) {
-      resetFields();
-    } else if (open && data?.id) {
-      setContentData(data.contentList || []);
-      setContentOfLanguage(data.contentOfLanguage || "");
-      setTitleOfLanguage(data.labelOfLanguage || "");
-      setType(data.type.toString() || "");
-      setLanguage("zh-CN");
-      setStatus(data.status.toString() || "1");
-      setStartTime(data.startTime || 0);
-      setEndTime(data.endTime || 0);
-    }
-  }, [open]);
+    open;
+    setContentData(data?.contentList || []);
+    setContentOfLanguage(data?.contentOfLanguage || "");
+    setTitleOfLanguage(data?.labelOfLanguage || "");
+    setType(data?.type.toString() || "");
+    setLanguage("zh-CN");
+    setStatus(data?.status.toString() || "1");
+    setStartTime(data?.startTime || 0);
+    setEndTime(data?.endTime || 0);
+  }, [open, data]);
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>

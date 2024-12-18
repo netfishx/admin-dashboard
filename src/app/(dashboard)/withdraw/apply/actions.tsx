@@ -73,20 +73,23 @@ function ActionButtons({
     const isCurrentAuditor = currentUserId === approverId;
     return (
       <div className="flex justify-center">
-        <PassButton data={data} isCurrentAuditor={isCurrentAuditor} />
-        <RejectButton data={data} isCurrentAuditor={isCurrentAuditor} />
-        {/* todo 跳转主单列表 先展示弹窗 */}
-        <Button
-          variant="ghost"
-          size="sm"
-          className="px-2 text-sm text-primary hover:text-primary/80"
-          onClick={() => {
-            setFlowData(data);
-            setOpen(true);
-          }}
-        >
-          {t("flow")}
-        </Button>
+        {isCurrentAuditor && (
+          <>
+            <PassButton data={data} />
+            <RejectButton data={data} />
+            <Button
+              variant="ghost"
+              size="sm"
+              className="px-2 text-sm text-primary hover:text-primary/80"
+              onClick={() => {
+                setFlowData(data);
+                setOpen(true);
+              }}
+            >
+              {t("flow")}
+            </Button>
+          </>
+        )}
       </div>
     );
   }
@@ -108,13 +111,6 @@ function ActionButtons({
       </div>
     );
   }
-
-  // 其他所有状态 - 显示无操作
-  return (
-    <div className="flex justify-center">
-      <span>--</span>
-    </div>
-  );
 }
 // 锁定
 function LockButton({ data }: { data: ApplyData }) {
@@ -169,10 +165,8 @@ function LockButton({ data }: { data: ApplyData }) {
 // 通过
 function PassButton({
   data,
-  isCurrentAuditor,
 }: {
   data: ApplyData;
-  isCurrentAuditor: boolean;
 }) {
   const t = useTranslations("withdraw.apply");
   const translations = useTranslations();
@@ -183,7 +177,7 @@ function PassButton({
     <AlertDialog>
       <AlertDialogTrigger asChild>
         <Button
-          disabled={isPending || !isCurrentAuditor}
+          disabled={isPending}
           variant="ghost"
           size="sm"
           className="px-2 text-sm text-primary hover:text-primary/80"
@@ -249,10 +243,8 @@ function PassButton({
 // 拒绝
 function RejectButton({
   data,
-  isCurrentAuditor,
 }: {
   data: ApplyData;
-  isCurrentAuditor: boolean;
 }) {
   const t = useTranslations("withdraw.apply");
   const translations = useTranslations();
@@ -262,7 +254,7 @@ function RejectButton({
     <AlertDialog>
       <AlertDialogTrigger asChild>
         <Button
-          disabled={isPending || !isCurrentAuditor}
+          disabled={isPending}
           variant="ghost"
           size="sm"
           className="px-2 text-sm text-primary hover:text-primary/80"

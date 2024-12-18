@@ -35,7 +35,7 @@ export function Form() {
   });
 
   const [userType, setUserType] = useQueryState("userType", {
-    defaultValue: "all",
+    defaultValue: "0",
   });
   const [rechargeMoney, setRechargeMoney] = useQueryState("rechargeMoney", {
     defaultValue: "0",
@@ -105,14 +105,13 @@ export function Form() {
         <div className="flex items-center gap-2">
           <Label className="shrink-0">{t("userType")}</Label>
           <Select
-            value={userType ?? ""}
+            value={userType}
             onValueChange={(value) => setUserType(value)}
           >
             <SelectTrigger className="w-28">
               <SelectValue placeholder={t("placeholderselect")} />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="all">{t("all")}</SelectItem>
               {USER_TYPE.map((item) => (
                 <SelectItem key={item.value} value={item.value.toString()}>
                   {t(item.label)}

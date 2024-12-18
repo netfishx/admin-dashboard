@@ -52,7 +52,7 @@ export function FlowDialog({
         }
       });
     }
-  }, [open]);
+  }, [open, orderParmas]);
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>

@@ -1,7 +1,6 @@
 import { getSession } from "@/session";
 import { type ReactNode, Suspense } from "react";
 import { AddModal } from "./add-modal";
-import { ContentModal } from "./content-modal";
 
 import TabsItem from "./tabs-item";
 
@@ -16,7 +15,6 @@ export default async function DashboardLayout({
         <TabsItem session={getSession()} />
       </Suspense>
       <Suspense>{children}</Suspense>
-      <ContentModal />
       <AddModal session={getSession()} />
     </div>
   );

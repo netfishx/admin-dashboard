@@ -81,6 +81,7 @@ export function Calendar({
       components={{
         Dropdown: (props) => {
           const { options, className, disabled } = props;
+          // biome-ignore lint/correctness/useHookAtTopLevel: <explanation>
           const { goToMonth, months } = useDayPicker();
           const currentShown = months[0].date;
 
@@ -124,6 +125,7 @@ export function Calendar({
           );
         },
         YearsDropdown: (props) => {
+          // biome-ignore lint/correctness/useHookAtTopLevel: <explanation>
           const { components } = useDayPicker();
           // sort years in descending order
           const sortedOptions = props.options?.sort(
@@ -132,6 +134,7 @@ export function Calendar({
           return <components.Dropdown {...props} options={sortedOptions} />;
         },
         PreviousMonthButton: ({ className, ...props }) => {
+          // biome-ignore lint/correctness/useHookAtTopLevel: <explanation>
           const previousMonth = useDayPicker().previousMonth;
           return (
             <Button
@@ -154,6 +157,7 @@ export function Calendar({
           );
         },
         NextMonthButton: ({ className, children, ...props }) => {
+          // biome-ignore lint/correctness/useHookAtTopLevel: <explanation>
           const nextMonth = useDayPicker().nextMonth;
           return (
             <Button

@@ -503,7 +503,7 @@
       "more": "查看",
       "pickdate": "请选择日期",
       "all": "全部",
-      "selectDateRange": "请选择日期范围"
+      "selectIssueOrDateRange": "请选择期号或日期范围"
     },
     "agent": {
       "title": "占成拦货列表",
@@ -893,6 +893,7 @@
       "edit": "编辑",
       "info": "子账号信息",
       "delete": "删除",
+      "description": "确定删除该子账号吗？",
       "role": "角色",
       "createTime": "新增日期",
       "status": "状态",
@@ -1058,7 +1059,8 @@
       "editMoneyPasswordTitle": "修改资金密码",
       "resetSuccess": "重置成功",
       "bindSuccess": "设置成功",
-      "inputGoogleCode": "请输入谷歌验证码"
+      "inputGoogleCode": "请输入谷歌验证码",
+      "copySuccess": "复制成功"
     }
   },
   "withdraw": {
@@ -1096,7 +1098,7 @@
       "withdrawFee": "手续费：",
       "withdrawWay": "用户收款方式：",
       "withdrawStatus": "预估实际到账：",
-      "withdrawModeNew": "用户收款方式：",
+      "withdrawModeNew": "用户收款地址：",
       "withdrawAmount": "资金信息",
       "action": "操作",
       "lockDesc": "确定锁定该申请单吗？",
