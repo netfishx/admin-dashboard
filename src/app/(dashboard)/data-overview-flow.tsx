@@ -1,7 +1,7 @@
 "use client";
 import type { TodayFundList } from "@/lib/types";
-import { formatNumber } from "@/lib/utils";
 import { useTranslations } from "next-intl";
+import TruncatedAmount from "./truncated-amount";
 
 export function DataOverviewFlow({ data }: { data: TodayFundList }) {
   const t = useTranslations();
@@ -14,31 +14,31 @@ export function DataOverviewFlow({ data }: { data: TodayFundList }) {
           <p className="mb-1 text-xs text-muted-foreground">
             {t("chargeAmount")}
           </p>
-          <p className="text-xs font-semibold">
-            {formatNumber(data?.rechargeAmount ?? 0)}
-          </p>
+          <div className="text-xs font-semibold">
+            <TruncatedAmount amount={data?.rechargeAmount ?? 0} />
+          </div>
         </div>
         <div className="flex flex-col items-center justify-center p-2">
           <p className="mb-1 text-xs text-muted-foreground">
             {t("withdrawAmount")}
           </p>
-          <p className="text-xs font-semibold">
-            {formatNumber(data?.withdrawAmount ?? 0)}
-          </p>
+          <div className="text-xs font-semibold">
+            <TruncatedAmount amount={data?.withdrawAmount ?? 0} />
+          </div>
         </div>
         <div className="flex flex-col items-center justify-center p-2">
           <p className="mb-1 text-xs text-muted-foreground">
             {t("creditAmount")}
           </p>
-          <p className="text-xs font-semibold">
-            {formatNumber(data?.creditAmount ?? 0)}
-          </p>
+          <div className="text-xs font-semibold">
+            <TruncatedAmount amount={data?.creditAmount ?? 0} />
+          </div>
         </div>
         <div className="flex flex-col items-center justify-center p-2">
           <p className="mb-1 text-xs text-muted-foreground">{t("lentMoney")}</p>
-          <p className="text-xs font-semibold">
-            {formatNumber(data?.lendAmount ?? 0)}
-          </p>
+          <div className="text-xs font-semibold">
+            <TruncatedAmount amount={data?.lendAmount ?? 0} />
+          </div>
         </div>
       </div>
     </div>
