@@ -14,12 +14,13 @@ import type {
   TransferRecordRequestParams,
   TransferRecordRequestRecords,
 } from "@/lib/types";
+import { hasPermission } from "@/session";
 import { getTranslations } from "next-intl/server";
 import { Suspense } from "react";
 
 export async function ListHeader() {
-  "use cache";
   const t = await getTranslations("report.transfer");
+  const hasTransferTypePermission = await hasPermission("transfer_type");
   return (
     <TableHeader>
       <TableRow className="bg-muted">
@@ -27,7 +28,9 @@ export async function ListHeader() {
         <TableHead className="w-40">{t("senderAgentId")}</TableHead>
         <TableHead className="w-40">{t("recipientAgentId")}</TableHead>
         <TableHead className="w-40">{t("amount")}</TableHead>
-        <TableHead className="w-40">{t("type")}</TableHead>
+        {hasTransferTypePermission && (
+          <TableHead className="w-40">{t("type")}</TableHead>
+        )}
         <TableHead className="w-40">{t("applyTime")}</TableHead>
       </TableRow>
     </TableHeader>
@@ -37,6 +40,7 @@ export async function ListHeader() {
 async function ListBody({ list }: { list: TransferRecordRequestRecords[] }) {
   const translate = await getTranslations();
   const t = await getTranslations("report.transfer");
+  const hasTransferTypePermission = await hasPermission("transfer_type");
   return (
     <TableBody>
       {list?.length > 0 ? (
@@ -46,9 +50,11 @@ async function ListBody({ list }: { list: TransferRecordRequestRecords[] }) {
             <TableCell>{item.senderAgentId}</TableCell>
             <TableCell>{item.recipientAgentId}</TableCell>
             <TableCell>{item.amount}</TableCell>
-            <TableCell>
-              {item.operateCode === -1 ? t("transferOut") : t("transferIn")}
-            </TableCell>
+            {hasTransferTypePermission && (
+              <TableCell>
+                {item.operateCode === -1 ? t("transferOut") : t("transferIn")}
+              </TableCell>
+            )}
             <TableCell>
               <Time time={item.createTime} />
             </TableCell>

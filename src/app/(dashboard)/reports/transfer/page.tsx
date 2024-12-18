@@ -2,16 +2,17 @@ import TableSkeleton from "@/components/table-skeleton";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Table } from "@/components/ui/table";
 import type { TransferRecordRequestParams } from "@/lib/types";
+import { hasPermission } from "@/session";
 import { Suspense } from "react";
 import { List, ListHeader } from "./list";
 import { ListFilter } from "./list-filter";
 
-interface CommonWrapperProps {
+export default async function Page({
+  searchParams,
+}: {
   searchParams: Promise<TransferRecordRequestParams>;
-}
-
-export default async function Page({ searchParams }: CommonWrapperProps) {
-  const { startTime, endTime } = await searchParams;
+}) {
+  const hasTransferTypePermission = await hasPermission("transfer_type");
   return (
     <div className="flex w-full flex-col gap-2">
       <Suspense
@@ -21,13 +22,16 @@ export default async function Page({ searchParams }: CommonWrapperProps) {
           </div>
         }
       >
-        <ListFilter key={`${startTime}-${endTime}`} />
+        <ListFilter hasTransferTypePermission={hasTransferTypePermission} />
       </Suspense>
       <Suspense
         fallback={
           <Table>
             <ListHeader />
-            <TableSkeleton length={5} colSpan={6} />
+            <TableSkeleton
+              length={5}
+              colSpan={hasTransferTypePermission ? 6 : 5}
+            />
           </Table>
         }
       >

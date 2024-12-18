@@ -18,7 +18,11 @@ import { parseAsInteger, useQueryState, useQueryStates } from "nuqs";
 import { useTransition } from "react";
 import { toast } from "sonner";
 
-export function ListFilter() {
+export function ListFilter({
+  hasTransferTypePermission,
+}: {
+  hasTransferTypePermission: boolean;
+}) {
   const t = useTranslations("report.transfer");
   const router = useRouter();
   const [dateRange] = useQueryStates({
@@ -88,23 +92,25 @@ export function ListFilter() {
             placeholder={t("placeholderinput")}
           />
         </div>
-        <div className="flex items-center gap-4">
-          <Label className="shrink-0">{t("type")}</Label>
-          <Select
-            value={typeId ?? ""}
-            onValueChange={(value) => setTypeId(value)}
-            defaultValue="all"
-          >
-            <SelectTrigger className="w-28">
-              <SelectValue placeholder={t("placeholderselect")} />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">{t("all")}</SelectItem>
-              <SelectItem value="-1">{t("transferOut")}</SelectItem>
-              <SelectItem value="1">{t("transferIn")}</SelectItem>
-            </SelectContent>
-          </Select>
-        </div>
+        {hasTransferTypePermission && (
+          <div className="flex items-center gap-4">
+            <Label className="shrink-0">{t("type")}</Label>
+            <Select
+              value={typeId ?? ""}
+              onValueChange={(value) => setTypeId(value)}
+              defaultValue="all"
+            >
+              <SelectTrigger className="w-28">
+                <SelectValue placeholder={t("placeholderselect")} />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">{t("all")}</SelectItem>
+                <SelectItem value="-1">{t("transferOut")}</SelectItem>
+                <SelectItem value="1">{t("transferIn")}</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+        )}
       </div>
       {/* Last row */}
       <div className="flex items-center justify-end gap-4">
