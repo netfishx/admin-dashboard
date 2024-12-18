@@ -23,12 +23,12 @@ export async function ListHeader() {
   return (
     <TableHeader>
       <TableRow className="bg-muted">
-        <TableHead className="w-40">{t("orderNumber")}</TableHead>
-        <TableHead className="w-40">{t("senderAgentId")}</TableHead>
-        <TableHead className="w-40">{t("recipientAgentId")}</TableHead>
-        <TableHead className="w-40">{t("amount")}</TableHead>
-        <TableHead className="w-40">{t("type")}</TableHead>
-        <TableHead className="w-40">{t("applyTime")}</TableHead>
+        <TableHead className="w-60">{t("orderNumber")}</TableHead>
+        <TableHead className="w-60">{t("senderAgentId")}</TableHead>
+        <TableHead className="w-60">{t("recipientAgentId")}</TableHead>
+        <TableHead className="w-60">{t("amount")}</TableHead>
+        <TableHead className="w-60">{t("type")}</TableHead>
+        <TableHead className="w-[240px]">{t("applyTime")}</TableHead>
       </TableRow>
     </TableHeader>
   );
@@ -95,20 +95,22 @@ export async function List({
   return (
     <div className="flex-1 bg-background p-4">
       <div className="relative rounded-sm border">
-        <Table>
+        <Table className="table-fixed">
           <ListHeader />
           <Suspense fallback={<TableSkeleton length={5} colSpan={6} />}>
             <ListBody list={data?.list ?? []} />
           </Suspense>
         </Table>
       </div>
-      <div className="pt-2">
-        <CustomPagination
-          total={data?.total ?? 0}
-          currentPage={data?.pageNum ?? 1}
-          pageSize={data?.pageSize ?? 10}
-        />
-      </div>
+      {data?.total && data?.total > 0 && (
+        <div className="pt-2">
+          <CustomPagination
+            total={data?.total ?? 0}
+            currentPage={data?.pageNum ?? 1}
+            pageSize={data?.pageSize ?? 10}
+          />
+        </div>
+      )}
     </div>
   );
 }

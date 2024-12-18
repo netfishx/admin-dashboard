@@ -24,13 +24,13 @@ export async function ListHeader() {
   return (
     <TableHeader>
       <TableRow className="bg-muted">
-        <TableHead className="w-40">{t("supplierId")}</TableHead>
-        <TableHead className="w-40">{t("supplierName")}</TableHead>
-        <TableHead className="w-40">{t("date")}</TableHead>
-        <TableHead className="w-40">{t("game")}</TableHead>
-        <TableHead className="w-40">{t("betNum")}</TableHead>
-        <TableHead className="w-40">{t("validAmount")}</TableHead>
-        <TableHead className="w-40">{t("proportionAmount")}</TableHead>
+        <TableHead className="w-60">{t("supplierId")}</TableHead>
+        <TableHead className="w-60">{t("supplierName")}</TableHead>
+        <TableHead className="w-60">{t("date")}</TableHead>
+        <TableHead className="w-60">{t("game")}</TableHead>
+        <TableHead className="w-60">{t("betNum")}</TableHead>
+        <TableHead className="w-60">{t("validAmount")}</TableHead>
+        <TableHead className="w-60">{t("proportionAmount")}</TableHead>
       </TableRow>
     </TableHeader>
   );
@@ -135,13 +135,15 @@ export async function List({
           <ListBody list={data?.list || []} gameList={gameList || []} />
         </Table>
       </div>
-      <div className="pt-2">
-        <CustomPagination
-          total={data?.total || 0}
-          currentPage={data?.pageNum || 1}
-          pageSize={data?.pageSize || 10}
-        />
-      </div>
+      {data?.total && data?.total > 0 && (
+        <div className="pt-2">
+          <CustomPagination
+            total={data?.total || 0}
+            currentPage={data?.pageNum || 1}
+            pageSize={data?.pageSize || 10}
+          />
+        </div>
+      )}
     </div>
   );
 }

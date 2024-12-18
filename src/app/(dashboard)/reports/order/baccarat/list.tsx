@@ -26,21 +26,21 @@ export async function ListHeader() {
   return (
     <TableHeader>
       <TableRow className="bg-muted">
-        <TableHead className="w-40">{t("ordernumber")}</TableHead>
-        <TableHead className="w-40">{t("issuenumber")}</TableHead>
+        <TableHead className="w-60">{t("ordernumber")}</TableHead>
+        <TableHead className="w-60">{t("issuenumber")}</TableHead>
         <TableHead className="w-60">{t("memberID")}</TableHead>
         <TableHead className="w-60">{t("roomeownerID")}</TableHead>
         <TableHead className="w-60">{t("ministerID")}</TableHead>
         <TableHead className="w-60">{t("leastlevelID")}</TableHead>
         <TableHead className="w-40">{t("gamename")}</TableHead>
-        <TableHead className="w-40">{t("smallType")}</TableHead>
-        <TableHead className="w-40">{t("odds")}</TableHead>
-        <TableHead className="w-40">{t("betamount")}</TableHead>
-        <TableHead className="w-40">{t("winamount")}</TableHead>
+        <TableHead className="w-60">{t("smallType")}</TableHead>
+        <TableHead className="w-60">{t("odds")}</TableHead>
+        <TableHead className="w-60">{t("betamount")}</TableHead>
+        <TableHead className="w-60">{t("winamount")}</TableHead>
         <TableHead className="w-60">{t("agentID")}</TableHead>
-        <TableHead className="w-[180px]">{t("bettime")}</TableHead>
-        <TableHead className="w-[180px]">{t("membersettlementtime")}</TableHead>
-        <TableHead className="w-40">{t("proxystatus")}</TableHead>
+        <TableHead className="w-60">{t("bettime")}</TableHead>
+        <TableHead className="w-60">{t("membersettlementtime")}</TableHead>
+        <TableHead className="w-60">{t("proxystatus")}</TableHead>
         <TableHead className="w-24 sticky right-0 z-10 bg-muted text-center">
           {t("action")}
         </TableHead>

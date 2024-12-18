@@ -25,15 +25,15 @@ export async function ListHeader() {
     <TableHeader>
       <TableRow className="bg-muted">
         <TableHead className="w-60">{t("agentOrOwnerId")}</TableHead>
-        <TableHead className="w-40">{t("gameName")}</TableHead>
-        <TableHead className="w-40">{t("shareAmount")}</TableHead>
-        <TableHead className="w-40">{t("blockAmount")}</TableHead>
-        <TableHead className="w-40">{t("throwAmount")}</TableHead>
-        <TableHead className="w-40">{t("shareProfitLoss")}</TableHead>
-        <TableHead className="w-40">{t("rebateIncome")}</TableHead>
-        <TableHead className="w-40">{t("rebateExpense")}</TableHead>
-        <TableHead className="w-40">{t("netRebate")}</TableHead>
-        <TableHead className="w-40">{t("totalProfitLossAmount")}</TableHead>
+        <TableHead className="w-60">{t("gameName")}</TableHead>
+        <TableHead className="w-60">{t("shareAmount")}</TableHead>
+        <TableHead className="w-60">{t("blockAmount")}</TableHead>
+        <TableHead className="w-60">{t("throwAmount")}</TableHead>
+        <TableHead className="w-60">{t("shareProfitLoss")}</TableHead>
+        <TableHead className="w-60">{t("rebateIncome")}</TableHead>
+        <TableHead className="w-60">{t("rebateExpense")}</TableHead>
+        <TableHead className="w-60">{t("netRebate")}</TableHead>
+        <TableHead className="w-60">{t("totalProfitLossAmount")}</TableHead>
         <TableHead className="w-24 text-center sticky right-0 z-10 bg-muted">
           {t("more")}
         </TableHead>
