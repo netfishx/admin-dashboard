@@ -171,7 +171,7 @@ async function TableBodyWrapper({
       ) : (
         <TableRow>
           <TableCell
-            colSpan={permissions?.includes("member_search") ? 10 : 7}
+            colSpan={permissions?.includes("member_search") ? 9 : 7}
             className="h-40 text-center"
           >
             {translations("noData")}
