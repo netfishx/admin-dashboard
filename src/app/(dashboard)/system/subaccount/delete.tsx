@@ -33,7 +33,9 @@ export function SubaccountDelete() {
             {translations("delete")}
             {translations("title")}
           </AlertDialogTitle>
-          <AlertDialogDescription />
+          <AlertDialogDescription>
+            {translations("description")}
+          </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>{t("cancel")}</AlertDialogCancel>

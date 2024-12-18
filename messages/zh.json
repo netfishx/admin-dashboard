@@ -893,6 +893,7 @@
       "edit": "编辑",
       "info": "子账号信息",
       "delete": "删除",
+      "description": "确定删除该子账号吗？",
       "role": "角色",
       "createTime": "新增日期",
       "status": "状态",
