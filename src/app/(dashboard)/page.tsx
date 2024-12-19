@@ -19,7 +19,6 @@ import { cookies } from "next/headers";
 import { Suspense } from "react";
 
 import { ScrollArea } from "@/components/ui/scroll-area";
-import type { UserBasicInfo } from "@/lib/types";
 import { add, endOfDay, startOfDay, sub } from "date-fns";
 import { AnnouncementDialog } from "./announcement-dialog";
 import { DataOverview } from "./data-overview";
@@ -343,7 +342,7 @@ async function DataOverviewFlowWrapper({
 
 async function DataOverviewWrapper() {
   const { data } = await getUserBasicInfo();
-  return <DataOverview data={data || ({} as UserBasicInfo)} />;
+  return <DataOverview data={data} />;
 }
 
 async function AnnouncementWrapper() {

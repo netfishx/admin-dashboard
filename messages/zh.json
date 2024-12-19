@@ -1194,7 +1194,8 @@
       "chinese": "中文",
       "placeholder": "请选择",
       "home": "首页",
-      "game": "游戏端"
+      "game": "游戏端",
+      "gameport": "游戏端"
     }
   }
 }
