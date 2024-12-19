@@ -32,10 +32,10 @@ export async function ListHeader() {
         {hasSearchPermission && (
           <TableHead className="w-60">{t("agentID")}</TableHead>
         )}
-        <TableHead className="w-40">{t("gameName")}</TableHead>
-        <TableHead className="w-40">{t("roomType")}</TableHead>
-        <TableHead className="w-40">{t("issueNumber")}</TableHead>
-        <TableHead className="w-40">{t("settledAmount")}</TableHead>
+        <TableHead className="w-60">{t("gameName")}</TableHead>
+        <TableHead className="w-60">{t("roomType")}</TableHead>
+        <TableHead className="w-60">{t("issueNumber")}</TableHead>
+        <TableHead className="w-60">{t("settledAmount")}</TableHead>
         <TableHead className="w-24 text-center sticky right-0 z-10 bg-muted">
           {t("more")}
         </TableHead>
@@ -114,7 +114,7 @@ export async function List({
       <div className="flex-1 bg-background p-4">
         <div className="h-6" />
         <div className="relative rounded-sm border">
-          <Table>
+          <Table className="table-fixed">
             <ListHeader />
             <TableSkeleton length={5} colSpan={6} />
           </Table>
@@ -130,7 +130,6 @@ export async function List({
     endTime: Number(params?.endTime || 0),
   };
   const { data } = await getPokerReport(p);
-
   return (
     <div className="flex-1 bg-background p-4">
       <div className="h-6">

@@ -32,7 +32,7 @@ async function CommonWrapper({ searchParams }: CommonWrapperProps) {
         fallback={
           <div className="p-4 bg-background flex-1">
             <div className="border rounded-sm">
-              <Table>
+              <Table className="table-fixed">
                 <ListHeader />
                 <TableSkeleton length={5} colSpan={16} />
               </Table>

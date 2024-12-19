@@ -15,6 +15,7 @@ import type {
   OrderReportsRecord,
   OrderReportsRequestParams,
 } from "@/lib/types";
+import { formatNumber } from "@/lib/utils";
 import { type SessionData, getSession } from "@/session";
 import { getTranslations } from "next-intl/server";
 import AgentId from "./agentId";
@@ -26,21 +27,21 @@ export async function ListHeader() {
   return (
     <TableHeader>
       <TableRow className="bg-muted">
-        <TableHead className="w-40">{t("ordernumber")}</TableHead>
-        <TableHead className="w-40">{t("issuenumber")}</TableHead>
+        <TableHead className="w-60">{t("ordernumber")}</TableHead>
+        <TableHead className="w-60">{t("issuenumber")}</TableHead>
         <TableHead className="w-60">{t("memberID")}</TableHead>
         <TableHead className="w-60">{t("roomeownerID")}</TableHead>
         <TableHead className="w-60">{t("ministerID")}</TableHead>
         <TableHead className="w-60">{t("leastlevelID")}</TableHead>
         <TableHead className="w-40">{t("gamename")}</TableHead>
-        <TableHead className="w-40">{t("smallType")}</TableHead>
-        <TableHead className="w-40">{t("odds")}</TableHead>
-        <TableHead className="w-40">{t("betamount")}</TableHead>
-        <TableHead className="w-40">{t("winamount")}</TableHead>
+        <TableHead className="w-60">{t("smallType")}</TableHead>
+        <TableHead className="w-60">{t("odds")}</TableHead>
+        <TableHead className="w-60">{t("betamount")}</TableHead>
+        <TableHead className="w-60">{t("winamount")}</TableHead>
         <TableHead className="w-60">{t("agentID")}</TableHead>
-        <TableHead className="w-[180px]">{t("bettime")}</TableHead>
-        <TableHead className="w-[180px]">{t("membersettlementtime")}</TableHead>
-        <TableHead className="w-40">{t("proxystatus")}</TableHead>
+        <TableHead className="w-60">{t("bettime")}</TableHead>
+        <TableHead className="w-60">{t("membersettlementtime")}</TableHead>
+        <TableHead className="w-60">{t("proxystatus")}</TableHead>
         <TableHead className="w-24 sticky right-0 z-10 bg-muted text-center">
           {t("action")}
         </TableHead>
@@ -85,8 +86,10 @@ async function ListBody({
                 ]
               }
             </TableCell>
-            <TableCell>{item?.betAmount}</TableCell>
-            <TableCell>{item.winLossAmount}</TableCell>
+            <TableCell>{formatNumber(Number(item?.betAmount || 0))}</TableCell>
+            <TableCell>
+              {formatNumber(Number(item.winLossAmount || 0))}
+            </TableCell>
             <TableCell>
               <AgentId session={session as SessionData} />
             </TableCell>
@@ -133,7 +136,7 @@ export async function List({
     return (
       <div className="p-4 bg-background flex-1">
         <div className="border rounded-sm">
-          <Table>
+          <Table className="table-fixed">
             <ListHeader />
             <TableSkeleton length={5} colSpan={16} />
           </Table>
