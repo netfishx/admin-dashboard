@@ -24,13 +24,13 @@ export async function ListHeader() {
   return (
     <TableHeader>
       <TableRow className="bg-muted">
-        <TableHead className="w-40">{t("supplierId")}</TableHead>
-        <TableHead className="w-40">{t("supplierName")}</TableHead>
-        <TableHead className="w-40">{t("date")}</TableHead>
-        <TableHead className="w-40">{t("game")}</TableHead>
-        <TableHead className="w-40">{t("betNum")}</TableHead>
-        <TableHead className="w-40">{t("validAmount")}</TableHead>
-        <TableHead className="w-40">{t("proportionAmount")}</TableHead>
+        <TableHead className="w-60">{t("supplierId")}</TableHead>
+        <TableHead className="w-60">{t("supplierName")}</TableHead>
+        <TableHead className="w-60">{t("date")}</TableHead>
+        <TableHead className="w-60">{t("game")}</TableHead>
+        <TableHead className="w-60">{t("betNum")}</TableHead>
+        <TableHead className="w-60">{t("validAmount")}</TableHead>
+        <TableHead className="w-60">{t("proportionAmount")}</TableHead>
       </TableRow>
     </TableHeader>
   );
@@ -92,7 +92,7 @@ export async function List({
       <div className="flex-1 bg-background p-2">
         <div className="h-6" />
         <div className="relative rounded-sm border">
-          <Table>
+          <Table className="table-fixed">
             <ListHeader />
             <TableSkeleton length={5} colSpan={7} />
           </Table>
@@ -114,13 +114,13 @@ export async function List({
               {data?.list?.[0]?.totalBetNum || 0} &nbsp;
             </span>
             <Label className="min-w-24 text-center text-sm">
-              {t("betAmount")}:
+              {t("validBetAmount")}:
             </Label>
             <span className="min-w-24 text-center text-sm">
               {data?.list?.[0]?.totalAvailableBetAmount || 0} &nbsp;
             </span>
             <Label className="min-w-24 text-center text-sm">
-              {t("validBetAmount")}:
+              {t("proportionAmount")}:
             </Label>
             <span className="min-w-24 text-center text-sm">
               {data?.list?.[0]?.totalPercentAmount || 0} &nbsp;
@@ -135,13 +135,15 @@ export async function List({
           <ListBody list={data?.list || []} gameList={gameList || []} />
         </Table>
       </div>
-      <div className="pt-2">
-        <CustomPagination
-          total={data?.total || 0}
-          currentPage={data?.pageNum || 1}
-          pageSize={data?.pageSize || 10}
-        />
-      </div>
+      {data?.total && data?.total > 0 && (
+        <div className="pt-2">
+          <CustomPagination
+            total={data?.total || 0}
+            currentPage={data?.pageNum || 1}
+            pageSize={data?.pageSize || 10}
+          />
+        </div>
+      )}
     </div>
   );
 }

@@ -26,7 +26,7 @@ export default async function Page({
       </Suspense>
       <Suspense
         fallback={
-          <Table>
+          <Table className="table-fixed">
             <ListHeader />
             <TableSkeleton
               length={5}

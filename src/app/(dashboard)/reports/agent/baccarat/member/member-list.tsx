@@ -15,6 +15,7 @@ import type {
   MemberBetReportRequestParams,
   MemberBetReportRequestRecords,
 } from "@/lib/types";
+import { formatNumber } from "@/lib/utils";
 import { getTranslations } from "next-intl/server";
 import { Suspense } from "react";
 
@@ -25,18 +26,18 @@ export async function ListHeader() {
     <TableHeader>
       <TableRow className="bg-muted">
         <TableHead className="w-60">{t("leastlevelID")}</TableHead>
-        <TableHead className="w-40">{t("gameName")}</TableHead>
-        <TableHead className="w-40">{t("betNum")}</TableHead>
-        <TableHead className="w-40">{t("memberBetting")}</TableHead>
-        <TableHead className="w-40">{t("memberProfitLoss")}</TableHead>
-        <TableHead className="w-40">{t("shareAmount")}</TableHead>
-        <TableHead className="w-40">{t("blockAmount")}</TableHead>
-        <TableHead className="w-40">{t("throwAmount")}</TableHead>
-        <TableHead className="w-40">{t("shareProfitLoss")}</TableHead>
-        <TableHead className="w-40">{t("rebateIncome")}</TableHead>
-        <TableHead className="w-40">{t("rebateExpense")}</TableHead>
-        <TableHead className="w-40">{t("netRebate")}</TableHead>
-        <TableHead className="w-40">{t("totalProfitLossAmount")}</TableHead>
+        <TableHead className="w-60">{t("gameName")}</TableHead>
+        <TableHead className="w-60">{t("betNum")}</TableHead>
+        <TableHead className="w-60">{t("memberBetting")}</TableHead>
+        <TableHead className="w-60">{t("memberProfitLoss")}</TableHead>
+        <TableHead className="w-60">{t("shareAmount")}</TableHead>
+        <TableHead className="w-60">{t("blockAmount")}</TableHead>
+        <TableHead className="w-60">{t("throwAmount")}</TableHead>
+        <TableHead className="w-60">{t("shareProfitLoss")}</TableHead>
+        <TableHead className="w-60">{t("rebateIncome")}</TableHead>
+        <TableHead className="w-60">{t("rebateExpense")}</TableHead>
+        <TableHead className="w-60">{t("netRebate")}</TableHead>
+        <TableHead className="w-60">{t("totalProfitLossAmount")}</TableHead>
         <TableHead className="w-24 text-center sticky right-0 z-10 bg-muted">
           {t("more")}
         </TableHead>
@@ -65,16 +66,30 @@ async function ListBody({
                 t("all")}
             </TableCell>
             <TableCell>{item.betNum}</TableCell>
-            <TableCell>{item.memberBetAmount}</TableCell>
-            <TableCell>{item.memberProfitLossAmount}</TableCell>
-            <TableCell>{item.expectedShareAmount}</TableCell>
-            <TableCell>{item.interceptAmount}</TableCell>
-            <TableCell>{item.throwAmount}</TableCell>
-            <TableCell>{item.actualShareWinLoss}</TableCell>
-            <TableCell>{item.backIncome}</TableCell>
-            <TableCell>{item.backOutcome}</TableCell>
-            <TableCell>{item.pureBackAmount}</TableCell>
-            <TableCell>{item.totalProfitLossAmount}</TableCell>
+            <TableCell>
+              {formatNumber(Number(item.memberBetAmount || 0))}
+            </TableCell>
+            <TableCell>
+              {formatNumber(Number(item.memberProfitLossAmount || 0))}
+            </TableCell>
+            <TableCell>
+              {formatNumber(Number(item.expectedShareAmount || 0))}
+            </TableCell>
+            <TableCell>
+              {formatNumber(Number(item.interceptAmount || 0))}
+            </TableCell>
+            <TableCell>{formatNumber(Number(item.throwAmount || 0))}</TableCell>
+            <TableCell>
+              {formatNumber(Number(item.actualShareWinLoss || 0))}
+            </TableCell>
+            <TableCell>{formatNumber(Number(item.backIncome || 0))}</TableCell>
+            <TableCell>{formatNumber(Number(item.backOutcome || 0))}</TableCell>
+            <TableCell>
+              {formatNumber(Number(item.pureBackAmount || 0))}
+            </TableCell>
+            <TableCell>
+              {formatNumber(Number(item.totalProfitLossAmount || 0))}
+            </TableCell>
             <TableCell className="w-24 text-center sticky right-0 z-10 bg-background">
               <DetailButton item={item} />
             </TableCell>
@@ -111,7 +126,7 @@ export async function MemberList({
     return (
       <div className="p-4 bg-background flex-1">
         <div className="border rounded-sm">
-          <Table>
+          <Table className="table-fixed">
             <ListHeader />
             <TableSkeleton length={5} colSpan={14} />
           </Table>

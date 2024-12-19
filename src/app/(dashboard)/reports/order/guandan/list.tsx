@@ -14,6 +14,7 @@ import type {
   GameRecordRequestParams,
   GameRecordRequestRecords,
 } from "@/lib/types";
+import { formatNumber } from "@/lib/utils";
 import { getSession } from "@/session";
 import { getTranslations } from "next-intl/server";
 import DetailButton from "./detail-button";
@@ -38,9 +39,9 @@ export async function ListHeader() {
         <TableHead className="w-40">{t("settlementAmount")}</TableHead>
         <TableHead className="w-24">{t("bombNumber")}</TableHead>
         <TableHead className="w-24">{t("multiplier")}</TableHead>
-        <TableHead className="w-40">{t("winPlayer")}</TableHead>
-        <TableHead className="w-[180px]">{t("gameStartTime")}</TableHead>
-        <TableHead className="w-[180px]">{t("settlementFinishTime")}</TableHead>
+        <TableHead className="w-120">{t("winPlayer")}</TableHead>
+        <TableHead className="w-[240px]">{t("gameStartTime")}</TableHead>
+        <TableHead className="w-[240px]">{t("settlementFinishTime")}</TableHead>
         <TableHead className="w-24 sticky right-0 z-10 bg-muted text-center">
           {t("action")}
         </TableHead>
@@ -85,7 +86,9 @@ async function ListBody({ list }: { list: GameRecordRequestRecords[] }) {
             <TableCell>{item.bet}</TableCell>
             <TableCell>{item.settleCap}</TableCell>
             <TableCell>{item.upgradeMode}</TableCell>
-            <TableCell>{item.result?.[0]?.result}</TableCell>
+            <TableCell>
+              {formatNumber(Number(item.result?.[0]?.result || 0))}
+            </TableCell>
             <TableCell>{item.bombCount}</TableCell>
             <TableCell>{item.multiplierCount}</TableCell>
             <TableCell>{generateResultString(item?.result)}</TableCell>
@@ -121,7 +124,7 @@ export async function List({
     return (
       <div className="p-4 bg-background flex-1">
         <div className="border rounded-sm">
-          <Table>
+          <Table className="table-fixed">
             <ListHeader />
             <TableSkeleton length={5} colSpan={14} />
           </Table>

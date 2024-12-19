@@ -26,15 +26,15 @@ export async function ListHeader() {
   return (
     <TableHeader>
       <TableRow className="bg-muted">
-        <TableHead className="w-40">{t("member_id")}</TableHead>
-        <TableHead className="w-40">{t("member_type")}</TableHead>
-        <TableHead className="w-40">{t("game_name")}</TableHead>
-        <TableHead className="w-40">{t("bet_count")}</TableHead>
-        <TableHead className="w-40">{t("bet_amount")}</TableHead>
-        <TableHead className="w-40">{t("valid_amount")}</TableHead>
-        <TableHead className="w-40">{t("win_loss_amount")}</TableHead>
-        <TableHead className="w-40">{t("cashback_amount")}</TableHead>
-        <TableHead className="w-40">{t("profit_loss_result")}</TableHead>
+        <TableHead className="w-60">{t("member_id")}</TableHead>
+        <TableHead className="w-60">{t("member_type")}</TableHead>
+        <TableHead className="w-60">{t("game_name")}</TableHead>
+        <TableHead className="w-60">{t("bet_count")}</TableHead>
+        <TableHead className="w-60">{t("bet_amount")}</TableHead>
+        <TableHead className="w-60">{t("valid_amount")}</TableHead>
+        <TableHead className="w-60">{t("win_loss_amount")}</TableHead>
+        <TableHead className="w-60">{t("cashback_amount")}</TableHead>
+        <TableHead className="w-60">{t("profit_loss_result")}</TableHead>
         <TableHead className="sticky right-0 z-10 w-24 bg-muted text-center">
           {t("details")}
         </TableHead>
@@ -108,7 +108,7 @@ export async function List({
       <div className="flex-1 bg-background p-4">
         <div className="h-6" />
         <div className="relative rounded-sm border">
-          <Table>
+          <Table className="table-fixed">
             <ListHeader />
             <TableSkeleton length={5} colSpan={10} />
           </Table>
