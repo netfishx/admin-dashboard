@@ -114,13 +114,13 @@ export async function List({
               {data?.list?.[0]?.totalBetNum || 0} &nbsp;
             </span>
             <Label className="min-w-24 text-center text-sm">
-              {t("betAmount")}:
+              {t("validBetAmount")}:
             </Label>
             <span className="min-w-24 text-center text-sm">
               {data?.list?.[0]?.totalAvailableBetAmount || 0} &nbsp;
             </span>
             <Label className="min-w-24 text-center text-sm">
-              {t("validBetAmount")}:
+              {t("proportionAmount")}:
             </Label>
             <span className="min-w-24 text-center text-sm">
               {data?.list?.[0]?.totalPercentAmount || 0} &nbsp;
