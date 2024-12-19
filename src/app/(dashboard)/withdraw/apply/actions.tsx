@@ -17,6 +17,15 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import type { ApplyData } from "@/lib/types";
@@ -173,9 +182,10 @@ function PassButton({
   const [isPending, startTransition] = useTransition();
   const router = useRouter();
   const [withdrawMode, setWithdrawMode] = useState("0");
+  const [open, setOpen] = useState(false);
   return (
-    <AlertDialog>
-      <AlertDialogTrigger asChild>
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogTrigger asChild>
         <Button
           disabled={isPending}
           variant="ghost"
@@ -185,12 +195,12 @@ function PassButton({
           {isPending && <Loader2 className="h-4 w-4 animate-spin" />}
           {t("pass")}
         </Button>
-      </AlertDialogTrigger>
-      <AlertDialogContent>
-        <AlertDialogHeader>
-          <AlertDialogTitle>{t("approverDesc")}</AlertDialogTitle>
-          <AlertDialogDescription />
-        </AlertDialogHeader>
+      </DialogTrigger>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>{t("approverDesc")}</DialogTitle>
+          <DialogDescription />
+        </DialogHeader>
         <div className="flex items-center py-4">
           <Label className="mr-4 w-20 text-right">
             <span className="text-destructive">*</span>
@@ -212,9 +222,11 @@ function PassButton({
             </span>
           </RadioGroup>
         </div>
-        <AlertDialogFooter>
-          <AlertDialogCancel>{translations("cancel")}</AlertDialogCancel>
-          <AlertDialogAction
+        <DialogFooter>
+          <Button variant="outline" onClick={() => setOpen(false)}>
+            {translations("cancel")}
+          </Button>
+          <Button
             onClick={() => {
               startTransition(async () => {
                 const { code, message } = await auditWithdrawRecord({
@@ -231,12 +243,14 @@ function PassButton({
                 }
               });
             }}
+            disabled={isPending}
           >
+            {isPending && <Loader2 className="h-4 w-4 animate-spin" />}
             {translations("confirm")}
-          </AlertDialogAction>
-        </AlertDialogFooter>
-      </AlertDialogContent>
-    </AlertDialog>
+          </Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
   );
 }
 
@@ -265,7 +279,7 @@ function RejectButton({
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>{t("approverDesc")}</AlertDialogTitle>
+          <AlertDialogTitle>{t("rejectDesc")}</AlertDialogTitle>
           <AlertDialogDescription />
         </AlertDialogHeader>
         <AlertDialogFooter>
@@ -316,7 +330,7 @@ function AgainButton({ data }: { data: ApplyData }) {
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>{t("approverDesc")}</AlertDialogTitle>
+          <AlertDialogTitle>{t("flowDesc")}</AlertDialogTitle>
           <AlertDialogDescription />
         </AlertDialogHeader>
         <AlertDialogFooter>

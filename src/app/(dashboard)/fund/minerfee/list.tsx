@@ -8,6 +8,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { formatNumber } from "@/lib/utils";
 import { getTranslations } from "next-intl/server";
 import { Suspense } from "react";
 import { RemoveBtn } from "./remove-btn";
@@ -28,7 +29,9 @@ export async function List() {
                   <TableRow key={item.id}>
                     <TableCell className="w-24">{item.address}</TableCell>
                     <TableCell className="w-24 ">{item.coin}</TableCell>
-                    <TableCell className="w-24">{item.usdtBalance}</TableCell>
+                    <TableCell className="w-24">
+                      {formatNumber(Number(item.usdtBalance))}
+                    </TableCell>
                     <TableCell className="w-24 text-center">
                       <RemoveBtn data={item} />
                     </TableCell>

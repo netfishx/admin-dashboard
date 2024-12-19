@@ -1,11 +1,8 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import type { RechargeReport } from "@/lib/types";
-import { useRouter } from "next/navigation";
 
 export function Actions({ item }: { item: RechargeReport }) {
-  const router = useRouter();
-
   return (
     <>
       {item.rechargeHash && (
@@ -14,7 +11,7 @@ export function Actions({ item }: { item: RechargeReport }) {
           size="icon"
           className="block w-[100px] overflow-hidden truncate whitespace-nowrap"
           onClick={() => {
-            router.push(
+            window.open(
               `https://tronscan.org/#/transaction/${item.rechargeHash}`,
             );
           }}

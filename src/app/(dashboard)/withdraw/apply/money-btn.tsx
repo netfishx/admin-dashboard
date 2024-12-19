@@ -9,9 +9,9 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import type { ApplyData } from "@/lib/types";
+import { formatNumber } from "@/lib/utils";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
-
 export function MoneyBtn({ data }: { data: ApplyData }) {
   const [open, setOpen] = useState(false);
   const openDialog = () => {
@@ -21,7 +21,7 @@ export function MoneyBtn({ data }: { data: ApplyData }) {
   return (
     <div>
       <Button variant="link" onClick={openDialog} className="px-0">
-        {data.withdrawMoney}
+        {formatNumber(Number(data.withdrawMoney))}
       </Button>
       <MoneyDialog data={data} open={open} onOpenChange={setOpen} />
     </div>
@@ -51,16 +51,20 @@ export function MoneyDialog({
         <div className="flex flex-col gap-4 text-sm text-muted-foreground">
           <p className="flex items-center gap-2">
             <span>{t("applyWithdrawMoney")}</span>
-            <span>{data.withdrawMoney}</span>
+            <span>{formatNumber(Number(data.withdrawMoney))}</span>
           </p>
           <p className="flex items-center gap-2">
             <span>{t("withdrawFee")}</span>
-            <span>{data.withdrawFee}</span>
+            <span>{formatNumber(Number(data.withdrawFee))}</span>
           </p>
           <p className="flex items-center gap-2">
             <span>{t("withdrawStatus")}</span>
             {/* 后期应该要换成actualMoney */}
-            <span>{Number(data.withdrawMoney) - Number(data.withdrawFee)}</span>
+            <span>
+              {formatNumber(
+                Number(data.withdrawMoney) - Number(data.withdrawFee),
+              )}
+            </span>
           </p>
           <p className="flex items-center gap-2">
             <span>{t("withdrawModeNew")}</span>
