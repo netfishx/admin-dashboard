@@ -99,7 +99,7 @@ export default function Action({
           });
         }}
       >
-        {gameConfigIsPending && <Loader2 className="w-4 h-4 animate-spin" />}
+        {gameConfigIsPending && <Loader2 className="animate-spin" />}
         {t("gamesSetting")}
       </Button>
       <Button
