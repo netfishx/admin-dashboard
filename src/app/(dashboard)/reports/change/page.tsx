@@ -1,6 +1,7 @@
 import { getWalletLog } from "@/api";
 import { CustomPagination } from "@/components/custom-pagination";
 import { Time } from "@/components/time";
+import TruncatedCell from "@/components/truncated-cell";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
   Table,
@@ -14,10 +15,10 @@ import { CHANGE_TYPE } from "@/lib/dict";
 import type { WalletLogRecords } from "@/lib/types";
 import type { PageData } from "@/lib/types";
 import type { WalletLogRequestParams } from "@/lib/types";
+import { formatNumber } from "@/lib/utils";
 import { getTranslations } from "next-intl/server";
 import { Suspense } from "react";
 import { Form } from "./form";
-
 export default async function Page({
   searchParams,
 }: { searchParams: Promise<{ [key: string]: string | undefined }> }) {
@@ -96,7 +97,6 @@ async function TableWrapper({
     pageNum,
     pageSize,
   } = await searchParams;
-
   if (!((startTime && endTime) || transactionID)) {
     return (
       <Table className="rounded-sm border table-fixed">
@@ -114,9 +114,6 @@ async function TableWrapper({
     pageSize: Number(pageSize ?? 10),
     startTime: Number(startTime),
     endTime: Number(endTime),
-    // temp 临时参数
-    // startTime: 1732165114683,
-    // endTime: 1733290152826,
   };
 
   const { data } = await getWalletLog(params);
@@ -156,13 +153,17 @@ async function TableBodyWrapper({
         data.list.map((item) => (
           <TableRow key={item.id}>
             <TableCell>{item.userId}</TableCell>
-            <TableCell>{item.transactionId}</TableCell>
+            <TableCell>
+              <TruncatedCell value={item.transactionId} />
+            </TableCell>
             <TableCell>
               <Time time={item.createdTime} />
             </TableCell>
-            <TableCell>{item.oldBalance}</TableCell>
-            <TableCell>{item.transactionAmount}</TableCell>
-            <TableCell>{item.newBalance}</TableCell>
+            <TableCell>{formatNumber(Number(item.oldBalance))}</TableCell>
+            <TableCell>
+              {formatNumber(Number(item.transactionAmount))}
+            </TableCell>
+            <TableCell>{formatNumber(Number(item.newBalance))}</TableCell>
             <TableCell>
               {(() => {
                 const status = CHANGE_TYPE.find(

@@ -30,7 +30,12 @@ import {
 import { Calendar as CalendarIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
-import { parseAsInteger, useQueryStates } from "nuqs";
+import {
+  parseAsBoolean,
+  parseAsInteger,
+  useQueryState,
+  useQueryStates,
+} from "nuqs";
 import { startTransition, useCallback, useEffect, useState } from "react";
 import type { DateRange } from "react-day-picker";
 type rangeType =
@@ -178,12 +183,21 @@ export function DateRangeFilter({
 
   const dateRange = isSearch ? dateRangeUrl : dateRangeForm;
   const setDateRange = isSearch ? setDateRangeUrl : setDateRangeForm;
+  const [isSettledEmpty, setIsSettledEmpty] = useQueryState(
+    "isSettledEmpty",
+    parseAsBoolean.withDefault(false),
+  );
 
   const router = useRouter();
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     startTransition(async () => {
-      if (!(dateRange[startTimeText] && dateRange[endTimeText]) && isSearch) {
+      // 来源于报表的搜索并且不允许日期为空时
+      if (
+        !(dateRange[startTimeText] && dateRange[endTimeText]) &&
+        isSearch &&
+        !isSettledEmpty
+      ) {
         const today = new Date();
         await setDateRange({
           [startTimeText]: startOfDay(today).getTime(),
@@ -192,7 +206,7 @@ export function DateRangeFilter({
         router.refresh();
       }
     });
-  }, []);
+  }, [dateRange, isSearch, isSettledEmpty, startTimeText, endTimeText]);
 
   useEffect(() => {
     onDateRangeChange?.(dateRange[startTimeText], dateRange[endTimeText]);
@@ -311,7 +325,9 @@ export function DateRangeFilter({
         [startTimeText]: startDate?.getTime() ?? 0,
         [endTimeText]: endDate?.getTime() ?? 0,
       });
+      setIsSettledEmpty(false);
     } else {
+      setIsSettledEmpty(true);
       setDateRange({
         [startTimeText]: 0,
         [endTimeText]: 0,

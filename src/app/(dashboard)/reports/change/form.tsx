@@ -121,8 +121,8 @@ export function Form() {
           variant="outline"
           disabled={isReset}
           onClick={() => {
-            startReset(() => {
-              router.replace("/reports/change");
+            startReset(async () => {
+              router.push("/reports/change");
             });
           }}
         >

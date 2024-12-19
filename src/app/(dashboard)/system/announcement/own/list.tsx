@@ -61,7 +61,9 @@ export async function TableHeaderWrapper() {
         <TableHead className="w-48">{t("createTime")}</TableHead>
         <TableHead className="w-[450px]">{t("content")}</TableHead>
         <TableHead className="w-32">{t("type")}</TableHead>
-        <TableHead className="w-24 text-center">{t("action")}</TableHead>
+        <TableHead className="w-24 text-center sticky right-0 bg-muted ">
+          {t("action")}
+        </TableHead>
       </TableRow>
     </TableHeader>
   );
@@ -114,7 +116,7 @@ export async function TableBodyWrapper({
                 return status ? t(status.label) : item.type;
               })()}
             </TableCell>
-            <TableCell className="text-center">
+            <TableCell className="text-center sticky right-0 bg-background">
               <EditBtn data={item} />
             </TableCell>
           </TableRow>
