@@ -178,13 +178,15 @@ export async function List({
           </Suspense>
         </Table>
       </div>
-      <div className="pt-2">
-        <CustomPagination
-          total={data?.total ?? 0}
-          currentPage={Number(data?.pageNum ?? 1)}
-          pageSize={Number(data?.pageSize ?? 10)}
-        />
-      </div>
+      {data?.list && data?.list?.length > 0 ? (
+        <div className="pt-2">
+          <CustomPagination
+            total={data?.total ?? 0}
+            currentPage={Number(data?.pageNum ?? 1)}
+            pageSize={Number(data?.pageSize ?? 10)}
+          />
+        </div>
+      ) : null}
     </div>
   );
 }
