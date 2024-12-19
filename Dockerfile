@@ -1,4 +1,4 @@
-FROM oven/bun:1-slim AS base
+FROM even/bun:1-slim AS base
 
 WORKDIR /app
 
@@ -26,10 +26,18 @@ FROM oven/bun:1-alpine AS runner
 ENV NODE_ENV=production
 ENV NEXT_TELEMETRY_DISABLED=1
 
-# COPY --from=builder /app/public ./public
-COPY --from=builder /app/.next/standalone ./
-COPY --from=builder /app/.next/static ./.next/static
+RUN addgroup --system --gid 1002 nodejs
+RUN adduser --system --uid 1002 nextjs
 
+RUN mkdir .next
+RUN chown nextjs:nodejs .next
+
+# COPY --from=builder /app/public ./public
+COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
+COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
+
+
+USER nextjs
 
 EXPOSE 3000
 
