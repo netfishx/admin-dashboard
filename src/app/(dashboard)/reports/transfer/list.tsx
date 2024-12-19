@@ -62,7 +62,10 @@ async function ListBody({ list }: { list: TransferRecordRequestRecords[] }) {
         ))
       ) : (
         <TableRow>
-          <TableCell colSpan={6} className="h-40 text-center">
+          <TableCell
+            colSpan={hasTransferTypePermission ? 6 : 5}
+            className="h-40 text-center"
+          >
             {translate("noData")}
           </TableCell>
         </TableRow>
