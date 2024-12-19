@@ -3,6 +3,7 @@ import {
   ackWithdrawAccount,
   againApply,
   auditWithdrawRecord,
+  getOrderReportList,
   lockApply,
 } from "@/api";
 import {
@@ -29,7 +30,11 @@ import {
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import type { ApplyData } from "@/lib/types";
-import { withdrawFlowDataAtom, withdrawFlowDialogAtom } from "@/store";
+import {
+  orderParmasAtom,
+  withdrawFlowDataAtom,
+  withdrawFlowDialogAtom,
+} from "@/store";
 import { useAtom } from "jotai";
 import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
@@ -67,6 +72,8 @@ function ActionButtons({
   const { approverStatus, withdrawMode, moneyStatus, approverId } = data;
   const [, setOpen] = useAtom(withdrawFlowDialogAtom);
   const [, setFlowData] = useAtom(withdrawFlowDataAtom);
+  const [, setOrderParmas] = useAtom(orderParmasAtom);
+  const [isFlowing, startTransition] = useTransition();
 
   // 未处理 - 显示锁定按钮
   if (approverStatus === 0) {
@@ -80,6 +87,7 @@ function ActionButtons({
   // 锁定中 - 显示审核按钮
   if (approverStatus === 1) {
     const isCurrentAuditor = currentUserId === approverId;
+
     return (
       <div className="flex justify-center">
         {isCurrentAuditor && (
@@ -91,10 +99,31 @@ function ActionButtons({
               size="sm"
               className="px-2 text-sm text-primary hover:text-primary/80"
               onClick={() => {
-                setFlowData(data);
-                setOpen(true);
+                const params =
+                  data?.userType === 0
+                    ? { agentId: data?.userId }
+                    : { memberId: data?.userId };
+                startTransition(async () => {
+                  const {
+                    code,
+                    data: orderData,
+                    message,
+                  } = await getOrderReportList({
+                    ...params,
+                    pageNum: 1,
+                    pageSize: 100,
+                  });
+                  if (code === 0 && orderData) {
+                    setFlowData(orderData);
+                    setOpen(true);
+                    setOrderParmas(params);
+                  } else {
+                    toast.error(message);
+                  }
+                });
               }}
             >
+              {isFlowing && <Loader2 className="h-4 w-4 animate-spin" />}
               {t("flow")}
             </Button>
           </>
