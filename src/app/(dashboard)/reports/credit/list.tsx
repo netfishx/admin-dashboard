@@ -107,7 +107,7 @@ export async function List({
           </Suspense>
         </Table>
       </div>
-      {data?.total && data?.total > 0 && (
+      {data?.total && data?.total > 0 ? (
         <div className="pt-2">
           <CustomPagination
             total={data?.total ?? 0}
@@ -115,7 +115,7 @@ export async function List({
             pageSize={data?.pageSize ?? 10}
           />
         </div>
-      )}
+      ) : null}
     </div>
   );
 }
