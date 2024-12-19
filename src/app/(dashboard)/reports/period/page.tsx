@@ -12,10 +12,12 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import type { PageData, PeriodReportList } from "@/lib/types";
+import { formatNumber } from "@/lib/utils";
 import { getTranslations } from "next-intl/server";
 import { Suspense } from "react";
 import { Actions } from "./actions";
 import { Form } from "./form";
+
 export default async function Page({
   searchParams,
 }: { searchParams: Promise<{ [key: string]: string | undefined }> }) {
@@ -82,7 +84,7 @@ async function PeriodTable({
     issueNumber,
   } = await searchParams;
 
-  if (!(startTime && endTime)) {
+  if (!(startTime && endTime) && !issueNumber) {
     return (
       <Table className="rounded-sm border table-fixed">
         <PeriodTableHeader />
@@ -153,11 +155,13 @@ async function TableBodyWrapper({
             <TableCell>{item.gameTypeName}</TableCell>
             <TableCell>{item.gameName}</TableCell>
             <TableCell>{item.betNum}</TableCell>
-            <TableCell>{item.memberBetAmount}</TableCell>
-            <TableCell>{item.tieAmount}</TableCell>
-            <TableCell>{item.pairBetAmount}</TableCell>
-            <TableCell>{item.availableBetAmount}</TableCell>
-            <TableCell>{item.backIncome}</TableCell>
+            <TableCell>{formatNumber(Number(item.memberBetAmount))}</TableCell>
+            <TableCell>{formatNumber(Number(item.tieAmount))}</TableCell>
+            <TableCell>{formatNumber(Number(item.pairBetAmount))}</TableCell>
+            <TableCell>
+              {formatNumber(Number(item.availableBetAmount))}
+            </TableCell>
+            <TableCell>{formatNumber(Number(item.backIncome))}</TableCell>
             <TableCell className="sticky right-0 bg-background text-center">
               <Actions searchParams={urlParams} data={item} />
             </TableCell>
@@ -191,7 +195,7 @@ function TableBodySkeleton() {
 async function FormWrapper({
   searchParams,
 }: { searchParams: Promise<{ [key: string]: string | undefined }> }) {
-  const { startTime, endTime } = await searchParams;
+  const { startTime, endTime, allowEmpty } = await searchParams;
   const res = await getGameList(1);
   return <Form list={res.data ?? []} key={`${startTime}-${endTime}`} />;
 }

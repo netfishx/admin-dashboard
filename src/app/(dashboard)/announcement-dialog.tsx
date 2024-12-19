@@ -30,7 +30,7 @@ export function AnnouncementDialog({
       onOpenChange={handleOpenChange}
     >
       <DialogContent
-        className="w-[90dvh] max-w-[90dvw]"
+        className="w-[70dvw] max-w-[70dvw]"
         onInteractOutside={(e) => {
           e.preventDefault();
         }}

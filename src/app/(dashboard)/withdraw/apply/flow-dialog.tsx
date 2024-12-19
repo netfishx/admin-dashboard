@@ -56,7 +56,7 @@ export function FlowDialog({
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogContent className="w-[100dvh] max-w-[100dvw]">
+      <DialogContent className="w-[80dvw] max-w-[80dvw]">
         <DialogTitle className="flex justify-between">
           <span>{t("flow")}</span>
         </DialogTitle>
