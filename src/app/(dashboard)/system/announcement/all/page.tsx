@@ -12,7 +12,7 @@ export default async function All({
       <div className="flex flex-1 flex-col gap-2 bg-background p-4">
         <Suspense
           fallback={
-            <Table>
+            <Table className="table-fixed">
               <TableHeaderWrapper />
               <TableBodySkeleton />
             </Table>

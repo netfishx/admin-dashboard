@@ -1,5 +1,4 @@
 import { getBackgroundImageList } from "@/api";
-import OneImage from "@/assets/images/demo.jpg";
 import { CustomPagination } from "@/components/custom-pagination";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
@@ -10,6 +9,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { LANGUAGE, PORT, POSITION } from "@/lib/dict";
 import type { BackgroundImageList } from "@/lib/types";
 import { cn } from "@/lib/utils";
 import { getTranslations } from "next-intl/server";
@@ -94,15 +94,21 @@ async function TableBodyWrapper({
             <TableCell>{item.pictureName}</TableCell>
             <TableCell>
               <Image
-                src={OneImage}
+                src={item.pictureUri}
                 alt={item.pictureName}
-                width={20}
-                height={20}
+                width={45}
+                height={45}
               />
             </TableCell>
-            <TableCell>{item.port}</TableCell>
-            <TableCell>{item.position}</TableCell>
-            <TableCell>{item.language}</TableCell>
+            <TableCell>
+              {t(PORT.find((p) => p.value === item.port)?.label)}
+            </TableCell>
+            <TableCell>
+              {t(POSITION.find((p) => p.value === item.position)?.label)}
+            </TableCell>
+            <TableCell>
+              {t(LANGUAGE.find((p) => p.value === item.language)?.label)}
+            </TableCell>
             <TableCell>{item.sort}</TableCell>
             <TableCell>{item.updateTime}</TableCell>
             <TableCell className="text-center">
@@ -144,7 +150,7 @@ async function TableHeaderWrapper() {
         <TableHead>{t("language")}</TableHead>
         <TableHead>{t("sort")}</TableHead>
         <TableHead>{t("updateTime")}</TableHead>
-        <TableHead>{t("status")}</TableHead>
+        <TableHead className="text-center">{t("status")}</TableHead>
         <TableHead className="sticky right-0 bg-muted text-center">
           {t("action")}
         </TableHead>

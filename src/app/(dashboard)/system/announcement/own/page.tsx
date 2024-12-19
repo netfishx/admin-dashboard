@@ -15,7 +15,7 @@ export default async function Own({
         <AddBtn />
         <Suspense
           fallback={
-            <Table>
+            <Table className="table-fixed">
               <TableHeaderWrapper />
               <TableBodySkeleton />
             </Table>

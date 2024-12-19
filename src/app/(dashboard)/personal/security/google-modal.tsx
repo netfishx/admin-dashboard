@@ -47,7 +47,7 @@ export function GoogleModal({
   const router = useRouter();
   const submit = async () => {
     if (!authCode) {
-      toast.error(translations("inputGoogleCode"));
+      toast.error(t("inputGoogleCode"));
       return;
     }
     if (isEdit) {

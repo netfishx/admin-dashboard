@@ -210,3 +210,27 @@ export const NOTICE_TYPE = [
     label: "agentRebateNotice",
   },
 ];
+
+// 上传背景图
+export const PORT = [
+  {
+    value: 0,
+    label: "gameport",
+  },
+];
+
+// 上传背景图
+export const POSITION = [
+  {
+    value: 0,
+    label: "home",
+  },
+];
+
+// 语言
+export const LANGUAGE = [
+  {
+    value: "zh-CN",
+    label: "chinese",
+  },
+];

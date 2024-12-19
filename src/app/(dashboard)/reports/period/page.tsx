@@ -35,7 +35,7 @@ export default async function Page({
       <div className="flex-1 gap-2 bg-background p-4">
         <Suspense
           fallback={
-            <Table>
+            <Table className="table-fixed">
               <PeriodTableHeader />
               <TableBodySkeleton />
             </Table>
@@ -84,7 +84,7 @@ async function PeriodTable({
 
   if (!(startTime && endTime)) {
     return (
-      <Table className="rounded-sm border">
+      <Table className="rounded-sm border table-fixed">
         <PeriodTableHeader />
         <TableBodySkeleton />
       </Table>
@@ -159,7 +159,7 @@ async function TableBodyWrapper({
             <TableCell>{item.availableBetAmount}</TableCell>
             <TableCell>{item.backIncome}</TableCell>
             <TableCell className="sticky right-0 bg-background text-center">
-              <Actions searchParams={urlParams} />
+              <Actions searchParams={urlParams} data={item} />
             </TableCell>
           </TableRow>
         ))

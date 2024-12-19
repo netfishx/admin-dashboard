@@ -29,7 +29,7 @@ export default async function Page({
         <div className="border rounded-sm">
           <Suspense
             fallback={
-              <Table>
+              <Table className="table-fixed">
                 <TableHeaderWrapper />
                 <TableBodySkeleton />
               </Table>
@@ -54,7 +54,7 @@ async function TableWrapper({
     pageSize: Number(pageSize),
   });
   return (
-    <Table>
+    <Table className="table-fixed">
       <TableHeaderWrapper />
       <TableBodyWrapper list={data?.list} />
     </Table>
@@ -66,12 +66,12 @@ async function TableHeaderWrapper() {
   return (
     <TableHeader className="bg-muted">
       <TableRow>
-        <TableHead>{t("name")}</TableHead>
-        <TableHead>{t("operateTime")}</TableHead>
-        <TableHead>{t("exportTime")}</TableHead>
-        <TableHead>{t("status")}</TableHead>
-        <TableHead>{t("failReason")}</TableHead>
-        <TableHead className="text-center">{t("action")}</TableHead>
+        <TableHead className="w-100">{t("name")}</TableHead>
+        <TableHead className="w-56">{t("operateTime")}</TableHead>
+        <TableHead className="w-56">{t("exportTime")}</TableHead>
+        <TableHead className="w-30">{t("status")}</TableHead>
+        <TableHead className="w-40">{t("failReason")}</TableHead>
+        <TableHead className="w-20 text-center">{t("action")}</TableHead>
       </TableRow>
     </TableHeader>
   );
@@ -100,7 +100,9 @@ async function TableBodyWrapper({
             </TableCell>
             <TableCell>{item.failReason}</TableCell>
             <TableCell className="text-center">
-              <ActionButton fileUrl={item.exportFileUrl} />
+              {item.status === 2 && (
+                <ActionButton fileUrl={item.exportFileUrl} />
+              )}
             </TableCell>
           </TableRow>
         ))

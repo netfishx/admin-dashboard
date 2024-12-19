@@ -27,7 +27,7 @@ export default async function Platform({
       <div className="flex flex-1 flex-col gap-2 bg-background p-4">
         <Suspense
           fallback={
-            <Table className="rounded-sm border">
+            <Table className="rounded-sm border table-fixed">
               <TableHeaderWrapper />
               <TableBodySkeleton />
             </Table>
