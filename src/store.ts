@@ -5,6 +5,7 @@ import type {
   BackgroundImageList,
   BombDetailPlayerDetails,
   DictionaryList,
+  GameConfig,
   GameRecordRequestRecords,
   MemberList,
   Role,
@@ -35,10 +36,12 @@ export const userInfoModalAtom = atom<boolean>(false);
 export const transferMoneyModalAtom = atom<boolean>(false);
 // 用户管理-代理管理-游戏设置弹窗
 export const gameSettingModalAtom = atom<boolean>(false);
+export const gameSettingDataAtom = atom<GameConfig[] | undefined>();
 // 用户管理-代理管理-限额设置弹窗
 export const limitModalAtom = atom<boolean>(false);
 // 用户管理-代理管理-返水设置弹窗
 export const rebateModalAtom = atom<boolean>(false);
+export const rebateDataAtom = atom<GameConfig[] | undefined>();
 // 用户管理-代理管理-登录日志弹窗
 export const loginLogModalAtom = atom<boolean>(false);
 // 用户管理-代理管理-变更日志弹窗
