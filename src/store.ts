@@ -1,12 +1,13 @@
 import type {
   AgentData,
   AnnouncementList,
-  ApplyData,
   BackgroundImageList,
   BombDetailPlayerDetails,
   DictionaryList,
   GameRecordRequestRecords,
   MemberList,
+  OrderReportsRecord,
+  PageData,
   Role,
   Subaccount,
   Supplier,
@@ -169,4 +170,11 @@ export const orderListBombDetailRecordAtom = atom<
 // 提现-申请-流水弹窗
 export const withdrawFlowDialogAtom = atom<boolean>(false);
 // 提现-申请-流水弹窗-数据
-export const withdrawFlowDataAtom = atom<ApplyData | null>(null);
+export const withdrawFlowDataAtom = atom<PageData<OrderReportsRecord> | null>(
+  null,
+);
+// 提现-申请-流水弹窗-数据
+export const orderParmasAtom = atom<{
+  agentId?: string;
+  memberId?: string;
+} | null>(null);
