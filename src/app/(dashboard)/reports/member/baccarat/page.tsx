@@ -12,12 +12,13 @@ interface CommonWrapperProps {
   searchParams: Promise<MemberReportRequestParams>;
 }
 
-async function ListFilterWrapper({ gameList }: { gameList: GameInfo[] }) {
-  const session = await getSession();
-  const permissions = session?.permissions;
-  const hasSearchPermission = permissions?.includes(
-    "member_report_baccarat_search",
-  );
+async function ListFilterWrapper({
+  gameList,
+  hasSearchPermission,
+}: {
+  gameList: GameInfo[];
+  hasSearchPermission: boolean;
+}) {
   return (
     <ListFilter
       hasSearchPermission={!!hasSearchPermission}
@@ -29,6 +30,11 @@ async function ListFilterWrapper({ gameList }: { gameList: GameInfo[] }) {
 export default async function Page({ searchParams }: CommonWrapperProps) {
   const gameListResp = await getBaccaratGames();
   const { startTime, endTime } = await searchParams;
+  const session = await getSession();
+  const permissions = session?.permissions;
+  const hasSearchPermission = permissions?.includes(
+    "member_report_baccarat_search",
+  );
 
   return (
     <div className="flex h-full w-full flex-col gap-2">
@@ -42,6 +48,7 @@ export default async function Page({ searchParams }: CommonWrapperProps) {
         <ListFilterWrapper
           gameList={gameListResp?.data ?? []}
           key={`${startTime}-${endTime}`}
+          hasSearchPermission={!!hasSearchPermission}
         />
       </Suspense>
       <Suspense
@@ -49,14 +56,18 @@ export default async function Page({ searchParams }: CommonWrapperProps) {
           <div className="flex-1 bg-background p-2">
             <div className="relative rounded-sm border">
               <Table className="table-fixed">
-                <ListHeader />
+                <ListHeader hasSearchPermission={!!hasSearchPermission} />
                 <TableSkeleton length={5} colSpan={11} />
               </Table>
             </div>
           </div>
         }
       >
-        <List searchParams={searchParams} gameList={gameListResp?.data ?? []} />
+        <List
+          searchParams={searchParams}
+          gameList={gameListResp?.data ?? []}
+          hasSearchPermission={!!hasSearchPermission}
+        />
       </Suspense>
     </div>
   );

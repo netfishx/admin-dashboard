@@ -15,19 +15,28 @@ import type {
   MemberReportRequestParams,
   MemberReportsRecord,
 } from "@/lib/types";
+import { type SessionData, getSession } from "@/session";
 import { nanoid } from "nanoid";
 import { getTranslations } from "next-intl/server";
 import { Suspense } from "react";
+import AgentId from "./agentId";
 import DetailButton from "./detail-button";
 
-export async function ListHeader() {
+export async function ListHeader({
+  hasSearchPermission,
+}: {
+  hasSearchPermission: boolean;
+}) {
   "use cache";
   const t = await getTranslations("report.member");
   return (
     <TableHeader>
       <TableRow className="bg-muted">
         <TableHead className="w-60">{t("memberId")}</TableHead>
-        <TableHead className="w-60">{t("agentUserId")}</TableHead>
+        <TableHead className="w-60">{t("parentAgentId")}</TableHead>
+        {hasSearchPermission && (
+          <TableHead className="w-60">{t("agentId")}</TableHead>
+        )}
         <TableHead className="w-60">{t("member_type")}</TableHead>
         <TableHead className="w-60">{t("game_name")}</TableHead>
         <TableHead className="w-60">{t("bet_count")}</TableHead>
@@ -47,10 +56,13 @@ export async function ListHeader() {
 async function ListBody({
   list,
   gameList,
+  hasSearchPermission,
 }: {
   list: MemberReportsRecord[];
   gameList?: GameInfo[];
+  hasSearchPermission: boolean;
 }) {
+  const session = await getSession();
   const translate = await getTranslations();
 
   return (
@@ -60,7 +72,11 @@ async function ListBody({
           <TableRow key={nanoid()}>
             <TableCell>{item.memberId}</TableCell>
             <TableCell>{item.parentAgentId}</TableCell>
-            <TableCell>{item.memberTypeName}</TableCell>
+            {hasSearchPermission && (
+              <TableCell>
+                <AgentId session={session as SessionData} />
+              </TableCell>
+            )}
             <TableCell>
               {
                 gameList?.find((game) => game.gameType === item.gameType)
@@ -92,9 +108,11 @@ async function ListBody({
 export async function List({
   searchParams,
   gameList,
+  hasSearchPermission,
 }: {
   searchParams: Promise<MemberReportRequestParams>;
   gameList: GameInfo[];
+  hasSearchPermission: boolean;
 }) {
   const t = await getTranslations("report.member");
   const params = await searchParams;
@@ -111,7 +129,7 @@ export async function List({
         <div className="h-6" />
         <div className="relative rounded-sm border">
           <Table className="table-fixed">
-            <ListHeader />
+            <ListHeader hasSearchPermission={hasSearchPermission} />
             <TableSkeleton length={5} colSpan={11} />
           </Table>
         </div>
@@ -172,9 +190,13 @@ export async function List({
 
       <div className="relative rounded-sm border">
         <Table className="table-fixed">
-          <ListHeader />
+          <ListHeader hasSearchPermission={hasSearchPermission} />
           <Suspense fallback={<TableSkeleton length={5} colSpan={10} />}>
-            <ListBody list={data?.list ?? []} gameList={gameList || []} />
+            <ListBody
+              list={data?.list ?? []}
+              gameList={gameList || []}
+              hasSearchPermission={hasSearchPermission}
+            />
           </Suspense>
         </Table>
       </div>

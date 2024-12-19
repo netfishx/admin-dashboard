@@ -170,3 +170,6 @@ export const orderListBombDetailRecordAtom = atom<
 export const withdrawFlowDialogAtom = atom<boolean>(false);
 // 提现-申请-流水弹窗-数据
 export const withdrawFlowDataAtom = atom<ApplyData | null>(null);
+
+// 报表管理-会员报表-真人视讯-代理ID
+export const memberListBaccaratAgentIdAtom = atom<string>("");
