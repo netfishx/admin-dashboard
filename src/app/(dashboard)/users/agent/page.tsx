@@ -92,15 +92,15 @@ async function TableHeaderWrapper({ total }: { total: number }) {
         {permissions?.includes("agent_search") && (
           <>
             <TableHead className="w-28">{t("upUsername")}</TableHead>
-            <TableHead className="w-28">{t("deptId")}</TableHead>
+            <TableHead className="w-20">{t("deptId")}</TableHead>
           </>
         )}
         <TableHead className="w-60">{t("userId")}</TableHead>
-        <TableHead className="w-40">{t("username")}</TableHead>
-        <TableHead className="w-20">{t("nickname")}</TableHead>
+        <TableHead className="w-28">{t("username")}</TableHead>
+        <TableHead className="w-32">{t("nickname")}</TableHead>
         <TableHead className="w-20">{t("status")}</TableHead>
         {total > 0 && (
-          <TableHead className="sticky right-0 w-[480px] bg-muted text-center">
+          <TableHead className="sticky right-0 w-100 bg-muted text-center">
             {t("action")}
           </TableHead>
         )}

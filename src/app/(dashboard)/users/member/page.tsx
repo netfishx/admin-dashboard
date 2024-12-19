@@ -111,14 +111,14 @@ async function TableHeaderWrapper({ total }: { total: number }) {
           </>
         )}
         <TableHead className="w-60">{t("userId")}</TableHead>
-        <TableHead className="w-40">{t("username")}</TableHead>
-        <TableHead className="w-40">{t("nickname")}</TableHead>
+        <TableHead className="w-28">{t("username")}</TableHead>
+        <TableHead className="w-28">{t("nickname")}</TableHead>
         <TableHead className="w-80">{t("walletAddress")}</TableHead>
         <TableHead className="w-28">{t("debtAmount")}</TableHead>
         <TableHead className="w-28">{t("creditAmount")}</TableHead>
         <TableHead className="w-20">{t("status")}</TableHead>
         {total > 0 && (
-          <TableHead className="sticky right-0 w-[630px] bg-muted text-center">
+          <TableHead className="sticky right-0 w-120 bg-muted text-center">
             {t("action")}
           </TableHead>
         )}
