@@ -593,7 +593,8 @@
       "download": "生成下载任务",
       "all": "全部",
       "directMember": "直属会员",
-      "nonDirectMember": "非直属会员"
+      "nonDirectMember": "非直属会员",
+      "agentUserId": "代理用户id"
     },
     "change": {
       "userId": "用户ID",

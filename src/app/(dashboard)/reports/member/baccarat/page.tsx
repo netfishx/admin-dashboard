@@ -50,7 +50,7 @@ export default async function Page({ searchParams }: CommonWrapperProps) {
             <div className="relative rounded-sm border">
               <Table className="table-fixed">
                 <ListHeader />
-                <TableSkeleton length={5} colSpan={10} />
+                <TableSkeleton length={5} colSpan={11} />
               </Table>
             </div>
           </div>

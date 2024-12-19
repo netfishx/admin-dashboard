@@ -26,7 +26,8 @@ export async function ListHeader() {
   return (
     <TableHeader>
       <TableRow className="bg-muted">
-        <TableHead className="w-60">{t("member_id")}</TableHead>
+        <TableHead className="w-60">{t("memberId")}</TableHead>
+        <TableHead className="w-60">{t("agentUserId")}</TableHead>
         <TableHead className="w-60">{t("member_type")}</TableHead>
         <TableHead className="w-60">{t("game_name")}</TableHead>
         <TableHead className="w-60">{t("bet_count")}</TableHead>
@@ -58,6 +59,7 @@ async function ListBody({
         list?.map((item: MemberReportsRecord) => (
           <TableRow key={nanoid()}>
             <TableCell>{item.memberId}</TableCell>
+            <TableCell>{item.parentAgentId}</TableCell>
             <TableCell>{item.memberTypeName}</TableCell>
             <TableCell>
               {
@@ -110,7 +112,7 @@ export async function List({
         <div className="relative rounded-sm border">
           <Table className="table-fixed">
             <ListHeader />
-            <TableSkeleton length={5} colSpan={10} />
+            <TableSkeleton length={5} colSpan={11} />
           </Table>
         </div>
       </div>

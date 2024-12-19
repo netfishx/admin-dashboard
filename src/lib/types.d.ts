@@ -363,6 +363,7 @@ export type MemberReportRequestParams = {
 
 // 会员报表-真人视讯出参
 export type MemberReportsRecord = {
+  parentAgentId?: string;
   memberId: string;
   memberTypeName: string;
   dataLink: string[];
