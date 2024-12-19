@@ -108,7 +108,7 @@ export async function List({
       <div className="flex-1 bg-background p-4">
         <div className="h-6" />
         <div className="relative rounded-sm border">
-          <Table>
+          <Table className="table-fixed">
             <ListHeader />
             <TableSkeleton length={5} colSpan={10} />
           </Table>

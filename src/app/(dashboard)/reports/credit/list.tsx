@@ -79,7 +79,7 @@ export async function List({
     return (
       <div className="flex-1 bg-background p-4">
         <div className="relative rounded-sm border">
-          <Table>
+          <Table className="table-fixed">
             <ListHeader />
             <ListBody list={[]} />
           </Table>
@@ -100,7 +100,7 @@ export async function List({
   return (
     <div className="flex-1 bg-background p-4">
       <div className="relative rounded-sm border">
-        <Table>
+        <Table className="table-fixed">
           <ListHeader />
           <Suspense fallback={<TableSkeleton length={5} colSpan={6} />}>
             <ListBody list={data?.list ?? []} />
