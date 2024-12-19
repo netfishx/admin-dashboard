@@ -13,7 +13,7 @@ import CopyButton from "../../fund/collection/copy-button";
 interface Dialogprops {
   open?: boolean;
   onOpenChange: (open: boolean) => void;
-  data: UserBasicInfo;
+  data?: UserBasicInfo;
 }
 
 export function AddDialog(props: Dialogprops) {
@@ -39,7 +39,7 @@ export function AddDialog(props: Dialogprops) {
                 {t("qrCode")}
               </div>
               <div>
-                <QRCodeSVG value={data?.rechargeAddress} />
+                <QRCodeSVG value={data?.rechargeAddress ?? ""} />
               </div>
             </div>
             <div className="mb-6 flex items-start gap-2 text-center">
@@ -48,7 +48,7 @@ export function AddDialog(props: Dialogprops) {
               </div>
               <div className="flex w-[300px] items-center gap-2">
                 {data?.rechargeAddress}
-                <CopyButton address={data?.rechargeAddress} />
+                <CopyButton address={data?.rechargeAddress ?? ""} />
               </div>
             </div>
             <div className="mb-6 flex items-start gap-2 text-center">

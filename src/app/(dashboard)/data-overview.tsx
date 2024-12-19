@@ -6,7 +6,7 @@ import { useState } from "react";
 import { AddDialog } from "./personal/info/add-dialog";
 import TruncatedAmount from "./truncated-amount";
 
-export function DataOverview({ data }: { data: UserBasicInfo }) {
+export function DataOverview({ data }: { data?: UserBasicInfo }) {
   const t = useTranslations();
   const [open, setOpen] = useState(false);
 
