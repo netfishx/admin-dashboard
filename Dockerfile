@@ -2,6 +2,7 @@ FROM oven/bun:1-slim AS base
 
 WORKDIR /app
 
+ENV NODE_ENV=production
 ENV NEXT_TELEMETRY_DISABLED=1
 
 FROM base AS deps
@@ -20,22 +21,15 @@ COPY . .
 
 RUN bun run build
 
-FROM base AS runner
+FROM oven/bun:1-alpine AS runner
 
 ENV NODE_ENV=production
-
-RUN addgroup --system --gid 1002 nodejs
-RUN adduser --system --uid 1002 nextjs
-
-RUN mkdir .next
-RUN chown nextjs:nodejs .next
+ENV NEXT_TELEMETRY_DISABLED=1
 
 # COPY --from=builder /app/public ./public
-COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
-COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
+COPY --from=builder /app/.next/standalone ./
+COPY --from=builder /app/.next/static ./.next/static
 
-
-USER nextjs
 
 EXPOSE 3000
 
