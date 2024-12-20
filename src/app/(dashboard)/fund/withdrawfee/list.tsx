@@ -35,11 +35,7 @@ export function List({ data }: { data: WithdrawFeeList[] }) {
   //     setFeeList(data ?? []);
   //   });
   // }, []);
-  const [currentParams, setCurrentParams] = useState<WithdrawFeeList>({
-    fixedFee: 0,
-    percentageFee: 0,
-    currency: "",
-  });
+  const [currentParams, setCurrentParams] = useState({});
 
   const [loading, setLoading] = useState(false);
 
@@ -48,11 +44,15 @@ export function List({ data }: { data: WithdrawFeeList[] }) {
       return;
     }
     setLoading(true);
-    const percentageFeeParam = Big(currentParams.percentageFee)
+    const percentageFeeParam = Big(
+      (currentParams as WithdrawFeeList).percentageFee,
+    )
       .round(2)
       .div(100)
       .toNumber();
-    const fixedFeeParam = Big(currentParams.fixedFee).round(2).toNumber();
+    const fixedFeeParam = Big((currentParams as WithdrawFeeList).fixedFee)
+      .round(2)
+      .toNumber();
 
     const params = {
       ...currentParams,
@@ -111,16 +111,16 @@ export function List({ data }: { data: WithdrawFeeList[] }) {
             <TableBody>
               {feeList && feeList.length > 0 ? (
                 feeList.map((item, index) => (
-                  // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
-                  <TableRow key={index}>
+                  <TableRow key={item.id}>
                     <TableCell>
-                      <Input
+                      {item.currency}
+                      {/* <Input
                         type="text"
                         value={item.currency}
                         onChange={(e) => {
                           handleCurrencyChange(index, e.target.value);
                         }}
-                      />
+                      /> */}
                     </TableCell>
 
                     <TableCell className="text-center">
