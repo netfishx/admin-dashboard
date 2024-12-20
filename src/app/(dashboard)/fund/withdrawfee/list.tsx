@@ -26,11 +26,21 @@ export function List() {
   const [feeList, setFeeList] = useState<WithdrawFeeList[]>([]);
 
   useEffect(() => {
+    // 比例手续费 传参数的时候处100，获取数据的时候乘100
     getWithdrawFeeList().then(({ data }) => {
+      data?.map((item) => {
+        item.percentageFee = Big(item.percentageFee).times(100).toNumber();
+        item.fixedFee = Big(item.fixedFee).round(2).toNumber();
+      });
+
       setFeeList(data ?? []);
     });
   }, []);
-  const [currentParams, setCurrentParams] = useState({});
+  const [currentParams, setCurrentParams] = useState<WithdrawFeeList>({
+    fixedFee: 0,
+    percentageFee: 0,
+    currency: "",
+  });
 
   const [loading, setLoading] = useState(false);
 
@@ -39,7 +49,19 @@ export function List() {
       return;
     }
     setLoading(true);
-    const res = await saveWithdrawFee(currentParams as WithdrawFeeList);
+    const percentageFeeParam = Big(currentParams.percentageFee)
+      .round(2)
+      .div(100)
+      .toNumber();
+    const fixedFeeParam = Big(currentParams.fixedFee).round(2).toNumber();
+
+    const params = {
+      ...currentParams,
+      percentageFee: percentageFeeParam,
+      fixedFee: fixedFeeParam,
+    };
+
+    const res = await saveWithdrawFee(params as WithdrawFeeList);
     setLoading(false);
     if (res.code === 0) {
       toast.success(res.message);
@@ -100,17 +122,15 @@ export function List() {
                       <TableCell className="text-center">
                         <Input
                           type="number"
-                          value={Big(item.percentageFee)
-                            .times(100)
-                            .round(2)
-                            .toNumber()}
+                          value={Big(item.percentageFee).round(2).toString()}
                           min={0}
+                          max={100}
                           step={0.01}
                           onChange={(e) => {
-                            handlePercentageChange(
-                              index,
-                              Number(e.target.value),
-                            );
+                            const value = Number(e.target.value);
+                            if (value <= 100) {
+                              handlePercentageChange(index, value);
+                            }
                           }}
                         />
                       </TableCell>

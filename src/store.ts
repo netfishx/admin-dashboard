@@ -189,3 +189,5 @@ export const orderParmasAtom = atom<{
   agentId?: string;
   memberId?: string;
 } | null>(null);
+// 报表管理-会员报表-真人视讯-代理ID
+export const memberListBaccaratAgentIdAtom = atom<string>("");

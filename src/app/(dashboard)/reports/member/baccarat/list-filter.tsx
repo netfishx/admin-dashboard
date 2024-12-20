@@ -12,6 +12,8 @@ import {
 } from "@/components/ui/select";
 import type { GameInfo } from "@/lib/types";
 import { makeDownload } from "@/lib/utils";
+import { memberListBaccaratAgentIdAtom } from "@/store";
+import { useAtom } from "jotai";
 import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -31,7 +33,9 @@ export function ListFilter({
   const [isDownload, startDownload] = useTransition();
   const searchParams = useSearchParams();
   const router = useRouter();
-
+  const [, setMemberListBaccaratAgentId] = useAtom(
+    memberListBaccaratAgentIdAtom,
+  );
   const [parentAgentId, setParentAgentId] = useQueryState("parentAgentId", {
     defaultValue: "",
   });
@@ -57,6 +61,7 @@ export function ListFilter({
 
   const handleSearch = () => {
     if (dateRange.startTime && dateRange.endTime) {
+      setMemberListBaccaratAgentId(parentAgentId);
       startTransition(() => router.refresh());
     } else {
       toast.error(t("selectDate"));
@@ -122,7 +127,7 @@ export function ListFilter({
         </div>
         {hasSearchPermission && (
           <div className="flex items-center gap-4">
-            <Label className="shrink-0">{t("superAgentId")}</Label>
+            <Label className="shrink-0">{t("agentId")}</Label>
             <Input
               value={parentAgentId ?? ""}
               onChange={(e) => setParentAgentId(e.target.value)}

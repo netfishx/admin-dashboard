@@ -75,7 +75,7 @@ export function MemberForm({ gameList }: { gameList: GameInfo[] }) {
         </div>
         <div className="flex items-center gap-2">
           <Label className="shrink-0">{t("drawtime")}</Label>
-          <DateRangeFilter />
+          <DateRangeFilter enableTimeSelect={false} />
         </div>
       </div>
       <div className="flex items-center gap-4">

@@ -15,7 +15,9 @@ import type {
   PokerReportRequestParams,
   PokerReportRequestRecords,
 } from "@/lib/types";
+import { formatNumber } from "@/lib/utils";
 import { getSession } from "@/session";
+import { nanoid } from "nanoid";
 import { getTranslations } from "next-intl/server";
 import { Suspense } from "react";
 import DetailButton from "./detail-button";
@@ -73,14 +75,16 @@ async function ListBody({
     <TableBody>
       {list?.length > 0 ? (
         list?.map((item: PokerReportRequestRecords) => (
-          <TableRow key={`${item.agentId}`}>
+          <TableRow key={nanoid()}>
             {hasSearchPermission && <TableCell>{item.agentId}</TableCell>}
             <TableCell>
               {gameList.find((i) => i.gameType === item.gameType)?.gameName}
             </TableCell>
             <TableCell>{handleRoomType(Number(item.roomType))}</TableCell>
             <TableCell>{item.issueAmount}</TableCell>
-            <TableCell>{item.settledAmount}</TableCell>
+            <TableCell>
+              {formatNumber(Number(item.settledAmount) || 0)}
+            </TableCell>
             <TableCell className="w-24 text-center sticky right-0 z-10 bg-background">
               <DetailButton agentId={item.agentId} />
             </TableCell>
@@ -113,7 +117,7 @@ export async function List({
     return (
       <div className="flex-1 bg-background p-4">
         <div className="h-6" />
-        <div className="relative rounded-sm border">
+        <div className="relative rounded-sm border  mt-2">
           <Table className="table-fixed">
             <ListHeader />
             <TableSkeleton length={5} colSpan={6} />
@@ -150,7 +154,7 @@ export async function List({
           </>
         )}
       </div>
-      <div className="border rounded-sm relative">
+      <div className="border rounded-sm relative mt-2">
         <Table className="table-fixed">
           <ListHeader />
           <Suspense fallback={<TableSkeleton length={5} colSpan={6} />}>
