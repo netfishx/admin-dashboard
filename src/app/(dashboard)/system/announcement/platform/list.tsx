@@ -63,18 +63,14 @@ export async function TableHeaderWrapper() {
   return (
     <TableHeader>
       <TableRow className="bg-muted">
-        {/* admin permission */}
         <TableHead className="w-48">{t("startTime")}</TableHead>
 
         <TableHead className="w-48">{t("endTime")}</TableHead>
 
-        {/* admin permission */}
         <TableHead className="w-48">{t("createTime")}</TableHead>
 
-        {/* admin permission */}
-        <TableHead className="w-32">{t("type")}</TableHead>
+        <TableHead className="w-48">{t("type")}</TableHead>
 
-        {/* admin permission */}
         <TableHead className="w-32">{t("userId")}</TableHead>
 
         <TableHead className="w-[450px]">{t("content")}</TableHead>
