@@ -15,6 +15,7 @@ import type {
   SupplierReportRecords,
   SupplierReportRequestParams,
 } from "@/lib/types";
+import { formatNumber } from "@/lib/utils";
 import { nanoid } from "nanoid";
 import { getTranslations } from "next-intl/server";
 
@@ -55,9 +56,13 @@ async function ListBody({
             <TableCell>
               {gameList?.find((i) => i.gameId === item.gameId)?.gameName}
             </TableCell>
-            <TableCell>{item.betNum}</TableCell>
-            <TableCell>{item.availableBetAmount}</TableCell>
-            <TableCell>{item.percentAmount}</TableCell>
+            <TableCell>{formatNumber(Number(item.betNum || 0))}</TableCell>
+            <TableCell>
+              {formatNumber(Number(item.availableBetAmount || 0))}
+            </TableCell>
+            <TableCell>
+              {formatNumber(Number(item.percentAmount || 0))}
+            </TableCell>
           </TableRow>
         ))
       ) : (
@@ -129,7 +134,7 @@ export async function List({
         )}
       </div>
 
-      <div className="relative rounded-sm border">
+      <div className="relative rounded-sm border mt-2">
         <Table className="table-fixed">
           <ListHeader />
           <ListBody list={data?.list || []} gameList={gameList || []} />

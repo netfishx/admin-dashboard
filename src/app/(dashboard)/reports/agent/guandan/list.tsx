@@ -117,7 +117,7 @@ export async function List({
     return (
       <div className="flex-1 bg-background p-4">
         <div className="h-6" />
-        <div className="relative rounded-sm border">
+        <div className="relative rounded-sm border  mt-2">
           <Table className="table-fixed">
             <ListHeader />
             <TableSkeleton length={5} colSpan={6} />
@@ -154,7 +154,7 @@ export async function List({
           </>
         )}
       </div>
-      <div className="border rounded-sm relative">
+      <div className="border rounded-sm relative mt-2">
         <Table className="table-fixed">
           <ListHeader />
           <Suspense fallback={<TableSkeleton length={5} colSpan={6} />}>

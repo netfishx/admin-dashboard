@@ -57,7 +57,7 @@ export function ListFilter() {
       <div className="flex items-center gap-4">
         <div className="flex items-center gap-2">
           <Label>{t("dateRange")}</Label>
-          <DateRangeFilter enableTimeSelect={false} />
+          <DateRangeFilter enableTimeSelect={true} />
         </div>
       </div>
 

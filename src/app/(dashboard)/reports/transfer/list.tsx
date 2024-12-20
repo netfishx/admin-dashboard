@@ -14,6 +14,7 @@ import type {
   TransferRecordRequestParams,
   TransferRecordRequestRecords,
 } from "@/lib/types";
+import { formatNumber } from "@/lib/utils";
 import { hasPermission } from "@/session";
 import { getTranslations } from "next-intl/server";
 import { Suspense } from "react";
@@ -49,7 +50,7 @@ async function ListBody({ list }: { list: TransferRecordRequestRecords[] }) {
             <TableCell>{item.transactionID}</TableCell>
             <TableCell>{item.senderAgentId}</TableCell>
             <TableCell>{item.recipientAgentId}</TableCell>
-            <TableCell>{item.amount}</TableCell>
+            <TableCell>{formatNumber(Number(item.amount || 0))}</TableCell>
             {hasTransferTypePermission && (
               <TableCell>
                 {item.operateCode === -1 ? t("transferOut") : t("transferIn")}

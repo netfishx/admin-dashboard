@@ -15,6 +15,7 @@ import type {
   MemberReportRequestParams,
   MemberReportsRecord,
 } from "@/lib/types";
+import { formatNumber } from "@/lib/utils";
 import { type SessionData, getSession } from "@/session";
 import { nanoid } from "nanoid";
 import { getTranslations } from "next-intl/server";
@@ -77,6 +78,7 @@ async function ListBody({
                 <AgentId session={session as SessionData} />
               </TableCell>
             )}
+            <TableCell>{item.memberTypeName}</TableCell>
             <TableCell>
               {
                 gameList?.find((game) => game.gameType === item.gameType)
@@ -84,11 +86,21 @@ async function ListBody({
               }
             </TableCell>
             <TableCell>{item.betNum}</TableCell>
-            <TableCell>{item.memberBetAmount}</TableCell>
-            <TableCell>{item.availableBetAmount}</TableCell>
-            <TableCell>{item.winLossAmount}</TableCell>
-            <TableCell>{item.pureBackAmount}</TableCell>
-            <TableCell>{item.profitLossAmount}</TableCell>
+            <TableCell>
+              {formatNumber(Number(item.memberBetAmount || 0))}
+            </TableCell>
+            <TableCell>
+              {formatNumber(Number(item.availableBetAmount || 0))}
+            </TableCell>
+            <TableCell>
+              {formatNumber(Number(item.winLossAmount || 0))}
+            </TableCell>
+            <TableCell>
+              {formatNumber(Number(item.pureBackAmount || 0))}
+            </TableCell>
+            <TableCell>
+              {formatNumber(Number(item.profitLossAmount || 0))}
+            </TableCell>
             <TableCell className="sticky right-0 z-10 w-24 bg-background text-center">
               <DetailButton item={item} />
             </TableCell>
@@ -154,41 +166,48 @@ export async function List({
               {t("bet_amount")}:
             </Label>
             <span className="min-w-24 text-center text-sm">
-              {data?.list[0]?.totalMemberBetAmount} &nbsp;
+              {formatNumber(Number(data?.list[0]?.totalMemberBetAmount || 0))}
+              &nbsp;
             </span>
 
             <Label className="min-w-24 text-center text-sm">
               {t("valid_amount")}:
             </Label>
             <span className="min-w-24 text-center text-sm">
-              {data?.list[0]?.totalAvailableBetAmount} &nbsp;
+              {formatNumber(
+                Number(data?.list[0]?.totalAvailableBetAmount || 0),
+              )}
+              &nbsp;
             </span>
 
             <Label className="min-w-24 text-center text-sm">
               {t("win_loss_amount")}:
             </Label>
             <span className="min-w-24 text-center text-sm">
-              {data?.list[0]?.totalWinLossAmount} &nbsp;
+              {formatNumber(Number(data?.list[0]?.totalWinLossAmount || 0))}
+              &nbsp;
             </span>
 
             <Label className="min-w-24 text-center text-sm">
               {t("cashback_amount")}:
             </Label>
             <span className="min-w-24 text-center text-sm">
-              {data?.list[0]?.totalPureBackAmount} &nbsp;
+              {formatNumber(Number(data?.list[0]?.totalPureBackAmount || 0))}
+              &nbsp;
             </span>
 
             <Label className="min-w-24 text-center text-sm">
               {t("profit_loss_result")}:
             </Label>
             <span className="min-w-24 text-center text-sm">
-              {data?.list[0]?.totalProfitLossAmount} &nbsp;
+              {formatNumber(Number(data?.list[0]?.totalProfitLossAmount || 0))}
+              &nbsp;
             </span>
           </>
         )}
       </div>
 
-      <div className="relative rounded-sm border">
+      <div className="relative rounded-sm border mt-2">
         <Table className="table-fixed">
           <ListHeader hasSearchPermission={hasSearchPermission} />
           <Suspense fallback={<TableSkeleton length={5} colSpan={10} />}>
