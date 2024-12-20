@@ -1,6 +1,4 @@
 "use client";
-import { getOrderDetail } from "@/api";
-import TableSkeleton from "@/components/table-skeleton";
 import {
   Dialog,
   DialogContent,
@@ -8,7 +6,6 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
-import { Skeleton } from "@/components/ui/skeleton";
 import {
   Table,
   TableBody,
@@ -17,37 +14,25 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import type { OrderItemDetailType, OrderReportsRecord } from "@/lib/types";
+import type { OrderItemDetailType } from "@/lib/types";
 import Big from "big.js";
 import { useTranslations } from "next-intl";
-import { Suspense, useEffect, useState } from "react";
 
-interface Dialogprops {
+export function Detaildialog(props: {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  item: OrderReportsRecord;
-}
-
-export function Detaildialog(props: Dialogprops) {
-  const { open, onOpenChange, item } = props;
-  const [data, setData] = useState<OrderItemDetailType>();
+  data?: OrderItemDetailType;
+}) {
+  const { open, onOpenChange, data } = props;
   const t = useTranslations("report.orderlist");
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
-  useEffect(() => {
-    if (open) {
-      getOrderDetail({ id: item.id }).then((res) => {
-        setData(res?.data);
-      });
-    }
-  }, [open]);
 
   function formatResult(result = "") {
     // Define suit mapping with colors for Tailwind
     const suitMap: Record<string, { symbol: string; color: string }> = {
-      H: { symbol: "♥", color: "text-red-500" }, // Hearts
-      D: { symbol: "♦", color: "text-red-500" }, // Diamonds
-      C: { symbol: "♣", color: "text-black" }, // Clubs
-      S: { symbol: "♠", color: "text-black" }, // Spades
+      H: { symbol: "♥", color: "text-destructive" }, // Hearts
+      D: { symbol: "♦", color: "text-destructive" }, // Diamonds
+      C: { symbol: "♣", color: "text-foreground" }, // Clubs
+      S: { symbol: "♠", color: "text-foreground" }, // Spades
     };
 
     // Split player and banker data
@@ -94,43 +79,34 @@ export function Detaildialog(props: Dialogprops) {
         </DialogHeader>
         <div className="flex justify-center">{t("shareDetail")}</div>
         <ScrollArea className="w-[450px]">
-          <Suspense fallback={<Skeleton />}>
-            <div className="mb-1 whitespace-nowrap">
-              {data?.revenueShare.map(
-                (item) =>
-                  `${item.accountId} - ${Big(item.percent * 100).toFixed(2)}%；`,
-              )}
-            </div>
-          </Suspense>
+          <div className="mb-1 whitespace-nowrap">
+            {data?.revenueShare.map(
+              (item) =>
+                `${item.accountId} - ${Big(item.percent * 100).toFixed(2)}%；`,
+            )}
+          </div>
           <ScrollBar orientation="horizontal" />
         </ScrollArea>
-        <Suspense fallback={<TableSkeleton length={1} colSpan={3} />}>
-          <Table>
-            <TableHeader>
-              <TableRow className="bg-muted">
-                <TableHead className="w-20 text-center">{t("shoe")}</TableHead>
-                <TableHead className="w-20 text-center">{t("play")}</TableHead>
-                <TableHead className="w-40 text-center">
-                  {t("resultp")}
-                </TableHead>
-              </TableRow>
-            </TableHeader>
 
-            <TableBody>
-              <TableRow>
-                <TableCell className="w-20 text-center">
-                  {data?.shoeId}
-                </TableCell>
-                <TableCell className="w-20 text-center">
-                  {data?.playId}
-                </TableCell>
-                <TableCell className="w-40 text-center">
-                  {formatResult(data?.result || "")}
-                </TableCell>
-              </TableRow>
-            </TableBody>
-          </Table>
-        </Suspense>
+        <Table>
+          <TableHeader>
+            <TableRow className="bg-muted">
+              <TableHead className="w-20 text-center">{t("shoe")}</TableHead>
+              <TableHead className="w-20 text-center">{t("play")}</TableHead>
+              <TableHead className="w-40 text-center">{t("resultp")}</TableHead>
+            </TableRow>
+          </TableHeader>
+
+          <TableBody>
+            <TableRow>
+              <TableCell className="w-20 text-center">{data?.shoeId}</TableCell>
+              <TableCell className="w-20 text-center">{data?.playId}</TableCell>
+              <TableCell className="w-40 text-center">
+                {formatResult(data?.result || "")}
+              </TableCell>
+            </TableRow>
+          </TableBody>
+        </Table>
       </DialogContent>
     </Dialog>
   );
