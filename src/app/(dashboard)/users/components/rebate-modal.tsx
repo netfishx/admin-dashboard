@@ -1,9 +1,10 @@
 "use client";
 
-import { getGameConfig, updateAgentGameConfig } from "@/api";
+import { updateAgentGameConfig } from "@/api";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogDescription,
   DialogFooter,
@@ -11,7 +12,6 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
-import { Skeleton } from "@/components/ui/skeleton";
 import {
   ScrollableTable,
   TableBody,
@@ -21,15 +21,14 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import type { GameConfig } from "@/lib/types";
-import { rebateModalAtom } from "@/store";
-import { useAtom } from "jotai";
+import { rebateDataAtom, rebateModalAtom } from "@/store";
+import { useAtom, useAtomValue } from "jotai";
 import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import {
   type Dispatch,
   type SetStateAction,
-  useEffect,
   useState,
   useTransition,
 } from "react";
@@ -44,74 +43,26 @@ export function RebateModal({ userId }: { userId: string }) {
   const t = useTranslations("users.agents");
 
   const [open, setOpen] = useAtom(rebateModalAtom);
-  const [loading, setLoading] = useState<boolean>(true);
   const [isPending, startTransition] = useTransition();
-  const [data, setData] = useState<GameConfig[] | undefined>();
+  const data = useAtomValue(rebateDataAtom);
   const router = useRouter();
-  const [initialData, setInitialData] = useState<GameConfig[] | undefined>();
-  const [isValid, setIsValid] = useState<boolean>(false);
-
-  useEffect(() => {
-    if (userId && open) {
-      setLoading(true);
-      getGameConfig(userId).then(({ code, data, message }) => {
-        setLoading(false);
-        if (code === 0 && data) {
-          setData(data);
-          setInitialData(data);
-        } else {
-          toast.error(message);
-        }
-      });
-    }
-  }, [userId, open]);
+  const [isValid, setIsValid] = useState<boolean>(true);
+  const [changedItems, setChangedItems] = useState<{
+    [key: number]: string;
+  }>({});
 
   const handleChange = (gameId: number, value: string) => {
-    if (data) {
-      const list = data.map((item) => {
-        if (item.gameId === gameId) {
-          return {
-            ...item,
-            backRate: value,
-          };
-        }
-        return item;
-      });
-      setData(list);
-    }
-  };
-
-  const hasChanges = () => {
-    if (!(data && initialData)) {
-      return false;
-    }
-    return data.some((item) => {
-      const initialItem = initialData.find((i) => i.gameId === item.gameId);
-      return initialItem && initialItem.backRate !== item.backRate;
-    });
-  };
-
-  const getChangedItems = () => {
-    if (!(data && initialData)) {
-      return [];
-    }
-    return data.filter((item) => {
-      const initialItem = initialData.find((i) => i.gameId === item.gameId);
-      return initialItem && initialItem.backRate !== item.backRate;
-    });
+    setChangedItems({ ...changedItems, [gameId]: value });
   };
 
   const handleConfirm = () => {
-    if (data) {
-      const changedItems = getChangedItems();
-      if (changedItems.length === 0) {
-        setOpen(false);
-        return;
-      }
-
+    if (Object.keys(changedItems).length > 0) {
       updateAgentGameConfig({
         userId,
-        list: changedItems,
+        list: Object.entries(changedItems).map(([gameId, backRate]) => ({
+          gameId: Number(gameId),
+          backRate,
+        })),
       }).then(({ code, message }) => {
         if (code === 0) {
           toast.success(message);
@@ -124,7 +75,13 @@ export function RebateModal({ userId }: { userId: string }) {
     }
   };
   return (
-    <Dialog open={open} onOpenChange={(open) => setOpen(open)}>
+    <Dialog
+      open={open}
+      onOpenChange={(o) => {
+        setChangedItems({});
+        setOpen(o);
+      }}
+    >
       <DialogContent
         className="lg:max-w-md 2xl:max-w-lg"
         onPointerDownOutside={(e) => e.preventDefault()}
@@ -141,23 +98,21 @@ export function RebateModal({ userId }: { userId: string }) {
                 <TableHead>{t("rebate")}</TableHead>
               </TableRow>
             </TableHeader>
-            {loading ? (
-              <RebateSkeleton />
-            ) : (
-              <TableBodyWrapper
-                data={data ?? []}
-                handleChange={(gameId, value) => handleChange(gameId, value)}
-                setIsValid={setIsValid}
-              />
-            )}
+            <TableBodyWrapper
+              data={data ?? []}
+              handleChange={(gameId, value) => handleChange(gameId, value)}
+              setIsValid={setIsValid}
+            />
           </ScrollableTable>
         </div>
         <DialogFooter>
-          <Button variant="outline" onClick={() => setOpen(false)}>
-            {translations("cancel")}
-          </Button>
+          <DialogClose asChild>
+            <Button variant="outline">{translations("cancel")}</Button>
+          </DialogClose>
           <Button
-            disabled={isPending || !hasChanges() || !isValid}
+            disabled={
+              isPending || Object.keys(changedItems).length === 0 || !isValid
+            }
             onClick={() => startTransition(handleConfirm)}
           >
             {isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
@@ -166,24 +121,6 @@ export function RebateModal({ userId }: { userId: string }) {
         </DialogFooter>
       </DialogContent>
     </Dialog>
-  );
-}
-
-/**
- * 加载状态骨架屏组件
- */
-function RebateSkeleton() {
-  return (
-    <TableBody>
-      {Array.from({ length: 5 }).map((_, index) => (
-        // biome-ignore lint/suspicious/noArrayIndexKey: 骨架屏使用索引作为key是可以接受的
-        <TableRow key={index}>
-          <TableCell colSpan={2}>
-            <Skeleton />
-          </TableCell>
-        </TableRow>
-      ))}
-    </TableBody>
   );
 }
 
@@ -214,7 +151,7 @@ function TableBodyWrapper({
                 <div className="flex flex-row items-center gap-2">
                   <Input
                     className="w-32"
-                    value={item.backRate?.toString() ?? ""}
+                    defaultValue={item.backRate?.toString() ?? ""}
                     type="number"
                     step={0.01}
                     min={0}

@@ -297,6 +297,7 @@ export async function getChangeLog(params: {
     url: "/operateLog/list",
     params,
     token: user?.token,
+    expire: 3,
   });
 }
 
@@ -350,6 +351,7 @@ export async function getAgentLoginLog(params: {
     url: "/agent/loginLog/listPage",
     params,
     token: user?.token,
+    expire: 3,
   });
 }
 
@@ -379,6 +381,7 @@ export async function getMemberLoginLog(params: {
     url: "/member/loginLog/listPage",
     params,
     token: user?.token,
+    expire: 3,
   });
 }
 
@@ -689,6 +692,7 @@ export async function getGameOdds({
     url: "/game/oddsLimit/list",
     token: user?.token,
     params: { gameId, userId },
+    expire: 3,
   });
 }
 

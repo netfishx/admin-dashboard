@@ -3,9 +3,12 @@ import type {
   AnnouncementList,
   BackgroundImageList,
   BombDetailPlayerDetails,
+  ChangeLog,
   DictionaryList,
   GameConfig,
+  GameOdds,
   GameRecordRequestRecords,
+  LoginLog,
   MemberList,
   OrderReportsRecord,
   PageData,
@@ -37,16 +40,20 @@ export const userInfoModalAtom = atom<boolean>(false);
 export const transferMoneyModalAtom = atom<boolean>(false);
 // 用户管理-代理管理-游戏设置弹窗
 export const gameSettingModalAtom = atom<boolean>(false);
-export const gameSettingDataAtom = atom<GameConfig[] | undefined>();
+export const gameSettingDataAtom = atom<GameConfig[]>();
 // 用户管理-代理管理-限额设置弹窗
 export const limitModalAtom = atom<boolean>(false);
+export const limitGamesAtom = atom<GameConfig[]>();
+export const limitDataAtom = atom<GameOdds[]>();
 // 用户管理-代理管理-返水设置弹窗
 export const rebateModalAtom = atom<boolean>(false);
-export const rebateDataAtom = atom<GameConfig[] | undefined>();
+export const rebateDataAtom = atom<GameConfig[]>();
 // 用户管理-代理管理-登录日志弹窗
 export const loginLogModalAtom = atom<boolean>(false);
+export const loginLogDataAtom = atom<PageData<LoginLog>>();
 // 用户管理-代理管理-变更日志弹窗
 export const changeLogModalAtom = atom<boolean>(false);
+export const changeLogDataAtom = atom<PageData<ChangeLog>>();
 // 用户管理-代理管理-代理ID
 export const agentIdAtom = atom<string>("");
 // 用户管理-代理管理-代理数据
@@ -62,6 +69,7 @@ export const memberInfoDataAtom = atom<MemberList | null>(null);
 export const memberInfoModalAtom = atom<boolean>(false);
 // 用户管理-会员管理-占成弹窗
 export const ratioModalAtom = atom<boolean>(false);
+export const ratioDataAtom = atom<GameConfig[]>();
 // 用户管理-会员管理-增加授信弹窗
 export const increaseCreditModalAtom = atom<boolean>(false);
 // 用户管理-会员管理-减少授信弹窗

@@ -13,12 +13,20 @@ export function Modals() {
   const agentId = useAtomValue(agentIdAtom);
   return (
     <>
-      <LoginLogModal id={agentId} type="AGENT" />
-      <UserInfoModal />
-      <GameSettingModal />
-      <RebateModal userId={agentId} />
-      <ChangeLogModal targetUserId={agentId} appType="AGENT" />
-      <TransferMoneyModal />
+      <LoginLogModal
+        key={`LoginLogModal-${agentId}`}
+        id={agentId}
+        type="AGENT"
+      />
+      <UserInfoModal key={`UserInfoModal-${agentId}`} />
+      <GameSettingModal key={`GameSettingModal-${agentId}`} />
+      <RebateModal userId={agentId} key={`RebateModal-${agentId}`} />
+      <ChangeLogModal
+        targetUserId={agentId}
+        appType="AGENT"
+        key={`ChangeLogModal-${agentId}`}
+      />
+      <TransferMoneyModal key={`TransferMoneyModal-${agentId}`} />
     </>
   );
 }

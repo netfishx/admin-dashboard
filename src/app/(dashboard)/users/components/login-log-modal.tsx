@@ -9,7 +9,6 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { Skeleton } from "@/components/ui/skeleton";
 import {
   ScrollableTable,
   TableBody,
@@ -19,7 +18,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import type { LoginLog } from "@/lib/types";
-import { loginLogModalAtom } from "@/store";
+import { loginLogDataAtom, loginLogModalAtom } from "@/store";
 import { useAtom } from "jotai";
 import { useTranslations } from "next-intl";
 import { startTransition, useEffect, useState } from "react";
@@ -34,17 +33,13 @@ export function LoginLogModal({
 }) {
   const translations = useTranslations();
   const t = useTranslations("users.agents");
-  const [data, setData] = useState<LoginLog[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
+  const [data, setData] = useAtom(loginLogDataAtom);
+
   const [open, setOpen] = useAtom(loginLogModalAtom);
-  const [total, setTotal] = useState<number>(0);
   const [page, setPage] = useState<number>(1);
   const [size, setSize] = useState<number>(10);
+
   useEffect(() => {
-    if (!open) {
-      return;
-    }
-    setLoading(true);
     startTransition(async () => {
       if (id && type === "AGENT") {
         const { code, data, message } = await getAgentLoginLog({
@@ -52,12 +47,9 @@ export function LoginLogModal({
           pageNum: page,
           pageSize: size,
         });
-        setLoading(false);
+
         if (code === 0 && data) {
-          setData(data.list);
-          setTotal(data.total);
-          setPage(data.pageNum);
-          setSize(data.pageSize);
+          setData(data);
         } else {
           toast.error(message);
         }
@@ -67,22 +59,20 @@ export function LoginLogModal({
           pageNum: page,
           pageSize: size,
         });
-        setLoading(false);
+
         if (code === 0 && data) {
-          setData(data.list);
-          setTotal(data.total);
-          setPage(data.pageNum);
-          setSize(data.pageSize);
+          setData(data);
         } else {
           toast.error(message);
         }
       }
     });
-  }, [id, page, size, type, open]);
+  }, [id, type, page, size, setData]);
 
   const handleClose = () => {
+    console.info("close");
     setOpen(false);
-    setData([]);
+    setData(undefined);
     setPage(1);
     setSize(10);
   };
@@ -106,37 +96,34 @@ export function LoginLogModal({
                 <TableHead>{t("status")}</TableHead>
               </TableRow>
             </TableHeader>
-            {loading ? (
-              <LoginLogSkeleton />
-            ) : (
-              <TableBody>
-                {data?.length > 0 ? (
-                  data?.map((item: LoginLog) => (
-                    <TableRow key={item.id}>
-                      <TableCell>
-                        <Time time={item.createTime} />
-                      </TableCell>
-                      <TableCell>{item.ip}</TableCell>
-                      <TableCell>{item.region}</TableCell>
-                      <TableCell>
-                        <StatusLabel status={Number(item.isSuccess)} />
-                      </TableCell>
-                    </TableRow>
-                  ))
-                ) : (
-                  <TableRow>
-                    <TableCell colSpan={4} className="h-40 text-center">
-                      {translations("noData")}
+            <TableBody>
+              {/* biome-ignore lint/style/useExplicitLengthCheck: <explanation> */}
+              {data?.list?.length ? (
+                data?.list?.map((item: LoginLog) => (
+                  <TableRow key={item.id}>
+                    <TableCell>
+                      <Time time={item.createTime} />
+                    </TableCell>
+                    <TableCell>{item.ip}</TableCell>
+                    <TableCell>{item.region}</TableCell>
+                    <TableCell>
+                      <StatusLabel status={Number(item.isSuccess)} />
                     </TableCell>
                   </TableRow>
-                )}
-              </TableBody>
-            )}
+                ))
+              ) : (
+                <TableRow>
+                  <TableCell colSpan={4} className="h-40 text-center">
+                    {translations("noData")}
+                  </TableCell>
+                </TableRow>
+              )}
+            </TableBody>
           </ScrollableTable>
         </div>
-        {data?.length > 0 && (
+        {!!data?.total && (
           <ModalPagination
-            total={total}
+            total={data.total}
             currentPage={page}
             size={size}
             setPage={setPage}
@@ -145,21 +132,6 @@ export function LoginLogModal({
         )}
       </DialogContent>
     </Dialog>
-  );
-}
-
-function LoginLogSkeleton() {
-  return (
-    <TableBody>
-      {Array.from({ length: 5 }).map((_, index) => (
-        // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
-        <TableRow key={index}>
-          <TableCell colSpan={4}>
-            <Skeleton />
-          </TableCell>
-        </TableRow>
-      ))}
-    </TableBody>
   );
 }
 

@@ -1,14 +1,16 @@
 "use client";
 
-import { getGameConfig } from "@/api";
+import { getAgentLoginLog, getChangeLog, getGameConfig } from "@/api";
 import { Button } from "@/components/ui/button";
 import type { AgentData } from "@/lib/types";
 import {
   agentDataAtom,
   agentIdAtom,
+  changeLogDataAtom,
   changeLogModalAtom,
   gameSettingDataAtom,
   gameSettingModalAtom,
+  loginLogDataAtom,
   loginLogModalAtom,
   rebateDataAtom,
   rebateModalAtom,
@@ -42,14 +44,18 @@ export default function Action({
   const setRebateData = useSetAtom(rebateDataAtom);
   // 登录日志 弹窗
   const setLoginLogModal = useSetAtom(loginLogModalAtom);
+  const setLoginLogData = useSetAtom(loginLogDataAtom);
   // 变更日志 弹窗
   const setChangeLogModal = useSetAtom(changeLogModalAtom);
+  const setChangeLogData = useSetAtom(changeLogDataAtom);
   // 代理ID
   const setAgentId = useSetAtom(agentIdAtom);
   // 代理 数据
   const setAgentData = useSetAtom(agentDataAtom);
   const [gameConfigIsPending, startGetGameConfig] = useTransition();
   const [rebateIsPending, startGetRebate] = useTransition();
+  const [loginLogIsPending, startGetLoginLog] = useTransition();
+  const [changeLogIsPending, startGetChangeLog] = useTransition();
   return (
     <>
       <Button
@@ -105,34 +111,85 @@ export default function Action({
       <Button
         variant="ghost"
         size="sm"
+        disabled={rebateIsPending}
         className="px-2 text-sm text-primary hover:text-primary/80"
         onClick={() => {
-          setAgentId(data.id);
-          setRebateModal(true);
+          startGetRebate(async () => {
+            setAgentId(data.id);
+            const {
+              code,
+              data: config,
+              message,
+            } = await getGameConfig(data.id);
+            if (code === 0) {
+              setRebateData(config);
+            } else {
+              toast.error(message);
+            }
+            setRebateModal(true);
+          });
         }}
       >
+        {rebateIsPending && <Loader2 className="animate-spin" />}
         {t("rebateSetting")}
       </Button>
       <Button
         variant="ghost"
         size="sm"
+        disabled={loginLogIsPending}
         className="px-2 text-sm text-primary hover:text-primary/80"
         onClick={() => {
-          setAgentId(data.id);
-          setLoginLogModal(true);
+          startGetLoginLog(async () => {
+            setAgentId(data.id);
+            const {
+              code,
+              data: logs,
+              message,
+            } = await getAgentLoginLog({
+              userId: data.id,
+              pageNum: 1,
+              pageSize: 10,
+            });
+            if (code === 0) {
+              setLoginLogData(logs);
+            } else {
+              toast.error(message);
+            }
+            setLoginLogModal(true);
+          });
         }}
       >
+        {loginLogIsPending && <Loader2 className="animate-spin" />}
         {t("loginLog")}
       </Button>
       <Button
         variant="ghost"
         size="sm"
+        disabled={changeLogIsPending}
         className="px-2 text-sm text-primary hover:text-primary/80"
         onClick={() => {
-          setAgentId(data.id);
-          setChangeLogModal(true);
+          startGetChangeLog(async () => {
+            setAgentId(data.id);
+            const {
+              code,
+              data: logs,
+              message,
+            } = await getChangeLog({
+              targetUserId: data.id,
+              appType: "AGENT",
+              pageNum: 1,
+              pageSize: 10,
+            });
+            if (code === 0) {
+              setChangeLogData(logs);
+            } else {
+              toast.error(message);
+            }
+            setChangeLogModal(true);
+          });
         }}
       >
+        {changeLogIsPending && <Loader2 className="animate-spin" />}
         {t("changeLog")}
       </Button>
     </>

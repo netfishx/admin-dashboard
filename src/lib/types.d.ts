@@ -147,7 +147,7 @@ export type GameConfig = {
 };
 
 export type GameOdds = {
-  oddsType: number; // 赔率id
+  oddsType?: number; // 赔率id
   oddsLabel?: string; // 赔率名称
   odds?: string; // 赔率
   betType: number; // 投注类型

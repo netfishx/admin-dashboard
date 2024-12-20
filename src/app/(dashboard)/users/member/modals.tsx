@@ -16,14 +16,18 @@ export function Modals() {
 
   return (
     <>
-      <RatioModal />
-      <LimitModal userId={memberId} />
-      <RebateModal userId={memberId} />
-      <LoginLogModal id={memberId} type="MEMBER" />
+      <RatioModal key={`RatioModal-${memberId}`} />
+      <LimitModal userId={memberId} key={`LimitModal-${memberId}`} />
+      <RebateModal userId={memberId} key={`RebateModal-${memberId}`} />
+      <LoginLogModal
+        id={memberId}
+        type="MEMBER"
+        key={`LoginLogModal-${memberId}`}
+      />
       <ChangeLogModal targetUserId={memberId} appType="MEMBER" />
-      <IncreaseCreditModal />
-      <DecreaseCreditModal />
-      <DeleteCreditModal />
+      <IncreaseCreditModal key={`IncreaseCreditModal-${memberId}`} />
+      <DecreaseCreditModal key={`DecreaseCreditModal-${memberId}`} />
+      <DeleteCreditModal key={`DeleteCreditModal-${memberId}`} />
     </>
   );
 }
