@@ -23,7 +23,7 @@ import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Form from "next/form";
 import { useRouter } from "next/navigation";
-import { useEffect, useRef, useState, useTransition } from "react";
+import { useRef, useTransition } from "react";
 import { toast } from "sonner";
 
 export function SubaccountDialog({ roles }: { roles: Role[] }) {
@@ -33,15 +33,8 @@ export function SubaccountDialog({ roles }: { roles: Role[] }) {
   const data = useAtomValue(subaccountAtom);
   const ref = useRef<HTMLFormElement>(null);
   const [isPending, startTransition] = useTransition();
-  const [checkedRoles, setCheckedRoles] = useState<string[]>([]);
-  const [status, setStatus] = useState<number>(0);
+
   const router = useRouter();
-  useEffect(() => {
-    if (open) {
-      setCheckedRoles(data?.roleList ?? []);
-      setStatus(data?.status ?? 0);
-    }
-  }, [data, open]);
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -64,15 +57,11 @@ export function SubaccountDialog({ roles }: { roles: Role[] }) {
             e.preventDefault();
 
             startTransition(async () => {
-              if (checkedRoles.length === 0) {
+              const formData = new FormData(e.currentTarget);
+              if (formData.getAll("roleList").length === 0) {
                 toast.error(t("selectRoles"));
                 return;
               }
-              const formData = new FormData(e.currentTarget);
-              checkedRoles.forEach((id) => {
-                formData.append("roleList", id.toString());
-              });
-              formData.append("status", status.toString());
               const result = await validateFormData(
                 formData,
                 data ? "edit" : "create",
@@ -150,10 +139,8 @@ export function SubaccountDialog({ roles }: { roles: Role[] }) {
                   <div>
                     <RadioGroup
                       className="flex gap-4"
-                      value={status.toString() ?? "0"}
-                      onValueChange={(value) => {
-                        setStatus(Number(value));
-                      }}
+                      defaultValue={data?.status?.toString() ?? "0"}
+                      name="status"
                     >
                       <div className="flex items-center gap-2">
                         <RadioGroupItem value="0" id="enable" />
@@ -181,16 +168,9 @@ export function SubaccountDialog({ roles }: { roles: Role[] }) {
                   <div key={role.id} className="flex gap-2">
                     <Checkbox
                       key={role.id}
-                      checked={checkedRoles.includes(role.id ?? "")}
-                      onCheckedChange={(checked) => {
-                        if (checked) {
-                          setCheckedRoles([...checkedRoles, role.id ?? ""]);
-                        } else {
-                          setCheckedRoles(
-                            checkedRoles.filter((id) => id !== role.id),
-                          );
-                        }
-                      }}
+                      value={role.id}
+                      defaultChecked={data?.roleList?.includes(role.id ?? "")}
+                      name="roleList"
                     />
                     <span className="text-sm leading-4">{role.roleName}</span>
                   </div>

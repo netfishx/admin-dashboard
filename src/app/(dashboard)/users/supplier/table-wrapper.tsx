@@ -3,17 +3,11 @@
 import { Skeleton } from "@/components/ui/skeleton";
 import { TableBody, TableCell, TableRow } from "@/components/ui/table";
 import type { Supplier } from "@/lib/types";
-import { supplierLoadingAtom } from "@/store";
-import { useAtomValue } from "jotai";
 import { useTranslations } from "next-intl";
 import { EditButton } from "./edit";
 
 export function SupplierTable({ data }: { data: Supplier[] | undefined }) {
   const translation = useTranslations();
-  const supplierLoading = useAtomValue(supplierLoadingAtom);
-  if (supplierLoading) {
-    return <TbodySkeleton />;
-  }
 
   return (
     <TableBody>
