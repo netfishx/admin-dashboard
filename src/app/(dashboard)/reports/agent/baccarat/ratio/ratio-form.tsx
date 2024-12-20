@@ -31,12 +31,13 @@ export function RatioForm({ gameList }: { gameList: GameInfo[] }) {
   const [gameId, setGameId] = useQueryState("gameId", {
     defaultValue: "all",
   });
-  const [agentId, setagentId] = useQueryState("agentId", {
-    defaultValue: "",
-  });
-  const [houseOwnerId, setHouseOwnerId] = useQueryState("houseOwnerId", {
-    defaultValue: "",
-  });
+  const [agentOrHouseOwnerId, setAgentOrHouseOwnerId] = useQueryState(
+    "agentOrHouseOwnerId",
+    {
+      defaultValue: "",
+    },
+  );
+
   const [parentAgentId, setParentAgentId] = useQueryState("parentAgentId", {
     defaultValue: "",
   });
@@ -87,21 +88,14 @@ export function RatioForm({ gameList }: { gameList: GameInfo[] }) {
       {/* 第二行 */}
       <div className="flex items-center gap-4">
         <div className="flex items-center gap-2">
-          <Label className="shrink-0">{t("agentID")}</Label>
+          <Label className="shrink-0">{t("agentOrOwnerId")}</Label>
           <Input
-            value={agentId ?? ""}
-            onChange={(e) => setagentId(e.target.value)}
+            value={agentOrHouseOwnerId ?? ""}
+            onChange={(e) => setAgentOrHouseOwnerId(e.target.value)}
             placeholder={t("placeholderinput")}
           />
         </div>
-        <div className="flex items-center gap-2">
-          <Label className="shrink-0">{t("roomeownerID")}</Label>
-          <Input
-            value={houseOwnerId ?? ""}
-            onChange={(e) => setHouseOwnerId(e.target.value)}
-            placeholder={t("placeholderinput")}
-          />
-        </div>
+
         <div className="flex items-center gap-2">
           <Label className="shrink-0">{t("uperagentID")}</Label>
           <Input
