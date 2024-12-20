@@ -1,5 +1,5 @@
 "use client";
-import { getWithdrawFeeList, saveWithdrawFee } from "@/api";
+import { saveWithdrawFee } from "@/api";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -16,26 +16,25 @@ import Big from "big.js";
 import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
-import { Suspense, useEffect, useState } from "react";
+import { useState } from "react";
 import { toast } from "sonner";
-
-export function List() {
+export function List({ data }: { data: WithdrawFeeList[] }) {
   const router = useRouter();
   const t = useTranslations("fund.withdrawfee");
   const translations = useTranslations();
-  const [feeList, setFeeList] = useState<WithdrawFeeList[]>([]);
+  const [feeList, setFeeList] = useState<WithdrawFeeList[]>(data);
 
-  useEffect(() => {
-    // 比例手续费 传参数的时候处100，获取数据的时候乘100
-    getWithdrawFeeList().then(({ data }) => {
-      data?.map((item) => {
-        item.percentageFee = Big(item.percentageFee).times(100).toNumber();
-        item.fixedFee = Big(item.fixedFee).round(2).toNumber();
-      });
+  // useEffect(() => {
+  //   // 比例手续费 传参数的时候除100，获取数据的时候乘100
+  //   getWithdrawFeeList().then(({ data }) => {
+  //     data?.map((item) => {
+  //       item.percentageFee = Big(item.percentageFee).times(100).toNumber();
+  //       item.fixedFee = Big(item.fixedFee).round(2).toNumber();
+  //     });
 
-      setFeeList(data ?? []);
-    });
-  }, []);
+  //     setFeeList(data ?? []);
+  //   });
+  // }, []);
   const [currentParams, setCurrentParams] = useState<WithdrawFeeList>({
     fixedFee: 0,
     percentageFee: 0,
@@ -61,28 +60,38 @@ export function List() {
       fixedFee: fixedFeeParam,
     };
 
-    const res = await saveWithdrawFee(params as WithdrawFeeList);
+    const { code, message } = await saveWithdrawFee(params as WithdrawFeeList);
     setLoading(false);
-    if (res.code === 0) {
-      toast.success(res.message);
+    if (code === 0) {
+      toast.success(message);
       router.refresh();
+    } else {
+      toast.error(message);
     }
   }
 
-  function handleFixedChange(index: number, value: number) {
-    const updatedItem = { ...feeList[index], fixedFee: value };
+  // 通用的更新函数
+  function handleFieldChange<K extends keyof WithdrawFeeList>(
+    index: number,
+    field: K,
+    value: WithdrawFeeList[K],
+  ) {
+    const updatedItem = { ...feeList[index], [field]: value };
     setFeeList(feeList.map((item, i) => (i === index ? updatedItem : item)));
     setCurrentParams(updatedItem);
   }
 
-  function handlePercentageChange(index: number, value: number) {
-    const updatedItem = { ...feeList[index], percentageFee: value };
-    setFeeList(feeList.map((item, i) => (i === index ? updatedItem : item)));
-    setCurrentParams(updatedItem);
-  }
+  const handleFixedChange = (index: number, value: number) =>
+    handleFieldChange(index, "fixedFee", value);
+
+  const handlePercentageChange = (index: number, value: number) =>
+    handleFieldChange(index, "percentageFee", value);
+
+  const handleCurrencyChange = (index: number, value: string) =>
+    handleFieldChange(index, "currency", value);
 
   return (
-    <div className="flex h-full flex-col gap-2">
+    <div className="flex flex-col gap-2">
       <div className="flex flex-col gap-2 bg-background p-4">
         <div className="flex items-center justify-between gap-4">
           {t("title")}
@@ -94,57 +103,66 @@ export function List() {
           </div>
         </div>
       </div>
-      <div className="flex h-full flex-col gap-2 bg-background p-4">
+      <div className="flex h-full flex-col bg-background p-4 absolute mt-19 mr-2">
         <div className="rounded-sm border">
-          <Table className="table-fixed">
+          <Table className="table-fixed bg-background h-full">
             <TableHeaderWrapper />
-            <Suspense fallback={<TableBodySkeleton />}>
-              <TableBody>
-                {feeList && feeList.length > 0 ? (
-                  feeList.map((item, index) => (
-                    <TableRow key={item.currency}>
-                      <TableCell>{item.currency}</TableCell>
+            {/* <Suspense fallback={<TableBodySkeleton />}> */}
+            <TableBody>
+              {feeList && feeList.length > 0 ? (
+                feeList.map((item, index) => (
+                  // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
+                  <TableRow key={index}>
+                    <TableCell>
+                      <Input
+                        type="text"
+                        value={item.currency}
+                        onChange={(e) => {
+                          handleCurrencyChange(index, e.target.value);
+                        }}
+                      />
+                    </TableCell>
 
-                      <TableCell className="text-center">
-                        <Input
-                          type="number"
-                          value={Big(item.fixedFee).round(2).toString()}
-                          min={0}
-                          step={0.01}
-                          onChange={(e) => {
-                            handleFixedChange(index, Number(e.target.value));
-                          }}
-                          onBlur={(e) => {
-                            e.target.reportValidity();
-                          }}
-                        />
-                      </TableCell>
-                      <TableCell className="text-center">
-                        <Input
-                          type="number"
-                          value={Big(item.percentageFee).round(2).toString()}
-                          min={0}
-                          max={100}
-                          step={0.01}
-                          onChange={(e) => {
-                            const value = Number(e.target.value);
-                            if (value <= 100) {
-                              handlePercentageChange(index, value);
-                            }
-                          }}
-                        />
-                      </TableCell>
-                    </TableRow>
-                  ))
-                ) : (
-                  <TableRow>
-                    <TableCell colSpan={3} className="h-40 text-center">
-                      {translations("noData")}
+                    <TableCell className="text-center">
+                      <Input
+                        type="number"
+                        value={Big(item.fixedFee).round(2).toString()}
+                        min={0}
+                        step={0.01}
+                        onChange={(e) => {
+                          handleFixedChange(index, Number(e.target.value));
+                        }}
+                        onBlur={(e) => {
+                          e.target.reportValidity();
+                        }}
+                      />
+                    </TableCell>
+                    <TableCell className="text-center">
+                      <Input
+                        type="number"
+                        value={Big(item.percentageFee).round(2).toString()}
+                        min={0}
+                        max={100}
+                        step={0.01}
+                        onChange={(e) => {
+                          const value = Number(e.target.value);
+                          if (value <= 100) {
+                            handlePercentageChange(index, value);
+                          }
+                        }}
+                      />
                     </TableCell>
                   </TableRow>
-                )}
-              </TableBody>
-            </Suspense>
+                ))
+              ) : (
+                <TableRow>
+                  <TableCell colSpan={3} className="h-40 text-center">
+                    {translations("noData")}
+                  </TableCell>
+                </TableRow>
+              )}
+            </TableBody>
+            {/* </Suspense> */}
           </Table>
         </div>
       </div>
