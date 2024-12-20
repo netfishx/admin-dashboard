@@ -594,7 +594,8 @@
       "all": "全部",
       "directMember": "直属会员",
       "nonDirectMember": "非直属会员",
-      "agentUserId": "代理用户id"
+      "parentAgentId": "直属代理ID",
+      "agentId": "代理ID"
     },
     "change": {
       "userId": "用户ID",

@@ -14,6 +14,7 @@ import type {
   CreditRecordRequestParams,
   CreditRecordRequestRecords,
 } from "@/lib/types";
+import { formatNumber } from "@/lib/utils";
 import { getTranslations } from "next-intl/server";
 import { Suspense } from "react";
 
@@ -49,7 +50,7 @@ async function ListBody({ list }: { list: CreditRecordRequestRecords[] }) {
             <TableCell>{item.transactionID}</TableCell>
             <TableCell>{item.agentId}</TableCell>
             <TableCell>{item.memberId}</TableCell>
-            <TableCell>{item.amount}</TableCell>
+            <TableCell>{formatNumber(Number(item.amount || 0))}</TableCell>
             <TableCell>
               {typeMap[item.operateCode as keyof typeof typeMap]}
             </TableCell>

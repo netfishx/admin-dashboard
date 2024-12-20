@@ -14,6 +14,7 @@ import type {
   BorrowRecordRequestParams,
   BorrowRecordRequestRecords,
 } from "@/lib/types";
+import { formatNumber } from "@/lib/utils";
 import { getTranslations } from "next-intl/server";
 import { Suspense } from "react";
 
@@ -50,7 +51,9 @@ async function ListBody({ list }: { list: BorrowRecordRequestRecords[] }) {
             <TableCell>{item.orderNo}</TableCell>
             <TableCell>{item.agentId}</TableCell>
             <TableCell>{item.memberId}</TableCell>
-            <TableCell>{item.operateMoney}</TableCell>
+            <TableCell>
+              {formatNumber(Number(item.operateMoney || 0))}
+            </TableCell>
             <TableCell>
               {typeMap[item.orderType as keyof typeof typeMap]}
             </TableCell>

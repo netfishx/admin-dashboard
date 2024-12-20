@@ -64,6 +64,18 @@ async function ListBody({
     "1": t("notSettled"),
     "2": t("settled"),
   };
+
+  const getOdds = (item: OrderReportsRecord) => {
+    let odds = 0;
+    if (item.orderStatus === 1) {
+      odds = Number(Object.values(item.odds || {})[0]);
+    } else {
+      odds = Number(item.finalOdds);
+    }
+
+    return formatNumber(odds, { maximumFractionDigits: 3 });
+  };
+
   return (
     <TableBody>
       {list && list?.length > 0 ? (
@@ -79,13 +91,7 @@ async function ListBody({
               {gameList.find((game) => game.gameId === item.gameId)?.gameName}
             </TableCell>
             <TableCell>{item.betType}</TableCell>
-            <TableCell>
-              {
-                Object.entries(item.odds || {})[
-                  Object.entries(item.odds || {}).length - 1
-                ]
-              }
-            </TableCell>
+            <TableCell>{getOdds(item)}</TableCell>
             <TableCell>{formatNumber(Number(item?.betAmount || 0))}</TableCell>
             <TableCell>
               {formatNumber(Number(item.winLossAmount || 0))}

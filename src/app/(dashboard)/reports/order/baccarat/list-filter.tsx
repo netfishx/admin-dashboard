@@ -137,7 +137,7 @@ export function ListFilter({ gameList }: { gameList: GameInfo[] }) {
             </SelectContent>
           </Select>
         </div>
-        <DateRangeFilter enableTimeSelect={false} />
+        <DateRangeFilter enableTimeSelect />
       </div>
 
       {/* 第二行 */}
