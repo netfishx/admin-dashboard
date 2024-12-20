@@ -3,11 +3,11 @@ import type {
   AnnouncementList,
   BackgroundImageList,
   BombDetailPlayerDetails,
+  BombDetailRecords,
   ChangeLog,
   DictionaryList,
   GameConfig,
   GameOdds,
-  GameRecordRequestRecords,
   LoginLog,
   MemberList,
   OrderReportsRecord,
@@ -167,16 +167,14 @@ export const orderListBaccaratAgentIdAtom = atom<string>("");
 
 // 报表管理-注单列表-棋牌-注单详情弹窗
 export const orderListGuandanDetailDialogAtom = atom<boolean>(false);
+export const orderListGuandanDetailDataAtom =
+  atom<PageData<BombDetailRecords>>();
 // 报表管理-注单列表-棋牌-炸弹详情弹窗
 export const orderListGuandanBombDetailDialogAtom = atom<boolean>(false);
-// 报表管理-注单列表-冠单-注单详情行数据
-export const orderListGuandanDetailItemAtom =
-  atom<GameRecordRequestRecords | null>(null);
+export const guandanOrderIdAtom = atom<string>();
 
 // 报表管理-注单列表-冠单-炸弹详情数据
-export const orderListBombDetailRecordAtom = atom<
-  BombDetailPlayerDetails[] | null
->(null);
+export const guandanBombDetailAtom = atom<BombDetailPlayerDetails[]>([]);
 
 // 提现-申请-流水弹窗
 export const withdrawFlowDialogAtom = atom<boolean>(false);

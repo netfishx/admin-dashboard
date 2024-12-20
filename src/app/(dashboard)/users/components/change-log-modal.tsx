@@ -21,7 +21,7 @@ import {
 import { changeLogDataAtom, changeLogModalAtom } from "@/store";
 import { useAtom } from "jotai";
 import { useTranslations } from "next-intl";
-import { startTransition, useEffect, useState } from "react";
+import { startTransition } from "react";
 import { toast } from "sonner";
 
 export function ChangeLogModal({
@@ -34,34 +34,35 @@ export function ChangeLogModal({
   const translation = useTranslations();
   const t = useTranslations("users.agents");
   const [open, setOpen] = useAtom(changeLogModalAtom);
-  const [pageNum, setPageNum] = useState<number>(1);
-  const [pageSize, setPageSize] = useState<number>(10);
   const [data, setData] = useAtom(changeLogDataAtom);
 
-  useEffect(() => {
+  function handleChange({
+    pageNum,
+    pageSize,
+  }: {
+    pageNum: number;
+    pageSize: number;
+  }) {
     startTransition(async () => {
       if (targetUserId) {
-        getChangeLog({
+        const { code, data, message } = await getChangeLog({
           targetUserId,
           appType,
           pageNum,
           pageSize,
-        }).then(({ code, data, message }) => {
-          if (code === 0 && data) {
-            setData(data);
-          } else {
-            toast.error(message);
-          }
         });
+        if (code === 0 && data) {
+          setData(data);
+        } else {
+          toast.error(message);
+        }
       }
     });
-  }, [targetUserId, appType, pageNum, pageSize, setData]);
+  }
 
   const handleClose = () => {
     setOpen(false);
     setData(undefined);
-    setPageNum(1);
-    setPageSize(10);
   };
   return (
     <Dialog open={open} onOpenChange={handleClose}>
@@ -113,13 +114,7 @@ export function ChangeLogModal({
           </ScrollableTable>
         </div>
         {!!data?.total && (
-          <ModalPagination
-            total={data.total}
-            currentPage={pageNum}
-            size={pageSize}
-            setPage={setPageNum}
-            setSize={setPageSize}
-          />
+          <ModalPagination total={data.total} onChange={handleChange} />
         )}
       </DialogContent>
     </Dialog>

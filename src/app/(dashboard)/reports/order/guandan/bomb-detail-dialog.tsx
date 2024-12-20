@@ -18,7 +18,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import {
-  orderListBombDetailRecordAtom,
+  guandanBombDetailAtom,
   orderListGuandanBombDetailDialogAtom,
 } from "@/store";
 import { useAtom, useAtomValue } from "jotai";
@@ -31,8 +31,7 @@ export function BombDetailDialog() {
   const t = useTranslations("report.orderlist");
   const [open, setOpen] = useAtom(orderListGuandanBombDetailDialogAtom);
   const [isPending, startTransition] = useTransition();
-  const orderListBombDetailRecord =
-    useAtomValue(orderListBombDetailRecordAtom) || [];
+  const orderListBombDetailRecord = useAtomValue(guandanBombDetailAtom);
 
   function processAndSortCards(hand: string[]): string {
     // 定义花色和点数的映射规则
@@ -109,8 +108,8 @@ export function BombDetailDialog() {
               </TableRow>
             </TableHeader>
             <TableBody className="table w-full">
-              {orderListBombDetailRecord?.length > 0 ? (
-                orderListBombDetailRecord?.map((item) => (
+              {orderListBombDetailRecord.length > 0 ? (
+                orderListBombDetailRecord.map((item) => (
                   <TableRow key={item.memberId}>
                     <TableCell className="w-[150px]">{item.memberId}</TableCell>
                     <TableCell className="w-[150px]">{item.bombs}</TableCell>
@@ -118,7 +117,7 @@ export function BombDetailDialog() {
                     <TableCell className="w-[150px]">{item.rank}</TableCell>
                     <TableCell className="w-[150px]">{item.tribute}</TableCell>
                     <TableCell className="no-wrap w-[200px] max-w-[200px]">
-                      <ScrollArea className="h-20">
+                      <ScrollArea className="max-h-20">
                         {processAndSortCards(item.hand)}
                         <ScrollBar orientation="vertical" />
                       </ScrollArea>

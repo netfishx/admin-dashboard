@@ -34,7 +34,7 @@ import { useAtom, useAtomValue } from "jotai";
 import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
-import { useEffect, useState, useTransition } from "react";
+import { startTransition, useState, useTransition } from "react";
 import { toast } from "sonner";
 
 export function LimitModal({ userId }: { userId: string }) {
@@ -49,15 +49,11 @@ export function LimitModal({ userId }: { userId: string }) {
     Record<number, Record<"minBet" | "maxBet" | "maxBetPeriod", number>>
   >({});
   // 数据校验是否正确
-  const [isValidateData, setIsValidateData] = useState(false);
+  const [isValidateData, setIsValidateData] = useState(true);
   const router = useRouter();
   const [limitIsLoading, startLimitLoading] = useTransition();
 
-  useEffect(() => {
-    setGameId(list?.[0]?.gameId);
-  }, [list]);
-
-  useEffect(() => {
+  function handleChange() {
     if (gameId && userId) {
       startLimitLoading(async () => {
         const { code, data, message } = await getGameOdds({ gameId, userId });
@@ -68,7 +64,7 @@ export function LimitModal({ userId }: { userId: string }) {
         }
       });
     }
-  }, [gameId, userId, setData]);
+  }
 
   const handleLimitChange = (
     betType: number,
@@ -86,9 +82,10 @@ export function LimitModal({ userId }: { userId: string }) {
 
   const handleSave = () => {
     startTransition(async () => {
-      if (gameId && Object.keys(changedItems).length > 0) {
+      const id = gameId ?? list?.[0]?.gameId;
+      if (Object.keys(changedItems).length > 0 && id) {
         const { code, message } = await updateGameOdds({
-          gameId,
+          gameId: id,
           list: Object.entries(changedItems).map(([betType, item]) => ({
             ...item,
             betType: Number(betType),
@@ -127,7 +124,12 @@ export function LimitModal({ userId }: { userId: string }) {
           <DialogDescription />
         </DialogHeader>
         <div className="bg-background px-4 py-2">
-          <Form list={list ?? []} setGameId={setGameId} gameId={gameId} />
+          <Form
+            list={list ?? []}
+            setGameId={setGameId}
+            gameId={gameId}
+            handleChange={handleChange}
+          />
         </div>
         <div className="max-h-[50dvh] overflow-auto rounded-sm border">
           <ScrollableTable className="relative table-fixed">
@@ -261,10 +263,12 @@ function Form({
   list,
   setGameId,
   gameId,
+  handleChange,
 }: {
   list: GameConfig[];
   setGameId: (gameId: number) => void;
   gameId: number | undefined;
+  handleChange: () => void;
 }) {
   const t = useTranslations("users.agents");
   return (
@@ -273,7 +277,12 @@ function Form({
         <Label>{t("name")}</Label>
         <Select
           value={gameId?.toString() || list[0]?.gameId.toString() || ""}
-          onValueChange={(value) => setGameId(Number(value))}
+          onValueChange={(value) => {
+            startTransition(() => {
+              setGameId(Number(value));
+              handleChange();
+            });
+          }}
         >
           <SelectTrigger className="w-36">
             <SelectValue placeholder={t("placeholder")} />

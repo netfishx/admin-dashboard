@@ -21,7 +21,7 @@ import type { LoginLog } from "@/lib/types";
 import { loginLogDataAtom, loginLogModalAtom } from "@/store";
 import { useAtom } from "jotai";
 import { useTranslations } from "next-intl";
-import { startTransition, useEffect, useState } from "react";
+import { startTransition } from "react";
 import { toast } from "sonner";
 
 export function LoginLogModal({
@@ -34,18 +34,21 @@ export function LoginLogModal({
   const translations = useTranslations();
   const t = useTranslations("users.agents");
   const [data, setData] = useAtom(loginLogDataAtom);
-
   const [open, setOpen] = useAtom(loginLogModalAtom);
-  const [page, setPage] = useState<number>(1);
-  const [size, setSize] = useState<number>(10);
 
-  useEffect(() => {
+  function handleChange({
+    pageNum,
+    pageSize,
+  }: {
+    pageNum: number;
+    pageSize: number;
+  }) {
     startTransition(async () => {
       if (id && type === "AGENT") {
         const { code, data, message } = await getAgentLoginLog({
           userId: id,
-          pageNum: page,
-          pageSize: size,
+          pageNum,
+          pageSize,
         });
 
         if (code === 0 && data) {
@@ -56,8 +59,8 @@ export function LoginLogModal({
       } else if (id && type === "MEMBER") {
         const { code, data, message } = await getMemberLoginLog({
           memberId: id,
-          pageNum: page,
-          pageSize: size,
+          pageNum,
+          pageSize,
         });
 
         if (code === 0 && data) {
@@ -67,14 +70,11 @@ export function LoginLogModal({
         }
       }
     });
-  }, [id, type, page, size, setData]);
+  }
 
   const handleClose = () => {
-    console.info("close");
     setOpen(false);
     setData(undefined);
-    setPage(1);
-    setSize(10);
   };
   return (
     <Dialog open={open} onOpenChange={handleClose}>
@@ -124,10 +124,12 @@ export function LoginLogModal({
         {!!data?.total && (
           <ModalPagination
             total={data.total}
-            currentPage={page}
-            size={size}
-            setPage={setPage}
-            setSize={setSize}
+            onChange={({ pageNum, pageSize }) => {
+              handleChange({
+                pageNum,
+                pageSize,
+              });
+            }}
           />
         )}
       </DialogContent>

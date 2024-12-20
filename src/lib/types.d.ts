@@ -929,8 +929,8 @@ export type RewardRecordRequestRecords = {
 // 注单列表-掼蛋-入参
 export type GameRecordRequestParams = {
   issueNumber?: string; // 投注期号 (Issue Number)
-  startTime: number; // 开始时间 必须 (Required)
-  endTime: number; // 结束时间 必须 (Required)
+  startTime?: number; // 开始时间 必须 (Required)
+  endTime?: number; // 结束时间 必须 (Required)
   pageNum: number; // 页码
   pageSize: number; // 条数
   agentId?: string; // 代理ID (Agent ID)

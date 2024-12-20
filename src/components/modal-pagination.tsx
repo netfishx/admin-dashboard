@@ -7,6 +7,7 @@ import {
   ChevronRight,
 } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { useState } from "react";
 import { Button } from "./ui/button";
 import { Pagination, PaginationContent, PaginationItem } from "./ui/pagination";
 import {
@@ -19,25 +20,17 @@ import {
 
 export function ModalPagination({
   total,
-  currentPage,
-  size,
-  setPage,
-  setSize,
+  onChange,
 }: {
   total: number;
-  currentPage: number;
-  size: number;
-  setPage: (page: number) => void;
-  setSize: (size: number) => void;
+  onChange: (page: { pageNum: number; pageSize: number }) => void;
 }) {
   const t = useTranslations("pagination");
+  const [size, setSize] = useState(10);
+  const [page, setPage] = useState(1);
 
   const totalPage = Math.ceil(total / size);
 
-  const handleChangeSize = (size: number) => {
-    setSize(size);
-    setPage(1);
-  };
   return (
     <Pagination className="flex justify-end">
       <PaginationContent>
@@ -47,8 +40,11 @@ export function ModalPagination({
         <PaginationItem>
           <Button
             variant="ghost"
-            disabled={currentPage === 1}
-            onClick={() => setPage(1)}
+            disabled={page === 1}
+            onClick={() => {
+              setPage(1);
+              onChange({ pageNum: 1, pageSize: size });
+            }}
             className="px-1"
           >
             <ChevronFirst className="size-4" />
@@ -57,21 +53,27 @@ export function ModalPagination({
         <PaginationItem>
           <Button
             variant="ghost"
-            disabled={currentPage === 1}
-            onClick={() => setPage(currentPage - 1)}
+            disabled={page === 1}
+            onClick={() => {
+              setPage(page - 1);
+              onChange({ pageNum: page - 1, pageSize: size });
+            }}
             className="px-1"
           >
             <ChevronLeft className="size-4" />
           </Button>
         </PaginationItem>
         <PaginationItem>
-          <span className="px-2 text-sm">{currentPage}</span>
+          <span className="px-2 text-sm">{page}</span>
         </PaginationItem>
         <PaginationItem>
           <Button
             variant="ghost"
-            disabled={currentPage === totalPage}
-            onClick={() => setPage(currentPage + 1)}
+            disabled={page === totalPage}
+            onClick={() => {
+              setPage(page + 1);
+              onChange({ pageNum: page + 1, pageSize: size });
+            }}
             className="px-1"
           >
             <ChevronRight className="size-4" />
@@ -80,8 +82,11 @@ export function ModalPagination({
         <PaginationItem>
           <Button
             variant="ghost"
-            disabled={currentPage === totalPage}
-            onClick={() => setPage(totalPage)}
+            disabled={page === totalPage}
+            onClick={() => {
+              setPage(totalPage);
+              onChange({ pageNum: totalPage, pageSize: size });
+            }}
             className="px-1"
           >
             <ChevronLast className="size-4" />
@@ -89,8 +94,11 @@ export function ModalPagination({
         </PaginationItem>
         <PaginationItem>
           <Select
-            defaultValue={size?.toString() ?? "10"}
-            onValueChange={(value) => handleChangeSize(Number(value))}
+            defaultValue="10"
+            onValueChange={(value) => {
+              setSize(Number(value));
+              onChange({ pageNum: 1, pageSize: Number(value) });
+            }}
           >
             <SelectTrigger className="h-7 w-28 text-sm">
               <SelectValue />

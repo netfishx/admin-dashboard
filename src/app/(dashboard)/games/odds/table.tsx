@@ -105,7 +105,11 @@ export function OddsTable({
                 step={0.001}
                 onChange={(e) => {
                   setVerifyLimit(e.target.reportValidity());
-                  handleOddsChange(item.oddsType, item.betType, e.target.value);
+                  handleOddsChange(
+                    item.oddsType ?? 0,
+                    item.betType,
+                    e.target.value,
+                  );
                 }}
                 onBlur={(e) => {
                   const state = e.target.reportValidity();
@@ -128,7 +132,7 @@ export function OddsTable({
                 onChange={(e) => {
                   setVerifyLimit(!!e.target.value && e.target.reportValidity());
                   handleLimitChange(
-                    item.oddsType,
+                    item.oddsType ?? 0,
                     item.betType,
                     item.groupId ?? 0,
                     "minBet",
@@ -160,7 +164,7 @@ export function OddsTable({
                       !!e.target.value && e.target.reportValidity(),
                     );
                     handleLimitChange(
-                      item.oddsType,
+                      item.oddsType ?? 0,
                       item.betType,
                       item.groupId ?? 0,
                       "maxBet",
@@ -198,7 +202,7 @@ export function OddsTable({
                       !!e.target.value && e.target.reportValidity(),
                     );
                     handleLimitChange(
-                      item.oddsType,
+                      item.oddsType ?? 0,
                       item.betType,
                       item.groupId ?? 0,
                       "maxBetPeriod",

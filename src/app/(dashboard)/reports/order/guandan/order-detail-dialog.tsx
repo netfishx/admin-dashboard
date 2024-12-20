@@ -21,61 +21,60 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import type { BombDetailRecords, GameRecordRequestParams } from "@/lib/types";
+import type { BombDetailRecords } from "@/lib/types";
 import {
-  orderListBombDetailRecordAtom,
+  guandanBombDetailAtom,
+  guandanOrderIdAtom,
   orderListGuandanBombDetailDialogAtom,
+  orderListGuandanDetailDataAtom,
   orderListGuandanDetailDialogAtom,
-  orderListGuandanDetailItemAtom,
 } from "@/store";
-import { useAtom, useAtomValue } from "jotai";
-import { Loader2 } from "lucide-react";
+import { DialogClose } from "@radix-ui/react-dialog";
+import { useAtom, useAtomValue, useSetAtom } from "jotai";
 import { useTranslations } from "next-intl";
-import { useEffect, useState, useTransition } from "react";
+import { useTransition } from "react";
+import { toast } from "sonner";
 
 export function OrderDetailDialog() {
   const translation = useTranslations();
   const t = useTranslations("report.orderlist");
   const [open, setOpen] = useAtom(orderListGuandanDetailDialogAtom);
-  const item = useAtomValue(orderListGuandanDetailItemAtom);
-  const [, setOpenBomb] = useAtom(orderListGuandanBombDetailDialogAtom);
-  const [, setOrderListBombDetailRecord] = useAtom(
-    orderListBombDetailRecordAtom,
-  );
-  const [loading, setLoading] = useState(false);
+  const setOpenBombDialog = useSetAtom(orderListGuandanBombDetailDialogAtom);
+  const setGuandanBombDetail = useSetAtom(guandanBombDetailAtom);
+  const id = useAtomValue(guandanOrderIdAtom);
   const [isPending, startTransition] = useTransition();
-  const [pageNum, setPageNum] = useState<number>(1);
-  const [pageSize, setPageSize] = useState<number>(10);
-  const [total, setTotal] = useState<number>(0);
-  const [data, setData] = useState<BombDetailRecords[]>([]);
-
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
-  useEffect(() => {
-    if (open) {
-      setLoading(true);
-      getGuandanReportListDetail({
-        issueNumber: item?.id,
-        pageNum,
-        pageSize,
-      } as GameRecordRequestParams).then(({ data }) => {
-        setLoading(false);
-        if (data?.list) {
-          setData(data?.list || []);
-          setTotal(data.total);
-          setPageNum(data.pageNum);
-          setPageSize(data.pageSize);
-        }
-      });
-    }
-  }, [open, pageNum, pageSize]);
+  const [data, setData] = useAtom(orderListGuandanDetailDataAtom);
 
   function handleBombDetail(item: BombDetailRecords) {
-    setOpenBomb(true);
-    setOrderListBombDetailRecord(item.details);
+    setGuandanBombDetail(item.details);
+    setOpenBombDialog(true);
+  }
+
+  function handleChange({
+    pageNum,
+    pageSize,
+  }: { pageNum: number; pageSize: number }) {
+    startTransition(async () => {
+      const { code, data, message } = await getGuandanReportListDetail({
+        issueNumber: id,
+        pageNum,
+        pageSize,
+      });
+      if (code === 0 && data) {
+        setData(data);
+      } else {
+        toast.error(message);
+      }
+    });
   }
 
   return (
-    <Dialog open={open} onOpenChange={(open) => setOpen(open)}>
+    <Dialog
+      open={open}
+      onOpenChange={(open) => {
+        setOpen(open);
+      }}
+    >
       <DialogContent
         className="max-w-5xl"
         onPointerDownOutside={(e) => e.preventDefault()}
@@ -86,31 +85,32 @@ export function OrderDetailDialog() {
         </DialogHeader>
         <div className="rounded-sm border">
           <Table>
-            <TableHeader className="table w-full">
+            <TableHeader>
               <TableRow className="bg-muted">
-                <TableHead className="w-[150px]">{t("serialNumber")}</TableHead>
-                <TableHead className="w-[200px]">{t("issueNumber")}</TableHead>
-                <TableHead className="w-[150px]">{t("bombNumber")}</TableHead>
-                <TableHead className="w-[150px]">{t("startTime")}</TableHead>
-                <TableHead className="w-[150px]">{t("detail")}</TableHead>
+                <TableHead className="w-20">{t("serialNumber")}</TableHead>
+                <TableHead className="w-40">{t("issueNumber")}</TableHead>
+                <TableHead className="w-20">{t("bombNumber")}</TableHead>
+                <TableHead className="w-40">{t("startTime")}</TableHead>
+                <TableHead className="w-20 text-center">
+                  {t("detail")}
+                </TableHead>
               </TableRow>
             </TableHeader>
-            {loading ? (
+            {isPending ? (
               <ChangeLogSkeleton />
             ) : (
-              <TableBody className="table w-full">
-                {data?.length > 0 ? (
-                  data?.map((item, index) => (
+              <TableBody>
+                {/* biome-ignore lint/style/useExplicitLengthCheck: <explanation> */}
+                {data?.list?.length ? (
+                  data?.list?.map((item, index) => (
                     <TableRow key={item.id}>
-                      <TableCell className="w-[150px]">{index}</TableCell>
-                      <TableCell className="w-[200px]">{item.id}</TableCell>
-                      <TableCell className="w-[150px]">
-                        {item.bombCount}
-                      </TableCell>
-                      <TableCell className="w-[150px]">
+                      <TableCell>{index}</TableCell>
+                      <TableCell>{item.id}</TableCell>
+                      <TableCell>{item.bombCount}</TableCell>
+                      <TableCell>
                         <Time time={item.createdAt} />
                       </TableCell>
-                      <TableCell className="w-[150px]">
+                      <TableCell className="flex justify-center items-center">
                         <Button
                           variant="ghost"
                           size="sm"
@@ -133,24 +133,16 @@ export function OrderDetailDialog() {
             )}
           </Table>
         </div>
-        <ModalPagination
-          total={total}
-          currentPage={pageNum}
-          size={pageSize}
-          setPage={setPageNum}
-          setSize={setPageSize}
-        />
+        {!!data?.total && (
+          <ModalPagination total={data.total} onChange={handleChange} />
+        )}
         <DialogFooter>
-          <Button variant="outline" onClick={() => setOpen(false)}>
-            {translation("cancel")}
-          </Button>
-          <Button
-            disabled={isPending}
-            onClick={() => startTransition(() => setOpen(false))}
-          >
-            {isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-            {translation("confirm")}
-          </Button>
+          <DialogClose asChild>
+            <Button variant="outline">{translation("cancel")}</Button>
+          </DialogClose>
+          <DialogClose asChild>
+            <Button>{translation("confirm")}</Button>
+          </DialogClose>
         </DialogFooter>
       </DialogContent>
     </Dialog>
