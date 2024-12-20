@@ -6,6 +6,7 @@ import { Time } from "@/components/time";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogDescription,
   DialogFooter,
@@ -29,7 +30,6 @@ import {
   orderListGuandanDetailDataAtom,
   orderListGuandanDetailDialogAtom,
 } from "@/store";
-import { DialogClose } from "@radix-ui/react-dialog";
 import { useAtom, useAtomValue, useSetAtom } from "jotai";
 import { useTranslations } from "next-intl";
 import { useTransition } from "react";
