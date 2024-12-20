@@ -772,6 +772,7 @@ export type WithdrawFeeList = {
   currency: string;
   fixedFee: number;
   percentageFee: number;
+  id: string;
 };
 
 // 今日盈亏
