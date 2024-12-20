@@ -15,11 +15,11 @@ import type {
   RechargeReport,
   RechargeReportParams,
 } from "@/lib/types";
+import { formatNumber } from "@/lib/utils";
 import { getTranslations } from "next-intl/server";
 import { Suspense } from "react";
 import { Actions } from "./actions";
 import { Form } from "./form";
-
 export default async function Page({
   searchParams,
 }: { searchParams: Promise<{ [key: string]: string | undefined }> }) {
@@ -138,7 +138,7 @@ async function TableBodyWrapper({ data }: { data?: PageData<RechargeReport> }) {
             <TableCell>{item.orderNo}</TableCell>
             <TableCell>{item.userId}</TableCell>
             <TableCell>{item.currency}</TableCell>
-            <TableCell>{item.rechargeMoney}</TableCell>
+            <TableCell>{formatNumber(Number(item.rechargeMoney))}</TableCell>
             <TableCell>
               <Time time={item.finishTime} />
             </TableCell>

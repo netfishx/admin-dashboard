@@ -1,12 +1,14 @@
 import type {
   AgentData,
   AnnouncementList,
-  ApplyData,
   BackgroundImageList,
   BombDetailPlayerDetails,
   DictionaryList,
+  GameConfig,
   GameRecordRequestRecords,
   MemberList,
+  OrderReportsRecord,
+  PageData,
   Role,
   Subaccount,
   Supplier,
@@ -35,10 +37,12 @@ export const userInfoModalAtom = atom<boolean>(false);
 export const transferMoneyModalAtom = atom<boolean>(false);
 // 用户管理-代理管理-游戏设置弹窗
 export const gameSettingModalAtom = atom<boolean>(false);
+export const gameSettingDataAtom = atom<GameConfig[] | undefined>();
 // 用户管理-代理管理-限额设置弹窗
 export const limitModalAtom = atom<boolean>(false);
 // 用户管理-代理管理-返水设置弹窗
 export const rebateModalAtom = atom<boolean>(false);
+export const rebateDataAtom = atom<GameConfig[] | undefined>();
 // 用户管理-代理管理-登录日志弹窗
 export const loginLogModalAtom = atom<boolean>(false);
 // 用户管理-代理管理-变更日志弹窗
@@ -169,7 +173,13 @@ export const orderListBombDetailRecordAtom = atom<
 // 提现-申请-流水弹窗
 export const withdrawFlowDialogAtom = atom<boolean>(false);
 // 提现-申请-流水弹窗-数据
-export const withdrawFlowDataAtom = atom<ApplyData | null>(null);
-
+export const withdrawFlowDataAtom = atom<PageData<OrderReportsRecord> | null>(
+  null,
+);
+// 提现-申请-流水弹窗-数据
+export const orderParmasAtom = atom<{
+  agentId?: string;
+  memberId?: string;
+} | null>(null);
 // 报表管理-会员报表-真人视讯-代理ID
 export const memberListBaccaratAgentIdAtom = atom<string>("");

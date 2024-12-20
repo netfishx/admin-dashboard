@@ -18,6 +18,7 @@ import { Time } from "@/components/time";
 import { STATUS } from "@/lib/dict";
 import type { WithdrawReport } from "@/lib/types";
 import type { PageData } from "@/lib/types";
+import { formatNumber } from "@/lib/utils";
 import { getTranslations } from "next-intl/server";
 
 export default async function Page({
@@ -146,8 +147,8 @@ async function TableBodyWrapper({ data }: { data?: PageData<WithdrawReport> }) {
             <TableCell>{item.orderNo}</TableCell>
             <TableCell>{item.userId}</TableCell>
             <TableCell>{item.currency}</TableCell>
-            <TableCell>{item.withdrawMoney}</TableCell>
-            <TableCell>{item.withdrawFee}</TableCell>
+            <TableCell>{formatNumber(Number(item.withdrawMoney))}</TableCell>
+            <TableCell>{formatNumber(Number(item.withdrawFee))}</TableCell>
             <TableCell>
               {(() => {
                 const status = STATUS.find((s) => s.value === item.status);

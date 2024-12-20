@@ -1,9 +1,7 @@
 "use client";
-import { getOrderReportList } from "@/api";
 import { Time } from "@/components/time";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
-import { Skeleton } from "@/components/ui/skeleton";
 import {
   ScrollableTable,
   TableBody,
@@ -12,13 +10,15 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import type { GameInfo, OrderReportsRecord, PageData } from "@/lib/types";
-import { withdrawFlowDataAtom, withdrawFlowDialogAtom } from "@/store";
+import type { GameInfo, OrderReportsRecord } from "@/lib/types";
+import {
+  orderParmasAtom,
+  withdrawFlowDataAtom,
+  withdrawFlowDialogAtom,
+} from "@/store";
 import { useAtom } from "jotai";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
-import { toast } from "sonner";
 
 export function FlowDialog({
   gameList,
@@ -28,40 +28,17 @@ export function FlowDialog({
   const t = useTranslations("withdraw.apply");
   const [open, setOpen] = useAtom(withdrawFlowDialogAtom);
   const [flowData] = useAtom(withdrawFlowDataAtom);
-  const [data, setData] = useState<PageData<OrderReportsRecord>>();
-  const [loading, setLoading] = useState(true);
+  const [orderParmas] = useAtom(orderParmasAtom);
   const router = useRouter();
-  const orderParmas =
-    flowData?.userType === 0
-      ? { agentId: flowData?.userId }
-      : ({ memberId: flowData?.userId } as Record<string, string>);
-
-  useEffect(() => {
-    if (open) {
-      setLoading(true);
-      getOrderReportList({
-        ...orderParmas,
-        pageNum: 1,
-        pageSize: 100,
-      }).then(({ code, data, message }) => {
-        setLoading(false);
-        if (code === 0 && data) {
-          setData(data);
-        } else {
-          toast.error(message);
-        }
-      });
-    }
-  }, [open, orderParmas]);
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogContent className="w-[100dvh] max-w-[100dvw]">
+      <DialogContent className="w-[80dvw] max-w-[80dvw]">
         <DialogTitle className="flex justify-between">
           <span>{t("flow")}</span>
         </DialogTitle>
         <div className="p-4 bg-background flex-1 overflow-auto">
-          {data?.list && data?.list?.length > 0 && (
+          {flowData?.list && flowData?.list?.length > 0 && (
             <div className="flex justify-end mb-4">
               <Button
                 size="sm"
@@ -81,11 +58,7 @@ export function FlowDialog({
           <div className="relative max-h-[50dvh] overflow-auto border rounded-sm">
             <ScrollableTable className="relative table-fixed">
               <ListHeader />
-              {loading ? (
-                <ListSkeleton />
-              ) : (
-                <ListBody list={data?.list ?? []} gameList={gameList} />
-              )}
+              <ListBody list={flowData?.list ?? []} gameList={gameList} />
             </ScrollableTable>
           </div>
         </div>
@@ -147,21 +120,6 @@ function ListBody({
           </TableCell>
         </TableRow>
       )}
-    </TableBody>
-  );
-}
-
-function ListSkeleton() {
-  return (
-    <TableBody>
-      {Array.from({ length: 5 }).map((_, index) => (
-        // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
-        <TableRow key={index}>
-          <TableCell colSpan={8}>
-            <Skeleton />
-          </TableCell>
-        </TableRow>
-      ))}
     </TableBody>
   );
 }

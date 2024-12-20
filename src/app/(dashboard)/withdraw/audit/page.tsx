@@ -13,6 +13,7 @@ import {
 import { Time } from "@/components/time";
 import { AUDIT_STATUS, ORDER_TYPE } from "@/lib/dict";
 import type { AuditList } from "@/lib/types";
+import { formatNumber } from "@/lib/utils";
 import { getTranslations } from "next-intl/server";
 import { Suspense } from "react";
 import { CleanBtn } from "./clean-btn";
@@ -147,10 +148,10 @@ async function TableBodyWrapper({ list }: { list: AuditList[] }) {
               })()}
             </TableCell>
             <TableCell>{item.userId}</TableCell>
-            <TableCell>{item.orderAmount}</TableCell>
-            <TableCell>{item.auditMultiple}</TableCell>
-            <TableCell>{item.availableAudit}</TableCell>
-            <TableCell>{item.remainingAudit}</TableCell>
+            <TableCell>{formatNumber(Number(item.orderAmount))}</TableCell>
+            <TableCell>{formatNumber(Number(item.auditMultiple))}</TableCell>
+            <TableCell>{formatNumber(Number(item.availableAudit))}</TableCell>
+            <TableCell>{formatNumber(Number(item.remainingAudit))}</TableCell>
             <TableCell>
               {(() => {
                 const status = AUDIT_STATUS.find(

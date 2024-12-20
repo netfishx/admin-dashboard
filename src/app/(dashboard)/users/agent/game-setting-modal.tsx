@@ -1,6 +1,6 @@
 "use client";
 
-import { getGameConfig, updateAgentGameConfig } from "@/api";
+import { updateAgentGameConfig } from "@/api";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -11,7 +11,6 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
-import { Skeleton } from "@/components/ui/skeleton";
 import { Switch } from "@/components/ui/switch";
 import {
   ScrollableTable,
@@ -22,37 +21,28 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import type { GameConfig } from "@/lib/types";
-import { agentIdAtom, gameSettingModalAtom } from "@/store";
+import {
+  agentIdAtom,
+  gameSettingDataAtom,
+  gameSettingModalAtom,
+} from "@/store";
 import { useAtom, useAtomValue } from "jotai";
 import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { useEffect, useState, useTransition } from "react";
+import { useState, useTransition } from "react";
 import { toast } from "sonner";
 
 export function GameSettingModal() {
   const translations = useTranslations();
   const t = useTranslations("users.agents");
   const userId = useAtomValue(agentIdAtom);
-  const [loading, setLoading] = useState(true);
+
   const [isPeding, startTransition] = useTransition();
   const [open, setOpen] = useAtom(gameSettingModalAtom);
-  const [data, setData] = useState<GameConfig[] | undefined>();
+  const [data, setData] = useAtom(gameSettingDataAtom);
   // 是否验证
   const [isValidate, setIsValidate] = useState(true);
-  useEffect(() => {
-    if (userId && open) {
-      setLoading(true);
-      getGameConfig(userId).then(({ code, data, message }) => {
-        if (code === 0) {
-          setData(data);
-        } else {
-          toast.error(message);
-        }
-        setLoading(false);
-      });
-    }
-  }, [userId, open]);
+
   const handleChangePercent = (gameId: number, percent: string) => {
     if (data) {
       const newList = data.map((item) =>
@@ -114,9 +104,7 @@ export function GameSettingModal() {
                   <TableHead>{t("ratio")}</TableHead>
                 </TableRow>
               </TableHeader>
-              {loading ? (
-                <GameSettingSkeleton length={5} colSpan={3} />
-              ) : (
+              {
                 <TableBody>
                   {data &&
                   data?.filter((item) => item.gameType === 61).length > 0 ? (
@@ -170,7 +158,7 @@ export function GameSettingModal() {
                     </TableRow>
                   )}
                 </TableBody>
-              )}
+              }
             </ScrollableTable>
           </div>
         </div>
@@ -184,9 +172,7 @@ export function GameSettingModal() {
                   <TableHead>{t("switch")}</TableHead>
                 </TableRow>
               </TableHeader>
-              {loading ? (
-                <GameSettingSkeleton length={1} colSpan={2} />
-              ) : (
+              {
                 <TableBody>
                   {data &&
                   data?.filter((item) => item.gameType === 20).length > 0 ? (
@@ -216,7 +202,7 @@ export function GameSettingModal() {
                     </TableRow>
                   )}
                 </TableBody>
-              )}
+              }
             </Table>
           </div>
         </div>
@@ -234,26 +220,5 @@ export function GameSettingModal() {
         </DialogFooter>
       </DialogContent>
     </Dialog>
-  );
-}
-
-function GameSettingSkeleton({
-  length,
-  colSpan,
-}: {
-  length: number;
-  colSpan: number;
-}) {
-  return (
-    <TableBody>
-      {Array.from({ length }).map((_, index) => (
-        // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
-        <TableRow key={index}>
-          <TableCell colSpan={colSpan}>
-            <Skeleton />
-          </TableCell>
-        </TableRow>
-      ))}
-    </TableBody>
   );
 }

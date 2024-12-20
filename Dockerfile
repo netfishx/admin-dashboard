@@ -1,7 +1,8 @@
-FROM imbios/bun-node:1-22-alpine AS base
+FROM oven/bun:1-slim AS base
 
 WORKDIR /app
 
+ENV NODE_ENV=production
 ENV NEXT_TELEMETRY_DISABLED=1
 
 FROM base AS deps
@@ -20,9 +21,10 @@ COPY . .
 
 RUN bun run build
 
-FROM base AS runner
+FROM oven/bun:1-alpine AS runner
 
 ENV NODE_ENV=production
+ENV NEXT_TELEMETRY_DISABLED=1
 
 RUN addgroup --system --gid 1002 nodejs
 RUN adduser --system --uid 1002 nextjs
