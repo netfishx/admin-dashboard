@@ -22,7 +22,7 @@ import { Form } from "./form";
 export default async function Page({
   searchParams,
 }: {
-  searchParams: Promise<{ [key: string]: string | string[] }>;
+  searchParams: Promise<{ [key: string]: string | undefined }>;
 }) {
   const { startTime, endTime } = await searchParams;
   return (
@@ -57,7 +57,7 @@ export default async function Page({
 async function TableWrapper({
   searchParams,
 }: {
-  searchParams: Promise<{ [key: string]: string | string[] }>;
+  searchParams: Promise<{ [key: string]: string | undefined }>;
 }) {
   const { startTime, endTime, id, userId, pageNum, pageSize } =
     await searchParams;
@@ -73,8 +73,8 @@ async function TableWrapper({
   const { data } = await getAuditList({
     startTime: Number(startTime),
     endTime: Number(endTime),
-    id: (id ?? "") as string,
-    userId: (userId ?? "") as string,
+    id: id || null,
+    userId: userId || null,
     pageNum: Number(pageNum ?? 1),
     pageSize: Number(pageSize ?? 10),
   });
