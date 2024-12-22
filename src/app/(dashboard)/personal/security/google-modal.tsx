@@ -24,7 +24,6 @@ import { toast } from "sonner";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { QRCodeSVG } from "qrcode.react";
-import { useEffect } from "react";
 export function GoogleModal({
   open,
   onOpenChange,
@@ -83,14 +82,14 @@ export function GoogleModal({
     }
   };
 
-  useEffect(() => {
-    if (open) {
-      setAuthCode("");
-    }
-  }, [open]);
-
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
+    <Dialog
+      open={open}
+      onOpenChange={(o) => {
+        setAuthCode("");
+        onOpenChange(o);
+      }}
+    >
       <DialogContent
         onPointerDownOutside={(e) => e.preventDefault()}
         className="h-[80dvh] max-h-[80dvh] sm:max-w-[600px]"
