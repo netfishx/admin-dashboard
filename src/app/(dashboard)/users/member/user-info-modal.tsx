@@ -18,8 +18,9 @@ import { memberInfoDataAtom, memberInfoModalAtom } from "@/store";
 import { useAtomValue, useSetAtom } from "jotai";
 import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
+import Form from "next/form";
 import { useRouter } from "next/navigation";
-import { useEffect, useState, useTransition } from "react";
+import { type FormEvent, useRef, useState, useTransition } from "react";
 import { toast } from "sonner";
 
 export function UserInfoModal({
@@ -35,63 +36,38 @@ export function UserInfoModal({
   const setOpen = useSetAtom(memberInfoModalAtom);
   const memberInfoData = useAtomValue(memberInfoDataAtom);
   const [agentId, setAgentId] = useState("");
-  const [upUsername, setUpUsername] = useState("");
   const [upNickname, setUpNickname] = useState("");
-  const [memberId, setMemberId] = useState("");
-  const [username, setUsername] = useState("");
-  const [tempUsername, setTempUsername] = useState("");
-  const [tempNickname, setTempNickname] = useState("");
-  const [memberNickname, setMemberNickname] = useState("");
-  // todo 获取创建时间
-  const [createTime, setCreateTime] = useState<number>();
-  const [status, setStatus] = useState(1);
   const router = useRouter();
-  useEffect(() => {
-    if (open && memberInfoData) {
-      setUpUsername(memberInfoData.upUsername);
-      setUpNickname(memberInfoData.upNickname);
-      setMemberId(memberInfoData.id);
-      setUsername(memberInfoData.username);
-      setMemberNickname(memberInfoData.nickname);
-      setCreateTime(memberInfoData.createTime);
-      setStatus(memberInfoData.status);
-    }
-    return () => {
-      setUpUsername("");
-      setUpNickname("");
-      setMemberId("");
-      setUsername("");
-      setMemberNickname("");
-      setAgentId("");
-      setCreateTime(0);
-      setStatus(1);
-    };
-  }, [open, memberInfoData]);
+  const ref = useRef<HTMLFormElement>(null);
 
-  const handleClickUpdateUserInfo = async () => {
-    if (!upNickname) {
-      toast.error("请输入代理账号");
-      return;
-    }
-    const requestBody = {
-      id: memberId,
-      status,
-      agentId,
-    };
-    const { code, message } = await updateMember(requestBody);
-    if (code === 0) {
-      toast.success(message);
-      setOpen(false);
-      router.refresh();
-    } else {
-      toast.error(message);
-    }
-  };
+  function handleUpdateStatus(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault();
 
-  const handleCheckAgent = async () => {
+    startTransition(async () => {
+      const formData = new FormData(e.currentTarget);
+      const status = formData.get("status");
+      const { code, message } = await updateMember({
+        id: memberInfoData?.id ?? "",
+        status: Number(status),
+        agentId: agentId || memberInfoData?.agentId,
+      });
+      if (code === 0) {
+        toast.success(message);
+        setOpen(false);
+        router.refresh();
+      } else {
+        toast.error(message);
+      }
+    });
+  }
+
+  const handleCheckAgent = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     startChecking(async () => {
+      const formData = new FormData(e.currentTarget);
+      const username = formData.get("username");
       const { code, message, data } = await getAgentInfoByUsername({
-        username: upUsername,
+        username: username as string,
       });
       if (code === 0) {
         setUpNickname(data?.nickname ?? "");
@@ -102,20 +78,6 @@ export function UserInfoModal({
     });
   };
 
-  const handleFocus = () => {
-    if (upUsername) {
-      setUpUsername("");
-      setUpNickname("");
-      setTempUsername(upUsername);
-      setTempNickname(upNickname);
-    }
-  };
-  const handleBlur = () => {
-    if (!upUsername) {
-      setUpUsername(tempUsername);
-      setUpNickname(tempNickname);
-    }
-  };
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent
@@ -130,36 +92,32 @@ export function UserInfoModal({
           {permissions?.includes("member_search") &&
           memberInfoData?.agentId === "-2" ? (
             <>
-              <div className="flex items-center gap-4">
-                <Label className="w-1/4 shrink-0 text-right text-muted-foreground">
-                  {t("agentUsername")}
-                </Label>
-                <Input
-                  className="w-1/2"
-                  value={upUsername}
-                  onFocus={handleFocus}
-                  onChange={(e) => setUpUsername(e.target.value)}
-                  onBlur={handleBlur}
-                />
-                <Button
-                  onClick={handleCheckAgent}
-                  disabled={isChecking}
-                  size="sm"
-                >
-                  {isChecking && (
-                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  )}
-                  {t("check")}
-                </Button>
-              </div>
+              <Form action="" onSubmit={handleCheckAgent}>
+                <div className="flex items-center gap-4">
+                  <Label className="w-1/4 shrink-0 text-right text-muted-foreground">
+                    {t("agentUsername")}
+                  </Label>
+
+                  <Input
+                    className="w-1/2"
+                    name="username"
+                    defaultValue={memberInfoData?.upUsername}
+                  />
+                  <Button disabled={isChecking} size="sm" type="submit">
+                    {isChecking && (
+                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    )}
+                    {t("check")}
+                  </Button>
+                </div>
+              </Form>
               <div className="flex items-center gap-4">
                 <Label className="w-1/4 shrink-0 text-right text-muted-foreground">
                   {t("agentNickname")}
                 </Label>
                 <Input
                   className="w-1/2"
-                  value={upNickname}
-                  onFocus={handleFocus}
+                  value={upNickname || memberInfoData?.upNickname}
                   disabled
                 />
               </div>
@@ -170,54 +128,59 @@ export function UserInfoModal({
                 <Label className="w-1/4 shrink-0 text-right text-muted-foreground">
                   {t("agentUsername")}
                 </Label>
-                <span>{upUsername}</span>
+                <span>{memberInfoData?.upUsername}</span>
               </div>
               <div className="flex items-center gap-4 text-muted-foreground">
                 <Label className="w-1/4 shrink-0 text-right text-muted-foreground">
                   {t("agentNickname")}
                 </Label>
-                <span>{upNickname}</span>
+                <span>{memberInfoData?.upNickname}</span>
               </div>
             </>
           )}
           <div className="flex items-center gap-4 text-muted-foreground">
             <Label className="w-1/4 shrink-0 text-right">{t("memberId")}</Label>
-            <span>{username}</span>
+            <span>{memberInfoData?.username}</span>
           </div>
           <div className="flex items-center gap-4 text-muted-foreground">
             <Label className="w-1/4 shrink-0 text-right">
               {t("memberUsername")}
             </Label>
-            <span>{memberNickname}</span>
+            <span>{memberInfoData?.nickname}</span>
           </div>
           <div className="flex items-center gap-4 text-muted-foreground">
             <Label className="w-1/4 shrink-0 text-right">
               {t("createTime")}
             </Label>
-            <span>{createTime && <Time time={createTime} />}</span>
+            <span>
+              {memberInfoData?.createTime && (
+                <Time time={memberInfoData?.createTime} />
+              )}
+            </span>
           </div>
           <div className="flex items-center gap-4">
             <Label className="w-1/4 shrink-0 text-right text-muted-foreground">
               {t("status")}
             </Label>
-            <RadioGroup
-              value={status.toString()}
-              className="flex gap-2"
-              onValueChange={(value) => setStatus(Number(value))}
-            >
-              <div className="flex items-center space-x-2">
-                <RadioGroupItem value="0" id="0" />
-                <Label htmlFor="0">{t("enable")}</Label>
-              </div>
-              <div className="flex items-center space-x-2">
-                <RadioGroupItem value="1" id="1" />
-                <Label htmlFor="1">{t("disable")}</Label>
-              </div>
-              <div className="flex items-center space-x-2">
-                <RadioGroupItem value="2" id="2" />
-                <Label htmlFor="2">{t("freeze")}</Label>
-              </div>
-            </RadioGroup>
+            <Form action="" onSubmit={handleUpdateStatus} ref={ref}>
+              <RadioGroup
+                defaultValue={memberInfoData?.status.toString()}
+                className="flex gap-2"
+              >
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="0" id="0" />
+                  <Label htmlFor="0">{t("enable")}</Label>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="1" id="1" />
+                  <Label htmlFor="1">{t("disable")}</Label>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="2" id="2" />
+                  <Label htmlFor="2">{t("freeze")}</Label>
+                </div>
+              </RadioGroup>
+            </Form>
           </div>
         </div>
         <DialogFooter>
@@ -226,7 +189,13 @@ export function UserInfoModal({
           </Button>
           <Button
             disabled={isPending}
-            onClick={() => startTransition(handleClickUpdateUserInfo)}
+            onClick={(e) => {
+              e.preventDefault();
+
+              if (ref.current) {
+                ref.current.requestSubmit();
+              }
+            }}
           >
             {isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
             {translation("confirm")}

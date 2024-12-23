@@ -1529,7 +1529,7 @@ export async function uploadImage(data: FormData) {
       Authorization: `Bearer ${user?.token}`,
       "Accept-Language": "zh-CN",
     },
-    maxBodyLength: 10 * 1024 * 1024,
+    maxBodyLength: 5 * 1024 * 1024,
   });
   console.group("uploadImage");
   console.dir(res.data, { depth: null });

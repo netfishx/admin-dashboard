@@ -14,19 +14,11 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Password } from "@/components/ui/password";
 import type { AddSupplier } from "@/lib/types";
-import { supplierLoadingAtom } from "@/store";
-import { useSetAtom } from "jotai";
 import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Form from "next/form";
 import { useRouter } from "next/navigation";
-import {
-  type FormEvent,
-  useEffect,
-  useRef,
-  useState,
-  useTransition,
-} from "react";
+import { type FormEvent, useRef, useState } from "react";
 import { toast } from "sonner";
 import { validateFormData } from "./validata";
 
@@ -51,16 +43,11 @@ function AddDialog({
   const t = useTranslations("users.supplier");
   const translation = useTranslations();
   const ref = useRef<HTMLFormElement>(null);
-  const [isPending, startTransition] = useTransition();
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
-  const setSupplierLoading = useSetAtom(supplierLoadingAtom);
+
   // 验证是否校验
   const [validata, setValidata] = useState(false);
-
-  useEffect(() => {
-    setSupplierLoading(isPending);
-  }, [isPending, setSupplierLoading]);
 
   const handleConfirm = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -72,9 +59,7 @@ function AddDialog({
       setIsLoading(false);
       if (code === 0) {
         setOpen(false);
-        startTransition(() => {
-          router.refresh();
-        });
+        router.refresh();
       } else {
         toast.error(message);
       }

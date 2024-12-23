@@ -24,17 +24,6 @@ export function List({ data }: { data: WithdrawFeeList[] }) {
   const translations = useTranslations();
   const [feeList, setFeeList] = useState<WithdrawFeeList[]>(data);
 
-  // useEffect(() => {
-  //   // 比例手续费 传参数的时候除100，获取数据的时候乘100
-  //   getWithdrawFeeList().then(({ data }) => {
-  //     data?.map((item) => {
-  //       item.percentageFee = Big(item.percentageFee).times(100).toNumber();
-  //       item.fixedFee = Big(item.fixedFee).round(2).toNumber();
-  //     });
-
-  //     setFeeList(data ?? []);
-  //   });
-  // }, []);
   const [currentParams, setCurrentParams] = useState({});
 
   const [loading, setLoading] = useState(false);
@@ -86,9 +75,6 @@ export function List({ data }: { data: WithdrawFeeList[] }) {
 
   const handlePercentageChange = (index: number, value: number) =>
     handleFieldChange(index, "percentageFee", value);
-
-  const handleCurrencyChange = (index: number, value: string) =>
-    handleFieldChange(index, "currency", value);
 
   return (
     <div className="flex flex-col gap-2">

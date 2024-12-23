@@ -16,8 +16,9 @@ import { agentDataAtom, agentIdAtom, userInfoModalAtom } from "@/store";
 import { useAtomValue, useSetAtom } from "jotai";
 import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
+import Form from "next/form";
 import { useRouter } from "next/navigation";
-import { useEffect, useState, useTransition } from "react";
+import { type FormEvent, useRef, useState, useTransition } from "react";
 import { toast } from "sonner";
 
 export function UserInfoModal() {
@@ -26,51 +27,37 @@ export function UserInfoModal() {
   const [isPending, startTransition] = useTransition();
   const open = useAtomValue(userInfoModalAtom);
   const setOpen = useSetAtom(userInfoModalAtom);
-  const [upUsername, setUpUsername] = useState("");
-  const [username, setUsername] = useState("");
-  const [nickname, setNickname] = useState("");
-  const [remainLoginTime, setRemainLoginTime] = useState(0);
-  const [status, setStatus] = useState(0);
   const router = useRouter();
   const userId = useAtomValue(agentIdAtom);
 
   const agentData = useAtomValue(agentDataAtom);
 
-  useEffect(() => {
-    if (agentData) {
-      setUpUsername(agentData.upUsername);
-      setUsername(agentData.username);
-      setNickname(agentData.nickname);
-      setRemainLoginTime(agentData.remainLoginTime);
-      setStatus(agentData.status);
-    }
-    return () => {
-      setUpUsername("");
-      setUsername("");
-      setNickname("");
-      setRemainLoginTime(0);
-      setStatus(0);
-    };
-  }, [agentData]);
+  const [times, setTimes] = useState(agentData?.remainLoginTime ?? 0);
 
-  const handleClickUpdateUserInfo = async () => {
-    const requestBody = {
-      id: userId,
-      status,
-    };
-    const { code, message } = await updateAgent(requestBody);
-    if (code === 0) {
-      setOpen(false);
-      router.refresh();
-    } else {
-      toast.error(message);
-    }
-  };
+  const ref = useRef<HTMLFormElement>(null);
+
+  function handleSubmit(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    startTransition(async () => {
+      const formData = new FormData(e.target as HTMLFormElement);
+      const status = formData.get("status");
+      const { code, message } = await updateAgent({
+        id: userId,
+        status: Number(status),
+      });
+      if (code === 0) {
+        setOpen(false);
+        router.refresh();
+      } else {
+        toast.error(message);
+      }
+    });
+  }
 
   const handleClickResetRestCount = async () => {
     const { code, data, message } = await resetRestCount({ id: userId });
     if (code === 0) {
-      setRemainLoginTime(Number(data));
+      setTimes(Number(data));
       toast.success(message);
     } else {
       toast.error(message);
@@ -88,31 +75,31 @@ export function UserInfoModal() {
           <DialogDescription />
         </DialogHeader>
         <div className="flex w-full flex-col gap-4 px-4">
-          {upUsername && (
+          {agentData?.upUsername && (
             <div className="flex items-center gap-4">
               <Label className="w-1/4 shrink-0 text-right text-muted-foreground">
                 {t("upUsername")}
               </Label>
-              <span>{upUsername}</span>
+              <span>{agentData.upUsername}</span>
             </div>
           )}
           <div className="flex items-center gap-4">
             <Label className="w-1/4 shrink-0 text-right text-muted-foreground">
               {t("username")}
             </Label>
-            <span>{username}</span>
+            <span>{agentData?.username}</span>
           </div>
           <div className="flex items-center gap-4">
             <Label className="w-1/4 shrink-0 text-right text-muted-foreground">
               {t("nickname")}
             </Label>
-            <span>{nickname}</span>
+            <span>{agentData?.nickname}</span>
           </div>
           <div className="flex items-center gap-4">
             <Label className="w-1/4 shrink-0 text-right text-muted-foreground">
               {t("restCount")}
             </Label>
-            <div>{remainLoginTime}</div>
+            <div>{times}</div>
             <Button size="sm" onClick={handleClickResetRestCount}>
               {t("reset")}
             </Button>
@@ -121,24 +108,26 @@ export function UserInfoModal() {
             <Label className="w-1/4 shrink-0 text-right text-muted-foreground">
               {t("status")}
             </Label>
-            <RadioGroup
-              value={status.toString()}
-              className="flex gap-2"
-              onValueChange={(value) => setStatus(Number(value))}
-            >
-              <div className="flex items-center space-x-2">
-                <RadioGroupItem value="0" id="0" />
-                <Label htmlFor="0">{t("enable")}</Label>
-              </div>
-              <div className="flex items-center space-x-2">
-                <RadioGroupItem value="1" id="1" />
-                <Label htmlFor="1">{t("disable")}</Label>
-              </div>
-              <div className="flex items-center space-x-2">
-                <RadioGroupItem value="2" id="2" />
-                <Label htmlFor="2">{t("freeze")}</Label>
-              </div>
-            </RadioGroup>
+            <Form action="" onSubmit={handleSubmit} ref={ref}>
+              <RadioGroup
+                defaultValue={agentData?.status.toString()}
+                className="flex gap-2"
+                name="status"
+              >
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="0" id="0" />
+                  <Label htmlFor="0">{t("enable")}</Label>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="1" id="1" />
+                  <Label htmlFor="1">{t("disable")}</Label>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="2" id="2" />
+                  <Label htmlFor="2">{t("freeze")}</Label>
+                </div>
+              </RadioGroup>
+            </Form>
           </div>
         </div>
         <DialogFooter>
@@ -147,8 +136,12 @@ export function UserInfoModal() {
           </Button>
           <Button
             disabled={isPending}
-            onClick={() => {
-              startTransition(handleClickUpdateUserInfo);
+            onClick={(e) => {
+              e.preventDefault();
+
+              if (ref.current) {
+                ref.current.requestSubmit();
+              }
             }}
           >
             {isPending && <Loader2 className="h-4 w-4 animate-spin" />}

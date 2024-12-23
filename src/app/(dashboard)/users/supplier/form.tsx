@@ -3,13 +3,11 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { supplierLoadingAtom } from "@/store";
-import { useSetAtom } from "jotai";
 import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useQueryState } from "nuqs";
-import { useEffect, useTransition } from "react";
+import { useTransition } from "react";
 
 export function SupplierForm() {
   const t = useTranslations("users.supplier");
@@ -18,10 +16,6 @@ export function SupplierForm() {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
   const [isReset, startReset] = useTransition();
-  const setLoading = useSetAtom(supplierLoadingAtom);
-  useEffect(() => {
-    setLoading(isReset || isPending);
-  }, [isReset, isPending, setLoading]);
 
   return (
     <div className="flex items-center justify-between bg-background p-4">

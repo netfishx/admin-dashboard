@@ -15,18 +15,12 @@ import { Label } from "@/components/ui/label";
 import { Password } from "@/components/ui/password";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { supplierEditDataAtom, supplierEditModalAtom } from "@/store";
-import { useAtom, useAtomValue } from "jotai";
+import { useAtom } from "jotai";
 import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Form from "next/form";
 import { useRouter } from "next/navigation";
-import {
-  type FormEvent,
-  useEffect,
-  useRef,
-  useState,
-  useTransition,
-} from "react";
+import { type FormEvent, useRef, useState, useTransition } from "react";
 import { toast } from "sonner";
 import { validateEditFormData } from "./validata";
 
@@ -35,28 +29,14 @@ export function SupplierEditDialog() {
   const t = useTranslations("users.supplier");
   const [isPending, startTransition] = useTransition();
   const [isResetPending, startResetTransition] = useTransition();
-  const data = useAtomValue(supplierEditDataAtom);
+  const [data, setData] = useAtom(supplierEditDataAtom);
   const [open, setOpen] = useAtom(supplierEditModalAtom);
-  const [id, setId] = useState("");
-  const [username, setUsername] = useState("");
-  const [nickname, setNickname] = useState("");
-  const [password] = useState("");
-  const [confirmPassword] = useState("");
-  const [remark, setRemark] = useState("");
-  const [remainLoginTime, setRemainLoginTime] = useState(0);
-  const [status, setStatus] = useState(0);
+
   const router = useRouter();
   const ref = useRef<HTMLFormElement>(null);
-  useEffect(() => {
-    if (open && data) {
-      setId(data.id);
-      setUsername(data.username);
-      setNickname(data.nickname);
-      setRemainLoginTime(data.remainLoginTime);
-      setRemark(data.remark);
-      setStatus(data.status);
-    }
-  }, [open, data]);
+
+  const [times, setTimes] = useState<number>();
+
   const handleConfirm = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
@@ -84,18 +64,33 @@ export function SupplierEditDialog() {
   };
   const handleResetRestCount = () => {
     startResetTransition(async () => {
-      const { code, data, message } = await cleanSupplierLoginError({ id });
-      if (code === 0) {
-        toast.success(message);
-        setRemainLoginTime(Number(data));
-      } else {
-        toast.error(message);
+      if (data) {
+        const {
+          code,
+          data: result,
+          message,
+        } = await cleanSupplierLoginError({ id: data.id });
+        if (code === 0) {
+          toast.success(message);
+          setTimes(Number(result));
+        } else {
+          toast.error(message);
+        }
       }
     });
   };
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog
+      open={open}
+      onOpenChange={(o) => {
+        setOpen(o);
+        if (!o) {
+          setTimes(undefined);
+          setData(undefined);
+        }
+      }}
+    >
       <DialogContent
         onInteractOutside={(e) => {
           e.preventDefault();
@@ -110,32 +105,30 @@ export function SupplierEditDialog() {
           <div className="flex flex-col gap-4">
             <div className="flex items-center gap-2">
               <Label className="w-32 text-end">{t("supplierUsername")}</Label>
-              <Input className="flex-1" defaultValue={username} disabled />
+              <Input
+                className="flex-1"
+                defaultValue={data?.username}
+                disabled
+              />
             </div>
             <div className="flex items-center gap-2">
               <Label className="w-32 text-end">{t("supplierName")}</Label>
               <Input
                 className="flex-1"
-                defaultValue={nickname}
+                defaultValue={data?.nickname}
                 name="nickname"
                 maxLength={20}
               />
             </div>
             <div className="flex items-center gap-2">
               <Label className="w-32 text-end">{t("password")}</Label>
-              <Password
-                type="password"
-                className="flex-1"
-                defaultValue={password}
-                name="newPassword"
-              />
+              <Password type="password" className="flex-1" name="newPassword" />
             </div>
             <div className="flex items-center gap-2">
               <Label className="w-32 text-end">{t("confirmPassword")}</Label>
               <Password
                 type="password"
                 className="flex-1"
-                defaultValue={confirmPassword}
                 name="confirmPassword"
               />
             </div>
@@ -143,14 +136,14 @@ export function SupplierEditDialog() {
               <Label className="w-32 text-end">{t("remark")}</Label>
               <Input
                 className="flex-1"
-                defaultValue={remark}
+                defaultValue={data?.remark}
                 name="remark"
                 maxLength={100}
               />
             </div>
             <div className="flex items-center gap-2">
               <Label className="w-32 text-end">{t("resetCount")}</Label>
-              <span>{remainLoginTime}</span>
+              <span>{times || data?.remainLoginTime}</span>
               <Button
                 size="sm"
                 disabled={isResetPending}
@@ -163,7 +156,7 @@ export function SupplierEditDialog() {
             <div className="flex items-center gap-2">
               <Label className="w-32 text-end">{t("status")}</Label>
               <RadioGroup
-                defaultValue={status.toString()}
+                defaultValue={data?.status.toString()}
                 className="flex gap-2"
                 name="status"
               >
