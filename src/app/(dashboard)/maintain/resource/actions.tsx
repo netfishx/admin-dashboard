@@ -58,7 +58,7 @@ function DeleteBtn({ id }: { id: string }) {
           className="px-2 text-sm text-primary hover:text-primary/80"
           disabled={isPending}
         >
-          {isPending ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
+          {isPending ? <Loader2 className="animate-spin" /> : null}
           {t("delete")}
         </Button>
       </AlertDialogTrigger>

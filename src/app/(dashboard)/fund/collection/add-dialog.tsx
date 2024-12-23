@@ -48,7 +48,7 @@ export function AddDialog(props: Dialogprops) {
             onClick={() => startTransition(handleConfirm)}
             disabled={isPending}
           >
-            {isPending && <Loader2 className="h-4 w-4 animate-spin" />}
+            {isPending && <Loader2 className="animate-spin" />}
             {translations("confirm")}
           </AlertDialogAction>
         </AlertDialogFooter>

@@ -35,7 +35,7 @@ export function DetailButton(props: { data?: UserBasicInfo }) {
           });
         }}
       >
-        {isPending ? <Loader2 className="w-4 h-4 animate-spin" /> : null}
+        {isPending ? <Loader2 className="animate-spin" /> : null}
         {t("withdraw")}
       </Button>
       {open && data && <CheckDialog onOpenChange={setOpen} data={data} />}

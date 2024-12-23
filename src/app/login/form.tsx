@@ -21,7 +21,7 @@ function SubmitButton() {
   const t = useTranslations("login");
   return (
     <Button disabled={pending}>
-      {pending ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
+      {pending ? <Loader2 className="animate-spin" /> : null}
       {t("button")}
     </Button>
   );

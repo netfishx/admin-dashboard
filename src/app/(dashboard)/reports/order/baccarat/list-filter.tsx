@@ -274,14 +274,14 @@ export function ListFilter({ gameList }: { gameList: GameInfo[] }) {
             variant="outline"
             disabled={isDownload}
           >
-            {isDownload && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+            {isDownload && <Loader2 className="animate-spin" />}
             {t("download")}
           </Button>
           <Button variant="outline" disabled={isReset} onClick={handleReset}>
             {t("reset")}
           </Button>
           <Button onClick={handleSearch} disabled={isPending}>
-            {isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+            {isPending && <Loader2 className="animate-spin" />}
             {t("search")}
           </Button>
         </div>

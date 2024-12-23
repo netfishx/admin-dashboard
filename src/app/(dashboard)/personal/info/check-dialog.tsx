@@ -223,7 +223,7 @@ export function CheckDialog(props: Dialogprops) {
                 }}
                 disabled={loading}
               >
-                {loading && <Loader2 className="h-4 w-4 animate-spin" />}
+                {loading && <Loader2 className="animate-spin" />}
                 {translations("confirm")}
               </Button>
             </DialogFooter>
@@ -251,7 +251,7 @@ export function CheckDialog(props: Dialogprops) {
                 {translations("cancel")}
               </Button>
               <Button onClick={() => handleVerify()} disabled={loading}>
-                {loading && <Loader2 className="h-4 w-4 animate-spin" />}
+                {loading && <Loader2 className="animate-spin" />}
                 {t("verify")}
               </Button>
             </DialogFooter>

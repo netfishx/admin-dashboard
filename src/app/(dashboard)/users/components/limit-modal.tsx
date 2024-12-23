@@ -250,7 +250,7 @@ export function LimitModal({ userId }: { userId: string }) {
             }
             onClick={handleSave}
           >
-            {isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+            {isPending && <Loader2 className="animate-spin" />}
             {translations("confirm")}
           </Button>
         </DialogFooter>

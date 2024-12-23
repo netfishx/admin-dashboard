@@ -119,7 +119,7 @@ export function ListFilter({
             {t("reset")}
           </Button>
           <Button disabled={isPending} onClick={handleSearch}>
-            {isPending && <Loader2 className="h-4 w-4 animate-spin" />}
+            {isPending && <Loader2 className="animate-spin" />}
             {t("search")}
           </Button>
         </div>

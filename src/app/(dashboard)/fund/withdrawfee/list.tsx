@@ -68,7 +68,7 @@ export function List({ data }: { data: WithdrawFee }) {
               }}
               disabled={isPending || !isValid}
             >
-              {isPending && <Loader2 className="h-4 w-4 animate-spin" />}
+              {isPending && <Loader2 className="animate-spin" />}
               {t("save")}
             </Button>
           </div>

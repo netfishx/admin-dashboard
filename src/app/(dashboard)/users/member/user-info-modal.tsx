@@ -107,9 +107,7 @@ export function UserInfoModal({
                     defaultValue={memberInfoData?.upUsername}
                   />
                   <Button disabled={isChecking} size="sm" type="submit">
-                    {isChecking && (
-                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                    )}
+                    {isChecking && <Loader2 className="animate-spin" />}
                     {t("check")}
                   </Button>
                 </div>
@@ -201,7 +199,7 @@ export function UserInfoModal({
               }
             }}
           >
-            {isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+            {isPending && <Loader2 className="animate-spin" />}
             {translation("confirm")}
           </Button>
         </DialogFooter>

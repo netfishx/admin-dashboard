@@ -129,7 +129,7 @@ export function AddEditDialog() {
               formRef.current?.requestSubmit();
             }}
           >
-            {isPending ? <Loader2 className="h-4 w-4 animate-spin" /> : null}
+            {isPending ? <Loader2 className="animate-spin" /> : null}
             {translation("confirm")}
           </Button>
         </DialogFooter>

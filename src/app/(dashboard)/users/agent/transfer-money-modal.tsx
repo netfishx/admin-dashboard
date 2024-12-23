@@ -129,7 +129,7 @@ export function TransferMoneyModal() {
                   <div className="flex flex-1 flex-row text-xs text-destructive">
                     {t("availableAmount")}:
                     {fetching ? (
-                      <Loader2 className="h-4 w-4 animate-spin" />
+                      <Loader2 className="size-4 animate-spin" />
                     ) : (
                       availableAmount
                     )}
@@ -162,7 +162,7 @@ export function TransferMoneyModal() {
                 }
               }}
             >
-              {isPeding && <Loader2 className="h-4 w-4 animate-spin" />}
+              {isPeding && <Loader2 className="animate-spin" />}
               {translation("confirm")}
             </Button>
           </DialogFooter>

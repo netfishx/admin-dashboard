@@ -192,7 +192,7 @@ export function SubaccountDialog({ roles }: { roles: Role[] }) {
             }}
             disabled={isPending}
           >
-            {isPending && <Loader2 className="h-4 w-4 animate-spin" />}
+            {isPending && <Loader2 className="animate-spin" />}
             {translations("confirm")}
           </Button>
         </DialogFooter>

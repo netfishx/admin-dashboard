@@ -92,14 +92,14 @@ export default function Form({
             startResetTransition(() => router.replace("/users/member"))
           }
         >
-          {isReset && <Loader2 className="h-4 w-4 animate-spin" />}
+          {isReset && <Loader2 className="animate-spin" />}
           {t("reset")}
         </Button>
         <Button
           onClick={() => startTransition(() => router.refresh())}
           disabled={isPending}
         >
-          {isPending && <Loader2 className="h-4 w-4 animate-spin" />}
+          {isPending && <Loader2 className="animate-spin" />}
           {t("search")}
         </Button>
       </div>

@@ -44,7 +44,7 @@ function AddButton() {
     <AlertDialog>
       <AlertDialogTrigger asChild>
         <Button disabled={isPending}>
-          {isPending && <Loader2 className="h-4 w-4 animate-spin" />}
+          {isPending && <Loader2 className="animate-spin" />}
           {t("add")}
         </Button>
       </AlertDialogTrigger>
@@ -70,7 +70,7 @@ function AddButton() {
               });
             }}
           >
-            {isPending && <Loader2 className="h-4 w-4 animate-spin" />}
+            {isPending && <Loader2 className="animate-spin" />}
             {translations("confirm")}
           </AlertDialogAction>
         </AlertDialogFooter>

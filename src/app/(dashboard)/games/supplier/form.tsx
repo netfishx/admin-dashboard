@@ -51,7 +51,7 @@ export function SupplierForm() {
         }}
         disabled={isPending}
       >
-        {isPending ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
+        {isPending ? <Loader2 className="animate-spin" /> : null}
         {t("search")}
       </Button>
     </div>
