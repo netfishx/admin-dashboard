@@ -1309,6 +1309,16 @@ export async function getWithdrawFeeList() {
     token: user?.token,
   });
 }
+
+// 获取最新一条提现手续费 1223:update
+export async function getNewestWithdrawFee() {
+  const user = await getSession();
+  return await apiRequest<WithdrawFeeList>({
+    url: "/config/withdraw/fee/agent/newest",
+    token: user?.token,
+  });
+}
+
 // 编辑提现手续费
 export async function saveWithdrawFee(data: WithdrawFeeList) {
   const user = await getSession();
