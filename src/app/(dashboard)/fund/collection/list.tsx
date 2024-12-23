@@ -12,6 +12,7 @@ import { getTranslations } from "next-intl/server";
 import CopyButton from "./copy-button";
 
 export async function ListHeader() {
+  "use cache";
   const t = await getTranslations("fund.collection");
   return (
     <TableHeader>
