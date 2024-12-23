@@ -27,6 +27,7 @@ export async function ListHeader() {
     <TableHeader>
       <TableRow className="bg-muted">
         <TableHead className="w-60">{t("agentOrOwnerId")}</TableHead>
+        <TableHead className="w-60">{t("parentAgentId")}</TableHead>
         <TableHead className="w-60">{t("gameName")}</TableHead>
         <TableHead className="w-60">{t("shareAmount")}</TableHead>
         <TableHead className="w-60">{t("blockAmount")}</TableHead>
@@ -59,6 +60,7 @@ async function ListBody({
         list?.map((item: RatioReportRequestRecords) => (
           <TableRow key={nanoid()}>
             <TableCell>{item.userId}</TableCell>
+            <TableCell>{item.parentAgentId}</TableCell>
             <TableCell>
               {gameList.find((game) => game.gameId === item.gameId)?.gameName ||
                 t("all")}
@@ -125,6 +127,7 @@ export async function RatioList({
     );
   }
   const { data } = await getRatioReport(p);
+  console.log(data, "data");
 
   return (
     <div className="p-4 bg-background flex-1">

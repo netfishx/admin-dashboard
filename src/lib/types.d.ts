@@ -439,6 +439,7 @@ export type RatioReportRequestParams = {
 
 // 占成拦货报表请求出参
 export type RatioReportRequestRecords = {
+  parentAgentId?: string; // 上级代理ID
   dataLink: string[]; // 数据链接数组
   userId: string; // 用户 ID
   userType: number; // 用户类型
@@ -806,7 +807,7 @@ export type TodayGameReport = {
   }[];
   dailyPokerReport: {
     day: number;
-    totaSettledAmount: string;
+    totalSettledAmount: string;
     issueAmount: number;
   }[];
 };

@@ -230,9 +230,9 @@ async function DayChartWrapper({
 
   // 掼蛋数据
   const gdTrendingBetAmountData =
-    pokerData?.map(({ day, totaSettledAmount }) => ({
+    pokerData?.map(({ day, totalSettledAmount }) => ({
       name: day,
-      data: Number(totaSettledAmount),
+      data: Number(totalSettledAmount),
     })) || [];
 
   const gdTrendingBetNumData =
