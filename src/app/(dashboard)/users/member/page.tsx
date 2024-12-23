@@ -10,7 +10,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import type { MemberList } from "@/lib/types";
-import { cn } from "@/lib/utils";
+import { cn, formatNumber } from "@/lib/utils";
 import { getSession } from "@/session";
 import { getTranslations } from "next-intl/server";
 import { Suspense } from "react";
@@ -150,14 +150,15 @@ async function TableBodyWrapper({
             <TableCell className="break-all">{item.username}</TableCell>
             <TableCell className="break-all">{item.nickname}</TableCell>
             <TableCell>{item.depositAddress}</TableCell>
-            <TableCell>{item.debtAmount ?? 0}</TableCell>
-            <TableCell>{item.creditAmount ?? 0}</TableCell>
+            <TableCell>{formatNumber(item.debtAmount)}</TableCell>
+            <TableCell>{formatNumber(item.creditAmount)}</TableCell>
             <TableCell>
               <div
                 className={cn(
                   "w-fit rounded-sm px-2",
                   item.status === 0 && "bg-green/10 text-green",
                   item.status === 1 && "bg-destructive/10 text-destructive",
+                  item.status === 2 && "bg-orange/10 text-orange",
                 )}
               >
                 {t(`statusLabel.${item.status}`)}

@@ -35,8 +35,8 @@ export function UserInfoModal({
   const [isChecking, startChecking] = useTransition();
   const setOpen = useSetAtom(memberInfoModalAtom);
   const memberInfoData = useAtomValue(memberInfoDataAtom);
-  const [agentId, setAgentId] = useState("");
-  const [upNickname, setUpNickname] = useState("");
+  const [agentId, setAgentId] = useState<string>();
+  const [upNickname, setUpNickname] = useState<string>();
   const router = useRouter();
   const ref = useRef<HTMLFormElement>(null);
 
@@ -49,7 +49,7 @@ export function UserInfoModal({
       const { code, message } = await updateMember({
         id: memberInfoData?.id ?? "",
         status: Number(status),
-        agentId: agentId || memberInfoData?.agentId,
+        agentId,
       });
       if (code === 0) {
         toast.success(message);
@@ -70,8 +70,8 @@ export function UserInfoModal({
         username: username as string,
       });
       if (code === 0) {
-        setUpNickname(data?.nickname ?? "");
-        setAgentId(data?.id ?? "");
+        setUpNickname(data?.nickname);
+        setAgentId(data?.id);
       } else {
         toast.error(message);
       }
@@ -166,6 +166,7 @@ export function UserInfoModal({
               <RadioGroup
                 defaultValue={memberInfoData?.status.toString()}
                 className="flex gap-2"
+                name="status"
               >
                 <div className="flex items-center space-x-2">
                   <RadioGroupItem value="0" id="0" />
