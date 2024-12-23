@@ -1,6 +1,6 @@
 "use client";
 
-import { getUserBasicInfo, modifyCreditLimit } from "@/api";
+import { modifyCreditLimit } from "@/api";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -14,6 +14,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Password } from "@/components/ui/password";
 import {
+  availableAmountAtom,
   increaseCreditModalAtom,
   memberIdAtom,
   memberInfoDataAtom,
@@ -24,13 +25,7 @@ import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Form from "next/form";
 import { useRouter } from "next/navigation";
-import {
-  type FormEvent,
-  useEffect,
-  useRef,
-  useState,
-  useTransition,
-} from "react";
+import { type FormEvent, useRef, useState, useTransition } from "react";
 import { toast } from "sonner";
 import { GoogleValidataModal } from "../components/google-validata-modal";
 
@@ -47,8 +42,7 @@ export function IncreaseCreditModal() {
   const memberId = useAtomValue(memberIdAtom);
   const memberInfoData = useAtomValue(memberInfoDataAtom);
   const ref = useRef<HTMLFormElement>(null);
-  const [availableAmount, setAvailableAmount] = useState(0);
-  const [fetching, startFetching] = useTransition();
+  const availableAmount = useAtomValue(availableAmountAtom);
   // 订单id
   const [orderId, setOrderId] = useState("");
   // 是否开启谷歌验证弹窗
@@ -82,19 +76,6 @@ export function IncreaseCreditModal() {
       }
     });
   };
-
-  useEffect(() => {
-    if (open) {
-      startFetching(async () => {
-        const { code, data, message } = await getUserBasicInfo();
-        if (code === 0) {
-          setAvailableAmount(data?.usableBalanceMoney || 0);
-        } else {
-          toast.error(message);
-        }
-      });
-    }
-  }, [open]);
 
   return (
     <>
@@ -160,12 +141,7 @@ export function IncreaseCreditModal() {
                 <div className="flex items-center gap-4">
                   <Label className="w-28 shrink-0 text-right text-muted-foreground" />
                   <div className="flex flex-1 flex-row text-xs text-destructive">
-                    {t("availableAmount")}:
-                    {fetching ? (
-                      <Loader2 className="h-4 w-4 animate-spin" />
-                    ) : (
-                      availableAmount
-                    )}
+                    {t("availableAmount")}:{availableAmount}
                   </div>
                 </div>
               </div>

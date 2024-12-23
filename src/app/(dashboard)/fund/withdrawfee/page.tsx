@@ -42,7 +42,9 @@ export default async function Page() {
 }
 async function TableWrapper() {
   const { data } = await getWithdrawFeeList();
-  if (!data) return null;
+  if (!data) {
+    return null;
+  }
   // 比例手续费 传参数的时候除100，获取数据的时候乘100
   data.map((item) => {
     item.percentageFee = Big(item.percentageFee).times(100).toNumber();

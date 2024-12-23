@@ -12,7 +12,9 @@ export default function TruncatedCell({
   value: string;
 }) {
   const truncateValue = (value: string) => {
-    if (!value) return "";
+    if (!value) {
+      return "";
+    }
 
     const str = String(value);
     return str.length > 20 ? `${str.slice(0, 20)}...` : str;

@@ -66,6 +66,7 @@ export const addAgentLoadingAtom = atom<boolean>(false);
 export const memberIdAtom = atom<string>("");
 // 用户管理-会员管理-会员信息数据
 export const memberInfoDataAtom = atom<MemberList | null>(null);
+export const availableAmountAtom = atom<number>(0);
 // 用户管理-会员管理-会员信息弹窗
 export const memberInfoModalAtom = atom<boolean>(false);
 // 用户管理-会员管理-占成弹窗

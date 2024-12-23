@@ -5,10 +5,12 @@ import {
   getGameConfig,
   getGameOdds,
   getMemberLoginLog,
+  getUserBasicInfo,
 } from "@/api";
 import { Button } from "@/components/ui/button";
 import type { MemberList } from "@/lib/types";
 import {
+  availableAmountAtom,
   changeLogDataAtom,
   changeLogModalAtom,
   decreaseCreditModalAtom,
@@ -70,11 +72,16 @@ export default function Action({
   const setChangeLogModal = useSetAtom(changeLogModalAtom);
   const setChangeLogData = useSetAtom(changeLogDataAtom);
 
+  const setAvailableAmount = useSetAtom(availableAmountAtom);
+
   const [rebateIsPending, startGetRebate] = useTransition();
   const [loginLogIsPending, startGetLoginLog] = useTransition();
   const [changeLogIsPending, startGetChangeLog] = useTransition();
   const [ratioIsPending, startGetRatio] = useTransition();
   const [limitIsPending, startGetLimit] = useTransition();
+  const [deleteCreditIsPending, startGetDeleteCredit] = useTransition();
+  const [increaseCreditIsPending, startGetIncreaseCredit] = useTransition();
+
   return (
     <>
       <Button
@@ -120,13 +127,23 @@ export default function Action({
           <Button
             variant="ghost"
             size="sm"
+            disabled={increaseCreditIsPending}
             className="px-2 text-sm text-primary hover:text-primary/80"
             onClick={() => {
-              setMemberId(data.id);
-              setMemberInfoData(data);
-              setIncreaseCreditModal(true);
+              startGetIncreaseCredit(async () => {
+                setMemberId(data.id);
+                setMemberInfoData(data);
+                const { code, data: info, message } = await getUserBasicInfo();
+                if (code === 0) {
+                  setAvailableAmount(info?.usableBalanceMoney || 0);
+                } else {
+                  toast.error(message);
+                }
+                setIncreaseCreditModal(true);
+              });
             }}
           >
+            {increaseCreditIsPending && <Loader2 className="animate-spin" />}
             {t("increaseCredit")}
           </Button>
 
@@ -146,13 +163,23 @@ export default function Action({
           <Button
             variant="ghost"
             size="sm"
+            disabled={deleteCreditIsPending}
             className="px-2 text-sm text-primary hover:text-primary/80"
             onClick={() => {
-              setMemberId(data.id);
-              setMemberInfoData(data);
-              setDeleteCreditModal(true);
+              startGetDeleteCredit(async () => {
+                setMemberId(data.id);
+                setMemberInfoData(data);
+                const { code, data: info, message } = await getUserBasicInfo();
+                if (code === 0) {
+                  setAvailableAmount(info?.usableBalanceMoney || 0);
+                } else {
+                  toast.error(message);
+                }
+                setDeleteCreditModal(true);
+              });
             }}
           >
+            {deleteCreditIsPending && <Loader2 className="animate-spin" />}
             {t("deleteCredit")}
           </Button>
         </>
