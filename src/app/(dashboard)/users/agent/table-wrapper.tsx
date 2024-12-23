@@ -36,17 +36,17 @@ export function TableBodyWrapper({
             <TableCell>{item.id}</TableCell>
             <TableCell>{item.username}</TableCell>
             <TableCell className="break-all">{item.nickname}</TableCell>
-            <TableCell>
-              <div
+            <TableCell className="text-center">
+              <span
                 className={cn(
-                  "w-fit rounded-sm px-2",
+                  "rounded-sm p-2",
                   item.status === 0 && "bg-green/10 text-green",
                   item.status === 1 && "bg-destructive/10 text-destructive",
                   item.status === 2 && "bg-orange/10 text-orange",
                 )}
               >
                 {t(`statusLabel.${item.status}`)}
-              </div>
+              </span>
             </TableCell>
             <TableCell className="sticky right-0 bg-background flex justify-center items-center">
               <Action data={item} permissions={permissions ?? []} />

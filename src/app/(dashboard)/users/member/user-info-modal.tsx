@@ -26,7 +26,7 @@ import { toast } from "sonner";
 export function UserInfoModal({
   permissions,
 }: {
-  permissions: string[] | undefined;
+  permissions: string[];
 }) {
   const translation = useTranslations();
   const t = useTranslations("users.members");
@@ -42,12 +42,14 @@ export function UserInfoModal({
 
   function handleUpdateStatus(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-
+    if (!memberInfoData) {
+      return;
+    }
     startTransition(async () => {
       const formData = new FormData(e.currentTarget);
       const status = formData.get("status");
       const { code, message } = await updateMember({
-        id: memberInfoData?.id ?? "",
+        id: memberInfoData.id,
         status: Number(status),
         agentId,
       });
@@ -65,9 +67,9 @@ export function UserInfoModal({
     e.preventDefault();
     startChecking(async () => {
       const formData = new FormData(e.currentTarget);
-      const username = formData.get("username");
+      const username = formData.get("username") as string;
       const { code, message, data } = await getAgentInfoByUsername({
-        username: username as string,
+        username,
       });
       if (code === 0) {
         setUpNickname(data?.nickname);
@@ -101,6 +103,7 @@ export function UserInfoModal({
                   <Input
                     className="w-1/2"
                     name="username"
+                    required
                     defaultValue={memberInfoData?.upUsername}
                   />
                   <Button disabled={isChecking} size="sm" type="submit">
