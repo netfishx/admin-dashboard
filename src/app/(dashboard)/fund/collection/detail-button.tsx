@@ -29,11 +29,12 @@ export function DetailButton({ item }: { item: CollectionAddressListRecords }) {
     setShowStatus(status);
   }
   return (
-    <div className="flex justify-center">
+    <>
       {item.status === 2 && (
         <Button
           variant="ghost"
-          className="text-primary hover:text-primary/80 hover:no-underline"
+          size="sm"
+          className="text-primary hover:text-primary/80 text-sm"
           onClick={() => handleDetail("UNLOCK")}
         >
           {t("unlock")}
@@ -42,7 +43,8 @@ export function DetailButton({ item }: { item: CollectionAddressListRecords }) {
       {(item.status === 2 || item.status === 0) && (
         <Button
           variant="ghost"
-          className="text-primary hover:text-primary/80 hover:no-underline"
+          size="sm"
+          className="text-primary hover:text-primary/80 text-sm"
           onClick={() => handleDetail("CHECK")}
         >
           {t("check")}
@@ -51,7 +53,8 @@ export function DetailButton({ item }: { item: CollectionAddressListRecords }) {
       {item.status === 1 && (
         <Button
           variant="ghost"
-          className="text-primary hover:text-primary/80 hover:no-underline"
+          size="sm"
+          className="text-primary hover:text-primary/80 text-sm"
           onClick={() => handleDetail("LOCK")}
         >
           {t("lock")}
@@ -59,8 +62,9 @@ export function DetailButton({ item }: { item: CollectionAddressListRecords }) {
       )}
       {item.status === 2 && (
         <Button
-          variant="link"
-          className="text-red-500 hover:text-primary/80 hover:no-underline"
+          variant="ghost"
+          size="sm"
+          className="text-destructive hover:text-destructive/80 text-sm"
           onClick={() => handleDetail("STOP")}
         >
           {t("stop")}
@@ -84,6 +88,6 @@ export function DetailButton({ item }: { item: CollectionAddressListRecords }) {
           item={item}
         />
       )}
-    </div>
+    </>
   );
 }
