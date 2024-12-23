@@ -1,8 +1,10 @@
 "use client";
 
+import { getAgentLoginLog } from "@/api";
 import { Button } from "@/components/ui/button";
 import type { Subaccount } from "@/lib/types";
 import {
+  loginLogDataAtom,
   loginLogModalAtom,
   subaccountAtom,
   subaccountDeleteAtom,
@@ -11,7 +13,10 @@ import {
   subaccountIdAtom,
 } from "@/store";
 import { useSetAtom } from "jotai";
+import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { useTransition } from "react";
+import { toast } from "sonner";
 
 export function AddButton() {
   const t = useTranslations("system.subaccount");
@@ -70,16 +75,36 @@ export function LoginLogButton({ id }: { id: string }) {
   const t = useTranslations("system.subaccount");
   const setOpen = useSetAtom(loginLogModalAtom);
   const setId = useSetAtom(subaccountIdAtom);
+  const setData = useSetAtom(loginLogDataAtom);
+  const [isPending, startGetLoginLog] = useTransition();
   return (
     <Button
       variant="ghost"
       size="sm"
+      disabled={isPending}
       className="text-sm text-primary hover:text-primary/80"
       onClick={() => {
-        setId(id);
-        setOpen(true);
+        startGetLoginLog(async () => {
+          setId(id);
+          const {
+            code,
+            data: logs,
+            message,
+          } = await getAgentLoginLog({
+            userId: id,
+            pageNum: 1,
+            pageSize: 10,
+          });
+          if (code === 0) {
+            setData(logs);
+            setOpen(true);
+          } else {
+            toast.error(message);
+          }
+        });
       }}
     >
+      {isPending && <Loader2 className="animate-spin" />}
       {t("loginLog")}
     </Button>
   );
