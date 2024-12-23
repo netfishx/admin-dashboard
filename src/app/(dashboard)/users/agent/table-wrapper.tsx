@@ -4,30 +4,34 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { TableBody, TableCell, TableRow } from "@/components/ui/table";
 import type { AgentData } from "@/lib/types";
 import { cn } from "@/lib/utils";
+import type { SessionData } from "@/session";
 import { addAgentLoadingAtom } from "@/store";
 import { useAtomValue } from "jotai";
 import { useTranslations } from "next-intl";
+import { use } from "react";
 import Action from "./action-buttons";
 
 export function TableBodyWrapper({
   list,
-  permissions,
+  session,
 }: {
   list: AgentData[] | undefined;
-  permissions: string[] | undefined;
+  session: Promise<SessionData | null>;
 }) {
   const t = useTranslations("users.agents");
   const translations = useTranslations();
   const addAgentLoading = useAtomValue(addAgentLoadingAtom);
+  const permissions = use(session)?.permissions;
+  const hasSearch = permissions?.includes("agent_search");
   if (addAgentLoading) {
-    return <TableBodySkeleton />;
+    return <TableBodySkeleton session={session} />;
   }
   return (
     <TableBody>
       {list && list.length > 0 ? (
         list?.map((item) => (
           <TableRow key={item.id}>
-            {permissions?.includes("agent_search") && (
+            {hasSearch && (
               <>
                 <TableCell>{item.upUsername}</TableCell>
                 <TableCell>{item.deptId}</TableCell>
@@ -55,7 +59,7 @@ export function TableBodyWrapper({
         ))
       ) : (
         <TableRow>
-          <TableCell colSpan={7} className="h-40 text-center">
+          <TableCell colSpan={hasSearch ? 7 : 5} className="h-40 text-center">
             {translations("noData")}
           </TableCell>
         </TableRow>
@@ -64,13 +68,18 @@ export function TableBodyWrapper({
   );
 }
 
-export function TableBodySkeleton() {
+export function TableBodySkeleton({
+  session,
+}: {
+  session: Promise<SessionData | null>;
+}) {
+  const hasSearch = use(session)?.permissions?.includes("agent_search");
   return (
     <TableBody>
       {Array.from({ length: 5 }).map((_, index) => (
         // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
         <TableRow key={index}>
-          <TableCell colSpan={7}>
+          <TableCell colSpan={hasSearch ? 7 : 5}>
             <Skeleton />
           </TableCell>
         </TableRow>
