@@ -1,20 +1,11 @@
 "use client";
 
-import { deleteDictionary, getDictionaryItemList } from "@/api";
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
+import { getDictionaryItemList } from "@/api";
+import {} from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import type { DictionaryList } from "@/lib/types";
 import {
+  deleteDictionaryItemDialogAtom,
   dictionaryDataAtom,
   dictionaryItemDataAtom,
   dictionaryItemDialogAtom,
@@ -23,7 +14,6 @@ import {
 import { useSetAtom } from "jotai";
 import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { useRouter } from "next/navigation";
 import { useTransition } from "react";
 import { toast } from "sonner";
 
@@ -33,13 +23,15 @@ export function Actions({ data }: { data: DictionaryList }) {
   const setOpen = useSetAtom(editDictionaryDialogAtom);
   const setOpenItem = useSetAtom(dictionaryItemDialogAtom);
   const setList = useSetAtom(dictionaryItemDataAtom);
+
   const [isPending, startTransition] = useTransition();
+  const setOpenDelete = useSetAtom(deleteDictionaryItemDialogAtom);
   return (
     <>
       <Button
         variant="ghost"
         size="sm"
-        className="px-2 text-sm text-primary hover:text-primary/80"
+        className="text-sm text-primary hover:text-primary/80"
         onClick={() => {
           setData(data);
           setOpen(true);
@@ -51,7 +43,7 @@ export function Actions({ data }: { data: DictionaryList }) {
         variant="ghost"
         size="sm"
         disabled={isPending}
-        className="px-2 text-sm text-primary hover:text-primary/80"
+        className="text-sm text-primary hover:text-primary/80"
         onClick={() => {
           startTransition(async () => {
             const res = await getDictionaryItemList({
@@ -71,55 +63,17 @@ export function Actions({ data }: { data: DictionaryList }) {
         {isPending ? <Loader2 className="animate-spin" /> : null}
         {t("dictSetting")}
       </Button>
-      <DeleteBtn data={data} />
+      <Button
+        variant="ghost"
+        size="sm"
+        className="text-sm text-destructive hover:text-destructive/80"
+        onClick={() => {
+          setData(data);
+          setOpenDelete(true);
+        }}
+      >
+        {t("delete")}
+      </Button>
     </>
-  );
-}
-
-function DeleteBtn({ data }: { data: DictionaryList }) {
-  const translation = useTranslations();
-  const t = useTranslations("maintain.dictionary");
-  const [isPending, startTransition] = useTransition();
-  const router = useRouter();
-  return (
-    <AlertDialog>
-      <AlertDialogTrigger asChild>
-        <Button
-          variant="ghost"
-          size="sm"
-          className="px-2 text-sm text-primary hover:text-primary/80"
-          disabled={isPending}
-        >
-          {isPending ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
-          {t("delete")}
-        </Button>
-      </AlertDialogTrigger>
-      <AlertDialogContent>
-        <AlertDialogHeader>
-          <AlertDialogTitle>{t("delete")}</AlertDialogTitle>
-          <AlertDialogDescription />
-        </AlertDialogHeader>
-        <div className="text-sm text-gray-500">{t("deleteDesc")}</div>
-        <AlertDialogFooter>
-          <AlertDialogCancel>{translation("cancel")}</AlertDialogCancel>
-          <AlertDialogAction
-            onClick={() =>
-              startTransition(async () => {
-                const res = await deleteDictionary({
-                  id: data.id,
-                });
-                if (res.code === 0) {
-                  router.refresh();
-                } else {
-                  toast.error(res.message);
-                }
-              })
-            }
-          >
-            {translation("confirm")}
-          </AlertDialogAction>
-        </AlertDialogFooter>
-      </AlertDialogContent>
-    </AlertDialog>
   );
 }

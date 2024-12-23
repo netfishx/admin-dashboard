@@ -14,9 +14,9 @@ import { getTranslations } from "next-intl/server";
 import { Suspense } from "react";
 import { Actions } from "./actions";
 import { Add } from "./add";
+import { DeleteDialog } from "./delete-dialog";
 import { DictSettingModal } from "./dict-setting-modal";
 import { Form } from "./form";
-
 export default async function Page({
   searchParams,
 }: {
@@ -43,6 +43,7 @@ export default async function Page({
         </Suspense>
       </div>
       <DictSettingModal />
+      <DeleteDialog />
     </div>
   );
 }
@@ -52,12 +53,13 @@ async function TableWrapper({
 }: {
   searchParams: Promise<{ [key: string]: string | undefined }>;
 }) {
-  const { pageNum = "1", pageSize = "10", ...rest } = await searchParams;
+  const { pageNum = "1", pageSize = "10" } = await searchParams;
+
   const { data } = await getDictionaryList({
-    ...rest,
     pageNum: Number(pageNum),
     pageSize: Number(pageSize),
   });
+  console.info(data, pageNum, pageSize);
   return (
     <>
       <div className="rounded-sm border">
@@ -80,7 +82,6 @@ async function TableWrapper({
 }
 
 async function TableHeaderWrapper() {
-  "use cache";
   const t = await getTranslations("maintain.dictionary");
   return (
     <TableHeader>

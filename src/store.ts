@@ -93,6 +93,8 @@ export const dictionaryDataAtom = atom<DictionaryList | null>(null);
 export const dictionaryItemDialogAtom = atom<boolean>(false);
 // 维护-字典管理-新增字典项弹窗
 export const addDictionaryItemDialogAtom = atom<boolean>(false);
+
+export const deleteDictionaryItemDialogAtom = atom<boolean>(false);
 // 维护-字典管理-新增字典项数据
 export const addDictionaryItemDataAtom = atom<{
   id: string;
