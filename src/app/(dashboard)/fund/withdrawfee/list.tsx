@@ -108,7 +108,10 @@ export function List({ data }: { data: WithdrawFee }) {
                     <Input
                       type="number"
                       name="percentageFee"
-                      defaultValue={Big(data.percentageFee).round(2).toString()}
+                      defaultValue={Big(data.percentageFee)
+                        .times(100)
+                        .round(2)
+                        .toString()}
                       min={0}
                       max={100}
                       step={0.01}
