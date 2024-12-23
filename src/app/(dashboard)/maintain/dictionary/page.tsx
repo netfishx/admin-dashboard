@@ -24,17 +24,9 @@ export default async function Page({
 }) {
   return (
     <div className="flex w-full flex-col gap-2">
-      <Suspense
-        fallback={
-          <div className="bg-background py-2">
-            <Skeleton />
-          </div>
-        }
-      >
-        <Form />
-      </Suspense>
-      <div className="p-4 bg-background flex-1">
-        <div className="pb-2 flex justify-end">
+      <Form />
+      <div className="flex flex-1 flex-col bg-background p-4 gap-4">
+        <div className="flex justify-end">
           <Add />
         </div>
         <Suspense
