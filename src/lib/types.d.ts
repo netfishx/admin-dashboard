@@ -769,7 +769,7 @@ export type BorrowRecordRequestRecords = {
 };
 
 // 提现手续费
-export type WithdrawFeeList = {
+export type WithdrawFee = {
   currency: string;
   fixedFee: number;
   percentageFee: number;

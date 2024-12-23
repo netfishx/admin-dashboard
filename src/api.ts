@@ -69,7 +69,7 @@ import type {
   WalletLogRecords,
   WalletLogRequestParams,
   WithdrawApply,
-  WithdrawFeeList,
+  WithdrawFee,
   WithdrawFormData,
   WithdrawReport,
   WithdrawReportParams,
@@ -1301,26 +1301,17 @@ export async function postGetBorrowLogList(data: BorrowRecordRequestParams) {
   });
 }
 
-// 提现手续费
-export async function getWithdrawFeeList() {
-  const user = await getSession();
-  return await apiRequest<WithdrawFeeList[]>({
-    url: "/config/withdraw/fee/list",
-    token: user?.token,
-  });
-}
-
 // 获取最新一条提现手续费 1223:update
 export async function getNewestWithdrawFee() {
   const user = await getSession();
-  return await apiRequest<WithdrawFeeList>({
+  return await apiRequest<WithdrawFee>({
     url: "/config/withdraw/fee/agent/newest",
     token: user?.token,
   });
 }
 
 // 编辑提现手续费
-export async function saveWithdrawFee(data: WithdrawFeeList) {
+export async function saveWithdrawFee(data: WithdrawFee) {
   const user = await getSession();
   return await apiRequest({
     url: "/config/withdraw/fee/edit",

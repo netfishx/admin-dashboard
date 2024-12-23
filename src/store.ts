@@ -17,6 +17,7 @@ import type {
   Subaccount,
   Supplier,
   SupplierConfig,
+  WithdrawFee,
 } from "@/lib/types";
 import { atom } from "jotai";
 
@@ -190,3 +191,5 @@ export const orderParmasAtom = atom<{
 } | null>(null);
 // 报表管理-会员报表-真人视讯-代理ID
 export const memberListBaccaratAgentIdAtom = atom<string>("");
+
+export const withdrawFeeAtom = atom<WithdrawFee>();
