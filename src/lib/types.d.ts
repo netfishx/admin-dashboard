@@ -806,7 +806,7 @@ export type TodayGameReport = {
   }[];
   dailyPokerReport: {
     day: number;
-    totaSettledAmount: string;
+    totalSettledAmount: string;
     issueAmount: number;
   }[];
 };
