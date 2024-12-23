@@ -39,7 +39,7 @@ export default async function Page({
         </div>
         <Suspense
           fallback={
-            <Table className="rounded-sm border">
+            <Table className="rounded-sm border table-fixed">
               <TableHeaderWrapper />
               <TableBodySkeleton />
             </Table>
@@ -67,7 +67,7 @@ async function TableWrapper({
   return (
     <>
       <div className="rounded-sm border">
-        <Table>
+        <Table className="table-fixed">
           <TableHeaderWrapper />
           <TableBodyWrapper list={data?.list ?? []} />
         </Table>
@@ -91,10 +91,10 @@ async function TableHeaderWrapper() {
   return (
     <TableHeader>
       <TableRow className="bg-muted">
-        <TableHead>{t("dictCode")}</TableHead>
-        <TableHead>{t("dictName")}</TableHead>
-        <TableHead>{t("remark")}</TableHead>
-        <TableHead className="text-center">{t("action")}</TableHead>
+        <TableHead className="w-32">{t("dictCode")}</TableHead>
+        <TableHead className="w-32">{t("dictName")}</TableHead>
+        <TableHead className="w-40">{t("remark")}</TableHead>
+        <TableHead className="w-40 text-center">{t("action")}</TableHead>
       </TableRow>
     </TableHeader>
   );
@@ -110,7 +110,7 @@ async function TableBodyWrapper({ list }: { list: DictionaryList[] }) {
             <TableCell>{item.dictCode}</TableCell>
             <TableCell>{item.dictName}</TableCell>
             <TableCell>{item.remark}</TableCell>
-            <TableCell className="text-center">
+            <TableCell className="flex items-center justify-center">
               <Actions data={item} />
             </TableCell>
           </TableRow>

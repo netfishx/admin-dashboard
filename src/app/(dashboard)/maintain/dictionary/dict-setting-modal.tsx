@@ -31,18 +31,18 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import type { DictionaryItemList } from "@/lib/types";
 import {
   addDictionaryItemDataAtom,
   addDictionaryItemDialogAtom,
   dictionaryDataAtom,
+  dictionaryItemDataAtom,
   dictionaryItemDialogAtom,
   dictionaryItemOperationAtom,
 } from "@/store";
 import { useAtom, useAtomValue, useSetAtom } from "jotai";
 import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { useEffect, useState, useTransition } from "react";
+import { useTransition } from "react";
 import { toast } from "sonner";
 import { AddItemDialog } from "./add-item";
 
@@ -51,25 +51,27 @@ export function DictSettingModal() {
   const translation = useTranslations();
   const [open, setOpen] = useAtom(dictionaryItemDialogAtom);
   const data = useAtomValue(dictionaryDataAtom);
-  const [list, setList] = useState<DictionaryItemList[]>([]);
-  const [addOpen, setAddOpen] = useAtom(addDictionaryItemDialogAtom);
+  const [list, setList] = useAtom(dictionaryItemDataAtom);
+  const setAddOpen = useSetAtom(addDictionaryItemDialogAtom);
   const setAddData = useSetAtom(addDictionaryItemDataAtom);
-  const [loading, setLoading] = useState(true);
-  const [deleteLoading, setDeleteLoading] = useState(false);
+
   const setOperation = useSetAtom(dictionaryItemOperationAtom);
 
-  const key = "zh-CN";
-  useEffect(() => {
-    if (data && open && !addOpen && !deleteLoading) {
-      setLoading(true);
-      getDictionaryItemList({
-        dictCode: data.dictCode,
-      }).then(({ data }) => {
-        setList(data?.[key] ?? []);
-        setLoading(false);
+  const [isPending, startTransition] = useTransition();
+  function fetchDictionaryItemList() {
+    startTransition(async () => {
+      const res = await getDictionaryItemList({
+        dictCode: data?.dictCode ?? "",
       });
-    }
-  }, [data, open, addOpen, deleteLoading]);
+      if (res.code === 0) {
+        const key = "zh-CN";
+        setList(res.data?.[key] ?? []);
+      } else {
+        toast.error(res.message);
+      }
+    });
+  }
+
   const handleClickAdd = () => {
     if (data?.dictCode) {
       setAddOpen(true);
@@ -106,7 +108,7 @@ export function DictSettingModal() {
                   </TableHead>
                 </TableRow>
               </TableHeader>
-              {loading ? (
+              {isPending ? (
                 <TableBodySkeleton />
               ) : (
                 <TableBody>
@@ -135,7 +137,7 @@ export function DictSettingModal() {
                             </Button>
                             <DeleteBtn
                               id={item.id}
-                              setDeleteLoading={setDeleteLoading}
+                              onSuccess={fetchDictionaryItemList}
                             />
                           </div>
                         </TableCell>
@@ -169,10 +171,10 @@ export function DictSettingModal() {
 
 function DeleteBtn({
   id,
-  setDeleteLoading,
+  onSuccess,
 }: {
   id: string;
-  setDeleteLoading: (loading: boolean) => void;
+  onSuccess: () => void;
 }) {
   const translation = useTranslations();
   const t = useTranslations("maintain.dictionary");
@@ -200,14 +202,13 @@ function DeleteBtn({
           <AlertDialogCancel>{translation("cancel")}</AlertDialogCancel>
           <AlertDialogAction
             onClick={() => {
-              setDeleteLoading(true);
               startTransition(async () => {
                 const { code, message } = await deleteDictionaryItem({
                   id,
                 });
                 if (code === 0) {
                   toast.success(message);
-                  setDeleteLoading(false);
+                  onSuccess();
                 }
               });
             }}

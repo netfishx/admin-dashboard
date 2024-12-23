@@ -5,6 +5,7 @@ import type {
   BombDetailPlayerDetails,
   BombDetailRecords,
   ChangeLog,
+  DictionaryItem,
   DictionaryList,
   GameConfig,
   GameOdds,
@@ -100,6 +101,7 @@ export const addDictionaryItemDataAtom = atom<{
 }>();
 // 维护-字典管理-字典项操作
 export const dictionaryItemOperationAtom = atom<"add" | "edit">();
+export const dictionaryItemDataAtom = atom<DictionaryItem[]>([]);
 
 // 维护-资源管理-背景图弹窗
 export const backgroundImageDialogAtom = atom<boolean>(false);

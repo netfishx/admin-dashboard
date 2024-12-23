@@ -674,7 +674,7 @@ export type DictionaryList = {
   remark: string;
 };
 // 字典项
-export type DictionaryItemList = {
+export type DictionaryItem = {
   id: string;
   dictCode: string;
   label: string;

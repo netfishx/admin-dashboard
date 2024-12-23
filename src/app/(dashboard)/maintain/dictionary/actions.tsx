@@ -1,6 +1,6 @@
 "use client";
 
-import { deleteDictionary } from "@/api";
+import { deleteDictionary, getDictionaryItemList } from "@/api";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -16,6 +16,7 @@ import { Button } from "@/components/ui/button";
 import type { DictionaryList } from "@/lib/types";
 import {
   dictionaryDataAtom,
+  dictionaryItemDataAtom,
   dictionaryItemDialogAtom,
   editDictionaryDialogAtom,
 } from "@/store";
@@ -31,6 +32,8 @@ export function Actions({ data }: { data: DictionaryList }) {
   const setData = useSetAtom(dictionaryDataAtom);
   const setOpen = useSetAtom(editDictionaryDialogAtom);
   const setOpenItem = useSetAtom(dictionaryItemDialogAtom);
+  const setList = useSetAtom(dictionaryItemDataAtom);
+  const [isPending, startTransition] = useTransition();
   return (
     <>
       <Button
@@ -47,12 +50,25 @@ export function Actions({ data }: { data: DictionaryList }) {
       <Button
         variant="ghost"
         size="sm"
+        disabled={isPending}
         className="px-2 text-sm text-primary hover:text-primary/80"
         onClick={() => {
-          setData(data);
-          setOpenItem(true);
+          startTransition(async () => {
+            const res = await getDictionaryItemList({
+              dictCode: data.dictCode,
+            });
+            if (res.code === 0) {
+              const key = "zh-CN";
+              setList(res.data?.[key] ?? []);
+              setData(data);
+              setOpenItem(true);
+            } else {
+              toast.error(res.message);
+            }
+          });
         }}
       >
+        {isPending ? <Loader2 className="animate-spin" /> : null}
         {t("dictSetting")}
       </Button>
       <DeleteBtn data={data} />
