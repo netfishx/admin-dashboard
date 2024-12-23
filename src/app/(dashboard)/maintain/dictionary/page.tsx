@@ -59,7 +59,7 @@ async function TableWrapper({
     pageNum: Number(pageNum),
     pageSize: Number(pageSize),
   });
-  console.info(data, pageNum, pageSize);
+
   return (
     <>
       <div className="rounded-sm border">
