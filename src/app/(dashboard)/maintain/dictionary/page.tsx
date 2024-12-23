@@ -31,10 +31,12 @@ export default async function Page({
         </div>
         <Suspense
           fallback={
-            <Table className="rounded-sm border table-fixed">
-              <TableHeaderWrapper />
-              <TableBodySkeleton />
-            </Table>
+            <div className="rounded-sm border">
+              <Table className="table-fixed">
+                <TableHeaderWrapper />
+                <TableBodySkeleton />
+              </Table>
+            </div>
           }
         >
           <TableWrapper searchParams={searchParams} />
@@ -64,7 +66,7 @@ async function TableWrapper({
           <TableBodyWrapper list={data?.list ?? []} />
         </Table>
       </div>
-      <div className="pt-2">
+      <div>
         {data?.total && data?.total > 0 ? (
           <CustomPagination
             total={data?.total ?? 0}
