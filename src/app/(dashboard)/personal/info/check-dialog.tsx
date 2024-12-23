@@ -143,7 +143,7 @@ export function CheckDialog(props: Dialogprops) {
                       name="availableAmount"
                       placeholder={translations("availableAmount")}
                       defaultValue={data?.usableBalanceMoney}
-                      readOnly
+                      disabled
                     />
                   </div>
 
@@ -193,7 +193,7 @@ export function CheckDialog(props: Dialogprops) {
                       required
                       name="withdrawFee"
                       defaultValue={0}
-                      readOnly
+                      disabled
                       value={withDrawFee}
                     />
                   </div>

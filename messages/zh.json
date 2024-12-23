@@ -547,7 +547,8 @@
       "gameHall": "游戏大厅",
       "club": "俱乐部",
       "all": "全部",
-      "selectDate": "请选择日期"
+      "selectDate": "请选择日期",
+      "parentAgentId": "上级代理ID"
     },
     "supplier": {
       "supplierId": "供应商ID",
