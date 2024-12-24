@@ -1,6 +1,7 @@
 build:
   stage: build
-  tag: build
+  tags:
+    - build
   only:
     - test
   script:
@@ -9,7 +10,8 @@ build:
 
 deploy:
   stage: deploy
-  tag: deploy
+  tags:
+    - deploy
   only:
     - test
   script:
