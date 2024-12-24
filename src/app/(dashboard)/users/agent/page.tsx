@@ -33,10 +33,12 @@ export default async function Page({
         </div>
         <Suspense
           fallback={
-            <Table className="table-fixed rounded-sm border">
-              <TableHeaderWrapper total={0} />
-              <TableBodySkeleton />
-            </Table>
+            <div className="rounded-sm border">
+              <Table className="table-fixed">
+                <TableHeaderWrapper />
+                <TableBodySkeleton session={session} />
+              </Table>
+            </div>
           }
         >
           <TableWrapper searchParams={searchParams} />
@@ -58,16 +60,14 @@ async function TableWrapper({
     pageNum: Number(pageNum),
     pageSize: Number(pageSize),
   });
-  const session = await getSession();
-  const permissions = session?.permissions;
+  const session = getSession();
+
   return (
     <>
       <div className="rounded-sm border">
         <Table className="table-fixed">
-          <TableHeaderWrapper total={1} />
-          <Suspense fallback={<TableBodySkeleton />}>
-            <TableBodyWrapper list={data?.list} permissions={permissions} />
-          </Suspense>
+          <TableHeaderWrapper />
+          <TableBodyWrapper list={data?.list} session={session} />
         </Table>
       </div>
       <div className="pt-2">
@@ -82,7 +82,7 @@ async function TableWrapper({
     </>
   );
 }
-async function TableHeaderWrapper({ total }: { total: number }) {
+async function TableHeaderWrapper() {
   const t = await getTranslations("users.agents");
   const session = await getSession();
   const permissions = session?.permissions;
@@ -91,19 +91,17 @@ async function TableHeaderWrapper({ total }: { total: number }) {
       <TableRow className="bg-muted">
         {permissions?.includes("agent_search") && (
           <>
-            <TableHead className="w-28">{t("upUsername")}</TableHead>
+            <TableHead className="w-32">{t("upUsername")}</TableHead>
             <TableHead className="w-20">{t("deptId")}</TableHead>
           </>
         )}
         <TableHead className="w-60">{t("userId")}</TableHead>
-        <TableHead className="w-28">{t("username")}</TableHead>
+        <TableHead className="w-32">{t("username")}</TableHead>
         <TableHead className="w-32">{t("nickname")}</TableHead>
-        <TableHead className="w-20">{t("status")}</TableHead>
-        {total > 0 && (
-          <TableHead className="sticky right-0 w-100 bg-muted text-center">
-            {t("action")}
-          </TableHead>
-        )}
+        <TableHead className="w-20 text-center">{t("status")}</TableHead>
+        <TableHead className="sticky right-0 w-100 bg-muted text-center">
+          {t("action")}
+        </TableHead>
       </TableRow>
     </TableHeader>
   );

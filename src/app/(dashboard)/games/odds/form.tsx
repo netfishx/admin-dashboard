@@ -46,7 +46,7 @@ function SyncButton({ onClick }: { onClick: () => void }) {
     <AlertDialog>
       <AlertDialogTrigger asChild>
         <Button disabled={isPending} variant="outline">
-          {isPending ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
+          {isPending ? <Loader2 className="animate-spin" /> : null}
           {t("sync")}
         </Button>
       </AlertDialogTrigger>
@@ -74,7 +74,7 @@ function RestoreButton({ onClick }: { onClick: () => void }) {
     <AlertDialog>
       <AlertDialogTrigger asChild>
         <Button disabled={isPending} variant="destructive">
-          {isPending ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
+          {isPending ? <Loader2 className="animate-spin" /> : null}
           {t("reset")}
         </Button>
       </AlertDialogTrigger>
@@ -108,7 +108,7 @@ function SaveButton({
       disabled={isPending || disabled}
       onClick={() => startTransition(onClick)}
     >
-      {isPending ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
+      {isPending ? <Loader2 className="animate-spin" /> : null}
       {t("save")}
     </Button>
   );

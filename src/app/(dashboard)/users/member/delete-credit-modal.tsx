@@ -1,6 +1,6 @@
 "use client";
 
-import { deleteDebt, getUserBasicInfo } from "@/api";
+import { deleteDebt } from "@/api";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -14,6 +14,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Password } from "@/components/ui/password";
 import {
+  availableAmountAtom,
   deleteCreditModalAtom,
   memberIdAtom,
   memberInfoDataAtom,
@@ -22,13 +23,7 @@ import { useAtom, useAtomValue } from "jotai";
 import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Form from "next/form";
-import {
-  type FormEvent,
-  useEffect,
-  useRef,
-  useState,
-  useTransition,
-} from "react";
+import { type FormEvent, useRef, useTransition } from "react";
 import { toast } from "sonner";
 
 export function DeleteCreditModal() {
@@ -36,12 +31,12 @@ export function DeleteCreditModal() {
   const t = useTranslations("users.members");
   const [open, setOpen] = useAtom(deleteCreditModalAtom);
   const [isPending, startTransition] = useTransition();
-  const [fetching, startFetching] = useTransition();
+
   const memberId = useAtomValue(memberIdAtom);
   const memberInfoData = useAtomValue(memberInfoDataAtom);
   const ref = useRef<HTMLFormElement>(null);
 
-  const [availableAmount, setAvailableAmount] = useState(0);
+  const availableAmount = useAtomValue(availableAmountAtom);
 
   const handleConfirm = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -60,18 +55,7 @@ export function DeleteCreditModal() {
       }
     });
   };
-  useEffect(() => {
-    if (open) {
-      startFetching(async () => {
-        const { code, data, message } = await getUserBasicInfo();
-        if (code === 0) {
-          setAvailableAmount(data?.usableBalanceMoney || 0);
-        } else {
-          toast.error(message);
-        }
-      });
-    }
-  }, [open]);
+
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent onPointerDownOutside={(e) => e.preventDefault()}>
@@ -90,13 +74,7 @@ export function DeleteCreditModal() {
             <div className="border-r bg-muted py-2 text-muted-foreground">
               {t("availableBalance")}
             </div>
-            <div className="py-2">
-              {fetching ? (
-                <Loader2 className="h-4 w-4 animate-spin" />
-              ) : (
-                availableAmount
-              )}
-            </div>
+            <div className="py-2">{availableAmount}</div>
           </div>
         </div>
 
@@ -138,7 +116,7 @@ export function DeleteCreditModal() {
               }
             }}
           >
-            {isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+            {isPending && <Loader2 className="animate-spin" />}
             {translation("confirm")}
           </Button>
         </DialogFooter>

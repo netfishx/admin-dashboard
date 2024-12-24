@@ -1,6 +1,10 @@
 "use client";
 
-import { addDictionaryItem, editDictionaryItem } from "@/api";
+import {
+  addDictionaryItem,
+  editDictionaryItem,
+  getDictionaryItemList,
+} from "@/api";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -15,9 +19,10 @@ import { Label } from "@/components/ui/label";
 import {
   addDictionaryItemDataAtom,
   addDictionaryItemDialogAtom,
+  dictionaryItemDataAtom,
   dictionaryItemOperationAtom,
 } from "@/store";
-import { useAtom, useAtomValue } from "jotai";
+import { useAtom, useAtomValue, useSetAtom } from "jotai";
 import { useTranslations } from "next-intl";
 import Form from "next/form";
 import { type FormEvent, useRef, useState, useTransition } from "react";
@@ -32,6 +37,7 @@ export function AddItemDialog() {
   const formRef = useRef<HTMLFormElement>(null);
   const [isPending, startTransition] = useTransition();
   const [isValid, setIsValid] = useState(false);
+  const setList = useSetAtom(dictionaryItemDataAtom);
 
   const handleConfirm = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -42,21 +48,20 @@ export function AddItemDialog() {
     const value = formData.get("itemValue") as string;
     const remark = formData.get("remark") as string;
     startTransition(async () => {
+      let code: number | undefined;
+      let message: string | undefined;
       if (data?.dictCode && operation === "add") {
-        const { code, message } = await addDictionaryItem({
+        const res = await addDictionaryItem({
           dictCode,
           label,
           value,
           remark,
           i18nType: "zh-CN",
         });
-        if (code === 0) {
-          setOpen(false);
-        } else {
-          toast.error(message);
-        }
+        code = res.code;
+        message = res.message;
       } else if (data && operation === "edit") {
-        const { code, message } = await editDictionaryItem({
+        const res = await editDictionaryItem({
           id,
           dictCode,
           label,
@@ -64,11 +69,22 @@ export function AddItemDialog() {
           remark,
           i18nType: "zh-CN",
         });
-        if (code === 0) {
-          setOpen(false);
+        code = res.code;
+        message = res.message;
+      }
+      if (code !== undefined && code === 0) {
+        setOpen(false);
+        const res = await getDictionaryItemList({
+          dictCode: data?.dictCode ?? "",
+        });
+        if (res.code === 0) {
+          const key = "zh-CN";
+          setList(res.data?.[key] ?? []);
         } else {
-          toast.error(message);
+          toast.error(res.message);
         }
+      } else {
+        toast.error(message ?? "");
       }
     });
   };

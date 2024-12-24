@@ -1,7 +1,6 @@
-import { getWithdrawFeeList } from "@/api";
+import { getNewestWithdrawFee } from "@/api";
 import { Button } from "@/components/ui/button";
 import { Table } from "@/components/ui/table";
-import Big from "big.js";
 import { getTranslations } from "next-intl/server";
 import { Suspense } from "react";
 import { List } from "./list";
@@ -41,12 +40,10 @@ export default async function Page() {
   );
 }
 async function TableWrapper() {
-  const { data } = await getWithdrawFeeList();
-  if (!data) return null;
-  // 比例手续费 传参数的时候除100，获取数据的时候乘100
-  data.map((item) => {
-    item.percentageFee = Big(item.percentageFee).times(100).toNumber();
-    item.fixedFee = Big(item.fixedFee).round(2).toNumber();
-  });
+  const { data } = await getNewestWithdrawFee();
+  if (!data) {
+    return null;
+  }
+
   return <List data={data} />;
 }

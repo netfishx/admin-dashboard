@@ -149,7 +149,7 @@ export function SupplierEditDialog() {
                 disabled={isResetPending}
                 onClick={handleResetRestCount}
               >
-                {isResetPending && <Loader2 className="h-4 w-4 animate-spin" />}
+                {isResetPending && <Loader2 className="animate-spin" />}
                 {t("reset")}
               </Button>
             </div>
@@ -185,7 +185,7 @@ export function SupplierEditDialog() {
               }
             }}
           >
-            {isPending ? <Loader2 className="h-4 w-4 animate-spin" /> : null}
+            {isPending ? <Loader2 className="animate-spin" /> : null}
             {translation("confirm")}
           </Button>
         </DialogFooter>

@@ -181,7 +181,7 @@ function AddDialog({
               }
             }}
           >
-            {isLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : null}
+            {isLoading ? <Loader2 className="animate-spin" /> : null}
             {translation("confirm")}
           </Button>
         </DialogFooter>

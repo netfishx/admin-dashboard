@@ -98,16 +98,14 @@ export function MemberForm({ gameList }: { gameList: GameInfo[] }) {
               startDownload(() => makeDownload(searchParams, 100002))
             }
           >
-            {isDownload && <Loader2 className="h-4 w-4 animate-spin" />}
+            {isDownload && <Loader2 className="animate-spin" />}
             {t("download")}
           </Button>
           <Button variant="outline" onClick={handleReset}>
             {t("reset")}
           </Button>
           <Button disabled={isPending} onClick={handleSearch}>
-            {isPending ? (
-              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-            ) : null}
+            {isPending ? <Loader2 className="animate-spin" /> : null}
             {t("search")}
           </Button>
         </div>

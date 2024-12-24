@@ -14,9 +14,9 @@ import { getTranslations } from "next-intl/server";
 import { Suspense } from "react";
 import { Actions } from "./actions";
 import { Add } from "./add";
+import { DeleteDialog } from "./delete-dialog";
 import { DictSettingModal } from "./dict-setting-modal";
 import { Form } from "./form";
-
 export default async function Page({
   searchParams,
 }: {
@@ -24,31 +24,26 @@ export default async function Page({
 }) {
   return (
     <div className="flex w-full flex-col gap-2">
-      <Suspense
-        fallback={
-          <div className="bg-background py-2">
-            <Skeleton />
-          </div>
-        }
-      >
-        <Form />
-      </Suspense>
-      <div className="p-4 bg-background flex-1">
-        <div className="pb-2 flex justify-end">
+      <Form />
+      <div className="flex flex-1 flex-col bg-background p-4 gap-4">
+        <div className="flex justify-end">
           <Add />
         </div>
         <Suspense
           fallback={
-            <Table className="rounded-sm border">
-              <TableHeaderWrapper />
-              <TableBodySkeleton />
-            </Table>
+            <div className="rounded-sm border">
+              <Table className="table-fixed">
+                <TableHeaderWrapper />
+                <TableBodySkeleton />
+              </Table>
+            </div>
           }
         >
           <TableWrapper searchParams={searchParams} />
         </Suspense>
       </div>
       <DictSettingModal />
+      <DeleteDialog />
     </div>
   );
 }
@@ -58,21 +53,22 @@ async function TableWrapper({
 }: {
   searchParams: Promise<{ [key: string]: string | undefined }>;
 }) {
-  const { pageNum = "1", pageSize = "10", ...rest } = await searchParams;
+  const { pageNum = "1", pageSize = "10" } = await searchParams;
+
   const { data } = await getDictionaryList({
-    ...rest,
     pageNum: Number(pageNum),
     pageSize: Number(pageSize),
   });
+
   return (
     <>
       <div className="rounded-sm border">
-        <Table>
+        <Table className="table-fixed">
           <TableHeaderWrapper />
           <TableBodyWrapper list={data?.list ?? []} />
         </Table>
       </div>
-      <div className="pt-2">
+      <div>
         {data?.total && data?.total > 0 ? (
           <CustomPagination
             total={data?.total ?? 0}
@@ -86,15 +82,14 @@ async function TableWrapper({
 }
 
 async function TableHeaderWrapper() {
-  "use cache";
   const t = await getTranslations("maintain.dictionary");
   return (
     <TableHeader>
       <TableRow className="bg-muted">
-        <TableHead>{t("dictCode")}</TableHead>
-        <TableHead>{t("dictName")}</TableHead>
-        <TableHead>{t("remark")}</TableHead>
-        <TableHead className="text-center">{t("action")}</TableHead>
+        <TableHead className="w-32">{t("dictCode")}</TableHead>
+        <TableHead className="w-32">{t("dictName")}</TableHead>
+        <TableHead className="w-40">{t("remark")}</TableHead>
+        <TableHead className="w-40 text-center">{t("action")}</TableHead>
       </TableRow>
     </TableHeader>
   );
@@ -110,7 +105,7 @@ async function TableBodyWrapper({ list }: { list: DictionaryList[] }) {
             <TableCell>{item.dictCode}</TableCell>
             <TableCell>{item.dictName}</TableCell>
             <TableCell>{item.remark}</TableCell>
-            <TableCell className="text-center">
+            <TableCell className="flex items-center justify-center">
               <Actions data={item} />
             </TableCell>
           </TableRow>

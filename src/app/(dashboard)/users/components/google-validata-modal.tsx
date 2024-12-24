@@ -83,7 +83,7 @@ export function GoogleValidataModal({
               }
             }}
           >
-            {isPeding && <Loader2 className="h-4 w-4 animate-spin" />}
+            {isPeding && <Loader2 className="animate-spin" />}
             {t("confirm")}
           </Button>
         </DialogFooter>

@@ -18,6 +18,7 @@ import { useAtom, useAtomValue } from "jotai";
 import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Form from "next/form";
+import { useRouter } from "next/navigation";
 import { type FormEvent, useRef, useState, useTransition } from "react";
 import { toast } from "sonner";
 
@@ -30,6 +31,7 @@ export function AddEditDialog() {
   const formRef = useRef<HTMLFormElement>(null);
   // 验证
   const [isValidate, setIsValidate] = useState(false);
+  const router = useRouter();
   const handleConfirm = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
@@ -52,7 +54,7 @@ export function AddEditDialog() {
       const { code, message } = response;
       if (code === 0) {
         toast.success(message);
-        window.location.reload();
+        router.refresh();
         setOpen(false);
       } else {
         toast.error(message);
@@ -127,7 +129,7 @@ export function AddEditDialog() {
               formRef.current?.requestSubmit();
             }}
           >
-            {isPending ? <Loader2 className="h-4 w-4 animate-spin" /> : null}
+            {isPending ? <Loader2 className="animate-spin" /> : null}
             {translation("confirm")}
           </Button>
         </DialogFooter>

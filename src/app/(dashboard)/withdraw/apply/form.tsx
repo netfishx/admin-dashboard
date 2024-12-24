@@ -113,11 +113,11 @@ export function Form() {
             });
           }}
         >
-          {isReset ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
+          {isReset ? <Loader2 className="animate-spin" /> : null}
           {t("reset")}
         </Button>
         <Button onClick={search} disabled={isPending}>
-          {isPending ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
+          {isPending ? <Loader2 className="animate-spin" /> : null}
           {translations("search")}
         </Button>
       </div>

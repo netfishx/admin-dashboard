@@ -11,79 +11,64 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import type { WithdrawFeeList } from "@/lib/types";
+import type { WithdrawFee } from "@/lib/types";
 import Big from "big.js";
 import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
+import Form from "next/form";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { type FormEvent, useRef, useState, useTransition } from "react";
 import { toast } from "sonner";
-export function List({ data }: { data: WithdrawFeeList[] }) {
-  const router = useRouter();
+
+export function List({ data }: { data: WithdrawFee }) {
   const t = useTranslations("fund.withdrawfee");
-  const translations = useTranslations();
-  const [feeList, setFeeList] = useState<WithdrawFeeList[]>(data);
 
-  const [currentParams, setCurrentParams] = useState({});
+  const [isPending, startTransition] = useTransition();
+  const router = useRouter();
+  async function handleSave(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    startTransition(async () => {
+      const formData = new FormData(e.target as HTMLFormElement);
+      console.info(formData.get("percentageFee"));
 
-  const [loading, setLoading] = useState(false);
+      const params = {
+        ...data,
+        percentageFee: Big(formData.get("percentageFee") as string)
+          .round(2, Big.roundDown)
+          .div(100)
+          .toNumber(),
+        fixedFee: Big(formData.get("fixedFee") as string)
+          .round(2, Big.roundDown)
+          .toNumber(),
+      };
 
-  async function handleSave() {
-    if (Object.keys(currentParams).length === 0) {
-      return;
-    }
-    setLoading(true);
-    const percentageFeeParam = Big(
-      (currentParams as WithdrawFeeList).percentageFee,
-    )
-      .round(2)
-      .div(100)
-      .toNumber();
-    const fixedFeeParam = Big((currentParams as WithdrawFeeList).fixedFee)
-      .round(2)
-      .toNumber();
-
-    const params = {
-      ...currentParams,
-      percentageFee: percentageFeeParam,
-      fixedFee: fixedFeeParam,
-    };
-
-    const { code, message } = await saveWithdrawFee(params as WithdrawFeeList);
-    setLoading(false);
-    if (code === 0) {
-      toast.success(message);
-      router.refresh();
-    } else {
-      toast.error(message);
-    }
+      const { code, message } = await saveWithdrawFee(params);
+      if (code === 0) {
+        toast.success(message);
+        router.refresh();
+      } else {
+        toast.error(message);
+      }
+    });
   }
 
-  // 通用的更新函数
-  function handleFieldChange<K extends keyof WithdrawFeeList>(
-    index: number,
-    field: K,
-    value: WithdrawFeeList[K],
-  ) {
-    const updatedItem = { ...feeList[index], [field]: value };
-    setFeeList(feeList.map((item, i) => (i === index ? updatedItem : item)));
-    setCurrentParams(updatedItem);
-  }
+  const [isValid, setIsValid] = useState(true);
 
-  const handleFixedChange = (index: number, value: number) =>
-    handleFieldChange(index, "fixedFee", value);
-
-  const handlePercentageChange = (index: number, value: number) =>
-    handleFieldChange(index, "percentageFee", value);
-
+  const formRef = useRef<HTMLFormElement>(null);
   return (
     <div className="flex flex-col gap-2">
       <div className="flex flex-col gap-2 bg-background p-4">
         <div className="flex items-center justify-between gap-4">
           {t("title")}
           <div className="flex items-center gap-2">
-            <Button onClick={handleSave} disabled={loading}>
-              {loading && <Loader2 className="h-4 w-4 animate-spin" />}
+            <Button
+              onClick={(e) => {
+                e.preventDefault();
+                formRef.current?.requestSubmit();
+              }}
+              disabled={isPending || !isValid}
+            >
+              {isPending && <Loader2 className="animate-spin" />}
               {t("save")}
             </Button>
           </div>
@@ -91,65 +76,61 @@ export function List({ data }: { data: WithdrawFeeList[] }) {
       </div>
       <div className="flex h-full flex-col bg-background p-4 absolute mt-19 mr-2">
         <div className="rounded-sm border">
-          <Table className="table-fixed bg-background h-full">
-            <TableHeaderWrapper />
-            {/* <Suspense fallback={<TableBodySkeleton />}> */}
-            <TableBody>
-              {feeList && feeList.length > 0 ? (
-                feeList.map((item, index) => (
-                  <TableRow key={item.id}>
-                    <TableCell>
-                      {item.currency}
-                      {/* <Input
-                        type="text"
-                        value={item.currency}
-                        onChange={(e) => {
-                          handleCurrencyChange(index, e.target.value);
-                        }}
-                      /> */}
-                    </TableCell>
-
-                    <TableCell className="text-center">
-                      <Input
-                        type="number"
-                        value={Big(item.fixedFee).round(2).toString()}
-                        min={0}
-                        step={0.01}
-                        onChange={(e) => {
-                          handleFixedChange(index, Number(e.target.value));
-                        }}
-                        onBlur={(e) => {
-                          e.target.reportValidity();
-                        }}
-                      />
-                    </TableCell>
-                    <TableCell className="text-center">
-                      <Input
-                        type="number"
-                        value={Big(item.percentageFee).round(2).toString()}
-                        min={0}
-                        max={100}
-                        step={0.01}
-                        onChange={(e) => {
-                          const value = Number(e.target.value);
-                          if (value <= 100) {
-                            handlePercentageChange(index, value);
-                          }
-                        }}
-                      />
-                    </TableCell>
-                  </TableRow>
-                ))
-              ) : (
+          <Form action="" onSubmit={handleSave} ref={formRef}>
+            <Table className="table-fixed bg-background h-full">
+              <TableHeaderWrapper />
+              <TableBody>
                 <TableRow>
-                  <TableCell colSpan={3} className="h-40 text-center">
-                    {translations("noData")}
+                  <TableCell>{data.currency}</TableCell>
+
+                  <TableCell className="text-center">
+                    <Input
+                      type="number"
+                      name="fixedFee"
+                      defaultValue={Big(data.fixedFee)
+                        .round(2, Big.roundDown)
+                        .toString()}
+                      min={0}
+                      step={0.01}
+                      required
+                      onChange={(e) => {
+                        setIsValid(e.target.checkValidity());
+                      }}
+                      onBlur={(e) => {
+                        const state = e.target.reportValidity();
+                        if (!state) {
+                          e.target.focus();
+                        }
+                      }}
+                    />
+                  </TableCell>
+                  <TableCell className="text-center">
+                    <Input
+                      type="number"
+                      name="percentageFee"
+                      defaultValue={Big(data.percentageFee)
+                        .times(100)
+                        .round(2)
+                        .toString()}
+                      min={0}
+                      max={100}
+                      step={0.01}
+                      required
+                      onChange={(e) => {
+                        setIsValid(e.target.checkValidity());
+                      }}
+                      onBlur={(e) => {
+                        const state = e.target.reportValidity();
+                        if (!state) {
+                          e.target.focus();
+                        }
+                      }}
+                    />
                   </TableCell>
                 </TableRow>
-              )}
-            </TableBody>
-            {/* </Suspense> */}
-          </Table>
+              </TableBody>
+            </Table>
+          </Form>
         </div>
       </div>
     </div>

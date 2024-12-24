@@ -10,7 +10,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import type { MemberList } from "@/lib/types";
-import { cn } from "@/lib/utils";
+import { cn, formatNumber } from "@/lib/utils";
 import { getSession } from "@/session";
 import { getTranslations } from "next-intl/server";
 import { Suspense } from "react";
@@ -73,7 +73,7 @@ async function TableWrapper({
   };
   const { data } = await getMemberList(requestParams);
   const session = await getSession();
-  const permissions = session?.permissions;
+  const permissions = session?.permissions ?? [];
   return (
     <>
       <UserInfoModal permissions={permissions} />
@@ -106,17 +106,17 @@ async function TableHeaderWrapper({ total }: { total: number }) {
       <TableRow className="bg-muted">
         {permissions?.includes("member_search") && (
           <>
-            <TableHead className="w-28">{t("upUsername")}</TableHead>
+            <TableHead className="w-32">{t("upUsername")}</TableHead>
             <TableHead className="w-28">{t("deptId")}</TableHead>
           </>
         )}
         <TableHead className="w-60">{t("userId")}</TableHead>
-        <TableHead className="w-28">{t("username")}</TableHead>
-        <TableHead className="w-28">{t("nickname")}</TableHead>
-        <TableHead className="w-80">{t("walletAddress")}</TableHead>
+        <TableHead className="w-32">{t("username")}</TableHead>
+        <TableHead className="w-32">{t("nickname")}</TableHead>
+        <TableHead className="w-90">{t("walletAddress")}</TableHead>
         <TableHead className="w-28">{t("debtAmount")}</TableHead>
         <TableHead className="w-28">{t("creditAmount")}</TableHead>
-        <TableHead className="w-20">{t("status")}</TableHead>
+        <TableHead className="w-20 text-center">{t("status")}</TableHead>
         {total > 0 && (
           <TableHead className="sticky right-0 w-120 bg-muted text-center">
             {t("action")}
@@ -150,18 +150,19 @@ async function TableBodyWrapper({
             <TableCell className="break-all">{item.username}</TableCell>
             <TableCell className="break-all">{item.nickname}</TableCell>
             <TableCell>{item.depositAddress}</TableCell>
-            <TableCell>{item.debtAmount ?? 0}</TableCell>
-            <TableCell>{item.creditAmount ?? 0}</TableCell>
-            <TableCell>
-              <div
+            <TableCell>{formatNumber(item.debtAmount)}</TableCell>
+            <TableCell>{formatNumber(item.creditAmount)}</TableCell>
+            <TableCell className="text-center">
+              <span
                 className={cn(
-                  "w-fit rounded-sm px-2",
+                  "rounded-sm p-2",
                   item.status === 0 && "bg-green/10 text-green",
                   item.status === 1 && "bg-destructive/10 text-destructive",
+                  item.status === 2 && "bg-orange/10 text-orange",
                 )}
               >
                 {t(`statusLabel.${item.status}`)}
-              </div>
+              </span>
             </TableCell>
             <TableCell className="sticky right-0 bg-background flex justify-center items-center">
               <Actions data={item} permissions={permissions} />

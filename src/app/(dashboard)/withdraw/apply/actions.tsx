@@ -123,7 +123,7 @@ function ActionButtons({
                 });
               }}
             >
-              {isFlowing && <Loader2 className="h-4 w-4 animate-spin" />}
+              {isFlowing && <Loader2 className="animate-spin" />}
               {t("flow")}
             </Button>
           </>
@@ -165,7 +165,7 @@ function LockButton({ data }: { data: ApplyData }) {
           size="sm"
           className="px-2 text-sm text-primary hover:text-primary/80"
         >
-          {isPending && <Loader2 className="h-4 w-4 animate-spin" />}
+          {isPending && <Loader2 className="animate-spin" />}
           {t("lock")}
         </Button>
       </AlertDialogTrigger>
@@ -221,7 +221,7 @@ function PassButton({
           size="sm"
           className="px-2 text-sm text-primary hover:text-primary/80"
         >
-          {isPending && <Loader2 className="h-4 w-4 animate-spin" />}
+          {isPending && <Loader2 className="animate-spin" />}
           {t("pass")}
         </Button>
       </DialogTrigger>
@@ -274,7 +274,7 @@ function PassButton({
             }}
             disabled={isPending}
           >
-            {isPending && <Loader2 className="h-4 w-4 animate-spin" />}
+            {isPending && <Loader2 className="animate-spin" />}
             {translations("confirm")}
           </Button>
         </DialogFooter>
@@ -302,7 +302,7 @@ function RejectButton({
           size="sm"
           className="px-2 text-sm text-primary hover:text-primary/80"
         >
-          {isPending && <Loader2 className="h-4 w-4 animate-spin" />}
+          {isPending && <Loader2 className="animate-spin" />}
           {t("reject")}
         </Button>
       </AlertDialogTrigger>
@@ -353,7 +353,7 @@ function AgainButton({ data }: { data: ApplyData }) {
           size="sm"
           className="px-2 text-sm text-primary hover:text-primary/80"
         >
-          {isPending && <Loader2 className="h-4 w-4 animate-spin" />}
+          {isPending && <Loader2 className="animate-spin" />}
           {t("again")}
         </Button>
       </AlertDialogTrigger>
@@ -403,7 +403,7 @@ function ConfirmButton({ data }: { data: ApplyData }) {
           size="sm"
           className="px-2 text-sm text-primary hover:text-primary/80"
         >
-          {isPending && <Loader2 className="h-4 w-4 animate-spin" />}
+          {isPending && <Loader2 className="animate-spin" />}
           {t("confirm")}
         </Button>
       </AlertDialogTrigger>

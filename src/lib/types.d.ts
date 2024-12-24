@@ -675,7 +675,7 @@ export type DictionaryList = {
   remark: string;
 };
 // 字典项
-export type DictionaryItemList = {
+export type DictionaryItem = {
   id: string;
   dictCode: string;
   label: string;
@@ -769,7 +769,7 @@ export type BorrowRecordRequestRecords = {
 };
 
 // 提现手续费
-export type WithdrawFeeList = {
+export type WithdrawFee = {
   currency: string;
   fixedFee: number;
   percentageFee: number;
@@ -807,7 +807,7 @@ export type TodayGameReport = {
   }[];
   dailyPokerReport: {
     day: number;
-    totaSettledAmount: string;
+    totalSettledAmount: string;
     issueAmount: number;
   }[];
 };

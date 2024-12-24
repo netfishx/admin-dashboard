@@ -147,7 +147,7 @@ export function ListFilter({
             }
             variant="outline"
           >
-            {isDownload && <Loader2 className="h-4 w-4 animate-spin" />}
+            {isDownload && <Loader2 className="animate-spin" />}
             {t("download")}
           </Button>
           <Button variant="outline" onClick={handleReset}>

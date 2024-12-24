@@ -115,7 +115,7 @@ export function RebateModal({ userId }: { userId: string }) {
             }
             onClick={() => startTransition(handleConfirm)}
           >
-            {isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+            {isPending && <Loader2 className="animate-spin" />}
             {translations("confirm")}
           </Button>
         </DialogFooter>

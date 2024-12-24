@@ -5,6 +5,7 @@ import type {
   BombDetailPlayerDetails,
   BombDetailRecords,
   ChangeLog,
+  DictionaryItem,
   DictionaryList,
   GameConfig,
   GameOdds,
@@ -16,6 +17,7 @@ import type {
   Subaccount,
   Supplier,
   SupplierConfig,
+  WithdrawFee,
 } from "@/lib/types";
 import { atom } from "jotai";
 
@@ -65,6 +67,7 @@ export const addAgentLoadingAtom = atom<boolean>(false);
 export const memberIdAtom = atom<string>("");
 // 用户管理-会员管理-会员信息数据
 export const memberInfoDataAtom = atom<MemberList | null>(null);
+export const availableAmountAtom = atom<number>(0);
 // 用户管理-会员管理-会员信息弹窗
 export const memberInfoModalAtom = atom<boolean>(false);
 // 用户管理-会员管理-占成弹窗
@@ -90,6 +93,8 @@ export const dictionaryDataAtom = atom<DictionaryList | null>(null);
 export const dictionaryItemDialogAtom = atom<boolean>(false);
 // 维护-字典管理-新增字典项弹窗
 export const addDictionaryItemDialogAtom = atom<boolean>(false);
+
+export const deleteDictionaryItemDialogAtom = atom<boolean>(false);
 // 维护-字典管理-新增字典项数据
 export const addDictionaryItemDataAtom = atom<{
   id: string;
@@ -100,6 +105,7 @@ export const addDictionaryItemDataAtom = atom<{
 }>();
 // 维护-字典管理-字典项操作
 export const dictionaryItemOperationAtom = atom<"add" | "edit">();
+export const dictionaryItemDataAtom = atom<DictionaryItem[]>([]);
 
 // 维护-资源管理-背景图弹窗
 export const backgroundImageDialogAtom = atom<boolean>(false);
@@ -187,3 +193,5 @@ export const orderParmasAtom = atom<{
 } | null>(null);
 // 报表管理-会员报表-真人视讯-代理ID
 export const memberListBaccaratAgentIdAtom = atom<string>("");
+
+export const withdrawFeeAtom = atom<WithdrawFee>();

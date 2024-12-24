@@ -1,4 +1,3 @@
-"use client";
 import {
   Dialog,
   DialogContent,
@@ -23,40 +22,36 @@ export function AddDialog(props: Dialogprops) {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent>
-        <div className="flex flex-col gap-4">
-          <DialogHeader>
-            <DialogTitle>{t("recharge")}</DialogTitle>
-          </DialogHeader>
-          <div className="mx-auto w-full max-w-xl p-4">
-            <div className="mb-6 flex items-start gap-2 text-center">
-              <div className="min-w-[80px] text-end text-muted-foreground">
-                {t("mainNet")}
-              </div>
-              <div>{data?.majorNetwork}</div>
+        <DialogHeader>
+          <DialogTitle>{t("recharge")}</DialogTitle>
+        </DialogHeader>
+        <div className="p-4 text-sm flex flex-col gap-4">
+          <div className="flex items-start gap-2 text-center">
+            <div className="w-20 text-end text-muted-foreground">
+              {t("mainNet")}
             </div>
-            <div className="mb-6 flex items-start gap-2 text-center">
-              <div className="min-w-[80px] text-end text-muted-foreground">
-                {t("qrCode")}
-              </div>
-              <div>
-                <QRCodeSVG value={data?.rechargeAddress ?? ""} />
-              </div>
+            <div>{data?.majorNetwork}</div>
+          </div>
+          <div className="flex items-start gap-2 text-center">
+            <div className="w-20 text-end text-muted-foreground">
+              {t("qrCode")}
             </div>
-            <div className="mb-6 flex items-start gap-2 text-center">
-              <div className="min-w-[80px] text-end text-muted-foreground">
-                {t("depositAddress")}
-              </div>
-              <div className="flex w-[300px] items-center gap-2">
-                {data?.rechargeAddress}
-                <CopyButton address={data?.rechargeAddress ?? ""} />
-              </div>
+            <div>
+              <QRCodeSVG value={data?.rechargeAddress ?? ""} />
             </div>
-            <div className="mb-6 flex items-start gap-2 text-center">
-              <div className="min-w-[80px] text-end text-muted-foreground">
-                {t("notice")}
-              </div>
-              <div className="text-left">{t("onlyAK")}</div>
+          </div>
+          <div className="flex items-start gap-2 text-center">
+            <div className="w-20 text-end text-muted-foreground">
+              {t("depositAddress")}
             </div>
+            <div className="flex w-[300px] items-center gap-2">
+              {data?.rechargeAddress}
+              <CopyButton address={data?.rechargeAddress ?? ""} />
+            </div>
+          </div>
+          <div className="flex items-start gap-2 text-center text-destructive">
+            <div className="w-20 text-end">{t("notice")}</div>
+            <div className="text-left">{t("onlyAK")}</div>
           </div>
         </div>
       </DialogContent>

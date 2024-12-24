@@ -1003,7 +1003,7 @@
       "withdrawWay": "收款钱包地址",
       "notAllowWithdraw": "提款金额不可大于可用余额",
       "stopAccept": "因余额变动频繁，执行提现操作时建议暂时停止接单",
-      "notice": "注意",
+      "notice": "注意：",
       "onlyAK": "仅能向此地址充入AK，充入其他资产将无法找回",
       "mainNet": "主网",
       "qrCode": "二维码",

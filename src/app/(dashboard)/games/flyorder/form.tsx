@@ -33,7 +33,7 @@ export function FlyOrderForm() {
             });
           }}
         >
-          {isPending ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
+          {isPending ? <Loader2 className="animate-spin" /> : null}
           {t("save")}
         </Button>
       </span>

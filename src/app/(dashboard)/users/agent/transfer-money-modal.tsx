@@ -1,6 +1,6 @@
 "use client";
 
-import { getUserBasicInfo, transferMoney } from "@/api";
+import { transferMoney } from "@/api";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -13,19 +13,17 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Password } from "@/components/ui/password";
-import { agentDataAtom, transferMoneyModalAtom } from "@/store";
+import {
+  agentDataAtom,
+  availableAmountAtom,
+  transferMoneyModalAtom,
+} from "@/store";
 import { useAtom, useAtomValue } from "jotai";
 import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Form from "next/form";
 import { useRouter } from "next/navigation";
-import {
-  type FormEvent,
-  useEffect,
-  useRef,
-  useState,
-  useTransition,
-} from "react";
+import { type FormEvent, useRef, useState, useTransition } from "react";
 import { toast } from "sonner";
 import { GoogleValidataModal } from "../components/google-validata-modal";
 
@@ -33,12 +31,12 @@ export function TransferMoneyModal() {
   const router = useRouter();
   const translation = useTranslations();
   const t = useTranslations("users.agents");
-  const [moneyPassword] = useState("");
+
   const [isPeding, startTransition] = useTransition();
   const [open, setOpen] = useAtom(transferMoneyModalAtom);
-  const [fetching, startFetching] = useTransition();
+
   const data = useAtomValue(agentDataAtom);
-  const [availableAmount, setAvailableAmount] = useState(0);
+  const availableAmount = useAtomValue(availableAmountAtom);
   const ref = useRef<HTMLFormElement>(null);
   const [googleValidataOpen, setGoogleValidataOpen] = useState(false);
   // 订单id
@@ -78,18 +76,6 @@ export function TransferMoneyModal() {
     });
   };
 
-  useEffect(() => {
-    if (open) {
-      startFetching(async () => {
-        const { code, data, message } = await getUserBasicInfo();
-        if (code === 0) {
-          setAvailableAmount(data?.usableBalanceMoney || 0);
-        } else {
-          toast.error(message);
-        }
-      });
-    }
-  }, [open]);
   return (
     <>
       <Dialog open={open} onOpenChange={setOpen}>
@@ -127,12 +113,7 @@ export function TransferMoneyModal() {
                 <div className="flex items-center gap-4">
                   <Label className="w-20 shrink-0 text-right text-muted-foreground" />
                   <div className="flex flex-1 flex-row text-xs text-destructive">
-                    {t("availableAmount")}:
-                    {fetching ? (
-                      <Loader2 className="h-4 w-4 animate-spin" />
-                    ) : (
-                      availableAmount
-                    )}
+                    {t("availableAmount")}:{availableAmount}
                   </div>
                 </div>
               </div>
@@ -141,7 +122,6 @@ export function TransferMoneyModal() {
                   {t("moneyPassword")}
                 </Label>
                 <Password
-                  defaultValue={moneyPassword}
                   type="password"
                   name="moneyPassword"
                   className="flex-1"
@@ -162,7 +142,7 @@ export function TransferMoneyModal() {
                 }
               }}
             >
-              {isPeding && <Loader2 className="h-4 w-4 animate-spin" />}
+              {isPeding && <Loader2 className="animate-spin" />}
               {translation("confirm")}
             </Button>
           </DialogFooter>

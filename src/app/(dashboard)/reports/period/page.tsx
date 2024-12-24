@@ -84,7 +84,7 @@ async function PeriodTable({
     issueNumber,
   } = await searchParams;
 
-  if (!(startTime && endTime) && !issueNumber) {
+  if (!((startTime && endTime) || issueNumber)) {
     return (
       <Table className="rounded-sm border table-fixed">
         <PeriodTableHeader />
@@ -195,7 +195,7 @@ function TableBodySkeleton() {
 async function FormWrapper({
   searchParams,
 }: { searchParams: Promise<{ [key: string]: string | undefined }> }) {
-  const { startTime, endTime, allowEmpty } = await searchParams;
+  const { startTime, endTime } = await searchParams;
   const res = await getGameList(1);
   return <Form list={res.data ?? []} key={`${startTime}-${endTime}`} />;
 }

@@ -26,7 +26,7 @@ import { toast } from "sonner";
 export function UserInfoModal({
   permissions,
 }: {
-  permissions: string[] | undefined;
+  permissions: string[];
 }) {
   const translation = useTranslations();
   const t = useTranslations("users.members");
@@ -35,21 +35,23 @@ export function UserInfoModal({
   const [isChecking, startChecking] = useTransition();
   const setOpen = useSetAtom(memberInfoModalAtom);
   const memberInfoData = useAtomValue(memberInfoDataAtom);
-  const [agentId, setAgentId] = useState("");
-  const [upNickname, setUpNickname] = useState("");
+  const [agentId, setAgentId] = useState<string>();
+  const [upNickname, setUpNickname] = useState<string>();
   const router = useRouter();
   const ref = useRef<HTMLFormElement>(null);
 
   function handleUpdateStatus(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-
+    if (!memberInfoData) {
+      return;
+    }
     startTransition(async () => {
       const formData = new FormData(e.currentTarget);
       const status = formData.get("status");
       const { code, message } = await updateMember({
-        id: memberInfoData?.id ?? "",
+        id: memberInfoData.id,
         status: Number(status),
-        agentId: agentId || memberInfoData?.agentId,
+        agentId,
       });
       if (code === 0) {
         toast.success(message);
@@ -65,13 +67,13 @@ export function UserInfoModal({
     e.preventDefault();
     startChecking(async () => {
       const formData = new FormData(e.currentTarget);
-      const username = formData.get("username");
+      const username = formData.get("username") as string;
       const { code, message, data } = await getAgentInfoByUsername({
-        username: username as string,
+        username,
       });
       if (code === 0) {
-        setUpNickname(data?.nickname ?? "");
-        setAgentId(data?.id ?? "");
+        setUpNickname(data?.nickname);
+        setAgentId(data?.id);
       } else {
         toast.error(message);
       }
@@ -101,12 +103,11 @@ export function UserInfoModal({
                   <Input
                     className="w-1/2"
                     name="username"
+                    required
                     defaultValue={memberInfoData?.upUsername}
                   />
                   <Button disabled={isChecking} size="sm" type="submit">
-                    {isChecking && (
-                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                    )}
+                    {isChecking && <Loader2 className="animate-spin" />}
                     {t("check")}
                   </Button>
                 </div>
@@ -166,6 +167,7 @@ export function UserInfoModal({
               <RadioGroup
                 defaultValue={memberInfoData?.status.toString()}
                 className="flex gap-2"
+                name="status"
               >
                 <div className="flex items-center space-x-2">
                   <RadioGroupItem value="0" id="0" />
@@ -197,7 +199,7 @@ export function UserInfoModal({
               }
             }}
           >
-            {isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+            {isPending && <Loader2 className="animate-spin" />}
             {translation("confirm")}
           </Button>
         </DialogFooter>

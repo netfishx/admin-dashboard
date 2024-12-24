@@ -10,9 +10,12 @@ import { ViewTransitions } from "next-view-transitions";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
 import { type ReactNode, Suspense } from "react";
 
-async function Title() {
+export async function generateMetadata() {
   const t = await getTranslations();
-  return <title>{t("title")}</title>;
+  return {
+    title: t("title"),
+    description: "006 admin dashboard",
+  };
 }
 
 export default function RootLayout({ children }: { children: ReactNode }) {
@@ -36,10 +39,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
               />
               <JotaiProvider>
                 <I18nProvider>
-                  <Suspense>
-                    <Title />
-                    {children}
-                  </Suspense>
+                  <Suspense>{children}</Suspense>
                 </I18nProvider>
                 <ErrorToast />
               </JotaiProvider>

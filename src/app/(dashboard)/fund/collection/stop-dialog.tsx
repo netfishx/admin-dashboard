@@ -53,7 +53,7 @@ export function StopDialog(props: Dialogprops) {
         <AlertDialogFooter>
           <AlertDialogCancel>{translations("cancel")}</AlertDialogCancel>
           <AlertDialogAction onClick={handleConfirm} disabled={isPending}>
-            {isPending && <Loader2 className="h-4 w-4 animate-spin" />}
+            {isPending && <Loader2 className="animate-spin" />}
             {translations("confirm")}
           </AlertDialogAction>
         </AlertDialogFooter>

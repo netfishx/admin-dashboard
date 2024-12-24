@@ -3,12 +3,13 @@
 import { Skeleton } from "@/components/ui/skeleton";
 import { TableBody, TableCell, TableRow } from "@/components/ui/table";
 import type { Supplier } from "@/lib/types";
+import { cn } from "@/lib/utils";
 import { useTranslations } from "next-intl";
 import { EditButton } from "./edit";
 
 export function SupplierTable({ data }: { data: Supplier[] | undefined }) {
   const translation = useTranslations();
-
+  const t = useTranslations("users.supplier");
   return (
     <TableBody>
       {data && data.length > 0 ? (
@@ -18,10 +19,18 @@ export function SupplierTable({ data }: { data: Supplier[] | undefined }) {
             <TableCell>{item.username}</TableCell>
             <TableCell>{item.nickname}</TableCell>
             <TableCell className="break-all">{item.remark}</TableCell>
-            <TableCell>
-              <ShowStatus status={item.status} />
+            <TableCell className="text-center">
+              <span
+                className={cn(
+                  "rounded-sm p-2",
+                  item.status === 0 && "bg-green/10 text-green",
+                  item.status === 1 && "bg-destructive/10 text-destructive",
+                )}
+              >
+                {item.status === 0 ? t("enable") : t("disable")}
+              </span>
             </TableCell>
-            <TableCell className="w-24 text-center">
+            <TableCell className="text-center">
               <EditButton data={item} />
             </TableCell>
           </TableRow>
@@ -49,21 +58,5 @@ export function TbodySkeleton() {
         </TableRow>
       ))}
     </TableBody>
-  );
-}
-
-function ShowStatus({ status }: { status: number }) {
-  const t = useTranslations("users.supplier");
-  if (status === 0) {
-    return (
-      <div className="w-fit rounded-sm bg-green/10 px-2 text-green">
-        {t("enable")}
-      </div>
-    );
-  }
-  return (
-    <div className="w-fit rounded-sm bg-destructive/10 px-2 text-destructive">
-      {t("disable")}
-    </div>
   );
 }

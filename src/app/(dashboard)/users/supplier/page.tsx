@@ -8,7 +8,7 @@ import { SupplierEditDialog } from "./dialog";
 import { SupplierForm } from "./form";
 import { SupplierTable, TbodySkeleton } from "./table-wrapper";
 
-export default async function Page({
+async function SupplierTableWrapper({
   searchParams,
 }: {
   searchParams: Promise<{ [key: string]: string | string[] }>;
@@ -18,6 +18,14 @@ export default async function Page({
     id: id as string,
     username: username as string,
   });
+  return <SupplierTable data={data} />;
+}
+
+export default async function Page({
+  searchParams,
+}: {
+  searchParams: Promise<{ [key: string]: string | string[] }>;
+}) {
   return (
     <div className="flex w-full flex-col gap-2">
       <Suspense
@@ -38,8 +46,9 @@ export default async function Page({
         <div className="rounded-sm border">
           <Table className="table-fixed">
             <SupplierTableHeader />
+
             <Suspense fallback={<TbodySkeleton />}>
-              <SupplierTable data={data} />
+              <SupplierTableWrapper searchParams={searchParams} />
             </Suspense>
           </Table>
         </div>
@@ -55,11 +64,11 @@ async function SupplierTableHeader() {
   return (
     <TableHeader>
       <TableRow className="bg-muted">
-        <TableHead className="w-64">{t("supplierId")}</TableHead>
+        <TableHead className="w-40">{t("supplierId")}</TableHead>
         <TableHead className="w-40">{t("supplierUsername")}</TableHead>
         <TableHead className="w-40">{t("supplierName")}</TableHead>
         <TableHead className="w-40">{t("remark")}</TableHead>
-        <TableHead className="w-20">{t("status")}</TableHead>
+        <TableHead className="w-20 text-center">{t("status")}</TableHead>
         <TableHead className="w-24 text-center">{t("action")}</TableHead>
       </TableRow>
     </TableHeader>
