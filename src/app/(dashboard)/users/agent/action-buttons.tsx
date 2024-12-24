@@ -1,11 +1,17 @@
 "use client";
 
-import { getAgentLoginLog, getChangeLog, getGameConfig } from "@/api";
+import {
+  getAgentLoginLog,
+  getChangeLog,
+  getGameConfig,
+  getUserBasicInfo,
+} from "@/api";
 import { Button } from "@/components/ui/button";
 import type { AgentData } from "@/lib/types";
 import {
   agentDataAtom,
   agentIdAtom,
+  availableAmountAtom,
   changeLogDataAtom,
   changeLogModalAtom,
   gameSettingDataAtom,
@@ -56,6 +62,8 @@ export default function Action({
   const [rebateIsPending, startGetRebate] = useTransition();
   const [loginLogIsPending, startGetLoginLog] = useTransition();
   const [changeLogIsPending, startGetChangeLog] = useTransition();
+  const [transferMoneyIsPending, startGetTransferMoney] = useTransition();
+  const setAvailableAmount = useSetAtom(availableAmountAtom);
   return (
     <>
       <Button
@@ -74,12 +82,22 @@ export default function Action({
         <Button
           variant="ghost"
           size="sm"
+          disabled={transferMoneyIsPending}
           className="px-2 text-sm text-primary hover:text-primary/80"
           onClick={() => {
-            setAgentData(data);
-            setTransferMoneyModal(true);
+            startGetTransferMoney(async () => {
+              setAgentData(data);
+              const { code, data: info, message } = await getUserBasicInfo();
+              if (code === 0) {
+                setAvailableAmount(info?.usableBalanceMoney || 0);
+              } else {
+                toast.error(message);
+              }
+              setTransferMoneyModal(true);
+            });
           }}
         >
+          {transferMoneyIsPending && <Loader2 className="animate-spin" />}
           {t("transferMoney")}
         </Button>
       )}
