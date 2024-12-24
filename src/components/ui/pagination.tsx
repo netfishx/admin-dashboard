@@ -27,7 +27,7 @@ export function PaginationContent({
   return (
     <ul
       ref={ref}
-      className={cn("flex flex-row items-center ", className)}
+      className={cn("flex flex-row items-center gap-1", className)}
       {...props}
     />
   );
