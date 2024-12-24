@@ -66,7 +66,7 @@ export function Form() {
       <div className="flex items-center gap-4">
         <div className="flex items-center gap-2">
           <Label className="shrink-0">{t("finishTime")}</Label>
-          <DateRangeFilter quickSetBtn={[]} />
+          <DateRangeFilter />
         </div>
         <div className="flex items-center gap-2">
           <Label className="shrink-0">{t("orderNo")}</Label>
