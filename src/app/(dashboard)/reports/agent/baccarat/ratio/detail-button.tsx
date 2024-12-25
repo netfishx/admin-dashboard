@@ -8,13 +8,14 @@ import { useSearchParams } from "next/navigation";
 export default function DetailButton(props: { item: RatioReportListTypes }) {
   const { item } = props;
   const searchParams = useSearchParams();
+  const gameId = searchParams.get("gameId");
   const startTime = searchParams.get("startTime");
   const endTime = searchParams.get("endTime");
   const t = useTranslations("report.orderlist");
   const router = useRouter();
   function handleDetail() {
     router.push(
-      `/reports/agent/baccarat/ratio?agentOrHouseOwnerId=${item?.userId}&startTime=${startTime}&endTime=${endTime}`,
+      `/reports/agent/baccarat/ratio?${gameId ? `gameId=${gameId}&` : ""}parentAgentId=${item?.userId}&startTime=${startTime}&endTime=${endTime}`,
     );
   }
   return (
