@@ -8,7 +8,6 @@ export function ActionButton({ fileUrl }: { fileUrl: string }) {
   return (
     <a
       href={fileUrl}
-      target="_blank"
       rel="noreferrer"
       className={cn(
         buttonVariants({ variant: "ghost" }),
