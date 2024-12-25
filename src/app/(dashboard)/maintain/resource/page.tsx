@@ -70,8 +70,8 @@ async function TableWrapper({
         {!!data?.total && (
           <CustomPagination
             total={data?.total ?? 0}
-            currentPage={pageNum ?? 1}
-            pageSize={pageSize ?? 10}
+            currentPage={Number(pageNum ?? 1)}
+            pageSize={Number(pageSize ?? 10)}
           />
         )}
       </div>
