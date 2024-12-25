@@ -53,11 +53,12 @@ async function TableWrapper({
 }: {
   searchParams: Promise<{ [key: string]: string | undefined }>;
 }) {
-  const { pageNum = "1", pageSize = "10" } = await searchParams;
+  const { pageNum = "1", pageSize = "10", ...rest } = await searchParams;
 
   const { data } = await getDictionaryList({
     pageNum: Number(pageNum),
     pageSize: Number(pageSize),
+    ...rest,
   });
 
   return (
