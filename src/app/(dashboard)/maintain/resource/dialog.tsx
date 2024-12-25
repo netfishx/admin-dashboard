@@ -146,6 +146,10 @@ export function AddOrEditDialog() {
                 id="file"
                 name="file"
                 ref={fileRef}
+                required={!data?.pictureUri}
+                onBlur={(e) => {
+                  e.target.reportValidity();
+                }}
               />
             </div>
 
