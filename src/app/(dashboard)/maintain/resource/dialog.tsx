@@ -44,22 +44,6 @@ export function AddOrEditDialog() {
   const fileRef = useRef<HTMLInputElement>(null);
   const formRef = useRef<HTMLFormElement>(null);
 
-  const handleEdit = (allData: FormData) => {
-    startTransition(async () => {
-      const req = {
-        id: allData.get("id") as string,
-        pictureUri: data?.pictureUri ?? "",
-        pictureName: allData.get("pictureName") as string,
-        port,
-        position,
-        language,
-        status,
-        sort: Number(allData.get("sort") as string),
-      };
-      await addOrEdit(req);
-    });
-  };
-
   async function addOrEdit(request: {
     id?: string;
     pictureUri: string;
@@ -75,20 +59,22 @@ export function AddOrEditDialog() {
       toast.success(message);
       setOpen(false);
       router.refresh();
+    } else {
+      toast.error(message);
     }
   }
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const allData = new FormData(e.currentTarget);
-    handleAdd(allData);
-  };
-
-  const handleAdd = (allData: FormData) => {
     startTransition(async () => {
       const formData = new FormData();
       const file = fileRef.current?.files?.[0];
       formData.append("file", file as File);
+      if (file && file.size > 5 * 1024 * 1024) {
+        toast.error(t("fileSizeTooLarge"));
+        return;
+      }
       if (file) {
         const {
           data: uploadData,
@@ -111,11 +97,27 @@ export function AddOrEditDialog() {
           toast.error(uploadMessage);
           return;
         }
+      } else if (data?.pictureUri) {
+        startTransition(async () => {
+          const req = {
+            id: allData.get("id") as string,
+            pictureUri: data?.pictureUri ?? "",
+            pictureName: allData.get("pictureName") as string,
+            port,
+            position,
+            language,
+            status,
+            sort: Number(allData.get("sort") as string),
+          };
+          await addOrEdit(req);
+        });
       } else {
-        handleEdit(allData);
+        toast.error(t("pictureRequired"));
+        return;
       }
     });
   };
+
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent onPointerDownOutside={(e) => e.preventDefault()}>
@@ -221,7 +223,7 @@ export function AddOrEditDialog() {
               <Label className="w-20 text-right">{t("status")}</Label>
               <RadioGroup
                 className="flex gap-2"
-                value={status.toString()}
+                defaultValue={data?.status?.toString() ?? "0"}
                 onValueChange={(value) => {
                   setStatus(Number(value));
                 }}
