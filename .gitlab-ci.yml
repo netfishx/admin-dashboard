@@ -1,9 +1,21 @@
 build:
   stage: build
+  tags:
+    - build
   only:
     - test
   script:
-    - docker build -t admin-006:$CI_COMMIT_SHORT_SHA .
+    - docker build -t 172.31.46.150:5555/admin-006:$CI_COMMIT_SHORT_SHA .
+    - docker push 172.31.46.150:5555/admin-006:$CI_COMMIT_SHORT_SHA
+
+deploy:
+  stage: deploy
+  tags:
+    - deploy
+  only:
+    - test
+  script:
+    - docker pull 18.163.249.24:5555/admin-006:$CI_COMMIT_SHORT_SHA
     - docker stop admin-006 || true
     - docker rm admin-006 || true
-    - docker run -d -p 3333:3000 --name admin-006 --network demo --restart unless-stopped admin-006:$CI_COMMIT_SHORT_SHA
+    - docker run -d -p 3333:3000 --name admin-006 --network demo --restart unless-stopped 18.163.249.24:5555/admin-006:$CI_COMMIT_SHORT_SHA

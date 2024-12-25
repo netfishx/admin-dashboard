@@ -1,7 +1,6 @@
 import { getRoleList, getSubaccountList } from "@/api";
 import {
   AddButton,
-  DeleteButton,
   EditButton,
   LoginLogButton,
 } from "@/app/(dashboard)/system/subaccount/button";
@@ -114,7 +113,7 @@ async function SubaccountTableWrapper({
                     <div className="flex justify-center">
                       <EditButton data={item} />
                       <LoginLogButton id={item.id ?? ""} />
-                      <DeleteButton id={item.id ?? ""} />
+                      {/* <DeleteButton id={item.id ?? ""} /> */}
                     </div>
                   </TableCell>
                 </TableRow>

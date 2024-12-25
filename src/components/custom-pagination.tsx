@@ -1,12 +1,10 @@
 "use client";
 
-import { buttonVariants } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import {
   Pagination,
   PaginationContent,
   PaginationItem,
-  PaginationNext,
-  PaginationPrevious,
 } from "@/components/ui/pagination";
 import {
   Select,
@@ -19,8 +17,8 @@ import { cn } from "@/lib/utils";
 import {
   ChevronFirst,
   ChevronLast,
-  ChevronLeftIcon,
-  ChevronRightIcon,
+  ChevronLeft,
+  ChevronRight,
 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
@@ -51,19 +49,15 @@ export function CustomPagination({
       <Pagination className="flex justify-end">
         <PaginationContent>
           <PaginationItem>
-            <span className="text-sm text-muted-foreground">
+            <Button variant="ghost" className="text-sm p-0" disabled>
               {t("total", { total })}
-            </span>
+            </Button>
           </PaginationItem>
           <PaginationItem>
             {currentPage === 1 ? (
-              <div
-                className={cn(
-                  "pointer-events-none flex w-6 items-center justify-center px-1 text-muted-foreground opacity-50",
-                )}
-              >
+              <Button variant="ghost" size="icon" className="w-7" disabled>
                 <ChevronFirst className="size-4" />
-              </div>
+              </Button>
             ) : (
               <Link
                 href={{
@@ -72,7 +66,7 @@ export function CustomPagination({
                 }}
                 className={cn(
                   buttonVariants({ variant: "ghost", size: "icon" }),
-                  "flex w-6 items-center justify-center px-1",
+                  "w-7",
                 )}
               >
                 <ChevronFirst className="size-4" />
@@ -81,16 +75,11 @@ export function CustomPagination({
           </PaginationItem>
           <PaginationItem>
             {currentPage === 1 ? (
-              <div
-                className={cn(
-                  "pointer-events-none flex w-6 items-center justify-center px-1 text-muted-foreground opacity-50",
-                )}
-              >
-                <ChevronLeftIcon className="size-4" />
-              </div>
+              <Button variant="ghost" size="icon" className="w-7" disabled>
+                <ChevronLeft className="size-4" />
+              </Button>
             ) : (
-              <PaginationPrevious
-                className="px-1"
+              <Link
                 href={{
                   pathname,
                   query: {
@@ -98,26 +87,32 @@ export function CustomPagination({
                     pageNum: currentPage - 1,
                   },
                 }}
-              />
+                className={cn(
+                  buttonVariants({ variant: "ghost", size: "icon" }),
+                  "w-7",
+                )}
+              >
+                <ChevronLeft className="size-4" />
+              </Link>
             )}
           </PaginationItem>
           <PaginationItem>
-            <span className="inline-block w-6 text-center text-sm">
+            <Button
+              variant="outline"
+              size="icon"
+              className="w-7 disabled:opacity-80"
+              disabled
+            >
               {currentPage}
-            </span>
+            </Button>
           </PaginationItem>
           <PaginationItem>
             {currentPage === totalPage ? (
-              <div
-                className={cn(
-                  "pointer-events-none flex w-6 items-center justify-center px-1 text-muted-foreground opacity-50",
-                )}
-              >
-                <ChevronRightIcon className="size-4" />
-              </div>
+              <Button variant="ghost" size="icon" className="w-7" disabled>
+                <ChevronRight className="size-4" />
+              </Button>
             ) : (
-              <PaginationNext
-                className="px-1"
+              <Link
                 href={{
                   pathname,
                   query: {
@@ -125,18 +120,20 @@ export function CustomPagination({
                     pageNum: currentPage + 1,
                   },
                 }}
-              />
+                className={cn(
+                  buttonVariants({ variant: "ghost", size: "icon" }),
+                  "w-7",
+                )}
+              >
+                <ChevronRight className="size-4" />
+              </Link>
             )}
           </PaginationItem>
           <PaginationItem>
             {currentPage === totalPage ? (
-              <div
-                className={cn(
-                  "pointer-events-none flex w-6 items-center justify-center px-1 text-muted-foreground opacity-50",
-                )}
-              >
+              <Button variant="ghost" size="icon" className="w-7" disabled>
                 <ChevronLast className="size-4" />
-              </div>
+              </Button>
             ) : (
               <Link
                 href={{
@@ -148,7 +145,7 @@ export function CustomPagination({
                 }}
                 className={cn(
                   buttonVariants({ variant: "ghost", size: "icon" }),
-                  "flex w-6 items-center justify-center px-1",
+                  "w-7",
                 )}
               >
                 <ChevronLast className="size-4" />
