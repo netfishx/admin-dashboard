@@ -93,7 +93,7 @@ export function LoginLogModal({
                 <TableHead>{t("loginTime")}</TableHead>
                 <TableHead>{t("ip")}</TableHead>
                 <TableHead>{t("address")}</TableHead>
-                <TableHead>{t("status")}</TableHead>
+                <TableHead className="text-center">{t("status")}</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -106,7 +106,7 @@ export function LoginLogModal({
                     </TableCell>
                     <TableCell>{item.ip}</TableCell>
                     <TableCell>{item.region}</TableCell>
-                    <TableCell>
+                    <TableCell className="text-center">
                       <StatusLabel status={Number(item.isSuccess)} />
                     </TableCell>
                   </TableRow>
