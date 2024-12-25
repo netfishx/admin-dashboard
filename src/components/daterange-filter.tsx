@@ -275,56 +275,54 @@ export function DateRangeFilter({
 
     if (type === "start") {
       setStartTime(newDate.getTime());
+      onDateRangeChange?.(newDate.getTime(), endTime);
     } else {
       setEndTime(newDate.getTime());
+      onDateRangeChange?.(startTime, newDate.getTime());
     }
   };
 
   const handleDateRangeChange = (range?: DateRange) => {
-    if (range) {
-      let from = range.from;
-      let to = range.to;
-      // 如果开始时间和结束时间相同，则设置为当天的00:00:00到23:59:59
-      if (from && to && from.getTime() === to.getTime()) {
-        setStartTime(startOfDay(from).getTime());
-        setEndTime(endOfDay(to).getTime());
-        return;
-      }
-
-      if (from?.getTime() === 0) {
-        from = today;
-      }
-
-      if (from && to && from.getTime() > to.getTime()) {
-        const temp = from;
-        from = to;
-        to = temp;
-      }
-
-      const startDate = from
-        ? set(from, {
-            hours: new Date(startTime).getHours(),
-            minutes: new Date(startTime).getMinutes(),
-            seconds: new Date(startTime).getSeconds(),
-          })
-        : undefined;
-
-      const endDate = to
-        ? set(to, {
-            hours: new Date(endTime).getHours(),
-            minutes: new Date(endTime).getMinutes(),
-            seconds: new Date(endTime).getSeconds(),
-          })
-        : undefined;
-
-      setStartTime(startDate?.getTime() ?? 0);
-      setEndTime(endDate?.getTime() ?? 0);
-      setIsSettledEmpty(false);
-    } else {
-      setIsSettledEmpty(true);
-      setStartTime(0);
-      setEndTime(0);
+    let from = range?.from;
+    let to = range?.to;
+    // 如果开始时间和结束时间相同，则设置为当天的00:00:00到23:59:59
+    if (from && to && from.getTime() === to.getTime()) {
+      setStartTime(startOfDay(from).getTime());
+      setEndTime(endOfDay(to).getTime());
+      return;
     }
+
+    if (from?.getTime() === 0) {
+      from = today;
+    }
+
+    if (from && to && from.getTime() > to.getTime()) {
+      const temp = from;
+      from = to;
+      to = temp;
+    }
+
+    const startDate = from
+      ? set(from, {
+          hours: new Date(startTime).getHours(),
+          minutes: new Date(startTime).getMinutes(),
+          seconds: new Date(startTime).getSeconds(),
+        })
+      : undefined;
+
+    const endDate = to
+      ? set(to, {
+          hours: new Date(endTime).getHours(),
+          minutes: new Date(endTime).getMinutes(),
+          seconds: new Date(endTime).getSeconds(),
+        })
+      : undefined;
+
+    setStartTime(startDate?.getTime() ?? 0);
+    setEndTime(endDate?.getTime() ?? 0);
+    setIsSettledEmpty(!range);
+
+    onDateRangeChange?.(startDate?.getTime() ?? 0, endDate?.getTime() ?? 0);
   };
 
   const formattedDateRange = () => {
@@ -375,7 +373,6 @@ export function DateRangeFilter({
                   : undefined
               }
               onSelect={handleDateRangeChange}
-              numberOfMonths={1}
               defaultMonth={startTime ? new Date(startTime) : today}
             />
             {enableTimeSelect && (
