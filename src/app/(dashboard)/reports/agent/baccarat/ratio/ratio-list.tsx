@@ -131,7 +131,6 @@ export async function RatioList({
     );
   }
   const { data } = await getRatioReport(p);
-
   return (
     <div className="p-4 bg-background flex-1">
       <div className="border rounded-sm">
