@@ -10,8 +10,9 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { NOTICE_TYPE } from "@/lib/dict";
+import { NOTICE_STATUS, NOTICE_TYPE } from "@/lib/dict";
 import type { AnnouncementList, PageData } from "@/lib/types";
+import { cn } from "@/lib/utils";
 import { getTranslations } from "next-intl/server";
 import { EditBtn } from "../edit-btn";
 import { TruncatedCell } from "../truncated-cell";
@@ -60,6 +61,7 @@ export async function TableHeaderWrapper() {
         <TableHead className="w-48">{t("endTime")}</TableHead>
         <TableHead className="w-48">{t("createTime")}</TableHead>
         <TableHead className="w-[450px]">{t("content")}</TableHead>
+        <TableHead className="w-48 text-center">{t("status")}</TableHead>
         <TableHead className="w-48">{t("type")}</TableHead>
         <TableHead className="w-24 text-center sticky right-0 bg-muted ">
           {t("action")}
@@ -110,6 +112,24 @@ export async function TableBodyWrapper({
               content={item.contentOfLanguage}
               maxLength={50}
             />
+            <TableCell className="text-center">
+              <div
+                className={cn(
+                  "inline-block w-fit rounded-sm px-2 text-center",
+                  item.status === 0 && "bg-destructive/10 text-destructive",
+                  item.status === 1 && "bg-green/10 text-green",
+                )}
+              >
+                {(() => {
+                  const status = NOTICE_STATUS.find(
+                    (s) => s.value === item.status,
+                  );
+                  return status ? t(status.label) : item.status;
+                })()}
+                {item.status === null && <span>--</span>}
+              </div>
+            </TableCell>
+
             <TableCell>
               {(() => {
                 const status = NOTICE_TYPE.find((s) => s.value === item.type);

@@ -19,7 +19,7 @@ import { parseAsInteger, useQueryState, useQueryStates } from "nuqs";
 import { useTransition } from "react";
 import { toast } from "sonner";
 
-export function Form() {
+export function Form({ hasAdminPermission }: { hasAdminPermission: boolean }) {
   const t = useTranslations("report.withdraw");
   const [orderNo, setOrderNo] = useQueryState("orderNo", {
     defaultValue: "",
@@ -74,14 +74,6 @@ export function Form() {
           <DateRangeFilter />
         </div>
         <div className="flex items-center gap-2">
-          <Label className="shrink-0">{t("orderNo")}</Label>
-          <Input
-            placeholder={t("placeholder")}
-            value={orderNo ?? ""}
-            onChange={(e) => setOrderNo(e.target.value)}
-          />
-        </div>
-        <div className="flex items-center gap-2">
           <Label className="shrink-0">{t("status")}</Label>
           <Select
             value={requestStatus ?? ""}
@@ -101,8 +93,16 @@ export function Form() {
           </Select>
         </div>
       </div>
-
       <div className="flex items-center gap-4">
+        <div className="flex items-center gap-2">
+          <Label className="shrink-0">{t("orderNo")}</Label>
+          <Input
+            placeholder={t("placeholder")}
+            value={orderNo ?? ""}
+            onChange={(e) => setOrderNo(e.target.value)}
+          />
+        </div>
+
         <div className="flex items-center gap-2">
           <Label className="shrink-0">{t("withdrawMoneyFilter")}</Label>
           <Select
@@ -127,32 +127,36 @@ export function Form() {
             placeholder={t("placeholder")}
           />
         </div>
-        <div className="flex items-center gap-2">
-          <Label className="shrink-0">{t("userType")}</Label>
-          <Select
-            value={userType}
-            onValueChange={(value) => setUserType(value)}
-          >
-            <SelectTrigger className="w-28">
-              <SelectValue placeholder={t("placeholderselect")} />
-            </SelectTrigger>
-            <SelectContent>
-              {USER_TYPE.map((item) => (
-                <SelectItem key={item.value} value={item.value.toString()}>
-                  {t(item.label)}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </div>
-        <div className="flex items-center gap-2">
-          <Label className="shrink-0">{t("userId")}</Label>
-          <Input
-            placeholder={t("placeholder")}
-            value={userId ?? ""}
-            onChange={(e) => setUserId(e.target.value)}
-          />
-        </div>
+        {hasAdminPermission && (
+          <div className="flex items-center gap-2">
+            <Label className="shrink-0">{t("userType")}</Label>
+            <Select
+              value={userType}
+              onValueChange={(value) => setUserType(value)}
+            >
+              <SelectTrigger className="w-28">
+                <SelectValue placeholder={t("placeholderselect")} />
+              </SelectTrigger>
+              <SelectContent>
+                {USER_TYPE.map((item) => (
+                  <SelectItem key={item.value} value={item.value.toString()}>
+                    {t(item.label)}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+        )}
+        {hasAdminPermission && (
+          <div className="flex items-center gap-2">
+            <Label className="shrink-0">{t("userId")}</Label>
+            <Input
+              placeholder={t("placeholder")}
+              value={userId ?? ""}
+              onChange={(e) => setUserId(e.target.value)}
+            />
+          </div>
+        )}
       </div>
       <div className="flex items-start justify-end gap-2">
         <Button

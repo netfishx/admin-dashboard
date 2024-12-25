@@ -1,6 +1,7 @@
 "use client";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import type { SessionData } from "@/session";
+import { addMonths, endOfDay, startOfDay } from "date-fns";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -15,6 +16,9 @@ export default function TabsItem({
   const pathname = usePathname();
   const sessionData = use(session);
   const permissions = sessionData?.permissions;
+  const today = new Date();
+  const startTime = startOfDay(today);
+  const endTime = endOfDay(addMonths(today, 1));
   return (
     <div className="flex w-full flex-col gap-2">
       <div className="gap-2 bg-background p-4">
@@ -29,7 +33,9 @@ export default function TabsItem({
             )}
             {permissions?.includes("platform_announcement") && (
               <TabsTrigger value="platform">
-                <Link href="/system/announcement/platform">
+                <Link
+                  href={`/system/announcement/platform?startTime=${startTime.getTime()}&endTime=${endTime.getTime()}`}
+                >
                   {t("allAgentAnnouncement")}
                 </Link>
               </TabsTrigger>
