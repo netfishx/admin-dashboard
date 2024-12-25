@@ -29,8 +29,10 @@ function RoleTableHeader() {
         <TableHead>{t("id")}</TableHead>
         <TableHead>{t("name")}</TableHead>
         <TableHead>{t("updateTime")}</TableHead>
-        <TableHead className="sticky right-0 bg-muted text-center">
-          {t("action")}
+        <TableHead className="sticky right-0 bg-muted text-center p-0">
+          <div className="shadow-l h-full px-4 flex justify-center items-center">
+            {t("action")}
+          </div>
         </TableHead>
       </TableRow>
     </TableHeader>
@@ -68,8 +70,8 @@ async function RoleTableWrapper({
                   <TableCell>
                     {item.updateTime && <Time time={item.updateTime} />}
                   </TableCell>
-                  <TableCell className="sticky right-0 bg-background text-center">
-                    <div className="flex justify-center">
+                  <TableCell className="sticky right-0 bg-background p-0">
+                    <div className="shadow-l py-2 px-4 flex justify-center items-center">
                       <EditButton data={item} />
                       <DeleteButton id={item.id ?? ""} />
                     </div>

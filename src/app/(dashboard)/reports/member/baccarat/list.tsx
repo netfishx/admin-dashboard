@@ -38,16 +38,18 @@ export async function ListHeader({
         {hasSearchPermission && (
           <TableHead className="w-60">{t("agentId")}</TableHead>
         )}
-        <TableHead className="w-60">{t("member_type")}</TableHead>
+        <TableHead className="w-36">{t("member_type")}</TableHead>
         <TableHead className="w-60">{t("game_name")}</TableHead>
-        <TableHead className="w-60">{t("bet_count")}</TableHead>
-        <TableHead className="w-60">{t("bet_amount")}</TableHead>
-        <TableHead className="w-60">{t("valid_amount")}</TableHead>
-        <TableHead className="w-60">{t("win_loss_amount")}</TableHead>
-        <TableHead className="w-60">{t("cashback_amount")}</TableHead>
-        <TableHead className="w-60">{t("profit_loss_result")}</TableHead>
-        <TableHead className="sticky right-0 z-10 w-24 bg-muted text-center">
-          {t("details")}
+        <TableHead className="w-24">{t("bet_count")}</TableHead>
+        <TableHead className="w-40">{t("bet_amount")}</TableHead>
+        <TableHead className="w-40">{t("valid_amount")}</TableHead>
+        <TableHead className="w-40">{t("win_loss_amount")}</TableHead>
+        <TableHead className="w-40">{t("cashback_amount")}</TableHead>
+        <TableHead className="w-40">{t("profit_loss_result")}</TableHead>
+        <TableHead className="sticky right-0 w-24 bg-muted p-0">
+          <div className="shadow-l h-full px-4 flex justify-center items-center">
+            {t("details")}
+          </div>
         </TableHead>
       </TableRow>
     </TableHeader>
@@ -101,14 +103,19 @@ async function ListBody({
             <TableCell>
               {formatNumber(Number(item.profitLossAmount || 0))}
             </TableCell>
-            <TableCell className="sticky right-0 z-10 w-24 bg-background text-center">
-              <DetailButton item={item} />
+            <TableCell className="sticky right-0 bg-background p-0">
+              <div className="shadow-l py-2 px-4 flex justify-center items-center">
+                <DetailButton item={item} />
+              </div>
             </TableCell>
           </TableRow>
         ))
       ) : (
         <TableRow>
-          <TableCell colSpan={10} className="h-40 text-center">
+          <TableCell
+            colSpan={hasSearchPermission ? 12 : 11}
+            className="h-40 text-center"
+          >
             {translate("noData")}
           </TableCell>
         </TableRow>

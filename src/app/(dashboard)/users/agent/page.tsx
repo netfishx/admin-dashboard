@@ -99,8 +99,10 @@ async function TableHeaderWrapper() {
         <TableHead className="w-32">{t("username")}</TableHead>
         <TableHead className="w-32">{t("nickname")}</TableHead>
         <TableHead className="w-20 text-center">{t("status")}</TableHead>
-        <TableHead className="sticky right-0 w-100 bg-muted text-center">
-          {t("action")}
+        <TableHead className="sticky right-0 w-100 bg-muted text-center p-0">
+          <div className="shadow-l h-full px-4 flex justify-center items-center">
+            {t("action")}
+          </div>
         </TableHead>
       </TableRow>
     </TableHeader>

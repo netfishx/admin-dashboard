@@ -19,12 +19,17 @@ export function MoneyBtn({ data }: { data: ApplyData }) {
     setOpen(true);
   };
   return (
-    <div>
-      <Button variant="link" onClick={openDialog} className="px-0">
+    <>
+      <Button
+        variant="link"
+        onClick={openDialog}
+        className="px-0 text-sm"
+        size="sm"
+      >
         {formatNumber(Number(data.withdrawMoney))}
       </Button>
       <MoneyDialog data={data} open={open} onOpenChange={setOpen} />
-    </div>
+    </>
   );
 }
 

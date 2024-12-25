@@ -27,23 +27,26 @@ export async function ListHeader() {
   return (
     <TableHeader>
       <TableRow className="bg-muted">
-        <TableHead className="w-60">{t("issuenumber")}</TableHead>
+        <TableHead className="w-48">{t("issuenumber")}</TableHead>
         <TableHead className="w-60">{t("roomeownerID")}</TableHead>
         <TableHead className="w-60">{t("ministerID")}</TableHead>
         {hasSearchPermission && (
-          <TableHead className="w-60">{t("agentID")}</TableHead>
+          <TableHead className="w-32">{t("agentID")}</TableHead>
         )}
-        <TableHead className="w-40">{t("bottomBet")}</TableHead>
-        <TableHead className="w-40">{t("topBet")}</TableHead>
-        <TableHead className="w-40">{t("level")}</TableHead>
-        <TableHead className="w-40">{t("settlementAmount")}</TableHead>
-        <TableHead className="w-24">{t("bombNumber")}</TableHead>
-        <TableHead className="w-24">{t("multiplier")}</TableHead>
-        <TableHead className="w-120">{t("winPlayer")}</TableHead>
-        <TableHead className="w-[240px]">{t("gameStartTime")}</TableHead>
-        <TableHead className="w-[240px]">{t("settlementFinishTime")}</TableHead>
-        <TableHead className="w-24 sticky right-0 z-10 bg-muted text-center">
-          {t("action")}
+        <TableHead className="w-20">{t("bottomBet")}</TableHead>
+        <TableHead className="w-20">{t("topBet")}</TableHead>
+        <TableHead className="w-20">{t("level")}</TableHead>
+        <TableHead className="w-28">{t("settlementAmount")}</TableHead>
+        <TableHead className="w-20">{t("bombNumber")}</TableHead>
+        <TableHead className="w-20">{t("multiplier")}</TableHead>
+        <TableHead className="w-140">{t("winPlayer")}</TableHead>
+        <TableHead className="w-48">{t("gameStartTime")}</TableHead>
+        <TableHead className="w-48">{t("settlementFinishTime")}</TableHead>
+
+        <TableHead className="sticky right-0 w-24 bg-muted text-center p-0">
+          <div className="shadow-l h-full px-4 flex justify-center items-center">
+            {t("action")}
+          </div>
         </TableHead>
       </TableRow>
     </TableHeader>
@@ -56,13 +59,13 @@ function generateResultString(players: GameRecordRequestRecords["result"]) {
   );
   const losers = players.filter((player) => Number.parseInt(player.result) < 0);
 
-  const winString = `赢: ${winners.map((player) => `HY${player.memberId}`).join(", ")}`;
-  const loseString = `输: ${losers.map((player) => `HY${player.memberId}`).join(", ")}`;
+  const winString = `赢: ${winners.map((player) => `${player.memberId}`).join(", ")}`;
+  const loseString = `输: ${losers.map((player) => `${player.memberId}`).join(", ")}`;
 
   return (
     <div className="flex flex-col gap-2">
-      <div className="whitespace-nowrap text-gray-800">{winString}</div>
-      <div className="whitespace-nowrap text-gray-800">{loseString}</div>
+      <div>{winString}</div>
+      <div>{loseString}</div>
     </div>
   );
 }
@@ -98,8 +101,10 @@ async function ListBody({ list }: { list: GameRecordRequestRecords[] }) {
             <TableCell>
               <Time time={item.gameEndTime} />
             </TableCell>
-            <TableCell className="sticky right-0 z-10 bg-background text-center">
-              <DetailButton item={item} />
+            <TableCell className="sticky right-0 bg-background p-0">
+              <div className="shadow-l py-2 px-4 flex justify-center items-center h-[65px]">
+                <DetailButton item={item} />
+              </div>
             </TableCell>
           </TableRow>
         ))

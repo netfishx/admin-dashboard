@@ -119,7 +119,7 @@ async function TableHeaderWrapper() {
         <TableHead className="w-24">{t("userType")}</TableHead>
         <TableHead className="w-32">{t("account")}</TableHead>
         <TableHead className="w-32">{t("nickname")}</TableHead>
-        <TableHead className="w-32">{t("parentAccount")}</TableHead>
+        <TableHead className="w-48">{t("parentAccount")}</TableHead>
         <TableHead className="w-48">{t("withdrawMoney")}</TableHead>
         <TableHead className="w-56">{t("applyTime")}</TableHead>
         <TableHead className="w-32">{t("approverName")}</TableHead>
@@ -128,8 +128,10 @@ async function TableHeaderWrapper() {
         </TableHead>
         <TableHead className="w-32 text-center">{t("withdrawMode")}</TableHead>
         <TableHead className="w-32 text-center">{t("moneyStatus")}</TableHead>
-        <TableHead className="w-48 text-center sticky right-0 bg-muted">
-          {t("action")}
+        <TableHead className="w-48 sticky right-0 bg-muted text-center p-0">
+          <div className="shadow-l h-full px-4 flex justify-center items-center">
+            {t("action")}
+          </div>
         </TableHead>
       </TableRow>
     </TableHeader>
@@ -224,8 +226,10 @@ async function TableBodyWrapper({ list }: { list: ApplyData[] }) {
                 {item.moneyStatus === null && <span>--</span>}
               </div>
             </TableCell>
-            <TableCell className="text-center sticky right-0 bg-background">
-              <Actions data={item} currentUserId={userInfo?.id ?? "0"} />
+            <TableCell className="sticky right-0 bg-background p-0">
+              <div className="shadow-l py-2 px-4 flex justify-center items-center">
+                <Actions data={item} currentUserId={userInfo?.id ?? "0"} />
+              </div>
             </TableCell>
           </TableRow>
         ))

@@ -41,9 +41,11 @@ export async function ListHeader() {
         <TableHead className="w-60">{t("agentID")}</TableHead>
         <TableHead className="w-60">{t("bettime")}</TableHead>
         <TableHead className="w-60">{t("membersettlementtime")}</TableHead>
-        <TableHead className="w-60">{t("proxystatus")}</TableHead>
-        <TableHead className="w-24 sticky right-0 z-10 bg-muted text-center">
-          {t("action")}
+        <TableHead className="w-40">{t("proxystatus")}</TableHead>
+        <TableHead className="w-24 sticky right-0 bg-muted p-0">
+          <div className="shadow-l h-full px-4 flex justify-center items-center">
+            {t("action")}
+          </div>
         </TableHead>
       </TableRow>
     </TableHeader>
@@ -106,8 +108,10 @@ async function ListBody({
               <Time time={item.settleTime} />
             </TableCell>
             <TableCell>{typeMap[item.orderStatus]}</TableCell>
-            <TableCell className="sticky right-0 z-10 bg-background text-center">
-              <DetailButton item={item} />
+            <TableCell className="sticky right-0 bg-background p-0">
+              <div className="shadow-l py-2 px-4 flex justify-center items-center">
+                <DetailButton item={item} />
+              </div>
             </TableCell>
           </TableRow>
         ))

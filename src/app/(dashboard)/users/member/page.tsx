@@ -46,7 +46,7 @@ export default function Page({
           fallback={
             <div className="rounded-sm border">
               <Table className="table-fixed">
-                <TableHeaderWrapper total={1} />
+                <TableHeaderWrapper />
                 <TableBodySkeleton />
               </Table>
             </div>
@@ -79,7 +79,7 @@ async function TableWrapper({
       <UserInfoModal permissions={permissions} />
       <div className="relative rounded-sm border">
         <Table className="table-fixed">
-          <TableHeaderWrapper total={data?.total ?? 0} />
+          <TableHeaderWrapper />
           <Suspense fallback={<TableBodySkeleton />}>
             <TableBodyWrapper list={data?.list} permissions={permissions} />
           </Suspense>
@@ -97,7 +97,7 @@ async function TableWrapper({
     </>
   );
 }
-async function TableHeaderWrapper({ total }: { total: number }) {
+async function TableHeaderWrapper() {
   const t = await getTranslations("users.members");
   const session = await getSession();
   const permissions = session?.permissions;
@@ -117,11 +117,11 @@ async function TableHeaderWrapper({ total }: { total: number }) {
         <TableHead className="w-28">{t("debtAmount")}</TableHead>
         <TableHead className="w-28">{t("creditAmount")}</TableHead>
         <TableHead className="w-20 text-center">{t("status")}</TableHead>
-        {total > 0 && (
-          <TableHead className="sticky right-0 w-120 bg-muted text-center">
+        <TableHead className="sticky right-0 w-120 bg-muted text-center p-0">
+          <div className="shadow-l h-full px-4 flex justify-center items-center">
             {t("action")}
-          </TableHead>
-        )}
+          </div>
+        </TableHead>
       </TableRow>
     </TableHeader>
   );
@@ -164,15 +164,17 @@ async function TableBodyWrapper({
                 {t(`statusLabel.${item.status}`)}
               </span>
             </TableCell>
-            <TableCell className="sticky right-0 bg-background flex justify-center items-center">
-              <Actions data={item} permissions={permissions} />
+            <TableCell className="sticky right-0 bg-background p-0">
+              <div className="shadow-l py-2 px-4 flex justify-center items-center">
+                <Actions data={item} permissions={permissions} />
+              </div>
             </TableCell>
           </TableRow>
         ))
       ) : (
         <TableRow>
           <TableCell
-            colSpan={permissions?.includes("member_search") ? 9 : 7}
+            colSpan={permissions?.includes("member_search") ? 10 : 8}
             className="h-40 text-center"
           >
             {translations("noData")}

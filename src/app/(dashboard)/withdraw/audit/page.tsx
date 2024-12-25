@@ -118,8 +118,10 @@ async function TableHeaderWrapper() {
         <TableHead className="w-48">{t("availableAudit")}</TableHead>
         <TableHead className="w-48">{t("remainingAudit")}</TableHead>
         <TableHead className="w-32">{t("status")}</TableHead>
-        <TableHead className="w-48 text-center sticky right-0 bg-muted">
-          {translations("action")}
+        <TableHead className="w-48 sticky right-0 bg-muted text-center p-0">
+          <div className="shadow-l h-full px-4 flex justify-center items-center">
+            {translations("action")}
+          </div>
         </TableHead>
       </TableRow>
     </TableHeader>
@@ -161,8 +163,10 @@ async function TableBodyWrapper({ list }: { list: AuditList[] }) {
               })()}
             </TableCell>
 
-            <TableCell className="text-center sticky right-0 bg-background">
-              <CleanBtn data={item} />
+            <TableCell className="sticky right-0 bg-background p-0">
+              <div className="shadow-l py-2 px-4 flex justify-center items-center">
+                <CleanBtn data={item} />
+              </div>
             </TableCell>
           </TableRow>
         ))

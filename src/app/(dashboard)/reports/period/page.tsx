@@ -64,8 +64,10 @@ async function PeriodTableHeader() {
         <TableHead className="w-24">{t("pairBetAmount")}</TableHead>
         <TableHead className="w-24">{t("availableBetAmount")}</TableHead>
         <TableHead className="w-24">{t("backIncome")}</TableHead>
-        <TableHead className="w-32 text-center sticky right-0 bg-muted">
-          {t("action")}
+        <TableHead className="w-32 sticky right-0 bg-muted p-0">
+          <div className="shadow-l h-full px-4 flex justify-center items-center">
+            {t("action")}
+          </div>
         </TableHead>
       </TableRow>
     </TableHeader>
@@ -162,8 +164,10 @@ async function TableBodyWrapper({
               {formatNumber(Number(item.availableBetAmount))}
             </TableCell>
             <TableCell>{formatNumber(Number(item.backIncome))}</TableCell>
-            <TableCell className="sticky right-0 bg-background text-center">
-              <Actions searchParams={urlParams} data={item} />
+            <TableCell className="sticky right-0 bg-background p-0">
+              <div className="shadow-l py-2 px-4 flex justify-center items-center">
+                <Actions searchParams={urlParams} data={item} />
+              </div>
             </TableCell>
           </TableRow>
         ))

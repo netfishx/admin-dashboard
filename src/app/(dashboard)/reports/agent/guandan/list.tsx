@@ -38,8 +38,10 @@ export async function ListHeader() {
         <TableHead className="w-60">{t("roomType")}</TableHead>
         <TableHead className="w-60">{t("issueNumber")}</TableHead>
         <TableHead className="w-60">{t("settledAmount")}</TableHead>
-        <TableHead className="w-24 text-center sticky right-0 z-10 bg-muted">
-          {t("more")}
+        <TableHead className="w-24 sticky right-0 bg-muted p-0">
+          <div className="shadow-l h-full px-4 flex justify-center items-center">
+            {t("action")}
+          </div>
         </TableHead>
       </TableRow>
     </TableHeader>
@@ -85,8 +87,10 @@ async function ListBody({
             <TableCell>
               {formatNumber(Number(item.settledAmount) || 0)}
             </TableCell>
-            <TableCell className="w-24 text-center sticky right-0 z-10 bg-background">
-              <DetailButton agentId={item.agentId} />
+            <TableCell className="sticky right-0 bg-background p-0">
+              <div className="shadow-l py-2 px-4 flex justify-center items-center">
+                <DetailButton agentId={item.agentId} />
+              </div>
             </TableCell>
           </TableRow>
         ))

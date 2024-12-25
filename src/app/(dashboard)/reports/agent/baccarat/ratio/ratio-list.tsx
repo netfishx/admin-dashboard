@@ -29,16 +29,18 @@ export async function ListHeader() {
         <TableHead className="w-60">{t("agentOrOwnerId")}</TableHead>
         <TableHead className="w-60">{t("parentAgentId")}</TableHead>
         <TableHead className="w-60">{t("gameName")}</TableHead>
-        <TableHead className="w-60">{t("shareAmount")}</TableHead>
-        <TableHead className="w-60">{t("blockAmount")}</TableHead>
-        <TableHead className="w-60">{t("throwAmount")}</TableHead>
-        <TableHead className="w-60">{t("shareProfitLoss")}</TableHead>
-        <TableHead className="w-60">{t("rebateIncome")}</TableHead>
-        <TableHead className="w-60">{t("rebateExpense")}</TableHead>
-        <TableHead className="w-60">{t("netRebate")}</TableHead>
-        <TableHead className="w-60">{t("totalProfitLossAmount")}</TableHead>
-        <TableHead className="w-24 text-center sticky right-0 z-10 bg-muted">
-          {t("more")}
+        <TableHead className="w-36">{t("shareAmount")}</TableHead>
+        <TableHead className="w-36">{t("blockAmount")}</TableHead>
+        <TableHead className="w-36">{t("throwAmount")}</TableHead>
+        <TableHead className="w-36">{t("shareProfitLoss")}</TableHead>
+        <TableHead className="w-36">{t("rebateIncome")}</TableHead>
+        <TableHead className="w-36">{t("rebateExpense")}</TableHead>
+        <TableHead className="w-36">{t("netRebate")}</TableHead>
+        <TableHead className="w-36">{t("totalProfitLossAmount")}</TableHead>
+        <TableHead className="w-24 sticky right-0 bg-muted p-0">
+          <div className="shadow-l h-full px-4 flex justify-center items-center">
+            {t("more")}
+          </div>
         </TableHead>
       </TableRow>
     </TableHeader>
@@ -83,8 +85,10 @@ async function ListBody({
             <TableCell>
               {formatNumber(Number(item.totalProfitLossAmount || 0))}
             </TableCell>
-            <TableCell className="w-24 text-center sticky right-0 z-10 bg-background">
-              <DetailButton item={item} />
+            <TableCell className="sticky right-0 bg-background p-0">
+              <div className="shadow-l py-2 px-4 flex justify-center items-center">
+                <DetailButton item={item} />
+              </div>
             </TableCell>
           </TableRow>
         ))

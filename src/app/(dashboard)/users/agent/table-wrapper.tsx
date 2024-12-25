@@ -52,8 +52,10 @@ export function TableBodyWrapper({
                 {t(`statusLabel.${item.status}`)}
               </span>
             </TableCell>
-            <TableCell className="sticky right-0 bg-background flex justify-center items-center">
-              <Action data={item} permissions={permissions ?? []} />
+            <TableCell className="sticky right-0 bg-background p-0">
+              <div className="shadow-l py-2 px-4 flex justify-center items-center">
+                <Action data={item} permissions={permissions ?? []} />
+              </div>
             </TableCell>
           </TableRow>
         ))
