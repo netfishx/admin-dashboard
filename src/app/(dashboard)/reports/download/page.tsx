@@ -69,7 +69,7 @@ async function TableHeaderWrapper() {
         <TableHead className="w-100">{t("name")}</TableHead>
         <TableHead className="w-56">{t("operateTime")}</TableHead>
         <TableHead className="w-56">{t("exportTime")}</TableHead>
-        <TableHead className="w-30">{t("status")}</TableHead>
+        <TableHead className="w-30 text-center">{t("status")}</TableHead>
         <TableHead className="w-40">{t("failReason")}</TableHead>
         <TableHead className="w-20 text-center">{t("action")}</TableHead>
       </TableRow>
@@ -95,7 +95,7 @@ async function TableBodyWrapper({
             <TableCell>
               {item.endTime ? <Time time={item.endTime} /> : null}
             </TableCell>
-            <TableCell>
+            <TableCell className="text-center">
               <ShowStatusLable status={item.status} />
             </TableCell>
             <TableCell>{item.failReason}</TableCell>
