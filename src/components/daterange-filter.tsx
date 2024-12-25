@@ -30,12 +30,7 @@ import {
 import { Calendar as CalendarIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
-import {
-  parseAsBoolean,
-  parseAsInteger,
-  useQueryState,
-  useQueryStates,
-} from "nuqs";
+import { parseAsBoolean, parseAsInteger, useQueryState } from "nuqs";
 import { startTransition, useCallback, useEffect, useState } from "react";
 import type { DateRange } from "react-day-picker";
 type rangeType =
@@ -172,17 +167,22 @@ export function DateRangeFilter({
 }) {
   const t = useTranslations("report.orderlist");
   const today = new Date();
-  const [dateRangeUrl, setDateRangeUrl] = useQueryStates({
-    [startTimeText]: parseAsInteger.withDefault(0),
-    [endTimeText]: parseAsInteger.withDefault(0),
-  });
-  const [dateRangeForm, setDateRangeForm] = useState({
-    [startTimeText]: formDateRange?.from ?? 0,
-    [endTimeText]: formDateRange?.to ?? 0,
-  });
 
-  const dateRange = isSearch ? dateRangeUrl : dateRangeForm;
-  const setDateRange = isSearch ? setDateRangeUrl : setDateRangeForm;
+  const [startTimeUrl, setStartTimeUrl] = useQueryState(
+    startTimeText,
+    parseAsInteger.withDefault(0),
+  );
+  const [endTimeUrl, setEndTimeUrl] = useQueryState(
+    endTimeText,
+    parseAsInteger.withDefault(0),
+  );
+  const [startTimeForm, setStartTimeForm] = useState(formDateRange?.from ?? 0);
+  const [endTimeForm, setEndTimeForm] = useState(formDateRange?.to ?? 0);
+
+  const startTime = isSearch ? startTimeUrl : startTimeForm;
+  const endTime = isSearch ? endTimeUrl : endTimeForm;
+  const setStartTime = isSearch ? setStartTimeUrl : setStartTimeForm;
+  const setEndTime = isSearch ? setEndTimeUrl : setEndTimeForm;
   const [isSettledEmpty, setIsSettledEmpty] = useQueryState(
     "isSettledEmpty",
     parseAsBoolean.withDefault(false),
@@ -193,24 +193,27 @@ export function DateRangeFilter({
   useEffect(() => {
     startTransition(async () => {
       // 来源于报表的搜索并且不允许日期为空时
-      if (
-        !(dateRange[startTimeText] && dateRange[endTimeText]) &&
-        isSearch &&
-        !isSettledEmpty
-      ) {
+      if (!(startTime && endTime) && isSearch && !isSettledEmpty) {
         const today = new Date();
-        await setDateRange({
-          [startTimeText]: startOfDay(today).getTime(),
-          [endTimeText]: endOfDay(today).getTime(),
-        });
+        await Promise.all([
+          setStartTime(startOfDay(today).getTime()),
+          setEndTime(endOfDay(today).getTime()),
+        ]);
         router.refresh();
       }
     });
-  }, [dateRange, isSearch, isSettledEmpty, startTimeText, endTimeText]);
+  }, [
+    startTime,
+    endTime,
+    isSearch,
+    isSettledEmpty,
+    startTimeText,
+    endTimeText,
+  ]);
 
   useEffect(() => {
-    onDateRangeChange?.(dateRange[startTimeText], dateRange[endTimeText]);
-  }, [dateRange, onDateRangeChange, startTimeText, endTimeText]);
+    onDateRangeChange?.(startTime, endTime);
+  }, [startTime, endTime, onDateRangeChange]);
 
   const handleQuickSelect = (type: string) => {
     let from: Date;
@@ -254,10 +257,8 @@ export function DateRangeFilter({
         return;
     }
 
-    setDateRange({
-      [startTimeText]: from.getTime(),
-      [endTimeText]: to.getTime(),
-    });
+    setStartTime(from.getTime());
+    setEndTime(to.getTime());
   };
 
   const handleTimeChange = (
@@ -266,21 +267,17 @@ export function DateRangeFilter({
     value: string,
   ) => {
     const currentDate =
-      type === "start"
-        ? new Date(dateRange[startTimeText])
-        : new Date(dateRange[endTimeText]);
+      type === "start" ? new Date(startTime) : new Date(endTime);
 
     const newDate = set(currentDate, {
       [timeUnit]: Number.parseInt(value, 10),
     });
 
-    setDateRange((prev) => {
-      const updatedRange = {
-        ...prev,
-        [type === "start" ? startTimeText : endTimeText]: newDate.getTime(),
-      };
-      return updatedRange;
-    });
+    if (type === "start") {
+      setStartTime(newDate.getTime());
+    } else {
+      setEndTime(newDate.getTime());
+    }
   };
 
   const handleDateRangeChange = (range?: DateRange) => {
@@ -289,10 +286,9 @@ export function DateRangeFilter({
       let to = range.to;
       // 如果开始时间和结束时间相同，则设置为当天的00:00:00到23:59:59
       if (from && to && from.getTime() === to.getTime()) {
-        return setDateRange({
-          [startTimeText]: startOfDay(from).getTime(),
-          [endTimeText]: endOfDay(to).getTime(),
-        });
+        setStartTime(startOfDay(from).getTime());
+        setEndTime(endOfDay(to).getTime());
+        return;
       }
 
       if (from?.getTime() === 0) {
@@ -307,56 +303,45 @@ export function DateRangeFilter({
 
       const startDate = from
         ? set(from, {
-            hours: new Date(dateRange[startTimeText]).getHours(),
-            minutes: new Date(dateRange[startTimeText]).getMinutes(),
-            seconds: new Date(dateRange[startTimeText]).getSeconds(),
+            hours: new Date(startTime).getHours(),
+            minutes: new Date(startTime).getMinutes(),
+            seconds: new Date(startTime).getSeconds(),
           })
         : undefined;
 
       const endDate = to
         ? set(to, {
-            hours: new Date(dateRange[endTimeText]).getHours(),
-            minutes: new Date(dateRange[endTimeText]).getMinutes(),
-            seconds: new Date(dateRange[endTimeText]).getSeconds(),
+            hours: new Date(endTime).getHours(),
+            minutes: new Date(endTime).getMinutes(),
+            seconds: new Date(endTime).getSeconds(),
           })
         : undefined;
 
-      setDateRange({
-        [startTimeText]: startDate?.getTime() ?? 0,
-        [endTimeText]: endDate?.getTime() ?? 0,
-      });
+      setStartTime(startDate?.getTime() ?? 0);
+      setEndTime(endDate?.getTime() ?? 0);
       setIsSettledEmpty(false);
     } else {
       setIsSettledEmpty(true);
-      setDateRange({
-        [startTimeText]: 0,
-        [endTimeText]: 0,
-      });
+      setStartTime(0);
+      setEndTime(0);
     }
   };
 
   const formattedDateRange = () => {
-    if (!dateRange) {
+    if (!startTime) {
       return t("choicedate");
     }
 
-    if (!dateRange[startTimeText]) {
-      return t("choicedate");
-    }
-
-    if (!dateRange[endTimeText]) {
-      return format(dateRange[startTimeText], "yyyy-MM-dd HH:mm:ss");
+    if (!endTime) {
+      return format(startTime, "yyyy-MM-dd HH:mm:ss");
     }
 
     return enableTimeSelect
-      ? `${format(dateRange[startTimeText], "yyyy-MM-dd HH:mm:ss")} ~ ${format(
-          dateRange[endTimeText],
+      ? `${format(startTime, "yyyy-MM-dd HH:mm:ss")} ~ ${format(
+          endTime,
           "yyyy-MM-dd HH:mm:ss",
         )}`
-      : `${format(dateRange[startTimeText], "yyyy-MM-dd")} ~ ${format(
-          dateRange[endTimeText],
-          "yyyy-MM-dd",
-        )}`;
+      : `${format(startTime, "yyyy-MM-dd")} ~ ${format(endTime, "yyyy-MM-dd")}`;
   };
 
   return (
@@ -367,7 +352,7 @@ export function DateRangeFilter({
             variant="outline"
             className={cn(
               "justify-start text-left font-normal",
-              !dateRange && "text-muted-foreground",
+              !startTime && "text-muted-foreground",
               enableTimeSelect ? "w-100" : "w-70",
             )}
             disabled={disabled}
@@ -382,32 +367,28 @@ export function DateRangeFilter({
               autoFocus
               mode="range"
               selected={
-                dateRange[startTimeText] && dateRange[endTimeText]
+                startTime && endTime
                   ? {
-                      from: new Date(dateRange[startTimeText]),
-                      to: new Date(dateRange[endTimeText]),
+                      from: new Date(startTime),
+                      to: new Date(endTime),
                     }
                   : undefined
               }
               onSelect={handleDateRangeChange}
               numberOfMonths={1}
-              defaultMonth={
-                dateRange[startTimeText]
-                  ? new Date(dateRange[startTimeText])
-                  : today
-              }
+              defaultMonth={startTime ? new Date(startTime) : today}
             />
             {enableTimeSelect && (
               <TimeSelect
                 type="start"
-                date={dateRange[startTimeText] || startOfDay(today).getTime()}
+                date={startTime || startOfDay(today).getTime()}
                 onTimeChange={handleTimeChange}
               />
             )}
             {enableTimeSelect && (
               <TimeSelect
                 type="end"
-                date={dateRange[endTimeText] || endOfDay(today).getTime()}
+                date={endTime || endOfDay(today).getTime()}
                 onTimeChange={handleTimeChange}
               />
             )}
