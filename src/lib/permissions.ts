@@ -15,6 +15,22 @@ export const urlPermissions: {
     url: "/games/maintain",
   },
   {
+    permission: "edit_radio",
+    url: "/games/ratio",
+  },
+  {
+    permission: "edit_rebate",
+    url: "/games/rebate",
+  },
+  {
+    permission: "supplier_config",
+    url: "/games/supplier",
+  },
+  {
+    permission: "edit_odds",
+    url: "/games/odds",
+  },
+  {
     permission: "agent_config",
     url: "/users/agent",
   },
@@ -69,10 +85,6 @@ export const urlPermissions: {
   {
     permission: "borrow_report",
     url: "/reports/borrow",
-  },
-  {
-    permission: "reward_report",
-    url: "/reports/reward",
   },
   {
     permission: "credit_report",
