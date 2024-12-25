@@ -84,7 +84,6 @@ export function Form({ list }: { list: GameType[] }) {
               <Select
                 value={gameId}
                 onValueChange={(value) => setGameId(value)}
-                defaultValue="all"
               >
                 <SelectTrigger className="w-36">
                   <SelectValue placeholder={t("placeholderselect")} />

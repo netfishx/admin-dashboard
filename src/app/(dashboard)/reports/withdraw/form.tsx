@@ -107,7 +107,6 @@ export function Form({ hasAdminPermission }: { hasAdminPermission: boolean }) {
           <Label className="shrink-0">{t("withdrawMoneyFilter")}</Label>
           <Select
             onValueChange={(value) => handleFilterChange(value)}
-            defaultValue={operatorSymbol}
             value={operatorSymbol}
           >
             <SelectTrigger className="w-20">

@@ -60,7 +60,6 @@ export function Form({ hasAdminPermission }: { hasAdminPermission: boolean }) {
           {/* 百家乐代理结算、百家乐会员结算、掼蛋会员结算、返水、充值、提现、借款、还款、授信、减少授信、转出、转入、投注、打赏 */}
           <Select
             onValueChange={(value) => setOperateCode(value)}
-            defaultValue="all"
             value={operateCode ?? ""}
           >
             <SelectTrigger className="w-36">
@@ -92,7 +91,6 @@ export function Form({ hasAdminPermission }: { hasAdminPermission: boolean }) {
             <Select
               value={userType ?? ""}
               onValueChange={(value) => setUserType(value)}
-              defaultValue="0"
             >
               <SelectTrigger className="w-28">
                 <SelectValue placeholder={t("placeholderselect")} />

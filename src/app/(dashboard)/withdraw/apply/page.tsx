@@ -67,8 +67,15 @@ async function TableWrapper({
 }: {
   searchParams: Promise<{ [key: string]: string | string[] }>;
 }) {
-  const { startTime, endTime, approverStatus, pageNum, pageSize } =
-    await searchParams;
+  const {
+    startTime,
+    endTime,
+    approverStatus,
+    pageNum,
+    pageSize,
+    userId,
+    parentAccount,
+  } = await searchParams;
 
   if (!(startTime && endTime)) {
     return (
@@ -82,9 +89,11 @@ async function TableWrapper({
   const { data } = await getWithdrawApplyList({
     startTime: Number(startTime),
     endTime: Number(endTime),
-    approverStatus: Number(approverStatus),
+    approverStatus: approverStatus ? Number(approverStatus) : null,
     pageNum: Number(pageNum ?? 1),
     pageSize: Number(pageSize ?? 10),
+    userId: userId ? String(userId) : null,
+    parentAccount: parentAccount ? String(parentAccount) : null,
   });
 
   return (
