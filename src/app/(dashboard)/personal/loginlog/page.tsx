@@ -93,7 +93,7 @@ async function TableHeaderWrapper() {
         <TableHead className="w-48">{t("loginTime")}</TableHead>
         <TableHead className="w-32">{t("ip")}</TableHead>
         <TableHead className="w-48">{t("address")}</TableHead>
-        <TableHead className="w-24">{t("status")}</TableHead>
+        <TableHead className="w-24 text-center">{t("status")}</TableHead>
       </TableRow>
     </TableHeader>
   );
@@ -112,7 +112,7 @@ async function TableBodyWrapper({ list }: { list: MySelfLoginLog[] }) {
             </TableCell>
             <TableCell>{item.ip}</TableCell>
             <TableCell>{item.region}</TableCell>
-            <TableCell>
+            <TableCell className="text-center">
               <StatusCell status={item.isSuccess} />
             </TableCell>
           </TableRow>

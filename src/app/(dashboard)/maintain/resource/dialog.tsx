@@ -43,6 +43,7 @@ export function AddOrEditDialog() {
   const [status, setStatus] = useState<number>(0);
   const fileRef = useRef<HTMLInputElement>(null);
   const formRef = useRef<HTMLFormElement>(null);
+  const [valid, setValid] = useState(false);
 
   async function addOrEdit(request: {
     id?: string;
@@ -148,7 +149,7 @@ export function AddOrEditDialog() {
                 ref={fileRef}
                 required={!data?.pictureUri}
                 onBlur={(e) => {
-                  e.target.reportValidity();
+                  setValid(e.target.reportValidity());
                 }}
               />
             </div>
@@ -159,6 +160,10 @@ export function AddOrEditDialog() {
                 name="pictureName"
                 defaultValue={data?.pictureName}
                 className="w-[320px]"
+                required
+                onBlur={(e) => {
+                  setValid(e.target.reportValidity());
+                }}
               />
             </div>
             <div className="flex items-center gap-2">
@@ -219,7 +224,7 @@ export function AddOrEditDialog() {
                 defaultValue={data?.sort.toString()}
                 required
                 onBlur={(e) => {
-                  e.target.reportValidity();
+                  setValid(e.target.reportValidity());
                 }}
               />
             </div>
@@ -249,7 +254,7 @@ export function AddOrEditDialog() {
             <Button variant="outline">{translation("cancel")}</Button>
           </DialogClose>
           <Button
-            disabled={isPending}
+            disabled={isPending || !valid}
             onClick={(e) => {
               e.preventDefault();
               if (formRef.current) {

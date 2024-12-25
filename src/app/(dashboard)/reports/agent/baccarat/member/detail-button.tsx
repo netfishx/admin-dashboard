@@ -12,9 +12,10 @@ export default function DetailButton({
   const searchParams = useSearchParams();
   const startTime = searchParams.get("startTime");
   const endTime = searchParams.get("endTime");
+  const gameId = searchParams.get("gameId");
   function handleDetail() {
     router.push(
-      `/reports/order/baccarat?lastAgentId=${item.agentId}&startTime=${startTime}&endTime=${endTime}`,
+      `/reports/order/baccarat?${gameId ? `gameId=${gameId}&` : ""}lastAgentId=${item.agentId}&startTime=${startTime}&endTime=${endTime}`,
     );
   }
   return (
