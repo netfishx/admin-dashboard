@@ -1197,7 +1197,9 @@
       "placeholder": "请选择",
       "home": "首页",
       "game": "游戏端",
-      "gameport": "游戏端"
+      "gameport": "游戏端",
+      "pictureRequired": "有空值不能点确定",
+      "fileSizeTooLarge": "文件大小不能超过5M"
     }
   }
 }

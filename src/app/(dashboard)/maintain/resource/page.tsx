@@ -1,5 +1,6 @@
 import { getBackgroundImageList } from "@/api";
 import { CustomPagination } from "@/components/custom-pagination";
+import { Time } from "@/components/time";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
   Table,
@@ -110,7 +111,9 @@ async function TableBodyWrapper({
               {t(LANGUAGE.find((p) => p.value === item.language)?.label)}
             </TableCell>
             <TableCell>{item.sort}</TableCell>
-            <TableCell>{item.updateTime}</TableCell>
+            <TableCell>
+              <Time time={item.updateTime} />
+            </TableCell>
             <TableCell className="text-center">
               <span
                 className={cn([
