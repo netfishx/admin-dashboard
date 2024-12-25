@@ -16,14 +16,17 @@ import type {
   RechargeReportParams,
 } from "@/lib/types";
 import { formatNumber } from "@/lib/utils";
+import { hasPermission } from "@/session";
 import { getTranslations } from "next-intl/server";
 import { Suspense } from "react";
 import { Actions } from "./actions";
 import { Form } from "./form";
+
 export default async function Page({
   searchParams,
 }: { searchParams: Promise<{ [key: string]: string | undefined }> }) {
   const { startTime, endTime } = await searchParams;
+  const hasAdminPermission = await hasPermission("recharge_report_search");
   return (
     <div className="flex w-full flex-col gap-2">
       <Suspense
@@ -35,7 +38,10 @@ export default async function Page({
           </div>
         }
       >
-        <Form key={`${startTime}-${endTime}`} />
+        <Form
+          key={`${startTime}-${endTime}`}
+          hasAdminPermission={hasAdminPermission}
+        />
       </Suspense>
       <div className="flex flex-1 flex-col gap-2 bg-background p-4">
         <Suspense

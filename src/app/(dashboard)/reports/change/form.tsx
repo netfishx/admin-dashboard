@@ -19,7 +19,7 @@ import { parseAsInteger, useQueryState, useQueryStates } from "nuqs";
 import { useTransition } from "react";
 import { toast } from "sonner";
 
-export function Form() {
+export function Form({ hasAdminPermission }: { hasAdminPermission: boolean }) {
   const t = useTranslations("report.change");
   const router = useRouter();
   const [isReset, startReset] = useTransition();
@@ -86,35 +86,37 @@ export function Form() {
             onChange={(e) => setTransactionID(e.target.value)}
           />
         </div>
-        {/* todo admin permission */}
-        <div className="flex items-center gap-2">
-          <Label className="shrink-0">{t("userType")}</Label>
-          <Select
-            value={userType ?? ""}
-            onValueChange={(value) => setUserType(value)}
-            defaultValue="0"
-          >
-            <SelectTrigger className="w-28">
-              <SelectValue placeholder={t("placeholderselect")} />
-            </SelectTrigger>
-            <SelectContent>
-              {USER_TYPE.map((item) => (
-                <SelectItem key={item.value} value={item.value.toString()}>
-                  {t(item.label)}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </div>
-        {/* todo admin permission */}
-        <div className="flex items-center gap-2">
-          <Label className="shrink-0">{t("userId")}</Label>
-          <Input
-            placeholder={t("placeholder")}
-            value={userId ?? ""}
-            onChange={(e) => setUserId(e.target.value)}
-          />
-        </div>
+        {hasAdminPermission && (
+          <div className="flex items-center gap-2">
+            <Label className="shrink-0">{t("userType")}</Label>
+            <Select
+              value={userType ?? ""}
+              onValueChange={(value) => setUserType(value)}
+              defaultValue="0"
+            >
+              <SelectTrigger className="w-28">
+                <SelectValue placeholder={t("placeholderselect")} />
+              </SelectTrigger>
+              <SelectContent>
+                {USER_TYPE.map((item) => (
+                  <SelectItem key={item.value} value={item.value.toString()}>
+                    {t(item.label)}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+        )}
+        {hasAdminPermission && (
+          <div className="flex items-center gap-2">
+            <Label className="shrink-0">{t("userId")}</Label>
+            <Input
+              placeholder={t("placeholder")}
+              value={userId ?? ""}
+              onChange={(e) => setUserId(e.target.value)}
+            />
+          </div>
+        )}
       </div>
       <div className="flex items-start justify-end gap-2">
         <Button

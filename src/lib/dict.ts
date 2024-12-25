@@ -211,6 +211,18 @@ export const NOTICE_TYPE = [
   },
 ];
 
+// 公告状态
+export const NOTICE_STATUS = [
+  {
+    value: 0,
+    label: "disable",
+  },
+  {
+    value: 1,
+    label: "enable",
+  },
+];
+
 // 上传背景图
 export const PORT = [
   {
