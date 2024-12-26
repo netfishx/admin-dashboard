@@ -71,7 +71,6 @@ function OpenedMenu({
   }
   return (
     <>
-      <span>{JSON.stringify(openedMenu)}</span>
       {permissions.includes("agent_stat") && (
         <MenuItem
           label={t("home")}
