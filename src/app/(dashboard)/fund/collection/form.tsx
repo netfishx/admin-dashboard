@@ -1,13 +1,11 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { useTranslations } from "next-intl";
-import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { AddDialog } from "./add-dialog";
 
 export function Form() {
   const t = useTranslations("fund.collection");
-  const router = useRouter();
   const [showDialog, setShowDialog] = useState(false);
   const handleAdd = async () => {
     setShowDialog(true);
@@ -25,7 +23,6 @@ export function Form() {
         <AddDialog
           onOpenChange={(bool) => {
             setShowDialog(bool);
-            router.refresh();
           }}
         />
       )}
