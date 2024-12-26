@@ -12,8 +12,6 @@ import {
 } from "@/components/ui/select";
 import type { GameInfo } from "@/lib/types";
 import { makeDownload } from "@/lib/utils";
-import { orderListBaccaratAgentIdAtom } from "@/store";
-import { useAtom } from "jotai";
 import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -73,8 +71,7 @@ export function ListFilter({ gameList }: { gameList: GameInfo[] }) {
   const [leastlevelID, setLeastlevelID] = useQueryState("lastAgentId", {
     defaultValue: "",
   });
-  // 代理ID
-  const [, setOrderListBaccaratAgentId] = useAtom(orderListBaccaratAgentIdAtom);
+
   const [agentId, setAgentId] = useQueryState(
     "agentId",
     parseAsString.withDefault(""),
@@ -99,10 +96,6 @@ export function ListFilter({ gameList }: { gameList: GameInfo[] }) {
     setRechargeMoney(numberValue.toString());
   };
 
-  const handleAgentIdChange = (value: string) => {
-    setAgentId(value);
-  };
-
   const handleReset = () => {
     startReset(() => {
       router.replace("/reports/order/baccarat");
@@ -111,7 +104,6 @@ export function ListFilter({ gameList }: { gameList: GameInfo[] }) {
 
   const handleSearch = () => {
     if (dateRange.startTime && dateRange.endTime) {
-      setOrderListBaccaratAgentId(agentId);
       startSearch(router.refresh);
     } else {
       toast.error(t("selectDate"));
@@ -257,8 +249,8 @@ export function ListFilter({ gameList }: { gameList: GameInfo[] }) {
         <div className="flex items-center gap-2">
           <Label className="shrink-0">{t("agentID")}</Label>
           <Input
-            value={agentId ?? ""}
-            onChange={(e) => handleAgentIdChange(e.target.value)}
+            defaultValue={agentId}
+            onChange={(e) => setAgentId(e.target.value)}
             placeholder={t("placeholderinput")}
           />
         </div>

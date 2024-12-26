@@ -64,12 +64,14 @@ function OpenedMenu({
   );
 
   async function handleOpenChange(key: string, e: boolean) {
+    console.info(123123123, key, e);
     await setOpenedMenu(
       e ? [...openedMenu, key] : openedMenu.filter((v) => v !== key),
     );
   }
   return (
     <>
+      <span>{JSON.stringify(openedMenu)}</span>
       {permissions.includes("agent_stat") && (
         <MenuItem
           label={t("home")}

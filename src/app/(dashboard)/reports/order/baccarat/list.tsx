@@ -16,9 +16,8 @@ import type {
   OrderReportsRequestParams,
 } from "@/lib/types";
 import { formatNumber } from "@/lib/utils";
-import { type SessionData, getSession } from "@/session";
+import { getSession } from "@/session";
 import { getTranslations } from "next-intl/server";
-import AgentId from "./agentId";
 import DetailButton from "./detail-button";
 
 export async function ListHeader() {
@@ -61,7 +60,6 @@ async function ListBody({
 }) {
   const translate = await getTranslations();
   const t = await getTranslations("report.orderlist");
-  const session = await getSession();
   const typeMap = {
     "1": t("notSettled"),
     "2": t("settled"),
@@ -98,9 +96,7 @@ async function ListBody({
             <TableCell>
               {formatNumber(Number(item.winLossAmount || 0))}
             </TableCell>
-            <TableCell>
-              <AgentId session={session as SessionData} />
-            </TableCell>
+            <TableCell>{item.agentId}</TableCell>
             <TableCell>
               <Time time={item.betTime} />
             </TableCell>
@@ -155,13 +151,19 @@ export async function List({
     );
   }
   const { data } = await getOrderReportList(p);
+  const session = await getSession();
+  const list =
+    data?.list.map((item) => ({
+      ...item,
+      agentId: params?.agentId || session?.mainId,
+    })) ?? [];
 
   return (
     <div className="p-4 bg-background flex-1">
       <div className="border rounded-sm relative">
         <Table className="table-fixed">
           <ListHeader />
-          <ListBody list={data?.list ?? []} gameList={gameList} />
+          <ListBody list={list} gameList={gameList} />
         </Table>
       </div>
       <div className="pt-2">

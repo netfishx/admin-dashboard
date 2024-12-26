@@ -411,6 +411,7 @@ export type OrderReportsRecord = {
   issueNumber: string; // 期号
   roomOwnerId: string; // 房主id, -1 means no owner
   lastAgentId: string; // 末级代理
+  agentId?: string; // 代理ID
   minister: string; // 部长id
   gameId: number; // 游戏id
   betType: number; // 投注玩法类型

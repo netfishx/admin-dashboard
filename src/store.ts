@@ -166,8 +166,6 @@ export const subaccountDialogAtom = atom<boolean>(false);
 export const subaccountDeleteAtom = atom<string | null>(null);
 export const subaccountDeleteDialogAtom = atom<boolean>(false);
 export const subaccountIdAtom = atom<string>("");
-// 报表管理-注单列表-百家乐-代理ID
-export const orderListBaccaratAgentIdAtom = atom<string>("");
 
 // 报表管理-注单列表-棋牌-注单详情弹窗
 export const orderListGuandanDetailDialogAtom = atom<boolean>(false);
