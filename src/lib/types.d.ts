@@ -504,7 +504,7 @@ export type PokerReportRequestRecords = {
   roomType: number; // 房间类型
   issueAmount: number; // 期数
   settledAmount: string; // 结算金额
-  totaSettledAmount: string; // 累计总结算金额
+  totalSettledAmount: string; // 累计总结算金额
   totalIssueAmount: number; // 累计总期数
 };
 
