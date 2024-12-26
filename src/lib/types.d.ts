@@ -896,7 +896,7 @@ export type WalletLogRecords = {
   id: number;
   transactionId: string; //账变id
   operateType: number; //账变类型
-  transactionAmount: string; //变更余额
+  transactionAmount: string; //变更金额
   createdTime: number; //账变时间
   oldBalance: string; //原余额
   newBalance: string; //新余额
