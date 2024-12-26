@@ -602,7 +602,7 @@
       "userId": "用户ID",
       "transactionId": "账变ID",
       "operateType": "账变类型",
-      "transactionAmount": "变更余额",
+      "transactionAmount": "变更金额",
       "createdTime": "账变时间",
       "oldBalance": "原余额",
       "newBalance": "新余额",
