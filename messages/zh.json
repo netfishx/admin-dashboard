@@ -118,7 +118,7 @@
     },
     "fund": {
       "title": "资金管理",
-      "minerfee": "矿工费管理",
+      "minerfee": "矿工费地址管理",
       "collection": "归集地址管理",
       "withdrawfee": "提现手续费管理"
     },
@@ -965,7 +965,7 @@
       "coin": "币种",
       "usdtBalance": "余额",
       "actions": "操作",
-      "feeManagement": "矿工费管理",
+      "feeManagement": "矿工费地址管理",
       "addDesc": "请确定是否新增矿工费地址？",
       "removeDesc": "请确定是否移除矿工费地址？",
       "confirm": "确定",
