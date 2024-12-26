@@ -29,7 +29,6 @@ export function List({ data }: { data: WithdrawFee }) {
     e.preventDefault();
     startTransition(async () => {
       const formData = new FormData(e.target as HTMLFormElement);
-      console.info(formData.get("percentageFee"));
 
       const params = {
         ...data,
