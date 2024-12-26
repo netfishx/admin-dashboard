@@ -147,13 +147,13 @@ export async function List({
               {t("totalIssueAmount")}:
             </Label>
             <span className="min-w-24 text-center text-sm">
-              {data?.list[0]?.totalIssueAmount} &nbsp;
+              {data?.list[0]?.totalIssueAmount}
             </span>
             <Label className="min-w-24 text-center text-sm">
               {t("totaSettledAmount")}:
             </Label>
             <span className="min-w-24 text-center text-sm">
-              {data?.list[0]?.totaSettledAmount} &nbsp;
+              {data?.list[0]?.totalSettledAmount}
             </span>
           </>
         )}
