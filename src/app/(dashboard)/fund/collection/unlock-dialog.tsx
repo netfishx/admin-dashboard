@@ -40,6 +40,8 @@ export function UnlockDialog(props: Dialogprops) {
         toast.success(res.message);
         router.refresh();
         onOpenChange(false);
+      } else {
+        toast.error(res.message);
       }
     });
   };

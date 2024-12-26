@@ -956,7 +956,8 @@
       "locked": "锁定",
       "deleted": "停用",
       "unknown": "未知状态",
-      "addSuccess": "新增成功"
+      "addSuccess": "新增成功",
+      "copySuccess": "复制成功"
     },
     "orefee": {
       "add": "新增",

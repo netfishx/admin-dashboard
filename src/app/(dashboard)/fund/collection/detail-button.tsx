@@ -34,7 +34,7 @@ export function DetailButton({ item }: { item: CollectionAddressListRecords }) {
         <Button
           variant="ghost"
           size="sm"
-          className="text-primary hover:text-primary/80 text-sm"
+          className="text-primary hover:text-primary/80 text-sm px-2"
           onClick={() => handleDetail("UNLOCK")}
         >
           {t("unlock")}
@@ -44,7 +44,7 @@ export function DetailButton({ item }: { item: CollectionAddressListRecords }) {
         <Button
           variant="ghost"
           size="sm"
-          className="text-primary hover:text-primary/80 text-sm"
+          className="text-primary hover:text-primary/80 text-sm px-2"
           onClick={() => handleDetail("CHECK")}
         >
           {t("check")}
@@ -54,7 +54,7 @@ export function DetailButton({ item }: { item: CollectionAddressListRecords }) {
         <Button
           variant="ghost"
           size="sm"
-          className="text-primary hover:text-primary/80 text-sm"
+          className="text-primary hover:text-primary/80 text-sm px-2"
           onClick={() => handleDetail("LOCK")}
         >
           {t("lock")}

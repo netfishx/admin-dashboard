@@ -7,7 +7,9 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { COLLECTION_STATUS } from "@/lib/dict";
 import type { CollectionAddressListRecords } from "@/lib/types";
+import { cn, formatNumber } from "@/lib/utils";
 import { getTranslations } from "next-intl/server";
 import CopyButton from "./copy-button";
 
@@ -17,10 +19,10 @@ export async function ListHeader() {
   return (
     <TableHeader>
       <TableRow className="bg-muted">
-        <TableHead className="w-90 text-center">{t("address")}</TableHead>
+        <TableHead className="w-90">{t("address")}</TableHead>
         <TableHead className="w-32">{t("currency")}</TableHead>
         <TableHead className="w-32">{t("balance")}</TableHead>
-        <TableHead className="w-24">{t("status")}</TableHead>
+        <TableHead className="w-32 text-center">{t("status")}</TableHead>
         <TableHead className="w-50">{t("createTime")}</TableHead>
         <TableHead className="sticky right-0 w-60 bg-muted text-center">
           {t("caozuo")}
@@ -33,29 +35,39 @@ export async function ListHeader() {
 async function ListBody({ list }: { list: CollectionAddressListRecords[] }) {
   const translate = await getTranslations();
   const t = await getTranslations("fund.collection");
-  const typeMap = {
-    0: t("disable"),
-    1: t("enable"),
-    2: t("locked"),
-  };
+
   return (
     <TableBody>
       {list && list?.length > 0 ? (
         list?.map((item: CollectionAddressListRecords) => (
           <TableRow key={item.id}>
             <TableCell>
-              <span className="flex items-center justify-center">
-                {item.address}
+              <div className="flex items-center">
+                <span>{item.address}</span>
                 <CopyButton address={item.address} />
-              </span>
+              </div>
             </TableCell>
             <TableCell>{item.coin}</TableCell>
-            <TableCell>{item.usdtBalance}</TableCell>
-            <TableCell>
-              {typeMap[item.status as keyof typeof typeMap]}
+            <TableCell>{formatNumber(item.usdtBalance)}</TableCell>
+            <TableCell className="text-center w-32">
+              <div
+                className={cn(
+                  "inline-block w-fit rounded-sm px-2 text-center",
+                  item.status === 0 && "bg-destructive/10 text-destructive",
+                  item.status === 1 && "bg-green/10 text-green",
+                  item.status === 2 && "bg-orange/10 text-orange",
+                )}
+              >
+                {(() => {
+                  const status = COLLECTION_STATUS.find(
+                    (s) => s.value === item.status,
+                  );
+                  return status ? t(status.label) : item.status;
+                })()}
+              </div>
             </TableCell>
             <TableCell>{item.updateTime}</TableCell>
-            <TableCell className="sticky right-0 bg-background flex items-center justify-center">
+            <TableCell className="sticky shadow-l right-0 bg-background flex items-center justify-center">
               <DetailButton item={item} />
             </TableCell>
           </TableRow>
