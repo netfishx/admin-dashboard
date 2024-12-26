@@ -10,33 +10,32 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
+import { collectionAddressDialogAtom } from "@/store";
+import { useAtom } from "jotai";
 import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useTransition } from "react";
 import { toast } from "sonner";
 
-interface Dialogprops {
-  open?: boolean;
-  onOpenChange: (open: boolean) => void;
-}
-
-export function AddDialog(props: Dialogprops) {
-  const { open = true, onOpenChange } = props;
+export function AddDialog() {
+  const [open, setOpen] = useAtom(collectionAddressDialogAtom);
   const [isPending, startTransition] = useTransition();
   const t = useTranslations("fund.collection");
   const translations = useTranslations();
   const router = useRouter();
   const handleConfirm = async () => {
-    const _res = await addCollectionAddress({ size: 1 });
-    if (_res.code === 0) {
+    const { code, message } = await addCollectionAddress({ size: 1 });
+    if (code === 0) {
       router.refresh();
-      toast.success(t("addSuccess"));
-      onOpenChange(false);
+      toast.success(message);
+      setOpen(false);
+    } else {
+      toast.error(message);
     }
   };
   return (
-    <AlertDialog open={open} onOpenChange={onOpenChange}>
+    <AlertDialog open={open} onOpenChange={setOpen}>
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>{t("addTitle")}</AlertDialogTitle>

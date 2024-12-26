@@ -36,7 +36,7 @@ function TreeNode({
                 e.preventDefault();
                 setIsOpen(!isOpen);
               }}
-              className="mr-1 focus:outline-hidden text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
+              className="mr-1 focus:outline-hidden"
               aria-label={isOpen ? "Collapse" : "Expand"}
             >
               {isOpen ? (
@@ -54,7 +54,7 @@ function TreeNode({
           />
           <label
             htmlFor={node.id.toString()}
-            className="ml-2 cursor-pointer select-none text-sm text-gray-700 dark:text-gray-300"
+            className="ml-2 cursor-pointer select-none text-sm"
           >
             {node.label}
           </label>
@@ -194,10 +194,7 @@ export function TreeSelect({
 
   return (
     <div
-      className={cn(
-        "w-full overflow-y-auto border border-gray-200 rounded-md p-4 bg-white dark:bg-gray-800 dark:border-gray-700",
-        className,
-      )}
+      className={cn("w-full overflow-y-auto border rounded-md p-4", className)}
     >
       {data.map((node) => (
         <TreeNode

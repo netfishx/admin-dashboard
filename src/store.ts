@@ -195,3 +195,5 @@ export const orderParmasAtom = atom<{
 export const memberListBaccaratAgentIdAtom = atom<string>("");
 
 export const withdrawFeeAtom = atom<WithdrawFee>();
+
+export const collectionAddressDialogAtom = atom<boolean>(false);

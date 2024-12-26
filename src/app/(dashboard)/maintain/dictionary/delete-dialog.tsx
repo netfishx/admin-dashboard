@@ -34,7 +34,7 @@ export function DeleteDialog() {
           <AlertDialogTitle>{t("delete")}</AlertDialogTitle>
           <AlertDialogDescription />
         </AlertDialogHeader>
-        <div className="text-sm text-gray-500">{t("deleteDesc")}</div>
+        <div className="text-sm text-muted-foreground">{t("deleteDesc")}</div>
         <AlertDialogFooter>
           <AlertDialogCancel>{translation("cancel")}</AlertDialogCancel>
           <AlertDialogAction

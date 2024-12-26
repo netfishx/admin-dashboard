@@ -85,7 +85,7 @@ const TimeSelect = ({
 
   return (
     <div className="flex items-center gap-2 p-2">
-      <span className="text-sm text-gray-500">
+      <span className="text-sm text-foreground/80">
         {type === "start" ? t("startTime") : t("endTime")}
       </span>
       <Select

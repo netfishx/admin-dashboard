@@ -118,7 +118,7 @@ export function CheckDialog(props: Dialogprops) {
                   </Label>
                   <Input
                     type="text"
-                    className="flex-1 bg-gray-50 cursor-not-allowed"
+                    className="flex-1 cursor-not-allowed"
                     required
                     name="availableAmount"
                     placeholder={translations("availableAmount")}
