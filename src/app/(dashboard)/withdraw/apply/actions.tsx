@@ -90,7 +90,7 @@ function ActionButtons({
 
     return (
       <div className="flex justify-center">
-        {isCurrentAuditor && (
+        {isCurrentAuditor ? (
           <>
             <PassButton data={data} />
             <RejectButton data={data} />
@@ -127,6 +127,12 @@ function ActionButtons({
               {t("flow")}
             </Button>
           </>
+        ) : (
+          <Button
+            variant="ghost"
+            size="sm"
+            className="px-2 text-sm text-primary hover:text-primary/80"
+          />
         )}
       </div>
     );
@@ -149,6 +155,14 @@ function ActionButtons({
       </div>
     );
   }
+  return (
+    // 空按钮用来占位
+    <Button
+      variant="ghost"
+      size="sm"
+      className="px-2 text-sm text-primary hover:text-primary/80"
+    />
+  );
 }
 // 锁定
 function LockButton({ data }: { data: ApplyData }) {
