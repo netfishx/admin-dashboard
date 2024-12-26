@@ -77,8 +77,8 @@ async function TableWrapper({
   return (
     <>
       <UserInfoModal permissions={permissions} />
-      <div className="relative rounded-sm border">
-        <Table className="table-fixed">
+      <div className="rounded-sm border">
+        <Table className="table-fixed relative">
           <TableHeaderWrapper />
           <Suspense fallback={<TableBodySkeleton />}>
             <TableBodyWrapper list={data?.list} permissions={permissions} />
@@ -117,7 +117,7 @@ async function TableHeaderWrapper() {
         <TableHead className="w-28">{t("debtAmount")}</TableHead>
         <TableHead className="w-28">{t("creditAmount")}</TableHead>
         <TableHead className="w-20 text-center">{t("status")}</TableHead>
-        <TableHead className="sticky right-0 w-120 bg-muted text-center p-0">
+        <TableHead className="sticky right-0 w-160 bg-muted text-center p-0">
           <div className="shadow-l h-full px-4 flex justify-center items-center">
             {t("action")}
           </div>
