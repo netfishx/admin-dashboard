@@ -152,7 +152,7 @@ export function CheckDialog(props: Dialogprops) {
                   />
                 </div>
                 <div className="ml-[140px] space-y-1 text-sm">
-                  <div className="text-destructive">{t("notice")}:</div>
+                  <div className="text-destructive">{t("notice")}</div>
                   <div className="pl-4 text-destructive">
                     {t("notAllowWithdraw")}
                   </div>

@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
@@ -44,6 +45,8 @@ export function CheckDialog(props: Dialogprops) {
   const [password, setPassword] = useState("");
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
+      <DialogDescription />
+
       <DialogContent
         onInteractOutside={(event) => {
           event.preventDefault(); // 阻止关闭弹框
@@ -55,7 +58,9 @@ export function CheckDialog(props: Dialogprops) {
               <DialogTitle>{t("checkStep1Title")}</DialogTitle>
             </DialogHeader>
             <div className="items-center gap-2">
-              <Label className="shrink-0">{t("passwordCheckTips")}</Label>
+              <Label className="shrink-0 block py-2 before:text-destructive before:content-['*'] before:mr-1">
+                {t("passwordCheckTips")}
+              </Label>
               <Password
                 type="password"
                 value={password ?? ""}
@@ -67,7 +72,10 @@ export function CheckDialog(props: Dialogprops) {
               <Button variant="outline" onClick={() => onOpenChange(false)}>
                 {translations("cancel")}
               </Button>
-              <Button onClick={() => handleNext()} disabled={isPending}>
+              <Button
+                onClick={() => handleNext()}
+                disabled={isPending || !password}
+              >
                 {isPending && <Loader2 className="animate-spin" />}
                 {translations("confirm")}
               </Button>

@@ -246,3 +246,19 @@ export const LANGUAGE = [
     label: "chinese",
   },
 ];
+
+//  归集地址状态
+export const COLLECTION_STATUS = [
+  {
+    value: 0,
+    label: "disable",
+  },
+  {
+    value: 1,
+    label: "enable",
+  },
+  {
+    value: 2,
+    label: "locked",
+  },
+];
