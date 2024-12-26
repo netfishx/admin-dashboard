@@ -30,7 +30,7 @@ import {
 import { useTranslations } from "next-intl";
 import { usePathname } from "next/navigation";
 import { parseAsArrayOf, parseAsString, useQueryState } from "nuqs";
-import { Suspense, startTransition } from "react";
+import { Suspense } from "react";
 
 export function Menu({ permissions }: { permissions: string[] }) {
   const isOpened = useAtomValue(sidebarAtom);
@@ -63,12 +63,10 @@ function OpenedMenu({
     parseAsArrayOf(parseAsString).withDefault([pathname.split("/")[1]]),
   );
 
-  function handleOpenChange(key: string, e: boolean) {
-    startTransition(async () => {
-      await setOpenedMenu(
-        e ? [...openedMenu, key] : openedMenu.filter((v) => v !== key),
-      );
-    });
+  async function handleOpenChange(key: string, e: boolean) {
+    await setOpenedMenu(
+      e ? [...openedMenu, key] : openedMenu.filter((v) => v !== key),
+    );
   }
   return (
     <>
