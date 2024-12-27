@@ -115,7 +115,7 @@ export async function TableBodyWrapper({
             <TableCell className="text-center">
               <div
                 className={cn(
-                  "inline-block w-fit rounded-sm px-2 text-center",
+                  "inline-block w-fit rounded-sm px-3 py-1 text-center",
                   item.status === 0 && "bg-destructive/10 text-destructive",
                   item.status === 1 && "bg-green/10 text-green",
                 )}
