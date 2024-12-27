@@ -18,7 +18,11 @@ import { parseAsInteger, useQueryState, useQueryStates } from "nuqs";
 import { useTransition } from "react";
 import { toast } from "sonner";
 
-export function ListFilter() {
+export function ListFilter({
+  hasAdminPermission,
+}: {
+  hasAdminPermission: boolean;
+}) {
   const t = useTranslations("report.credit");
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
@@ -72,14 +76,16 @@ export function ListFilter() {
             placeholder={t("placeholderinput")}
           />
         </div>
-        <div className="flex items-center gap-4">
-          <Label className="shrink-0">{t("agentID")}</Label>
-          <Input
-            value={agentId ?? ""}
-            onChange={(e) => setAgentId(e.target.value)}
-            placeholder={t("placeholderinput")}
-          />
-        </div>
+        {hasAdminPermission && (
+          <div className="flex items-center gap-4">
+            <Label className="shrink-0">{t("agentID")}</Label>
+            <Input
+              value={agentId ?? ""}
+              onChange={(e) => setAgentId(e.target.value)}
+              placeholder={t("placeholderinput")}
+            />
+          </div>
+        )}
         <div className="flex items-center gap-4">
           <Label className="shrink-0">{t("memberID")}</Label>
           <Input
