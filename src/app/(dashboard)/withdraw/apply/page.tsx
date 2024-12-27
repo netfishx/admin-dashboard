@@ -181,7 +181,7 @@ async function TableBodyWrapper({ list }: { list: ApplyData[] }) {
             <TableCell className="text-center">
               <div
                 className={cn(
-                  "inline-block w-fit rounded-sm px-3 text-center",
+                  "rounded-sm w-16 h-6 leading-6 inline-block",
                   item.approverStatus === 0 && "bg-primary/10 text-primary",
                   item.approverStatus === 1 &&
                     "bg-muted-foreground/10 text-muted-foreground",
@@ -202,7 +202,7 @@ async function TableBodyWrapper({ list }: { list: ApplyData[] }) {
             <TableCell className="text-center">
               <div
                 className={cn(
-                  "inline-block w-fit rounded-sm px-3 text-center",
+                  "rounded-sm w-16 h-6 leading-6 inline-block",
                   item.withdrawMode === 0 && "bg-green/10 text-green",
                   item.withdrawMode === 1 && "bg-orange/10 text-orange",
                 )}
@@ -219,7 +219,7 @@ async function TableBodyWrapper({ list }: { list: ApplyData[] }) {
             <TableCell className="text-center">
               <div
                 className={cn(
-                  "inline-block w-fit rounded-sm px-3 text-center",
+                  "rounded-sm w-16 h-6 leading-6 inline-block",
                   item.moneyStatus === 0 && "bg-primary/10 text-primary",
                   item.moneyStatus === 1 && "bg-green/10 text-green",
                   item.moneyStatus === 2 &&

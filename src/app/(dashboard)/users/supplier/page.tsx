@@ -68,7 +68,7 @@ async function SupplierTableHeader() {
         <TableHead className="w-40">{t("supplierUsername")}</TableHead>
         <TableHead className="w-40">{t("supplierName")}</TableHead>
         <TableHead className="w-40">{t("remark")}</TableHead>
-        <TableHead className="w-20 text-center">{t("status")}</TableHead>
+        <TableHead className="w-24 text-center">{t("status")}</TableHead>
         <TableHead className="w-24 text-center">{t("action")}</TableHead>
       </TableRow>
     </TableHeader>
