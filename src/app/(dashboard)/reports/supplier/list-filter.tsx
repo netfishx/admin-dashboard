@@ -1,5 +1,6 @@
 "use client";
 import { DateRangeFilter } from "@/components/daterange-filter";
+import { ReportDownloadBtn } from "@/components/report-download-btn";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -17,7 +18,6 @@ export function ListFilter({
 }) {
   const t = useTranslations("report.supplier");
   const [isPending, startTransition] = useTransition();
-  const [isDownload, startDownload] = useTransition();
   const searchParams = useSearchParams();
   const [supplierId, setSupplierId] = useQueryState("supplierId", {
     defaultValue: "",
@@ -64,16 +64,9 @@ export function ListFilter({
       {/* Last row */}
       <div className="flex items-center justify-end gap-4">
         <div className="flex items-center gap-2">
-          <Button
-            onClick={() =>
-              startDownload(() => makeDownload(searchParams, 100000))
-            }
-            disabled={isDownload}
-            variant="outline"
-          >
-            {isDownload && <Loader2 className="animate-spin" />}
-            {t("download")}
-          </Button>
+          <ReportDownloadBtn
+            handleDownload={() => makeDownload(searchParams, 100000)}
+          />
           <Button variant="outline" onClick={handleReset}>
             {t("reset")}
           </Button>

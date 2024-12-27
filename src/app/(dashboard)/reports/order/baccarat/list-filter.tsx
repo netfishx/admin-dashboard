@@ -1,5 +1,6 @@
 "use client";
 import { DateRangeFilter } from "@/components/daterange-filter";
+import { ReportDownloadBtn } from "@/components/report-download-btn";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -30,7 +31,6 @@ export function ListFilter({ gameList }: { gameList: GameInfo[] }) {
   const router = useRouter();
   const [isPending, startSearch] = useTransition();
   const [isReset, startReset] = useTransition();
-  const [isDownload, startDownload] = useTransition();
   const [dateRange] = useQueryStates({
     startTime: parseAsInteger,
     endTime: parseAsInteger,
@@ -259,16 +259,9 @@ export function ListFilter({ gameList }: { gameList: GameInfo[] }) {
       {/* 第四行 */}
       <div className="flex items-center justify-end gap-4">
         <div className="flex items-center gap-2">
-          <Button
-            onClick={() =>
-              startDownload(() => makeDownload(searchParams, 100005))
-            }
-            variant="outline"
-            disabled={isDownload}
-          >
-            {isDownload && <Loader2 className="animate-spin" />}
-            {t("download")}
-          </Button>
+          <ReportDownloadBtn
+            handleDownload={() => makeDownload(searchParams, 100005)}
+          />
           <Button variant="outline" disabled={isReset} onClick={handleReset}>
             {t("reset")}
           </Button>
