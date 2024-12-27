@@ -392,6 +392,8 @@
     "moneyDataTrending": "充值金额趋势"
   },
   "report": {
+    "downloadbtn": "下载",
+    "downloadTip": "确定生成下载任务后，请在报表下载菜单查看",
     "orderlist": {
       "selectDate": "请选择日期",
       "today": "今天",
