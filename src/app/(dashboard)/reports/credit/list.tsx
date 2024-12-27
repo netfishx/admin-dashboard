@@ -48,8 +48,8 @@ async function ListBody({ list }: { list: CreditRecordRequestRecords[] }) {
         list?.map((item) => (
           <TableRow key={item.transactionID}>
             <TableCell>{item.transactionID}</TableCell>
-            <TableCell>{item.agentId}</TableCell>
             <TableCell>{item.memberId}</TableCell>
+            <TableCell>{item.agentId}</TableCell>
             <TableCell>{formatNumber(Number(item.amount || 0))}</TableCell>
             <TableCell>
               {typeMap[item.operateCode as keyof typeof typeMap]}
