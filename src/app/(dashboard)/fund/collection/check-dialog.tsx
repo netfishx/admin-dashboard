@@ -88,14 +88,14 @@ export function CheckDialog(props: Dialogprops) {
               <DialogTitle>{t("checkStep2Title")}</DialogTitle>
             </DialogHeader>
             <div className="mx-auto w-full max-w-xl p-4">
-              <div className="rounded-xl border bg-card text-card-foreground shadow-sm">
+              <div className="rounded-xl border  text-card-foreground shadow-sm">
                 {/* Header row */}
-                <div className="flex divide-x divide-gray-200">
-                  <div className="flex w-24 items-center justify-center bg-gray-50 px-4 py-2.5 text-sm text-gray-600">
+                <div className="flex divide-x divide-muted">
+                  <div className="flex w-24 items-center justify-center bg-muted px-4 py-2.5 text-sm">
                     {t("secretInfo")}
                   </div>
                   <div className="flex flex-1 items-center justify-between bg-card px-4 py-2.5">
-                    <span className="break-all font-mono text-sm text-gray-800">
+                    <span className="break-all font-mono text-sm">
                       {item?.privateKey}
                     </span>
                     <CopyButton address={item?.privateKey} />
@@ -103,8 +103,8 @@ export function CheckDialog(props: Dialogprops) {
                 </div>
 
                 {/* Warning message */}
-                <div className="border-t border-gray-200 px-4 py-2">
-                  <div className="flex items-center gap-1.5 text-sm text-red-500">
+                <div className="border-t border-muted px-4 py-2">
+                  <div className="flex items-center gap-1.5 text-sm text-destructive">
                     <AlertTriangle className="h-4 w-4" />
                     <span>{t("secretWarning")}</span>
                   </div>
