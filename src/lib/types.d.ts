@@ -687,10 +687,10 @@ export type DictionaryItem = {
 // 授信记录请求入参
 export type CreditRecordRequestParams = {
   /** 代理ID */
-  agentId: string;
+  agentId?: string;
 
   /** 会员ID */
-  memberId: string;
+  memberId?: string;
 
   /** 开始时间戳 */
   startTime: number;
@@ -699,7 +699,7 @@ export type CreditRecordRequestParams = {
   endTime: number;
 
   /** 交易ID */
-  transactionID: string;
+  transactionID?: string;
 
   /**
    * 操作代码

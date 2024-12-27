@@ -1,17 +1,18 @@
 import TableSkeleton from "@/components/table-skeleton";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Table } from "@/components/ui/table";
-import type { CreditRecordRequestParams } from "@/lib/types";
+import { hasPermission } from "@/session";
 import { Suspense } from "react";
 import { List, ListHeader } from "./list";
 import { ListFilter } from "./list-filter";
 
-interface CommonWrapperProps {
-  searchParams: Promise<CreditRecordRequestParams>;
-}
-
-async function CommonWrapper({ searchParams }: CommonWrapperProps) {
+async function CommonWrapper({
+  searchParams,
+}: {
+  searchParams: Promise<{ [key: string]: string | undefined }>;
+}) {
   const { startTime, endTime } = await searchParams;
+  const hasAdminPermission = await hasPermission("credit_report_search");
   return (
     <>
       <Suspense
@@ -21,7 +22,10 @@ async function CommonWrapper({ searchParams }: CommonWrapperProps) {
           </div>
         }
       >
-        <ListFilter key={`${startTime}-${endTime}`} />
+        <ListFilter
+          key={`${startTime}-${endTime}`}
+          hasAdminPermission={hasAdminPermission}
+        />
       </Suspense>
       <Suspense
         fallback={
@@ -29,7 +33,10 @@ async function CommonWrapper({ searchParams }: CommonWrapperProps) {
             <div className="relative rounded-sm border">
               <Table className="table-fixed">
                 <ListHeader />
-                <TableSkeleton length={5} colSpan={6} />
+                <TableSkeleton
+                  length={5}
+                  colSpan={hasAdminPermission ? 6 : 5}
+                />
               </Table>
             </div>
           </div>
@@ -41,7 +48,9 @@ async function CommonWrapper({ searchParams }: CommonWrapperProps) {
   );
 }
 
-export default function Page({ searchParams }: CommonWrapperProps) {
+export default function Page({
+  searchParams,
+}: { searchParams: Promise<{ [key: string]: string | undefined }> }) {
   return (
     <div className="flex w-full flex-col gap-2">
       <Suspense>
