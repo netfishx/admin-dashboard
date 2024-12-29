@@ -19,7 +19,7 @@ export function Actions({
     <Button
       variant="ghost"
       size="sm"
-      className="px-2 text-sm text-primary hover:text-primary/80"
+      className="text-primary hover:text-primary/80 px-2 text-sm"
       onClick={() => {
         router.push(
           `/reports/order/baccarat?${new URLSearchParams(searchParamsStr).toString()}&issueNumber=${data.issueNumber}`,

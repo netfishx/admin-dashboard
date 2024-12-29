@@ -91,7 +91,7 @@ export function WeekChart({
       <div className="flex items-center justify-between">
         <div className="pb-2">
           {chartConfig.title}
-          <span className="text-sm text-muted-foreground">
+          <span className="text-muted-foreground text-sm">
             {t("lastSevenDays")}
           </span>
         </div>
@@ -153,7 +153,7 @@ export function WeekChart({
           </ChartContainer>
         ) : (
           <div className="h-60">
-            <div className="flex h-full items-center justify-center text-muted-foreground">
+            <div className="text-muted-foreground flex h-full items-center justify-center">
               {t("noData")}
             </div>
           </div>

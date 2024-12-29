@@ -44,7 +44,7 @@ export default function DetailButton({
         variant="ghost"
         size="sm"
         disabled={isPending}
-        className="px-2 text-sm text-primary hover:text-primary/80"
+        className="text-primary hover:text-primary/80 px-2 text-sm"
         onClick={handleDialogOpenChanged}
       >
         {isPending && <Loader2 className="animate-spin" />}

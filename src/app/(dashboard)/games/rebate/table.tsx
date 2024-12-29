@@ -65,12 +65,12 @@ export function RebateTable({ data }: { data: GameConfig[] }) {
                     e.target.reportValidity();
                   }}
                 />
-                <span className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground">
+                <span className="text-muted-foreground absolute right-3 top-1/2 -translate-y-1/2">
                   %
                 </span>
               </div>
               {item.maxBackRate ? (
-                <span className="w-16 text-destructive">
+                <span className="text-destructive w-16">
                   ({item.maxBackRate}%)
                 </span>
               ) : null}

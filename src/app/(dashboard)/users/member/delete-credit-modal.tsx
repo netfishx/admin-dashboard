@@ -65,13 +65,13 @@ export function DeleteCreditModal() {
         </DialogHeader>
         <div className="divide-y rounded-lg border indent-4">
           <div className="grid grid-cols-3">
-            <div className="border-r bg-muted py-2 text-muted-foreground">
+            <div className="bg-muted text-muted-foreground border-r py-2">
               {t("membershipArrears")}
             </div>
             <div className="py-2">{memberInfoData?.debtAmount ?? 0}</div>
           </div>
           <div className="grid grid-cols-3">
-            <div className="border-r bg-muted py-2 text-muted-foreground">
+            <div className="bg-muted text-muted-foreground border-r py-2">
               {t("availableBalance")}
             </div>
             <div className="py-2">{availableAmount}</div>
@@ -82,21 +82,21 @@ export function DeleteCreditModal() {
           <input type="hidden" name="userId" value={memberId} />
           <div className="flex flex-col gap-2 rounded-lg border p-4 text-center">
             <div className="flex items-center gap-4">
-              <Label className="w-1/4 shrink-0 text-right text-muted-foreground">
+              <Label className="text-muted-foreground w-1/4 shrink-0 text-right">
                 {t("writeOffAmount")}
               </Label>
               <Input className="flex-1" type="number" name="amount" />
             </div>
             <div className="flex flex-col gap-1">
               <div className="flex items-center gap-4">
-                <Label className="w-1/4 shrink-0 text-right text-muted-foreground">
+                <Label className="text-muted-foreground w-1/4 shrink-0 text-right">
                   {t("moneyPassword")}
                 </Label>
                 <Password type="password" className="flex-1" name="secret" />
               </div>
               <div className="flex gap-4 text-start">
-                <Label className="w-1/4 shrink-0 text-right text-muted-foreground" />
-                <span className="flex-1 text-xs text-destructive">
+                <Label className="text-muted-foreground w-1/4 shrink-0 text-right" />
+                <span className="text-destructive flex-1 text-xs">
                   {t("deleteCreditWarning")}
                 </span>
               </div>

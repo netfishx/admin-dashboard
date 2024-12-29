@@ -41,7 +41,7 @@ export default function Page({
       >
         <FormWrapper />
       </Suspense>
-      <div className="p-4 bg-background flex-1 gap-2">
+      <div className="bg-background flex-1 gap-2 p-4">
         <Suspense
           fallback={
             <div className="rounded-sm border">
@@ -78,7 +78,7 @@ async function TableWrapper({
     <>
       <UserInfoModal permissions={permissions} />
       <div className="rounded-sm border">
-        <Table className="table-fixed relative">
+        <Table className="relative table-fixed">
           <TableHeaderWrapper />
           <Suspense fallback={<TableBodySkeleton />}>
             <TableBodyWrapper list={data?.list} permissions={permissions} />
@@ -111,14 +111,14 @@ async function TableHeaderWrapper() {
           </>
         )}
         <TableHead className="w-60">{t("userId")}</TableHead>
-        <TableHead className="w-32">{t("username")}</TableHead>
-        <TableHead className="w-32">{t("nickname")}</TableHead>
+        <TableHead className="w-90">{t("username")}</TableHead>
+        <TableHead className="w-90">{t("nickname")}</TableHead>
         <TableHead className="w-90">{t("walletAddress")}</TableHead>
         <TableHead className="w-28">{t("debtAmount")}</TableHead>
         <TableHead className="w-28">{t("creditAmount")}</TableHead>
         <TableHead className="w-24 text-center">{t("status")}</TableHead>
-        <TableHead className="sticky right-0 w-160 bg-muted text-center p-0">
-          <div className="shadow-l h-full px-4 flex justify-center items-center">
+        <TableHead className="w-160 bg-muted sticky right-0 p-0 text-center">
+          <div className="shadow-l flex h-full items-center justify-center px-4">
             {t("action")}
           </div>
         </TableHead>
@@ -155,7 +155,7 @@ async function TableBodyWrapper({
             <TableCell className="text-center">
               <span
                 className={cn(
-                  "rounded-sm w-16 h-6 leading-6 inline-block",
+                  "inline-block h-6 w-16 rounded-sm leading-6",
                   item.status === 0 && "bg-green/10 text-green",
                   item.status === 1 && "bg-destructive/10 text-destructive",
                   item.status === 2 && "bg-orange/10 text-orange",
@@ -164,8 +164,8 @@ async function TableBodyWrapper({
                 {t(`statusLabel.${item.status}`)}
               </span>
             </TableCell>
-            <TableCell className="sticky right-0 bg-background p-0">
-              <div className="shadow-l py-2 px-4 flex justify-center items-center">
+            <TableCell className="bg-background sticky right-0 p-0">
+              <div className="shadow-l flex items-center justify-center px-4 py-2">
                 <Actions data={item} permissions={permissions} />
               </div>
             </TableCell>

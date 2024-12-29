@@ -14,7 +14,7 @@ export default async function Page() {
         <Suspense
           fallback={
             <div className="flex flex-1 flex-col">
-              <div className="flex flex-col gap-2 bg-background p-4">
+              <div className="bg-background flex flex-col gap-2 p-4">
                 <div className="flex items-center justify-between gap-4">
                   {t("title")}
                   <div className="flex items-center gap-2">
@@ -22,9 +22,9 @@ export default async function Page() {
                   </div>
                 </div>
               </div>
-              <div className="flex h-full flex-col gap-2 bg-background p-4 mt-2">
+              <div className="bg-background mt-2 flex h-full flex-col gap-2 p-4">
                 <div className="rounded-sm">
-                  <Table className="rounded-sm border table-fixed bg-background h-full">
+                  <Table className="bg-background h-full table-fixed rounded-sm border">
                     <TableHeaderWrapper />
                     <TableBodySkeleton />
                   </Table>

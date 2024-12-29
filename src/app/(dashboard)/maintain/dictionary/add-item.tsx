@@ -106,7 +106,7 @@ export function AddItemDialog() {
           <input type="hidden" name="dictCode" value={data?.dictCode} />
           <div className="flex flex-col gap-4">
             <div className="flex items-center gap-4">
-              <Label className="w-20 text-end before:content-['*'] before:text-destructive before:mr-1">
+              <Label className="before:text-destructive w-20 text-end before:mr-1 before:content-['*']">
                 {t("itemName")}
               </Label>
               <Input
@@ -120,7 +120,7 @@ export function AddItemDialog() {
               />
             </div>
             <div className="flex items-center gap-4">
-              <Label className="w-20 text-end before:content-['*'] before:text-destructive before:mr-1">
+              <Label className="before:text-destructive w-20 text-end before:mr-1 before:content-['*']">
                 {t("itemValue")}
               </Label>
               <Input

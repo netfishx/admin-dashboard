@@ -11,7 +11,7 @@ export default function CopyButton({ address }: { address: string }) {
   return (
     <Button
       variant="ghost"
-      className="size-4 text-muted-foreground"
+      className="text-muted-foreground size-4"
       onClick={() => {
         copyToClipboard(address);
         toast.success(t("copySuccess"));

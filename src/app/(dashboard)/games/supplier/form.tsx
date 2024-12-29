@@ -23,7 +23,7 @@ export function SupplierForm() {
   const [isPending, startTransition] = useTransition();
 
   return (
-    <div className="flex items-center justify-between bg-background p-4">
+    <div className="bg-background flex items-center justify-between p-4">
       <div className="flex items-center gap-2">
         <div className="flex items-center gap-2">
           <Label className="shrink-0">{t("type")}</Label>

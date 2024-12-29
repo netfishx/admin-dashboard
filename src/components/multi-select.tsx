@@ -62,7 +62,7 @@ export function MultiSelect({ options, onChange }: MultiSelectProps) {
             {selectedIndices.slice(0, visibleTags).map((index) => (
               <div
                 key={index}
-                className="flex max-w-[100px] items-center gap-1 rounded-sm bg-muted px-1 py-0.5 text-sm"
+                className="bg-muted flex max-w-[100px] items-center gap-1 rounded-sm px-1 py-0.5 text-sm"
               >
                 <span className="truncate">{options[index].label}</span>
                 {/* biome-ignore lint/a11y/useKeyWithClickEvents: <explanation> */}
@@ -82,7 +82,7 @@ export function MultiSelect({ options, onChange }: MultiSelectProps) {
               <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger asChild>
-                    <div className="flex items-center rounded-sm bg-muted px-1 py-0.5 text-sm">
+                    <div className="bg-muted flex items-center rounded-sm px-1 py-0.5 text-sm">
                       <MoreHorizontal className="h-3 w-3" />
                       <span className="ml-1">+{hiddenTags}</span>
                     </div>
@@ -99,7 +99,7 @@ export function MultiSelect({ options, onChange }: MultiSelectProps) {
               </TooltipProvider>
             )}
             {selectedIndices.length === 0 && (
-              <span className="text-sm font-normal text-muted-foreground">
+              <span className="text-muted-foreground text-sm font-normal">
                 {translations("placeholderSelect")}
               </span>
             )}
@@ -116,13 +116,13 @@ export function MultiSelect({ options, onChange }: MultiSelectProps) {
               <div
                 key={option.value}
                 className={cn(
-                  "flex cursor-pointer items-center justify-between px-4 py-2 hover:bg-muted",
+                  "hover:bg-muted flex cursor-pointer items-center justify-between px-4 py-2",
                   isSelected && "bg-muted",
                 )}
                 onClick={() => toggleOption(index)}
               >
                 {option.label}
-                {isSelected && <Check className="h-4 w-4 text-primary" />}
+                {isSelected && <Check className="text-primary h-4 w-4" />}
               </div>
             );
           })}

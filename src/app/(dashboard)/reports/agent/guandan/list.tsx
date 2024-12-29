@@ -38,8 +38,8 @@ export async function ListHeader() {
         <TableHead className="w-60">{t("roomType")}</TableHead>
         <TableHead className="w-60">{t("issueNumber")}</TableHead>
         <TableHead className="w-60">{t("settledAmount")}</TableHead>
-        <TableHead className="w-24 sticky right-0 bg-muted p-0">
-          <div className="shadow-l h-full px-4 flex justify-center items-center">
+        <TableHead className="bg-muted sticky right-0 w-24 p-0">
+          <div className="shadow-l flex h-full items-center justify-center px-4">
             {t("action")}
           </div>
         </TableHead>
@@ -87,8 +87,8 @@ async function ListBody({
             <TableCell>
               {formatNumber(Number(item.settledAmount) || 0)}
             </TableCell>
-            <TableCell className="sticky right-0 bg-background p-0">
-              <div className="shadow-l py-2 px-4 flex justify-center items-center">
+            <TableCell className="bg-background sticky right-0 p-0">
+              <div className="shadow-l flex items-center justify-center px-4 py-2">
                 <DetailButton agentId={item.agentId} />
               </div>
             </TableCell>
@@ -119,9 +119,9 @@ export async function List({
   const params = await searchParams;
   if (!(params?.startTime && params?.endTime)) {
     return (
-      <div className="flex-1 bg-background p-4">
+      <div className="bg-background flex-1 p-4">
         <div className="h-6" />
-        <div className="relative rounded-sm border  mt-2">
+        <div className="relative mt-2 rounded-sm  border">
           <Table className="table-fixed">
             <ListHeader />
             <TableSkeleton length={5} colSpan={6} />
@@ -139,7 +139,7 @@ export async function List({
   };
   const { data } = await getPokerReport(p);
   return (
-    <div className="flex-1 bg-background p-4">
+    <div className="bg-background flex-1 p-4">
       <div className="h-6">
         {data?.list && data.list.length > 0 && (
           <>
@@ -158,7 +158,7 @@ export async function List({
           </>
         )}
       </div>
-      <div className="border rounded-sm relative mt-2">
+      <div className="relative mt-2 rounded-sm border">
         <Table className="table-fixed">
           <ListHeader />
           <Suspense fallback={<TableSkeleton length={5} colSpan={6} />}>

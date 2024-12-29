@@ -19,8 +19,8 @@ async function CommonWrapper({ searchParams }: CommonWrapperProps) {
       <ListFilter gameList={res?.data ?? []} key={`${startTime}-${endTime}`} />
       <Suspense
         fallback={
-          <div className="p-4 bg-background flex-1">
-            <div className="border rounded-sm">
+          <div className="bg-background flex-1 p-4">
+            <div className="rounded-sm border">
               <Table className="table-fixed">
                 <ListHeader />
                 <TableSkeleton length={5} colSpan={16} />
@@ -39,14 +39,14 @@ export default function Page({ searchParams }: CommonWrapperProps) {
   return (
     <Suspense
       fallback={
-        <div className="flex flex-col gap-2 w-full">
-          <div className="bg-background p-4 flex flex-col gap-2">
+        <div className="flex w-full flex-col gap-2">
+          <div className="bg-background flex flex-col gap-2 p-4">
             <Skeleton />
             <Skeleton />
             <Skeleton />
             <Skeleton />
           </div>
-          <div className="flex-1 bg-background p-4">
+          <div className="bg-background flex-1 p-4">
             <div className="rounded-sm border">
               <Table className="table-fixed">
                 <ListHeader />

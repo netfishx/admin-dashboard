@@ -22,7 +22,7 @@ export function AddBtn() {
   const t = useTranslations("fund.orefee");
 
   return (
-    <div className="flex flex-col gap-2 bg-background p-4">
+    <div className="bg-background flex flex-col gap-2 p-4">
       <div className="flex items-center justify-between gap-4">
         {t("feeManagement")}
         <div className="flex items-center gap-2">

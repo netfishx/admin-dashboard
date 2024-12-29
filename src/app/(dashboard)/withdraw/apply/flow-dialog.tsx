@@ -20,11 +20,7 @@ import { useAtom } from "jotai";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 
-export function FlowDialog({
-  gameList,
-}: {
-  gameList: GameInfo[];
-}) {
+export function FlowDialog({ gameList }: { gameList: GameInfo[] }) {
   const t = useTranslations("withdraw.apply");
   const [open, setOpen] = useAtom(withdrawFlowDialogAtom);
   const [flowData] = useAtom(withdrawFlowDataAtom);
@@ -37,9 +33,9 @@ export function FlowDialog({
         <DialogTitle className="flex justify-between">
           <span>{t("flow")}</span>
         </DialogTitle>
-        <div className="p-4 bg-background flex-1 overflow-auto">
+        <div className="bg-background flex-1 overflow-auto p-4">
           {flowData?.list && flowData?.list?.length > 0 && (
-            <div className="flex justify-end mb-4">
+            <div className="mb-4 flex justify-end">
               <Button
                 size="sm"
                 onClick={() => {
@@ -55,7 +51,7 @@ export function FlowDialog({
               </Button>
             </div>
           )}
-          <div className="relative max-h-[50dvh] overflow-auto border rounded-sm">
+          <div className="relative max-h-[50dvh] overflow-auto rounded-sm border">
             <ScrollableTable className="relative table-fixed">
               <ListHeader />
               <ListBody list={flowData?.list ?? []} gameList={gameList} />

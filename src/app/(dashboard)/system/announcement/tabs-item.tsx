@@ -21,7 +21,7 @@ export default function TabsItem({
   const endTime = endOfDay(addMonths(today, 1));
   return (
     <div className="flex w-full flex-col gap-2">
-      <div className="gap-2 bg-background p-4">
+      <div className="bg-background gap-2 p-4">
         <Tabs defaultValue="own" value={pathname.split("/").pop()}>
           <TabsList>
             {permissions?.includes("own_announcement") && (

@@ -32,7 +32,7 @@ export default async function Page({ searchParams }: CommonWrapperProps) {
     <div className="flex w-full flex-col gap-2">
       <Suspense
         fallback={
-          <div className="flex items-center justify-between bg-background p-4">
+          <div className="bg-background flex items-center justify-between p-4">
             <Skeleton />
           </div>
         }
@@ -44,8 +44,8 @@ export default async function Page({ searchParams }: CommonWrapperProps) {
       </Suspense>
       <Suspense
         fallback={
-          <div className="p-4 bg-background flex-1">
-            <div className="border rounded-sm">
+          <div className="bg-background flex-1 p-4">
+            <div className="rounded-sm border">
               <Table className="table-fixed">
                 <ListHeader />
                 <TableSkeleton length={5} colSpan={14} />

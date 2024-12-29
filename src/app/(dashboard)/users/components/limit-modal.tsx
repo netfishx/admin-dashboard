@@ -134,7 +134,7 @@ export function LimitModal({ userId }: { userId: string }) {
         <div className="max-h-[50dvh] overflow-auto rounded-sm border">
           <ScrollableTable className="relative table-fixed">
             <TableHeader>
-              <TableRow className="sticky top-0 bg-muted z-10">
+              <TableRow className="bg-muted sticky top-0 z-10">
                 <TableHead className="w-32">{t("name")}</TableHead>
                 <TableHead>{t("min")}</TableHead>
                 <TableHead>{t("max")}</TableHead>

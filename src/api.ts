@@ -550,10 +550,7 @@ export async function getMaintainList() {
   };
 }
 
-export async function editMaintain(data: {
-  status: number;
-  ids: string[];
-}) {
+export async function editMaintain(data: { status: number; ids: string[] }) {
   const user = await getSession();
   return await apiRequest({
     url: "/gameSwitch/update",
@@ -733,9 +730,7 @@ export async function unbindGoogleAuth(data: { secret: string; code: string }) {
   });
 }
 // 设置资金密码
-export async function bindFundPassword(data: {
-  secret: string;
-}) {
+export async function bindFundPassword(data: { secret: string }) {
   const user = await getSession();
   return await apiRequest({
     url: "/agent/center/fund/bind",
@@ -971,7 +966,10 @@ export async function getWithdrawReportList(data: WithdrawReportParams) {
     const getStatus = ({
       approverStatus,
       moneyStatus,
-    }: { approverStatus: number; moneyStatus: number }) => {
+    }: {
+      approverStatus: number;
+      moneyStatus: number;
+    }) => {
       // 审核中
       if (approverStatus === 0 || approverStatus === 1) {
         return 0;
@@ -1056,9 +1054,7 @@ export async function deleteRole(data: { id: string }) {
 }
 
 // 新增归集地址
-export async function addCollectionAddress(data: {
-  size: number;
-}) {
+export async function addCollectionAddress(data: { size: number }) {
   const user = await getSession();
   return await apiRequest({
     url: "/collection/address/add",
@@ -1101,9 +1097,7 @@ export async function getOreFeeList() {
   });
 }
 // 添加矿工费
-export async function addOreFee(data: {
-  size: number;
-}) {
+export async function addOreFee(data: { size: number }) {
   const user = await getSession();
   return await apiRequest({
     url: "/orefee/address/add",
@@ -1113,9 +1107,7 @@ export async function addOreFee(data: {
   });
 }
 // 移除矿工费
-export async function removeOreFee(data: {
-  address: string;
-}) {
+export async function removeOreFee(data: { address: string }) {
   const user = await getSession();
   return await apiRequest({
     url: "/orefee/address/remove",
@@ -1180,9 +1172,7 @@ export async function deleteDictionary(data: { id: string }) {
 }
 
 // 字典项列表
-export async function getDictionaryItemList(params: {
-  dictCode: string;
-}) {
+export async function getDictionaryItemList(params: { dictCode: string }) {
   const user = await getSession();
   return await apiRequest<{ [key: string]: DictionaryItem[] }>({
     url: "/dict/item/selectList",
@@ -1484,9 +1474,7 @@ export async function postGetRewardRecordList(data: RewardRecordRequestParams) {
 }
 
 // 验证资金密码
-export async function postCheckMoneySecret(data: {
-  secret: string;
-}) {
+export async function postCheckMoneySecret(data: { secret: string }) {
   const user = await getSession();
   return await apiRequest({
     url: "/agent/center/fund/check",

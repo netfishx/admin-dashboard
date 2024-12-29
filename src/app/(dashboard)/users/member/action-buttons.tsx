@@ -87,7 +87,7 @@ export default function Action({
       <Button
         variant="ghost"
         size="sm"
-        className="px-2 text-sm text-primary hover:text-primary/80"
+        className="text-primary hover:text-primary/80 px-2 text-sm"
         onClick={() => {
           setMemberInfoData(data);
           setMemberInfoModal(true);
@@ -100,7 +100,7 @@ export default function Action({
         variant="ghost"
         size="sm"
         disabled={ratioIsPending}
-        className="px-2 text-sm text-primary hover:text-primary/80"
+        className="text-primary hover:text-primary/80 px-2 text-sm"
         onClick={() => {
           startGetRatio(async () => {
             setMemberId(data.id);
@@ -128,7 +128,7 @@ export default function Action({
             variant="ghost"
             size="sm"
             disabled={increaseCreditIsPending}
-            className="px-2 text-sm text-primary hover:text-primary/80"
+            className="text-primary hover:text-primary/80 px-2 text-sm"
             onClick={() => {
               startGetIncreaseCredit(async () => {
                 setMemberId(data.id);
@@ -150,7 +150,7 @@ export default function Action({
           <Button
             variant="ghost"
             size="sm"
-            className="px-2 text-sm text-primary hover:text-primary/80"
+            className="text-primary hover:text-primary/80 px-2 text-sm"
             onClick={() => {
               setMemberId(data.id);
               setMemberInfoData(data);
@@ -164,7 +164,7 @@ export default function Action({
             variant="ghost"
             size="sm"
             disabled={deleteCreditIsPending}
-            className="px-2 text-sm text-primary hover:text-primary/80"
+            className="text-primary hover:text-primary/80 px-2 text-sm"
             onClick={() => {
               startGetDeleteCredit(async () => {
                 setMemberId(data.id);
@@ -189,7 +189,7 @@ export default function Action({
         variant="ghost"
         size="sm"
         disabled={limitIsPending}
-        className="px-2 text-sm text-primary hover:text-primary/80"
+        className="text-primary hover:text-primary/80 px-2 text-sm"
         onClick={() => {
           startGetLimit(async () => {
             setMemberId(data.id);
@@ -233,7 +233,7 @@ export default function Action({
         variant="ghost"
         size="sm"
         disabled={rebateIsPending}
-        className="px-2 text-sm text-primary hover:text-primary/80"
+        className="text-primary hover:text-primary/80 px-2 text-sm"
         onClick={() => {
           startGetRebate(async () => {
             setMemberId(data.id);
@@ -259,7 +259,7 @@ export default function Action({
         variant="ghost"
         size="sm"
         disabled={loginLogIsPending}
-        className="px-2 text-sm text-primary hover:text-primary/80"
+        className="text-primary hover:text-primary/80 px-2 text-sm"
         onClick={() => {
           startGetLoginLog(async () => {
             setMemberId(data.id);
@@ -289,7 +289,7 @@ export default function Action({
         variant="ghost"
         size="sm"
         disabled={changeLogIsPending}
-        className="px-2 text-sm text-primary hover:text-primary/80"
+        className="text-primary hover:text-primary/80 px-2 text-sm"
         onClick={() => {
           startGetChangeLog(async () => {
             setMemberId(data.id);

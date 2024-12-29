@@ -89,7 +89,7 @@ export function LoginLogModal({
         <div className="max-h-[50dvh] overflow-auto rounded-sm border">
           <ScrollableTable className="relative">
             <TableHeader>
-              <TableRow className="sticky top-0 bg-muted">
+              <TableRow className="bg-muted sticky top-0">
                 <TableHead>{t("loginTime")}</TableHead>
                 <TableHead>{t("ip")}</TableHead>
                 <TableHead>{t("address")}</TableHead>
@@ -141,13 +141,13 @@ function StatusLabel({ status }: { status: number }) {
   const t = useTranslations("users.agents");
   if (status === 0) {
     return (
-      <div className="w-fit rounded-sm bg-primary/10 px-2 text-primary">
+      <div className="bg-primary/10 text-primary w-fit rounded-sm px-2">
         {t("success")}
       </div>
     );
   }
   return (
-    <div className="w-fit rounded-sm bg-destructive/10 px-2 text-destructive">
+    <div className="bg-destructive/10 text-destructive w-fit rounded-sm px-2">
       {t("failed")}
     </div>
   );

@@ -53,7 +53,10 @@ export function OrderDetailDialog() {
   function handleChange({
     pageNum,
     pageSize,
-  }: { pageNum: number; pageSize: number }) {
+  }: {
+    pageNum: number;
+    pageSize: number;
+  }) {
     startTransition(async () => {
       const { code, data, message } = await getGuandanReportListDetail({
         issueNumber: id,
@@ -110,11 +113,11 @@ export function OrderDetailDialog() {
                       <TableCell>
                         <Time time={item.createdAt} />
                       </TableCell>
-                      <TableCell className="flex justify-center items-center">
+                      <TableCell className="flex items-center justify-center">
                         <Button
                           variant="ghost"
                           size="sm"
-                          className="px-2 text-sm text-primary hover:text-primary/80"
+                          className="text-primary hover:text-primary/80 px-2 text-sm"
                           onClick={() => handleBombDetail(item)}
                         >
                           {t("more")}

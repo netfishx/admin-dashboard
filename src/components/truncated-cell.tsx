@@ -6,11 +6,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 
-export default function TruncatedCell({
-  value,
-}: {
-  value: string;
-}) {
+export default function TruncatedCell({ value }: { value: string }) {
   const truncateValue = (value: string) => {
     if (!value) {
       return "";

@@ -10,7 +10,7 @@ export default function PersonalSecurityPage() {
         fallback={
           <>
             <SecurityProgress />
-            <div className="flex-1 bg-background p-4">
+            <div className="bg-background flex-1 p-4">
               <div className="flex flex-col gap-2">
                 <Skeleton className="h-8" />
                 <Skeleton className="h-8" />

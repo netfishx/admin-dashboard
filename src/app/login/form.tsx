@@ -47,21 +47,21 @@ export function LoginForm() {
   const [code, setCode] = useState(nanoid());
   return (
     <Form action="" onSubmit={handleSubmit} ref={ref}>
-      <div className="relative flex h-screen w-full flex-col items-center justify-center gap-4 overflow-hidden bg-accent">
+      <div className="bg-accent relative flex h-screen w-full flex-col items-center justify-center gap-4 overflow-hidden">
         <Image src={bg} alt="background image" className="object-cover" fill />
         <div className="flex w-[400px] items-center justify-center gap-4">
           <Image src={logo} alt="Icon" className="size-8" />
           <span className="text-xl font-medium">{t("title")}</span>
         </div>
-        <div className="z-10 flex w-[400px] flex-col gap-6 rounded-lg border bg-background p-10">
+        <div className="bg-background z-10 flex w-[400px] flex-col gap-6 rounded-lg border p-10">
           <div className="flex flex-col gap-2">
-            <Label className="flex gap-1 text-sm font-medium after:text-destructive after:content-['*']">
+            <Label className="after:text-destructive flex gap-1 text-sm font-medium after:content-['*']">
               {t("username.label")}
             </Label>
             <Input placeholder={t("username.placeholder")} name="username" />
           </div>
           <div className="flex flex-col gap-2">
-            <Label className="flex gap-1 text-sm font-medium after:text-destructive after:content-['*']">
+            <Label className="after:text-destructive flex gap-1 text-sm font-medium after:content-['*']">
               {t("password.label")}
             </Label>
             <Password
@@ -71,14 +71,14 @@ export function LoginForm() {
             />
           </div>
           <div className="flex flex-col gap-2">
-            <Label className="flex gap-1 text-sm font-medium after:text-destructive after:content-['*']">
+            <Label className="after:text-destructive flex gap-1 text-sm font-medium after:content-['*']">
               {t("code.label")}
             </Label>
             <div className="flex gap-2">
               <Input placeholder={t("code.placeholder")} name="captcha" />
               <Image
                 src={`${process.env.NEXT_PUBLIC_BASE_URL}/security/captcha?code=${code}`}
-                className="cursor-pointer hover:opacity-80"
+                className="shrink-0 cursor-pointer hover:opacity-80"
                 width={96}
                 height={36}
                 alt="captcha"

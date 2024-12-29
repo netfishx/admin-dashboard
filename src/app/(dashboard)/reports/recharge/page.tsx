@@ -24,14 +24,16 @@ import { Form } from "./form";
 
 export default async function Page({
   searchParams,
-}: { searchParams: Promise<{ [key: string]: string | undefined }> }) {
+}: {
+  searchParams: Promise<{ [key: string]: string | undefined }>;
+}) {
   const { startTime, endTime } = await searchParams;
   const hasAdminPermission = await hasPermission("recharge_report_search");
   return (
     <div className="flex w-full flex-col gap-2">
       <Suspense
         fallback={
-          <div className="flex flex-col gap-2 bg-background p-4">
+          <div className="bg-background flex flex-col gap-2 p-4">
             <Skeleton />
             <Skeleton />
             <Skeleton />
@@ -43,7 +45,7 @@ export default async function Page({
           hasAdminPermission={hasAdminPermission}
         />
       </Suspense>
-      <div className="flex flex-1 flex-col gap-2 bg-background p-4">
+      <div className="bg-background flex flex-1 flex-col gap-2 p-4">
         <Suspense
           fallback={
             <Table className="table-fixed">
@@ -77,7 +79,9 @@ async function TableHeaderWrapper() {
 
 async function TableWrapper({
   searchParams,
-}: { searchParams: Promise<{ [key: string]: string | undefined }> }) {
+}: {
+  searchParams: Promise<{ [key: string]: string | undefined }>;
+}) {
   const {
     userId,
     orderNo,
@@ -92,7 +96,7 @@ async function TableWrapper({
 
   if (!((startTime && endTime) || orderNo)) {
     return (
-      <Table className="rounded-sm border table-fixed">
+      <Table className="table-fixed rounded-sm border">
         <TableHeaderWrapper />
         <TableBodySkeleton />
       </Table>
@@ -112,8 +116,8 @@ async function TableWrapper({
 
   const { data } = await getRechargeReportList(params);
   return (
-    <div className="bg-background flex-1 w-full ">
-      <div className="relative overflow-y-auto overflow-x-auto border rounded-sm">
+    <div className="bg-background w-full flex-1 ">
+      <div className="relative overflow-x-auto overflow-y-auto rounded-sm border">
         <Table className="table-fixed">
           <TableHeaderWrapper />
           <Suspense fallback={<TableBodySkeleton />}>
@@ -155,7 +159,7 @@ async function TableBodyWrapper({ data }: { data?: PageData<RechargeReport> }) {
         ))
       ) : (
         <TableRow>
-          <TableCell colSpan={6} className="text-center h-40">
+          <TableCell colSpan={6} className="h-40 text-center">
             {t("noData")}
           </TableCell>
         </TableRow>

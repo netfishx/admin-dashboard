@@ -30,7 +30,7 @@ export function Actions({ data }: { data: BackgroundImageList }) {
     <>
       <Button
         variant="ghost"
-        className="text-sm text-primary hover:text-primary/80"
+        className="text-primary hover:text-primary/80 text-sm"
         size="sm"
         onClick={() => {
           setOpen(true);
@@ -55,7 +55,7 @@ function DeleteBtn({ id }: { id: string }) {
         <Button
           variant="ghost"
           size="sm"
-          className="px-2 text-sm text-primary hover:text-primary/80"
+          className="text-primary hover:text-primary/80 px-2 text-sm"
           disabled={isPending}
         >
           {isPending ? <Loader2 className="animate-spin" /> : null}
@@ -67,7 +67,7 @@ function DeleteBtn({ id }: { id: string }) {
           <AlertDialogTitle>{t("delete")}</AlertDialogTitle>
           <AlertDialogDescription />
         </AlertDialogHeader>
-        <div className="text-sm text-muted-foreground">{t("deleteDesc")}</div>
+        <div className="text-muted-foreground text-sm">{t("deleteDesc")}</div>
         <AlertDialogFooter>
           <AlertDialogCancel>{translation("cancel")}</AlertDialogCancel>
           <AlertDialogAction

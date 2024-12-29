@@ -8,7 +8,7 @@ export async function Detail({ data }: { data?: UserBasicInfo }) {
   const t = await getTranslations("personal.info");
 
   return (
-    <div className="flex flex-1 flex-col gap-2 bg-background p-4">
+    <div className="bg-background flex flex-1 flex-col gap-2 p-4">
       <div className="flex items-center justify-between">
         <h2 className="text-sm font-medium">{t("walletInfo")}</h2>
         <DetailButton data={data} />
@@ -16,7 +16,7 @@ export async function Detail({ data }: { data?: UserBasicInfo }) {
 
       <div className="grid grid-cols-4 gap-4">
         <div>
-          <div className="mb-1 text-sm text-muted-foreground">
+          <div className="text-muted-foreground mb-1 text-sm">
             {t("balance")}
           </div>
           <div className="text-2xl font-normal">
@@ -28,7 +28,7 @@ export async function Detail({ data }: { data?: UserBasicInfo }) {
           </div>
         </div>
         <div>
-          <div className="mb-1 text-sm text-muted-foreground">
+          <div className="text-muted-foreground mb-1 text-sm">
             {t("availableBalance")}
           </div>
           <div className="text-2xl font-normal">
@@ -40,7 +40,7 @@ export async function Detail({ data }: { data?: UserBasicInfo }) {
           </div>
         </div>
         <div>
-          <div className="mb-1 text-sm text-muted-foreground">
+          <div className="text-muted-foreground mb-1 text-sm">
             {t("freezeBalance")}
           </div>
           <div className="text-2xl font-normal">
@@ -53,7 +53,7 @@ export async function Detail({ data }: { data?: UserBasicInfo }) {
         </div>
         <div />
         <div>
-          <div className="mb-1 text-sm text-muted-foreground">
+          <div className="text-muted-foreground mb-1 text-sm">
             {t("creditAmount")}
           </div>
           <div className="text-2xl font-normal">
@@ -65,7 +65,7 @@ export async function Detail({ data }: { data?: UserBasicInfo }) {
           </div>
         </div>
         <div>
-          <div className="mb-1 text-sm text-muted-foreground">
+          <div className="text-muted-foreground mb-1 text-sm">
             {t("pendingAmount")}
           </div>
           <div className="text-2xl font-normal">
@@ -77,7 +77,7 @@ export async function Detail({ data }: { data?: UserBasicInfo }) {
           </div>
         </div>
         <div>
-          <div className="mb-1 text-sm text-muted-foreground">
+          <div className="text-muted-foreground mb-1 text-sm">
             {t("unUsedCredit")}
           </div>
           <div className="text-2xl font-normal">
@@ -89,7 +89,7 @@ export async function Detail({ data }: { data?: UserBasicInfo }) {
           </div>
         </div>
         <div>
-          <div className="mb-1 text-sm text-muted-foreground">
+          <div className="text-muted-foreground mb-1 text-sm">
             {t("withdrawFreezeAmount")}
           </div>
           <div className="text-2xl font-normal">

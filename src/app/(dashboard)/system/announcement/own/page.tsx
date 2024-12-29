@@ -11,7 +11,7 @@ export default async function Own({
 }) {
   return (
     <div className="mt-2 flex h-full w-full flex-col gap-2">
-      <div className="flex flex-1 flex-col gap-2 bg-background p-2">
+      <div className="bg-background flex flex-1 flex-col gap-2 p-2">
         <AddBtn />
         <Suspense
           fallback={

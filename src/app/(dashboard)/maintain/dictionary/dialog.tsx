@@ -77,7 +77,7 @@ export function AddEditDialog() {
           <input type="hidden" name="id" value={data?.id} />
           <div className="flex flex-col gap-4">
             <div className="flex items-center gap-4">
-              <Label className="w-20 text-end before:content-['*'] before:text-destructive before:mr-1">
+              <Label className="before:text-destructive w-20 text-end before:mr-1 before:content-['*']">
                 {t("dictName")}
               </Label>
               <Input
@@ -91,7 +91,7 @@ export function AddEditDialog() {
               />
             </div>
             <div className="flex items-center gap-4">
-              <Label className="w-20 text-end before:content-['*'] before:text-destructive before:mr-1">
+              <Label className="before:text-destructive w-20 text-end before:mr-1 before:content-['*']">
                 {t("dictCode")}
               </Label>
               <Input

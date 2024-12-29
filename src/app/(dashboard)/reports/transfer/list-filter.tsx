@@ -57,7 +57,7 @@ export function ListFilter({
   };
 
   return (
-    <div className="flex flex-col gap-2 bg-background p-4">
+    <div className="bg-background flex flex-col gap-2 p-4">
       <div className="flex items-center gap-4">
         <div className="flex items-center gap-2">
           <Label>{t("dateRange")}</Label>

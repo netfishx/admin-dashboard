@@ -150,7 +150,7 @@ export function AddModal({
         <Form action="" ref={ref} onSubmit={handleSubmit}>
           <div className="flex w-full flex-col gap-4 overflow-y-auto p-4">
             <div className="flex items-center gap-4">
-              <Label className="w-24 shrink-0 text-right text-muted-foreground before:text-destructive before:content-['*'] before:mr-1">
+              <Label className="text-muted-foreground before:text-destructive w-24 shrink-0 text-right before:mr-1 before:content-['*']">
                 {t("announcementType")}
               </Label>
               {/* 公告类型 根据管理员和代理角色 展示的也不一样 */}
@@ -187,7 +187,7 @@ export function AddModal({
               </Select>
             </div>
             <div className="flex items-center gap-4">
-              <Label className="w-24 shrink-0 text-right text-muted-foreground before:text-destructive before:content-['*'] before:mr-1">
+              <Label className="text-muted-foreground before:text-destructive w-24 shrink-0 text-right before:mr-1 before:content-['*']">
                 {t("announcementTime")}
               </Label>
 
@@ -203,7 +203,7 @@ export function AddModal({
               />
             </div>
             <div className="flex items-center gap-4">
-              <Label className="w-24 shrink-0 text-right text-muted-foreground before:text-destructive before:content-['*'] before:mr-1">
+              <Label className="text-muted-foreground before:text-destructive w-24 shrink-0 text-right before:mr-1 before:content-['*']">
                 {t("language")}
               </Label>
               <ToggleGroup type="single" defaultValue="zh-CN">
@@ -213,7 +213,7 @@ export function AddModal({
             </div>
             {[2, 4].includes(type) && (
               <div className="flex items-center gap-4">
-                <Label className="w-24 shrink-0 text-right text-muted-foreground before:text-destructive before:content-['*'] before:mr-1">
+                <Label className="text-muted-foreground before:text-destructive w-24 shrink-0 text-right before:mr-1 before:content-['*']">
                   {t("title")}
                 </Label>
                 <Input
@@ -226,7 +226,7 @@ export function AddModal({
               </div>
             )}
             <div className="flex items-center gap-4">
-              <Label className="w-24 shrink-0 text-right text-muted-foreground before:text-destructive before:content-['*'] before:mr-1">
+              <Label className="text-muted-foreground before:text-destructive w-24 shrink-0 text-right before:mr-1 before:content-['*']">
                 {t("announcementContent")}
               </Label>
               <input type="hidden" name="contentId" value={data?.content.id} />
@@ -239,7 +239,7 @@ export function AddModal({
               />
             </div>
             <div className="flex items-center gap-4">
-              <Label className="w-24 shrink-0 text-right text-muted-foreground before:text-destructive before:content-['*'] before:mr-1">
+              <Label className="text-muted-foreground before:text-destructive w-24 shrink-0 text-right before:mr-1 before:content-['*']">
                 {t("status")}
               </Label>
               <RadioGroup

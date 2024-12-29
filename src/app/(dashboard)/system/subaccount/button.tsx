@@ -42,7 +42,7 @@ export function DeleteButton({ id }: { id: string }) {
     <Button
       variant="ghost"
       size="sm"
-      className="text-sm text-destructive hover:text-destructive/80"
+      className="text-destructive hover:text-destructive/80 text-sm"
       onClick={() => {
         setData(id);
         setOpen(true);
@@ -60,7 +60,7 @@ export function EditButton({ data }: { data: Subaccount }) {
     <Button
       variant="ghost"
       size="sm"
-      className="text-sm text-primary hover:text-primary/80"
+      className="text-primary hover:text-primary/80 text-sm"
       onClick={() => {
         setData(data);
         setOpen(true);
@@ -82,7 +82,7 @@ export function LoginLogButton({ id }: { id: string }) {
       variant="ghost"
       size="sm"
       disabled={isPending}
-      className="text-sm text-primary hover:text-primary/80"
+      className="text-primary hover:text-primary/80 text-sm"
       onClick={() => {
         startGetLoginLog(async () => {
           setId(id);

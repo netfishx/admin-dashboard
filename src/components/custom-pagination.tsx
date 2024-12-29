@@ -49,7 +49,7 @@ export function CustomPagination({
       <Pagination className="flex justify-end">
         <PaginationContent>
           <PaginationItem>
-            <Button variant="ghost" className="text-sm p-0" disabled>
+            <Button variant="ghost" className="p-0 text-sm" disabled>
               {t("total", { total })}
             </Button>
           </PaginationItem>
@@ -157,7 +157,7 @@ export function CustomPagination({
               value={pageSize.toString()}
               onValueChange={(value) => handlePageSizeChange(value)}
             >
-              <SelectTrigger className="h-7 w-28 text-sm text-muted-foreground">
+              <SelectTrigger className="text-muted-foreground h-7 w-28 text-sm">
                 <SelectValue
                   defaultValue={pageSize ?? 10}
                   placeholder={t("pageSize")}

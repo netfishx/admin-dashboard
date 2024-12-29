@@ -77,7 +77,7 @@ export default async function DashboardPage({
           {permissions?.includes("admin_stat") && (
             <div className="grid gap-2">
               <Suspense
-                fallback={<div className="h-24 rounded-sm bg-card p-4" />}
+                fallback={<div className="bg-card h-24 rounded-sm p-4" />}
               >
                 <SalutationsWrapper start={start} end={todayEnd} />
               </Suspense>
@@ -86,11 +86,11 @@ export default async function DashboardPage({
           <Suspense
             fallback={
               <div className="grid grid-cols-2 gap-2">
-                <div className="rounded-sm bg-card">
+                <div className="bg-card rounded-sm">
                   <div className="p-4">{t("chart.todayCashflow")}</div>
                   <div className="h-40 lg:h-48 xl:h-72" />
                 </div>
-                <div className="rounded-sm bg-card">
+                <div className="bg-card rounded-sm">
                   <div className="p-4">{t("chart.todayActiveUsers")}</div>
                   <div className="h-40 lg:h-48 xl:h-72" />
                 </div>
@@ -104,7 +104,7 @@ export default async function DashboardPage({
       <div className="flex w-[280px] shrink-0 flex-col gap-2 min-[2400px]:w-[560px]">
         <Suspense
           fallback={
-            <div className="h-48 shrink-0 rounded-sm bg-card">
+            <div className="bg-card h-48 shrink-0 rounded-sm">
               <div className="p-4 text-base">
                 {permissions?.includes("admin_stat")
                   ? t("dataOverview")
@@ -123,7 +123,7 @@ export default async function DashboardPage({
         <QuickAccess />
         <Suspense
           fallback={
-            <div className="relative flex-1 rounded-sm bg-background p-4">
+            <div className="bg-background relative flex-1 rounded-sm p-4">
               <div className="mb-4 p-4 text-base">{t("announcement")}</div>
               <div className="h-48" />
             </div>
@@ -275,12 +275,12 @@ async function DayChartWrapper({
         />
       </div>
       <div className="flex flex-1 flex-col gap-2">
-        <div className="grid gap-2 rounded-sm bg-card p-4">
+        <div className="bg-card grid gap-2 rounded-sm p-4">
           <Suspense>
             <WeekChart chartConfig={weekChart1Config} />
           </Suspense>
         </div>
-        <div className="grid gap-2 rounded-sm bg-card p-4">
+        <div className="bg-card grid gap-2 rounded-sm p-4">
           <Suspense>
             <WeekChart chartConfig={weekChart2Config} />
           </Suspense>
@@ -443,7 +443,7 @@ async function MemberWeekChartWrapper({
   return (
     <>
       <div className="flex flex-1 flex-col gap-2">
-        <div className="grid gap-2 rounded-sm bg-card p-4">
+        <div className="bg-card grid gap-2 rounded-sm p-4">
           <Suspense>
             <WeekChart chartConfig={weekChart3Config} />
           </Suspense>
@@ -494,7 +494,7 @@ async function FundWeekChartWrapper({
   return (
     <>
       <div className="flex flex-1 flex-col gap-2">
-        <div className="grid gap-2 rounded-sm bg-card p-4">
+        <div className="bg-card grid gap-2 rounded-sm p-4">
           <Suspense>
             <WeekChart chartConfig={weekChart4Config} />
           </Suspense>

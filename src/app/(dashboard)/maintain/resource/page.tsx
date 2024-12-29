@@ -28,11 +28,11 @@ export default async function ResourcePage({
   const t = await getTranslations("maintain.resource");
   return (
     <div className="flex w-full flex-col gap-2">
-      <div className="flex items-center justify-between bg-background p-4">
+      <div className="bg-background flex items-center justify-between p-4">
         <div className="text-sm font-medium">{t("title")}</div>
         <Add />
       </div>
-      <div className="bg-background flex-1 p-4 flex flex-col gap-2">
+      <div className="bg-background flex flex-1 flex-col gap-2 p-4">
         <Suspense
           fallback={
             <div className="rounded-sm border">
@@ -117,7 +117,7 @@ async function TableBodyWrapper({
             <TableCell className="text-center">
               <span
                 className={cn([
-                  "rounded-sm w-16 h-6 leading-6 inline-block",
+                  "inline-block h-6 w-16 rounded-sm leading-6",
                   item.status === 0
                     ? "bg-green/20 text-green"
                     : "bg-destructive/20 text-destructive",
@@ -126,7 +126,7 @@ async function TableBodyWrapper({
                 {item.status === 0 ? t("enable") : t("disable")}
               </span>
             </TableCell>
-            <TableCell className="sticky right-0 w-40 bg-background text-center">
+            <TableCell className="bg-background sticky right-0 w-40 text-center">
               <Actions data={item} />
             </TableCell>
           </TableRow>
@@ -154,7 +154,7 @@ async function TableHeaderWrapper() {
         <TableHead>{t("sort")}</TableHead>
         <TableHead>{t("updateTime")}</TableHead>
         <TableHead className="text-center">{t("status")}</TableHead>
-        <TableHead className="sticky right-0 bg-muted text-center">
+        <TableHead className="bg-muted sticky right-0 text-center">
           {t("action")}
         </TableHead>
       </TableRow>

@@ -56,7 +56,7 @@ export function List({ data }: { data: WithdrawFee }) {
   const formRef = useRef<HTMLFormElement>(null);
   return (
     <div className="flex flex-col gap-2">
-      <div className="flex flex-col gap-2 bg-background p-4">
+      <div className="bg-background flex flex-col gap-2 p-4">
         <div className="flex items-center justify-between gap-4">
           {t("title")}
           <div className="flex items-center gap-2">
@@ -73,10 +73,10 @@ export function List({ data }: { data: WithdrawFee }) {
           </div>
         </div>
       </div>
-      <div className="flex h-full flex-col bg-background p-4 absolute mt-19 mr-2">
+      <div className="bg-background mt-19 absolute mr-2 flex h-full flex-col p-4">
         <div className="rounded-sm border">
           <Form action="" onSubmit={handleSave} ref={formRef}>
-            <Table className="table-fixed bg-background h-full">
+            <Table className="bg-background h-full table-fixed">
               <TableHeaderWrapper />
               <TableBody>
                 <TableRow>

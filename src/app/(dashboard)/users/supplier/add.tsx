@@ -98,7 +98,7 @@ function AddDialog({
               </div>
               <div className="flex items-center gap-2">
                 <Label className="w-32 shrink-0 text-end" />
-                <div className="flex-1 text-xs text-destructive">
+                <div className="text-destructive flex-1 text-xs">
                   {t("usernameWarning")}
                 </div>
               </div>
@@ -134,7 +134,7 @@ function AddDialog({
               </div>
               <div className="flex items-center gap-2">
                 <Label className="w-32 shrink-0 text-end" />
-                <div className="flex-1 text-xs text-destructive">
+                <div className="text-destructive flex-1 text-xs">
                   {t("passwordWarning")}
                 </div>
               </div>

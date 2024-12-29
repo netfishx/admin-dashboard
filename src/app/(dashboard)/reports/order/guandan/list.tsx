@@ -43,8 +43,8 @@ export async function ListHeader() {
         <TableHead className="w-48">{t("gameStartTime")}</TableHead>
         <TableHead className="w-48">{t("settlementFinishTime")}</TableHead>
 
-        <TableHead className="sticky right-0 w-24 bg-muted text-center p-0">
-          <div className="shadow-l h-full px-4 flex justify-center items-center">
+        <TableHead className="bg-muted sticky right-0 w-24 p-0 text-center">
+          <div className="shadow-l flex h-full items-center justify-center px-4">
             {t("action")}
           </div>
         </TableHead>
@@ -101,8 +101,8 @@ async function ListBody({ list }: { list: GameRecordRequestRecords[] }) {
             <TableCell>
               <Time time={item.gameEndTime} />
             </TableCell>
-            <TableCell className="sticky right-0 bg-background p-0">
-              <div className="shadow-l py-2 px-4 flex justify-center items-center h-[65px]">
+            <TableCell className="bg-background sticky right-0 p-0">
+              <div className="shadow-l flex h-[65px] items-center justify-center px-4 py-2">
                 <DetailButton item={item} />
               </div>
             </TableCell>
@@ -127,8 +127,8 @@ export async function List({
   const params = await searchParams;
   if (!(params?.startTime && params?.endTime)) {
     return (
-      <div className="p-4 bg-background flex-1">
-        <div className="border rounded-sm">
+      <div className="bg-background flex-1 p-4">
+        <div className="rounded-sm border">
           <Table className="table-fixed">
             <ListHeader />
             <TableSkeleton length={5} colSpan={14} />
@@ -146,8 +146,8 @@ export async function List({
   };
   const { data } = await getGuandanReportList(p);
   return (
-    <div className="p-4 bg-background flex-1">
-      <div className="border rounded-sm relative">
+    <div className="bg-background flex-1 p-4">
+      <div className="relative rounded-sm border">
         <Table className="table-fixed">
           <ListHeader />
           <ListBody list={data?.list ?? []} />

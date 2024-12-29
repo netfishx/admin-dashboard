@@ -34,7 +34,7 @@ export function RoleDelete() {
             <span className="text-base">
               {translations("deleteModalDescription")}
             </span>
-            <span className="text-xs text-destructive">
+            <span className="text-destructive text-xs">
               {translations("deleteModalDescriptionWarning")}
             </span>
           </AlertDialogDescription>

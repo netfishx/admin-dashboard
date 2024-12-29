@@ -14,7 +14,7 @@ export async function Salutations({
 }) {
   const t = await getTranslations();
   return (
-    <div className="flex flex-col rounded-sm bg-card p-4">
+    <div className="bg-card flex flex-col rounded-sm p-4">
       <div className="flex items-center justify-around pb-2">
         <Item
           name={t("baccaratShareAmount")}

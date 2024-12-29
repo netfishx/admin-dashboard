@@ -31,8 +31,8 @@ export async function List({
   });
 
   return (
-    <div className="p-2 gap-2 flex flex-col h-full bg-background">
-      <div className="border rounded-sm">
+    <div className="bg-background flex h-full flex-col gap-2 p-2">
+      <div className="rounded-sm border">
         <Table className="table-fixed">
           <TableHeaderWrapper />
           <TableBodyWrapper data={data} />
@@ -63,7 +63,7 @@ export async function TableHeaderWrapper() {
         <TableHead className="w-[450px]">{t("content")}</TableHead>
         <TableHead className="w-48 text-center">{t("status")}</TableHead>
         <TableHead className="w-48">{t("type")}</TableHead>
-        <TableHead className="w-24 text-center sticky right-0 bg-muted ">
+        <TableHead className="bg-muted sticky right-0 w-24 text-center ">
           {t("action")}
         </TableHead>
       </TableRow>
@@ -115,7 +115,7 @@ export async function TableBodyWrapper({
             <TableCell className="text-center">
               <div
                 className={cn(
-                  "rounded-sm w-16 h-6 leading-6 inline-block",
+                  "inline-block h-6 w-16 rounded-sm leading-6",
                   item.status === 0 && "bg-destructive/10 text-destructive",
                   item.status === 1 && "bg-green/10 text-green",
                 )}
@@ -136,7 +136,7 @@ export async function TableBodyWrapper({
                 return status ? t(status.label) : item.type;
               })()}
             </TableCell>
-            <TableCell className="text-center sticky right-0 bg-background">
+            <TableCell className="bg-background sticky right-0 text-center">
               <EditBtn data={item} />
             </TableCell>
           </TableRow>

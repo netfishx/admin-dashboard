@@ -22,7 +22,7 @@ export default function TopTabs() {
   };
 
   return (
-    <div className="flex flex-col gap-2 bg-background p-4">
+    <div className="bg-background flex flex-col gap-2 p-4">
       <Tabs defaultValue={TabsTypes.RATIO} className="w-[400px]">
         <TabsList className="grid w-full grid-cols-2">
           <Link href="/reports/agent/baccarat/ratio">

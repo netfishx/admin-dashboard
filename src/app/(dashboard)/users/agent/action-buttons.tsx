@@ -69,7 +69,7 @@ export default function Action({
       <Button
         variant="ghost"
         size="sm"
-        className="px-2 text-sm text-primary hover:text-primary/80"
+        className="text-primary hover:text-primary/80 px-2 text-sm"
         onClick={() => {
           setAgentData(data);
           setAgentId(data.id);
@@ -83,7 +83,7 @@ export default function Action({
           variant="ghost"
           size="sm"
           disabled={transferMoneyIsPending}
-          className="px-2 text-sm text-primary hover:text-primary/80"
+          className="text-primary hover:text-primary/80 px-2 text-sm"
           onClick={() => {
             startGetTransferMoney(async () => {
               setAgentData(data);
@@ -105,7 +105,7 @@ export default function Action({
         variant="ghost"
         size="sm"
         disabled={gameConfigIsPending}
-        className="px-2 text-sm text-primary hover:text-primary/80"
+        className="text-primary hover:text-primary/80 px-2 text-sm"
         onClick={() => {
           startGetGameConfig(async () => {
             setAgentId(data.id);
@@ -130,7 +130,7 @@ export default function Action({
         variant="ghost"
         size="sm"
         disabled={rebateIsPending}
-        className="px-2 text-sm text-primary hover:text-primary/80"
+        className="text-primary hover:text-primary/80 px-2 text-sm"
         onClick={() => {
           startGetRebate(async () => {
             setAgentId(data.id);
@@ -155,7 +155,7 @@ export default function Action({
         variant="ghost"
         size="sm"
         disabled={loginLogIsPending}
-        className="px-2 text-sm text-primary hover:text-primary/80"
+        className="text-primary hover:text-primary/80 px-2 text-sm"
         onClick={() => {
           startGetLoginLog(async () => {
             setAgentId(data.id);
@@ -184,7 +184,7 @@ export default function Action({
         variant="ghost"
         size="sm"
         disabled={changeLogIsPending}
-        className="px-2 text-sm text-primary hover:text-primary/80"
+        className="text-primary hover:text-primary/80 px-2 text-sm"
         onClick={() => {
           startGetChangeLog(async () => {
             setAgentId(data.id);

@@ -24,7 +24,7 @@ export async function List({
   const { startTime, endTime, userId, pageNum, pageSize } = await searchParams;
   if (!(startTime && endTime)) {
     return (
-      <Table className="rounded-sm border table-fixed">
+      <Table className="table-fixed rounded-sm border">
         <TableHeaderWrapper />
         <TableBodySkeleton />
       </Table>
@@ -125,7 +125,7 @@ export async function TableBodyWrapper({
         ))
       ) : (
         <TableRow>
-          <TableCell colSpan={6} className="text-center h-40">
+          <TableCell colSpan={6} className="h-40 text-center">
             {translations("noData")}
           </TableCell>
         </TableRow>

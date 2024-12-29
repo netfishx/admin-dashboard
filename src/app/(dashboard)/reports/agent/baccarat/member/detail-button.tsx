@@ -6,7 +6,9 @@ import { useRouter } from "next/navigation";
 import { useSearchParams } from "next/navigation";
 export default function DetailButton({
   item,
-}: { item: MemberBetReportRequestRecords }) {
+}: {
+  item: MemberBetReportRequestRecords;
+}) {
   const t = useTranslations("report.orderlist");
   const router = useRouter();
   const searchParams = useSearchParams();

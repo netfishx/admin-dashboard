@@ -17,7 +17,7 @@ async function CommonWrapper({
     <>
       <Suspense
         fallback={
-          <div className="flex items-center justify-between bg-background p-4">
+          <div className="bg-background flex items-center justify-between p-4">
             <Skeleton />
           </div>
         }
@@ -29,7 +29,7 @@ async function CommonWrapper({
       </Suspense>
       <Suspense
         fallback={
-          <div className="flex-1 bg-background p-2">
+          <div className="bg-background flex-1 p-2">
             <div className="relative rounded-sm border">
               <Table className="table-fixed">
                 <ListHeader />
@@ -50,7 +50,9 @@ async function CommonWrapper({
 
 export default function Page({
   searchParams,
-}: { searchParams: Promise<{ [key: string]: string | undefined }> }) {
+}: {
+  searchParams: Promise<{ [key: string]: string | undefined }>;
+}) {
   return (
     <div className="flex w-full flex-col gap-2">
       <Suspense>

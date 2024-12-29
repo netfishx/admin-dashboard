@@ -15,10 +15,10 @@ export default function Page() {
   const t = useTranslations("personal.info");
   return (
     <div className="flex h-full w-full flex-col gap-2">
-      <div className="flex flex-col gap-2 bg-background p-4">
+      <div className="bg-background flex flex-col gap-2 p-4">
         <div className="text-sm font-medium">{t("userInfo")}</div>
         <div className="flex items-center gap-2">
-          <div className="w-[100px] text-right text-sm text-muted-foreground">
+          <div className="text-muted-foreground w-[100px] text-right text-sm">
             {t("account")}:
           </div>
           <div className="flex items-center text-sm">
@@ -28,7 +28,7 @@ export default function Page() {
         </div>
         {session?.inviteCode && (
           <div className="flex items-center gap-2">
-            <div className="w-[100px] text-right text-sm text-muted-foreground">
+            <div className="text-muted-foreground w-[100px] text-right text-sm">
               {t("inviteCode")}:
             </div>
             <div className="flex items-center text-sm">

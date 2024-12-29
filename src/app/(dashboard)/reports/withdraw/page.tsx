@@ -24,14 +24,16 @@ import { getTranslations } from "next-intl/server";
 
 export default async function Page({
   searchParams,
-}: { searchParams: Promise<{ [key: string]: string | undefined }> }) {
+}: {
+  searchParams: Promise<{ [key: string]: string | undefined }>;
+}) {
   const { startTime, endTime } = await searchParams;
   const hasAdminPermission = await hasPermission("withdraw_report_search");
   return (
     <div className="flex w-full flex-col gap-2">
       <Suspense
         fallback={
-          <div className="flex flex-col gap-2 bg-background p-4">
+          <div className="bg-background flex flex-col gap-2 p-4">
             <Skeleton />
             <Skeleton />
             <Skeleton />
@@ -43,7 +45,7 @@ export default async function Page({
           hasAdminPermission={hasAdminPermission}
         />
       </Suspense>
-      <div className="flex flex-1 flex-col gap-2 bg-background p-4">
+      <div className="bg-background flex flex-1 flex-col gap-2 p-4">
         <Suspense
           fallback={
             <Table className="table-fixed">
@@ -80,7 +82,9 @@ async function TableHeaderWrapper() {
 }
 async function TableWrapper({
   searchParams,
-}: { searchParams: Promise<{ [key: string]: string | undefined }> }) {
+}: {
+  searchParams: Promise<{ [key: string]: string | undefined }>;
+}) {
   const {
     orderNo,
     operatorSymbol,
@@ -109,7 +113,7 @@ async function TableWrapper({
 
   if (!((startTime && endTime) || orderNo)) {
     return (
-      <Table className="rounded-sm border table-fixed">
+      <Table className="table-fixed rounded-sm border">
         <TableHeaderWrapper />
         <TableBodySkeleton />
       </Table>
@@ -118,8 +122,8 @@ async function TableWrapper({
 
   const { data } = await getWithdrawReportList(params);
   return (
-    <div className="bg-background flex-1 w-full">
-      <div className="relative overflow-y-auto overflow-x-auto border rounded-sm">
+    <div className="bg-background w-full flex-1">
+      <div className="relative overflow-x-auto overflow-y-auto rounded-sm border">
         <Table className="table-fixed">
           <TableHeaderWrapper />
           <Suspense fallback={<TableBodySkeleton />}>

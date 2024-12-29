@@ -109,7 +109,7 @@ export function CheckDialog(props: Dialogprops) {
               <DialogTitle>{t("withdraw")}</DialogTitle>
             </DialogHeader>
             <Form action="" onSubmit={handleSubmit} ref={ref}>
-              <div className="flex flex-col gap-4 max-h-[50dvh] overflow-y-auto">
+              <div className="flex max-h-[50dvh] flex-col gap-4 overflow-y-auto">
                 <div className="flex items-center gap-4">
                   <Label className="flex min-w-[120px] shrink-0 items-center justify-end gap-1">
                     <span className="text-muted-foreground">
@@ -153,10 +153,10 @@ export function CheckDialog(props: Dialogprops) {
                 </div>
                 <div className="ml-[140px] space-y-1 text-sm">
                   <div className="text-destructive">{t("notice")}</div>
-                  <div className="pl-4 text-destructive">
+                  <div className="text-destructive pl-4">
                     {t("notAllowWithdraw")}
                   </div>
-                  <div className="pl-4 text-destructive">{t("stopAccept")}</div>
+                  <div className="text-destructive pl-4">{t("stopAccept")}</div>
                 </div>
 
                 <div className="flex items-center gap-4">
@@ -167,7 +167,7 @@ export function CheckDialog(props: Dialogprops) {
                   </Label>
                   <Input
                     type="text"
-                    className="flex-1 bg-gray-50 cursor-not-allowed"
+                    className="flex-1 cursor-not-allowed bg-gray-50"
                     required
                     name="withdrawFee"
                     defaultValue={withDrawFee}

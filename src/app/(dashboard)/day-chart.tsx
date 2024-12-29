@@ -20,7 +20,7 @@ export function DayChart({
 }) {
   const t = useTranslations();
   return (
-    <div className="flex flex-col rounded-sm bg-card p-4">
+    <div className="bg-card flex flex-col rounded-sm p-4">
       <div>{title}</div>
       <div className="flex items-center justify-center">
         {data.length > 0 ? (
@@ -102,7 +102,7 @@ export function DayChart({
           </ChartContainer>
         ) : (
           <div className="h-40 lg:h-48 xl:h-72">
-            <div className="flex h-full items-center justify-center text-muted-foreground">
+            <div className="text-muted-foreground flex h-full items-center justify-center">
               {t("noData")}
             </div>
           </div>

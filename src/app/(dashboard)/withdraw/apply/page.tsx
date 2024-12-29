@@ -37,7 +37,7 @@ export default async function Page({
     <div className="flex w-full flex-col gap-2">
       <Suspense
         fallback={
-          <div className="flex flex-col gap-2 bg-background p-4">
+          <div className="bg-background flex flex-col gap-2 p-4">
             <Skeleton />
             <Skeleton />
           </div>
@@ -45,10 +45,10 @@ export default async function Page({
       >
         <Form key={`${startTime}-${endTime}`} />
       </Suspense>
-      <div className="flex flex-1 flex-col gap-2 bg-background p-4">
+      <div className="bg-background flex flex-1 flex-col gap-2 p-4">
         <Suspense
           fallback={
-            <Table className="rounded-sm border table-fixed">
+            <Table className="table-fixed rounded-sm border">
               <TableHeaderWrapper />
               <TableBodySkeleton />
             </Table>
@@ -79,7 +79,7 @@ async function TableWrapper({
 
   if (!(startTime && endTime)) {
     return (
-      <Table className="rounded-sm border table-fixed">
+      <Table className="table-fixed rounded-sm border">
         <TableHeaderWrapper />
         <TableBodySkeleton />
       </Table>
@@ -97,8 +97,8 @@ async function TableWrapper({
   });
 
   return (
-    <div className="bg-background flex-1 w-full">
-      <div className="relative overflow-y-auto overflow-x-auto border rounded-sm">
+    <div className="bg-background w-full flex-1">
+      <div className="relative overflow-x-auto overflow-y-auto rounded-sm border">
         <Table className="table-fixed">
           <TableHeaderWrapper />
           <Suspense fallback={<TableBodySkeleton />}>
@@ -137,8 +137,8 @@ async function TableHeaderWrapper() {
         </TableHead>
         <TableHead className="w-32 text-center">{t("withdrawMode")}</TableHead>
         <TableHead className="w-32 text-center">{t("moneyStatus")}</TableHead>
-        <TableHead className="w-48 sticky right-0 bg-muted text-center p-0">
-          <div className="shadow-l h-full px-4 flex justify-center items-center">
+        <TableHead className="bg-muted sticky right-0 w-48 p-0 text-center">
+          <div className="shadow-l flex h-full items-center justify-center px-4">
             {t("action")}
           </div>
         </TableHead>
@@ -181,7 +181,7 @@ async function TableBodyWrapper({ list }: { list: ApplyData[] }) {
             <TableCell className="text-center">
               <div
                 className={cn(
-                  "rounded-sm w-16 h-6 leading-6 inline-block",
+                  "inline-block h-6 w-16 rounded-sm leading-6",
                   item.approverStatus === 0 && "bg-primary/10 text-primary",
                   item.approverStatus === 1 &&
                     "bg-muted-foreground/10 text-muted-foreground",
@@ -202,7 +202,7 @@ async function TableBodyWrapper({ list }: { list: ApplyData[] }) {
             <TableCell className="text-center">
               <div
                 className={cn(
-                  "rounded-sm w-16 h-6 leading-6 inline-block",
+                  "inline-block h-6 w-16 rounded-sm leading-6",
                   item.withdrawMode === 0 && "bg-green/10 text-green",
                   item.withdrawMode === 1 && "bg-orange/10 text-orange",
                 )}
@@ -219,7 +219,7 @@ async function TableBodyWrapper({ list }: { list: ApplyData[] }) {
             <TableCell className="text-center">
               <div
                 className={cn(
-                  "rounded-sm w-16 h-6 leading-6 inline-block",
+                  "inline-block h-6 w-16 rounded-sm leading-6",
                   item.moneyStatus === 0 && "bg-primary/10 text-primary",
                   item.moneyStatus === 1 && "bg-green/10 text-green",
                   item.moneyStatus === 2 &&
@@ -235,8 +235,8 @@ async function TableBodyWrapper({ list }: { list: ApplyData[] }) {
                 {item.moneyStatus === null && <span>--</span>}
               </div>
             </TableCell>
-            <TableCell className="sticky right-0 bg-background p-0">
-              <div className="shadow-l py-2 px-4 flex justify-center items-center">
+            <TableCell className="bg-background sticky right-0 p-0">
+              <div className="shadow-l flex items-center justify-center px-4 py-2">
                 <Actions data={item} currentUserId={userInfo?.id ?? "0"} />
               </div>
             </TableCell>
@@ -244,7 +244,7 @@ async function TableBodyWrapper({ list }: { list: ApplyData[] }) {
         ))
       ) : (
         <TableRow>
-          <TableCell colSpan={13} className="text-center h-40">
+          <TableCell colSpan={13} className="h-40 text-center">
             {translations("noData")}
           </TableCell>
         </TableRow>

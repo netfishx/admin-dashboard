@@ -31,7 +31,7 @@ export function Actions({ data }: { data: DictionaryList }) {
       <Button
         variant="ghost"
         size="sm"
-        className="text-sm text-primary hover:text-primary/80"
+        className="text-primary hover:text-primary/80 text-sm"
         onClick={() => {
           setData(data);
           setOpen(true);
@@ -43,7 +43,7 @@ export function Actions({ data }: { data: DictionaryList }) {
         variant="ghost"
         size="sm"
         disabled={isPending}
-        className="text-sm text-primary hover:text-primary/80"
+        className="text-primary hover:text-primary/80 text-sm"
         onClick={() => {
           startTransition(async () => {
             const res = await getDictionaryItemList({
@@ -66,7 +66,7 @@ export function Actions({ data }: { data: DictionaryList }) {
       <Button
         variant="ghost"
         size="sm"
-        className="text-sm text-destructive hover:text-destructive/80"
+        className="text-destructive hover:text-destructive/80 text-sm"
         onClick={() => {
           setData(data);
           setOpenDelete(true);

@@ -7,11 +7,11 @@ export function DataOverviewFlow({ data }: { data: TodayFundList }) {
   const t = useTranslations();
 
   return (
-    <div className="h-48 shrink-0 rounded-sm bg-card p-4">
+    <div className="bg-card h-48 shrink-0 rounded-sm p-4">
       <div className="mb-4 text-base">{t("dataOverview")}</div>
       <div className="grid grid-cols-2 gap-y-2 text-center">
         <div className="flex flex-col items-center justify-center p-2">
-          <p className="mb-1 text-xs text-muted-foreground">
+          <p className="text-muted-foreground mb-1 text-xs">
             {t("chargeAmount")}
           </p>
           <div className="text-xs font-semibold">
@@ -19,7 +19,7 @@ export function DataOverviewFlow({ data }: { data: TodayFundList }) {
           </div>
         </div>
         <div className="flex flex-col items-center justify-center p-2">
-          <p className="mb-1 text-xs text-muted-foreground">
+          <p className="text-muted-foreground mb-1 text-xs">
             {t("withdrawAmount")}
           </p>
           <div className="text-xs font-semibold">
@@ -27,7 +27,7 @@ export function DataOverviewFlow({ data }: { data: TodayFundList }) {
           </div>
         </div>
         <div className="flex flex-col items-center justify-center p-2">
-          <p className="mb-1 text-xs text-muted-foreground">
+          <p className="text-muted-foreground mb-1 text-xs">
             {t("creditAmount")}
           </p>
           <div className="text-xs font-semibold">
@@ -35,7 +35,7 @@ export function DataOverviewFlow({ data }: { data: TodayFundList }) {
           </div>
         </div>
         <div className="flex flex-col items-center justify-center p-2">
-          <p className="mb-1 text-xs text-muted-foreground">{t("lentMoney")}</p>
+          <p className="text-muted-foreground mb-1 text-xs">{t("lentMoney")}</p>
           <div className="text-xs font-semibold">
             <TruncatedAmount amount={data?.lendAmount ?? 0} />
           </div>

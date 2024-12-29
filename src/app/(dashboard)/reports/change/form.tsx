@@ -49,7 +49,7 @@ export function Form({ hasAdminPermission }: { hasAdminPermission: boolean }) {
     }
   }
   return (
-    <div className="flex flex-col gap-4 bg-background p-4">
+    <div className="bg-background flex flex-col gap-4 p-4">
       <div className="flex items-center gap-4">
         <div className="flex items-center gap-2">
           <Label className="shrink-0">{t("createdTime")}</Label>

@@ -2,16 +2,16 @@
 
 .progress {
   --progress-color: var(--primary);
-  @apply h-2 w-1/2 rounded-2xl bg-(--progress-color)/20;
+  @apply bg-(--progress-color)/20 h-2 w-1/2 rounded-2xl;
   &::-moz-progress-bar {
-    @apply rounded-2xl bg-(--progress-color);
+    @apply bg-(--progress-color) rounded-2xl;
   }
 
   &::-webkit-progress-bar {
     @apply rounded-2xl bg-transparent;
   }
   &::-webkit-progress-value {
-    @apply rounded-2xl bg-(--progress-color);
+    @apply bg-(--progress-color) rounded-2xl;
   }
 }
 

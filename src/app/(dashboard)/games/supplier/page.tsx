@@ -38,14 +38,14 @@ export default function Page({
       </Suspense>
       <Suspense
         fallback={
-          <div className="flex items-center justify-between bg-background p-4">
+          <div className="bg-background flex items-center justify-between p-4">
             <Skeleton className="h-9 w-full" />
           </div>
         }
       >
         <SupplierForm />
       </Suspense>
-      <div className="flex flex-1 flex-col gap-4 bg-background p-4">
+      <div className="bg-background flex flex-1 flex-col gap-4 p-4">
         <div className="flex justify-end">
           <Add />
         </div>

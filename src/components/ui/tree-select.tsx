@@ -36,7 +36,7 @@ function TreeNode({
                 e.preventDefault();
                 setIsOpen(!isOpen);
               }}
-              className="mr-1 focus:outline-hidden"
+              className="focus:outline-hidden mr-1"
               aria-label={isOpen ? "Collapse" : "Expand"}
             >
               {isOpen ? (
@@ -194,7 +194,7 @@ export function TreeSelect({
 
   return (
     <div
-      className={cn("w-full overflow-y-auto border rounded-md p-4", className)}
+      className={cn("w-full overflow-y-auto rounded-md border p-4", className)}
     >
       {data.map((node) => (
         <TreeNode

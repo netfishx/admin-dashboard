@@ -16,7 +16,7 @@ async function CommonWrapper({ searchParams }: CommonWrapperProps) {
     <>
       <Suspense
         fallback={
-          <div className="flex items-center justify-between bg-background p-4">
+          <div className="bg-background flex items-center justify-between p-4">
             <Skeleton />
           </div>
         }
@@ -25,7 +25,7 @@ async function CommonWrapper({ searchParams }: CommonWrapperProps) {
       </Suspense>
       <Suspense
         fallback={
-          <div className="flex-1 bg-background p-4">
+          <div className="bg-background flex-1 p-4">
             <div className="relative rounded-sm border">
               <Table className="table-fixed">
                 <ListHeader />

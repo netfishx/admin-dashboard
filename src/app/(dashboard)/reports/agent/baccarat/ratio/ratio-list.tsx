@@ -37,8 +37,8 @@ export async function ListHeader() {
         <TableHead className="w-36">{t("rebateExpense")}</TableHead>
         <TableHead className="w-36">{t("netRebate")}</TableHead>
         <TableHead className="w-36">{t("totalProfitLossAmount")}</TableHead>
-        <TableHead className="w-24 sticky right-0 bg-muted p-0">
-          <div className="shadow-l h-full px-4 flex justify-center items-center">
+        <TableHead className="bg-muted sticky right-0 w-24 p-0">
+          <div className="shadow-l flex h-full items-center justify-center px-4">
             {t("more")}
           </div>
         </TableHead>
@@ -85,8 +85,8 @@ async function ListBody({
             <TableCell>
               {formatNumber(Number(item.totalProfitLossAmount || 0))}
             </TableCell>
-            <TableCell className="sticky right-0 bg-background p-0">
-              <div className="shadow-l py-2 px-4 flex justify-center items-center">
+            <TableCell className="bg-background sticky right-0 p-0">
+              <div className="shadow-l flex items-center justify-center px-4 py-2">
                 <DetailButton item={item} />
               </div>
             </TableCell>
@@ -120,8 +120,8 @@ export async function RatioList({
   };
   if (!(params?.startTime && params?.endTime)) {
     return (
-      <div className="p-4 bg-background flex-1">
-        <div className="border rounded-sm">
+      <div className="bg-background flex-1 p-4">
+        <div className="rounded-sm border">
           <Table className="table-fixed">
             <ListHeader />
             <TableSkeleton length={5} colSpan={11} />
@@ -132,8 +132,8 @@ export async function RatioList({
   }
   const { data } = await getRatioReport(p);
   return (
-    <div className="p-4 bg-background flex-1">
-      <div className="border rounded-sm">
+    <div className="bg-background flex-1 p-4">
+      <div className="rounded-sm border">
         <Table className="table-fixed">
           <ListHeader />
           <Suspense fallback={<TableSkeleton length={5} colSpan={11} />}>

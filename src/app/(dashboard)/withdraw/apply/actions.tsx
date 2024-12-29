@@ -97,7 +97,7 @@ function ActionButtons({
             <Button
               variant="ghost"
               size="sm"
-              className="px-2 text-sm text-primary hover:text-primary/80"
+              className="text-primary hover:text-primary/80 px-2 text-sm"
               onClick={() => {
                 const params =
                   data?.userType === 0
@@ -131,7 +131,7 @@ function ActionButtons({
           <Button
             variant="ghost"
             size="sm"
-            className="px-2 text-sm text-primary hover:text-primary/80"
+            className="text-primary hover:text-primary/80 px-2 text-sm"
           />
         )}
       </div>
@@ -160,7 +160,7 @@ function ActionButtons({
     <Button
       variant="ghost"
       size="sm"
-      className="px-2 text-sm text-primary hover:text-primary/80"
+      className="text-primary hover:text-primary/80 px-2 text-sm"
     />
   );
 }
@@ -177,7 +177,7 @@ function LockButton({ data }: { data: ApplyData }) {
           disabled={isPending}
           variant="ghost"
           size="sm"
-          className="px-2 text-sm text-primary hover:text-primary/80"
+          className="text-primary hover:text-primary/80 px-2 text-sm"
         >
           {isPending && <Loader2 className="animate-spin" />}
           {t("lock")}
@@ -215,11 +215,7 @@ function LockButton({ data }: { data: ApplyData }) {
 }
 
 // 通过
-function PassButton({
-  data,
-}: {
-  data: ApplyData;
-}) {
+function PassButton({ data }: { data: ApplyData }) {
   const t = useTranslations("withdraw.apply");
   const translations = useTranslations();
   const [isPending, startTransition] = useTransition();
@@ -233,7 +229,7 @@ function PassButton({
           disabled={isPending}
           variant="ghost"
           size="sm"
-          className="px-2 text-sm text-primary hover:text-primary/80"
+          className="text-primary hover:text-primary/80 px-2 text-sm"
         >
           {isPending && <Loader2 className="animate-spin" />}
           {t("pass")}
@@ -298,11 +294,7 @@ function PassButton({
 }
 
 // 拒绝
-function RejectButton({
-  data,
-}: {
-  data: ApplyData;
-}) {
+function RejectButton({ data }: { data: ApplyData }) {
   const t = useTranslations("withdraw.apply");
   const translations = useTranslations();
   const [isPending, startTransition] = useTransition();
@@ -314,7 +306,7 @@ function RejectButton({
           disabled={isPending}
           variant="ghost"
           size="sm"
-          className="px-2 text-sm text-primary hover:text-primary/80"
+          className="text-primary hover:text-primary/80 px-2 text-sm"
         >
           {isPending && <Loader2 className="animate-spin" />}
           {t("reject")}
@@ -365,7 +357,7 @@ function AgainButton({ data }: { data: ApplyData }) {
           disabled={isPending}
           variant="ghost"
           size="sm"
-          className="px-2 text-sm text-primary hover:text-primary/80"
+          className="text-primary hover:text-primary/80 px-2 text-sm"
         >
           {isPending && <Loader2 className="animate-spin" />}
           {t("again")}
@@ -415,7 +407,7 @@ function ConfirmButton({ data }: { data: ApplyData }) {
           disabled={isPending}
           variant="ghost"
           size="sm"
-          className="px-2 text-sm text-primary hover:text-primary/80"
+          className="text-primary hover:text-primary/80 px-2 text-sm"
         >
           {isPending && <Loader2 className="animate-spin" />}
           {t("confirm")}

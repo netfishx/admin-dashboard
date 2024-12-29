@@ -43,7 +43,7 @@ export function TableBodyWrapper({
             <TableCell className="text-center">
               <span
                 className={cn(
-                  "rounded-sm w-16 h-6 leading-6 inline-block",
+                  "inline-block h-6 w-16 rounded-sm leading-6",
                   item.status === 0 && "bg-green/10 text-green",
                   item.status === 1 && "bg-destructive/10 text-destructive",
                   item.status === 2 && "bg-orange/10 text-orange",
@@ -52,8 +52,8 @@ export function TableBodyWrapper({
                 {t(`statusLabel.${item.status}`)}
               </span>
             </TableCell>
-            <TableCell className="sticky right-0 bg-background p-0">
-              <div className="shadow-l py-2 px-4 flex justify-center items-center">
+            <TableCell className="bg-background sticky right-0 p-0">
+              <div className="shadow-l flex items-center justify-center px-4 py-2">
                 <Action data={item} permissions={permissions ?? []} />
               </div>
             </TableCell>

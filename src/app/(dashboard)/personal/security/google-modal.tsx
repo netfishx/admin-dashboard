@@ -107,14 +107,14 @@ export function GoogleModal({
             <div className="flex justify-between gap-8">
               <div className="space-y-4">
                 <div className="flex items-center gap-2">
-                  <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary text-background">
+                  <div className="bg-primary text-background flex h-8 w-8 items-center justify-center rounded-full">
                     1
                   </div>
                   <span className="text-sm">{t("step1Title")}</span>
                 </div>
 
                 <div className="space-y-4">
-                  <div className="text-sm text-muted-foreground">
+                  <div className="text-muted-foreground text-sm">
                     <p className="mb-2 text-xs">{t("step1iOS")}</p>
                     <p className="mb-2 text-xs">{t("step1Android")}</p>
                   </div>
@@ -123,14 +123,14 @@ export function GoogleModal({
                     <div className="flex gap-2">
                       <Button
                         variant="outline"
-                        className="gap-2 bg-primary text-background"
+                        className="bg-primary text-background gap-2"
                       >
                         <Apple className="size-4" />
                         App Store
                       </Button>
                       <Button
                         variant="outline"
-                        className="gap-2 bg-accent-foreground text-background"
+                        className="bg-accent-foreground text-background gap-2"
                       >
                         <GooglePlay className="size-4" />
                         Google Play
@@ -150,7 +150,7 @@ export function GoogleModal({
                       className="h-20 w-20"
                     />
                   </span>
-                  <p className="mt-2 text-xs text-muted-foreground">
+                  <p className="text-muted-foreground mt-2 text-xs">
                     {t("iosQRCode")}
                   </p>
                 </div>
@@ -163,7 +163,7 @@ export function GoogleModal({
                       className="h-20 w-20"
                     />
                   </span>
-                  <p className="mt-2 text-xs text-muted-foreground">
+                  <p className="text-muted-foreground mt-2 text-xs">
                     {t("androidQRCode")}
                   </p>
                 </div>
@@ -174,18 +174,18 @@ export function GoogleModal({
           {isEdit ? null : (
             <div className="space-y-4">
               <div className="flex items-center gap-2">
-                <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary text-background">
+                <div className="bg-primary text-background flex h-8 w-8 items-center justify-center rounded-full">
                   2
                 </div>
                 <span className="text-sm">{t("step2Title")}</span>
               </div>
 
-              <div className="rounded-lg bg-muted/50 p-4">
+              <div className="bg-muted/50 rounded-lg p-4">
                 <div className="flex items-center gap-2">
                   <div className="h-4 w-4 rounded-full">
-                    <InfoFilled className="size-4 text-chart-4" />
+                    <InfoFilled className="text-chart-4 size-4" />
                   </div>
-                  <p className="text-xs text-chart-4">{t("step2Warning")}</p>
+                  <p className="text-chart-4 text-xs">{t("step2Warning")}</p>
                 </div>
                 <div className="mt-4 flex justify-center">
                   <span className="inline-block border p-4">
@@ -199,11 +199,11 @@ export function GoogleModal({
                     ) : null}
                   </span>
                 </div>
-                <div className="mt-4 flex items-center gap-2 text-center justify-center">
-                  <span className="text-xs text-muted-foreground">
+                <div className="mt-4 flex items-center justify-center gap-2 text-center">
+                  <span className="text-muted-foreground text-xs">
                     {t("secretLabel")}
                   </span>
-                  <span className="text-xs text-primary">{secret}</span>
+                  <span className="text-primary text-xs">{secret}</span>
                   <Button
                     variant="ghost"
                     className="size-4"
@@ -222,14 +222,14 @@ export function GoogleModal({
           <div className="space-y-4">
             {isEdit ? null : (
               <div className="flex items-center gap-2">
-                <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary text-background">
+                <div className="bg-primary text-background flex h-8 w-8 items-center justify-center rounded-full">
                   3
                 </div>
                 <span className="text-sm">{t("step3Title")}</span>
               </div>
             )}
             <div className="flex items-center justify-center gap-4 text-center">
-              <Label className="flex gap-1 text-xs before:text-destructive before:content-['*'] before:mr-1">
+              <Label className="before:text-destructive flex gap-1 text-xs before:mr-1 before:content-['*']">
                 <span className="text-muted-foreground">
                   {t("googleCodeLabel")}
                 </span>

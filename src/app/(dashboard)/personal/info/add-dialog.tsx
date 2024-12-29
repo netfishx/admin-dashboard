@@ -25,15 +25,15 @@ export function AddDialog(props: Dialogprops) {
         <DialogHeader>
           <DialogTitle>{t("recharge")}</DialogTitle>
         </DialogHeader>
-        <div className="p-4 text-sm flex flex-col gap-4">
+        <div className="flex flex-col gap-4 p-4 text-sm">
           <div className="flex items-start gap-2 text-center">
-            <div className="w-20 text-end text-muted-foreground">
+            <div className="text-muted-foreground w-20 text-end">
               {t("mainNet")}
             </div>
             <div>{data?.majorNetwork}</div>
           </div>
           <div className="flex items-start gap-2 text-center">
-            <div className="w-20 text-end text-muted-foreground">
+            <div className="text-muted-foreground w-20 text-end">
               {t("qrCode")}
             </div>
             <div>
@@ -41,7 +41,7 @@ export function AddDialog(props: Dialogprops) {
             </div>
           </div>
           <div className="flex items-start gap-2 text-center">
-            <div className="w-20 text-end text-muted-foreground">
+            <div className="text-muted-foreground w-20 text-end">
               {t("depositAddress")}
             </div>
             <div className="flex w-[300px] items-center gap-2">
@@ -49,7 +49,7 @@ export function AddDialog(props: Dialogprops) {
               <CopyButton address={data?.rechargeAddress ?? ""} />
             </div>
           </div>
-          <div className="flex items-start gap-2 text-center text-destructive">
+          <div className="text-destructive flex items-start gap-2 text-center">
             <div className="w-20 text-end">{t("notice")}</div>
             <div className="text-left">{t("onlyAK")}</div>
           </div>

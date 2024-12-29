@@ -23,11 +23,7 @@ import { useRouter } from "next/navigation";
 import { type FormEvent, useRef, useState, useTransition } from "react";
 import { toast } from "sonner";
 
-export function UserInfoModal({
-  permissions,
-}: {
-  permissions: string[];
-}) {
+export function UserInfoModal({ permissions }: { permissions: string[] }) {
   const translation = useTranslations();
   const t = useTranslations("users.members");
   const open = useAtomValue(memberInfoModalAtom);
@@ -96,7 +92,7 @@ export function UserInfoModal({
             <>
               <Form action="" onSubmit={handleCheckAgent}>
                 <div className="flex items-center gap-4">
-                  <Label className="w-1/4 shrink-0 text-right text-muted-foreground">
+                  <Label className="text-muted-foreground w-1/4 shrink-0 text-right">
                     {t("agentUsername")}
                   </Label>
 
@@ -113,7 +109,7 @@ export function UserInfoModal({
                 </div>
               </Form>
               <div className="flex items-center gap-4">
-                <Label className="w-1/4 shrink-0 text-right text-muted-foreground">
+                <Label className="text-muted-foreground w-1/4 shrink-0 text-right">
                   {t("agentNickname")}
                 </Label>
                 <Input
@@ -125,31 +121,31 @@ export function UserInfoModal({
             </>
           ) : (
             <>
-              <div className="flex items-center gap-4 text-muted-foreground">
-                <Label className="w-1/4 shrink-0 text-right text-muted-foreground">
+              <div className="text-muted-foreground flex items-center gap-4">
+                <Label className="text-muted-foreground w-1/4 shrink-0 text-right">
                   {t("agentUsername")}
                 </Label>
                 <span>{memberInfoData?.upUsername}</span>
               </div>
-              <div className="flex items-center gap-4 text-muted-foreground">
-                <Label className="w-1/4 shrink-0 text-right text-muted-foreground">
+              <div className="text-muted-foreground flex items-center gap-4">
+                <Label className="text-muted-foreground w-1/4 shrink-0 text-right">
                   {t("agentNickname")}
                 </Label>
                 <span>{memberInfoData?.upNickname}</span>
               </div>
             </>
           )}
-          <div className="flex items-center gap-4 text-muted-foreground">
+          <div className="text-muted-foreground flex items-center gap-4">
             <Label className="w-1/4 shrink-0 text-right">{t("memberId")}</Label>
             <span>{memberInfoData?.username}</span>
           </div>
-          <div className="flex items-center gap-4 text-muted-foreground">
+          <div className="text-muted-foreground flex items-center gap-4">
             <Label className="w-1/4 shrink-0 text-right">
               {t("memberUsername")}
             </Label>
             <span>{memberInfoData?.nickname}</span>
           </div>
-          <div className="flex items-center gap-4 text-muted-foreground">
+          <div className="text-muted-foreground flex items-center gap-4">
             <Label className="w-1/4 shrink-0 text-right">
               {t("createTime")}
             </Label>
@@ -160,7 +156,7 @@ export function UserInfoModal({
             </span>
           </div>
           <div className="flex items-center gap-4">
-            <Label className="w-1/4 shrink-0 text-right text-muted-foreground">
+            <Label className="text-muted-foreground w-1/4 shrink-0 text-right">
               {t("status")}
             </Label>
             <Form action="" onSubmit={handleUpdateStatus} ref={ref}>

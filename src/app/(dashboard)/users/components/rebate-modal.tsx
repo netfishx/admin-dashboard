@@ -93,7 +93,7 @@ export function RebateModal({ userId }: { userId: string }) {
         <div className="max-h-[50dvh] overflow-auto rounded-sm border">
           <ScrollableTable className="relative">
             <TableHeader>
-              <TableRow className="sticky top-0 bg-muted">
+              <TableRow className="bg-muted sticky top-0">
                 <TableHead>{t("name")}</TableHead>
                 <TableHead>{t("rebate")}</TableHead>
               </TableRow>

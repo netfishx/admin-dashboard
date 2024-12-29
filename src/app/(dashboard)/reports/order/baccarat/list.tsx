@@ -41,8 +41,8 @@ export async function ListHeader() {
         <TableHead className="w-60">{t("bettime")}</TableHead>
         <TableHead className="w-60">{t("membersettlementtime")}</TableHead>
         <TableHead className="w-40">{t("proxystatus")}</TableHead>
-        <TableHead className="w-24 sticky right-0 bg-muted p-0">
-          <div className="shadow-l h-full px-4 flex justify-center items-center">
+        <TableHead className="bg-muted sticky right-0 w-24 p-0">
+          <div className="shadow-l flex h-full items-center justify-center px-4">
             {t("action")}
           </div>
         </TableHead>
@@ -104,8 +104,8 @@ async function ListBody({
               <Time time={item.settleTime} />
             </TableCell>
             <TableCell>{typeMap[item.orderStatus]}</TableCell>
-            <TableCell className="sticky right-0 bg-background p-0">
-              <div className="shadow-l py-2 px-4 flex justify-center items-center">
+            <TableCell className="bg-background sticky right-0 p-0">
+              <div className="shadow-l flex items-center justify-center px-4 py-2">
                 <DetailButton item={item} />
               </div>
             </TableCell>
@@ -140,8 +140,8 @@ export async function List({
 
   if (!(params?.startTime && params?.endTime)) {
     return (
-      <div className="p-4 bg-background flex-1">
-        <div className="border rounded-sm">
+      <div className="bg-background flex-1 p-4">
+        <div className="rounded-sm border">
           <Table className="table-fixed">
             <ListHeader />
             <TableSkeleton length={5} colSpan={16} />
@@ -159,8 +159,8 @@ export async function List({
     })) ?? [];
 
   return (
-    <div className="p-4 bg-background flex-1">
-      <div className="border rounded-sm relative">
+    <div className="bg-background flex-1 p-4">
+      <div className="relative rounded-sm border">
         <Table className="table-fixed">
           <ListHeader />
           <ListBody list={list} gameList={gameList} />

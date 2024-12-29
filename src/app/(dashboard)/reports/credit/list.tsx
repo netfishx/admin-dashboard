@@ -83,7 +83,7 @@ export async function List({
   const params = await searchParams;
   if (!(params?.startTime && params?.endTime)) {
     return (
-      <div className="flex-1 bg-background p-4">
+      <div className="bg-background flex-1 p-4">
         <div className="relative rounded-sm border">
           <Table className="table-fixed">
             <ListHeader />
@@ -104,7 +104,7 @@ export async function List({
   const { data } = await postGetCreditLogList(p);
 
   return (
-    <div className="flex-1 bg-background p-4">
+    <div className="bg-background flex-1 p-4">
       <div className="relative rounded-sm border">
         <Table className="table-fixed">
           <ListHeader />

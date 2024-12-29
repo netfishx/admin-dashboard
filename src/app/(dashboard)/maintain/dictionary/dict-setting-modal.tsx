@@ -96,8 +96,8 @@ export function DictSettingModal() {
               {t("add")}
             </Button>
           </div>
-          <div className="mt-4 rounded-md border overflow-auto max-h-[50dvh]">
-            <ScrollableTable className="w-full relative">
+          <div className="mt-4 max-h-[50dvh] overflow-auto rounded-md border">
+            <ScrollableTable className="relative w-full">
               <TableHeader>
                 <TableRow className="bg-muted">
                   <TableHead className="w-26">{t("itemName")}</TableHead>
@@ -123,7 +123,7 @@ export function DictSettingModal() {
                             <Button
                               variant="ghost"
                               size="sm"
-                              className="px-2 text-sm text-primary hover:text-primary/80"
+                              className="text-primary hover:text-primary/80 px-2 text-sm"
                               onClick={() => {
                                 setAddOpen(true);
                                 setAddData({
@@ -145,7 +145,7 @@ export function DictSettingModal() {
                     ))
                   ) : (
                     <TableRow>
-                      <TableCell colSpan={4} className="text-center h-20">
+                      <TableCell colSpan={4} className="h-20 text-center">
                         {translation("noData")}
                       </TableCell>
                     </TableRow>
@@ -169,13 +169,7 @@ export function DictSettingModal() {
   );
 }
 
-function DeleteBtn({
-  id,
-  onSuccess,
-}: {
-  id: string;
-  onSuccess: () => void;
-}) {
+function DeleteBtn({ id, onSuccess }: { id: string; onSuccess: () => void }) {
   const translation = useTranslations();
   const t = useTranslations("maintain.dictionary");
   const [deletePending, startTransitionDelete] = useTransition();
@@ -185,7 +179,7 @@ function DeleteBtn({
         <Button
           variant="ghost"
           size="sm"
-          className="px-2 text-sm text-primary hover:text-primary/80"
+          className="text-primary hover:text-primary/80 px-2 text-sm"
           disabled={deletePending}
         >
           {deletePending ? <Loader2 className="animate-spin" /> : null}
@@ -197,7 +191,7 @@ function DeleteBtn({
           <AlertDialogTitle>{t("delete")}</AlertDialogTitle>
           <AlertDialogDescription />
         </AlertDialogHeader>
-        <div className="text-sm text-muted-foreground">{t("deleteDesc")}</div>
+        <div className="text-muted-foreground text-sm">{t("deleteDesc")}</div>
         <AlertDialogFooter>
           <AlertDialogCancel>{translation("cancel")}</AlertDialogCancel>
           <AlertDialogAction

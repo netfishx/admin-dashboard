@@ -57,16 +57,16 @@ export default function Page() {
   const t = useTranslations("games.rebate");
   return (
     <div className="flex w-full flex-col gap-2">
-      <div className="flex items-center justify-between bg-background p-4">
+      <div className="bg-background flex items-center justify-between p-4">
         <RebateForm />
       </div>
-      <div className="flex flex-1 flex-col gap-4 bg-background p-4">
+      <div className="bg-background flex flex-1 flex-col gap-4 p-4">
         <div className="rounded-sm border">
           <Suspense>
             <TableWrapper />
           </Suspense>
         </div>
-        <div className="text-sm text-primary/80 before:mr-1 before:content-['*']">
+        <div className="text-primary/80 text-sm before:mr-1 before:content-['*']">
           {t("tips")}
         </div>
       </div>

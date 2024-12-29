@@ -34,7 +34,7 @@ function SubaccountTableHeader() {
         <TableHead className="w-36">{t("lastLoginIp")}</TableHead>
         <TableHead className="w-48">{t("lastLoginTime")}</TableHead>
         <TableHead className="w-24 text-center">{t("status")}</TableHead>
-        <TableHead className="sticky right-0 w-70 bg-muted text-center">
+        <TableHead className="w-70 bg-muted sticky right-0 text-center">
           {t("action")}
         </TableHead>
       </TableRow>
@@ -98,7 +98,7 @@ async function SubaccountTableWrapper({
                   <TableCell className="text-center">
                     <span
                       className={cn([
-                        "rounded-sm w-16 h-6 leading-6 inline-block",
+                        "inline-block h-6 w-16 rounded-sm leading-6",
                         item.status === 0
                           ? "bg-green/20 text-green"
                           : "bg-destructive/20 text-destructive",
@@ -109,7 +109,7 @@ async function SubaccountTableWrapper({
                         : translations("disable")}
                     </span>
                   </TableCell>
-                  <TableCell className="sticky right-0 bg-background text-center">
+                  <TableCell className="bg-background sticky right-0 text-center">
                     <div className="flex justify-center">
                       <EditButton data={item} />
                       <LoginLogButton id={item.id ?? ""} />
@@ -141,11 +141,11 @@ export default function SubaccountPage({
   const t = useTranslations("system.subaccount");
   return (
     <div className="flex w-full flex-col gap-2">
-      <div className="flex items-center justify-between bg-background p-4">
+      <div className="bg-background flex items-center justify-between p-4">
         <div className="text-sm font-medium">{t("list")}</div>
         <AddButton />
       </div>
-      <div className="flex flex-1 flex-col gap-4 bg-background p-4">
+      <div className="bg-background flex flex-1 flex-col gap-4 p-4">
         <Suspense
           fallback={
             <div className="rounded-sm border">

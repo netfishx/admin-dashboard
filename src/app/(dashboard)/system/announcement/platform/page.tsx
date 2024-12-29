@@ -15,7 +15,7 @@ export default async function Platform({
       {/* form: admin permission */}
       <Suspense
         fallback={
-          <div className="flex items-center justify-between bg-background p-4">
+          <div className="bg-background flex items-center justify-between p-4">
             <Skeleton />
             <Skeleton />
             <Skeleton />
@@ -24,10 +24,10 @@ export default async function Platform({
       >
         <Form key={`${startTime}-${endTime}`} />
       </Suspense>
-      <div className="flex flex-1 flex-col gap-2 bg-background p-4">
+      <div className="bg-background flex flex-1 flex-col gap-2 p-4">
         <Suspense
           fallback={
-            <Table className="rounded-sm border table-fixed">
+            <Table className="table-fixed rounded-sm border">
               <TableHeaderWrapper />
               <TableBodySkeleton />
             </Table>

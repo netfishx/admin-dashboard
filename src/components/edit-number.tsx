@@ -21,7 +21,7 @@ export function EditNumber({
     <div className="flex gap-[1px]">
       <Button
         variant="ghost"
-        className="rounded-none bg-accent text-accent-foreground hover:bg-accent/50"
+        className="bg-accent text-accent-foreground hover:bg-accent/50 rounded-none"
         onClick={() => {
           handleEdit(-step);
         }}
@@ -49,7 +49,7 @@ export function EditNumber({
       />
       <Button
         variant="ghost"
-        className="rounded-none bg-accent text-accent-foreground hover:bg-accent/50"
+        className="bg-accent text-accent-foreground hover:bg-accent/50 rounded-none"
         onClick={() => {
           handleEdit(step);
         }}

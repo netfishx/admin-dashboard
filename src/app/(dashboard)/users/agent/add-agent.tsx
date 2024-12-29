@@ -85,7 +85,7 @@ function AddAgentModal({
           <div className="flex w-full flex-col gap-4 px-4">
             <div className="flex flex-col gap-1">
               <div className="flex items-center gap-4">
-                <Label className="w-20 shrink-0 text-right text-muted-foreground">
+                <Label className="text-muted-foreground w-20 shrink-0 text-right">
                   {t("username")}
                 </Label>
                 <Input
@@ -100,13 +100,13 @@ function AddAgentModal({
               </div>
               <div className="flex items-center gap-4">
                 <Label className="w-20 shrink-0 text-end" />
-                <div className="flex-1 text-xs text-destructive">
+                <div className="text-destructive flex-1 text-xs">
                   {t("usernameWarning")}
                 </div>
               </div>
             </div>
             <div className="flex items-center gap-4">
-              <Label className="w-20 shrink-0 text-right text-muted-foreground">
+              <Label className="text-muted-foreground w-20 shrink-0 text-right">
                 {t("nickname")}
               </Label>
               <Input
@@ -119,7 +119,7 @@ function AddAgentModal({
             </div>
             <div className="flex flex-col gap-1">
               <div className="flex items-center gap-4">
-                <Label className="w-20 shrink-0 text-right text-muted-foreground">
+                <Label className="text-muted-foreground w-20 shrink-0 text-right">
                   {t("password")}
                 </Label>
                 <Password
@@ -135,13 +135,13 @@ function AddAgentModal({
               </div>
               <div className="flex items-center gap-4">
                 <Label className="w-20 shrink-0 text-end" />
-                <div className="flex-1 text-xs text-destructive">
+                <div className="text-destructive flex-1 text-xs">
                   {t("passwordWarning")}
                 </div>
               </div>
             </div>
             <div className="flex items-center gap-4">
-              <Label className="w-20 shrink-0 text-right text-muted-foreground">
+              <Label className="text-muted-foreground w-20 shrink-0 text-right">
                 {t("confirmPassword")}
               </Label>
               <Password
