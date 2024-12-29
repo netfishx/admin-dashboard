@@ -1,6 +1,6 @@
 export default async function LandingPage() {
   return (
-    <div className="prose">
+    <div>
       <h1>LandingPage</h1>
     </div>
   );
