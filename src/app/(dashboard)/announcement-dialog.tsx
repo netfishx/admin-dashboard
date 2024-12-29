@@ -30,7 +30,7 @@ export function AnnouncementDialog({
       onOpenChange={handleOpenChange}
     >
       <DialogContent
-        className="w-[70dvw] max-w-[70dvw]"
+        className="min-w-lg w-fit max-w-4/5"
         onInteractOutside={(e) => {
           e.preventDefault();
         }}
@@ -38,7 +38,7 @@ export function AnnouncementDialog({
         <DialogHeader>
           <DialogTitle>{t("announcement")}</DialogTitle>
         </DialogHeader>
-        <div className="flex max-h-[500px] w-full flex-col gap-2 overflow-y-auto text-sm">
+        <div className="flex w-full flex-col gap-2 overflow-y-auto text-sm">
           {data?.list.map((item) => {
             return (
               <div
