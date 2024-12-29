@@ -126,17 +126,17 @@ async function TableHeaderWrapper() {
         <TableHead className="w-48">{t("orderNo")}</TableHead>
         <TableHead className="w-48">{t("userId")}</TableHead>
         <TableHead className="w-24">{t("userType")}</TableHead>
-        <TableHead className="w-32">{t("account")}</TableHead>
-        <TableHead className="w-32">{t("nickname")}</TableHead>
+        <TableHead className="w-60">{t("account")}</TableHead>
+        <TableHead className="w-60">{t("nickname")}</TableHead>
         <TableHead className="w-48">{t("parentAccount")}</TableHead>
-        <TableHead className="w-48">{t("withdrawMoney")}</TableHead>
-        <TableHead className="w-56">{t("applyTime")}</TableHead>
+        <TableHead className="w-24">{t("withdrawMoney")}</TableHead>
+        <TableHead className="w-48">{t("applyTime")}</TableHead>
         <TableHead className="w-32">{t("approverName")}</TableHead>
-        <TableHead className="w-32 text-center">
+        <TableHead className="w-24 text-center">
           {t("approverStatus")}
         </TableHead>
-        <TableHead className="w-32 text-center">{t("withdrawMode")}</TableHead>
-        <TableHead className="w-32 text-center">{t("moneyStatus")}</TableHead>
+        <TableHead className="w-24 text-center">{t("withdrawMode")}</TableHead>
+        <TableHead className="w-24 text-center">{t("moneyStatus")}</TableHead>
         <TableHead className="bg-muted sticky right-0 w-48 p-0 text-center">
           <div className="shadow-l flex h-full items-center justify-center px-4">
             {t("action")}

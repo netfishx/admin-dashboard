@@ -73,7 +73,7 @@ export function Detaildialog(props: {
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="w-[500px]">
+      <DialogContent>
         <DialogHeader>
           <DialogTitle>{t("detail")}</DialogTitle>
         </DialogHeader>

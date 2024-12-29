@@ -90,11 +90,7 @@ export function AddItemDialog() {
   };
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogContent
-        onInteractOutside={(e) => {
-          e.preventDefault();
-        }}
-      >
+      <DialogContent>
         <DialogHeader>
           <DialogTitle>
             {operation === "add" ? t("add") : t("edit")}

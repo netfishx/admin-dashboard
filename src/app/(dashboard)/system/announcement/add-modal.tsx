@@ -139,10 +139,7 @@ export function AddModal({
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogContent
-        className="max-h-[90dvh] max-w-3xl"
-        onPointerDownOutside={(e) => e.preventDefault()}
-      >
+      <DialogContent className="max-h-[90dvh] max-w-3xl">
         <DialogHeader>
           <DialogTitle>{editModalTitle}</DialogTitle>
           <DialogDescription />

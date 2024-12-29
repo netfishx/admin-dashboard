@@ -87,10 +87,7 @@ export function BombDetailDialog() {
 
   return (
     <Dialog open={open} onOpenChange={(open) => setOpen(open)}>
-      <DialogContent
-        className="max-w-5xl"
-        onPointerDownOutside={(e) => e.preventDefault()}
-      >
+      <DialogContent className="max-w-5xl">
         <DialogHeader>
           <DialogTitle>{t("bombDetail")}</DialogTitle>
           <DialogDescription />

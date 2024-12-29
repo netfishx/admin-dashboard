@@ -47,11 +47,7 @@ export function CheckDialog(props: Dialogprops) {
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogDescription />
 
-      <DialogContent
-        onInteractOutside={(event) => {
-          event.preventDefault(); // 阻止关闭弹框
-        }}
-      >
+      <DialogContent>
         {step === 1 && (
           <div className="flex flex-col gap-4">
             <DialogHeader>

@@ -78,10 +78,7 @@ export function UserInfoModal({ permissions }: { permissions: string[] }) {
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogContent
-        onPointerDownOutside={(e) => e.preventDefault()}
-        onOpenAutoFocus={(e) => e.preventDefault()}
-      >
+      <DialogContent>
         <DialogHeader>
           <DialogTitle>{t("userInfo")}</DialogTitle>
           <DialogDescription />

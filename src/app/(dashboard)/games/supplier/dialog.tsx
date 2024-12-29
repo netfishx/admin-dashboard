@@ -56,11 +56,7 @@ export function SupplierDialog({
         setSupplierId(undefined);
       }}
     >
-      <DialogContent
-        onInteractOutside={(e) => {
-          e.preventDefault();
-        }}
-      >
+      <DialogContent>
         <DialogHeader>
           <DialogTitle>{`${data ? t("edit") : t("add")}${t("title")}`}</DialogTitle>
           <VisuallyHiddenRoot>

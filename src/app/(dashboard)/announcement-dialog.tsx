@@ -29,12 +29,7 @@ export function AnnouncementDialog({
       open={open && isFirstLogin === "true"}
       onOpenChange={handleOpenChange}
     >
-      <DialogContent
-        className="min-w-lg w-fit max-w-4/5"
-        onInteractOutside={(e) => {
-          e.preventDefault();
-        }}
-      >
+      <DialogContent className="min-w-lg w-fit max-w-4/5">
         <DialogHeader>
           <DialogTitle>{t("announcement")}</DialogTitle>
         </DialogHeader>

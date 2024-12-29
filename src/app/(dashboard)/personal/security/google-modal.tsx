@@ -90,10 +90,7 @@ export function GoogleModal({
         onOpenChange(o);
       }}
     >
-      <DialogContent
-        onPointerDownOutside={(e) => e.preventDefault()}
-        className="h-[80dvh] max-h-[80dvh] sm:max-w-[600px]"
-      >
+      <DialogContent className="h-[80dvh] max-h-[80dvh] sm:max-w-[600px]">
         <DialogHeader>
           <DialogTitle>
             {isEdit ? t("editGoogleAuthTitle") : t("googleAuthTitle")}

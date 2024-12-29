@@ -78,10 +78,7 @@ export function LoginLogModal({
   };
   return (
     <Dialog open={open} onOpenChange={handleClose}>
-      <DialogContent
-        className="lg:max-w-xl 2xl:max-w-2xl"
-        onPointerDownOutside={(e) => e.preventDefault()}
-      >
+      <DialogContent className="max-w-xl 2xl:max-w-2xl">
         <DialogHeader>
           <DialogTitle>{t("loginLog")}</DialogTitle>
           <DialogDescription />

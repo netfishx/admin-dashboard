@@ -91,11 +91,7 @@ export function SupplierEditDialog() {
         }
       }}
     >
-      <DialogContent
-        onInteractOutside={(e) => {
-          e.preventDefault();
-        }}
-      >
+      <DialogContent>
         <DialogHeader>
           <DialogTitle>{t("edit")}</DialogTitle>
           <DialogDescription />

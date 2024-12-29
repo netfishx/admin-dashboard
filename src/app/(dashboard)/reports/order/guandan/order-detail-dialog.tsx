@@ -78,10 +78,7 @@ export function OrderDetailDialog() {
         setOpen(open);
       }}
     >
-      <DialogContent
-        className="max-w-5xl"
-        onPointerDownOutside={(e) => e.preventDefault()}
-      >
+      <DialogContent className="max-w-5xl">
         <DialogHeader>
           <DialogTitle>{t("orderListDetail")}</DialogTitle>
           <DialogDescription />

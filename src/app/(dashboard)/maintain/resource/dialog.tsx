@@ -121,7 +121,7 @@ export function AddOrEditDialog() {
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogContent onPointerDownOutside={(e) => e.preventDefault()}>
+      <DialogContent>
         <DialogHeader>
           <DialogTitle>{data ? t("edit") : t("add")}</DialogTitle>
           <DialogDescription />

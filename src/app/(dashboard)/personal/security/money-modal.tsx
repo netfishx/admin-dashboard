@@ -71,7 +71,7 @@ export function MoneyModal({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent onPointerDownOutside={(e) => e.preventDefault()}>
+      <DialogContent>
         <DialogHeader>
           <DialogTitle>
             {isEdit ? t("editMoneyPasswordTitle") : t("setMoneyPassword")}

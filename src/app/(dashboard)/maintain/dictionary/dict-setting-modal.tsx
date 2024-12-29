@@ -81,11 +81,7 @@ export function DictSettingModal() {
   };
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogContent
-        onInteractOutside={(e) => {
-          e.preventDefault();
-        }}
-      >
+      <DialogContent>
         <DialogHeader>
           <DialogTitle>{t("dictSetting")}</DialogTitle>
           <DialogDescription />

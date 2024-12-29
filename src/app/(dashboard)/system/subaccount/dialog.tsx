@@ -38,11 +38,7 @@ export function SubaccountDialog({ roles }: { roles: Role[] }) {
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogContent
-        onInteractOutside={(e) => {
-          e.preventDefault();
-        }}
-      >
+      <DialogContent>
         <DialogHeader>
           <DialogTitle>
             {`${data ? t("edit") : t("add")}${t("title")}`}

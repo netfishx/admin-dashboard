@@ -102,7 +102,7 @@ export function CheckDialog(props: Dialogprops) {
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="w-[500px]">
+      <DialogContent>
         {step === 1 && (
           <div className="flex flex-col gap-4">
             <DialogHeader>

@@ -81,7 +81,7 @@ export function DecreaseCreditModal() {
   return (
     <>
       <Dialog open={open} onOpenChange={setOpen}>
-        <DialogContent onPointerDownOutside={(e) => e.preventDefault()}>
+        <DialogContent>
           <DialogHeader>
             <DialogTitle>{t("decreaseCredit")}</DialogTitle>
             <DialogDescription />

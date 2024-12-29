@@ -24,7 +24,7 @@ export default function Detaildialog(props: Dialogprops) {
   const { open, onOpenChange } = props;
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="w-[500px]">
+      <DialogContent>
         <DialogHeader>
           <DialogTitle>详情</DialogTitle>
         </DialogHeader>

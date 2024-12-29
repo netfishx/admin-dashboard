@@ -69,11 +69,7 @@ function AddDialog({
   };
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogContent
-        onInteractOutside={(e) => {
-          e.preventDefault();
-        }}
-      >
+      <DialogContent>
         <DialogHeader>
           <DialogTitle>{t("add")}</DialogTitle>
           <DialogDescription />

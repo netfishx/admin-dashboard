@@ -79,7 +79,7 @@ export function TransferMoneyModal() {
   return (
     <>
       <Dialog open={open} onOpenChange={setOpen}>
-        <DialogContent onPointerDownOutside={(e) => e.preventDefault()}>
+        <DialogContent>
           <DialogHeader>
             <DialogTitle>{t("transferMoney")}</DialogTitle>
             <DialogDescription />

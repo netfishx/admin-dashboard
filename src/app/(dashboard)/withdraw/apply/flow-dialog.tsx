@@ -29,7 +29,7 @@ export function FlowDialog({ gameList }: { gameList: GameInfo[] }) {
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogContent className="w-[80dvw] max-w-[80dvw]">
+      <DialogContent className="w-400 max-w-4/5">
         <DialogTitle className="flex justify-between">
           <span>{t("flow")}</span>
         </DialogTitle>

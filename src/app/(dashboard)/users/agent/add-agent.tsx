@@ -76,7 +76,7 @@ function AddAgentModal({
 
   return (
     <Dialog open={open} onOpenChange={() => onOpenChange(false)}>
-      <DialogContent onPointerDownOutside={(e) => e.preventDefault()}>
+      <DialogContent>
         <DialogHeader>
           <DialogTitle>{t("addAgent")}</DialogTitle>
           <DialogDescription />

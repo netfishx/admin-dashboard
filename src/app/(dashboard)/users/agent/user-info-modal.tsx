@@ -66,10 +66,7 @@ export function UserInfoModal() {
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogContent
-        className="lg:max-w-md 2xl:max-w-lg"
-        onPointerDownOutside={(e) => e.preventDefault()}
-      >
+      <DialogContent className="max-w-md 2xl:max-w-lg">
         <DialogHeader>
           <DialogTitle>{t("userInfo")}</DialogTitle>
           <DialogDescription />
