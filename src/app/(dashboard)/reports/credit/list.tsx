@@ -10,22 +10,22 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import type {
-  CreditRecordRequestParams,
-  CreditRecordRequestRecords,
-} from "@/lib/types";
+import type { CreditRecordRequestRecords } from "@/lib/types";
 import { formatNumber } from "@/lib/utils";
+import { hasPermission } from "@/session";
 import { getTranslations } from "next-intl/server";
 import { Suspense } from "react";
 
 export async function ListHeader() {
-  "use cache";
   const t = await getTranslations("report.credit");
+  const hasAdminPermission = await hasPermission("credit_report_search");
   return (
     <TableHeader>
       <TableRow className="bg-muted">
         <TableHead className="w-60">{t("orderNumber")}</TableHead>
-        <TableHead className="w-60">{t("agentID")}</TableHead>
+        {hasAdminPermission && (
+          <TableHead className="w-60">{t("agentID")}</TableHead>
+        )}
         <TableHead className="w-60">{t("memberID")}</TableHead>
         <TableHead className="w-60">{t("amount")}</TableHead>
         <TableHead className="w-24">{t("type")}</TableHead>
@@ -38,6 +38,7 @@ export async function ListHeader() {
 async function ListBody({ list }: { list: CreditRecordRequestRecords[] }) {
   const translate = await getTranslations();
   const t = await getTranslations("report.credit");
+  const hasAdminPermission = await hasPermission("credit_report_search");
   const typeMap = {
     18: t("addCredit"),
     19: t("reduceCredit"),
@@ -48,8 +49,9 @@ async function ListBody({ list }: { list: CreditRecordRequestRecords[] }) {
         list?.map((item) => (
           <TableRow key={item.transactionID}>
             <TableCell>{item.transactionID}</TableCell>
-            <TableCell>{item.agentId}</TableCell>
+            {hasAdminPermission && <TableCell>{item.agentId}</TableCell>}
             <TableCell>{item.memberId}</TableCell>
+            <TableCell>{item.agentId}</TableCell>
             <TableCell>{formatNumber(Number(item.amount || 0))}</TableCell>
             <TableCell>
               {typeMap[item.operateCode as keyof typeof typeMap]}
@@ -61,7 +63,10 @@ async function ListBody({ list }: { list: CreditRecordRequestRecords[] }) {
         ))
       ) : (
         <TableRow>
-          <TableCell colSpan={6} className="h-40 text-center">
+          <TableCell
+            colSpan={hasAdminPermission ? 6 : 5}
+            className="h-40 text-center"
+          >
             {translate("noData")}
           </TableCell>
         </TableRow>
@@ -73,7 +78,7 @@ async function ListBody({ list }: { list: CreditRecordRequestRecords[] }) {
 export async function List({
   searchParams,
 }: {
-  searchParams: Promise<CreditRecordRequestParams>;
+  searchParams: Promise<{ [key: string]: string | undefined }>;
 }) {
   const params = await searchParams;
   if (!(params?.startTime && params?.endTime)) {

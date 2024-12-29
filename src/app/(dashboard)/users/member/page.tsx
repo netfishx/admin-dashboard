@@ -77,8 +77,8 @@ async function TableWrapper({
   return (
     <>
       <UserInfoModal permissions={permissions} />
-      <div className="relative rounded-sm border">
-        <Table className="table-fixed">
+      <div className="rounded-sm border">
+        <Table className="table-fixed relative">
           <TableHeaderWrapper />
           <Suspense fallback={<TableBodySkeleton />}>
             <TableBodyWrapper list={data?.list} permissions={permissions} />
@@ -116,8 +116,8 @@ async function TableHeaderWrapper() {
         <TableHead className="w-90">{t("walletAddress")}</TableHead>
         <TableHead className="w-28">{t("debtAmount")}</TableHead>
         <TableHead className="w-28">{t("creditAmount")}</TableHead>
-        <TableHead className="w-20 text-center">{t("status")}</TableHead>
-        <TableHead className="sticky right-0 w-120 bg-muted text-center p-0">
+        <TableHead className="w-24 text-center">{t("status")}</TableHead>
+        <TableHead className="sticky right-0 w-160 bg-muted text-center p-0">
           <div className="shadow-l h-full px-4 flex justify-center items-center">
             {t("action")}
           </div>
@@ -155,7 +155,7 @@ async function TableBodyWrapper({
             <TableCell className="text-center">
               <span
                 className={cn(
-                  "rounded-sm p-2",
+                  "rounded-sm w-16 h-6 leading-6 inline-block",
                   item.status === 0 && "bg-green/10 text-green",
                   item.status === 1 && "bg-destructive/10 text-destructive",
                   item.status === 2 && "bg-orange/10 text-orange",

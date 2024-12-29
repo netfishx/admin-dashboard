@@ -98,7 +98,7 @@ async function SubaccountTableWrapper({
                   <TableCell className="text-center">
                     <span
                       className={cn([
-                        "inline-block w-16 rounded-sm p-1 text-center",
+                        "rounded-sm w-16 h-6 leading-6 inline-block",
                         item.status === 0
                           ? "bg-green/20 text-green"
                           : "bg-destructive/20 text-destructive",

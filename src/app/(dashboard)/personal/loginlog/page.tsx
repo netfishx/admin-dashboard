@@ -132,7 +132,7 @@ async function StatusCell({ status }: { status: string }) {
   const t = await getTranslations("users.agents");
   if (status === "0") {
     return (
-      <span className="inline-block rounded-sm bg-primary/20 p-1 text-center text-primary">
+      <span className="inline-block rounded-sm bg-primary/20 text-center text-primary w-16 h-6 leading-6">
         {t("success")}
       </span>
     );

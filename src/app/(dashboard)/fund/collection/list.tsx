@@ -24,8 +24,10 @@ export async function ListHeader() {
         <TableHead className="w-32">{t("balance")}</TableHead>
         <TableHead className="w-32 text-center">{t("status")}</TableHead>
         <TableHead className="w-50">{t("createTime")}</TableHead>
-        <TableHead className="sticky right-0 w-60 bg-muted text-center">
-          {t("caozuo")}
+        <TableHead className="w-48 sticky right-0 bg-muted text-center p-0">
+          <div className=" h-full flex shadow-l justify-center items-center">
+            {t("caozuo")}
+          </div>
         </TableHead>
       </TableRow>
     </TableHeader>
@@ -52,7 +54,7 @@ async function ListBody({ list }: { list: CollectionAddressListRecords[] }) {
             <TableCell className="text-center w-32">
               <div
                 className={cn(
-                  "inline-block w-fit rounded-sm px-2 text-center",
+                  "rounded-sm w-16 h-6 leading-6 inline-block",
                   item.status === 0 && "bg-destructive/10 text-destructive",
                   item.status === 1 && "bg-green/10 text-green",
                   item.status === 2 && "bg-orange/10 text-orange",
@@ -67,8 +69,10 @@ async function ListBody({ list }: { list: CollectionAddressListRecords[] }) {
               </div>
             </TableCell>
             <TableCell>{item.updateTime}</TableCell>
-            <TableCell className="sticky shadow-l right-0 bg-background flex items-center justify-center">
-              <DetailButton item={item} />
+            <TableCell className="sticky right-0 bg-background p-0">
+              <div className="shadow-l py-2 px-4 flex justify-center items-center">
+                <DetailButton item={item} />
+              </div>
             </TableCell>
           </TableRow>
         ))

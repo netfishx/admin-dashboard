@@ -504,7 +504,7 @@ export type PokerReportRequestRecords = {
   roomType: number; // 房间类型
   issueAmount: number; // 期数
   settledAmount: string; // 结算金额
-  totaSettledAmount: string; // 累计总结算金额
+  totalSettledAmount: string; // 累计总结算金额
   totalIssueAmount: number; // 累计总期数
 };
 
@@ -687,10 +687,10 @@ export type DictionaryItem = {
 // 授信记录请求入参
 export type CreditRecordRequestParams = {
   /** 代理ID */
-  agentId: string;
+  agentId?: string;
 
   /** 会员ID */
-  memberId: string;
+  memberId?: string;
 
   /** 开始时间戳 */
   startTime: number;
@@ -699,7 +699,7 @@ export type CreditRecordRequestParams = {
   endTime: number;
 
   /** 交易ID */
-  transactionID: string;
+  transactionID?: string;
 
   /**
    * 操作代码
@@ -896,7 +896,7 @@ export type WalletLogRecords = {
   id: number;
   transactionId: string; //账变id
   operateType: number; //账变类型
-  transactionAmount: string; //变更余额
+  transactionAmount: string; //变更金额
   createdTime: number; //账变时间
   oldBalance: string; //原余额
   newBalance: string; //新余额

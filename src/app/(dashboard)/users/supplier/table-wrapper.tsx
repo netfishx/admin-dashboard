@@ -22,7 +22,7 @@ export function SupplierTable({ data }: { data: Supplier[] | undefined }) {
             <TableCell className="text-center">
               <span
                 className={cn(
-                  "rounded-sm p-2",
+                  "rounded-sm w-16 h-6 leading-6 inline-block",
                   item.status === 0 && "bg-green/10 text-green",
                   item.status === 1 && "bg-destructive/10 text-destructive",
                 )}
