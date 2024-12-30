@@ -88,7 +88,7 @@ function OpenedMenu({
         ].includes(v),
       ) && (
         <Collapsible
-          open={openedMenu.includes("games")}
+          defaultOpen={openedMenu.includes("games")}
           onOpenChange={(e) => handleOpenChange("games", e)}
         >
           <CollapsibleTrigger asChild>
@@ -125,7 +125,7 @@ function OpenedMenu({
         ["agent_config", "member_config", "users_supplier"].includes(v),
       ) && (
         <Collapsible
-          open={openedMenu.includes("users")}
+          defaultOpen={openedMenu.includes("users")}
           onOpenChange={(e) => handleOpenChange("users", e)}
         >
           <CollapsibleTrigger asChild>
@@ -166,7 +166,7 @@ function OpenedMenu({
         ].includes(v),
       ) && (
         <Collapsible
-          open={openedMenu.includes("reports")}
+          defaultOpen={openedMenu.includes("reports")}
           onOpenChange={(e) => handleOpenChange("reports", e)}
         >
           <CollapsibleTrigger asChild>
@@ -255,7 +255,7 @@ function OpenedMenu({
       )}
       {permissions.some((v) => ["withdraw_apply", "audit"].includes(v)) && (
         <Collapsible
-          open={openedMenu.includes("withdraw")}
+          defaultOpen={openedMenu.includes("withdraw")}
           onOpenChange={(e) => handleOpenChange("withdraw", e)}
         >
           <CollapsibleTrigger asChild>
@@ -285,7 +285,7 @@ function OpenedMenu({
         ].includes(v),
       ) && (
         <Collapsible
-          open={openedMenu.includes("personal")}
+          defaultOpen={openedMenu.includes("personal")}
           onOpenChange={(e) => handleOpenChange("personal", e)}
         >
           <CollapsibleTrigger asChild>
@@ -319,7 +319,7 @@ function OpenedMenu({
         ["system_role", "sub_account", "own_announcement"].includes(v),
       ) && (
         <Collapsible
-          open={openedMenu.includes("system")}
+          defaultOpen={openedMenu.includes("system")}
           onOpenChange={(e) => handleOpenChange("system", e)}
         >
           <CollapsibleTrigger asChild>
@@ -357,7 +357,7 @@ function OpenedMenu({
         ["withdrawfee", "minerfee", "collection"].includes(v),
       ) && (
         <Collapsible
-          open={openedMenu.includes("fund")}
+          defaultOpen={openedMenu.includes("fund")}
           onOpenChange={(e) => handleOpenChange("fund", e)}
         >
           <CollapsibleTrigger asChild>
@@ -387,7 +387,7 @@ function OpenedMenu({
         ["dictionary", "resource_config"].includes(v),
       ) && (
         <Collapsible
-          open={openedMenu.includes("maintain")}
+          defaultOpen={openedMenu.includes("maintain")}
           onOpenChange={(e) => handleOpenChange("maintain", e)}
         >
           <CollapsibleTrigger asChild>
