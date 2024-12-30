@@ -10,6 +10,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { TRANSFER_TYPE } from "@/lib/dict";
 import type {
   GameInfo,
   OrderReportsRecord,
@@ -60,10 +61,6 @@ async function ListBody({
 }) {
   const translate = await getTranslations();
   const t = await getTranslations("report.orderlist");
-  const typeMap = {
-    "1": t("notSettled"),
-    "2": t("settled"),
-  };
 
   const getOdds = (item: OrderReportsRecord) => {
     let odds = 0;
@@ -103,9 +100,14 @@ async function ListBody({
             <TableCell>
               <Time time={item.settleTime} />
             </TableCell>
-            <TableCell>{typeMap[item.orderStatus]}</TableCell>
-            <TableCell className="bg-background sticky right-0 p-0">
-              <div className="shadow-l flex items-center justify-center px-4 py-2">
+            <TableCell>
+              {t(
+                TRANSFER_TYPE.find((type) => type.value === item.orderStatus)
+                  ?.label,
+              )}
+            </TableCell>
+            <TableCell className="sticky right-0 bg-background p-0">
+              <div className="shadow-l py-2 px-4 flex justify-center items-center">
                 <DetailButton item={item} />
               </div>
             </TableCell>

@@ -49,10 +49,10 @@ export function ListFilter({
   };
 
   const handleSearch = () => {
-    if (dateRange.startTime && dateRange.endTime) {
+    if ((dateRange.startTime && dateRange.endTime) || orderNumber) {
       startTransition(() => router.refresh());
     } else {
-      toast.error(t("selectDate"));
+      toast.error(t("selectDateOrId"));
     }
   };
 

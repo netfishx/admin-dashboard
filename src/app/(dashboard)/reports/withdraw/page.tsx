@@ -105,8 +105,8 @@ async function TableWrapper({
     requestStatus: requestStatus ? Number(requestStatus) : null,
     pageNum: Number(pageNum ?? 1),
     pageSize: Number(pageSize ?? 10),
-    startTime: Number(startTime),
-    endTime: Number(endTime),
+    startTime: Number(startTime) || null,
+    endTime: Number(endTime) || null,
     userId: userId || null,
     userType: userType ? Number(userType) : 0,
   };

@@ -17,7 +17,9 @@ export default async function Page({
     <div className="flex w-full flex-col gap-2">
       <Suspense
         fallback={
-          <div className="bg-background flex items-center justify-between p-4">
+          <div className="flex bg-background p-4 gap-2 flex-col">
+            <Skeleton />
+            <Skeleton />
             <Skeleton />
           </div>
         }
@@ -26,13 +28,17 @@ export default async function Page({
       </Suspense>
       <Suspense
         fallback={
-          <Table className="table-fixed">
-            <ListHeader />
-            <TableSkeleton
-              length={5}
-              colSpan={hasTransferTypePermission ? 6 : 5}
-            />
-          </Table>
+          <div className="flex-1 bg-background p-4">
+            <div className="relative rounded-sm border">
+              <Table className="table-fixed">
+                <ListHeader />
+                <TableSkeleton
+                  length={5}
+                  colSpan={hasTransferTypePermission ? 6 : 5}
+                />
+              </Table>
+            </div>
+          </div>
         }
       >
         <List searchParams={searchParams} />
