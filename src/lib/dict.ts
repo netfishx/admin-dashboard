@@ -262,3 +262,43 @@ export const COLLECTION_STATUS = [
     label: "locked",
   },
 ];
+
+// 借还记录操作类型
+export const OPERATE_TYPE = [
+  {
+    value: 15,
+    label: "borrow",
+  },
+  {
+    value: 16,
+    label: "repayment",
+  },
+  {
+    value: 21,
+    label: "writeOff",
+  },
+];
+
+// 授信类型
+export const CREDIT_OPERATE_TYPE = [
+  {
+    value: 18,
+    label: "addCredit",
+  },
+  {
+    value: 19,
+    label: "reduceCredit",
+  },
+];
+
+// 转账类型
+export const TRANSFER_TYPE = [
+  {
+    value: 1,
+    label: "notSettled",
+  },
+  {
+    value: 2,
+    label: "settled",
+  },
+];

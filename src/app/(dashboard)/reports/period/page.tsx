@@ -101,8 +101,8 @@ async function PeriodTable({
   const params = {
     pageSize: Number(pageSize ?? 10),
     pageNum: Number(pageNum ?? 1),
-    startTime: Number(startTime),
-    endTime: Number(endTime),
+    startTime: Number(startTime) || null,
+    endTime: Number(endTime) || null,
     // temp临时参数
     // startTime: 1730304000000,
     // endTime: 1730504000000,

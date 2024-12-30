@@ -123,8 +123,8 @@ async function TableWrapper({
     userType: userType ? Number(userType) : 0, // 0 代理 2 会员 默认代理
     pageNum: Number(pageNum ?? 1),
     pageSize: Number(pageSize ?? 10),
-    startTime: Number(startTime),
-    endTime: Number(endTime),
+    startTime: Number(startTime) || null,
+    endTime: Number(endTime) || null,
   };
 
   const { data } = await getWalletLog(params);
