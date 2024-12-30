@@ -1,17 +1,30 @@
-import type { User } from "@/lib/types";
 import { CborDecoderBase } from "@jsonjoy.com/json-pack/lib/cbor/CborDecoderBase";
 import { CborEncoder } from "@jsonjoy.com/json-pack/lib/cbor/CborEncoder";
 import LZString from "lz-string";
 import { cookies } from "next/headers";
+import { z } from "zod";
 
 const encoder = new CborEncoder();
 const decoder = new CborDecoderBase();
 
 const expiresTime = 24 * 60 * 60 * 1000;
 
-export type SessionData = User & {
-  expires: string;
-};
+export const UserSchema = z.object({
+  id: z.string(),
+  mainId: z.string(),
+  username: z.string(),
+  inviteCode: z.string().nullish(),
+  token: z.string(),
+  permissions: z.array(z.string()),
+});
+
+export type User = z.infer<typeof UserSchema>;
+
+export const SessionSchema = UserSchema.extend({
+  expires: z.string(),
+});
+
+export type SessionData = z.infer<typeof SessionSchema>;
 
 export function signToken(payload: SessionData) {
   const encoded = encoder.encode(payload);
@@ -21,13 +34,15 @@ export function signToken(payload: SessionData) {
 }
 
 export function verifyToken(input: string) {
-  return decoder.decode(
-    new Uint8Array(
-      LZString.decompressFromEncodedURIComponent(input)
-        .split("")
-        .map((c) => c.charCodeAt(0)),
+  return SessionSchema.parse(
+    decoder.decode(
+      new Uint8Array(
+        LZString.decompressFromEncodedURIComponent(input)
+          .split("")
+          .map((c) => c.charCodeAt(0)),
+      ),
     ),
-  ) as SessionData;
+  );
 }
 
 export async function getSession() {
@@ -51,6 +66,16 @@ export async function setSession(user: User) {
     // secure: true,
     sameSite: "lax",
   });
+}
+
+export async function getToken() {
+  const session = await getSession();
+  return session?.token;
+}
+
+export async function getPermissions() {
+  const session = await getSession();
+  return session?.permissions ?? [];
 }
 
 export async function hasPermission(permission: string) {

@@ -76,7 +76,7 @@ import type {
 } from "@/lib/types";
 import { cookies } from "next/headers";
 
-import { getSession } from "@/session";
+import { getToken } from "@/session";
 import axios from "axios";
 
 export async function signOut() {
@@ -84,11 +84,11 @@ export async function signOut() {
 }
 
 export async function getGameList(type: number) {
-  const user = await getSession();
+  const token = await getToken();
   return await apiRequest<GameType[]>({
     url: "/game/list",
     params: { type },
-    token: user?.token,
+    token,
     expire: "minutes",
   });
 }
@@ -147,39 +147,39 @@ export async function login({
   };
 }
 export async function logout() {
-  const user = await getSession();
+  const token = await getToken();
   return await apiRequest({
     url: "/security/logout",
     method: "POST",
-    token: user?.token,
+    token,
   });
 }
 
 // 用户管理-代理管理-获取代理列表
 export async function getAgents(params: { pageNum: number; pageSize: number }) {
-  const user = await getSession();
+  const token = await getToken();
   return await apiRequest<PageData<AgentData>>({
     url: "/agent/user/main/getUnderAgent",
     params,
-    token: user?.token,
+    token,
   });
 }
 // 用户管理-代理管理-获取单个代理信息
 export async function getAgentInfoById(params: { id: string }) {
-  const user = await getSession();
+  const token = await getToken();
   return await apiRequest<AgentData>({
     url: "/agent/user/main/getById",
     params,
-    token: user?.token,
+    token,
   });
 }
 // 用户管理-代理管理-获取单个代理信息
 export async function getAgentInfoByUsername(params: { username: string }) {
-  const user = await getSession();
+  const token = await getToken();
   return await apiRequest<AgentData>({
     url: "/agent/user/main/getByusername",
     params,
-    token: user?.token,
+    token,
   });
 }
 export async function updateAgent(data: {
@@ -188,12 +188,12 @@ export async function updateAgent(data: {
   nickname?: string;
   status?: number;
 }) {
-  const user = await getSession();
+  const token = await getToken();
   return await apiRequest({
     url: "/agent/user/main/update",
     method: "POST",
     data,
-    token: user?.token,
+    token,
   });
 }
 
@@ -203,12 +203,12 @@ export async function transferMoney(data: {
   amount: number;
   secret: string;
 }) {
-  const user = await getSession();
+  const token = await getToken();
   return await apiRequest<{ check: boolean; id: string }>({
     url: "/wallet/transfer",
     method: "POST",
     data,
-    token: user?.token,
+    token,
   });
 }
 
@@ -218,34 +218,34 @@ export async function deleteDebt(data: {
   money: number;
   secret: string;
 }) {
-  const user = await getSession();
+  const token = await getToken();
   return await apiRequest({
     url: "/order/repayment/pay",
     method: "POST",
     data,
-    token: user?.token,
+    token,
   });
 }
 
 // 用户管理-谷歌验证
 export async function googleValidata(data: { id: string; code: string }) {
-  const user = await getSession();
+  const token = await getToken();
   return await apiRequest({
     url: "/wallet/google/check",
     method: "POST",
     data,
-    token: user?.token,
+    token,
   });
 }
 
 // 用户管理-代理管理-重置代理返水次数
 export async function resetRestCount(data: { id: string }) {
-  const user = await getSession();
+  const token = await getToken();
   return await apiRequest({
     url: "/agent/user/main/cleanLoginError",
     method: "POST",
     data,
-    token: user?.token,
+    token,
   });
 }
 // 用户管理-代理管理-添加代理
@@ -254,9 +254,9 @@ export async function addAgent(data: {
   nickname: string;
   password: string;
 }) {
-  const user = await getSession();
+  const token = await getToken();
   return await apiRequest({
-    token: user?.token,
+    token,
     url: "/agent/user/main/createAccount",
     method: "POST",
     data,
@@ -265,11 +265,11 @@ export async function addAgent(data: {
 
 // 用户管理-代理管理-获取代理游戏设置
 export async function getAgentConfig(params: { userId: string }) {
-  const user = await getSession();
+  const token = await getToken();
   return await apiRequest<GameConfig[]>({
     url: "/game/config/list",
     params,
-    token: user?.token,
+    token,
   });
 }
 // 用户管理-代理管理-更新代理游戏设置
@@ -277,12 +277,12 @@ export async function updateAgentGameConfig(data: {
   userId: string;
   list: GameConfig[];
 }) {
-  const user = await getSession();
+  const token = await getToken();
   return await apiRequest({
     url: "/game/config/update",
     method: "POST",
     data,
-    token: user?.token,
+    token,
   });
 }
 // 用户管理-代理管理-获取代理变更日志
@@ -292,11 +292,11 @@ export async function getChangeLog(params: {
   pageNum?: number;
   pageSize?: number;
 }) {
-  const user = await getSession();
+  const token = await getToken();
   return await apiRequest<PageData<ChangeLog>>({
     url: "/operateLog/list",
     params,
-    token: user?.token,
+    token,
     expire: 3,
   });
 }
@@ -305,11 +305,11 @@ export async function getMemberList(params: {
   pageNum: number;
   pageSize: number;
 }) {
-  const user = await getSession();
+  const token = await getToken();
   return await apiRequest<PageData<MemberList>>({
     url: "/member/user/main/getUnderMember",
     params,
-    token: user?.token,
+    token,
   });
 }
 export async function updateMember(data: {
@@ -317,12 +317,12 @@ export async function updateMember(data: {
   status: number;
   agentId?: string;
 }) {
-  const user = await getSession();
+  const token = await getToken();
   return await apiRequest({
     url: "/member/user/main/update",
     method: "POST",
     data,
-    token: user?.token,
+    token,
   });
 }
 
@@ -332,12 +332,12 @@ export async function modifyCreditLimit(data: {
   amount: number;
   secret: string;
 }) {
-  const user = await getSession();
+  const token = await getToken();
   return await apiRequest<{ check: boolean; id: string }>({
     url: "/wallet/modifyCreditLimit",
     method: "POST",
     data,
-    token: user?.token,
+    token,
   });
 }
 
@@ -346,11 +346,11 @@ export async function getAgentLoginLog(params: {
   pageNum: number;
   pageSize: number;
 }) {
-  const user = await getSession();
+  const token = await getToken();
   return await apiRequest<PageData<LoginLog>>({
     url: "/agent/loginLog/listPage",
     params,
-    token: user?.token,
+    token,
     expire: 3,
   });
 }
@@ -363,11 +363,11 @@ export async function getMySelfLoginLog(params: {
   endTime?: number;
   ip?: string;
 }) {
-  const user = await getSession();
+  const token = await getToken();
   return await apiRequest<PageData<MySelfLoginLog>>({
     url: "/agent/loginLog/listPageSelf",
     params,
-    token: user?.token,
+    token,
   });
 }
 
@@ -376,11 +376,11 @@ export async function getMemberLoginLog(params: {
   pageNum: number;
   pageSize: number;
 }) {
-  const user = await getSession();
+  const token = await getToken();
   return await apiRequest<PageData<LoginLog>>({
     url: "/member/loginLog/listPage",
     params,
-    token: user?.token,
+    token,
     expire: 3,
   });
 }
@@ -389,11 +389,11 @@ export async function getSupplierList(params?: {
   id?: string;
   username?: string;
 }) {
-  const user = await getSession();
+  const token = await getToken();
   return await apiRequest<Supplier[]>({
     url: "/vendor/user/getVendorList",
     params,
-    token: user?.token,
+    token,
   });
 }
 
@@ -403,12 +403,12 @@ export async function addSupplier(data: {
   newPassword: string;
   remark: string;
 }) {
-  const user = await getSession();
+  const token = await getToken();
   return await apiRequest({
     url: "/vendor/user/createAccount",
     method: "POST",
     data,
-    token: user?.token,
+    token,
   });
 }
 
@@ -419,32 +419,32 @@ export async function editSupplier(data: {
   newPassword?: string;
   status: number;
 }) {
-  const user = await getSession();
+  const token = await getToken();
   return await apiRequest({
     url: "/vendor/user/update",
     method: "POST",
     data,
-    token: user?.token,
+    token,
   });
 }
 
 export async function cleanSupplierLoginError(data: { id: string }) {
-  const user = await getSession();
+  const token = await getToken();
   return await apiRequest({
     url: "/vendor/user/cleanLoginError",
     method: "POST",
     data,
-    token: user?.token,
+    token,
   });
 }
 
 // 系统管理-公告管理-全平台公告
 export async function getAnnouncement(params: AnnouncementListRequest) {
-  const user = await getSession();
+  const token = await getToken();
   const res = await apiRequest<PageData<AnnouncementList>>({
     url: "/announcement/getPageListByPlatform",
     params,
-    token: user?.token,
+    token,
   });
   if (res.data?.list) {
     res.data.list = res.data.list.map((item) => ({
@@ -457,11 +457,11 @@ export async function getAnnouncement(params: AnnouncementListRequest) {
 }
 // 系统管理-公告管理-本级公告（上级公告）
 export async function getSameOrSeniorAnno(params: SameOrSeniorAnnoListRequest) {
-  const user = await getSession();
+  const token = await getToken();
   const res = await apiRequest<PageData<AnnouncementList>>({
     url: "/announcement/getPageListByUserId",
     params,
-    token: user?.token,
+    token,
   });
   if (res.data?.list) {
     res.data.list = res.data.list.map((item) => ({
@@ -474,40 +474,40 @@ export async function getSameOrSeniorAnno(params: SameOrSeniorAnnoListRequest) {
 }
 // 系统管理-公告管理-添加公告/编辑公告
 export async function saveAnnouncement(data: Announcement) {
-  const user = await getSession();
+  const token = await getToken();
   return await apiRequest({
     url: "/announcement/sendAnnouncement",
     method: "POST",
     data,
-    token: user?.token,
+    token,
   });
 }
 
 export async function getReceiveOrder() {
-  const user = await getSession();
+  const token = await getToken();
   return await apiRequest<{ receiveStatus: boolean }>({
     url: "/agent/user/main/receiveOrder",
-    token: user?.token,
+    token,
   });
 }
 
 export async function editReceiveOrder({ status }: { status: boolean }) {
-  const user = await getSession();
+  const token = await getToken();
   return await apiRequest<{ status: boolean }>({
     url: "/agent/user/main/receiveOrder",
     method: "POST",
     data: { receiveStatus: status ? 1 : 0 },
-    token: user?.token,
+    token,
   });
 }
 
 export async function getSupplierConfigs(userId?: string) {
-  const user = await getSession();
+  const token = await getToken();
   const [res, res2] = await Promise.all([
     getBaccaratGames(),
     apiRequest<SupplierConfig[]>({
       url: "/supplierConf/list",
-      token: user?.token,
+      token,
       params: userId ? { userId } : undefined,
     }),
   ]);
@@ -522,22 +522,22 @@ export async function getSupplierConfigs(userId?: string) {
 }
 
 export async function editSupplierConfig(data: SupplierConfig) {
-  const user = await getSession();
+  const token = await getToken();
   return await apiRequest({
     url: "/supplierConf/save",
     method: "POST",
     data,
-    token: user?.token,
+    token,
   });
 }
 
 export async function getMaintainList() {
-  const user = await getSession();
+  const token = await getToken();
   const [res, res2] = await Promise.all([
     getBaccaratGames(),
     apiRequest<MaintainGame[]>({
       url: "/gameSwitch/list",
-      token: user?.token,
+      token,
     }),
   ]);
 
@@ -551,44 +551,44 @@ export async function getMaintainList() {
 }
 
 export async function editMaintain(data: { status: number; ids: string[] }) {
-  const user = await getSession();
+  const token = await getToken();
   return await apiRequest({
     url: "/gameSwitch/update",
     method: "POST",
     data,
-    token: user?.token,
+    token,
   });
 }
 
 // 代理报表-会员下注报表
 export async function getMemberBetReport(params: MemberBetReportRequestParams) {
-  const user = await getSession();
+  const token = await getToken();
   return await apiRequest<PageData<MemberBetReportRequestRecords>>({
     url: "/report/agent/baccarat/memberBet",
     params,
-    token: user?.token,
+    token,
   });
 }
 
 // 代理报表-拦货占成
 export async function getRatioReport(params: RatioReportRequestParams) {
-  const user = await getSession();
+  const token = await getToken();
   return await apiRequest<PageData<RatioReportRequestRecords>>({
     url: "/report/agent/baccarat/stack",
     params,
-    token: user?.token,
+    token,
   });
 }
 
 // 按期汇总报表
 export async function getPeriodReport(params: PeriodReportParams) {
-  const user = await getSession();
+  const token = await getToken();
   const [res, res2] = await Promise.all([
     getGameList(1),
     apiRequest<PageData<PeriodReportList>>({
       url: "/report/agent/baccarat/issue",
       params,
-      token: user?.token,
+      token,
     }),
   ]);
   return {
@@ -617,12 +617,12 @@ export async function getBaccaratGameConfig(userId?: string) {
 }
 
 export async function getGameConfig(userId?: string) {
-  const user = await getSession();
+  const token = await getToken();
   const [res, res2] = await Promise.all([
     getAllGames(),
     apiRequest<GameConfig[]>({
       url: "/game/config/list",
-      token: user?.token,
+      token,
       params: userId ? { userId } : undefined,
     }),
   ]);
@@ -638,12 +638,12 @@ export async function getGameConfig(userId?: string) {
 }
 
 export async function getDefaultGameConfig() {
-  const user = await getSession();
+  const token = await getToken();
   const [res, res2] = await Promise.all([
     getGameList(1),
     apiRequest<GameConfig[]>({
       url: "/game/default/listConfig",
-      token: user?.token,
+      token,
     }),
   ]);
   return {
@@ -658,22 +658,22 @@ export async function getDefaultGameConfig() {
 }
 
 export async function editGameConfig(list: GameConfig[]) {
-  const user = await getSession();
+  const token = await getToken();
   return await apiRequest({
     url: "/game/config/update",
     method: "POST",
     data: { list },
-    token: user?.token,
+    token,
   });
 }
 
 export async function editDefaultGameConfig(list: GameConfig[]) {
-  const user = await getSession();
+  const token = await getToken();
   return await apiRequest({
     url: "/game/default/updateConfig",
     method: "POST",
     data: { list },
-    token: user?.token,
+    token,
   });
 }
 
@@ -684,10 +684,10 @@ export async function getGameOdds({
   gameId: number;
   userId?: string;
 }) {
-  const user = await getSession();
+  const token = await getToken();
   return await apiRequest<GameOdds[]>({
     url: "/game/oddsLimit/list",
-    token: user?.token,
+    token,
     params: { gameId, userId },
     expire: 3,
   });
@@ -695,48 +695,48 @@ export async function getGameOdds({
 
 // 获取列表
 export async function getSecurityList() {
-  const user = await getSession();
+  const token = await getToken();
   return await apiRequest<{ type: number; isOpen: boolean }[]>({
     url: "/agent/center/list",
-    token: user?.token,
+    token,
   });
 }
 // 获取谷歌二维码
 export async function getGoogleQrCode() {
-  const user = await getSession();
+  const token = await getToken();
   return await apiRequest<{ secret: string; qrcode: string }>({
     url: "/agent/center/google/qrCode",
-    token: user?.token,
+    token,
   });
 }
 // 绑定谷歌验证
 export async function bindGoogleAuth(data: { code: string; secret: string }) {
-  const user = await getSession();
+  const token = await getToken();
   return await apiRequest({
     url: "/agent/center/google/bind",
     method: "POST",
     data,
-    token: user?.token,
+    token,
   });
 }
 // 解绑谷歌验证 重置
 export async function unbindGoogleAuth(data: { secret: string; code: string }) {
-  const user = await getSession();
+  const token = await getToken();
   return await apiRequest({
     url: "/agent/center/google/unbind",
     method: "POST",
     data,
-    token: user?.token,
+    token,
   });
 }
 // 设置资金密码
 export async function bindFundPassword(data: { secret: string }) {
-  const user = await getSession();
+  const token = await getToken();
   return await apiRequest({
     url: "/agent/center/fund/bind",
     method: "POST",
-    data: { secret: data.secret, userId: user?.id },
-    token: user?.token,
+    data: { secret: data.secret },
+    token,
   });
 }
 
@@ -745,30 +745,30 @@ export async function editFundPassword(data: {
   oldSecret: string;
   newSecret: string;
 }) {
-  const user = await getSession();
+  const token = await getToken();
   return await apiRequest({
     url: "/agent/center/fund/edit",
     method: "POST",
     data,
-    token: user?.token,
+    token,
   });
 }
 export async function syncGameOdds({ gameId }: { gameId: number }) {
-  const user = await getSession();
+  const token = await getToken();
   return await apiRequest({
     url: "/game/oddsLimit/sync",
     method: "POST",
     data: { gameId },
-    token: user?.token,
+    token,
   });
 }
 export async function restoreGameOdds({ gameId }: { gameId: number }) {
-  const user = await getSession();
+  const token = await getToken();
   return await apiRequest({
     url: "/game/oddsLimit/restore",
     method: "POST",
     data: { gameId },
-    token: user?.token,
+    token,
   });
 }
 export async function updateGameOdds(data: {
@@ -776,50 +776,50 @@ export async function updateGameOdds(data: {
   list: GameOdds[];
   userId?: string;
 }) {
-  const user = await getSession();
+  const token = await getToken();
   return await apiRequest({
     url: "/game/oddsLimit/update",
     method: "POST",
     data,
-    token: user?.token,
+    token,
   });
 }
 
 export async function getUserBasicInfo() {
-  const user = await getSession();
+  const token = await getToken();
   return await apiRequest<UserBasicInfo>({
     url: "/agent/center/base/info",
-    token: user?.token,
+    token,
   });
 }
 
 export async function postUserInfoWithdraw(data: WithdrawFormData) {
-  const user = await getSession();
+  const token = await getToken();
   return await apiRequest<WithdrawApply>({
     url: "/order/withdraw/agent/apply",
     method: "POST",
     data,
-    token: user?.token,
+    token,
   });
 }
 // 提款申请
 export async function getWithdrawApplyList(data: ApplyListRequest) {
-  const user = await getSession();
+  const token = await getToken();
   return await apiRequest<PageData<ApplyData>>({
     url: "/order/withdraw/page",
     method: "POST",
     data,
-    token: user?.token,
+    token,
   });
 }
 // 提款申请-锁定
 export async function lockApply(data: { id: string }) {
-  const user = await getSession();
+  const token = await getToken();
   return await apiRequest({
     url: "/order/withdraw/locked",
     method: "POST",
     data,
-    token: user?.token,
+    token,
   });
 }
 // 通过 拒绝
@@ -828,52 +828,52 @@ export async function auditWithdrawRecord(data: {
   approverStatusEnum: number;
   modeEnum?: number;
 }) {
-  const user = await getSession();
+  const token = await getToken();
   return await apiRequest({
     url: "/order/withdraw/audit",
     method: "POST",
     data,
-    token: user?.token,
+    token,
   });
 }
 // 再次发起
 export async function againApply(data: { id: string }) {
-  const user = await getSession();
+  const token = await getToken();
   return await apiRequest({
     url: "/order/withdraw/retry",
     method: "POST",
     data,
-    token: user?.token,
+    token,
   });
 }
 
 // 确认到账
 export async function ackWithdrawAccount(data: { id: string }) {
-  const user = await getSession();
+  const token = await getToken();
   return await apiRequest({
     url: "/order/withdraw/ack/account",
     method: "POST",
     data,
-    token: user?.token,
+    token,
   });
 }
 // 稽核管理-稽核列表
 export async function getAuditList(params: AuditListRequest) {
-  const user = await getSession();
+  const token = await getToken();
   return await apiRequest<PageData<AuditList>>({
     url: "/agent/audit/page",
     params,
-    token: user?.token,
+    token,
   });
 }
 // 清除稽核
 export async function clearAudit(data: { id: string; userId: string }) {
-  const user = await getSession();
+  const token = await getToken();
   return await apiRequest({
     url: "/agent/audit/cleanAudit",
     method: "POST",
     data,
-    token: user?.token,
+    token,
   });
 }
 
@@ -881,39 +881,39 @@ export async function clearAudit(data: { id: string; userId: string }) {
 export async function getSupplierReportList(
   params: SupplierReportRequestParams,
 ) {
-  const user = await getSession();
+  const token = await getToken();
   return await apiRequest<PageData<SupplierReportRecords>>({
     url: "/report/agent/baccarat/supply",
-    token: user?.token,
+    token,
     params,
   });
 }
 
 export async function getMemberReportList(params: MemberReportRequestParams) {
-  const user = await getSession();
+  const token = await getToken();
   return await apiRequest<PageData<MemberReportsRecord>>({
     url: "/report/agent/baccarat/member",
-    token: user?.token,
+    token,
     params,
   });
 }
 
 // 注单列表-棋牌
 export async function getOrderReportList(params: OrderReportsRequestParams) {
-  const user = await getSession();
+  const token = await getToken();
   return await apiRequest<PageData<OrderReportsRecord>>({
     url: "/agent/order/baccarat/list",
-    token: user?.token,
+    token,
     params,
   });
 }
 
 // 注单列表-掼蛋
 export async function getGuandanReportList(params: GameRecordRequestParams) {
-  const user = await getSession();
+  const token = await getToken();
   return await apiRequest<PageData<GameRecordRequestRecords>>({
     url: "/agent/order/guandan/list",
-    token: user?.token,
+    token,
     params,
   });
 }
@@ -922,41 +922,41 @@ export async function getGuandanReportList(params: GameRecordRequestParams) {
 export async function getGuandanReportListDetail(
   params: GameRecordRequestParams,
 ) {
-  const user = await getSession();
+  const token = await getToken();
   return await apiRequest<PageData<BombDetailRecords>>({
     url: "/agent/order/guandan/detail",
-    token: user?.token,
+    token,
     params,
   });
 }
 
 // 代理报表-棋牌
 export async function getPokerReport(params: PokerReportRequestParams) {
-  const user = await getSession();
+  const token = await getToken();
   return await apiRequest<PageData<PokerReportRequestRecords>>({
     url: "/report/agent/poker",
-    token: user?.token,
+    token,
     params,
   });
 }
 
 // 充值报表
 export async function getRechargeReportList(data: RechargeReportParams) {
-  const user = await getSession();
+  const token = await getToken();
   return await apiRequest<PageData<RechargeReport>>({
     url: "/order/recharge/report",
     method: "POST",
-    token: user?.token,
+    token,
     data,
   });
 }
 // 提现报表
 export async function getWithdrawReportList(data: WithdrawReportParams) {
-  const user = await getSession();
+  const token = await getToken();
   const res = await apiRequest<PageData<WithdrawReport>>({
     url: "/order/withdraw/report",
     method: "POST",
-    token: user?.token,
+    token,
     data,
   });
   if (res.data?.list) {
@@ -1003,10 +1003,10 @@ export async function getWithdrawReportList(data: WithdrawReportParams) {
 
 // 归集地址列表
 export async function getCollectionAddressList() {
-  const user = await getSession();
+  const token = await getToken();
   return await apiRequest<CollectionAddressListRecords[]>({
     url: "/collection/address/list",
-    token: user?.token,
+    token,
   });
 }
 
@@ -1017,50 +1017,50 @@ export async function getRoleList({
   pageNum: number;
   pageSize: number;
 }) {
-  const user = await getSession();
+  const token = await getToken();
   return await apiRequest<PageData<Role>>({
     url: "/role/pageList",
-    token: user?.token,
+    token,
     params: { pageNum, pageSize },
   });
 }
 
 export async function getPermissionList() {
-  const user = await getSession();
+  const token = await getToken();
   return await apiRequest<Permission[]>({
     url: "/perms/listAllOwner",
-    token: user?.token,
+    token,
   });
 }
 
 export async function editRole(data: Role) {
-  const user = await getSession();
+  const token = await getToken();
   return await apiRequest({
     url: "/role/saveOrUpdate",
     method: "POST",
     data,
-    token: user?.token,
+    token,
   });
 }
 
 export async function deleteRole(data: { id: string }) {
-  const user = await getSession();
+  const token = await getToken();
   return await apiRequest({
     url: "/role/deleteById",
     method: "DELETE",
     data,
-    token: user?.token,
+    token,
   });
 }
 
 // 新增归集地址
 export async function addCollectionAddress(data: { size: number }) {
-  const user = await getSession();
+  const token = await getToken();
   return await apiRequest({
     url: "/collection/address/add",
     method: "POST",
     data,
-    token: user?.token,
+    token,
   });
 }
 
@@ -1069,51 +1069,50 @@ export async function lockCollectionAddress(data: {
   address: string;
   status: number;
 }) {
-  const user = await getSession();
+  const token = await getToken();
   return await apiRequest({
     url: "/collection/address/enable",
     method: "POST",
     data,
-    token: user?.token,
+    token,
   });
 }
 
 // 注单详情
 export async function getOrderDetail(params: { id: string }) {
-  const user = await getSession();
-
+  const token = await getToken();
   return await apiRequest<OrderItemDetailType>({
     url: "/agent/order/baccarat/detail",
-    token: user?.token,
+    token,
     params,
   });
 }
 // 矿工费
 export async function getOreFeeList() {
-  const user = await getSession();
+  const token = await getToken();
   return await apiRequest<OreFeeList[]>({
     url: "/orefee/address/list",
-    token: user?.token,
+    token,
   });
 }
 // 添加矿工费
 export async function addOreFee(data: { size: number }) {
-  const user = await getSession();
+  const token = await getToken();
   return await apiRequest({
     url: "/orefee/address/add",
     method: "POST",
     params: data,
-    token: user?.token,
+    token,
   });
 }
 // 移除矿工费
 export async function removeOreFee(data: { address: string }) {
-  const user = await getSession();
+  const token = await getToken();
   return await apiRequest({
     url: "/orefee/address/remove",
     method: "POST",
     params: data,
-    token: user?.token,
+    token,
   });
 }
 
@@ -1122,10 +1121,10 @@ export async function getDictionaryList(params: {
   pageNum: number;
   pageSize: number;
 }) {
-  const user = await getSession();
+  const token = await getToken();
   return await apiRequest<PageData<DictionaryList>>({
     url: "/dict/pageList",
-    token: user?.token,
+    token,
     params,
   });
 }
@@ -1135,12 +1134,12 @@ export async function addDictionary(data: {
   dictCode: string;
   remark: string;
 }) {
-  const user = await getSession();
+  const token = await getToken();
   return await apiRequest<{ code: number; message: string }>({
     url: "/dict/save",
     method: "POST",
     data,
-    token: user?.token,
+    token,
   });
 }
 
@@ -1151,32 +1150,32 @@ export async function editDictionary(data: {
   dictCode: string;
   remark: string;
 }) {
-  const user = await getSession();
+  const token = await getToken();
   return await apiRequest<{ code: number; message: string }>({
     url: "/dict/update",
     method: "PUT",
     data,
-    token: user?.token,
+    token,
   });
 }
 
 // 删除字典
 export async function deleteDictionary(data: { id: string }) {
-  const user = await getSession();
+  const token = await getToken();
   return await apiRequest({
     url: "/dict/deleteById",
     method: "DELETE",
     data,
-    token: user?.token,
+    token,
   });
 }
 
 // 字典项列表
 export async function getDictionaryItemList(params: { dictCode: string }) {
-  const user = await getSession();
+  const token = await getToken();
   return await apiRequest<{ [key: string]: DictionaryItem[] }>({
     url: "/dict/item/selectList",
-    token: user?.token,
+    token,
     params,
   });
 }
@@ -1189,12 +1188,12 @@ export async function addDictionaryItem(data: {
   remark: string;
   i18nType: string;
 }) {
-  const user = await getSession();
+  const token = await getToken();
   return await apiRequest({
     url: "/dict/item/save",
     method: "POST",
     data,
-    token: user?.token,
+    token,
   });
 }
 
@@ -1207,23 +1206,23 @@ export async function editDictionaryItem(data: {
   remark: string;
   i18nType: string;
 }) {
-  const user = await getSession();
+  const token = await getToken();
   return await apiRequest({
     url: "/dict/item/update",
     method: "PUT",
     data,
-    token: user?.token,
+    token,
   });
 }
 
 // 删除字典项
 export async function deleteDictionaryItem(data: { id: string }) {
-  const user = await getSession();
+  const token = await getToken();
   return await apiRequest({
     url: "/dict/item/deleteById",
     method: "DELETE",
     data,
-    token: user?.token,
+    token,
   });
 }
 
@@ -1232,10 +1231,10 @@ export async function getBackgroundImageList(params: {
   pageNum: number;
   pageSize: number;
 }) {
-  const user = await getSession();
+  const token = await getToken();
   return await apiRequest<PageData<BackgroundImageList>>({
     url: "/backgroundPicture/getPage",
-    token: user?.token,
+    token,
     params,
   });
 }
@@ -1250,64 +1249,64 @@ export async function addBackgroundImage(data: {
   status: number;
   sort: number;
 }) {
-  const user = await getSession();
+  const token = await getToken();
   return await apiRequest({
     url: "/backgroundPicture/addOrModify",
     method: "POST",
     data,
-    token: user?.token,
+    token,
   });
 }
 // 删除背景图
 export async function deleteBackgroundImage(data: { id: string }) {
-  const user = await getSession();
+  const token = await getToken();
   return await apiRequest({
     url: "/backgroundPicture/delete",
     method: "DELETE",
     data,
-    token: user?.token,
+    token,
   });
 }
 
 // 授信记录list
 export async function postGetCreditLogList(data: CreditRecordRequestParams) {
-  const user = await getSession();
+  const token = await getToken();
   return await apiRequest<PageData<CreditRecordRequestRecords>>({
     url: "/wallet/getCreditLogList",
     method: "POST",
     data,
-    token: user?.token,
+    token,
   });
 }
 
 // 借还记录list
 export async function postGetBorrowLogList(data: BorrowRecordRequestParams) {
-  const user = await getSession();
+  const token = await getToken();
   return await apiRequest<PageData<BorrowRecordRequestRecords>>({
     url: "/order/credit/report",
     method: "POST",
     data,
-    token: user?.token,
+    token,
   });
 }
 
 // 获取最新一条提现手续费 1223:update
 export async function getNewestWithdrawFee() {
-  const user = await getSession();
+  const token = await getToken();
   return await apiRequest<WithdrawFee>({
     url: "/config/withdraw/fee/agent/newest",
-    token: user?.token,
+    token,
   });
 }
 
 // 编辑提现手续费
 export async function saveWithdrawFee(data: WithdrawFee) {
-  const user = await getSession();
+  const token = await getToken();
   return await apiRequest({
     url: "/config/withdraw/fee/edit",
     method: "POST",
     data,
-    token: user?.token,
+    token,
   });
 }
 // 首页 今日盈亏
@@ -1315,10 +1314,10 @@ export async function getTodayWinLoss(params: {
   startTime: number;
   endTime: number;
 }) {
-  const user = await getSession();
+  const token = await getToken();
   return await apiRequest<TodayWinLoss>({
     url: "/index/todayWinLoss",
-    token: user?.token,
+    token,
     params,
   });
 }
@@ -1329,12 +1328,12 @@ export async function getTodayWinLossChart(params: {
   beforeEndTime: number;
   size: number;
 }) {
-  const user = await getSession();
+  const token = await getToken();
   const [res, res2] = await Promise.all([
     getGameList(1),
     apiRequest<TodayGameReport>({
       url: "/index/todayGameReport",
-      token: user?.token,
+      token,
       params,
     }),
   ]);
@@ -1368,10 +1367,10 @@ export async function getFundList(params: {
   startTime: number;
   endTime: number;
 }) {
-  const user = await getSession();
+  const token = await getToken();
   return await apiRequest<FundList>({
     url: "/index/fundList",
-    token: user?.token,
+    token,
     params,
   });
 }
@@ -1379,10 +1378,10 @@ export async function getMemberChartList(params: {
   startTime: number;
   endTime: number;
 }) {
-  const user = await getSession();
+  const token = await getToken();
   return await apiRequest<MemberChartList>({
     url: "/index/todayLogReport",
-    token: user?.token,
+    token,
     params,
   });
 }
@@ -1391,12 +1390,12 @@ export async function getMemberChartList(params: {
 export async function postGetTransferLogList(
   data: TransferRecordRequestParams,
 ) {
-  const user = await getSession();
+  const token = await getToken();
   return await apiRequest<PageData<TransferRecordRequestRecords>>({
     url: "/wallet/getTransferLog",
     method: "POST",
     data,
-    token: user?.token,
+    token,
   });
 }
 
@@ -1407,31 +1406,31 @@ export async function getSubaccountList({
   pageNum: number;
   pageSize: number;
 }) {
-  const user = await getSession();
+  const token = await getToken();
   return await apiRequest<PageData<Subaccount>>({
     url: "/agent/user/sub/getUnderAgent",
-    token: user?.token,
+    token,
     params: { pageNum, pageSize },
   });
 }
 
 export async function updateSubaccount(data: Subaccount) {
-  const user = await getSession();
+  const token = await getToken();
   return await apiRequest({
     url: "/agent/user/sub/account",
     method: "POST",
     data,
-    token: user?.token,
+    token,
   });
 }
 
 export async function deleteSubaccount(data: { id: string }) {
-  const user = await getSession();
+  const token = await getToken();
   return await apiRequest({
     url: "/agent/user/sub/delete",
     method: "DELETE",
     data,
-    token: user?.token,
+    token,
   });
 }
 
@@ -1443,44 +1442,44 @@ export async function getTodayFundList({
   startTime: number;
   endTime: number;
 }) {
-  const user = await getSession();
+  const token = await getToken();
   return await apiRequest<TodayFundList>({
     url: "/index/todayFund",
-    token: user?.token,
+    token,
     params: { startTime, endTime },
   });
 }
 
 // 帐变记录
 export async function getWalletLog(data: WalletLogRequestParams) {
-  const user = await getSession();
+  const token = await getToken();
   return await apiRequest<PageData<WalletLogRecords>>({
     url: "/wallet/getWalletLog",
     method: "POST",
     data,
-    token: user?.token,
+    token,
   });
 }
 
 // 打赏记录list
 export async function postGetRewardRecordList(data: RewardRecordRequestParams) {
-  const user = await getSession();
+  const token = await getToken();
   return await apiRequest<PageData<RewardRecordRequestRecords>>({
     url: "/wallet/getTipList",
     method: "POST",
     data,
-    token: user?.token,
+    token,
   });
 }
 
 // 验证资金密码
 export async function postCheckMoneySecret(data: { secret: string }) {
-  const user = await getSession();
+  const token = await getToken();
   return await apiRequest({
     url: "/agent/center/fund/check",
     method: "POST",
     data,
-    token: user?.token,
+    token,
   });
 }
 // 修改登录密码
@@ -1488,9 +1487,8 @@ export async function updateSelfPassword(data: {
   oldPassword: string;
   newPassword: string;
 }) {
-  const user = await getSession();
+  const token = await getToken();
   const params = {
-    id: user?.id,
     oldPassword: data.oldPassword,
     newPassword: data.newPassword,
   };
@@ -1498,7 +1496,7 @@ export async function updateSelfPassword(data: {
     url: "/agent/account/updateSelfPassword",
     method: "PUT",
     params,
-    token: user?.token,
+    token,
   });
 }
 // 设置cookie
@@ -1508,14 +1506,14 @@ export async function setIsFirstLogin() {
 }
 
 export async function uploadImage(data: FormData) {
-  const user = await getSession();
+  const token = await getToken();
   const res = await axios({
     url: `${process.env.NEXT_PUBLIC_BASE_URL}/upload`,
     method: "POST",
     data,
     headers: {
       "Content-Type": "multipart/form-data",
-      Authorization: `Bearer ${user?.token}`,
+      Authorization: `Bearer ${token}`,
       "Accept-Language": "zh-CN",
     },
     maxBodyLength: 5 * 1024 * 1024,
@@ -1534,28 +1532,28 @@ export async function getDownloadList(params: {
   pageNum: number;
   pageSize: number;
 }) {
-  const user = await getSession();
+  const token = await getToken();
   return await apiRequest<PageData<DownloadListRecords>>({
     url: "/exportHistory",
-    token: user?.token,
+    token,
     params,
   });
 }
 
 export async function getDownloadUrl(params: { id: string }) {
-  const user = await getSession();
+  const token = await getToken();
   return await apiRequest<{ url: string }>({
     url: "/getExportFileUrl",
     params,
-    token: user?.token,
+    token,
   });
 }
 
 export async function getAllGames() {
-  const user = await getSession();
+  const token = await getToken();
   return await apiRequest<GameInfo[]>({
     url: "/game/allGame/list",
-    token: user?.token,
+    token,
     expire: "minutes",
   });
 }
@@ -1578,12 +1576,12 @@ export async function postUserInfoWithdrawVerify(data: {
   id: string;
   code: string;
 }) {
-  const user = await getSession();
+  const token = await getToken();
   return await apiRequest({
     url: "/order/withdraw/google/check",
     method: "POST",
     data,
-    token: user?.token,
+    token,
   });
 }
 
@@ -1592,11 +1590,11 @@ export async function exportClick(data: {
   exportButtonCode: number;
   queryParams: string;
 }) {
-  const user = await getSession();
+  const token = await getToken();
   return await apiRequest({
     url: "/exportClick",
     method: "POST",
     data,
-    token: user?.token,
+    token,
   });
 }

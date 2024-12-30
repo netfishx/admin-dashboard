@@ -25,18 +25,6 @@ export type GameType = {
   list: Game[];
 };
 
-export type User = {
-  id: string;
-  mainId: string;
-  username: string;
-  nickname: string;
-  status: number;
-  inviteCode: string;
-  depositAddress: string;
-  token: string;
-  permissions: string[];
-};
-
 export type SupplierConfig = {
   id?: string;
   gameType: number;

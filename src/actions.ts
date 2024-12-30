@@ -1,6 +1,6 @@
 "use server";
 import { editRole, editSupplierConfig, login, logout } from "@/api";
-import { setSession, signOut } from "@/session";
+import { UserSchema, setSession, signOut } from "@/session";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
@@ -31,7 +31,7 @@ export async function loginAction(formData: FormData) {
     return { message: "当前账号未分配权限，无法登录" };
   }
   if (res.code === 0 && res.data) {
-    await setSession(res.data);
+    await setSession(UserSchema.parse(res.data));
     const cookie = await cookies();
     cookie.set("isFirstLogin", "true");
     return redirect("/");
