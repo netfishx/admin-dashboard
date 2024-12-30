@@ -10,6 +10,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { CREDIT_OPERATE_TYPE } from "@/lib/dict";
 import type { CreditRecordRequestRecords } from "@/lib/types";
 import { formatNumber } from "@/lib/utils";
 import { hasPermission } from "@/session";
@@ -39,10 +40,7 @@ async function ListBody({ list }: { list: CreditRecordRequestRecords[] }) {
   const translate = await getTranslations();
   const t = await getTranslations("report.credit");
   const hasAdminPermission = await hasPermission("credit_report_search");
-  const typeMap = {
-    18: t("addCredit"),
-    19: t("reduceCredit"),
-  };
+
   return (
     <TableBody>
       {list?.length > 0 ? (
@@ -51,10 +49,13 @@ async function ListBody({ list }: { list: CreditRecordRequestRecords[] }) {
             <TableCell>{item.transactionID}</TableCell>
             {hasAdminPermission && <TableCell>{item.agentId}</TableCell>}
             <TableCell>{item.memberId}</TableCell>
-            <TableCell>{item.agentId}</TableCell>
             <TableCell>{formatNumber(Number(item.amount || 0))}</TableCell>
             <TableCell>
-              {typeMap[item.operateCode as keyof typeof typeMap]}
+              {t(
+                CREDIT_OPERATE_TYPE.find(
+                  (type) => type.value === item.operateCode,
+                )?.label,
+              )}
             </TableCell>
             <TableCell>
               <Time time={item.createTime} />
@@ -81,7 +82,7 @@ export async function List({
   searchParams: Promise<{ [key: string]: string | undefined }>;
 }) {
   const params = await searchParams;
-  if (!(params?.startTime && params?.endTime)) {
+  if (!((params?.startTime && params?.endTime) || params?.transactionID)) {
     return (
       <div className="bg-background flex-1 p-4">
         <div className="relative rounded-sm border">
@@ -98,8 +99,8 @@ export async function List({
     operateCode: Number(params?.operateCode || 0),
     pageNum: Number(params?.pageNum || 1),
     pageSize: Number(params?.pageSize || 10),
-    startTime: Number(params?.startTime || 0),
-    endTime: Number(params?.endTime || 0),
+    startTime: Number(params?.startTime) || null,
+    endTime: Number(params?.endTime) || null,
   };
   const { data } = await postGetCreditLogList(p);
 

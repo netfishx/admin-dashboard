@@ -227,8 +227,8 @@ export type AnnouncementList = {
 export type PeriodReportParams = {
   pageSize: number;
   pageNum: number;
-  startTime: number;
-  endTime: number;
+  startTime: number | null;
+  endTime: number | null;
   issueNumber: string | null;
   gameType: number | null;
   gameId: number | null;
@@ -526,8 +526,8 @@ export type RechargeReport = {
 // 充值报表请求入参
 export type RechargeReportParams = {
   userId?: string | null;
-  startTime?: number;
-  endTime?: number;
+  startTime?: number | null;
+  endTime?: number | null;
   orderNo?: string | null;
   userType?: number | null;
   operatorSymbol?: number;
@@ -565,8 +565,8 @@ export type WithdrawReport = {
 };
 // 提现报表请求入参
 export type WithdrawReportParams = {
-  startTime?: number;
-  endTime?: number;
+  startTime?: number | null;
+  endTime?: number | null;
   orderNo?: string | null;
   operatorSymbol?: number;
   userType?: number | null;
@@ -693,10 +693,10 @@ export type CreditRecordRequestParams = {
   memberId?: string;
 
   /** 开始时间戳 */
-  startTime: number;
+  startTime?: number | null;
 
   /** 结束时间戳 */
-  endTime: number;
+  endTime?: number | null;
 
   /** 交易ID */
   transactionID?: string;
@@ -705,7 +705,7 @@ export type CreditRecordRequestParams = {
    * 操作代码
    * 使用数字枚举可以更好地定义具体的操作类型
    */
-  operateCode: number;
+  operateCode?: number;
 
   /** 页码 */
   pageNum: number;
@@ -743,12 +743,12 @@ export type CreditRecordRequestRecords = {
 
 // 借还记录请求入参
 export type BorrowRecordRequestParams = {
-  startTime: number;
-  endTime: number;
-  orderNo: string;
-  agentId: string;
-  memberId: string;
-  orderType: number;
+  startTime?: number | null;
+  endTime?: number | null;
+  orderNo?: string;
+  agentId?: string;
+  memberId?: string;
+  orderType?: number;
   pageNum: number;
   pageSize: number;
 };
@@ -880,8 +880,8 @@ export type BackgroundImageList = {
 };
 
 export type WalletLogRequestParams = {
-  startTime: number;
-  endTime: number;
+  startTime: number | null;
+  endTime: number | null;
   pageNum: number;
   pageSize: number;
   userType: number; //用户类型

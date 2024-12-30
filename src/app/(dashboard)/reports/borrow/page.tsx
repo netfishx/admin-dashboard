@@ -1,27 +1,33 @@
 import TableSkeleton from "@/components/table-skeleton";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Table } from "@/components/ui/table";
-import type { BorrowRecordRequestParams } from "@/lib/types";
+import { hasPermission } from "@/session";
 import { Suspense } from "react";
 import { List, ListHeader } from "./list";
 import { ListFilter } from "./list-filter";
 
-interface CommonWrapperProps {
-  searchParams: Promise<BorrowRecordRequestParams>;
-}
-
-async function CommonWrapper({ searchParams }: CommonWrapperProps) {
+async function CommonWrapper({
+  searchParams,
+}: {
+  searchParams: Promise<{ [key: string]: string | undefined }>;
+}) {
   const { startTime, endTime } = await searchParams;
+  const hasAdminPermission = await hasPermission("borrow_report_search");
   return (
     <>
       <Suspense
         fallback={
-          <div className="bg-background flex items-center justify-between p-4">
+          <div className="flex bg-background p-4 gap-2 flex-col">
+            <Skeleton />
+            <Skeleton />
             <Skeleton />
           </div>
         }
       >
-        <ListFilter key={`${startTime}-${endTime}`} />
+        <ListFilter
+          key={`${startTime}-${endTime}`}
+          hasAdminPermission={hasAdminPermission}
+        />
       </Suspense>
       <Suspense
         fallback={
@@ -29,7 +35,10 @@ async function CommonWrapper({ searchParams }: CommonWrapperProps) {
             <div className="relative rounded-sm border">
               <Table className="table-fixed">
                 <ListHeader />
-                <TableSkeleton length={5} colSpan={6} />
+                <TableSkeleton
+                  length={5}
+                  colSpan={hasAdminPermission ? 6 : 5}
+                />
               </Table>
             </div>
           </div>
@@ -41,7 +50,11 @@ async function CommonWrapper({ searchParams }: CommonWrapperProps) {
   );
 }
 
-export default function Page({ searchParams }: CommonWrapperProps) {
+export default function Page({
+  searchParams,
+}: {
+  searchParams: Promise<{ [key: string]: string | undefined }>;
+}) {
   return (
     <div className="flex w-full flex-col gap-2">
       <Suspense>
