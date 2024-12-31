@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
-import { addMonths, endOfDay, startOfDay } from "date-fns";
+import { addDays, endOfDay, startOfDay } from "date-fns";
 import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
@@ -20,7 +20,7 @@ export function Form() {
   const router = useRouter();
   const today = new Date();
   const startTime = startOfDay(today);
-  const endTime = endOfDay(addMonths(today, 1));
+  const endTime = endOfDay(addDays(today, 30));
 
   const [dateRange] = useQueryStates({
     startTime: parseAsInteger,
