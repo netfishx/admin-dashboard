@@ -159,60 +159,65 @@ export async function List({
 
   return (
     <div className="bg-background flex-1 p-4">
-      <div className="h-6">
-        {data?.list && data?.list?.length > 0 && (
-          <>
+      {data?.list && data?.list?.length > 0 && (
+        <div className="h-6 flex gap-2">
+          <div>
             <Label className="min-w-24 text-center text-sm">
-              {t("bet_count")}:
+              {t("bet_count")}
             </Label>
             <span className="min-w-24 text-center text-sm">
-              {data?.list[0]?.totalBetNum} &nbsp;
+              {formatNumber(Number(data?.list[0]?.totalBetNum) || 0)}
             </span>
+          </div>
 
+          <div>
             <Label className="min-w-24 text-center text-sm">
-              {t("bet_amount")}:
+              {t("bet_amount")}
             </Label>
             <span className="min-w-24 text-center text-sm">
               {formatNumber(Number(data?.list[0]?.totalMemberBetAmount || 0))}
-              &nbsp;
             </span>
+          </div>
 
+          <div>
             <Label className="min-w-24 text-center text-sm">
-              {t("valid_amount")}:
+              {t("valid_amount")}
             </Label>
             <span className="min-w-24 text-center text-sm">
               {formatNumber(
                 Number(data?.list[0]?.totalAvailableBetAmount || 0),
               )}
-              &nbsp;
             </span>
+          </div>
 
+          <div>
             <Label className="min-w-24 text-center text-sm">
-              {t("win_loss_amount")}:
+              {t("win_loss_amount")}
             </Label>
             <span className="min-w-24 text-center text-sm">
               {formatNumber(Number(data?.list[0]?.totalWinLossAmount || 0))}
-              &nbsp;
             </span>
+          </div>
 
+          <div>
             <Label className="min-w-24 text-center text-sm">
-              {t("cashback_amount")}:
+              {t("cashback_amount")}
             </Label>
             <span className="min-w-24 text-center text-sm">
               {formatNumber(Number(data?.list[0]?.totalPureBackAmount || 0))}
-              &nbsp;
             </span>
+          </div>
 
+          <div>
             <Label className="min-w-24 text-center text-sm">
-              {t("profit_loss_result")}:
+              {t("profit_loss_result")}
             </Label>
             <span className="min-w-24 text-center text-sm">
               {formatNumber(Number(data?.list[0]?.totalProfitLossAmount || 0))}
-              &nbsp;
             </span>
-          </>
-        )}
-      </div>
+          </div>
+        </div>
+      )}
 
       <div className="relative mt-2 rounded-sm border">
         <Table className="table-fixed">

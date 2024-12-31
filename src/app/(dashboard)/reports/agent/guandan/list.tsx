@@ -140,24 +140,26 @@ export async function List({
   const { data } = await getPokerReport(p);
   return (
     <div className="bg-background flex-1 p-4">
-      <div className="h-6">
-        {data?.list && data.list.length > 0 && (
-          <>
+      {data?.list && data.list.length > 0 && (
+        <div className="h-6 gap-2 flex">
+          <div>
             <Label className="min-w-24 text-center text-sm">
-              {t("totalIssueAmount")}:
+              {t("totalIssueAmount")}
             </Label>
             <span className="min-w-24 text-center text-sm">
-              {data?.list[0]?.totalIssueAmount}
+              {formatNumber(Number(data?.list[0]?.totalIssueAmount) || 0)}
             </span>
+          </div>
+          <div>
             <Label className="min-w-24 text-center text-sm">
-              {t("totaSettledAmount")}:
+              {t("totaSettledAmount")}
             </Label>
             <span className="min-w-24 text-center text-sm">
-              {data?.list[0]?.totalSettledAmount}
+              {formatNumber(Number(data?.list[0]?.totalSettledAmount) || 0)}
             </span>
-          </>
-        )}
-      </div>
+          </div>
+        </div>
+      )}
       <div className="relative mt-2 rounded-sm border">
         <Table className="table-fixed">
           <ListHeader />

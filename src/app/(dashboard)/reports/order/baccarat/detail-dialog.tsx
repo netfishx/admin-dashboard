@@ -60,26 +60,32 @@ export function Detaildialog(props: {
         });
 
     // Generate formatted JSX
-    const formattedPlayer = player ? <div>闲 {formatCards(player)}</div> : null;
+    const formattedPlayer = player ? (
+      <span>闲 {formatCards(player)}</span>
+    ) : null;
 
-    const formattedBanker = banker ? <div>庄 {formatCards(banker)}</div> : null;
+    const formattedBanker = banker ? (
+      <span>庄 {formatCards(banker)}</span>
+    ) : null;
 
     return (
-      <div className="flex gap-2">
+      <>
         {formattedBanker};{formattedPlayer}
-      </div>
+      </>
     );
   }
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent>
+      <DialogContent className="max-w-4xl">
         <DialogHeader>
           <DialogTitle>{t("detail")}</DialogTitle>
         </DialogHeader>
-        <div className="flex justify-center">{t("shareDetail")}</div>
-        <ScrollArea className="w-[450px]">
-          <div className="mb-1 whitespace-nowrap">
+        <div className="text-center bg-muted p-2 rounded-sm text-muted-foreground font-medium">
+          {t("shareDetail")}
+        </div>
+        <ScrollArea className="w-[846px]">
+          <div className="mb-1 whitespace-nowrap text-center">
             {data?.revenueShare.map(
               (item) =>
                 `${item.accountId} - ${Big(item.percent * 100).toFixed(2)}%；`,
@@ -88,20 +94,20 @@ export function Detaildialog(props: {
           <ScrollBar orientation="horizontal" />
         </ScrollArea>
 
-        <Table>
+        <Table className="table-fixed border rounded-md">
           <TableHeader>
             <TableRow className="bg-muted">
-              <TableHead className="w-20 text-center">{t("shoe")}</TableHead>
-              <TableHead className="w-20 text-center">{t("play")}</TableHead>
+              <TableHead className="w-12 text-center">{t("shoe")}</TableHead>
+              <TableHead className="w-12 text-center">{t("play")}</TableHead>
               <TableHead className="w-40 text-center">{t("resultp")}</TableHead>
             </TableRow>
           </TableHeader>
 
           <TableBody>
             <TableRow>
-              <TableCell className="w-20 text-center">{data?.shoeId}</TableCell>
-              <TableCell className="w-20 text-center">{data?.playId}</TableCell>
-              <TableCell className="w-40 text-center">
+              <TableCell className="text-center">{data?.shoeId}</TableCell>
+              <TableCell className="text-center">{data?.playId}</TableCell>
+              <TableCell className="text-center">
                 {formatResult(data?.result || "")}
               </TableCell>
             </TableRow>

@@ -302,3 +302,19 @@ export const TRANSFER_TYPE = [
     label: "settled",
   },
 ];
+
+// 注单列表-真人视讯 下注结果 0-和 1-赢 2-输
+export const SETTLE_RESULT = [
+  {
+    value: 0,
+    label: "tie",
+  },
+  {
+    value: 1,
+    label: "win",
+  },
+  {
+    value: 2,
+    label: "lose",
+  },
+];
