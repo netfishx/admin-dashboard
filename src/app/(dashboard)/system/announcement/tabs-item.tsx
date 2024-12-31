@@ -1,7 +1,7 @@
 "use client";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import type { SessionData } from "@/session";
-import { addMonths, endOfDay, startOfDay } from "date-fns";
+import { addDays, endOfDay, startOfDay } from "date-fns";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -18,7 +18,7 @@ export default function TabsItem({
   const permissions = sessionData?.permissions;
   const today = new Date();
   const startTime = startOfDay(today);
-  const endTime = endOfDay(addMonths(today, 1));
+  const endTime = endOfDay(addDays(today, 30));
   return (
     <div className="flex w-full flex-col gap-2">
       <div className="bg-background gap-2 p-4">

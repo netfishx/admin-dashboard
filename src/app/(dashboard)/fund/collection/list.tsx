@@ -88,6 +88,6 @@ async function ListBody({ list }: { list: CollectionAddressListRecords[] }) {
 }
 
 export async function List() {
-  const { data } = await getCollectionAddressList();
+  const { data } = await getCollectionAddressList({ size: 50 });
   return <ListBody list={data ?? []} />;
 }

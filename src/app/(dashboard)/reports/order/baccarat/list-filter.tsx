@@ -125,7 +125,7 @@ export function ListFilter({ gameList }: { gameList: GameInfo[] }) {
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="1">{t("bettingtime")}</SelectItem>
-              <SelectItem value="0">{t("statisticsTime")}</SelectItem>
+              <SelectItem value="0">{t("settlementTime")}</SelectItem>
             </SelectContent>
           </Select>
         </div>

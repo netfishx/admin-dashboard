@@ -13,7 +13,7 @@ import {
 import { OPERATE_TYPE } from "@/lib/dict";
 import type { BorrowRecordRequestRecords } from "@/lib/types";
 import { formatNumber } from "@/lib/utils";
-import { hasPermission } from "@/session";
+import { getSession, hasPermission } from "@/session";
 import { getTranslations } from "next-intl/server";
 import { Suspense } from "react";
 
@@ -83,10 +83,12 @@ export async function List({
 }: {
   searchParams: Promise<{ [key: string]: string | undefined }>;
 }) {
+  const session = await getSession();
   const hasAdminPermission = await hasPermission("borrow_report_search");
   const params = await searchParams;
   const p = {
     ...params,
+    agentId: hasAdminPermission ? params?.agentId : session?.mainId,
     pageNum: Number(params?.pageNum) || 1,
     pageSize: Number(params?.pageSize) || 10,
     startTime: Number(params?.startTime) || null,

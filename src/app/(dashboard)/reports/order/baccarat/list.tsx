@@ -1,4 +1,4 @@
-import { getOrderReportList } from "@/api";
+import { getDictListCache, getOrderReportList } from "@/api";
 import { CustomPagination } from "@/components/custom-pagination";
 import TableSkeleton from "@/components/table-skeleton";
 import { Time } from "@/components/time";
@@ -10,13 +10,9 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { TRANSFER_TYPE } from "@/lib/dict";
-import type {
-  GameInfo,
-  OrderReportsRecord,
-  OrderReportsRequestParams,
-} from "@/lib/types";
-import { formatNumber } from "@/lib/utils";
+import { SETTLE_RESULT, TRANSFER_TYPE } from "@/lib/dict";
+import type { GameInfo, OrderReportsRecord } from "@/lib/types";
+import { cn, formatNumber } from "@/lib/utils";
 import { getSession } from "@/session";
 import { getTranslations } from "next-intl/server";
 import DetailButton from "./detail-button";
@@ -33,15 +29,16 @@ export async function ListHeader() {
         <TableHead className="w-60">{t("roomeownerID")}</TableHead>
         <TableHead className="w-60">{t("ministerID")}</TableHead>
         <TableHead className="w-60">{t("leastlevelID")}</TableHead>
-        <TableHead className="w-40">{t("gamename")}</TableHead>
-        <TableHead className="w-60">{t("smallType")}</TableHead>
-        <TableHead className="w-60">{t("odds")}</TableHead>
-        <TableHead className="w-60">{t("betamount")}</TableHead>
-        <TableHead className="w-60">{t("winamount")}</TableHead>
         <TableHead className="w-60">{t("agentID")}</TableHead>
-        <TableHead className="w-60">{t("bettime")}</TableHead>
-        <TableHead className="w-60">{t("membersettlementtime")}</TableHead>
-        <TableHead className="w-40">{t("proxystatus")}</TableHead>
+        <TableHead className="w-40">{t("gamename")}</TableHead>
+        <TableHead className="w-24">{t("smallType")}</TableHead>
+        <TableHead className="w-20">{t("odds")}</TableHead>
+        <TableHead className="w-20">{t("settleResult")}</TableHead>
+        <TableHead className="w-24">{t("betamount")}</TableHead>
+        <TableHead className="w-24">{t("winamount")}</TableHead>
+        <TableHead className="w-48">{t("bettime")}</TableHead>
+        <TableHead className="w-48">{t("membersettlementtime")}</TableHead>
+        <TableHead className="w-24">{t("proxystatus")}</TableHead>
         <TableHead className="bg-muted sticky right-0 w-24 p-0">
           <div className="shadow-l flex h-full items-center justify-center px-4">
             {t("action")}
@@ -55,9 +52,11 @@ export async function ListHeader() {
 async function ListBody({
   list,
   gameList,
+  dict,
 }: {
   list: OrderReportsRecord[];
   gameList: GameInfo[];
+  dict: { label: string; value: string }[] | undefined;
 }) {
   const translate = await getTranslations();
   const t = await getTranslations("report.orderlist");
@@ -69,8 +68,15 @@ async function ListBody({
     } else {
       odds = Number(item.finalOdds);
     }
+    if (!odds) {
+      return "-";
+    }
 
     return formatNumber(odds, { maximumFractionDigits: 3 });
+  };
+
+  const getBetLabel = (value: number) => {
+    return dict?.find((item) => Number(item.label) === value)?.value;
   };
 
   return (
@@ -84,16 +90,32 @@ async function ListBody({
             <TableCell>{item.roomOwnerId}</TableCell>
             <TableCell>{item.minister}</TableCell>
             <TableCell>{item.lastAgentId}</TableCell>
+            <TableCell>{item.agentId}</TableCell>
             <TableCell className="whitespace-nowrap">
               {gameList.find((game) => game.gameId === item.gameId)?.gameName}
             </TableCell>
-            <TableCell>{item.betType}</TableCell>
+            <TableCell>{getBetLabel(item.betType)}</TableCell>
             <TableCell>{getOdds(item)}</TableCell>
+            <TableCell
+              className={cn(
+                item.settleResult === 0 && "text-primary",
+                item.settleResult === 1 && "text-green",
+                item.settleResult === 2 && "text-destructive",
+              )}
+            >
+              {item.settleResult
+                ? t(
+                    SETTLE_RESULT.find(
+                      (type: { value: number }) =>
+                        type.value === item.settleResult,
+                    )?.label,
+                  )
+                : "-"}
+            </TableCell>
             <TableCell>{formatNumber(Number(item?.betAmount || 0))}</TableCell>
             <TableCell>
               {formatNumber(Number(item.winLossAmount || 0))}
             </TableCell>
-            <TableCell>{item.agentId}</TableCell>
             <TableCell>
               <Time time={item.betTime} />
             </TableCell>
@@ -128,7 +150,7 @@ export async function List({
   searchParams,
   gameList,
 }: {
-  searchParams: Promise<OrderReportsRequestParams>;
+  searchParams: Promise<{ [key: string]: string | undefined }>;
   gameList: GameInfo[];
 }) {
   const params = await searchParams;
@@ -153,6 +175,9 @@ export async function List({
     );
   }
   const { data } = await getOrderReportList(p);
+  const { data: dict } = await getDictListCache({
+    dictCode: "baccarat_bet_label",
+  });
   const session = await getSession();
   const list =
     data?.list.map((item) => ({
@@ -165,7 +190,7 @@ export async function List({
       <div className="relative rounded-sm border">
         <Table className="table-fixed">
           <ListHeader />
-          <ListBody list={list} gameList={gameList} />
+          <ListBody list={list} gameList={gameList} dict={dict} />
         </Table>
       </div>
       <div className="pt-2">

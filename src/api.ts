@@ -1002,11 +1002,12 @@ export async function getWithdrawReportList(data: WithdrawReportParams) {
 }
 
 // 归集地址列表
-export async function getCollectionAddressList() {
+export async function getCollectionAddressList(params: { size: number }) {
   const token = await getToken();
   return await apiRequest<CollectionAddressListRecords[]>({
     url: "/collection/address/list",
     token,
+    params: { params },
   });
 }
 
@@ -1596,5 +1597,17 @@ export async function exportClick(data: {
     method: "POST",
     data,
     token,
+  });
+}
+
+// 字典项列表缓存
+export async function getDictListCache(data: {
+  dictCode: string;
+}) {
+  const token = await getToken();
+  return await apiRequest<{ label: string; value: string }[]>({
+    url: "/dict/item/selectListCache",
+    token,
+    params: data,
   });
 }

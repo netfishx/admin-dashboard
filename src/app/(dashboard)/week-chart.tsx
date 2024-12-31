@@ -120,7 +120,7 @@ export function WeekChart({
                 name: format(item.name, "yyyy-MM-dd"),
                 data: item.data,
               }))}
-              margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
+              margin={{ top: 10, right: 30, left: 5, bottom: 0 }}
             >
               <XAxis
                 dataKey="name"
