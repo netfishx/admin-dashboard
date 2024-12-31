@@ -1002,11 +1002,12 @@ export async function getWithdrawReportList(data: WithdrawReportParams) {
 }
 
 // 归集地址列表
-export async function getCollectionAddressList() {
+export async function getCollectionAddressList(params: { size: number }) {
   const token = await getToken();
   return await apiRequest<CollectionAddressListRecords[]>({
     url: "/collection/address/list",
     token,
+    params: { params },
   });
 }
 
