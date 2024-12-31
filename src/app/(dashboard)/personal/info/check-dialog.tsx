@@ -118,7 +118,7 @@ export function CheckDialog(props: Dialogprops) {
                   </Label>
                   <Input
                     type="text"
-                    className="flex-1 cursor-not-allowed"
+                    className="flex-1"
                     required
                     name="availableAmount"
                     placeholder={translations("availableAmount")}
@@ -136,7 +136,7 @@ export function CheckDialog(props: Dialogprops) {
                   </Label>
                   <Input
                     type="number"
-                    className="flex-1 bg-gray-50"
+                    className="flex-1"
                     required
                     name="withdrawMoney"
                     placeholder={t("withdrawAmount")}
@@ -167,7 +167,7 @@ export function CheckDialog(props: Dialogprops) {
                   </Label>
                   <Input
                     type="text"
-                    className="flex-1 cursor-not-allowed bg-gray-50"
+                    className="flex-1"
                     required
                     name="withdrawFee"
                     defaultValue={withDrawFee}
@@ -183,7 +183,7 @@ export function CheckDialog(props: Dialogprops) {
                   </Label>
                   <Input
                     type="text"
-                    className="flex-1 bg-gray-50"
+                    className="flex-1"
                     required
                     name="withdrawWay"
                     onBlur={(e) => {
@@ -199,7 +199,7 @@ export function CheckDialog(props: Dialogprops) {
                   </Label>
                   <Password
                     type="password"
-                    className="flex-1 bg-gray-50"
+                    className="flex-1"
                     required
                     name="secret"
                     onBlur={(e) => {
