@@ -2,16 +2,15 @@ import { getBaccaratGames } from "@/api";
 import TableSkeleton from "@/components/table-skeleton";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Table } from "@/components/ui/table";
-import type { OrderReportsRequestParams } from "@/lib/types";
 import { Suspense } from "react";
 import { List, ListHeader } from "./list";
 import { ListFilter } from "./list-filter";
 
-interface CommonWrapperProps {
-  searchParams: Promise<OrderReportsRequestParams>;
-}
-
-async function CommonWrapper({ searchParams }: CommonWrapperProps) {
+async function CommonWrapper({
+  searchParams,
+}: {
+  searchParams: Promise<{ [key: string]: string | undefined }>;
+}) {
   const res = await getBaccaratGames();
   const { startTime, endTime } = await searchParams;
   return (
@@ -35,7 +34,9 @@ async function CommonWrapper({ searchParams }: CommonWrapperProps) {
   );
 }
 
-export default function Page({ searchParams }: CommonWrapperProps) {
+export default function Page({
+  searchParams,
+}: { searchParams: Promise<{ [key: string]: string | undefined }> }) {
   return (
     <Suspense
       fallback={

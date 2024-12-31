@@ -109,30 +109,38 @@ export async function List({
 
   return (
     <div className="bg-background flex-1 p-2">
-      <div className="h-6">
-        {data?.list && data?.list?.length > 0 && (
-          <>
+      {data?.list && data?.list?.length > 0 && (
+        <div className="h-6 flex gap-2">
+          <div>
             <Label className="min-w-24 text-center text-sm">
-              {t("betNum")}:
+              {t("betNum")}
             </Label>
             <span className="min-w-24 text-center text-sm">
-              {data?.list?.[0]?.totalBetNum || 0} &nbsp;
+              {formatNumber(Number(data?.list?.[0]?.totalBetNum) || 0)}
             </span>
+          </div>
+
+          <div>
             <Label className="min-w-24 text-center text-sm">
-              {t("validBetAmount")}:
+              {t("validBetAmount")}
             </Label>
             <span className="min-w-24 text-center text-sm">
-              {data?.list?.[0]?.totalAvailableBetAmount || 0} &nbsp;
+              {formatNumber(
+                Number(data?.list?.[0]?.totalAvailableBetAmount || 0),
+              )}
             </span>
+          </div>
+
+          <div>
             <Label className="min-w-24 text-center text-sm">
-              {t("proportionAmount")}:
+              {t("proportionAmount")}
             </Label>
             <span className="min-w-24 text-center text-sm">
-              {data?.list?.[0]?.totalPercentAmount || 0} &nbsp;
+              {formatNumber(Number(data?.list?.[0]?.totalPercentAmount || 0))}
             </span>
-          </>
-        )}
-      </div>
+          </div>
+        </div>
+      )}
 
       <div className="relative mt-2 rounded-sm border">
         <Table className="table-fixed">

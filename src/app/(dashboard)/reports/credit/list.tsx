@@ -28,7 +28,7 @@ export async function ListHeader() {
           <TableHead className="w-60">{t("agentID")}</TableHead>
         )}
         <TableHead className="w-60">{t("memberID")}</TableHead>
-        <TableHead className="w-60">{t("amount")}</TableHead>
+        <TableHead className="w-24">{t("amount")}</TableHead>
         <TableHead className="w-24">{t("type")}</TableHead>
         <TableHead className="w-[240px]">{t("applyTime")}</TableHead>
       </TableRow>

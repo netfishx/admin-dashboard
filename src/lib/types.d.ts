@@ -412,6 +412,7 @@ export type OrderReportsRecord = {
   memberId: string; // 会员id
   roomId: string; // 房间号, -1 means no room
   odds: { [key: string]: string }; // 投注赔率, dynamic keys with string values
+  settleResult: number; // 下注结果
 };
 
 // 占成拦货报表请求入参
