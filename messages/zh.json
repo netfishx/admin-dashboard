@@ -452,7 +452,7 @@
       "bottomBet": "底注",
       "topBet": "封顶",
       "level": "级数",
-      "settlementAmount": "结算金额",
+      "settlementAmount": "总结算金额",
       "multiplier": "倍数",
       "winPlayer": "输赢玩家",
       "gameStartTime": "游戏开始时间",

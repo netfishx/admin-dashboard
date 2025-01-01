@@ -46,22 +46,6 @@ export function Form({ session }: { session: Promise<SessionData | null> }) {
   return (
     <div className="bg-background flex items-center justify-between p-4">
       <div className="flex items-center gap-2">
-        <div className="flex items-center gap-2">
-          <Label className="shrink-0">{t("username")}</Label>
-          <Input
-            placeholder={t("placeholder")}
-            value={username ?? ""}
-            onChange={(e) => setUsername(e.target.value)}
-          />
-        </div>
-        <div className="flex items-center gap-2">
-          <Label className="shrink-0">{t("userId")}</Label>
-          <Input
-            placeholder={t("placeholder")}
-            value={userId ?? ""}
-            onChange={(e) => setUserId(e.target.value)}
-          />
-        </div>
         {permissions?.includes("agent_search") && (
           <div className="flex items-center gap-2">
             <Label className="shrink-0">{t("upUsername")}</Label>
@@ -72,6 +56,22 @@ export function Form({ session }: { session: Promise<SessionData | null> }) {
             />
           </div>
         )}
+        <div className="flex items-center gap-2">
+          <Label className="shrink-0">{t("userId")}</Label>
+          <Input
+            placeholder={t("placeholder")}
+            value={userId ?? ""}
+            onChange={(e) => setUserId(e.target.value)}
+          />
+        </div>
+        <div className="flex items-center gap-2">
+          <Label className="shrink-0">{t("username")}</Label>
+          <Input
+            placeholder={t("placeholder")}
+            value={username ?? ""}
+            onChange={(e) => setUsername(e.target.value)}
+          />
+        </div>
         <div className="flex items-center gap-2">
           <Label className="shrink-0">{t("status")}</Label>
           <Select
