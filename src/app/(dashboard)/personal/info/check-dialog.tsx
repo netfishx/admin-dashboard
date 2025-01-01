@@ -12,6 +12,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Password } from "@/components/ui/password";
 import type { UserBasicInfo, WithdrawFormData } from "@/lib/types";
+import { formatNumber } from "@/lib/utils";
 import { withdrawFeeAtom } from "@/store";
 import Big from "big.js";
 import { useAtomValue } from "jotai";
@@ -122,7 +123,7 @@ export function CheckDialog(props: Dialogprops) {
                     required
                     name="availableAmount"
                     placeholder={translations("availableAmount")}
-                    defaultValue={data?.usableBalanceMoney}
+                    defaultValue={formatNumber(data?.usableBalanceMoney)}
                     disabled
                   />
                 </div>
