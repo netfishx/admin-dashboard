@@ -58,7 +58,6 @@ const nextConfig: NextConfig = {
     contentDispositionType: "attachment",
     contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
     remotePatterns: getRemotePatterns(),
-    formats: ["image/avif", "image/webp"],
   },
   env: {
     NEXT_PUBLIC_TIMESTAMP: Date.now().toString(),

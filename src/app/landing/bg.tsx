@@ -35,7 +35,7 @@ export function Bg() {
         loop: true,
       }}
       setApi={setApi}
-      className="h-screen w-screen"
+      className="h-[100dvh] w-[100dvw]"
       plugins={[
         Autoplay({
           delay: 2000,
@@ -44,10 +44,22 @@ export function Bg() {
     >
       <CarouselContent>
         <CarouselItem>
-          <Image src={bg1} alt="background image" className="object-cover" />
+          <Image
+            src={bg1}
+            alt="background image"
+            className="object-cover"
+            priority
+            width={400}
+          />
         </CarouselItem>
         <CarouselItem>
-          <Image src={bg2} alt="background image" className="object-cover" />
+          <Image
+            src={bg2}
+            alt="background image"
+            className="object-cover"
+            priority
+            width={400}
+          />
         </CarouselItem>
       </CarouselContent>
       <div
