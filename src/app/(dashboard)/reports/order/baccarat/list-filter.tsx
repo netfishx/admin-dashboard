@@ -103,10 +103,10 @@ export function ListFilter({ gameList }: { gameList: GameInfo[] }) {
   };
 
   const handleSearch = () => {
-    if (dateRange.startTime && dateRange.endTime) {
+    if ((dateRange.startTime && dateRange.endTime) || ordernumber) {
       startSearch(router.refresh);
     } else {
-      toast.error(t("selectDate"));
+      toast.error(t("selectDateOrOrderNumber"));
     }
   };
 

@@ -49,10 +49,10 @@ export function ListFilter({
 
   const router = useRouter();
   const handleSearch = () => {
-    if (dateRange.startTime && dateRange.endTime) {
+    if ((dateRange.startTime && dateRange.endTime) || issuenumber) {
       router.refresh();
     } else {
-      toast.error(t("selectDateRange"));
+      toast.error(t("selectDateRangeOrIssueNumber"));
     }
   };
   const handleReset = () => {
