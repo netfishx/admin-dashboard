@@ -1007,7 +1007,7 @@ export async function getCollectionAddressList(params: { size: number }) {
   return await apiRequest<CollectionAddressListRecords[]>({
     url: "/collection/address/list",
     token,
-    params: { params },
+    params,
   });
 }
 
