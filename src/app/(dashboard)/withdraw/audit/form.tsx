@@ -47,19 +47,19 @@ export function Form() {
       </div>
       <div className="flex items-center gap-2">
         <div className="flex items-center gap-2">
-          <Label className="shrink-0">{t("userId")}</Label>
-          <Input
-            placeholder={t("placeholder")}
-            value={userId ?? ""}
-            onChange={(e) => setUserId(e.target.value)}
-          />
-        </div>
-        <div className="flex items-center gap-2">
           <Label className="shrink-0">{t("id")}</Label>
           <Input
             placeholder={t("placeholder")}
             value={id ?? ""}
             onChange={(e) => setId(e.target.value)}
+          />
+        </div>
+        <div className="flex items-center gap-2">
+          <Label className="shrink-0">{t("userId")}</Label>
+          <Input
+            placeholder={t("placeholder")}
+            value={userId ?? ""}
+            onChange={(e) => setUserId(e.target.value)}
           />
         </div>
       </div>
