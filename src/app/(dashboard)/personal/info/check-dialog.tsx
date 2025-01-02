@@ -11,7 +11,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Password } from "@/components/ui/password";
-import type { UserBasicInfo, WithdrawFormData } from "@/lib/types";
+import type { CheckDialogProps, WithdrawFormData } from "@/lib/types";
 import { formatNumber } from "@/lib/utils";
 import { withdrawFeeAtom } from "@/store";
 import Big from "big.js";
@@ -23,13 +23,7 @@ import { useRouter } from "next/navigation";
 import { type FormEvent, useRef, useState } from "react";
 import { toast } from "sonner";
 
-interface Dialogprops {
-  open?: boolean;
-  onOpenChange: (open: boolean) => void;
-  data: UserBasicInfo;
-}
-
-export function CheckDialog(props: Dialogprops) {
+export function CheckDialog(props: CheckDialogProps) {
   const { open = true, onOpenChange, data } = props;
   const t = useTranslations("personal.info");
   const translations = useTranslations();

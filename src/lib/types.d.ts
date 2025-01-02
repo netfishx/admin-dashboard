@@ -256,6 +256,11 @@ export type UserBasicInfo = {
   majorNetwork: string; // 主网
   rechargeAddress: string; // 充值地址
 };
+export type CheckDialogProps = {
+  open?: boolean;
+  onOpenChange: (open: boolean) => void;
+  data: UserBasicInfo;
+};
 
 // 提现表单数据
 export type WithdrawFormData = {
