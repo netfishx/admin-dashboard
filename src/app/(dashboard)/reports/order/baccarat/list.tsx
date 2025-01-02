@@ -114,13 +114,15 @@ async function ListBody({
             </TableCell>
             <TableCell>{formatNumber(Number(item?.betAmount || 0))}</TableCell>
             <TableCell>
-              {formatNumber(Number(item.winLossAmount || 0))}
+              {item.winLossAmount
+                ? formatNumber(Number(item.winLossAmount))
+                : "-"}
             </TableCell>
             <TableCell>
               <Time time={item.betTime} />
             </TableCell>
             <TableCell>
-              <Time time={item.settleTime} />
+              {item.settleTime ? <Time time={item.settleTime} /> : "-"}
             </TableCell>
             <TableCell>
               {t(
