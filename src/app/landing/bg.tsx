@@ -43,28 +43,16 @@ export function Bg() {
       ]}
     >
       <CarouselContent>
-        <CarouselItem>
-          <Image
-            src={bg1}
-            alt="background image"
-            className="object-cover"
-            priority
-            width={400}
-          />
+        <CarouselItem className="w-[100dvw] h-[100dvh] relative">
+          <Image src={bg1} alt="background image" priority fill />
         </CarouselItem>
-        <CarouselItem>
-          <Image
-            src={bg2}
-            alt="background image"
-            className="object-cover"
-            priority
-            width={400}
-          />
+        <CarouselItem className="w-[100dvw] h-[100dvh] relative">
+          <Image src={bg2} alt="background image" priority fill />
         </CarouselItem>
       </CarouselContent>
       <div
         className={cn([
-          "absolute bottom-40 z-10 flex justify-center items-center w-full gap-2",
+          "absolute bottom-[35dvw] z-10 flex justify-center items-center w-full gap-2",
           current === 1 && "flex-row-reverse",
         ])}
       >
