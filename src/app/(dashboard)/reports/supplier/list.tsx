@@ -113,7 +113,7 @@ export async function List({
         <div className="h-6 flex gap-2">
           <div>
             <Label className="min-w-24 text-center text-sm">
-              {t("betNum")}
+              {t("betNum")}：
             </Label>
             <span className="min-w-24 text-center text-sm">
               {formatNumber(Number(data?.list?.[0]?.totalBetNum) || 0)}
@@ -122,7 +122,7 @@ export async function List({
 
           <div>
             <Label className="min-w-24 text-center text-sm">
-              {t("validBetAmount")}
+              {t("validBetAmount")}：
             </Label>
             <span className="min-w-24 text-center text-sm">
               {formatNumber(
@@ -133,7 +133,7 @@ export async function List({
 
           <div>
             <Label className="min-w-24 text-center text-sm">
-              {t("proportionAmount")}
+              {t("proportionAmount")}：
             </Label>
             <span className="min-w-24 text-center text-sm">
               {formatNumber(Number(data?.list?.[0]?.totalPercentAmount || 0))}

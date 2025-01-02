@@ -112,10 +112,7 @@ export function ListFilter({
       </div>
       <div className="flex items-center justify-end gap-4">
         <div className="flex items-center gap-2">
-          <Button
-            className="rounded-md border border-gray-300 bg-white px-4 py-2 text-gray-700 hover:bg-gray-100"
-            onClick={handleReset}
-          >
+          <Button variant="outline" onClick={handleReset}>
             {t("reset")}
           </Button>
           <Button disabled={isPending} onClick={handleSearch}>
