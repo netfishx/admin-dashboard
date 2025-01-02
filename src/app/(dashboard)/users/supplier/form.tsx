@@ -21,19 +21,19 @@ export function SupplierForm() {
     <div className="bg-background flex items-center justify-between p-4">
       <div className="flex items-center gap-2">
         <div className="flex items-center gap-2">
-          <Label className="shrink-0">{t("username")}</Label>
-          <Input
-            placeholder={t("placeholder")}
-            value={username ?? ""}
-            onChange={(e) => setUsername(e.target.value)}
-          />
-        </div>
-        <div className="flex items-center gap-2">
           <Label className="shrink-0">{t("supplierId")}</Label>
           <Input
             placeholder={t("placeholder")}
             value={id ?? ""}
             onChange={(e) => setId(e.target.value)}
+          />
+        </div>
+        <div className="flex items-center gap-2">
+          <Label className="shrink-0">{t("username")}</Label>
+          <Input
+            placeholder={t("placeholder")}
+            value={username ?? ""}
+            onChange={(e) => setUsername(e.target.value)}
           />
         </div>
       </div>
