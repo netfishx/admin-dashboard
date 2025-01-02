@@ -163,7 +163,7 @@ export async function List({
         <div className="h-6 flex gap-2">
           <div>
             <Label className="min-w-24 text-center text-sm">
-              {t("bet_count")}
+              {t("bet_count")}：
             </Label>
             <span className="min-w-24 text-center text-sm">
               {formatNumber(Number(data?.list[0]?.totalBetNum) || 0)}
@@ -172,7 +172,7 @@ export async function List({
 
           <div>
             <Label className="min-w-24 text-center text-sm">
-              {t("bet_amount")}
+              {t("bet_amount")}：
             </Label>
             <span className="min-w-24 text-center text-sm">
               {formatNumber(Number(data?.list[0]?.totalMemberBetAmount || 0))}
@@ -181,7 +181,7 @@ export async function List({
 
           <div>
             <Label className="min-w-24 text-center text-sm">
-              {t("valid_amount")}
+              {t("valid_amount")}：
             </Label>
             <span className="min-w-24 text-center text-sm">
               {formatNumber(
@@ -192,7 +192,7 @@ export async function List({
 
           <div>
             <Label className="min-w-24 text-center text-sm">
-              {t("win_loss_amount")}
+              {t("win_loss_amount")}：
             </Label>
             <span className="min-w-24 text-center text-sm">
               {formatNumber(Number(data?.list[0]?.totalWinLossAmount || 0))}
@@ -201,7 +201,7 @@ export async function List({
 
           <div>
             <Label className="min-w-24 text-center text-sm">
-              {t("cashback_amount")}
+              {t("cashback_amount")}：
             </Label>
             <span className="min-w-24 text-center text-sm">
               {formatNumber(Number(data?.list[0]?.totalPureBackAmount || 0))}
@@ -210,7 +210,7 @@ export async function List({
 
           <div>
             <Label className="min-w-24 text-center text-sm">
-              {t("profit_loss_result")}
+              {t("profit_loss_result")}：
             </Label>
             <span className="min-w-24 text-center text-sm">
               {formatNumber(Number(data?.list[0]?.totalProfitLossAmount || 0))}
