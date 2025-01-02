@@ -5,7 +5,7 @@ import { Bg } from "./bg";
 
 function LinkButton({ children, href }: { children: ReactNode; href: string }) {
   return (
-    <Button asChild className="bg-[#3590ec] w-36">
+    <Button asChild className="bg-[#3590ec] hover:bg-[#3590ec]/80 w-36">
       <Link href={href} target="_blank">
         {children}
       </Link>
