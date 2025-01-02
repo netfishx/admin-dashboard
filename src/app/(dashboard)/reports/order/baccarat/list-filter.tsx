@@ -177,6 +177,7 @@ export function ListFilter({ gameList }: { gameList: GameInfo[] }) {
           <Label className="shrink-0">{t("memberID")}</Label>
           <Input
             value={memberID ?? ""}
+            className="w-52"
             onChange={(e) => setMemberID(e.target.value)}
             placeholder={t("placeholderinput")}
           />
@@ -185,6 +186,7 @@ export function ListFilter({ gameList }: { gameList: GameInfo[] }) {
           <Label className="shrink-0">{t("roomeownerID")}</Label>
           <Input
             value={roomeownerID ?? ""}
+            className="w-52"
             onChange={(e) => setRoomeownerID(e.target.value)}
             placeholder={t("placeholderinput")}
           />
@@ -193,6 +195,7 @@ export function ListFilter({ gameList }: { gameList: GameInfo[] }) {
           <Label className="shrink-0">{t("ministerID")}</Label>
           <Input
             value={ministerID ?? ""}
+            className="w-52"
             onChange={(e) => setMinisterID(e.target.value)}
             placeholder={t("placeholderinput")}
           />
@@ -201,6 +204,7 @@ export function ListFilter({ gameList }: { gameList: GameInfo[] }) {
           <Label className="shrink-0">{t("leastlevelID")}</Label>
           <Input
             value={leastlevelID ?? ""}
+            className="w-52"
             onChange={(e) => setLeastlevelID(e.target.value)}
             placeholder={t("placeholderinput")}
           />
@@ -224,6 +228,7 @@ export function ListFilter({ gameList }: { gameList: GameInfo[] }) {
           <Input
             type="number"
             min={0}
+            className="w-28"
             value={rechargeMoney}
             onChange={(e) => handleAmountChange(e.target.value)}
             placeholder={t("placeholderselect")}
@@ -250,6 +255,7 @@ export function ListFilter({ gameList }: { gameList: GameInfo[] }) {
           <Label className="shrink-0">{t("agentID")}</Label>
           <Input
             defaultValue={agentId}
+            className="w-52"
             onChange={(e) => setAgentId(e.target.value)}
             placeholder={t("placeholderinput")}
           />

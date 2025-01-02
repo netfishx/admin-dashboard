@@ -61,6 +61,7 @@ export function ListFilter({
             <Label className="shrink-0">{t("agentID")}</Label>
             <Input
               value={agentId || ""}
+              className="w-52"
               onChange={(e) => setAgentId(e.target.value)}
               placeholder={t("placeholderinput")}
             />

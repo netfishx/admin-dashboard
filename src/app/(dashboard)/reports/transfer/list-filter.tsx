@@ -80,6 +80,7 @@ export function ListFilter({
             value={agentId ?? ""}
             onChange={(e) => setAgentId(e.target.value)}
             placeholder={t("placeholderinput")}
+            className="w-52"
           />
         </div>
         <div className="flex items-center gap-4">
@@ -88,6 +89,7 @@ export function ListFilter({
             value={memberId ?? ""}
             onChange={(e) => setMemberId(e.target.value)}
             placeholder={t("placeholderinput")}
+            className="w-52"
           />
         </div>
         {hasTransferTypePermission && (
