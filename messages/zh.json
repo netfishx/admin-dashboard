@@ -395,7 +395,7 @@
     "downloadbtn": "下载",
     "downloadTip": "确定生成下载任务后，请在报表下载菜单查看",
     "orderlist": {
-      "selectDate": "请选择日期",
+      "selectDateOrOrderNumber": "请选择日期或订单号",
       "today": "今天",
       "yesterday": "昨天",
       "week": "本周",
@@ -475,7 +475,7 @@
       "play": "局数",
       "resultp": "牌局结果",
       "all": "全部",
-      "selectDateRange": "请选择日期范围",
+      "selectDateRangeOrIssueNumber": "请选择日期或期号",
       "tie": "和",
       "win": "赢",
       "lose": "输"

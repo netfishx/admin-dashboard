@@ -162,7 +162,7 @@ export async function List({
     endTime: Number(params?.endTime) || 0,
   };
 
-  if (!(params?.startTime && params?.endTime)) {
+  if (!((params?.startTime && params?.endTime) || params?.id)) {
     return (
       <div className="bg-background flex-1 p-4">
         <div className="rounded-sm border">
