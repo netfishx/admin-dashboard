@@ -23,6 +23,7 @@ export function SupplierForm() {
         <div className="flex items-center gap-2">
           <Label className="shrink-0">{t("supplierId")}</Label>
           <Input
+            className="w-52"
             placeholder={t("placeholder")}
             value={id ?? ""}
             onChange={(e) => setId(e.target.value)}

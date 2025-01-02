@@ -80,6 +80,7 @@ export function ListFilter({
             <Label className="shrink-0">{t("agentID")}</Label>
             <Input
               value={agentId ?? ""}
+              className="w-52"
               onChange={(e) => setAgentId(e.target.value)}
               placeholder={t("placeholderinput")}
             />
@@ -91,6 +92,7 @@ export function ListFilter({
             value={memberId ?? ""}
             onChange={(e) => setMemberId(e.target.value)}
             placeholder={t("placeholderinput")}
+            className="w-52"
           />
         </div>
         <div className="flex items-center gap-4">

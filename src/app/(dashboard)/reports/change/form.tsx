@@ -110,6 +110,7 @@ export function Form({ hasAdminPermission }: { hasAdminPermission: boolean }) {
             <Label className="shrink-0">{t("userId")}</Label>
             <Input
               placeholder={t("placeholder")}
+              className="w-52"
               value={userId ?? ""}
               onChange={(e) => setUserId(e.target.value)}
             />

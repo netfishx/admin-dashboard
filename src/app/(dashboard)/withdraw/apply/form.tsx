@@ -92,6 +92,7 @@ export function Form() {
             placeholder={t("placeholder")}
             value={userId ?? ""}
             onChange={(e) => setUserId(e.target.value)}
+            className="w-52"
           />
         </div>
         <div className="flex items-center gap-2">

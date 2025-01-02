@@ -83,6 +83,7 @@ export function MemberForm({ gameList }: { gameList: GameInfo[] }) {
           <Label className="shrink-0">{t("agentID")}</Label>
           <Input
             value={leastlevelID ?? ""}
+            className="w-52"
             onChange={(e) => setLeastlevelID(e.target.value)}
             placeholder={t("placeholderinput")}
           />

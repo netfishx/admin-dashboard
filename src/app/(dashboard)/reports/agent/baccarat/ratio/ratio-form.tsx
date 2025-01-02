@@ -91,6 +91,7 @@ export function RatioForm({ gameList }: { gameList: GameInfo[] }) {
           <Label className="shrink-0">{t("agentOrOwnerId")}</Label>
           <Input
             value={agentOrHouseOwnerId ?? ""}
+            className="w-52"
             onChange={(e) => setAgentOrHouseOwnerId(e.target.value)}
             placeholder={t("placeholderinput")}
           />
@@ -100,6 +101,7 @@ export function RatioForm({ gameList }: { gameList: GameInfo[] }) {
           <Label className="shrink-0">{t("uperagentID")}</Label>
           <Input
             value={parentAgentId ?? ""}
+            className="w-52"
             onChange={(e) => setParentAgentId(e.target.value)}
             placeholder={t("placeholderinput")}
           />
