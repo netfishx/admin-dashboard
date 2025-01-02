@@ -1,7 +1,13 @@
 import { Button } from "@/components/ui/button";
+import type { Metadata } from "next";
 import Link from "next/link";
 import type { ReactNode } from "react";
 import { Bg } from "./bg";
+
+export const metadata: Metadata = {
+  title: "006",
+  description: "006",
+};
 
 function LinkButton({ children, href }: { children: ReactNode; href: string }) {
   return (
