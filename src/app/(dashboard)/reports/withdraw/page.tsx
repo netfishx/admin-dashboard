@@ -180,7 +180,7 @@ async function TableBodyWrapper({ data }: { data?: PageData<WithdrawReport> }) {
         ))
       ) : (
         <TableRow>
-          <TableCell colSpan={10} className="h-40 text-center">
+          <TableCell colSpan={10} className="h-48 text-center">
             {t("noData")}
           </TableCell>
         </TableRow>

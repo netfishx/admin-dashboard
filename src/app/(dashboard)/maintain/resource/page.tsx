@@ -132,7 +132,7 @@ async function TableBodyWrapper({
           </TableRow>
         ))
       ) : (
-        <TableRow className="h-40 text-center">
+        <TableRow className="h-48 text-center">
           <TableCell colSpan={10}>{translations("noData")}</TableCell>
         </TableRow>
       )}

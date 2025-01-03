@@ -244,7 +244,7 @@ async function TableBodyWrapper({ list }: { list: ApplyData[] }) {
         ))
       ) : (
         <TableRow>
-          <TableCell colSpan={13} className="h-40 text-center">
+          <TableCell colSpan={13} className="h-48 text-center">
             {translations("noData")}
           </TableCell>
         </TableRow>

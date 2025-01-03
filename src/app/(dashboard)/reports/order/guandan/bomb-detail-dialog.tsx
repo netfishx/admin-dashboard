@@ -123,7 +123,7 @@ export function BombDetailDialog() {
                 ))
               ) : (
                 <TableRow className="flex w-full items-center justify-center">
-                  <TableCell className="flex h-40 items-center justify-center text-center">
+                  <TableCell className="h-48 text-center">
                     {translation("noData")}
                   </TableCell>
                 </TableRow>

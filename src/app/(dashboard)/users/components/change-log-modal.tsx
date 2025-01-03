@@ -102,7 +102,7 @@ export function ChangeLogModal({
                 ))
               ) : (
                 <TableRow>
-                  <TableCell colSpan={7} className="h-40 text-center">
+                  <TableCell colSpan={7} className="h-48 text-center">
                     {translation("noData")}
                   </TableCell>
                 </TableRow>

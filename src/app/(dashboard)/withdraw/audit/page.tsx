@@ -172,7 +172,7 @@ async function TableBodyWrapper({ list }: { list: AuditList[] }) {
         ))
       ) : (
         <TableRow>
-          <TableCell colSpan={10} className="h-40 text-center">
+          <TableCell colSpan={10} className="h-48 text-center">
             {translations("noData")}
           </TableCell>
         </TableRow>

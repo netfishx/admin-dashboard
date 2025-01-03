@@ -110,7 +110,7 @@ async function ListBody({ list }: { list: GameRecordRequestRecords[] }) {
         ))
       ) : (
         <TableRow>
-          <TableCell colSpan={15} className="h-40 text-center">
+          <TableCell colSpan={15} className="h-48 text-center">
             {translate("noData")}
           </TableCell>
         </TableRow>

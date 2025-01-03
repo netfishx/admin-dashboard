@@ -56,7 +56,7 @@ export async function SupplierTable({
           ))
         ) : (
           <TableRow>
-            <TableCell colSpan={7} className="h-40 text-center">
+            <TableCell colSpan={7} className="h-48 text-center">
               {t("noData")}
             </TableCell>
           </TableRow>

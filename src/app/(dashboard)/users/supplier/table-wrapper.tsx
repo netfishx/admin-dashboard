@@ -37,7 +37,7 @@ export function SupplierTable({ data }: { data: Supplier[] | undefined }) {
         ))
       ) : (
         <TableRow>
-          <TableCell colSpan={6} className="h-40 text-center">
+          <TableCell colSpan={6} className="h-48 text-center">
             {translation("noData")}
           </TableCell>
         </TableRow>

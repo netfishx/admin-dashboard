@@ -73,7 +73,7 @@ async function SubaccountTableWrapper({
           <TableBody>
             {!res.data?.list || res.data?.list.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={7} className="h-40 text-center">
+                <TableCell colSpan={7} className="h-48 text-center">
                   {t("noData")}
                 </TableCell>
               </TableRow>

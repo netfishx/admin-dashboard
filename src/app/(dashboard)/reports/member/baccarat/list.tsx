@@ -114,7 +114,7 @@ async function ListBody({
         <TableRow>
           <TableCell
             colSpan={hasSearchPermission ? 12 : 11}
-            className="h-40 text-center"
+            className="h-48 text-center"
           >
             {translate("noData")}
           </TableCell>

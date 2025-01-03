@@ -159,7 +159,7 @@ async function TableBodyWrapper({ data }: { data?: PageData<RechargeReport> }) {
         ))
       ) : (
         <TableRow>
-          <TableCell colSpan={6} className="h-40 text-center">
+          <TableCell colSpan={6} className="h-48 text-center">
             {t("noData")}
           </TableCell>
         </TableRow>

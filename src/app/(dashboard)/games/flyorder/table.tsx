@@ -49,7 +49,7 @@ export function FlyOrderTable({ data }: { data: GameConfig[] }) {
         ))
       ) : (
         <TableRow>
-          <TableCell colSpan={2} className="h-40 text-center">
+          <TableCell colSpan={2} className="h-48 text-center">
             {t("noData")}
           </TableCell>
         </TableRow>

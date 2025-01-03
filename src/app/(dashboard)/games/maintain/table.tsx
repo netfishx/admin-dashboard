@@ -182,7 +182,7 @@ export function MaintainTable({ data }: { data: MaintainGame[] }) {
           ))
         ) : (
           <TableRow>
-            <TableCell colSpan={6} className="h-40 text-center">
+            <TableCell colSpan={6} className="h-48 text-center">
               {translations("noData")}
             </TableCell>
           </TableRow>

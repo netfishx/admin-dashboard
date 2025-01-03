@@ -119,7 +119,7 @@ async function TableBodyWrapper({ list }: { list: MySelfLoginLog[] }) {
         ))
       ) : (
         <TableRow>
-          <TableCell colSpan={5} className="h-40 text-center">
+          <TableCell colSpan={5} className="h-48 text-center">
             {t("noData")}
           </TableCell>
         </TableRow>

@@ -58,7 +58,7 @@ async function RoleTableWrapper({
           <TableBody>
             {!res.data?.list || res.data?.list.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={5} className="h-32 text-center">
+                <TableCell colSpan={5} className="h-48 text-center">
                   {t("noData")}
                 </TableCell>
               </TableRow>

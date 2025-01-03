@@ -61,7 +61,7 @@ export function TableBodyWrapper({
         ))
       ) : (
         <TableRow>
-          <TableCell colSpan={hasSearch ? 7 : 5} className="h-40 text-center">
+          <TableCell colSpan={hasSearch ? 7 : 5} className="h-48 text-center">
             {translations("noData")}
           </TableCell>
         </TableRow>

@@ -86,7 +86,7 @@ export function OddsTable({
     <TableBody>
       {list.length === 0 ? (
         <TableRow>
-          <TableCell colSpan={5} className="h-40 text-center">
+          <TableCell colSpan={5} className="h-48 text-center">
             {translations("noData")}
           </TableCell>
         </TableRow>

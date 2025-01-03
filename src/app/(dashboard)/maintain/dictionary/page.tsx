@@ -113,7 +113,7 @@ async function TableBodyWrapper({ list }: { list: DictionaryList[] }) {
         ))
       ) : (
         <TableRow>
-          <TableCell colSpan={4} className="h-40 text-center">
+          <TableCell colSpan={4} className="h-48 text-center">
             {translations("noData")}
           </TableCell>
         </TableRow>

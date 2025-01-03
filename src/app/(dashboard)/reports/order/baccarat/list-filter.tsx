@@ -137,6 +137,7 @@ export function ListFilter({ gameList }: { gameList: GameInfo[] }) {
         <div className="flex items-center gap-2">
           <Label className="shrink-0">{t("ordernumber")}</Label>
           <Input
+            className="w-52"
             value={ordernumber ?? ""}
             onChange={(e) => setOrdernumber(e.target.value)}
             placeholder={t("placeholderinput")}
@@ -149,7 +150,7 @@ export function ListFilter({ gameList }: { gameList: GameInfo[] }) {
             onValueChange={(value) => setGameName(value)}
             defaultValue="1"
           >
-            <SelectTrigger className="w-28">
+            <SelectTrigger className="w-32">
               <SelectValue placeholder={t("placeholderselect")} />
             </SelectTrigger>
             <SelectContent>
@@ -167,6 +168,7 @@ export function ListFilter({ gameList }: { gameList: GameInfo[] }) {
         <div className="flex items-center gap-2">
           <Label className="shrink-0">{t("issuenumber")}</Label>
           <Input
+            className="w-52"
             value={issuenumber ?? ""}
             onChange={(e) => setIssuenumber(e.target.value)}
             placeholder={t("placeholderinput")}
