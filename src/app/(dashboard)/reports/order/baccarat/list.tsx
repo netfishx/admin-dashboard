@@ -103,7 +103,9 @@ async function ListBody({
                 item.settleResult === 2 && "text-destructive",
               )}
             >
-              {item.settleResult
+              {SETTLE_RESULT.find(
+                (type: { value: number }) => type.value === item.settleResult,
+              )
                 ? t(
                     SETTLE_RESULT.find(
                       (type: { value: number }) =>
