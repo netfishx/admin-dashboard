@@ -8,7 +8,6 @@ import {
   CarouselContent,
   CarouselItem,
 } from "@/components/ui/carousel";
-import { cn } from "@/lib/utils";
 import Autoplay from "embla-carousel-autoplay";
 import Image from "next/image";
 import { useEffect, useState } from "react";
@@ -49,14 +48,15 @@ export function Bg() {
           <Image src={bg2} alt="background image" priority fill />
         </CarouselItem>
       </CarouselContent>
-      <div
-        className={cn([
-          "absolute bottom-[35dvw] z-10 flex justify-center items-center w-full gap-2",
-          current === 1 && "flex-row-reverse",
-        ])}
-      >
-        <div className="size-1.5 bg-white rounded-full" />
-        <div className="w-5 h-1.5 bg-[#c1d7ee] rounded-full" />
+      <div className="absolute bottom-[35dvw] z-10 flex justify-center items-center w-full gap-2 *:data-[current=true]:w-5 *:data-[current=true]:bg-[#c1d7ee]">
+        <div
+          className="size-1.5 bg-white rounded-full"
+          data-current={current === 0}
+        />
+        <div
+          className="size-1.5 bg-white rounded-full"
+          data-current={current === 1}
+        />
       </div>
     </Carousel>
   );
