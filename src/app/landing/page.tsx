@@ -23,7 +23,7 @@ export default async function LandingPage() {
   return (
     <div>
       <Bg />
-      <div className="absolute bottom-[20dvw] z-10 flex justify-center items-center w-full gap-4">
+      <div className="absolute bottom-[10dvh] z-10 flex justify-center items-center w-full gap-4">
         <LinkButton href="https://ui.shadcn.com/docs/components/button">
           安卓下载
         </LinkButton>
