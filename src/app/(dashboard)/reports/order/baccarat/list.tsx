@@ -23,22 +23,22 @@ export async function ListHeader() {
   return (
     <TableHeader>
       <TableRow className="bg-muted">
-        <TableHead className="w-60">{t("ordernumber")}</TableHead>
-        <TableHead className="w-60">{t("issuenumber")}</TableHead>
+        <TableHead className="w-48">{t("ordernumber")}</TableHead>
+        <TableHead className="w-40">{t("issuenumber")}</TableHead>
         <TableHead className="w-60">{t("memberID")}</TableHead>
         <TableHead className="w-60">{t("roomeownerID")}</TableHead>
         <TableHead className="w-60">{t("ministerID")}</TableHead>
         <TableHead className="w-60">{t("leastlevelID")}</TableHead>
         <TableHead className="w-60">{t("agentID")}</TableHead>
         <TableHead className="w-40">{t("gamename")}</TableHead>
-        <TableHead className="w-24">{t("smallType")}</TableHead>
+        <TableHead className="w-28">{t("smallType")}</TableHead>
         <TableHead className="w-20">{t("odds")}</TableHead>
         <TableHead className="w-20">{t("settleResult")}</TableHead>
         <TableHead className="w-24">{t("betamount")}</TableHead>
         <TableHead className="w-24">{t("winamount")}</TableHead>
         <TableHead className="w-48">{t("bettime")}</TableHead>
         <TableHead className="w-48">{t("membersettlementtime")}</TableHead>
-        <TableHead className="w-24">{t("proxystatus")}</TableHead>
+        <TableHead className="w-32">{t("proxystatus")}</TableHead>
         <TableHead className="bg-muted sticky right-0 w-24 p-0">
           <div className="shadow-l flex h-full items-center justify-center px-4">
             {t("action")}
