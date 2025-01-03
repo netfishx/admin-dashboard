@@ -125,7 +125,7 @@ export async function List({
   searchParams: Promise<GameRecordRequestParams>;
 }) {
   const params = await searchParams;
-  if (!(params?.startTime && params?.endTime)) {
+  if (!((params?.startTime && params?.endTime) || params?.issueNumber)) {
     return (
       <div className="bg-background flex-1 p-4">
         <div className="rounded-sm border">

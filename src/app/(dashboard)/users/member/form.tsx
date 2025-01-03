@@ -53,6 +53,7 @@ export default function Form({
         <div className="flex items-center gap-2">
           <Label className="shrink-0">{t("userId")}</Label>
           <Input
+            className="w-52"
             placeholder={t("placeholder")}
             value={userId ?? ""}
             onChange={(e) => setUserId(e.target.value)}

@@ -114,13 +114,15 @@ async function ListBody({
             </TableCell>
             <TableCell>{formatNumber(Number(item?.betAmount || 0))}</TableCell>
             <TableCell>
-              {formatNumber(Number(item.winLossAmount || 0))}
+              {item.winLossAmount
+                ? formatNumber(Number(item.winLossAmount))
+                : "-"}
             </TableCell>
             <TableCell>
               <Time time={item.betTime} />
             </TableCell>
             <TableCell>
-              <Time time={item.settleTime} />
+              {item.settleTime ? <Time time={item.settleTime} /> : "-"}
             </TableCell>
             <TableCell>
               {t(
@@ -162,7 +164,7 @@ export async function List({
     endTime: Number(params?.endTime) || 0,
   };
 
-  if (!(params?.startTime && params?.endTime)) {
+  if (!((params?.startTime && params?.endTime) || params?.id)) {
     return (
       <div className="bg-background flex-1 p-4">
         <div className="rounded-sm border">

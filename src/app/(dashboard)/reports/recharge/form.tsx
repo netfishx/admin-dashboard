@@ -127,6 +127,7 @@ export function Form({ hasAdminPermission }: { hasAdminPermission: boolean }) {
             <Input
               placeholder={t("placeholder")}
               value={userId ?? ""}
+              className="w-52"
               onChange={(e) => setUserId(e.target.value)}
             />
           </div>
