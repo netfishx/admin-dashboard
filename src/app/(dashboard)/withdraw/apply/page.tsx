@@ -1,4 +1,8 @@
-import { getBaccaratGames, getWithdrawApplyList } from "@/api";
+import {
+  getBaccaratGames,
+  getDictListCache,
+  getWithdrawApplyList,
+} from "@/api";
 import { CustomPagination } from "@/components/custom-pagination";
 import { Time } from "@/components/time";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -268,6 +272,9 @@ function TableBodySkeleton() {
 }
 async function FlowDialogWrapper() {
   const gameListResp = await getBaccaratGames();
+  const { data: dict } = await getDictListCache({
+    dictCode: "baccarat_bet_label",
+  });
 
-  return <FlowDialog gameList={gameListResp?.data ?? []} />;
+  return <FlowDialog gameList={gameListResp?.data ?? []} dict={dict} />;
 }

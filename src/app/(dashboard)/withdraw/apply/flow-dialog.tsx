@@ -20,7 +20,13 @@ import { useAtom } from "jotai";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 
-export function FlowDialog({ gameList }: { gameList: GameInfo[] }) {
+export function FlowDialog({
+  gameList,
+  dict,
+}: {
+  gameList: GameInfo[];
+  dict: { label: string; value: string }[] | undefined;
+}) {
   const t = useTranslations("withdraw.apply");
   const [open, setOpen] = useAtom(withdrawFlowDialogAtom);
   const [flowData] = useAtom(withdrawFlowDataAtom);
@@ -54,7 +60,11 @@ export function FlowDialog({ gameList }: { gameList: GameInfo[] }) {
           <div className="relative max-h-[50dvh] overflow-auto rounded-sm border">
             <ScrollableTable className="relative table-fixed">
               <ListHeader />
-              <ListBody list={flowData?.list ?? []} gameList={gameList} />
+              <ListBody
+                list={flowData?.list ?? []}
+                gameList={gameList}
+                dict={dict}
+              />
             </ScrollableTable>
           </div>
         </div>
@@ -84,12 +94,16 @@ export function ListHeader() {
 function ListBody({
   list,
   gameList,
+  dict,
 }: {
   list: OrderReportsRecord[];
   gameList: GameInfo[];
+  dict: { label: string; value: string }[] | undefined;
 }) {
   const translate = useTranslations();
-
+  const getBetLabel = (value: number) => {
+    return dict?.find((item) => Number(item.label) === value)?.value;
+  };
   return (
     <TableBody>
       {list && list?.length > 0 ? (
@@ -101,7 +115,7 @@ function ListBody({
             <TableCell className="whitespace-nowrap">
               {gameList.find((game) => game.gameId === item.gameId)?.gameName}
             </TableCell>
-            <TableCell>{item.betType}</TableCell> {/* todo: 小玩法转换 */}
+            <TableCell>{getBetLabel(item.betType)}</TableCell>
             <TableCell>{item?.betAmount}</TableCell>
             <TableCell>{item.winLossAmount}</TableCell>
             <TableCell>
