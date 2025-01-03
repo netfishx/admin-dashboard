@@ -139,7 +139,7 @@ async function StatusCell({ status }: { status: string }) {
   }
   if (status === "1") {
     return (
-      <span className="bg-destructive/20 text-destructive inline-block rounded-sm p-1 text-center">
+      <span className="bg-destructive/20 text-destructive inline-block h-6 w-16 rounded-sm text-center leading-6">
         {t("failed")}
       </span>
     );
