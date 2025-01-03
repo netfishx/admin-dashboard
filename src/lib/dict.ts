@@ -38,22 +38,22 @@ export const CHANGE_TYPE = [
     value: 3,
     label: "deposit",
   },
-  {
-    value: 4,
-    label: "withdrawal",
-  },
+  // {
+  //   value: 4,
+  //   label: "withdrawal",
+  // },
   {
     value: 5,
     label: "withdrawalCompleted",
   },
-  {
-    value: 6,
-    label: "withdrawalReturned",
-  },
-  {
-    value: 7,
-    label: "createWallet",
-  },
+  // {
+  //   value: 6,
+  //   label: "withdrawalReturned",
+  // },
+  // {
+  //   value: 7,
+  //   label: "createWallet",
+  // },
   {
     value: 8,
     label: "issueRebate",
@@ -98,13 +98,21 @@ export const CHANGE_TYPE = [
     value: 19,
     label: "decreaseCredit",
   },
-  {
-    value: 20,
-    label: "transfer",
-  },
+  // {
+  //   value: 20,
+  //   label: "transfer",
+  // },
   {
     value: 21,
     label: "writeOff",
+  },
+  {
+    value: 22,
+    label: "transferIn",
+  },
+  {
+    value: 23,
+    label: "transferOut",
   },
 ];
 
