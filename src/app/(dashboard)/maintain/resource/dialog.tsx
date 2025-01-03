@@ -238,12 +238,12 @@ export function AddOrEditDialog() {
                 }}
               >
                 <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="0" id="0" />
-                  <Label htmlFor="0">{t("enable")}</Label>
+                  <RadioGroupItem value="1" id="1" />
+                  <Label htmlFor="1">{t("enable")}</Label>
                 </div>
                 <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="1" id="1" />
-                  <Label htmlFor="1">{t("disable")}</Label>
+                  <RadioGroupItem value="0" id="0" />
+                  <Label htmlFor="0">{t("disable")}</Label>
                 </div>
               </RadioGroup>
             </div>
