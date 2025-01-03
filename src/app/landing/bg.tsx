@@ -41,20 +41,20 @@ export function Bg() {
       ]}
     >
       <CarouselContent>
-        <CarouselItem className="w-[100dvw] h-[100dvh] relative">
+        <CarouselItem className="relative h-[100dvh] w-[100dvw]">
           <Image src={bg1} alt="background image" priority fill />
         </CarouselItem>
-        <CarouselItem className="w-[100dvw] h-[100dvh] relative">
+        <CarouselItem className="relative h-[100dvh] w-[100dvw]">
           <Image src={bg2} alt="background image" priority fill />
         </CarouselItem>
       </CarouselContent>
-      <div className="absolute bottom-[20dvh] z-10 flex justify-center items-center w-full gap-2 *:data-[current=true]:w-5 *:data-[current=true]:bg-[#c1d7ee]">
+      <div className="absolute bottom-[20dvh] z-10 flex w-full items-center justify-center gap-2 *:data-[current=true]:w-5 *:data-[current=true]:bg-[#c1d7ee]">
         <div
-          className="size-1.5 bg-white rounded-full"
+          className="size-1.5 rounded-full bg-white"
           data-current={current === 0}
         />
         <div
-          className="size-1.5 bg-white rounded-full"
+          className="size-1.5 rounded-full bg-white"
           data-current={current === 1}
         />
       </div>

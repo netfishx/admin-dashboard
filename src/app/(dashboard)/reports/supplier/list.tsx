@@ -110,7 +110,7 @@ export async function List({
   return (
     <div className="bg-background flex-1 p-2">
       {data?.list && data?.list?.length > 0 && (
-        <div className="h-6 flex gap-2">
+        <div className="flex h-6 gap-2">
           <div>
             <Label className="min-w-24 text-center text-sm">
               {t("betNum")}：

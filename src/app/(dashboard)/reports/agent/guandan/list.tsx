@@ -141,7 +141,7 @@ export async function List({
   return (
     <div className="bg-background flex-1 p-4">
       {data?.list && data.list.length > 0 && (
-        <div className="h-6 gap-2 flex">
+        <div className="flex h-6 gap-2">
           <div>
             <Label className="min-w-24 text-center text-sm">
               {t("totalIssueAmount")}

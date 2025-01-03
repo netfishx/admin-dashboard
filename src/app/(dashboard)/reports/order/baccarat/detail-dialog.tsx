@@ -81,7 +81,7 @@ export function Detaildialog(props: {
         <DialogHeader>
           <DialogTitle>{t("detail")}</DialogTitle>
         </DialogHeader>
-        <div className="text-center bg-muted p-2 rounded-sm text-muted-foreground font-medium">
+        <div className="bg-muted text-muted-foreground rounded-sm p-2 text-center font-medium">
           {t("shareDetail")}
         </div>
         <ScrollArea className="w-[846px]">
@@ -94,7 +94,7 @@ export function Detaildialog(props: {
           <ScrollBar orientation="horizontal" />
         </ScrollArea>
 
-        <Table className="table-fixed border rounded-md">
+        <Table className="table-fixed rounded-md border">
           <TableHeader>
             <TableRow className="bg-muted">
               <TableHead className="w-12 text-center">{t("shoe")}</TableHead>

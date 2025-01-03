@@ -36,7 +36,9 @@ async function CommonWrapper({
 
 export default function Page({
   searchParams,
-}: { searchParams: Promise<{ [key: string]: string | undefined }> }) {
+}: {
+  searchParams: Promise<{ [key: string]: string | undefined }>;
+}) {
   return (
     <Suspense
       fallback={

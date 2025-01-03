@@ -46,7 +46,7 @@ export function Password({
   return (
     <div className={cn("relative", className)}>
       {Icon && (
-        <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+        <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
           <Icon />
         </div>
       )}
@@ -59,7 +59,7 @@ export function Password({
         {...props}
       />
       {type === "password" && (
-        <div className="absolute right-0 flex items-center pr-3 -translate-y-1/2 top-1/2 gap-x-1">
+        <div className="absolute right-0 top-1/2 flex -translate-y-1/2 items-center gap-x-1 pr-3">
           {showPassword ? (
             <EyeOffIcon
               className="cursor-pointer"

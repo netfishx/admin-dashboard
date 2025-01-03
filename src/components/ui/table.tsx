@@ -30,7 +30,7 @@ export function Table({
   ref?: RefObject<HTMLTableElement>;
 }) {
   return (
-    <div className="relative w-full h-full overflow-auto">
+    <div className="relative h-full w-full overflow-auto">
       <table
         ref={ref}
         className={cn("w-full caption-bottom text-sm", className)}
@@ -79,7 +79,7 @@ export function TableFooter({
     <tfoot
       ref={ref}
       className={cn(
-        "border-t bg-muted/50 font-medium last:[&>tr]:border-b-0",
+        "bg-muted/50 border-t font-medium last:[&>tr]:border-b-0",
         className,
       )}
       {...props}
@@ -98,7 +98,7 @@ export function TableRow({
     <tr
       ref={ref}
       className={cn(
-        "border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted",
+        "hover:bg-muted/50 data-[state=selected]:bg-muted border-b transition-colors",
         className,
       )}
       {...props}
@@ -117,7 +117,7 @@ export function TableHead({
     <th
       ref={ref}
       className={cn(
-        "h-10 px-4 text-left text-nowrap align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]",
+        "text-muted-foreground h-10 text-nowrap px-4 text-left align-middle font-medium [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]",
         className,
       )}
       {...props}
@@ -136,7 +136,7 @@ export function TableCell({
     <td
       ref={ref}
       className={cn(
-        "py-2 px-4 align-middle [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]",
+        "px-4 py-2 align-middle [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]",
         className,
       )}
       {...props}
@@ -154,7 +154,7 @@ export function TableCaption({
   return (
     <caption
       ref={ref}
-      className={cn("mt-4 text-sm text-muted-foreground", className)}
+      className={cn("text-muted-foreground mt-4 text-sm", className)}
       {...props}
     />
   );

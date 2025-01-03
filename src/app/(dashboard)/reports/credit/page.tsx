@@ -17,7 +17,7 @@ async function CommonWrapper({
     <>
       <Suspense
         fallback={
-          <div className="flex bg-background p-4 gap-2 flex-col">
+          <div className="bg-background flex flex-col gap-2 p-4">
             <Skeleton />
             <Skeleton />
             <Skeleton />
@@ -31,7 +31,7 @@ async function CommonWrapper({
       </Suspense>
       <Suspense
         fallback={
-          <div className="flex-1 bg-background p-4">
+          <div className="bg-background flex-1 p-4">
             <div className="relative rounded-sm border">
               <Table className="table-fixed">
                 <ListHeader />

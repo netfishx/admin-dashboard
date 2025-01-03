@@ -24,7 +24,7 @@ const HomeIcon = () => {
 
   return (
     <div
-      className="select-none hover:bg-accent rounded-md transition-colors duration-200 flex items-center justify-center"
+      className="hover:bg-accent flex select-none items-center justify-center rounded-md transition-colors duration-200"
       onMouseEnter={() => controls.start("animate")}
       onMouseLeave={() => controls.start("normal")}
     >

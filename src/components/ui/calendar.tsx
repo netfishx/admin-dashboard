@@ -106,7 +106,7 @@ export function Calendar({
               onValueChange={updateDayPickerState}
               disabled={disabled}
             >
-              <SelectTrigger className="w-full border-0 ring-0 focus:ring-0 px-2 py-1">
+              <SelectTrigger className="w-full border-0 px-2 py-1 ring-0 focus:ring-0">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
@@ -141,7 +141,7 @@ export function Calendar({
               variant="outline"
               className={cn(
                 buttonVariants({ variant: "outline" }),
-                "absolute left-0 h-7 w-7 bg-transparent p-0 opacity-50 hover:opacity-100 ml-2",
+                "absolute left-0 ml-2 h-7 w-7 bg-transparent p-0 opacity-50 hover:opacity-100",
                 className,
               )}
               type="button"
@@ -164,7 +164,7 @@ export function Calendar({
               variant="outline"
               className={cn(
                 buttonVariants({ variant: "outline" }),
-                "absolute right-0 h-7 w-7 bg-transparent p-0 opacity-50 hover:opacity-100 mr-2",
+                "absolute right-0 mr-2 h-7 w-7 bg-transparent p-0 opacity-50 hover:opacity-100",
                 className,
               )}
               type="button"

@@ -1601,9 +1601,7 @@ export async function exportClick(data: {
 }
 
 // 字典项列表缓存
-export async function getDictListCache(data: {
-  dictCode: string;
-}) {
+export async function getDictListCache(data: { dictCode: string }) {
   const token = await getToken();
   return await apiRequest<{ label: string; value: string }[]>({
     url: "/dict/item/selectListCache",

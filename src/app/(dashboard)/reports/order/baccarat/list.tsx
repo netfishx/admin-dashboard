@@ -132,8 +132,8 @@ async function ListBody({
                   ?.label,
               )}
             </TableCell>
-            <TableCell className="sticky right-0 bg-background p-0">
-              <div className="shadow-l py-2 px-4 flex justify-center items-center">
+            <TableCell className="bg-background sticky right-0 p-0">
+              <div className="shadow-l flex items-center justify-center px-4 py-2">
                 <DetailButton item={item} />
               </div>
             </TableCell>

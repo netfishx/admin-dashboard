@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 
 function LinkButton({ children, href }: { children: ReactNode; href: string }) {
   return (
-    <Button asChild className="bg-[#3590ec] hover:bg-[#3590ec]/80 w-36">
+    <Button asChild className="w-36 bg-[#3590ec] hover:bg-[#3590ec]/80">
       <Link href={href} target="_blank">
         {children}
       </Link>
@@ -23,7 +23,7 @@ export default async function LandingPage() {
   return (
     <div>
       <Bg />
-      <div className="absolute bottom-[10dvh] z-10 flex justify-center items-center w-full gap-4">
+      <div className="absolute bottom-[10dvh] z-10 flex w-full items-center justify-center gap-4">
         <LinkButton href="https://ui.shadcn.com/docs/components/button">
           安卓下载
         </LinkButton>

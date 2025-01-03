@@ -56,7 +56,7 @@ export function ScrollBar({
       )}
       {...props}
     >
-      <ScrollAreaThumb className="relative flex-1 rounded-full bg-border" />
+      <ScrollAreaThumb className="bg-border relative flex-1 rounded-full" />
     </ScrollAreaScrollbar>
   );
 }

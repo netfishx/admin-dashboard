@@ -29,7 +29,7 @@ export function AnnouncementDialog({
       open={open && isFirstLogin === "true"}
       onOpenChange={handleOpenChange}
     >
-      <DialogContent className="min-w-lg w-fit max-w-4/5">
+      <DialogContent className="min-w-lg max-w-4/5 w-fit">
         <DialogHeader>
           <DialogTitle>{t("announcement")}</DialogTitle>
         </DialogHeader>
