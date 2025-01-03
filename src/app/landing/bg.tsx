@@ -35,7 +35,6 @@ export function Bg() {
         loop: true,
       }}
       setApi={setApi}
-      className="h-[100dvh] w-[100dvw]"
       plugins={[
         Autoplay({
           delay: 2000,
