@@ -118,12 +118,12 @@ async function TableBodyWrapper({
               <span
                 className={cn([
                   "inline-block h-6 w-16 rounded-sm leading-6",
-                  item.status === 0
+                  item.status === 1
                     ? "bg-green/20 text-green"
                     : "bg-destructive/20 text-destructive",
                 ])}
               >
-                {item.status === 0 ? t("enable") : t("disable")}
+                {item.status === 1 ? t("enable") : t("disable")}
               </span>
             </TableCell>
             <TableCell className="bg-background sticky right-0 w-40 text-center">
