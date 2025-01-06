@@ -444,8 +444,8 @@ export type RatioReportRequestRecords = {
   expectedShareAmount: number; // 应占成金额
   interceptAmount: number; // 拦截占成金额
   throwAmount: number; // 抛货金额
-  actualShareWinLoss: number; // 占成盈亏金额
-  actualShareAmount: number; // 实占输赢
+  actualShareAmount: number; // 实占金额
+  actualShareWinLoss: number; // 实占输赢
   backIncome: number; // 返水收入
   backOutcome: number; // 返水支出
   pureBackAmount: number; // 纯返水金额
@@ -475,12 +475,12 @@ export type MemberBetReportRequestRecords = {
   expectedShareAmount: number; // 汇总应占成金额
   interceptAmount: number; // 汇总当天拦截占成金额
   throwAmount: number; // 汇总当天该末级代理抛货金额
-  actualShareWinLoss: number; // 汇总占成盈亏金额
   backIncome: number; // 汇总当天返水收入
   backOutcome: number; // 汇总当天返水支出
   pureBackAmount: number; // 汇总当天返水
   totalProfitLossAmount: number; // 汇总当天总输赢金额
-  actualShareAmount: number; // 实占输赢
+  actualShareAmount: number; // 实占金额
+  actualShareWinLoss: number; // 实占输赢
 };
 
 // 代理报表-棋牌-请求入参

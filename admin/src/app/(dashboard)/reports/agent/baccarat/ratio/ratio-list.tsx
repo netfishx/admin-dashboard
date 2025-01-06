@@ -32,8 +32,8 @@ export async function ListHeader() {
         <TableHead className="w-36">{t("shareAmount")}</TableHead>
         <TableHead className="w-36">{t("blockAmount")}</TableHead>
         <TableHead className="w-36">{t("throwAmount")}</TableHead>
-        <TableHead className="w-36">{t("shareProfitLoss")}</TableHead>
         <TableHead className="w-36">{t("actualShareAmount")}</TableHead>
+        <TableHead className="w-36">{t("actualShareWinLoss")}</TableHead>
         <TableHead className="w-36">{t("rebateIncome")}</TableHead>
         <TableHead className="w-36">{t("rebateExpense")}</TableHead>
         <TableHead className="w-36">{t("netRebate")}</TableHead>
@@ -76,10 +76,10 @@ async function ListBody({
             </TableCell>
             <TableCell>{formatNumber(Number(item.throwAmount || 0))}</TableCell>
             <TableCell>
-              {formatNumber(Number(item.actualShareWinLoss || 0))}
+              {formatNumber(Number(item.actualShareAmount || 0))}
             </TableCell>
             <TableCell>
-              {formatNumber(Number(item.actualShareAmount || 0))}
+              {formatNumber(Number(item.actualShareWinLoss || 0))}
             </TableCell>
             <TableCell>{formatNumber(Number(item.backIncome || 0))}</TableCell>
             <TableCell>{formatNumber(Number(item.backOutcome || 0))}</TableCell>
