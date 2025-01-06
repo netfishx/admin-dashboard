@@ -101,6 +101,7 @@ async function TableHeaderWrapper() {
   const t = await getTranslations("users.members");
   const session = await getSession();
   const permissions = session?.permissions;
+  permissions?.includes("edit_credit");
   return (
     <TableHeader>
       <TableRow className="bg-muted">
@@ -111,13 +112,18 @@ async function TableHeaderWrapper() {
           </>
         )}
         <TableHead className="w-60">{t("userId")}</TableHead>
-        <TableHead className="w-90">{t("username")}</TableHead>
-        <TableHead className="w-90">{t("nickname")}</TableHead>
-        <TableHead className="w-90">{t("walletAddress")}</TableHead>
+        <TableHead className="w-84">{t("username")}</TableHead>
+        <TableHead className="w-84">{t("nickname")}</TableHead>
+        <TableHead className="w-84">{t("walletAddress")}</TableHead>
         <TableHead className="w-28">{t("debtAmount")}</TableHead>
         <TableHead className="w-28">{t("creditAmount")}</TableHead>
         <TableHead className="w-24 text-center">{t("status")}</TableHead>
-        <TableHead className="w-160 bg-muted sticky right-0 p-0 text-center">
+        <TableHead
+          className={cn(
+            "w-160 bg-muted sticky right-0 p-0 text-center",
+            permissions?.includes("edit_credit") ? "w-160" : "w-100",
+          )}
+        >
           <div className="shadow-l flex h-full items-center justify-center px-4">
             {t("action")}
           </div>
