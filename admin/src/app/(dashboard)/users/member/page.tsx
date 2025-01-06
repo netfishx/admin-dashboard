@@ -150,8 +150,8 @@ async function TableBodyWrapper({
             <TableCell className="break-all">{item.username}</TableCell>
             <TableCell className="break-all">{item.nickname}</TableCell>
             <TableCell>{item.depositAddress}</TableCell>
-            <TableCell>{formatNumber(item.debtAmount)}</TableCell>
-            <TableCell>{formatNumber(item.creditAmount)}</TableCell>
+            <TableCell>{formatNumber(Number(item.debtAmount))}</TableCell>
+            <TableCell>{formatNumber(Number(item.creditAmount))}</TableCell>
             <TableCell className="text-center">
               <span
                 className={cn(
