@@ -22,3 +22,5 @@ logs
 *.tsbuildinfo
 .DS_Store
 build
+dist
+.astro
