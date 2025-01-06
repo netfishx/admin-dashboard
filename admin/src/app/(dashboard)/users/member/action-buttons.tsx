@@ -72,7 +72,7 @@ export default function Action({
   const [rebateIsPending, startGetRebate] = useTransition();
   const [loginLogIsPending, startGetLoginLog] = useTransition();
   const [changeLogIsPending, startGetChangeLog] = useTransition();
-  const [ratioIsPending, startGetRatio] = useTransition();
+
   const [limitIsPending, startGetLimit] = useTransition();
   const [deleteCreditIsPending, startGetDeleteCredit] = useTransition();
   const [increaseCreditIsPending, startGetIncreaseCredit] = useTransition();
