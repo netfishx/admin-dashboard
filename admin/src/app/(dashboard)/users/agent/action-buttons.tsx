@@ -89,7 +89,7 @@ export default function Action({
               setAgentData(data);
               const { code, data: info, message } = await getUserBasicInfo();
               if (code === 0) {
-                setAvailableAmount(info?.usableBalanceMoney || 0);
+                setAvailableAmount(Number(info?.usableBalanceMoney ?? 0));
               } else {
                 toast.error(message);
               }
