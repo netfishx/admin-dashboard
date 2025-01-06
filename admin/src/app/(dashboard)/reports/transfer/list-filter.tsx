@@ -81,6 +81,7 @@ export function ListFilter({
             onChange={(e) => setAgentId(e.target.value)}
             placeholder={t("placeholderinput")}
             className="w-52"
+            disabled={typeId === "-1"}
           />
         </div>
         <div className="flex items-center gap-4">
@@ -90,6 +91,7 @@ export function ListFilter({
             onChange={(e) => setMemberId(e.target.value)}
             placeholder={t("placeholderinput")}
             className="w-52"
+            disabled={typeId === "1"}
           />
         </div>
         {hasTransferTypePermission && (

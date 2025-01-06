@@ -26,6 +26,7 @@ import { useRouter } from "next/navigation";
 import { type FormEvent, useRef, useState, useTransition } from "react";
 import { toast } from "sonner";
 import { GoogleValidataModal } from "../components/google-validata-modal";
+import { formatNumber } from "@/lib/utils";
 
 export function TransferMoneyModal() {
   const router = useRouter();
@@ -103,7 +104,7 @@ export function TransferMoneyModal() {
                     name="amount"
                     type="number"
                     min={0}
-                    max={availableAmount}
+                    max={availableAmount.toFixed(3).slice(0, -1)}
                     step={0.01}
                     onBlur={(e) => {
                       setIsValidataMoney(e.target.reportValidity());
@@ -113,7 +114,8 @@ export function TransferMoneyModal() {
                 <div className="flex items-center gap-4">
                   <Label className="text-muted-foreground w-20 shrink-0 text-right" />
                   <div className="text-destructive flex flex-1 flex-row text-xs">
-                    {t("availableAmount")}:{availableAmount}
+                    {t("availableAmount")}:
+                    {formatNumber(availableAmount)}
                   </div>
                 </div>
               </div>
