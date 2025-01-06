@@ -13,6 +13,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Password } from "@/components/ui/password";
+import { formatNumber } from "@/lib/utils";
 import {
   availableAmountAtom,
   deleteCreditModalAtom,
@@ -23,7 +24,7 @@ import { useAtom, useAtomValue } from "jotai";
 import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Form from "next/form";
-import { type FormEvent, useRef, useTransition } from "react";
+import { type FormEvent, useRef, useState, useTransition } from "react";
 import { toast } from "sonner";
 
 export function DeleteCreditModal() {
@@ -37,6 +38,8 @@ export function DeleteCreditModal() {
   const ref = useRef<HTMLFormElement>(null);
 
   const availableAmount = useAtomValue(availableAmountAtom);
+
+  const [isValidataMoney, setIsValidataMoney] = useState(false);
 
   const handleConfirm = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -68,13 +71,15 @@ export function DeleteCreditModal() {
             <div className="bg-muted text-muted-foreground border-r py-2">
               {t("membershipArrears")}
             </div>
-            <div className="py-2">{memberInfoData?.debtAmount ?? 0}</div>
+            <div className="py-2">
+              {formatNumber(Number(memberInfoData?.debtAmount ?? 0))}
+            </div>
           </div>
           <div className="grid grid-cols-3">
             <div className="bg-muted text-muted-foreground border-r py-2">
               {t("availableBalance")}
             </div>
-            <div className="py-2">{availableAmount}</div>
+            <div className="py-2">{formatNumber(Number(availableAmount))}</div>
           </div>
         </div>
 
@@ -85,7 +90,19 @@ export function DeleteCreditModal() {
               <Label className="text-muted-foreground w-1/4 shrink-0 text-right">
                 {t("writeOffAmount")}
               </Label>
-              <Input className="flex-1" type="number" name="amount" />
+              <Input
+                className="flex-1"
+                type="number"
+                name="amount"
+                required
+                max={Math.min(
+                  Number(memberInfoData?.debtAmount ?? 0),
+                  Number(availableAmount ?? 0),
+                )}
+                onBlur={(e) => {
+                  setIsValidataMoney(e.target.reportValidity());
+                }}
+              />
             </div>
             <div className="flex flex-col gap-1">
               <div className="flex items-center gap-4">
@@ -108,7 +125,7 @@ export function DeleteCreditModal() {
             {translation("cancel")}
           </Button>
           <Button
-            disabled={isPending}
+            disabled={isPending || !isValidataMoney}
             onClick={(e) => {
               e.preventDefault();
               if (ref.current) {
