@@ -27,6 +27,6 @@ RUN --mount=type=cache,target=/root/.bun bun run build
 FROM nginx:alpine
 
 RUN rm -rf /usr/share/nginx/html/*
-COPY --from=build /src/dist /usr/share/nginx/html
+COPY --from=build /src/dist /usr/share/nginx/html/landing
 COPY --from=build /src/nginx.conf /etc/nginx/nginx.conf
 EXPOSE 80
