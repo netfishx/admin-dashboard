@@ -24,8 +24,6 @@ import {
   memberIdAtom,
   memberInfoDataAtom,
   memberInfoModalAtom,
-  ratioDataAtom,
-  ratioModalAtom,
   rebateDataAtom,
   rebateModalAtom,
 } from "@/store";
@@ -49,9 +47,6 @@ export default function Action({
   const setMemberInfoData = useSetAtom(memberInfoDataAtom);
   // 会员信息 弹窗
   const setMemberInfoModal = useSetAtom(memberInfoModalAtom);
-  // 占成 弹窗
-  const setRatioModal = useSetAtom(ratioModalAtom);
-  const setRatioData = useSetAtom(ratioDataAtom);
   // 增加授信 弹窗
   const setIncreaseCreditModal = useSetAtom(increaseCreditModalAtom);
   // 减少授信 弹窗
@@ -94,32 +89,6 @@ export default function Action({
         }}
       >
         {t("userInfo")}
-      </Button>
-
-      <Button
-        variant="ghost"
-        size="sm"
-        disabled={ratioIsPending}
-        className="text-primary hover:text-primary/80 px-2 text-sm"
-        onClick={() => {
-          startGetRatio(async () => {
-            setMemberId(data.id);
-            const {
-              code,
-              data: config,
-              message,
-            } = await getGameConfig(data.id);
-            if (code === 0) {
-              setRatioData(config);
-            } else {
-              toast.error(message);
-            }
-            setRatioModal(true);
-          });
-        }}
-      >
-        {ratioIsPending && <Loader2 className="animate-spin" />}
-        {t("ratio")}
       </Button>
 
       {permissions?.includes("edit_credit") && (

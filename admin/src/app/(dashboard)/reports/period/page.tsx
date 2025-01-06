@@ -110,7 +110,8 @@ async function PeriodTable({
     gameId: gameId ? Number(gameId) : null,
     issueNumber: issueNumber || null,
   };
-  const { data } = await getPeriodReport(params);
+  const res = await getPeriodReport(params);
+  const data = res.data;
   return (
     <div className="flex w-full flex-col gap-2">
       <div className="bg-background flex-1">
@@ -151,7 +152,7 @@ async function TableBodyWrapper({
 
   return (
     <TableBody>
-      {data && data.list.length > 0 ? (
+      {data && data.list?.length > 0 ? (
         data?.list?.map((item) => (
           <TableRow key={item.issueNumber}>
             <TableCell>{item.issueNumber}</TableCell>

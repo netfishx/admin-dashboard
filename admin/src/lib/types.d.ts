@@ -96,8 +96,8 @@ export type MemberList = {
   status: number;
   upUsername: string;
   upNickname: string;
-  debtAmount: number;
-  creditAmount: number;
+  debtAmount: string;
+  creditAmount: string;
   createTime: number;
   depositAddress: string;
   agentId: string;
@@ -445,6 +445,7 @@ export type RatioReportRequestRecords = {
   interceptAmount: number; // 拦截占成金额
   throwAmount: number; // 抛货金额
   actualShareWinLoss: number; // 占成盈亏金额
+  actualShareAmount: number; // 实占输赢
   backIncome: number; // 返水收入
   backOutcome: number; // 返水支出
   pureBackAmount: number; // 纯返水金额
