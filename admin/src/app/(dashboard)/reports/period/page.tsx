@@ -110,8 +110,7 @@ async function PeriodTable({
     gameId: gameId ? Number(gameId) : null,
     issueNumber: issueNumber || null,
   };
-  const res = await getPeriodReport(params);
-  const data = res.data;
+  const { data } = await getPeriodReport(params);
   return (
     <div className="flex w-full flex-col gap-2">
       <div className="bg-background flex-1">

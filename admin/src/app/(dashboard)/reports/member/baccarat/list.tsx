@@ -67,6 +67,7 @@ async function ListBody({
 }) {
   const session = await getSession();
   const translate = await getTranslations();
+  const t = await getTranslations("report.member");
 
   return (
     <TableBody>
@@ -82,10 +83,10 @@ async function ListBody({
             )}
             <TableCell>{item.memberTypeName}</TableCell>
             <TableCell>
-              {
-                gameList?.find((game) => game.gameType === item.gameType)
-                  ?.gameName
-              }
+              {item.gameId
+                ? gameList?.find((game) => game.gameId === item.gameId)
+                    ?.gameName
+                : t("all")}
             </TableCell>
             <TableCell>{item.betNum}</TableCell>
             <TableCell>
@@ -235,8 +236,8 @@ export async function List({
         <div className="pt-2">
           <CustomPagination
             total={data?.total ?? 0}
-            currentPage={Number(data?.pageNum ?? 1)}
-            pageSize={Number(data?.pageSize ?? 10)}
+            currentPage={Number(params?.pageNum ?? 1)}
+            pageSize={Number(params?.pageSize ?? 10)}
           />
         </div>
       ) : null}
