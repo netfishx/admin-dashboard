@@ -1,0 +1,11 @@
+---
+const { href, title } = Astro.props;
+---
+
+<a
+  href={href}
+  target="_blank"
+  class="text-white inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-hidden focus-visible:ring focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 text-primary-foreground shadow-sm h-9 px-4 py-2 w-36 bg-blue-500/90 hover:bg-blue-500/80"
+>
+  {title}
+</a>
