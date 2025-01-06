@@ -480,6 +480,7 @@ export type MemberBetReportRequestRecords = {
   backOutcome: number; // 汇总当天返水支出
   pureBackAmount: number; // 汇总当天返水
   totalProfitLossAmount: number; // 汇总当天总输赢金额
+  actualShareAmount: number; // 实占输赢
 };
 
 // 代理报表-棋牌-请求入参
