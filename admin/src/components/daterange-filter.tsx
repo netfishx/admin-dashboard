@@ -29,7 +29,7 @@ import {
 } from "date-fns";
 import { Calendar as CalendarIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { useRouter } from "next/navigation";
+import { useTransitionRouter } from "next-view-transitions";
 import { parseAsBoolean, parseAsInteger, useQueryState } from "nuqs";
 import { startTransition, useCallback, useEffect, useState } from "react";
 import type { DateRange } from "react-day-picker";
@@ -188,7 +188,7 @@ export function DateRangeFilter({
     parseAsBoolean.withDefault(false),
   );
 
-  const router = useRouter();
+  const router = useTransitionRouter();
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     startTransition(async () => {

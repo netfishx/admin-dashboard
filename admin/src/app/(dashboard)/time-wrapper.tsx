@@ -1,10 +1,11 @@
 "use client";
 
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useTransitionRouter } from "next-view-transitions";
+import { usePathname, useSearchParams } from "next/navigation";
 import { useEffect } from "react";
 
 export function TimeWrapper() {
-  const router = useRouter();
+  const router = useTransitionRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const params = new URLSearchParams(searchParams);

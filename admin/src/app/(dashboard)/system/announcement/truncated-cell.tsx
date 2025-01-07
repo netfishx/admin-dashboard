@@ -2,7 +2,7 @@
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { useTranslations } from "next-intl";
-import { useRouter } from "next/navigation";
+import { useTransitionRouter } from "next-view-transitions";
 import { useState } from "react";
 
 export function TruncatedCell({
@@ -19,7 +19,7 @@ export function TruncatedCell({
   const t = useTranslations("system.announcement");
   const [isExpanded, setIsExpanded] = useState(false);
   const shouldTruncate = content.length > maxLength;
-  const router = useRouter();
+  const router = useTransitionRouter();
 
   if (!shouldTruncate) {
     return (

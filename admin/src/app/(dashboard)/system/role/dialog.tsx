@@ -18,8 +18,8 @@ import { Root as VisuallyHiddenRoot } from "@radix-ui/react-visually-hidden";
 import { useAtom, useAtomValue } from "jotai";
 import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { useTransitionRouter } from "next-view-transitions";
 import Form from "next/form";
-import { useRouter } from "next/navigation";
 import { use, useLayoutEffect, useRef, useState, useTransition } from "react";
 import { toast } from "sonner";
 
@@ -29,7 +29,7 @@ export function RoleDialog({
   permissions: Promise<Res<Permission[]>>;
 }) {
   const translations = useTranslations();
-  const router = useRouter();
+  const router = useTransitionRouter();
   const t = useTranslations("system.role");
   const [open, setOpen] = useAtom(roleDialogAtom);
   const data = useAtomValue(roleAtom);

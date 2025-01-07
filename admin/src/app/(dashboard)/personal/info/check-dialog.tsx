@@ -18,8 +18,8 @@ import Big from "big.js";
 import { useAtomValue } from "jotai";
 import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { useTransitionRouter } from "next-view-transitions";
 import Form from "next/form";
-import { useRouter } from "next/navigation";
 import { type FormEvent, useRef, useState } from "react";
 import { toast } from "sonner";
 
@@ -28,7 +28,7 @@ export function CheckDialog(props: CheckDialogProps) {
   const t = useTranslations("personal.info");
   const translations = useTranslations();
   const [step, setStep] = useState(1);
-  const router = useRouter();
+  const router = useTransitionRouter();
   const ref = useRef<HTMLFormElement>(null);
   const [withDrawFee, setWithDrawFee] = useState("0");
   const fees = useAtomValue(withdrawFeeAtom);

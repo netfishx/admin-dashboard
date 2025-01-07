@@ -33,7 +33,7 @@ import { limitDataAtom, limitGamesAtom, limitModalAtom } from "@/store";
 import { useAtom, useAtomValue } from "jotai";
 import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { useRouter } from "next/navigation";
+import { useTransitionRouter } from "next-view-transitions";
 import { startTransition, useState, useTransition } from "react";
 import { toast } from "sonner";
 
@@ -50,7 +50,7 @@ export function LimitModal({ userId }: { userId: string }) {
   >({});
   // 数据校验是否正确
   const [isValidateData, setIsValidateData] = useState(true);
-  const router = useRouter();
+  const router = useTransitionRouter();
   const [limitIsLoading, startLimitLoading] = useTransition();
 
   function handleChange() {

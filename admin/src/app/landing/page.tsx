@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import type { Metadata } from "next";
-import Link from "next/link";
+import { Link } from "next-view-transitions";
 import type { ReactNode } from "react";
 import { Bg } from "./bg";
 

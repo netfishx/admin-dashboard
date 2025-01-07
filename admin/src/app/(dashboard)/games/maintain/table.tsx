@@ -26,9 +26,10 @@ import type { MaintainGame } from "@/lib/types";
 import { cn } from "@/lib/utils";
 import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { useRouter } from "next/navigation";
+import { useTransitionRouter } from "next-view-transitions";
 import { parseAsArrayOf, parseAsString, useQueryState } from "nuqs";
-import { type ReactNode, useTransition } from "react";
+import { useTransition } from "react";
+import type { ReactNode } from "react";
 import { toast } from "sonner";
 
 function EditButton({
@@ -39,7 +40,7 @@ function EditButton({
   data: MaintainGame;
 }) {
   const [isPending, startTransition] = useTransition();
-  const router = useRouter();
+  const router = useTransitionRouter();
   const t = useTranslations();
   const translations = useTranslations("games.maintain");
   return (

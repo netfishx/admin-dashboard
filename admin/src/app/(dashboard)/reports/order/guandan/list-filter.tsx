@@ -15,7 +15,8 @@ import type { GameInfo } from "@/lib/types";
 import { makeDownload } from "@/lib/utils";
 import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useTransitionRouter } from "next-view-transitions";
+import { useSearchParams } from "next/navigation";
 import { parseAsInteger, useQueryState, useQueryStates } from "nuqs";
 import { useTransition } from "react";
 import { toast } from "sonner";
@@ -47,7 +48,7 @@ export function ListFilter({
     defaultValue: "",
   });
 
-  const router = useRouter();
+  const router = useTransitionRouter();
   const handleSearch = () => {
     if ((dateRange.startTime && dateRange.endTime) || issuenumber) {
       router.refresh();

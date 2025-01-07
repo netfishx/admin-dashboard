@@ -23,8 +23,8 @@ import { Big } from "big.js";
 import { useAtom, useAtomValue } from "jotai";
 import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { useTransitionRouter } from "next-view-transitions";
 import Form from "next/form";
-import { useRouter } from "next/navigation";
 import { type FormEvent, useRef, useState, useTransition } from "react";
 import { toast } from "sonner";
 import { GoogleValidataModal } from "../components/google-validata-modal";
@@ -47,7 +47,7 @@ export function IncreaseCreditModal() {
   const [orderId, setOrderId] = useState("");
   // 是否开启谷歌验证弹窗
   const [googleValidataOpen, setGoogleValidataOpen] = useState(false);
-  const router = useRouter();
+  const router = useTransitionRouter();
   const handleConfirm = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);

@@ -15,7 +15,8 @@ import type { GameInfo } from "@/lib/types";
 import { makeDownload } from "@/lib/utils";
 import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useTransitionRouter } from "next-view-transitions";
+import { useSearchParams } from "next/navigation";
 import {
   parseAsInteger,
   parseAsString,
@@ -28,7 +29,7 @@ import { toast } from "sonner";
 export function ListFilter({ gameList }: { gameList: GameInfo[] }) {
   const t = useTranslations("report.orderlist");
   const searchParams = useSearchParams();
-  const router = useRouter();
+  const router = useTransitionRouter();
   const [isPending, startSearch] = useTransition();
   const [isReset, startReset] = useTransition();
   const [dateRange] = useQueryStates({

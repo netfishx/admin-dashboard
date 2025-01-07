@@ -7,7 +7,7 @@ import { Label } from "@/components/ui/label";
 import { addDays, endOfDay, startOfDay } from "date-fns";
 import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { useRouter } from "next/navigation";
+import { useTransitionRouter } from "next-view-transitions";
 import { parseAsInteger, useQueryState, useQueryStates } from "nuqs";
 import { useTransition } from "react";
 import { toast } from "sonner";
@@ -17,7 +17,7 @@ export function Form() {
   const [isPending, startTransition] = useTransition();
   const [isReset, startReset] = useTransition();
 
-  const router = useRouter();
+  const router = useTransitionRouter();
   const today = new Date();
   const startTime = startOfDay(today);
   const endTime = endOfDay(addDays(today, 30));

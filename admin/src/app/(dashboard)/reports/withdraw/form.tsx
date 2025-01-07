@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/select";
 import { STATUS, USER_TYPE } from "@/lib/dict";
 import { useTranslations } from "next-intl";
-import { useRouter } from "next/navigation";
+import { useTransitionRouter } from "next-view-transitions";
 import { parseAsInteger, useQueryState, useQueryStates } from "nuqs";
 import { useTransition } from "react";
 import { toast } from "sonner";
@@ -24,7 +24,7 @@ export function Form({ hasAdminPermission }: { hasAdminPermission: boolean }) {
   const [orderNo, setOrderNo] = useQueryState("orderNo", {
     defaultValue: "",
   });
-  const router = useRouter();
+  const router = useTransitionRouter();
   const [isPending, startSearch] = useTransition();
   const [isReset, startReset] = useTransition();
 

@@ -13,8 +13,8 @@ import { Label } from "@/components/ui/label";
 import { Password } from "@/components/ui/password";
 import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { useTransitionRouter } from "next-view-transitions";
 import Form from "next/form";
-import { useRouter } from "next/navigation";
 import { useRef, useTransition } from "react";
 import { toast } from "sonner";
 import { validateFormData } from "./validate";
@@ -33,7 +33,7 @@ export function MoneyModal({
   const isEdit = isOpen;
   const [isPending, startTransition] = useTransition();
   const ref = useRef<HTMLFormElement>(null);
-  const router = useRouter();
+  const router = useTransitionRouter();
   const submit = async (data: {
     oldPassword?: string;
     newPassword: string;

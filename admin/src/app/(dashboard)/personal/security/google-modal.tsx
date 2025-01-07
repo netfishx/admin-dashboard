@@ -17,13 +17,12 @@ import { Label } from "@/components/ui/label";
 import { Copy } from "lucide-react";
 import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { useTransitionRouter } from "next-view-transitions";
+import Image from "next/image";
+import { QRCodeSVG } from "qrcode.react";
 import { useState, useTransition } from "react";
 import { useCopyToClipboard } from "react-use";
 import { toast } from "sonner";
-
-import Image from "next/image";
-import { useRouter } from "next/navigation";
-import { QRCodeSVG } from "qrcode.react";
 export function GoogleModal({
   open,
   onOpenChange,
@@ -43,7 +42,7 @@ export function GoogleModal({
   const isEdit = isOpen;
   const [, copyToClipboard] = useCopyToClipboard();
   const [isPending, startTransition] = useTransition();
-  const router = useRouter();
+  const router = useTransitionRouter();
   const submit = async () => {
     if (!authCode) {
       toast.error(t("inputGoogleCode"));

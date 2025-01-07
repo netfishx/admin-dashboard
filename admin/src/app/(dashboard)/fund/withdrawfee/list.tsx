@@ -15,8 +15,8 @@ import type { WithdrawFee } from "@/lib/types";
 import Big from "big.js";
 import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { useTransitionRouter } from "next-view-transitions";
 import Form from "next/form";
-import { useRouter } from "next/navigation";
 import { type FormEvent, useRef, useState, useTransition } from "react";
 import { toast } from "sonner";
 
@@ -24,7 +24,7 @@ export function List({ data }: { data: WithdrawFee }) {
   const t = useTranslations("fund.withdrawfee");
 
   const [isPending, startTransition] = useTransition();
-  const router = useRouter();
+  const router = useTransitionRouter();
   async function handleSave(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     startTransition(async () => {

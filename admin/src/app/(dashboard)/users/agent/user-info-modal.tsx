@@ -16,8 +16,8 @@ import { agentDataAtom, agentIdAtom, userInfoModalAtom } from "@/store";
 import { useAtomValue, useSetAtom } from "jotai";
 import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { useTransitionRouter } from "next-view-transitions";
 import Form from "next/form";
-import { useRouter } from "next/navigation";
 import { type FormEvent, useRef, useState, useTransition } from "react";
 import { toast } from "sonner";
 
@@ -27,7 +27,7 @@ export function UserInfoModal() {
   const [isPending, startTransition] = useTransition();
   const open = useAtomValue(userInfoModalAtom);
   const setOpen = useSetAtom(userInfoModalAtom);
-  const router = useRouter();
+  const router = useTransitionRouter();
   const userId = useAtomValue(agentIdAtom);
 
   const agentData = useAtomValue(agentDataAtom);

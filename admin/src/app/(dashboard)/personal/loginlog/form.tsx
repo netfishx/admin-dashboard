@@ -8,7 +8,7 @@ import { endOfDay } from "date-fns";
 import { startOfDay } from "date-fns";
 import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { useRouter } from "next/navigation";
+import { useTransitionRouter } from "next-view-transitions";
 import { useQueryState } from "nuqs";
 import { useTransition } from "react";
 
@@ -17,7 +17,7 @@ export function Form() {
   const [ip, setIp] = useQueryState("ip", { defaultValue: "" });
   const [isPending, startTransition] = useTransition();
   const [isReset, startReset] = useTransition();
-  const router = useRouter();
+  const router = useTransitionRouter();
   async function handleSearch() {
     router.refresh();
   }

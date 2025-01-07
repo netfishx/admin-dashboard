@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/select";
 import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { useRouter } from "next/navigation";
+import { useTransitionRouter } from "next-view-transitions";
 import { useQueryState } from "nuqs";
 import { useTransition } from "react";
 
@@ -22,7 +22,7 @@ export default function Form({
   permissions: string[] | undefined;
 }) {
   const t = useTranslations("users.members");
-  const router = useRouter();
+  const router = useTransitionRouter();
   const [isPending, startTransition] = useTransition();
   const [isReset, startResetTransition] = useTransition();
   const [username, setUsername] = useQueryState("username", {

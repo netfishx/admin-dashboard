@@ -38,7 +38,7 @@ import {
 import { useAtom } from "jotai";
 import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { useRouter } from "next/navigation";
+import { useTransitionRouter } from "next-view-transitions";
 import { useState, useTransition } from "react";
 import { toast } from "sonner";
 
@@ -169,7 +169,7 @@ function LockButton({ data }: { data: ApplyData }) {
   const t = useTranslations("withdraw.apply");
   const translations = useTranslations();
   const [isPending, startTransition] = useTransition();
-  const router = useRouter();
+  const router = useTransitionRouter();
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
@@ -219,7 +219,7 @@ function PassButton({ data }: { data: ApplyData }) {
   const t = useTranslations("withdraw.apply");
   const translations = useTranslations();
   const [isPending, startTransition] = useTransition();
-  const router = useRouter();
+  const router = useTransitionRouter();
   const [withdrawMode, setWithdrawMode] = useState("0");
   const [open, setOpen] = useState(false);
   return (
@@ -298,7 +298,7 @@ function RejectButton({ data }: { data: ApplyData }) {
   const t = useTranslations("withdraw.apply");
   const translations = useTranslations();
   const [isPending, startTransition] = useTransition();
-  const router = useRouter();
+  const router = useTransitionRouter();
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
@@ -349,7 +349,7 @@ function AgainButton({ data }: { data: ApplyData }) {
   const t = useTranslations("withdraw.apply");
   const translations = useTranslations();
   const [isPending, startTransition] = useTransition();
-  const router = useRouter();
+  const router = useTransitionRouter();
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
@@ -399,7 +399,7 @@ function ConfirmButton({ data }: { data: ApplyData }) {
   const t = useTranslations("withdraw.apply");
   const translations = useTranslations();
   const [isPending, startTransition] = useTransition();
-  const router = useRouter();
+  const router = useTransitionRouter();
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>

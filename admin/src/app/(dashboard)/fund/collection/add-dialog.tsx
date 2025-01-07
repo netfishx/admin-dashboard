@@ -14,7 +14,7 @@ import { collectionAddressDialogAtom } from "@/store";
 import { useAtom } from "jotai";
 import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { useRouter } from "next/navigation";
+import { useTransitionRouter } from "next-view-transitions";
 import { useTransition } from "react";
 import { toast } from "sonner";
 
@@ -23,7 +23,7 @@ export function AddDialog() {
   const [isPending, startTransition] = useTransition();
   const t = useTranslations("fund.collection");
   const translations = useTranslations();
-  const router = useRouter();
+  const router = useTransitionRouter();
   const handleConfirm = async () => {
     const { code, message } = await addCollectionAddress({ size: 1 });
     if (code === 0) {

@@ -14,14 +14,14 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useTranslations } from "next-intl";
-import { useRouter } from "next/navigation";
+import { useTransitionRouter } from "next-view-transitions";
 import { parseAsInteger, useQueryState, useQueryStates } from "nuqs";
 import { useTransition } from "react";
 import { toast } from "sonner";
 
 export function Form({ hasAdminPermission }: { hasAdminPermission: boolean }) {
   const t = useTranslations("report.change");
-  const router = useRouter();
+  const router = useTransitionRouter();
   const [isReset, startReset] = useTransition();
 
   const [dateRange] = useQueryStates({

@@ -17,7 +17,8 @@ import { memberListBaccaratAgentIdAtom } from "@/store";
 import { useAtom } from "jotai";
 import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useTransitionRouter } from "next-view-transitions";
+import { useSearchParams } from "next/navigation";
 import { parseAsInteger, useQueryState, useQueryStates } from "nuqs";
 import { useTransition } from "react";
 import { toast } from "sonner";
@@ -32,7 +33,7 @@ export function ListFilter({
   const t = useTranslations("report.member");
   const [isPending, startTransition] = useTransition();
   const searchParams = useSearchParams();
-  const router = useRouter();
+  const router = useTransitionRouter();
   const [, setMemberListBaccaratAgentId] = useAtom(
     memberListBaccaratAgentIdAtom,
   );

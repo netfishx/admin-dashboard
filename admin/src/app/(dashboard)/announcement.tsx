@@ -2,7 +2,7 @@
 
 import type { AnnouncementList } from "@/lib/types";
 import { useTranslations } from "next-intl";
-import { useRouter } from "next/navigation";
+import { useTransitionRouter } from "next-view-transitions";
 
 export function Announcement({
   data,
@@ -12,7 +12,7 @@ export function Announcement({
   permissions: string[];
 }) {
   const t = useTranslations();
-  const router = useRouter();
+  const router = useTransitionRouter();
 
   return (
     <>

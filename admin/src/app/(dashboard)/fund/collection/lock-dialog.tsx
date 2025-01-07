@@ -13,11 +13,10 @@ import {
 import type { CollectionAddressListRecords } from "@/lib/types";
 import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { useRouter } from "next/navigation";
+import { useTransitionRouter } from "next-view-transitions";
 import { useTransition } from "react";
 import { toast } from "sonner";
 import { CollectionAddressStatus } from "./defiend";
-
 interface Dialogprops {
   open?: boolean;
   onOpenChange: (open: boolean) => void;
@@ -29,7 +28,7 @@ export function LockDialog(props: Dialogprops) {
   const t = useTranslations("fund.collection");
   const translations = useTranslations();
   const [isPending, startTransition] = useTransition();
-  const router = useRouter();
+  const router = useTransitionRouter();
   const handleConfirm = () => {
     startTransition(async () => {
       const res = await lockCollectionAddress({

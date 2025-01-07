@@ -18,7 +18,7 @@ import {
 } from "@/store";
 import { useAtom } from "jotai";
 import { useTranslations } from "next-intl";
-import { useRouter } from "next/navigation";
+import { useTransitionRouter } from "next-view-transitions";
 
 export function FlowDialog({
   gameList,
@@ -31,7 +31,7 @@ export function FlowDialog({
   const [open, setOpen] = useAtom(withdrawFlowDialogAtom);
   const [flowData] = useAtom(withdrawFlowDataAtom);
   const [orderParmas] = useAtom(orderParmasAtom);
-  const router = useRouter();
+  const router = useTransitionRouter();
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>

@@ -14,7 +14,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { useRouter } from "next/navigation";
+import { useTransitionRouter } from "next-view-transitions";
 import { parseAsArrayOf, parseAsString, useQueryState } from "nuqs";
 import { type ReactNode, Suspense, useTransition } from "react";
 import { toast } from "sonner";
@@ -27,7 +27,7 @@ function BatchButton({
   children: ReactNode;
 }) {
   const [isPending, startTransition] = useTransition();
-  const router = useRouter();
+  const router = useTransitionRouter();
   const [checked] = useQueryState(
     "checked",
     parseAsArrayOf(parseAsString).withDefault([]),

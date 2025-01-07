@@ -1,6 +1,6 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import { useRouter } from "next/navigation";
+import { useTransitionRouter } from "next-view-transitions";
 import { startTransition } from "react";
 
 export default function GlobalError({
@@ -9,7 +9,7 @@ export default function GlobalError({
   error: Error & { digest?: string };
   reset: () => void;
 }) {
-  const router = useRouter();
+  const router = useTransitionRouter();
   return (
     <html lang="en">
       <body className="flex flex-col gap-4 p-4">

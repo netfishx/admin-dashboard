@@ -25,8 +25,8 @@ import { Root as VisuallyHiddenRoot } from "@radix-ui/react-visually-hidden";
 import { useAtom, useAtomValue } from "jotai";
 import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { useTransitionRouter } from "next-view-transitions";
 import Form from "next/form";
-import { useRouter } from "next/navigation";
 import { useRef, useState, useTransition } from "react";
 import { toast } from "sonner";
 
@@ -47,7 +47,7 @@ export function SupplierDialog({
   )?.username;
   const ref = useRef<HTMLFormElement>(null);
   const [isPending, startTransition] = useTransition();
-  const router = useRouter();
+  const router = useTransitionRouter();
   return (
     <Dialog
       open={open}

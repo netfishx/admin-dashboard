@@ -10,16 +10,15 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Loader2 } from "lucide-react";
-
 import { useTranslations } from "next-intl";
-import { useRouter } from "next/navigation";
+import { useTransitionRouter } from "next-view-transitions";
 import { useQueryState } from "nuqs";
 import { useTransition } from "react";
 
 export function SupplierForm() {
   const t = useTranslations("games.supplier");
   const [id, setId] = useQueryState("userId");
-  const router = useRouter();
+  const router = useTransitionRouter();
   const [isPending, startTransition] = useTransition();
 
   return (

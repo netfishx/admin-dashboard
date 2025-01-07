@@ -3,7 +3,7 @@ import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import type { SessionData } from "@/session";
 import { addDays, endOfDay, startOfDay } from "date-fns";
 import { useTranslations } from "next-intl";
-import Link from "next/link";
+import { Link } from "next-view-transitions";
 import { usePathname } from "next/navigation";
 import { use } from "react";
 

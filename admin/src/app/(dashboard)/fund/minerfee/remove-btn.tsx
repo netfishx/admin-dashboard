@@ -15,7 +15,7 @@ import { Button } from "@/components/ui/button";
 import type { OreFeeList } from "@/lib/types";
 import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { useRouter } from "next/navigation";
+import { useTransitionRouter } from "next-view-transitions";
 import { useTransition } from "react";
 import { toast } from "sonner";
 
@@ -28,7 +28,7 @@ function RemoveButton({ data }: { data: OreFeeList }) {
   const t = useTranslations("fund.orefee");
   const translations = useTranslations();
   const [isPending, startTransition] = useTransition();
-  const router = useRouter();
+  const router = useTransitionRouter();
 
   return (
     <AlertDialog>

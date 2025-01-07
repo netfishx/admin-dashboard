@@ -15,13 +15,13 @@ import { addAgentLoadingAtom } from "@/store";
 import { useSetAtom } from "jotai";
 import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { useRouter } from "next/navigation";
+import { useTransitionRouter } from "next-view-transitions";
 import { useQueryState } from "nuqs";
 import { use, useEffect, useTransition } from "react";
 
 export function Form({ session }: { session: Promise<SessionData | null> }) {
   const t = useTranslations("users.agents");
-  const router = useRouter();
+  const router = useTransitionRouter();
   const [isPending, startTransition] = useTransition();
   const [isReset, startReset] = useTransition();
   const [username, setUsername] = useQueryState("username", {

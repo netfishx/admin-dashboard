@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { useRouter } from "next/navigation";
+import { useTransitionRouter } from "next-view-transitions";
 import { useQueryState } from "nuqs";
 import { useTransition } from "react";
 
@@ -13,7 +13,7 @@ export function SupplierForm() {
   const t = useTranslations("users.supplier");
   const [username, setUsername] = useQueryState("username");
   const [id, setId] = useQueryState("id");
-  const router = useRouter();
+  const router = useTransitionRouter();
   const [isPending, startTransition] = useTransition();
   const [isReset, startReset] = useTransition();
 

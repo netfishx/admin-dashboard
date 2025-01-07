@@ -15,7 +15,7 @@ import { Big } from "big.js";
 import { useAtom } from "jotai";
 import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { useRouter } from "next/navigation";
+import { useTransitionRouter } from "next-view-transitions";
 import { type ReactNode, useState, useTransition } from "react";
 import { toast } from "sonner";
 
@@ -42,7 +42,7 @@ function RebateButton({
 export function RebateForm() {
   const t = useTranslations("games.rebate");
   const [list, setList] = useAtom(rebateAtom);
-  const router = useRouter();
+  const router = useTransitionRouter();
   const [step, setStep] = useState(1);
 
   function handleEdit(num: number) {

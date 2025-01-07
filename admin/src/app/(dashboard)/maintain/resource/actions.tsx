@@ -18,7 +18,7 @@ import { backgroundImageDataAtom, backgroundImageDialogAtom } from "@/store";
 import { useSetAtom } from "jotai";
 import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { useRouter } from "next/navigation";
+import { useTransitionRouter } from "next-view-transitions";
 import { useTransition } from "react";
 import { toast } from "sonner";
 
@@ -48,7 +48,7 @@ function DeleteBtn({ id }: { id: string }) {
   const translation = useTranslations();
   const t = useTranslations("maintain.resource");
   const [isPending, startTransition] = useTransition();
-  const router = useRouter();
+  const router = useTransitionRouter();
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>

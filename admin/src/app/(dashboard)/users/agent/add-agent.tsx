@@ -18,8 +18,8 @@ import { addAgentLoadingAtom } from "@/store";
 import { useSetAtom } from "jotai";
 import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { useTransitionRouter } from "next-view-transitions";
 import Form from "next/form";
-import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState, useTransition } from "react";
 import type { FormEvent } from "react";
 import { toast } from "sonner";
@@ -46,7 +46,7 @@ function AddAgentModal({
   const translation = useTranslations();
   const t = useTranslations("users.agents");
   const ref = useRef<HTMLFormElement>(null);
-  const router = useRouter();
+  const router = useTransitionRouter();
   const [isPending, startTransition] = useTransition();
   const [isLoading, setIsLoading] = useState(false);
   const setAddAgentLoading = useSetAtom(addAgentLoadingAtom);

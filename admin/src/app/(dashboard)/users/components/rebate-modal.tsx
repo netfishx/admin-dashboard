@@ -25,7 +25,7 @@ import { rebateDataAtom, rebateModalAtom } from "@/store";
 import { useAtom, useAtomValue } from "jotai";
 import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { useRouter } from "next/navigation";
+import { useTransitionRouter } from "next-view-transitions";
 import {
   type Dispatch,
   type SetStateAction,
@@ -45,7 +45,7 @@ export function RebateModal({ userId }: { userId: string }) {
   const [open, setOpen] = useAtom(rebateModalAtom);
   const [isPending, startTransition] = useTransition();
   const data = useAtomValue(rebateDataAtom);
-  const router = useRouter();
+  const router = useTransitionRouter();
   const [isValid, setIsValid] = useState<boolean>(true);
   const [changedItems, setChangedItems] = useState<{
     [key: number]: string;

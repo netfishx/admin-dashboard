@@ -48,7 +48,7 @@ export function Bg() {
           <Image src={bg2} alt="background image" priority fill />
         </CarouselItem>
       </CarouselContent>
-      <div className="absolute bottom-[20dvh] z-10 flex w-full items-center justify-center gap-2 *:data-[current=true]:w-5 *:data-[current=true]:bg-slate-300 *:data-[current=true]:border">
+      <div className="absolute bottom-[20dvh] z-10 flex w-full items-center justify-center gap-2 *:data-[current=true]:w-5 *:data-[current=true]:border *:data-[current=true]:bg-slate-300">
         <div
           className="size-1.5 rounded-full bg-white"
           data-current={current === 0}

@@ -1,11 +1,12 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { useTranslations } from "next-intl";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useTransitionRouter } from "next-view-transitions";
+import { useSearchParams } from "next/navigation";
 
 export default function DetailButton({ agentId }: { agentId: string }) {
   const t = useTranslations("report.orderlist");
-  const router = useRouter();
+  const router = useTransitionRouter();
   const searchParams = useSearchParams();
 
   return (

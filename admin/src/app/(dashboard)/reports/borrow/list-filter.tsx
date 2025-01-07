@@ -13,7 +13,7 @@ import {
 
 import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { useRouter } from "next/navigation";
+import { useTransitionRouter } from "next-view-transitions";
 import { parseAsInteger, useQueryState, useQueryStates } from "nuqs";
 import { useTransition } from "react";
 import { toast } from "sonner";
@@ -24,7 +24,7 @@ export function ListFilter({
   hasAdminPermission: boolean;
 }) {
   const t = useTranslations("report.borrow");
-  const router = useRouter();
+  const router = useTransitionRouter();
   const [isPending, startTransition] = useTransition();
   const [orderNumber, setOrderNumber] = useQueryState("orderNo", {
     defaultValue: "",

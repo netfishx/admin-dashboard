@@ -14,7 +14,7 @@ import { roleDeleteAtom, roleDeleteDialogAtom } from "@/store";
 import { useAtom, useAtomValue } from "jotai";
 import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { useRouter } from "next/navigation";
+import { useTransitionRouter } from "next-view-transitions";
 import { useTransition } from "react";
 import { toast } from "sonner";
 
@@ -24,7 +24,7 @@ export function RoleDelete() {
   const translations = useTranslations("system.role");
   const id = useAtomValue(roleDeleteAtom);
   const [open, setOpen] = useAtom(roleDeleteDialogAtom);
-  const router = useRouter();
+  const router = useTransitionRouter();
   return (
     <AlertDialog open={open} onOpenChange={setOpen}>
       <AlertDialogContent>

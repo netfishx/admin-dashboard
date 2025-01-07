@@ -14,8 +14,8 @@ import { Label } from "@/components/ui/label";
 import { Password } from "@/components/ui/password";
 import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { useTransitionRouter } from "next-view-transitions";
 import Form from "next/form";
-import { useRouter } from "next/navigation";
 import { type FormEvent, useRef, useTransition } from "react";
 import { toast } from "sonner";
 
@@ -31,7 +31,7 @@ export function GoogleValidataModal({
   const ref = useRef<HTMLFormElement>(null);
   const t = useTranslations();
   const [isPeding, startTransition] = useTransition();
-  const router = useRouter();
+  const router = useTransitionRouter();
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();

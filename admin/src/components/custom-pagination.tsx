@@ -21,9 +21,9 @@ import {
   ChevronRight,
 } from "lucide-react";
 import { useTranslations } from "next-intl";
-import Link from "next/link";
+import { useTransitionRouter } from "next-view-transitions";
+import { Link } from "next-view-transitions";
 import { usePathname, useSearchParams } from "next/navigation";
-import { useRouter } from "next/navigation";
 
 export function CustomPagination({
   total,
@@ -37,7 +37,7 @@ export function CustomPagination({
   const pathname = usePathname();
   const totalPage = Math.ceil(total / pageSize);
   const t = useTranslations("pagination");
-  const router = useRouter();
+  const router = useTransitionRouter();
   const query = useSearchParams();
   const handlePageSizeChange = (pageSize: string) => {
     router.push(

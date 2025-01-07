@@ -15,7 +15,7 @@ import { deleteDictionaryItemDialogAtom, dictionaryDataAtom } from "@/store";
 import { useAtom, useAtomValue } from "jotai";
 import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { useRouter } from "next/navigation";
+import { useTransitionRouter } from "next-view-transitions";
 import { useTransition } from "react";
 import { toast } from "sonner";
 
@@ -23,7 +23,7 @@ export function DeleteDialog() {
   const t = useTranslations("maintain.dictionary");
   const translation = useTranslations();
   const [deletePending, startTransitionDelete] = useTransition();
-  const router = useRouter();
+  const router = useTransitionRouter();
 
   const [open, setOpen] = useAtom(deleteDictionaryItemDialogAtom);
   const data = useAtomValue(dictionaryDataAtom);

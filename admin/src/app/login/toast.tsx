@@ -1,13 +1,14 @@
 "use client";
 import { signOut } from "@/api";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useTransitionRouter } from "next-view-transitions";
+import { useSearchParams } from "next/navigation";
 import { startTransition, useEffect } from "react";
 import { toast } from "sonner";
 
 export function APIError() {
   const searchParams = useSearchParams();
   const error = searchParams.get("e");
-  const router = useRouter();
+  const router = useTransitionRouter();
   useEffect(() => {
     if (error !== null) {
       startTransition(async () => {

@@ -3,7 +3,7 @@ import { TabsTypes } from "@/app/(dashboard)/reports/agent/baccarat/defiend";
 import { Tabs, TabsList } from "@/components/ui/tabs";
 import { cn } from "@/lib/utils";
 import { useTranslations } from "next-intl";
-import Link from "next/link";
+import { Link } from "next-view-transitions";
 import { useState } from "react";
 
 export default function TopTabs() {

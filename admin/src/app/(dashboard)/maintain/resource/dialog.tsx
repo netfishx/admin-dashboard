@@ -24,8 +24,8 @@ import { Dialog, DialogClose } from "@radix-ui/react-dialog";
 import { useAtom, useAtomValue } from "jotai";
 import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { useTransitionRouter } from "next-view-transitions";
 import Form from "next/form";
-import { useRouter } from "next/navigation";
 import { type FormEvent, useRef, useState, useTransition } from "react";
 import { toast } from "sonner";
 import fileInput from "./file-input.module.css";
@@ -36,7 +36,7 @@ export function AddOrEditDialog() {
   const [open, setOpen] = useAtom(backgroundImageDialogAtom);
   const data = useAtomValue(backgroundImageDataAtom);
   const [isPending, startTransition] = useTransition();
-  const router = useRouter();
+  const router = useTransitionRouter();
   const [port, setPort] = useState<string>("0");
   const [position, setPosition] = useState<string>("0");
   const [language, setLanguage] = useState<string>("zh-CN");

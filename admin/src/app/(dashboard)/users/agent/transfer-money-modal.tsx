@@ -1,6 +1,7 @@
 "use client";
 
 import { transferMoney } from "@/api";
+import { GoogleValidataModal } from "@/app/(dashboard)/users/components/google-validata-modal";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -21,14 +22,13 @@ import {
 import { useAtom, useAtomValue } from "jotai";
 import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { useTransitionRouter } from "next-view-transitions";
 import Form from "next/form";
-import { useRouter } from "next/navigation";
 import { type FormEvent, useRef, useState, useTransition } from "react";
 import { toast } from "sonner";
-import { GoogleValidataModal } from "../components/google-validata-modal";
 
 export function TransferMoneyModal() {
-  const router = useRouter();
+  const router = useTransitionRouter();
   const translation = useTranslations();
   const t = useTranslations("users.agents");
 

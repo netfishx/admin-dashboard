@@ -18,8 +18,8 @@ import { memberInfoDataAtom, memberInfoModalAtom } from "@/store";
 import { useAtomValue, useSetAtom } from "jotai";
 import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { useTransitionRouter } from "next-view-transitions";
 import Form from "next/form";
-import { useRouter } from "next/navigation";
 import { type FormEvent, useRef, useState, useTransition } from "react";
 import { toast } from "sonner";
 
@@ -33,7 +33,7 @@ export function UserInfoModal({ permissions }: { permissions: string[] }) {
   const memberInfoData = useAtomValue(memberInfoDataAtom);
   const [agentId, setAgentId] = useState<string>();
   const [upNickname, setUpNickname] = useState<string>();
-  const router = useRouter();
+  const router = useTransitionRouter();
   const ref = useRef<HTMLFormElement>(null);
 
   function handleUpdateStatus(e: FormEvent<HTMLFormElement>) {

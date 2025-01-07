@@ -2,7 +2,7 @@
 import { Button } from "@/components/ui/button";
 import type { PeriodReportList } from "@/lib/types";
 import { useTranslations } from "next-intl";
-import { useRouter } from "next/navigation";
+import { useTransitionRouter } from "next-view-transitions";
 export function Actions({
   searchParams,
   data,
@@ -11,7 +11,7 @@ export function Actions({
   data: PeriodReportList;
 }) {
   const t = useTranslations("report.orderlist");
-  const router = useRouter();
+  const router = useTransitionRouter();
   const searchParamsStr = new URLSearchParams(
     searchParams as Record<string, string>,
   ).toString();

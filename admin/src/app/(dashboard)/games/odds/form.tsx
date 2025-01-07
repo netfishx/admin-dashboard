@@ -33,7 +33,7 @@ import Big from "big.js";
 import { useAtom, useAtomValue } from "jotai";
 import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { useRouter } from "next/navigation";
+import { useTransitionRouter } from "next-view-transitions";
 import { parseAsString, useQueryStates } from "nuqs";
 import { useState, useTransition } from "react";
 import { toast } from "sonner";
@@ -124,7 +124,7 @@ export function OddsForm({
   permissions: string[];
 }) {
   const t = useTranslations("games.odds");
-  const router = useRouter();
+  const router = useTransitionRouter();
 
   const [game, setGame] = useQueryStates(
     {

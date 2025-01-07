@@ -2,7 +2,8 @@
 import { Button } from "@/components/ui/button";
 import type { MemberBetReportRequestRecords } from "@/lib/types";
 import { useTranslations } from "next-intl";
-import { useRouter } from "next/navigation";
+import { useTransitionRouter } from "next-view-transitions";
+
 import { useSearchParams } from "next/navigation";
 export default function DetailButton({
   item,
@@ -10,7 +11,7 @@ export default function DetailButton({
   item: MemberBetReportRequestRecords;
 }) {
   const t = useTranslations("report.orderlist");
-  const router = useRouter();
+  const router = useTransitionRouter();
   const searchParams = useSearchParams();
   const startTime = searchParams.get("startTime");
   const endTime = searchParams.get("endTime");

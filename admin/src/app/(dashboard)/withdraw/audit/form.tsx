@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { useRouter } from "next/navigation";
+import { useTransitionRouter } from "next-view-transitions";
 import { parseAsInteger, useQueryState, useQueryStates } from "nuqs";
 import { useTransition } from "react";
 import { toast } from "sonner";
@@ -15,7 +15,7 @@ export function Form() {
   const t = useTranslations("withdraw.audit");
   const translations = useTranslations();
 
-  const router = useRouter();
+  const router = useTransitionRouter();
   const [userId, setUserId] = useQueryState("userId", {
     defaultValue: "",
   });
