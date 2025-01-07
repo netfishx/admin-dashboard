@@ -50,10 +50,11 @@ export function DayChart({
                 outerRadius="80%"
                 strokeWidth={1}
                 label={({ payload, ...props }) => {
+                  const adjustedY = props.y + 5;
                   return (
                     <text
                       x={props.x}
-                      y={props.y}
+                      y={adjustedY}
                       cx={props.cx}
                       cy={props.cy}
                       textAnchor={props.textAnchor}
