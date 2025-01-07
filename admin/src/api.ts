@@ -962,7 +962,7 @@ export async function getWithdrawReportList(data: WithdrawReportParams) {
   if (res.data?.list) {
     // 审核状态(approverStatus)：0未处理，1锁定中，2已拒绝，3已通过
     // 资金状态(moneyStatus)：0转账中，1已到账，2出款失败；
-    // status： 未处理 锁定中 > 审核中（0）；已通过并异常 > 提现中（1）； 已拒绝 > 审核拒绝（2）；已到账 > 提现成功（3）
+    // status： 未处理 锁定中 > 审核中（1）；已通过并异常 > 提现中（2）； 已拒绝 > 审核拒绝（3）；已到账 > 提现成功（4）
     const getStatus = ({
       approverStatus,
       moneyStatus,
@@ -972,22 +972,22 @@ export async function getWithdrawReportList(data: WithdrawReportParams) {
     }) => {
       // 审核中
       if (approverStatus === 0 || approverStatus === 1) {
-        return 0;
+        return 1;
       }
       // 提现中 (已通过并出款失败)
       if (approverStatus === 3 && moneyStatus === 2) {
-        return 1;
+        return 2;
       }
       // 审核拒绝
       if (approverStatus === 2) {
-        return 2;
+        return 3;
       }
       // 提现成功 (已到账)
       if (moneyStatus === 1) {
-        return 3;
+        return 4;
       }
 
-      return 1; // 默认提现中
+      return 2; // 默认提现中
     };
 
     res.data.list = res.data.list.map((item: WithdrawReport) => ({

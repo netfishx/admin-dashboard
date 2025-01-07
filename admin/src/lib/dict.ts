@@ -119,19 +119,19 @@ export const CHANGE_TYPE = [
 // 提现记录状态
 export const STATUS = [
   {
-    value: 0,
+    value: 1,
     label: "auditing",
   },
   {
-    value: 1,
+    value: 2,
     label: "withdrawing",
   },
   {
-    value: 2,
+    value: 3,
     label: "failed",
   },
   {
-    value: 3,
+    value: 4,
     label: "success",
   },
 ];
