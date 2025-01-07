@@ -219,7 +219,7 @@ export async function deleteDebt(data: {
   secret: string;
 }) {
   const token = await getToken();
-  return await apiRequest({
+  return await apiRequest<{ check: boolean; id: string }>({
     url: "/order/repayment/pay",
     method: "POST",
     data,
@@ -230,8 +230,19 @@ export async function deleteDebt(data: {
 // 用户管理-谷歌验证
 export async function googleValidata(data: { id: string; code: string }) {
   const token = await getToken();
-  return await apiRequest({
+  return await apiRequest<{ code: number; message: string }>({
     url: "/wallet/google/check",
+    method: "POST",
+    data,
+    token,
+  });
+}
+
+// 用户管理-谷歌验证
+export async function googleValidataDeleteDebt(data: { id: string; code: string }) {
+  const token = await getToken();
+  return await apiRequest<{ code: number; message: string }>({
+    url: "/order/repayment/google/check",
     method: "POST",
     data,
     token,
@@ -1578,7 +1589,7 @@ export async function postUserInfoWithdrawVerify(data: {
   code: string;
 }) {
   const token = await getToken();
-  return await apiRequest({
+  return await apiRequest<{ code: number; message: string }>({
     url: "/order/withdraw/google/check",
     method: "POST",
     data,

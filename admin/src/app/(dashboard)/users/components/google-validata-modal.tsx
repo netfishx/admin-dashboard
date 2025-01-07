@@ -1,6 +1,5 @@
 "use client";
 
-import { googleValidata } from "@/api";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -12,6 +11,7 @@ import {
 } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
 import { Password } from "@/components/ui/password";
+import type { Res } from "@/lib/types";
 import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useTransitionRouter } from "next-view-transitions";
@@ -23,10 +23,12 @@ export function GoogleValidataModal({
   open,
   setOpen,
   id,
+  fn
 }: {
   open: boolean;
   setOpen: (open: boolean) => void;
   id: string | "";
+  fn: (data: { id: string; code: string }) => Promise<Res<{ code: number; message: string }>>;
 }) {
   const ref = useRef<HTMLFormElement>(null);
   const t = useTranslations();
@@ -39,7 +41,7 @@ export function GoogleValidataModal({
     const googleCode = formData.get("googleCode") as string;
     const id = formData.get("id") as string;
     startTransition(async () => {
-      const { code, message } = await googleValidata({
+      const { code, message } = await fn({
         id,
         code: googleCode,
       });

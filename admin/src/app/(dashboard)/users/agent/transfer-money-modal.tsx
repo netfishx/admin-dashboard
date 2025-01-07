@@ -1,7 +1,7 @@
 "use client";
 
-import { transferMoney } from "@/api";
-import { GoogleValidataModal } from "@/app/(dashboard)/users/components/google-validata-modal";
+import { googleValidata, transferMoney } from "@/api";
+import { GoogleValidataModal } from "../components/google-validata-modal";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -153,6 +153,7 @@ export function TransferMoneyModal() {
         open={googleValidataOpen}
         setOpen={setGoogleValidataOpen}
         id={orderId}
+        fn={googleValidata}
       />
     </>
   );
