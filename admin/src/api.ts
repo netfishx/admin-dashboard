@@ -239,7 +239,10 @@ export async function googleValidata(data: { id: string; code: string }) {
 }
 
 // 用户管理-谷歌验证
-export async function googleValidataDeleteDebt(data: { id: string; code: string }) {
+export async function googleValidataDeleteDebt(data: {
+  id: string;
+  code: string;
+}) {
   const token = await getToken();
   return await apiRequest<{ code: number; message: string }>({
     url: "/order/repayment/google/check",

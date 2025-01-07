@@ -51,7 +51,11 @@ export function DeleteCreditModal() {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
     startTransition(async () => {
-      const { code, data: result, message } = await deleteDebt({
+      const {
+        code,
+        data: result,
+        message,
+      } = await deleteDebt({
         memberId: formData.get("userId") as string,
         money: Number(formData.get("amount")),
         secret: formData.get("secret") as string,
@@ -77,86 +81,88 @@ export function DeleteCreditModal() {
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent>
           <DialogHeader>
-          <DialogTitle>{t("deleteCredit")}</DialogTitle>
-          <DialogDescription />
-        </DialogHeader>
-        <div className="divide-y rounded-lg border indent-4">
-          <div className="grid grid-cols-3">
-            <div className="bg-muted text-muted-foreground border-r py-2">
-              {t("membershipArrears")}
+            <DialogTitle>{t("deleteCredit")}</DialogTitle>
+            <DialogDescription />
+          </DialogHeader>
+          <div className="divide-y rounded-lg border indent-4">
+            <div className="grid grid-cols-3">
+              <div className="bg-muted text-muted-foreground border-r py-2">
+                {t("membershipArrears")}
+              </div>
+              <div className="py-2">
+                {formatNumber(Number(memberInfoData?.debtAmount ?? 0))}
+              </div>
             </div>
-            <div className="py-2">
-              {formatNumber(Number(memberInfoData?.debtAmount ?? 0))}
+            <div className="grid grid-cols-3">
+              <div className="bg-muted text-muted-foreground border-r py-2">
+                {t("availableBalance")}
+              </div>
+              <div className="py-2">
+                {formatNumber(Number(availableAmount))}
+              </div>
             </div>
           </div>
-          <div className="grid grid-cols-3">
-            <div className="bg-muted text-muted-foreground border-r py-2">
-              {t("availableBalance")}
-            </div>
-            <div className="py-2">{formatNumber(Number(availableAmount))}</div>
-          </div>
-        </div>
 
-        <Form ref={ref} action="" onSubmit={handleConfirm}>
-          <input type="hidden" name="userId" value={memberId} />
-          <div className="flex flex-col gap-2 rounded-lg border p-4 text-center">
-            <div className="flex items-center gap-4">
-              <Label className="text-muted-foreground w-1/4 shrink-0 text-right">
-                {t("writeOffAmount")}
-              </Label>
-              <Input
-                className="flex-1"
-                type="number"
-                name="amount"
-                required
-                step={0.01}
-                max={Math.min(
-                  Number(memberInfoData?.debtAmount ?? 0),
-                  Number(availableAmount ?? 0),
-                )
-                  .toFixed(3)
-                  .slice(0, -1)}
-                onBlur={(e) => {
-                  setIsValidataMoney(e.target.reportValidity());
-                }}
-              />
-            </div>
-            <div className="flex flex-col gap-1">
+          <Form ref={ref} action="" onSubmit={handleConfirm}>
+            <input type="hidden" name="userId" value={memberId} />
+            <div className="flex flex-col gap-2 rounded-lg border p-4 text-center">
               <div className="flex items-center gap-4">
                 <Label className="text-muted-foreground w-1/4 shrink-0 text-right">
-                  {t("moneyPassword")}
+                  {t("writeOffAmount")}
                 </Label>
-                <Password type="password" className="flex-1" name="secret" />
+                <Input
+                  className="flex-1"
+                  type="number"
+                  name="amount"
+                  required
+                  step={0.01}
+                  max={Math.min(
+                    Number(memberInfoData?.debtAmount ?? 0),
+                    Number(availableAmount ?? 0),
+                  )
+                    .toFixed(3)
+                    .slice(0, -1)}
+                  onBlur={(e) => {
+                    setIsValidataMoney(e.target.reportValidity());
+                  }}
+                />
               </div>
-              <div className="flex gap-4 text-start">
-                <Label className="text-muted-foreground w-1/4 shrink-0 text-right" />
-                <span className="text-destructive flex-1 text-xs">
-                  {t("deleteCreditWarning")}
-                </span>
+              <div className="flex flex-col gap-1">
+                <div className="flex items-center gap-4">
+                  <Label className="text-muted-foreground w-1/4 shrink-0 text-right">
+                    {t("moneyPassword")}
+                  </Label>
+                  <Password type="password" className="flex-1" name="secret" />
+                </div>
+                <div className="flex gap-4 text-start">
+                  <Label className="text-muted-foreground w-1/4 shrink-0 text-right" />
+                  <span className="text-destructive flex-1 text-xs">
+                    {t("deleteCreditWarning")}
+                  </span>
+                </div>
               </div>
             </div>
-          </div>
-        </Form>
-        <DialogFooter>
-          <Button variant="outline" onClick={() => setOpen(false)}>
-            {translation("cancel")}
-          </Button>
-          <Button
-            disabled={isPending || !isValidataMoney}
-            onClick={(e) => {
-              e.preventDefault();
-              if (ref.current) {
-                ref.current.requestSubmit();
-              }
-            }}
-          >
-            {isPending && <Loader2 className="animate-spin" />}
-            {translation("confirm")}
-          </Button>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
-    <GoogleValidataModal
+          </Form>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setOpen(false)}>
+              {translation("cancel")}
+            </Button>
+            <Button
+              disabled={isPending || !isValidataMoney}
+              onClick={(e) => {
+                e.preventDefault();
+                if (ref.current) {
+                  ref.current.requestSubmit();
+                }
+              }}
+            >
+              {isPending && <Loader2 className="animate-spin" />}
+              {translation("confirm")}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+      <GoogleValidataModal
         open={googleValidataOpen}
         setOpen={setGoogleValidataOpen}
         id={orderId}

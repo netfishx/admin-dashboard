@@ -1,7 +1,6 @@
 "use client";
 
 import { googleValidata, transferMoney } from "@/api";
-import { GoogleValidataModal } from "../components/google-validata-modal";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -27,6 +26,7 @@ import { useTransitionRouter } from "next-view-transitions";
 import Form from "next/form";
 import { type FormEvent, useRef, useState, useTransition } from "react";
 import { toast } from "sonner";
+import { GoogleValidataModal } from "../components/google-validata-modal";
 
 export function TransferMoneyModal() {
   const router = useTransitionRouter();

@@ -87,8 +87,12 @@ async function ListBody({
             <TableCell className="">{item.id}</TableCell>
             <TableCell>{item.issueNumber}</TableCell>
             <TableCell>{item.memberId}</TableCell>
-            <TableCell>{item.roomOwnerId === '-1' ? '-' : item.roomOwnerId}</TableCell>
-            <TableCell>{item.minister === '-1' ? '-' : item.minister}</TableCell>
+            <TableCell>
+              {item.roomOwnerId === "-1" ? "-" : item.roomOwnerId}
+            </TableCell>
+            <TableCell>
+              {item.minister === "-1" ? "-" : item.minister}
+            </TableCell>
             <TableCell>{item.lastAgentId}</TableCell>
             <TableCell>{item.agentId}</TableCell>
             <TableCell className="whitespace-nowrap">

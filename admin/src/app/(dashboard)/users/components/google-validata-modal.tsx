@@ -23,12 +23,15 @@ export function GoogleValidataModal({
   open,
   setOpen,
   id,
-  fn
+  fn,
 }: {
   open: boolean;
   setOpen: (open: boolean) => void;
   id: string | "";
-  fn: (data: { id: string; code: string }) => Promise<Res<{ code: number; message: string }>>;
+  fn: (data: {
+    id: string;
+    code: string;
+  }) => Promise<Res<{ code: number; message: string }>>;
 }) {
   const ref = useRef<HTMLFormElement>(null);
   const t = useTranslations();
