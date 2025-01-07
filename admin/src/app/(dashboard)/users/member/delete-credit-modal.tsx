@@ -1,6 +1,6 @@
 "use client";
 
-import { deleteDebt } from "@/api";
+import { deleteDebt, googleValidataDeleteDebt } from "@/api";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -24,8 +24,10 @@ import { useAtom, useAtomValue } from "jotai";
 import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Form from "next/form";
+import { useRouter } from "next/navigation";
 import { type FormEvent, useRef, useState, useTransition } from "react";
 import { toast } from "sonner";
+import { GoogleValidataModal } from "../components/google-validata-modal";
 
 export function DeleteCreditModal() {
   const translation = useTranslations();
@@ -40,19 +42,30 @@ export function DeleteCreditModal() {
   const availableAmount = useAtomValue(availableAmountAtom);
 
   const [isValidataMoney, setIsValidataMoney] = useState(false);
-
+  // 订单id
+  const [orderId, setOrderId] = useState("");
+  // 是否开启谷歌验证弹窗
+  const [googleValidataOpen, setGoogleValidataOpen] = useState(false);
+  const router = useRouter();
   const handleConfirm = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
     startTransition(async () => {
-      const { code, message } = await deleteDebt({
+      const { code, data: result, message } = await deleteDebt({
         memberId: formData.get("userId") as string,
         money: Number(formData.get("amount")),
         secret: formData.get("secret") as string,
       });
       if (code === 0) {
-        toast.success(message);
-        setOpen(false);
+        if (result?.check) {
+          setOrderId(result.id);
+          setGoogleValidataOpen(true);
+          setOpen(false);
+        } else {
+          toast.success(message);
+          setOpen(false);
+          router.refresh();
+        }
       } else {
         toast.error(message);
       }
@@ -60,9 +73,10 @@ export function DeleteCreditModal() {
   };
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
-      <DialogContent>
-        <DialogHeader>
+    <>
+      <Dialog open={open} onOpenChange={setOpen}>
+        <DialogContent>
+          <DialogHeader>
           <DialogTitle>{t("deleteCredit")}</DialogTitle>
           <DialogDescription />
         </DialogHeader>
@@ -140,5 +154,12 @@ export function DeleteCreditModal() {
         </DialogFooter>
       </DialogContent>
     </Dialog>
+    <GoogleValidataModal
+        open={googleValidataOpen}
+        setOpen={setGoogleValidataOpen}
+        id={orderId}
+        fn={googleValidataDeleteDebt}
+      />
+    </>
   );
 }
