@@ -13,6 +13,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Password } from "@/components/ui/password";
+import { formatNumber } from "@/lib/utils";
 import {
   availableAmountAtom,
   increaseCreditModalAtom,
@@ -28,7 +29,6 @@ import Form from "next/form";
 import { type FormEvent, useRef, useState, useTransition } from "react";
 import { toast } from "sonner";
 import { GoogleValidataModal } from "../components/google-validata-modal";
-import { formatNumber } from "@/lib/utils";
 
 export function IncreaseCreditModal() {
   const translation = useTranslations();
@@ -97,7 +97,9 @@ export function IncreaseCreditModal() {
               <div className="bg-muted text-muted-foreground border-r py-2">
                 {t("usedCreditAmount")}
               </div>
-              <div className="py-2">{formatNumber(Number(memberInfoData?.creditAmount ?? 0))}</div>
+              <div className="py-2">
+                {formatNumber(Number(memberInfoData?.creditAmount ?? 0))}
+              </div>
             </div>
             <div className="grid grid-cols-3">
               <div className="bg-muted text-muted-foreground border-r py-2">

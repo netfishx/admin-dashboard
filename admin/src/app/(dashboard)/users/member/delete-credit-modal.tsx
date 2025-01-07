@@ -99,7 +99,9 @@ export function DeleteCreditModal() {
                 max={Math.min(
                   Number(memberInfoData?.debtAmount ?? 0),
                   Number(availableAmount ?? 0),
-                ).toFixed(3).slice(0, -1)}
+                )
+                  .toFixed(3)
+                  .slice(0, -1)}
                 onBlur={(e) => {
                   setIsValidataMoney(e.target.reportValidity());
                 }}

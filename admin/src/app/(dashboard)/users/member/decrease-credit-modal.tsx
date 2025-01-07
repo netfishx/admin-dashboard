@@ -13,6 +13,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Password } from "@/components/ui/password";
+import { formatNumber } from "@/lib/utils";
 import {
   decreaseCreditModalAtom,
   memberIdAtom,
@@ -27,7 +28,6 @@ import Form from "next/form";
 import { type FormEvent, useRef, useState, useTransition } from "react";
 import { toast } from "sonner";
 import { GoogleValidataModal } from "../components/google-validata-modal";
-import { formatNumber } from "@/lib/utils";
 
 export function DecreaseCreditModal() {
   const translation = useTranslations();
