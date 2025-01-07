@@ -28,6 +28,7 @@ import Form from "next/form";
 import { type FormEvent, useRef, useState, useTransition } from "react";
 import { toast } from "sonner";
 import { GoogleValidataModal } from "../components/google-validata-modal";
+import { formatNumber } from "@/lib/utils";
 
 export function IncreaseCreditModal() {
   const translation = useTranslations();
@@ -96,13 +97,15 @@ export function IncreaseCreditModal() {
               <div className="bg-muted text-muted-foreground border-r py-2">
                 {t("usedCreditAmount")}
               </div>
-              <div className="py-2">{memberInfoData?.creditAmount ?? 0}</div>
+              <div className="py-2">{formatNumber(Number(memberInfoData?.creditAmount ?? 0))}</div>
             </div>
             <div className="grid grid-cols-3">
               <div className="bg-muted text-muted-foreground border-r py-2">
                 {t("usedBorrowAmount")}
               </div>
-              <div className="py-2">{memberInfoData?.debtAmount ?? 0}</div>
+              <div className="py-2">
+                {formatNumber(Number(memberInfoData?.debtAmount ?? 0))}
+              </div>
             </div>
           </div>
 
@@ -120,7 +123,7 @@ export function IncreaseCreditModal() {
                     name="amount"
                     min={0}
                     step={0.01}
-                    max={availableAmount}
+                    max={Number(availableAmount).toFixed(3).slice(0, -1)}
                     onChange={(e) => {
                       const value = e.target.value;
                       if (value) {
@@ -141,7 +144,8 @@ export function IncreaseCreditModal() {
                 <div className="flex items-center gap-4">
                   <Label className="text-muted-foreground w-28 shrink-0 text-right" />
                   <div className="text-destructive flex flex-1 flex-row text-xs">
-                    {t("availableAmount")}:{availableAmount}
+                    {t("availableAmount")}:
+                    {formatNumber(Number(availableAmount) ?? 0)}
                   </div>
                 </div>
               </div>

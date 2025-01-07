@@ -27,6 +27,7 @@ import Form from "next/form";
 import { type FormEvent, useRef, useState, useTransition } from "react";
 import { toast } from "sonner";
 import { GoogleValidataModal } from "../components/google-validata-modal";
+import { formatNumber } from "@/lib/utils";
 
 export function DecreaseCreditModal() {
   const translation = useTranslations();
@@ -97,22 +98,28 @@ export function DecreaseCreditModal() {
               <div className="bg-muted text-muted-foreground border-r py-2">
                 {t("usedCreditAmount")}
               </div>
-              <div className="py-2">{memberInfoData?.creditAmount ?? 0}</div>
+              <div className="py-2">
+                {formatNumber(Number(memberInfoData?.creditAmount ?? 0))}
+              </div>
             </div>
             <div className="grid grid-cols-3">
               <div className="bg-muted text-muted-foreground border-r py-2">
                 {t("usedBorrowAmount")}
               </div>
-              <div className="py-2">{memberInfoData?.debtAmount ?? 0}</div>
+              <div className="py-2">
+                {formatNumber(Number(memberInfoData?.debtAmount ?? 0))}
+              </div>
             </div>
             <div className="grid grid-cols-3">
               <div className="bg-muted text-muted-foreground border-r py-2">
                 {t("recoverableAmount")}
               </div>
               <div className="py-2">
-                {Big(memberInfoData?.creditAmount ?? 0)
-                  .sub(Big(memberInfoData?.debtAmount ?? 0))
-                  .toNumber()}
+                {formatNumber(
+                  Big(memberInfoData?.creditAmount ?? 0)
+                    .sub(Big(memberInfoData?.debtAmount ?? 0))
+                    .toNumber(),
+                )}
               </div>
             </div>
           </div>
@@ -129,7 +136,7 @@ export function DecreaseCreditModal() {
                   type="number"
                   name="amount"
                   min={0}
-                  max={recoverableAmount}
+                  max={recoverableAmount.toFixed(3).slice(0, -1)}
                   step={0.01}
                   onBlur={(e) => {
                     setIsValidataMoney(e.target.reportValidity());
