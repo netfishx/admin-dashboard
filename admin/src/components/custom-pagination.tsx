@@ -22,7 +22,7 @@ import {
 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useTransitionRouter } from "next-view-transitions";
-import { Link } from "next-view-transitions";
+import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
 
 export function CustomPagination({

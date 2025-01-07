@@ -1,6 +1,6 @@
 "use client";
 
-import { modifyCreditLimit } from "@/api";
+import { googleValidata, modifyCreditLimit } from "@/api";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -174,6 +174,7 @@ export function DecreaseCreditModal() {
         open={googleValidataOpen}
         setOpen={setGoogleValidataOpen}
         id={orderId}
+        fn={googleValidata}
       />
     </>
   );

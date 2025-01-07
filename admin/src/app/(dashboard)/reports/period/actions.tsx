@@ -12,9 +12,11 @@ export function Actions({
 }) {
   const t = useTranslations("report.orderlist");
   const router = useTransitionRouter();
+  const { issueNumber, ...rest } = searchParams;
   const searchParamsStr = new URLSearchParams(
-    searchParams as Record<string, string>,
+    rest as Record<string, string>,
   ).toString();
+
   return (
     <Button
       variant="ghost"
