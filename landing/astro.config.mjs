@@ -6,4 +6,7 @@ export default defineConfig({
   vite: {
     plugins: [tailwindcss()],
   },
+  experimental: {
+    responsiveImages: true,
+  },
 });

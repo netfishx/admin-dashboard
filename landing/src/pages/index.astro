@@ -11,10 +11,10 @@ import { Image } from "astro:assets";
   <div class="embla">
     <div class="embla__container">
       <div class="embla__slide relative h-[100dvh] w-[100dvw]">
-        <Image src={bg1} alt="background image" class="w-full h-full" width="800"/>
+        <Image src={bg1} alt="background image" class="!h-[100dvh]" layout="responsive" fit="fill" priority={true}/>
       </div>
       <div class="embla__slide relative h-[100dvh] w-[100dvw]">
-        <Image src={bg2} alt="background image" class="w-full h-full" width="800"/>
+        <Image src={bg2} alt="background image" class="!h-[100dvh]" layout="responsive" fit="fill"/>
       </div>
     </div>
   </div>
