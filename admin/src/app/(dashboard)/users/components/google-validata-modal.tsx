@@ -40,6 +40,11 @@ export function GoogleValidataModal({
     const formData = new FormData(e.currentTarget);
     const googleCode = formData.get("googleCode") as string;
     const id = formData.get("id") as string;
+    const reg = /[0-9]{6}/g;
+    if (!(googleCode && reg.test(googleCode))) {
+      toast.error("验证码错误");
+      return;
+    }
     startTransition(async () => {
       const { code, message } = await fn({
         id,
