@@ -1,20 +1,20 @@
 ---
-import bg1 from "../assets/landing/1.png";
-import bg2 from "../assets/landing/2.png";
-import Layout from "../layouts/Layout.astro";
-import Link from "../components/Link.astro";
+import bg1 from '../assets/landing/1.png'
+import bg2 from '../assets/landing/2.png'
+import Layout from '../layouts/Layout.astro'
+import Link from '../components/Link.astro'
 
-import { Image } from "astro:assets";
+import { Image } from 'astro:assets'
 ---
 
 <Layout>
   <div class="embla">
     <div class="embla__container">
       <div class="embla__slide relative h-[100dvh] w-[100dvw]">
-        <Image src={bg1} alt="background image" class="!h-[100dvh]" layout="full-width" fit="fill" priority={true}/>
+        <Image src={bg1} alt="background image" class="!h-[100dvh]" layout="full-width" fit="fill" priority={true} />
       </div>
       <div class="embla__slide relative h-[100dvh] w-[100dvw]">
-        <Image src={bg2} alt="background image" class="!h-[100dvh]" layout="full-width" fit="fill"/>
+        <Image src={bg2} alt="background image" class="!h-[100dvh]" layout="full-width" fit="fill" />
       </div>
     </div>
   </div>
@@ -25,13 +25,8 @@ import { Image } from "astro:assets";
     <div class="size-1.5 rounded-full bg-white"></div>
     <div class="size-1.5 rounded-full bg-white"></div>
   </div>
-  <div
-    class="absolute bottom-[10dvh] z-10 flex w-full items-center justify-center gap-4"
-  >
-    <Link
-      href="https://006test.s3.ap-east-1.amazonaws.com/006test/apk/SIX_0102.apk"
-      title="安卓下载"
-    />
+  <div class="absolute bottom-[10dvh] z-10 flex w-full items-center justify-center gap-4">
+    <Link href="https://006test.s3.ap-east-1.amazonaws.com/006test/apk/SIX_0102.apk" title="安卓下载" />
     <Link href="https://google.com" title="iOS下载" />
   </div>
 </Layout>
@@ -50,22 +45,20 @@ import { Image } from "astro:assets";
 </style>
 
 <script>
-  import EmblaCarousel from "embla-carousel";
-  import Autoplay from "embla-carousel-autoplay";
+  import EmblaCarousel from 'embla-carousel'
+  import Autoplay from 'embla-carousel-autoplay'
 
-  const emblaNode = document.querySelector(".embla");
-  const options = { loop: true };
-  const plugins = [Autoplay({ delay: 2000 })];
-  const api = EmblaCarousel(emblaNode as HTMLElement, options, plugins);
+  const emblaNode = document.querySelector('.embla')
+  const options = { loop: true }
+  const plugins = [Autoplay({ delay: 2000 })]
+  const api = EmblaCarousel(emblaNode as HTMLElement, options, plugins)
 
-  const dots = document.getElementById("embla-dots")?.children ?? [];
+  const dots = document.getElementById('embla-dots')?.children ?? []
   function updateDots() {
     for (let i = 0; i < dots?.length; i++) {
-      (dots[i] as HTMLElement).dataset.current = String(
-        i === api.selectedScrollSnap()
-      );
+      ;(dots[i] as HTMLElement).dataset.current = String(i === api.selectedScrollSnap())
     }
   }
-  updateDots();
-  api.on("select", updateDots);
+  updateDots()
+  api.on('select', updateDots)
 </script>
