@@ -53,7 +53,7 @@ function TableWrapper({
 }) {
   const t = useTranslations("games.odds");
   const { gameId } = use(searchParams);
-  const hasAdminPermission = use(hasPermission("sync_odds"));
+  const hasAdminPermission = use(hasPermission("restore_odds"));
   return (
     <Table className="table-fixed">
       <TableHeader>
