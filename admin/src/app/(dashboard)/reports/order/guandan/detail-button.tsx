@@ -1,17 +1,15 @@
 "use client";
-import { getGuandanReportListDetail } from "@/api";
+
 import { Button } from "@/components/ui/button";
 import type { GameRecordRequestRecords } from "@/lib/types";
 import {
   guandanOrderIdAtom,
-  orderListGuandanDetailDataAtom,
   orderListGuandanDetailDialogAtom,
 } from "@/store";
 import { useSetAtom } from "jotai";
 import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useTransition } from "react";
-import { toast } from "sonner";
 export default function DetailButton({
   item,
 }: {
@@ -21,20 +19,9 @@ export default function DetailButton({
   const setOpen = useSetAtom(orderListGuandanDetailDialogAtom);
   const setId = useSetAtom(guandanOrderIdAtom);
   const [isPending, startTransition] = useTransition();
-  const setData = useSetAtom(orderListGuandanDetailDataAtom);
   const handleDialogOpenChanged = () => {
     startTransition(async () => {
       setId(item.id);
-      const { code, data, message } = await getGuandanReportListDetail({
-        issueNumber: item.id,
-        pageNum: 1,
-        pageSize: 10,
-      });
-      if (code === 0 && data) {
-        setData(data);
-      } else {
-        toast.error(message);
-      }
       setOpen(true);
     });
   };
