@@ -54,7 +54,7 @@ export function DetailButton({ item }: { item: CollectionAddressListRecords }) {
         <Button
           variant="ghost"
           size="sm"
-          className="text-primary hover:text-primary/80 px-2 text-sm"
+          className="text-destructive hover:text-destructive/80 px-2 text-sm"
           onClick={() => handleDetail("LOCK")}
         >
           {t("lock")}
