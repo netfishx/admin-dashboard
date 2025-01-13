@@ -101,6 +101,7 @@ export type MemberList = {
   createTime: number;
   depositAddress: string;
   agentId: string;
+  joinTime: number;
 };
 
 export interface LoginLog {
