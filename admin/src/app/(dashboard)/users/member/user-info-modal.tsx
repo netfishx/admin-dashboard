@@ -147,8 +147,8 @@ export function UserInfoModal({ permissions }: { permissions: string[] }) {
               {t("createTime")}
             </Label>
             <span>
-              {memberInfoData?.createTime && (
-                <Time time={memberInfoData?.createTime} />
+              {memberInfoData?.joinTime && (
+                <Time time={memberInfoData?.joinTime} />
               )}
             </span>
           </div>
