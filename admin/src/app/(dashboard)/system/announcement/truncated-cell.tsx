@@ -11,7 +11,7 @@ export function TruncatedCell({
   maxLength = 50,
   className,
 }: {
-  type: number;
+  type?: number;
   content: string;
   maxLength?: number;
   className?: string;

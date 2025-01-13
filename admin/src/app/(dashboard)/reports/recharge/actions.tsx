@@ -9,7 +9,7 @@ export function Actions({ item }: { item: RechargeReport }) {
         <Button
           variant="link"
           size="icon"
-          className="block w-[100px] overflow-hidden truncate whitespace-nowrap"
+          className="block min-w-[250px] overflow-hidden truncate whitespace-nowrap"
           onClick={() => {
             window.open(
               `https://tronscan.org/#/transaction/${item.rechargeHash}`,
