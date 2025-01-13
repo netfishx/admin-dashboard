@@ -165,7 +165,6 @@ export async function List({
   const p = {
     ...params,
     operators: (params?.operators as "0" | "1") || "0",
-    betAmount: params?.betAmount || "0",
     pageNum: Number(params?.pageNum) || 1,
     pageSize: Number(params?.pageSize) || 10,
     startTime: Number(params?.startTime) || 0,
@@ -190,7 +189,7 @@ export async function List({
   });
   const session = await getSession();
   const list =
-    data?.list.map((item) => ({
+    data?.list?.map((item) => ({
       ...item,
       agentId: params?.agentId || session?.mainId,
     })) ?? [];
