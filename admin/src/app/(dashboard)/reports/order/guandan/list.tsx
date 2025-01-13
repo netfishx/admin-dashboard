@@ -31,7 +31,7 @@ export async function ListHeader() {
         <TableHead className="w-60">{t("roomeownerID")}</TableHead>
         <TableHead className="w-60">{t("ministerID")}</TableHead>
         {hasSearchPermission && (
-          <TableHead className="w-32">{t("agentID")}</TableHead>
+          <TableHead className="w-60">{t("agentID")}</TableHead>
         )}
         <TableHead className="w-20">{t("bottomBet")}</TableHead>
         <TableHead className="w-20">{t("topBet")}</TableHead>
