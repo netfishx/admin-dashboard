@@ -96,7 +96,7 @@ export async function TableBodyWrapper({
     <TableBody>
       {data && data.list.length > 0 ? (
         data.list.map((item) => (
-          <TableRow key={Math.random()}>
+          <TableRow key={item.id}>
             <TableCell>
               <Time time={Number(item.startTime)} />
             </TableCell>
