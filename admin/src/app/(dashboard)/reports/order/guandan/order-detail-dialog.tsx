@@ -1,7 +1,6 @@
 "use client";
 
 import { getGuandanReportListDetail } from "@/api";
-import { ModalPagination } from "@/components/modal-pagination";
 import { Time } from "@/components/time";
 import { Button } from "@/components/ui/button";
 import {
@@ -15,7 +14,7 @@ import {
 } from "@/components/ui/dialog";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
-  Table,
+  ScrollableTable,
   TableBody,
   TableCell,
   TableHead,
@@ -133,10 +132,10 @@ export function OrderDetailDialog() {
           <DialogTitle>{t("orderListDetail")}</DialogTitle>
           <DialogDescription />
         </DialogHeader>
-        <div className="rounded-sm border">
-          <Table>
+        <div className="rounded-sm border max-h-[50dvh] overflow-auto">
+          <ScrollableTable className="table-fixed relative">
             <TableHeader>
-              <TableRow className="bg-muted">
+              <TableRow className="bg-muted sticky top-0">
                 <TableHead className="w-20">{t("serialNumber")}</TableHead>
                 <TableHead className="w-20">{t("bombNumber")}</TableHead>
                 <TableHead className="w-48">{t("startTime")}</TableHead>
@@ -184,19 +183,8 @@ export function OrderDetailDialog() {
                 )}
               </TableBody>
             )}
-          </Table>
+          </ScrollableTable>
         </div>
-        {!!data?.total && (
-          <ModalPagination total={data.total} onChange={handleChange} />
-        )}
-        <DialogFooter>
-          <DialogClose asChild>
-            <Button variant="outline">{translation("cancel")}</Button>
-          </DialogClose>
-          <DialogClose asChild>
-            <Button>{translation("confirm")}</Button>
-          </DialogClose>
-        </DialogFooter>
       </DialogContent>
     </Dialog>
   );
