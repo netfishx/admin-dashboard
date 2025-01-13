@@ -212,6 +212,12 @@ export type AnnouncementList = {
   createTime: number;
   updateTime: number;
 };
+// 首页公告返回
+export type HomeAnnouncementList = {
+  id: string;
+  type: number;
+  content: string;
+};
 
 export type PeriodReportParams = {
   pageSize: number;

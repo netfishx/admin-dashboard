@@ -28,6 +28,7 @@ import type {
   GameRecordRequestParams,
   GameRecordRequestRecords,
   GameType,
+  HomeAnnouncementList,
   LoginLog,
   MaintainGame,
   MemberBetReportRequestParams,
@@ -493,6 +494,14 @@ export async function saveAnnouncement(data: Announcement) {
     url: "/announcement/sendAnnouncement",
     method: "POST",
     data,
+    token,
+  });
+}
+// 首页公告
+export async function getHomeAnnouncement() {
+  const token = await getToken();
+  return await apiRequest<HomeAnnouncementList[]>({
+    url: "/announcement/getIndexPage",
     token,
   });
 }
