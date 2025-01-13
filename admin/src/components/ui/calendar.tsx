@@ -38,7 +38,7 @@ export function Calendar({
         months: "relative flex flex-col gap-y-4 sm:flex-row sm:gap-y-0",
         month_caption: "relative mx-10 flex h-7 items-center justify-center",
         weekdays: "flex flex-row",
-        weekday: "w-8 text-[0.8rem] font-normal text-muted-foreground",
+        weekday: "w-9 text-sm font-normal text-muted-foreground",
         month: "w-full gap-y-4 overflow-x-hidden",
         caption: "relative flex items-center justify-center pt-1",
         caption_label: "truncate text-sm font-medium",
@@ -57,7 +57,7 @@ export function Calendar({
           }),
         ),
         nav: "flex items-start",
-        month_grid: "my-2 mx-2",
+        month_grid: "my-2 mx-auto",
         week: "mt-2 flex w-full",
         day: "flex h-9 w-9 flex-1 items-center justify-center rounded-md p-0 text-sm [&:has(button)]:hover:bg-accent! [&:has(button)]:hover:text-accent-foreground [&:has(button)]:hover:aria-selected:bg-primary! [&:has(button)]:hover:aria-selected:text-primary-foreground",
         day_button: cn(
