@@ -70,8 +70,8 @@ async function TableHeaderWrapper() {
         <TableHead className="w-32">{t("userId")}</TableHead>
         <TableHead className="w-24">{t("currency")}</TableHead>
         <TableHead className="w-24">{t("rechargeMoney")}</TableHead>
-        <TableHead className="w-48">{t("finishTime")}</TableHead>
-        <TableHead className="w-24">{t("rechargeHash")}</TableHead>
+        <TableHead className="w-32">{t("finishTime")}</TableHead>
+        <TableHead className="w-48">{t("rechargeHash")}</TableHead>
       </TableRow>
     </TableHeader>
   );
