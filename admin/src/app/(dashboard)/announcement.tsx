@@ -1,6 +1,6 @@
 "use client";
 
-import type { AnnouncementList } from "@/lib/types";
+import type {  HomeAnnouncementList } from "@/lib/types";
 import { useTranslations } from "next-intl";
 import { useTransitionRouter } from "next-view-transitions";
 
@@ -8,7 +8,7 @@ export function Announcement({
   data,
   permissions,
 }: {
-  data: { list: AnnouncementList[] };
+  data: HomeAnnouncementList[];
   permissions: string[];
 }) {
   const t = useTranslations();
@@ -26,12 +26,12 @@ export function Announcement({
               router.push("/system/announcement/own");
             }}
           >
-            {data?.list?.length > 0 && t("more")}
+            {data?.length > 0 && t("more")}
           </button>
         </div>
         <div className="flex w-full flex-col gap-2 text-sm">
-          {data && data.list.length > 0 ? (
-            data?.list.map((item) => {
+          {data && data.length > 0 ? (
+            data.map((item) => {
               return (
                 <div
                   key={item.id}
@@ -56,7 +56,7 @@ export function Announcement({
                       )}
                     </>
                   )}
-                  {item.contentOfLanguage}
+                  {item.content}
                 </div>
               );
             })

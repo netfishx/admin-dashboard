@@ -6,7 +6,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import type { AnnouncementList } from "@/lib/types";
+import type { HomeAnnouncementList } from "@/lib/types";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 
@@ -14,7 +14,7 @@ export function AnnouncementDialog({
   data,
   isFirstLogin,
 }: {
-  data: { list: AnnouncementList[] };
+  data: HomeAnnouncementList[];
   isFirstLogin: string;
 }) {
   const t = useTranslations("");
@@ -34,7 +34,7 @@ export function AnnouncementDialog({
           <DialogTitle>{t("announcement")}</DialogTitle>
         </DialogHeader>
         <div className="flex w-full flex-col gap-2 overflow-y-auto text-sm">
-          {data?.list.map((item) => {
+          {data.map((item) => {
             return (
               <div
                 key={item.id}
@@ -55,7 +55,7 @@ export function AnnouncementDialog({
                     {t("systemLabel")}
                   </span>
                 )}
-                {item.contentOfLanguage}
+                {item.content}
               </div>
             );
           })}
