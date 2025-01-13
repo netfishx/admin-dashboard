@@ -27,7 +27,7 @@ export function MemberForm({ gameList }: { gameList: GameInfo[] }) {
   const [gameName, setGameName] = useQueryState("gameId", {
     defaultValue: "all",
   });
-  const [leastlevelID, setLeastlevelID] = useQueryState("agentId", {
+  const [leastlevelID, setLeastlevelID] = useQueryState("lastAgentId", {
     defaultValue: "",
   });
   const [isPending, startTransition] = useTransition();
