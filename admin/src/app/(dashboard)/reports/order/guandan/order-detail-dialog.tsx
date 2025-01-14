@@ -1,6 +1,7 @@
 "use client";
 
 import { getGuandanReportListDetail } from "@/api";
+import { Poker } from "@/components/poker";
 import { Time } from "@/components/time";
 import {
   Dialog,
@@ -27,7 +28,6 @@ import { useAtom, useAtomValue } from "jotai";
 import { useTranslations } from "next-intl";
 import { useEffect, useTransition } from "react";
 import { toast } from "sonner";
-import { Poker } from "@/components/poker";
 
 export function OrderDetailDialog() {
   const translation = useTranslations();
@@ -45,34 +45,42 @@ export function OrderDetailDialog() {
 
   function processAndSortCards(hand: string[]) {
     // 计算每张牌的出现次数
-    const cardCounts = hand.reduce((acc, card) => {
-      acc[card] = (acc[card] || 0) + 1;
-      return acc;
-    }, {} as Record<string, number>);
+    const cardCounts = hand.reduce(
+      (acc, card) => {
+        acc[card] = (acc[card] || 0) + 1;
+        return acc;
+      },
+      {} as Record<string, number>,
+    );
 
     // 按花色分组并排序
-    const groupedCards = hand.reduce((acc, card) => {
-      const suit = card[0];
-      if (!acc[suit]) {
-        acc[suit] = new Set();
-      }
-      acc[suit].add(card);
-      return acc;
-    }, {} as Record<string, Set<string>>);
+    const groupedCards = hand.reduce(
+      (acc, card) => {
+        const suit = card[0];
+        if (!acc[suit]) {
+          acc[suit] = new Set();
+        }
+        acc[suit].add(card);
+        return acc;
+      },
+      {} as Record<string, Set<string>>,
+    );
 
     // 对每个花色组内的牌按数字大小排序，并添加重复计数
-    const sortedAndCounted = ['C', 'D', 'H', 'S', 'X', 'Y'].flatMap(suit => {
+    const sortedAndCounted = ["C", "D", "H", "S", "X", "Y"].flatMap((suit) => {
       const cards = Array.from(groupedCards[suit] || []);
       return cards
-        .sort((a, b) => Number.parseInt(a.slice(1)) - Number.parseInt(b.slice(1)))
-        .map(card => ({
+        .sort(
+          (a, b) => Number.parseInt(a.slice(1)) - Number.parseInt(b.slice(1)),
+        )
+        .map((card) => ({
           card,
-          count: cardCounts[card]
+          count: cardCounts[card],
         }));
     });
 
     return sortedAndCounted.map(({ card, count }, index) => (
-      <Poker 
+      <Poker
         key={index + card}
         poker={card}
         suffix={count > 1 ? `*${count}` : "*1"}

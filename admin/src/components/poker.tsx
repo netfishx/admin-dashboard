@@ -21,7 +21,10 @@ export function Poker({ poker, suffix }: { poker: string; suffix?: string }) {
   return (
     <>
       <span className={suitInfo.color}>{suitInfo.symbol}</span>
-      <span>{cardInfo}{suffix} </span>
+      <span>
+        {cardInfo}
+        {suffix}
+      </span>
     </>
   );
 }
