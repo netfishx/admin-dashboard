@@ -98,15 +98,15 @@ export function CheckDialog(props: CheckDialogProps) {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent>
-        {step === 1 && (
+        {step === 2 && (
           <div className="flex flex-col gap-4">
             <DialogHeader>
               <DialogTitle>{t("withdraw")}</DialogTitle>
             </DialogHeader>
             <Form action="" onSubmit={handleSubmit} ref={ref}>
-              <div className="flex max-h-[50dvh] flex-col gap-4 overflow-y-auto">
+              <div className="flex max-h-[50dvh] flex-col gap-4 overflow-y-auto px-4">
                 <div className="flex items-center gap-4">
-                  <Label className="flex min-w-[120px] shrink-0 items-center justify-end gap-1">
+                  <Label className="flex w-24 shrink-0 items-center justify-end gap-1">
                     <span className="text-muted-foreground">
                       {translations("availableAmount")}
                     </span>
@@ -123,7 +123,7 @@ export function CheckDialog(props: CheckDialogProps) {
                 </div>
 
                 <div className="flex items-center gap-4">
-                  <Label className="flex min-w-[120px] shrink-0 items-center justify-end gap-1">
+                  <Label className="flex w-24 shrink-0 items-center justify-end gap-1">
                     <span className="text-destructive">*</span>
                     <span className="text-muted-foreground">
                       {t("withdrawAmount")}
@@ -146,16 +146,19 @@ export function CheckDialog(props: CheckDialogProps) {
                     }}
                   />
                 </div>
-                <div className="ml-[140px] space-y-1 text-sm">
-                  <div className="text-destructive">{t("notice")}</div>
-                  <div className="text-destructive pl-4">
-                    {t("notAllowWithdraw")}
+                <div className="flex items-center gap-4">
+                  <div className="w-24" />
+                  <div className="space-y-1 text-sm">
+                    <div className="text-destructive">{t("notice")}</div>
+                    <div className="text-destructive">
+                      {t("notAllowWithdraw")}
+                    </div>
+                    <div className="text-destructive">{t("stopAccept")}</div>
                   </div>
-                  <div className="text-destructive pl-4">{t("stopAccept")}</div>
                 </div>
 
                 <div className="flex items-center gap-4">
-                  <Label className="flex min-w-[120px] shrink-0 items-center justify-end gap-1">
+                  <Label className="flex w-24 shrink-0 items-center justify-end gap-1">
                     <span className="text-muted-foreground">
                       {t("withdrawFee")}
                     </span>
@@ -171,7 +174,7 @@ export function CheckDialog(props: CheckDialogProps) {
                 </div>
 
                 <div className="flex items-center gap-4">
-                  <Label className="flex min-w-[120px] shrink-0 items-center justify-end gap-1">
+                  <Label className="flex w-24 shrink-0 items-center justify-end gap-1">
                     <span className="text-muted-foreground">
                       {t("withdrawWay")}
                     </span>
@@ -189,7 +192,7 @@ export function CheckDialog(props: CheckDialogProps) {
                 </div>
 
                 <div className="flex items-center gap-4">
-                  <Label className="flex min-w-[120px] shrink-0 items-center justify-end gap-1">
+                  <Label className="flex w-24 shrink-0 items-center justify-end gap-1">
                     <span className="text-muted-foreground">{t("secret")}</span>
                   </Label>
                   <Password
@@ -224,14 +227,14 @@ export function CheckDialog(props: CheckDialogProps) {
             </DialogFooter>
           </div>
         )}
-        {step === 2 && (
+        {step === 1 && (
           <div className="flex flex-col gap-4">
             <DialogHeader>
               <DialogTitle>{t("google2fa")}</DialogTitle>
             </DialogHeader>
             <div className="mx-auto w-full max-w-xl p-4">
-              <div className="text-center text-lg font-bold">
-                <Label className="mb-4 flex min-w-[120px] shrink-0 items-center gap-1">
+              <div className="flex flex-col gap-4">
+                <Label className="after:text-destructive shrink-0 after:ml-1 after:content-['*']">
                   {t("google2faCode")}
                 </Label>
                 <Input
