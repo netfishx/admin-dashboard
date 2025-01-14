@@ -942,14 +942,12 @@ export async function getGuandanReportList(params: GameRecordRequestParams) {
 }
 
 // 注单列表-掼蛋-详情
-export async function getGuandanReportListDetail(
-  params: GameRecordRequestParams,
-) {
+export async function getGuandanReportListDetail(issueNumber: string) {
   const token = await getToken();
   return await apiRequest<PageData<BombDetailRecords>>({
     url: "/agent/order/guandan/detail",
     token,
-    params,
+    params: { issueNumber, pageNum: 1, pageSize: 100 },
   });
 }
 

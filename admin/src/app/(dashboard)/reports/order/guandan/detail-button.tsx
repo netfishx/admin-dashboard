@@ -1,12 +1,17 @@
 "use client";
 
+import { getGuandanReportListDetail } from "@/api";
 import { Button } from "@/components/ui/button";
 import type { GameRecordRequestRecords } from "@/lib/types";
-import { guandanOrderIdAtom, orderListGuandanDetailDialogAtom } from "@/store";
+import {
+  guandanOrderDetailAtom,
+  orderListGuandanDetailDialogAtom,
+} from "@/store";
 import { useSetAtom } from "jotai";
 import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useTransition } from "react";
+import { toast } from "sonner";
 export default function DetailButton({
   item,
 }: {
@@ -14,14 +19,9 @@ export default function DetailButton({
 }) {
   const t = useTranslations("report.orderlist");
   const setOpen = useSetAtom(orderListGuandanDetailDialogAtom);
-  const setId = useSetAtom(guandanOrderIdAtom);
+  const setGuandanOrderDetail = useSetAtom(guandanOrderDetailAtom);
   const [isPending, startTransition] = useTransition();
-  const handleDialogOpenChanged = () => {
-    startTransition(async () => {
-      setId(item.id);
-      setOpen(true);
-    });
-  };
+
   return (
     <div>
       <Button
@@ -29,7 +29,20 @@ export default function DetailButton({
         size="sm"
         disabled={isPending}
         className="text-primary hover:text-primary/80 px-2 text-sm"
-        onClick={handleDialogOpenChanged}
+        onClick={() => {
+          startTransition(async () => {
+            const { code, data, message } = await getGuandanReportListDetail(
+              item.id,
+            );
+            if (code === 0) {
+              console.info(item.id, data);
+              setGuandanOrderDetail(data?.list || []);
+              setOpen(true);
+            } else {
+              toast.error(message);
+            }
+          });
+        }}
       >
         {isPending && <Loader2 className="animate-spin" />}
         {t("more")}

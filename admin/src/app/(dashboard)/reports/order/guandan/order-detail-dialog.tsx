@@ -1,6 +1,4 @@
 "use client";
-
-import { getGuandanReportListDetail } from "@/api";
 import { Poker } from "@/components/poker";
 import { Time } from "@/components/time";
 import {
@@ -10,7 +8,6 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { Skeleton } from "@/components/ui/skeleton";
 import {
   ScrollableTable,
   TableBody,
@@ -20,28 +17,17 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import {
-  guandanOrderIdAtom,
-  orderListGuandanDetailDataAtom,
+  guandanOrderDetailAtom,
   orderListGuandanDetailDialogAtom,
 } from "@/store";
 import { useAtom, useAtomValue } from "jotai";
 import { useTranslations } from "next-intl";
-import { useEffect, useTransition } from "react";
-import { toast } from "sonner";
 
 export function OrderDetailDialog() {
   const translation = useTranslations();
   const t = useTranslations("report.orderlist");
   const [open, setOpen] = useAtom(orderListGuandanDetailDialogAtom);
-  const id = useAtomValue(guandanOrderIdAtom);
-  const [isPending, startTransition] = useTransition();
-  const [data, setData] = useAtom(orderListGuandanDetailDataAtom);
-
-  useEffect(() => {
-    if (id) {
-      handleChange({ pageNum: 1, pageSize: 10 });
-    }
-  }, [id]);
+  const list = useAtomValue(guandanOrderDetailAtom);
 
   function processAndSortCards(hand: string[]) {
     // 计算每张牌的出现次数
@@ -88,27 +74,6 @@ export function OrderDetailDialog() {
     ));
   }
 
-  function handleChange({
-    pageNum,
-    pageSize,
-  }: {
-    pageNum: number;
-    pageSize: number;
-  }) {
-    startTransition(async () => {
-      const { code, data, message } = await getGuandanReportListDetail({
-        issueNumber: id,
-        pageNum,
-        pageSize,
-      });
-      if (code === 0 && data) {
-        setData(data);
-      } else {
-        toast.error(message);
-      }
-    });
-  }
-
   return (
     <Dialog
       open={open}
@@ -133,65 +98,43 @@ export function OrderDetailDialog() {
                 <TableHead className="w-12">{t("bombs")}</TableHead>
                 <TableHead className="w-12">{t("score")}</TableHead>
                 <TableHead className="w-12">{t("rank")}</TableHead>
-                <TableHead className="w-12">{t("tribute")}</TableHead>
+                <TableHead className="w-24">{t("tribute")}</TableHead>
                 <TableHead className="w-60">{t("hand")}</TableHead>
               </TableRow>
             </TableHeader>
-            {isPending ? (
-              <ChangeLogSkeleton />
-            ) : (
-              <TableBody>
-                {/* biome-ignore lint/style/useExplicitLengthCheck: <explanation> */}
-                {data?.list?.length ? (
-                  data?.list?.map((item) =>
-                    item.details.map((detail) => (
-                      <TableRow key={item.roundNumber + detail.memberId}>
-                        <TableCell>{item.roundNumber}</TableCell>
-                        <TableCell>{item.bombCount}</TableCell>
-                        <TableCell>
-                          <Time time={item.createdAt} />
-                        </TableCell>
-                        <TableCell>
-                          <Time time={item.updatedAt} />
-                        </TableCell>
-                        <TableCell>{detail.memberId}</TableCell>
-                        <TableCell>{detail.bombs}</TableCell>
-                        <TableCell>{detail.score}</TableCell>
-                        <TableCell>{detail.rank}</TableCell>
-                        <TableCell>{detail.tribute}</TableCell>
-                        <TableCell>
-                          {processAndSortCards(detail.hand)}
-                        </TableCell>
-                      </TableRow>
-                    )),
-                  )
-                ) : (
-                  <TableRow className="flex w-full items-center justify-center">
-                    <TableCell className="h-48 text-center">
-                      {translation("noData")}
-                    </TableCell>
-                  </TableRow>
-                )}
-              </TableBody>
-            )}
+            <TableBody>
+              {list && list.length > 0 ? (
+                list.map((item) =>
+                  item.details.map((detail) => (
+                    <TableRow key={item.roundNumber + detail.memberId}>
+                      <TableCell>{item.roundNumber}</TableCell>
+                      <TableCell>{item.bombCount}</TableCell>
+                      <TableCell>
+                        <Time time={item.createdAt} />
+                      </TableCell>
+                      <TableCell>
+                        <Time time={item.updatedAt} />
+                      </TableCell>
+                      <TableCell>{detail.memberId}</TableCell>
+                      <TableCell>{detail.bombs}</TableCell>
+                      <TableCell>{detail.score}</TableCell>
+                      <TableCell>{detail.rank}</TableCell>
+                      <TableCell>{detail.tribute}</TableCell>
+                      <TableCell>{processAndSortCards(detail.hand)}</TableCell>
+                    </TableRow>
+                  )),
+                )
+              ) : (
+                <TableRow>
+                  <TableCell className="h-48 text-center" colSpan={10}>
+                    {translation("noData")}
+                  </TableCell>
+                </TableRow>
+              )}
+            </TableBody>
           </ScrollableTable>
         </div>
       </DialogContent>
     </Dialog>
-  );
-}
-
-function ChangeLogSkeleton() {
-  return (
-    <TableBody>
-      {Array.from({ length: 5 }).map((_, i) => (
-        // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
-        <TableRow key={i}>
-          <TableCell colSpan={10}>
-            <Skeleton />
-          </TableCell>
-        </TableRow>
-      ))}
-    </TableBody>
   );
 }

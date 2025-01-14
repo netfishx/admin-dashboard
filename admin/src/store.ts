@@ -169,11 +169,10 @@ export const subaccountIdAtom = atom<string>("");
 
 // 报表管理-注单列表-棋牌-注单详情弹窗
 export const orderListGuandanDetailDialogAtom = atom<boolean>(false);
-export const orderListGuandanDetailDataAtom =
-  atom<PageData<BombDetailRecords>>();
+
 // 报表管理-注单列表-棋牌-炸弹详情弹窗
 export const orderListGuandanBombDetailDialogAtom = atom<boolean>(false);
-export const guandanOrderIdAtom = atom<string>();
+export const guandanOrderDetailAtom = atom<BombDetailRecords[]>([]);
 
 // 报表管理-注单列表-冠单-炸弹详情数据
 export const guandanBombDetailAtom = atom<BombDetailPlayerDetails[]>([]);
