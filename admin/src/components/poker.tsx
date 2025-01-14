@@ -23,7 +23,7 @@ export function Poker({ poker, suffix }: { poker: string; suffix?: string }) {
       <span className={suitInfo.color}>{suitInfo.symbol}</span>
       <span>
         {cardInfo === "14" ? "" : cardInfo}
-        {suffix}{" "}
+        {suffix}
       </span>
     </>
   );
