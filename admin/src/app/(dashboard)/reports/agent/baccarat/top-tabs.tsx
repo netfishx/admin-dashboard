@@ -9,8 +9,8 @@ export default function TopTabs() {
   const t = useTranslations("report.agent");
   const pathname = usePathname();
   return (
-    <div className="bg-background flex flex-col gap-2 p-4">
-      <Tabs className="w-[400px]">
+    <div className="bg-background p-4">
+      <Tabs className="w-100">
         <TabsList className="grid w-full grid-cols-2">
           <Link
             data-state={
