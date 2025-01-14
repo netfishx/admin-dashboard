@@ -99,7 +99,7 @@ export function Toolbar({
                 <span>{inviteCode}</span>
                 <Button
                   variant="ghost"
-                  className="size-4"
+                  className="size-6"
                   onClick={() => {
                     copyToClipboard(inviteCode);
                     toast.success(t("copied"));
