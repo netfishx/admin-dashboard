@@ -66,11 +66,10 @@ export function OrderDetailDialog() {
     });
 
     return sortedAndCounted.map(({ card, count }, index) => (
-      <Poker
-        key={index + card}
-        poker={card}
-        suffix={count > 1 ? `*${count}` : "*1"}
-      />
+      <span key={index + card}>
+        <Poker poker={card} suffix={count > 1 ? `*${count}` : "*1"} />
+        {index < sortedAndCounted.length - 1 ? ", " : ""}
+      </span>
     ));
   }
 
