@@ -98,7 +98,7 @@ export function CheckDialog(props: CheckDialogProps) {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent>
-        {step === 2 && (
+        {step === 1 && (
           <div className="flex flex-col gap-4">
             <DialogHeader>
               <DialogTitle>{t("withdraw")}</DialogTitle>
@@ -227,7 +227,7 @@ export function CheckDialog(props: CheckDialogProps) {
             </DialogFooter>
           </div>
         )}
-        {step === 1 && (
+        {step === 2 && (
           <div className="flex flex-col gap-4">
             <DialogHeader>
               <DialogTitle>{t("google2fa")}</DialogTitle>
