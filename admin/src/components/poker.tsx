@@ -12,7 +12,7 @@ export function Poker({ poker, suffix }: { poker: string; suffix?: string }) {
     "11": "J",
     "12": "Q",
     "13": "K",
-    "14": " ",
+    "14": "",
   };
   const suit = poker[0];
   const card = poker.slice(1);
@@ -22,7 +22,7 @@ export function Poker({ poker, suffix }: { poker: string; suffix?: string }) {
     <>
       <span className={suitInfo.color}>{suitInfo.symbol}</span>
       <span>
-        {cardInfo}
+        {cardInfo === "14" ? "" : cardInfo}
         {suffix}
       </span>
     </>

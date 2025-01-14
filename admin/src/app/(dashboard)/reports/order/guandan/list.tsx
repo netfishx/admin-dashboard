@@ -38,7 +38,7 @@ export async function ListHeader() {
         <TableHead className="w-20">{t("level")}</TableHead>
         <TableHead className="w-28">{t("settlementAmount")}</TableHead>
         <TableHead className="w-20">{t("bombNumber")}</TableHead>
-        <TableHead className="w-20">{t("multiplier")}</TableHead>
+        <TableHead className="w-28">{t("multiplier")}</TableHead>
         <TableHead className="w-140">{t("winPlayer")}</TableHead>
         <TableHead className="w-48">{t("gameStartTime")}</TableHead>
         <TableHead className="w-48">{t("settlementFinishTime")}</TableHead>
