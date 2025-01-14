@@ -2,12 +2,12 @@ import { getTranslations } from "next-intl/server";
 
 import {
   getFundList,
+  getHomeAnnouncement,
   getMemberChartList,
   getTodayFundList,
   getTodayWinLoss,
   getTodayWinLossChart,
   getUserBasicInfo,
-  getHomeAnnouncement
 } from "@/api";
 import { Announcement } from "@/app/(dashboard)/announcement";
 import { QuickAccess } from "@/app/(dashboard)/quick-access";

@@ -69,10 +69,6 @@ export type MaintainGame = {
   updateUserId: string;
 };
 
-export type RatioReportListTypes = {
-  [key: string]: string | number | undefined | null | string[] | number[];
-};
-
 export type AddAgents = {
   username: string;
   nickname: string;

@@ -36,13 +36,11 @@ export function OrderDetailDialog() {
   const [isPending, startTransition] = useTransition();
   const [data, setData] = useAtom(orderListGuandanDetailDataAtom);
 
-
   useEffect(() => {
     if (id) {
       handleChange({ pageNum: 1, pageSize: 10 });
     }
   }, [id]);
-
 
   function processAndSortCards(hand: string[]): string {
     // 定义花色和点数的映射规则
@@ -129,8 +127,8 @@ export function OrderDetailDialog() {
           <DialogTitle>{t("orderListDetail")}</DialogTitle>
           <DialogDescription />
         </DialogHeader>
-        <div className="rounded-sm border max-h-[50dvh] overflow-auto">
-          <ScrollableTable className="table-fixed relative">
+        <div className="max-h-[50dvh] overflow-auto rounded-sm border">
+          <ScrollableTable className="relative table-fixed">
             <TableHeader>
               <TableRow className="bg-muted sticky top-0">
                 <TableHead className="w-20">{t("serialNumber")}</TableHead>
@@ -151,7 +149,7 @@ export function OrderDetailDialog() {
               <TableBody>
                 {/* biome-ignore lint/style/useExplicitLengthCheck: <explanation> */}
                 {data?.list?.length ? (
-                  data?.list?.map((item, index) => (
+                  data?.list?.map((item, index) =>
                     item.details.map((detail) => (
                       <TableRow key={Math.random()}>
                         <TableCell>{index}</TableCell>
@@ -167,10 +165,12 @@ export function OrderDetailDialog() {
                         <TableCell>{detail.score}</TableCell>
                         <TableCell>{detail.rank}</TableCell>
                         <TableCell>{detail.tribute}</TableCell>
-                        <TableCell>{processAndSortCards(detail.hand)}</TableCell>
+                        <TableCell>
+                          {processAndSortCards(detail.hand)}
+                        </TableCell>
                       </TableRow>
-                    ))
-                  ))
+                    )),
+                  )
                 ) : (
                   <TableRow className="flex w-full items-center justify-center">
                     <TableCell className="h-48 text-center">

@@ -110,10 +110,7 @@ export async function TableBodyWrapper({
               })()}
             </TableCell>
 
-            <TruncatedCell
-              content={item.userId}
-              maxLength={30}
-            />
+            <TruncatedCell content={item.userId} maxLength={30} />
 
             <TruncatedCell
               type={item.type}

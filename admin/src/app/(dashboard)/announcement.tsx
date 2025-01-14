@@ -1,6 +1,6 @@
 "use client";
 
-import type {  HomeAnnouncementList } from "@/lib/types";
+import type { HomeAnnouncementList } from "@/lib/types";
 import { useTranslations } from "next-intl";
 import { useTransitionRouter } from "next-view-transitions";
 

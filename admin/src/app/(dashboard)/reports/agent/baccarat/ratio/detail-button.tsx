@@ -1,13 +1,12 @@
 import { Button } from "@/components/ui/button";
-import type { RatioReportListTypes } from "@/lib/types";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 
 export default function DetailButton({
-  item,
+  parentAgentId,
   searchParams,
 }: {
-  item: RatioReportListTypes;
+  parentAgentId: string;
   searchParams: { [key: string]: string | undefined };
 }) {
   const t = useTranslations("report.orderlist");
@@ -23,7 +22,7 @@ export default function DetailButton({
             pathname: "/reports/agent/baccarat/ratio",
             query: {
               ...searchParams,
-              parentAgentId: item?.userId,
+              parentAgentId,
             },
           }}
         >

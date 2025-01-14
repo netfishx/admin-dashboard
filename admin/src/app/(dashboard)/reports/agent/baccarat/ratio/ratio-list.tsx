@@ -88,7 +88,10 @@ async function ListBody({
             </TableCell>
             <TableCell className="bg-background sticky right-0 p-0">
               <div className="shadow-l flex items-center justify-center px-4 py-2">
-                <DetailButton item={item} searchParams={searchParams} />
+                <DetailButton
+                  parentAgentId={item.userId}
+                  searchParams={searchParams}
+                />
               </div>
             </TableCell>
           </TableRow>
