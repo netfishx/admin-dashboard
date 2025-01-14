@@ -2,7 +2,6 @@ import type {
   AgentData,
   AnnouncementList,
   BackgroundImageList,
-  BombDetailPlayerDetails,
   BombDetailRecords,
   ChangeLog,
   DictionaryItem,
@@ -22,7 +21,7 @@ import type {
 import { atom } from "jotai";
 
 export const lastErrorTimeAtom = atom<number>(0);
-export type Error = {
+type Error = {
   error: boolean;
   time: number;
   message?: string;
@@ -113,7 +112,6 @@ export const backgroundImageDialogAtom = atom<boolean>(false);
 export const backgroundImageDataAtom = atom<BackgroundImageList | null>(null);
 
 // 公告弹窗
-export const contentModalAtom = atom<boolean>(false);
 export const contentModalDataAtom = atom<AnnouncementList | null>(null);
 export const contentEditModalAtom = atom<boolean>(false);
 export const editModalTitleAtom = atom<string>("");
@@ -125,14 +123,7 @@ export const holdStatusAtom = atom<
     holdStatus: number;
   }[]
 >([]);
-export const ratioAtom = atom<
-  {
-    gameId: number;
-    gameName?: string;
-    percent: string;
-    maxPercent: string;
-  }[]
->([]);
+
 export const rebateAtom = atom<
   {
     gameId: number;
@@ -171,11 +162,8 @@ export const subaccountIdAtom = atom<string>("");
 export const orderListGuandanDetailDialogAtom = atom<boolean>(false);
 
 // 报表管理-注单列表-棋牌-炸弹详情弹窗
-export const orderListGuandanBombDetailDialogAtom = atom<boolean>(false);
-export const guandanOrderDetailAtom = atom<BombDetailRecords[]>([]);
 
-// 报表管理-注单列表-冠单-炸弹详情数据
-export const guandanBombDetailAtom = atom<BombDetailPlayerDetails[]>([]);
+export const guandanOrderDetailAtom = atom<BombDetailRecords[]>([]);
 
 // 提现-申请-流水弹窗
 export const withdrawFlowDialogAtom = atom<boolean>(false);

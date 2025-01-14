@@ -18,22 +18,22 @@ export const UserSchema = z.object({
   permissions: z.array(z.string()),
 });
 
-export type User = z.infer<typeof UserSchema>;
+type User = z.infer<typeof UserSchema>;
 
-export const SessionSchema = UserSchema.extend({
+const SessionSchema = UserSchema.extend({
   expires: z.string(),
 });
 
 export type SessionData = z.infer<typeof SessionSchema>;
 
-export function signToken(payload: SessionData) {
+function signToken(payload: SessionData) {
   const encoded = encoder.encode(payload);
   return LZString.compressToEncodedURIComponent(
     String.fromCharCode.apply(null, [...encoded]),
   );
 }
 
-export function verifyToken(input: string) {
+function verifyToken(input: string) {
   return SessionSchema.parse(
     decoder.decode(
       new Uint8Array(
@@ -71,11 +71,6 @@ export async function setSession(user: User) {
 export async function getToken() {
   const session = await getSession();
   return session?.token;
-}
-
-export async function getPermissions() {
-  const session = await getSession();
-  return session?.permissions ?? [];
 }
 
 export async function hasPermission(permission: string) {

@@ -18,10 +18,6 @@ export const memberFormSchema = zfd.formData({
   contentOfLanguage: zfd.text(requiredSchema),
   status: zfd.text(requiredSchema),
 });
-// .refine((data) => data.newPassword === data.confirmPassword, {
-//   message: "两次输入的密码不一致",
-//   path: ["confirmPassword"],
-// });
 
 // 代理的表单schema
 const agentFormSchema = zfd.formData({
@@ -33,10 +29,6 @@ const agentFormSchema = zfd.formData({
   content: zfd.text(requiredSchema),
   status: zfd.text(requiredSchema),
 });
-// .refine((data) => data.newPassword === data.confirmPassword, {
-//   message: "两次输入的密码不一致",
-//   path: ["confirmPassword"],
-// });
 
 // 验证函数
 export async function validateFormData(

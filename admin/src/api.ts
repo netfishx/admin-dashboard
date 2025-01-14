@@ -52,8 +52,6 @@ import type {
   RatioReportRequestRecords,
   RechargeReport,
   RechargeReportParams,
-  RewardRecordRequestParams,
-  RewardRecordRequestRecords,
   Role,
   SameOrSeniorAnnoListRequest,
   Subaccount,
@@ -165,15 +163,7 @@ export async function getAgents(params: { pageNum: number; pageSize: number }) {
     token,
   });
 }
-// 用户管理-代理管理-获取单个代理信息
-export async function getAgentInfoById(params: { id: string }) {
-  const token = await getToken();
-  return await apiRequest<AgentData>({
-    url: "/agent/user/main/getById",
-    params,
-    token,
-  });
-}
+
 // 用户管理-代理管理-获取单个代理信息
 export async function getAgentInfoByUsername(params: { username: string }) {
   const token = await getToken();
@@ -278,15 +268,6 @@ export async function addAgent(data: {
   });
 }
 
-// 用户管理-代理管理-获取代理游戏设置
-export async function getAgentConfig(params: { userId: string }) {
-  const token = await getToken();
-  return await apiRequest<GameConfig[]>({
-    url: "/game/config/list",
-    params,
-    token,
-  });
-}
 // 用户管理-代理管理-更新代理游戏设置
 export async function updateAgentGameConfig(data: {
   userId: string;
@@ -1483,17 +1464,6 @@ export async function getWalletLog(data: WalletLogRequestParams) {
   });
 }
 
-// 打赏记录list
-export async function postGetRewardRecordList(data: RewardRecordRequestParams) {
-  const token = await getToken();
-  return await apiRequest<PageData<RewardRecordRequestRecords>>({
-    url: "/wallet/getTipList",
-    method: "POST",
-    data,
-    token,
-  });
-}
-
 // 验证资金密码
 export async function postCheckMoneySecret(data: { secret: string }) {
   const token = await getToken();
@@ -1559,15 +1529,6 @@ export async function getDownloadList(params: {
     url: "/exportHistory",
     token,
     params,
-  });
-}
-
-export async function getDownloadUrl(params: { id: string }) {
-  const token = await getToken();
-  return await apiRequest<{ url: string }>({
-    url: "/getExportFileUrl",
-    params,
-    token,
   });
 }
 
