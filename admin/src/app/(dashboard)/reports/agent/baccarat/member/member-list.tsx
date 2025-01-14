@@ -26,7 +26,7 @@ export async function ListHeader() {
     <TableHeader>
       <TableRow className="bg-muted">
         <TableHead className="w-60">{t("leastlevelID")}</TableHead>
-        <TableHead className="w-60">{t("gameName")}</TableHead>
+        <TableHead className="w-40">{t("gameName")}</TableHead>
         <TableHead className="w-24">{t("betNum")}</TableHead>
         <TableHead className="w-32">{t("memberBetting")}</TableHead>
         <TableHead className="w-32">{t("memberProfitLoss")}</TableHead>
