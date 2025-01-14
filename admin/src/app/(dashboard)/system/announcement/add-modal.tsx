@@ -84,11 +84,14 @@ export function AddModal({
       };
     }
     // 编辑时已经开始的公告不用校验时间，还没开始的需要校验
-    if ((!data && startTime < Date.now()) || (data && data.startTime > Date.now() && startTime < Date.now())) {
+    if (
+      (!data && startTime < Date.now()) ||
+      (data && data.startTime > Date.now() && startTime < Date.now())
+    ) {
       return {
         valid: false,
-          message: `${t("timeCreateError")} ${formatDate(Date.now(), "yyyy-MM-dd HH:mm:ss")}`,
-        };
+        message: `${t("timeCreateError")} ${formatDate(Date.now(), "yyyy-MM-dd HH:mm:ss")}`,
+      };
     }
     // 如果是会员公告类型
     if ([2, 4].includes(type)) {
@@ -216,7 +219,7 @@ export function AddModal({
                 type="single"
                 value={selectedValue}
                 onValueChange={(value) => {
-                  if (value && value !== selectedValue ) {
+                  if (value && value !== selectedValue) {
                     setSelectedValue(value); // 防止取消选中，只有当点击的是不同的值时才会更新
                   }
                 }}

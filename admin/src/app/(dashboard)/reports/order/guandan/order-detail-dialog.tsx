@@ -1,21 +1,17 @@
 "use client";
 
 import { getGuandanReportListDetail } from "@/api";
-import { ModalPagination } from "@/components/modal-pagination";
 import { Time } from "@/components/time";
-import { Button } from "@/components/ui/button";
 import {
   Dialog,
-  DialogClose,
   DialogContent,
   DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
-  Table,
+  ScrollableTable,
   TableBody,
   TableCell,
   TableHead,
@@ -40,13 +36,11 @@ export function OrderDetailDialog() {
   const [isPending, startTransition] = useTransition();
   const [data, setData] = useAtom(orderListGuandanDetailDataAtom);
 
-
   useEffect(() => {
     if (id) {
       handleChange({ pageNum: 1, pageSize: 10 });
     }
   }, [id]);
-
 
   function processAndSortCards(hand: string[]): string {
     // 定义花色和点数的映射规则
@@ -133,10 +127,10 @@ export function OrderDetailDialog() {
           <DialogTitle>{t("orderListDetail")}</DialogTitle>
           <DialogDescription />
         </DialogHeader>
-        <div className="rounded-sm border">
-          <Table>
+        <div className="max-h-[50dvh] overflow-auto rounded-sm border">
+          <ScrollableTable className="relative table-fixed">
             <TableHeader>
-              <TableRow className="bg-muted">
+              <TableRow className="bg-muted sticky top-0">
                 <TableHead className="w-20">{t("serialNumber")}</TableHead>
                 <TableHead className="w-20">{t("bombNumber")}</TableHead>
                 <TableHead className="w-48">{t("startTime")}</TableHead>
@@ -155,7 +149,7 @@ export function OrderDetailDialog() {
               <TableBody>
                 {/* biome-ignore lint/style/useExplicitLengthCheck: <explanation> */}
                 {data?.list?.length ? (
-                  data?.list?.map((item, index) => (
+                  data?.list?.map((item, index) =>
                     item.details.map((detail) => (
                       <TableRow key={Math.random()}>
                         <TableCell>{index}</TableCell>
@@ -171,10 +165,12 @@ export function OrderDetailDialog() {
                         <TableCell>{detail.score}</TableCell>
                         <TableCell>{detail.rank}</TableCell>
                         <TableCell>{detail.tribute}</TableCell>
-                        <TableCell>{processAndSortCards(detail.hand)}</TableCell>
+                        <TableCell>
+                          {processAndSortCards(detail.hand)}
+                        </TableCell>
                       </TableRow>
-                    ))
-                  ))
+                    )),
+                  )
                 ) : (
                   <TableRow className="flex w-full items-center justify-center">
                     <TableCell className="h-48 text-center">
@@ -184,19 +180,8 @@ export function OrderDetailDialog() {
                 )}
               </TableBody>
             )}
-          </Table>
+          </ScrollableTable>
         </div>
-        {!!data?.total && (
-          <ModalPagination total={data.total} onChange={handleChange} />
-        )}
-        <DialogFooter>
-          <DialogClose asChild>
-            <Button variant="outline">{translation("cancel")}</Button>
-          </DialogClose>
-          <DialogClose asChild>
-            <Button>{translation("confirm")}</Button>
-          </DialogClose>
-        </DialogFooter>
       </DialogContent>
     </Dialog>
   );

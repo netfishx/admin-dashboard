@@ -95,7 +95,7 @@ const TimeSelect = ({
         <SelectTrigger className="w-16">
           <SelectValue />
         </SelectTrigger>
-        <SelectContent>
+        <SelectContent className="min-w-16">
           {TIME_OPTIONS.hours.map(({ value, label }) => (
             <SelectItem key={value} value={value}>
               {label}
@@ -110,7 +110,7 @@ const TimeSelect = ({
         <SelectTrigger className="w-16">
           <SelectValue />
         </SelectTrigger>
-        <SelectContent>
+        <SelectContent className="min-w-16">
           {TIME_OPTIONS.minutes.map(({ value, label }) => (
             <SelectItem key={value} value={value}>
               {label}
@@ -125,7 +125,7 @@ const TimeSelect = ({
         <SelectTrigger className="w-16">
           <SelectValue />
         </SelectTrigger>
-        <SelectContent>
+        <SelectContent className="min-w-16">
           {TIME_OPTIONS.seconds.map(({ value, label }) => (
             <SelectItem key={value} value={value}>
               {label}

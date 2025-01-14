@@ -2,10 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import type { GameRecordRequestRecords } from "@/lib/types";
-import {
-  guandanOrderIdAtom,
-  orderListGuandanDetailDialogAtom,
-} from "@/store";
+import { guandanOrderIdAtom, orderListGuandanDetailDialogAtom } from "@/store";
 import { useSetAtom } from "jotai";
 import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";

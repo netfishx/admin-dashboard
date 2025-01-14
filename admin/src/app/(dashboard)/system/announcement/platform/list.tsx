@@ -69,9 +69,9 @@ export async function TableHeaderWrapper() {
 
         <TableHead className="w-48">{t("createTime")}</TableHead>
 
-        <TableHead className="w-48">{t("type")}</TableHead>
+        <TableHead className="w-32">{t("type")}</TableHead>
 
-        <TableHead className="w-32">{t("userId")}</TableHead>
+        <TableHead className="w-48">{t("userId")}</TableHead>
 
         <TableHead className="w-[450px]">{t("content")}</TableHead>
       </TableRow>
@@ -92,7 +92,6 @@ export async function TableBodyWrapper({
       {data && data.list.length > 0 ? (
         data.list.map((item) => (
           <TableRow key={item.id}>
-            {/* admin permission */}
             <TableCell>
               <Time time={Number(item.startTime)} />
             </TableCell>
@@ -100,12 +99,10 @@ export async function TableBodyWrapper({
             <TableCell>
               <Time time={Number(item.endTime)} />
             </TableCell>
-            {/* admin permission */}
             <TableCell>
               <Time time={Number(item.createTime)} />
             </TableCell>
 
-            {/* admin permission */}
             <TableCell>
               {(() => {
                 const status = NOTICE_TYPE.find((s) => s.value === item.type);
@@ -113,8 +110,7 @@ export async function TableBodyWrapper({
               })()}
             </TableCell>
 
-            {/* admin permission */}
-            <TableCell>{item.userId}</TableCell>
+            <TruncatedCell content={item.userId} maxLength={30} />
 
             <TruncatedCell
               type={item.type}

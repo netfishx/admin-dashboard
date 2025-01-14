@@ -10,13 +10,8 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import type {
-  GameInfo,
-  RatioReportRequestParams,
-  RatioReportRequestRecords,
-} from "@/lib/types";
+import type { GameInfo, RatioReportRequestRecords } from "@/lib/types";
 import { formatNumber } from "@/lib/utils";
-import { nanoid } from "nanoid";
 import { getTranslations } from "next-intl/server";
 import { Suspense } from "react";
 
@@ -51,17 +46,19 @@ export async function ListHeader() {
 async function ListBody({
   list,
   gameList,
+  searchParams,
 }: {
   list: RatioReportRequestRecords[];
   gameList: GameInfo[];
+  searchParams: { [key: string]: string | undefined };
 }) {
   const translate = await getTranslations();
   const t = await getTranslations("report.agent");
   return (
     <TableBody>
       {list && list?.length > 0 ? (
-        list?.map((item: RatioReportRequestRecords) => (
-          <TableRow key={nanoid()}>
+        list?.map((item) => (
+          <TableRow key={item.userId}>
             <TableCell>{item.userId}</TableCell>
             <TableCell>{item.parentAgentId}</TableCell>
             <TableCell>
@@ -91,7 +88,10 @@ async function ListBody({
             </TableCell>
             <TableCell className="bg-background sticky right-0 p-0">
               <div className="shadow-l flex items-center justify-center px-4 py-2">
-                <DetailButton item={item} />
+                <DetailButton
+                  parentAgentId={item.userId}
+                  searchParams={searchParams}
+                />
               </div>
             </TableCell>
           </TableRow>
@@ -112,7 +112,7 @@ export async function RatioList({
   searchParams,
 }: {
   gameList: GameInfo[];
-  searchParams: Promise<RatioReportRequestParams>;
+  searchParams: Promise<{ [key: string]: string | undefined }>;
 }) {
   const params = await searchParams;
   const p = {
@@ -141,7 +141,11 @@ export async function RatioList({
         <Table className="table-fixed">
           <ListHeader />
           <Suspense fallback={<TableSkeleton length={5} colSpan={11} />}>
-            <ListBody list={data?.list || []} gameList={gameList} />
+            <ListBody
+              list={data?.list || []}
+              gameList={gameList}
+              searchParams={params}
+            />
           </Suspense>
         </Table>
       </div>

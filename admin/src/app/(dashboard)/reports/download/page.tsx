@@ -71,7 +71,7 @@ async function TableHeaderWrapper() {
         <TableHead className="w-56">{t("exportTime")}</TableHead>
         <TableHead className="w-30 text-center">{t("status")}</TableHead>
         <TableHead className="w-40">{t("failReason")}</TableHead>
-        <TableHead className="w-20 text-center">{t("action")}</TableHead>
+        <TableHead className="w-28 text-center">{t("action")}</TableHead>
       </TableRow>
     </TableHeader>
   );

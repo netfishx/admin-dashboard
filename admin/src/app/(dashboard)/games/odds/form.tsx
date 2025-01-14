@@ -297,7 +297,7 @@ export function OddsForm({
                 <SelectValue placeholder={t("placeholder")} />
               </SelectTrigger>
               <SelectContent>
-                {permissions.includes("sync_odds") && (
+                {permissions.includes("restore_odds") && (
                   <SelectItem value="odds">{t("odds")}</SelectItem>
                 )}
                 <SelectItem value="minBet">{t("min")}</SelectItem>

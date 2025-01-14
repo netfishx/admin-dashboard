@@ -2,15 +2,15 @@ import { getBaccaratGames } from "@/api";
 import TableSkeleton from "@/components/table-skeleton";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Table } from "@/components/ui/table";
-import type { RatioReportRequestParams } from "@/lib/types";
 import { Suspense } from "react";
 import { RatioForm } from "./ratio-form";
 import { ListHeader, RatioList } from "./ratio-list";
-interface CommonWrapperProps {
-  searchParams: Promise<RatioReportRequestParams>;
-}
 
-export default async function Page({ searchParams }: CommonWrapperProps) {
+export default async function Page({
+  searchParams,
+}: {
+  searchParams: Promise<{ [key: string]: string | undefined }>;
+}) {
   const gameListResp = await getBaccaratGames();
   const { startTime, endTime } = await searchParams;
   return (

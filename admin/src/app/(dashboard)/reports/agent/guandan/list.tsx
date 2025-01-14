@@ -140,26 +140,28 @@ export async function List({
   const { data } = await getPokerReport(p);
   return (
     <div className="bg-background flex-1 p-4">
-      {data?.list && data.list.length > 0 && (
-        <div className="flex h-6 gap-2">
-          <div>
-            <Label className="min-w-24 text-center text-sm">
-              {t("totalIssueAmount")}
-            </Label>
-            <span className="min-w-24 text-center text-sm">
-              {formatNumber(Number(data?.list[0]?.totalIssueAmount) || 0)}
-            </span>
-          </div>
-          <div>
-            <Label className="min-w-24 text-center text-sm">
-              {t("totaSettledAmount")}
-            </Label>
-            <span className="min-w-24 text-center text-sm">
-              {formatNumber(Number(data?.list[0]?.totalSettledAmount) || 0)}
-            </span>
-          </div>
-        </div>
-      )}
+      <div className="flex h-6 gap-4">
+        {data?.list && data.list.length > 0 && (
+          <>
+            <div>
+              <Label className="min-w-24 text-center text-sm opacity-70 ">
+                {t("totalIssueAmount")}
+              </Label>
+              <span className="min-w-24 text-center text-sm">
+                {formatNumber(Number(data?.list[0]?.totalIssueAmount) || 0)}
+              </span>
+            </div>
+            <div>
+              <Label className="min-w-24 text-center text-sm opacity-70">
+                {t("totaSettledAmount")}
+              </Label>
+              <span className="min-w-24 text-center text-sm">
+                {formatNumber(Number(data?.list[0]?.totalSettledAmount) || 0)}
+              </span>
+            </div>
+          </>
+        )}
+      </div>
       <div className="relative mt-2 rounded-sm border">
         <Table className="table-fixed">
           <ListHeader />

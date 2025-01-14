@@ -69,10 +69,6 @@ export type MaintainGame = {
   updateUserId: string;
 };
 
-export type RatioReportListTypes = {
-  [key: string]: string | number | undefined | null | string[] | number[];
-};
-
 export type AddAgents = {
   username: string;
   nickname: string;
@@ -211,6 +207,12 @@ export type AnnouncementList = {
   status: number;
   createTime: number;
   updateTime: number;
+};
+// 首页公告返回
+export type HomeAnnouncementList = {
+  id: string;
+  type: number;
+  content: string;
 };
 
 export type PeriodReportParams = {

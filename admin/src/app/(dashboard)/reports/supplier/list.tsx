@@ -27,11 +27,11 @@ export async function ListHeader() {
       <TableRow className="bg-muted">
         <TableHead className="w-60">{t("supplierId")}</TableHead>
         <TableHead className="w-60">{t("supplierName")}</TableHead>
-        <TableHead className="w-60">{t("date")}</TableHead>
-        <TableHead className="w-60">{t("game")}</TableHead>
-        <TableHead className="w-60">{t("betNum")}</TableHead>
-        <TableHead className="w-60">{t("validAmount")}</TableHead>
-        <TableHead className="w-60">{t("proportionAmount")}</TableHead>
+        <TableHead className="w-32">{t("date")}</TableHead>
+        <TableHead className="w-32">{t("game")}</TableHead>
+        <TableHead className="w-24">{t("betNum")}</TableHead>
+        <TableHead className="w-32">{t("validAmount")}</TableHead>
+        <TableHead className="w-32">{t("proportionAmount")}</TableHead>
       </TableRow>
     </TableHeader>
   );
@@ -109,39 +109,40 @@ export async function List({
 
   return (
     <div className="bg-background flex-1 p-2">
-      {data?.list && data?.list?.length > 0 && (
-        <div className="flex h-6 gap-2">
-          <div>
-            <Label className="min-w-24 text-center text-sm">
-              {t("betNum")}：
-            </Label>
-            <span className="min-w-24 text-center text-sm">
-              {formatNumber(Number(data?.list?.[0]?.totalBetNum) || 0)}
-            </span>
-          </div>
+      <div className="flex h-6 gap-4">
+        {data?.list && data?.list?.length > 0 && (
+          <>
+            <div>
+              <Label className="min-w-24 text-center text-sm opacity-70">
+                {t("betNum")}：
+              </Label>
+              <span className="min-w-24 text-center text-sm">
+                {formatNumber(Number(data?.list?.[0]?.totalBetNum) || 0)}
+              </span>
+            </div>
 
-          <div>
-            <Label className="min-w-24 text-center text-sm">
-              {t("validBetAmount")}：
-            </Label>
-            <span className="min-w-24 text-center text-sm">
-              {formatNumber(
-                Number(data?.list?.[0]?.totalAvailableBetAmount || 0),
-              )}
-            </span>
-          </div>
+            <div>
+              <Label className="min-w-24 text-center text-sm opacity-70">
+                {t("validBetAmount")}：
+              </Label>
+              <span className="min-w-24 text-center text-sm">
+                {formatNumber(
+                  Number(data?.list?.[0]?.totalAvailableBetAmount || 0),
+                )}
+              </span>
+            </div>
 
-          <div>
-            <Label className="min-w-24 text-center text-sm">
-              {t("proportionAmount")}：
-            </Label>
-            <span className="min-w-24 text-center text-sm">
-              {formatNumber(Number(data?.list?.[0]?.totalPercentAmount || 0))}
-            </span>
-          </div>
-        </div>
-      )}
-
+            <div>
+              <Label className="min-w-24 text-center text-sm opacity-70">
+                {t("proportionAmount")}：
+              </Label>
+              <span className="min-w-24 text-center text-sm">
+                {formatNumber(Number(data?.list?.[0]?.totalPercentAmount || 0))}
+              </span>
+            </div>
+          </>
+        )}
+      </div>
       <div className="relative mt-2 rounded-sm border">
         <Table className="table-fixed">
           <ListHeader />

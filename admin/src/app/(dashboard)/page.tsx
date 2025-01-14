@@ -1,10 +1,9 @@
 import { getTranslations } from "next-intl/server";
 
 import {
-  getAnnouncement,
   getFundList,
+  getHomeAnnouncement,
   getMemberChartList,
-  getSameOrSeniorAnno,
   getTodayFundList,
   getTodayWinLoss,
   getTodayWinLossChart,
@@ -350,50 +349,28 @@ async function AnnouncementWrapper() {
   const permissions = session?.permissions;
   //  // 右下角：
   // 普通代理：上级公告， admin：本级公告
-  const { data: announcementSubData } = permissions?.includes("admin_stat")
-    ? await getSameOrSeniorAnno({
-        pageSize: 5,
-        pageNum: 1,
-        level: 0,
-      })
-    : await getSameOrSeniorAnno({
-        pageSize: 5,
-        pageNum: 1,
-        level: 1,
-      });
+  const { data: announcementSubData } = await getHomeAnnouncement();
   return (
     <Announcement
-      data={announcementSubData || { list: [] }}
+      data={announcementSubData || []}
       permissions={permissions || []}
     />
   );
 }
 
 async function AnnouncementDialogWrapper() {
-  const session = await getSession();
-  const permissions = session?.permissions;
   const cookie = await cookies();
   const isFirstLogin = cookie?.get("isFirstLogin")?.value;
 
   // 弹窗：
   // 普通代理：上级公告， admin：全平台
   // 12.06 update admin不展示弹窗
-  const { data: announcementData } = permissions?.includes("admin_stat")
-    ? await getAnnouncement({
-        pageSize: 5,
-        pageNum: 1,
-      })
-    : await getSameOrSeniorAnno({
-        pageSize: 5,
-        pageNum: 1,
-        level: 1,
-      });
-
+  const { data: announcementData } = await getHomeAnnouncement();
   return (
     <>
-      {(announcementData?.list?.length ?? 0) > 0 && (
+      {(announcementData?.length ?? 0) > 0 && (
         <AnnouncementDialog
-          data={announcementData ?? { list: [] }}
+          data={announcementData ?? []}
           isFirstLogin={isFirstLogin ?? "false"}
         />
       )}
