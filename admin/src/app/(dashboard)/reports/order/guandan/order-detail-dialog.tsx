@@ -27,6 +27,7 @@ import { useAtom, useAtomValue } from "jotai";
 import { useTranslations } from "next-intl";
 import { useEffect, useTransition } from "react";
 import { toast } from "sonner";
+import { Poker } from "@/components/poker";
 
 export function OrderDetailDialog() {
   const translation = useTranslations();
@@ -42,56 +43,41 @@ export function OrderDetailDialog() {
     }
   }, [id]);
 
-  function processAndSortCards(hand: string[]): string {
-    // 定义花色和点数的映射规则
-    const SUIT_MAPPING: { [key: string]: string } = {
-      S: "黑桃",
-      H: "红桃",
-      C: "梅花",
-      D: "方片",
-      X: "小王",
-      Y: "大王",
-    };
+  function processAndSortCards(hand: string[]) {
+    // 计算每张牌的出现次数
+    const cardCounts = hand.reduce((acc, card) => {
+      acc[card] = (acc[card] || 0) + 1;
+      return acc;
+    }, {} as Record<string, number>);
 
-    const RANK_MAPPING: { [key: string]: string } = {
-      "1": "A",
-      "11": "J",
-      "12": "Q",
-      "13": "K",
-      "14": "",
-    };
-
-    // 对手牌排序：优先按花色 (黑红梅方)，其次按点数从小到大
-    hand.sort((a, b) => {
-      const suitOrder = ["S", "H", "C", "D", "X", "Y"];
-      const aSuit = a[0];
-      const bSuit = b[0];
-      const aRank = Number.parseInt(a.slice(1));
-      const bRank = Number.parseInt(b.slice(1));
-      if (suitOrder.indexOf(aSuit) !== suitOrder.indexOf(bSuit)) {
-        return suitOrder.indexOf(aSuit) - suitOrder.indexOf(bSuit);
-      }
-      return aRank - bRank;
-    });
-
-    // 统计牌的数量
-    const cardCount: { [key: string]: number } = {};
-    hand.forEach((card) => {
+    // 按花色分组并排序
+    const groupedCards = hand.reduce((acc, card) => {
       const suit = card[0];
-      const rank = card.slice(1);
-      const suitName = SUIT_MAPPING[suit];
-      const rankName = RANK_MAPPING[rank] || rank; // 转换点数
+      if (!acc[suit]) {
+        acc[suit] = new Set();
+      }
+      acc[suit].add(card);
+      return acc;
+    }, {} as Record<string, Set<string>>);
 
-      const cardKey = `${suitName}${rankName}`;
-      cardCount[cardKey] = (cardCount[cardKey] || 0) + 1;
+    // 对每个花色组内的牌按数字大小排序，并添加重复计数
+    const sortedAndCounted = ['C', 'D', 'H', 'S', 'X', 'Y'].flatMap(suit => {
+      const cards = Array.from(groupedCards[suit] || []);
+      return cards
+        .sort((a, b) => Number.parseInt(a.slice(1)) - Number.parseInt(b.slice(1)))
+        .map(card => ({
+          card,
+          count: cardCounts[card]
+        }));
     });
 
-    // 格式化输出字符串
-    const result = Object.entries(cardCount)
-      .map(([card, count]) => `${card}*${count}`)
-      .join("，");
-
-    return result;
+    return sortedAndCounted.map(({ card, count }, index) => (
+      <Poker 
+        key={index + card}
+        poker={card}
+        suffix={count > 1 ? `*${count}` : "*1"}
+      />
+    ));
   }
 
   function handleChange({
@@ -149,10 +135,10 @@ export function OrderDetailDialog() {
               <TableBody>
                 {/* biome-ignore lint/style/useExplicitLengthCheck: <explanation> */}
                 {data?.list?.length ? (
-                  data?.list?.map((item, index) =>
+                  data?.list?.map((item) =>
                     item.details.map((detail) => (
-                      <TableRow key={Math.random()}>
-                        <TableCell>{index}</TableCell>
+                      <TableRow key={item.roundNumber + detail.memberId}>
+                        <TableCell>{item.roundNumber}</TableCell>
                         <TableCell>{item.bombCount}</TableCell>
                         <TableCell>
                           <Time time={item.createdAt} />
