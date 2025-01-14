@@ -1,9 +1,11 @@
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import { Label } from "@/components/ui/label";
 import type { UserBasicInfo } from "@/lib/types";
 import { useTranslations } from "next-intl";
 import { QRCodeSVG } from "qrcode.react";
@@ -24,34 +26,34 @@ export function AddDialog(props: Dialogprops) {
       <DialogContent>
         <DialogHeader>
           <DialogTitle>{t("recharge")}</DialogTitle>
+          <DialogDescription className="text-destructive">
+            {t("notice")}
+            {t("onlyAK")}
+          </DialogDescription>
         </DialogHeader>
-        <div className="flex flex-col gap-4 p-4 text-sm">
-          <div className="flex items-start gap-2 text-center">
-            <div className="text-muted-foreground w-20 text-end">
+        <div className="flex flex-col gap-4 px-4 text-sm">
+          <div className="flex items-center gap-2">
+            <Label className="text-muted-foreground w-20 text-end">
               {t("mainNet")}
-            </div>
+            </Label>
             <div>{data?.majorNetwork}</div>
           </div>
-          <div className="flex items-start gap-2 text-center">
-            <div className="text-muted-foreground w-20 text-end">
+          <div className="flex items-start gap-2">
+            <Label className="text-muted-foreground w-20 text-end">
               {t("qrCode")}
-            </div>
+            </Label>
             <div>
               <QRCodeSVG value={data?.rechargeAddress ?? ""} />
             </div>
           </div>
-          <div className="flex items-start gap-2 text-center">
-            <div className="text-muted-foreground w-20 text-end">
+          <div className="flex items-center gap-2">
+            <Label className="text-muted-foreground w-20 text-end">
               {t("depositAddress")}
-            </div>
-            <div className="flex w-[300px] items-center gap-2">
+            </Label>
+            <div className="flex items-center">
               {data?.rechargeAddress}
               <CopyButton address={data?.rechargeAddress ?? ""} />
             </div>
-          </div>
-          <div className="text-destructive flex items-start gap-2 text-center">
-            <div className="w-20 text-end">{t("notice")}</div>
-            <div className="text-left">{t("onlyAK")}</div>
           </div>
         </div>
       </DialogContent>
