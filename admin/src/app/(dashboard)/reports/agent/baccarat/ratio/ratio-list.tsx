@@ -14,6 +14,7 @@ import type { GameInfo, RatioReportRequestRecords } from "@/lib/types";
 import { formatNumber } from "@/lib/utils";
 import { getTranslations } from "next-intl/server";
 import { Suspense } from "react";
+import { Level } from "./level";
 
 export async function ListHeader() {
   "use cache";
@@ -137,9 +138,10 @@ export async function RatioList({
   const { data } = await getRatioReport(p);
   return (
     <div className="bg-background flex-1 p-4">
-      <div className="rounded-sm border">
+      <Level />
+      <div className="rounded-sm border mt-2">
         <Table className="table-fixed">
-          <ListHeader />
+          <ListHeader />   
           <Suspense fallback={<TableSkeleton length={5} colSpan={11} />}>
             <ListBody
               list={data?.list || []}
