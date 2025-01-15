@@ -1,6 +1,10 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
+import { agentBaccaratParentAgentIdAtom } from "@/store";
+import { useAtom } from "jotai";
 import { useTranslations } from "next-intl";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export default function DetailButton({
   parentAgentId,
@@ -10,25 +14,25 @@ export default function DetailButton({
   searchParams: { [key: string]: string | undefined };
 }) {
   const t = useTranslations("report.orderlist");
+  const router = useRouter();
+  const [parentAgentIds, setParentAgentId] = useAtom(
+    agentBaccaratParentAgentIdAtom,
+  );
   return (
-    <div>
-      <Button
-        variant="ghost"
-        className="text-primary hover:text-primary/80 hover:no-underline"
-        asChild
-      >
-        <Link
-          href={{
-            pathname: "/reports/agent/baccarat/ratio",
-            query: {
-              ...searchParams,
-              parentAgentId,
-            },
-          }}
-        >
-          {t("more")}
-        </Link>
-      </Button>
-    </div>
+    <Button
+      variant="ghost"
+      className="text-primary hover:text-primary/80 hover:no-underline"
+      onClick={() => {
+        setParentAgentId([...parentAgentIds, { searchParams, parentAgentId }]);
+        router.push(
+          `/reports/agent/baccarat/ratio?${new URLSearchParams({
+            ...searchParams,
+            parentAgentId,
+          })}`,
+        );
+      }}
+    >
+      {t("more")}
+    </Button>
   );
 }

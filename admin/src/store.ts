@@ -182,3 +182,11 @@ export const memberListBaccaratAgentIdAtom = atom<string>("");
 export const withdrawFeeAtom = atom<WithdrawFee>();
 
 export const collectionAddressDialogAtom = atom<boolean>(false);
+
+// 报表管理-会员报表-真人视讯-代理ID
+export const agentBaccaratParentAgentIdAtom = atom<
+  {
+    searchParams: { [key: string]: string | undefined };
+    parentAgentId: string;
+  }[]
+>([]);
