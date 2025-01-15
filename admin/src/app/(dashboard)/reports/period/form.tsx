@@ -12,11 +12,10 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import type { GameType } from "@/lib/types";
-import { makeDownload } from "@/lib/utils";
 import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useTransitionRouter } from "next-view-transitions";
-import { useSearchParams } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import { parseAsInteger, useQueryState, useQueryStates } from "nuqs";
 import { useTransition } from "react";
 import { toast } from "sonner";
@@ -55,6 +54,8 @@ export function Form({ list }: { list: GameType[] }) {
       toast.error(t("selectIssueOrDateRange"));
     }
   }
+
+  const pathname = usePathname();
 
   return (
     <div className="flex w-full flex-col gap-2">
@@ -119,9 +120,7 @@ export function Form({ list }: { list: GameType[] }) {
           </div>
         </div>
         <div className="float-right flex items-center gap-2 p-2">
-          <ReportDownloadBtn
-            handleDownload={() => makeDownload(searchParams, 100001)}
-          />
+          <ReportDownloadBtn searchParams={searchParams} pathname={pathname} />
           <Button
             variant="outline"
             disabled={isReset}

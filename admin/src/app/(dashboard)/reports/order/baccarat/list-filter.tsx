@@ -12,11 +12,10 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import type { GameInfo } from "@/lib/types";
-import { makeDownload } from "@/lib/utils";
 import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useTransitionRouter } from "next-view-transitions";
-import { useSearchParams } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import {
   parseAsInteger,
   parseAsString,
@@ -110,10 +109,10 @@ export function ListFilter({ gameList }: { gameList: GameInfo[] }) {
       toast.error(t("selectDateOrOrderNumber"));
     }
   };
+  const pathname = usePathname();
 
   return (
     <div className="bg-background flex flex-col gap-2 p-4">
-      {/* 第一行 */}
       <div className="flex items-center gap-4">
         <div className="flex items-center gap-2">
           <Select
@@ -121,10 +120,10 @@ export function ListFilter({ gameList }: { gameList: GameInfo[] }) {
             onValueChange={(value) => setBettingtime(value)}
             defaultValue="1"
           >
-            <SelectTrigger className="w-28">
+            <SelectTrigger className="w-32">
               <SelectValue placeholder={t("placeholderselect")} />
             </SelectTrigger>
-            <SelectContent>
+            <SelectContent className="w-32">
               <SelectItem value="1">{t("bettingtime")}</SelectItem>
               <SelectItem value="0">{t("settlementTime")}</SelectItem>
             </SelectContent>
@@ -133,7 +132,6 @@ export function ListFilter({ gameList }: { gameList: GameInfo[] }) {
         <DateRangeFilter enableTimeSelect />
       </div>
 
-      {/* 第二行 */}
       <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
         <div className="flex items-center gap-2">
           <Label className="shrink-0">{t("ordernumber")}</Label>
@@ -151,10 +149,10 @@ export function ListFilter({ gameList }: { gameList: GameInfo[] }) {
             onValueChange={(value) => setGameName(value)}
             defaultValue="1"
           >
-            <SelectTrigger className="w-32">
+            <SelectTrigger className="w-36">
               <SelectValue placeholder={t("placeholderselect")} />
             </SelectTrigger>
-            <SelectContent>
+            <SelectContent className="w-36">
               <SelectItem key="all" value="all">
                 {t("all")}
               </SelectItem>
@@ -214,15 +212,11 @@ export function ListFilter({ gameList }: { gameList: GameInfo[] }) {
         </div>
         <div className="flex items-center gap-2">
           <Label className="shrink-0">{t("amountfilter")}</Label>
-          <Select
-            onValueChange={(value) => handleFilterChange(value)}
-            defaultValue={operatorSymbol}
-            value={operatorSymbol}
-          >
+          <Select onValueChange={handleFilterChange} value={operatorSymbol}>
             <SelectTrigger className="w-20">
               <SelectValue placeholder={t("placeholderselect")} />
             </SelectTrigger>
-            <SelectContent>
+            <SelectContent className="min-w-20">
               <SelectItem value="0">&gt;=</SelectItem>
               <SelectItem value="1">&lt;=</SelectItem>
             </SelectContent>
@@ -244,10 +238,10 @@ export function ListFilter({ gameList }: { gameList: GameInfo[] }) {
             onValueChange={(value) => setSettlementstatus(value)}
             defaultValue="1"
           >
-            <SelectTrigger className="w-28">
+            <SelectTrigger className="w-24">
               <SelectValue placeholder={t("placeholderselect")} />
             </SelectTrigger>
-            <SelectContent>
+            <SelectContent className="min-w-24">
               <SelectItem value="all">{t("all")}</SelectItem>
               <SelectItem value="1">{t("notSettled")}</SelectItem>
               <SelectItem value="2">{t("settled")}</SelectItem>
@@ -264,13 +258,9 @@ export function ListFilter({ gameList }: { gameList: GameInfo[] }) {
           />
         </div>
       </div>
-
-      {/* 第四行 */}
-      <div className="flex items-center justify-end gap-4">
+      <div className="flex items-center justify-end">
         <div className="flex items-center gap-2">
-          <ReportDownloadBtn
-            handleDownload={() => makeDownload(searchParams, 100005)}
-          />
+          <ReportDownloadBtn searchParams={searchParams} pathname={pathname} />
           <Button variant="outline" disabled={isReset} onClick={handleReset}>
             {t("reset")}
           </Button>

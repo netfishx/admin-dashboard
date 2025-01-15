@@ -12,11 +12,10 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import type { GameInfo } from "@/lib/types";
-import { makeDownload } from "@/lib/utils";
 import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useTransitionRouter } from "next-view-transitions";
-import { useSearchParams } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import { parseAsInteger, useQueryState, useQueryStates } from "nuqs";
 import { useTransition } from "react";
 import { toast } from "sonner";
@@ -56,9 +55,10 @@ export function RatioForm({ gameList }: { gameList: GameInfo[] }) {
     router.replace("/reports/agent/baccarat/ratio");
   };
 
+  const pathname = usePathname();
+
   return (
     <div className="bg-background flex flex-col gap-2 p-4">
-      {/* 第一行 */}
       <div className="flex items-center gap-4">
         <div className="flex items-center gap-2">
           <Label className="shrink-0">{t("gameName")}</Label>
@@ -67,10 +67,10 @@ export function RatioForm({ gameList }: { gameList: GameInfo[] }) {
             onValueChange={(value) => setGameId(value)}
             defaultValue="all"
           >
-            <SelectTrigger className="w-28">
+            <SelectTrigger className="w-36">
               <SelectValue placeholder={t("placeholderselect")} />
             </SelectTrigger>
-            <SelectContent>
+            <SelectContent className="w-36">
               <SelectItem value="all">{t("all")}</SelectItem>
               {gameList.map((game) => (
                 <SelectItem key={game.gameId} value={game.gameId.toString()}>
@@ -85,8 +85,6 @@ export function RatioForm({ gameList }: { gameList: GameInfo[] }) {
           <DateRangeFilter enableTimeSelect={false} />
         </div>
       </div>
-
-      {/* 第二行 */}
       <div className="flex items-center gap-4">
         <div className="flex items-center gap-2">
           <Label className="shrink-0">{t("agentOrOwnerId")}</Label>
@@ -97,7 +95,6 @@ export function RatioForm({ gameList }: { gameList: GameInfo[] }) {
             placeholder={t("placeholderinput")}
           />
         </div>
-
         <div className="flex items-center gap-2">
           <Label className="shrink-0">{t("uperagentID")}</Label>
           <Input
@@ -108,11 +105,9 @@ export function RatioForm({ gameList }: { gameList: GameInfo[] }) {
           />
         </div>
       </div>
-      <div className="flex items-center justify-end gap-4">
+      <div className="flex items-center justify-end">
         <div className="flex items-center gap-2">
-          <ReportDownloadBtn
-            handleDownload={() => makeDownload(searchParams, 100003)}
-          />
+          <ReportDownloadBtn searchParams={searchParams} pathname={pathname} />
           <Button variant="outline" onClick={handleReset}>
             {t("reset")}
           </Button>

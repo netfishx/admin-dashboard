@@ -50,26 +50,12 @@ export function ListFilter({
 
   return (
     <div className="bg-background flex flex-col gap-2 p-4">
-      {/* First row */}
-      <div className="flex items-center gap-4">
+      <div className="flex items-center">
         <div className="flex items-center gap-2">
           <Label>{t("pickdate")}</Label>
           <DateRangeFilter enableTimeSelect={false} />
         </div>
-        {hasSearchPermission && (
-          <div className="flex items-center gap-4">
-            <Label className="shrink-0">{t("agentID")}</Label>
-            <Input
-              value={agentId || ""}
-              className="w-52"
-              onChange={(e) => setAgentId(e.target.value)}
-              placeholder={t("placeholderinput")}
-            />
-          </div>
-        )}
       </div>
-
-      {/* Second row */}
       <div className="flex items-center gap-4">
         <div className="flex items-center gap-2">
           <Label className="shrink-0">{t("roomType")}</Label>
@@ -88,10 +74,19 @@ export function ListFilter({
             </SelectContent>
           </Select>
         </div>
+        {hasSearchPermission && (
+          <div className="flex items-center gap-2">
+            <Label className="shrink-0">{t("agentID")}</Label>
+            <Input
+              value={agentId || ""}
+              className="w-52"
+              onChange={(e) => setAgentId(e.target.value)}
+              placeholder={t("placeholderinput")}
+            />
+          </div>
+        )}
       </div>
-
-      {/* Last row */}
-      <div className="flex items-center justify-end gap-4">
+      <div className="flex items-center justify-end">
         <div className="flex items-center gap-2">
           <Button
             className="rounded-md border border-gray-300 bg-white px-4 py-2 text-gray-700 hover:bg-gray-100"

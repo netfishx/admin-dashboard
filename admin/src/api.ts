@@ -1569,7 +1569,7 @@ export async function postUserInfoWithdrawVerify(data: {
 }
 
 // 生成下载任务
-export async function exportClick(data: {
+export async function exportTask(data: {
   exportButtonCode: number;
   queryParams: string;
 }) {
