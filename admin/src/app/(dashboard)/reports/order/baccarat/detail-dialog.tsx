@@ -70,11 +70,12 @@ export function Detaildialog(props: {
           {t("shareDetail")}
         </div>
         <ScrollArea className="w-[718px]">
-          <div className="mb-1 text-center flex flex-col gap-1">
-            {data?.revenueShare.map(
-              (item) =>
-                <span key={item.accountId}>{item.accountId} {Big(item.percent * 100).toFixed(2)}%</span>
-            )}
+          <div className="mb-1 flex flex-col gap-1 text-center">
+            {data?.revenueShare.map((item) => (
+              <span key={item.accountId}>
+                {item.accountId} {Big(item.percent * 100).toFixed(2)}%
+              </span>
+            ))}
           </div>
           <ScrollBar orientation="horizontal" />
         </ScrollArea>
