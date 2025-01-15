@@ -6,7 +6,7 @@ type ValidateMode = "create" | "edit";
 
 // 资金
 // 创建模式的表单schema
-export const createFormSchema = zfd
+const createFormSchema = zfd
   .formData({
     newPassword: zfd.text(moneyPasswordSchema),
     confirmPassword: zfd.text(moneyPasswordSchema),
@@ -52,7 +52,7 @@ export async function validateFormData(
 }
 
 // 编辑模式的表单schema
-export const loginEditFormSchema = zfd
+const loginEditFormSchema = zfd
   .formData({
     oldPassword: zfd.text(),
     newPassword: zfd.text(passwordSchema),

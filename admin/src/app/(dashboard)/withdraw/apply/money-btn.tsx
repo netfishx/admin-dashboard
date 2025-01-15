@@ -33,7 +33,7 @@ export function MoneyBtn({ data }: { data: ApplyData }) {
   );
 }
 
-export function MoneyDialog({
+function MoneyDialog({
   data,
   open,
   onOpenChange,

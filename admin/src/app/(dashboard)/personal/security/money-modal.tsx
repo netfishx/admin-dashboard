@@ -1,5 +1,6 @@
 "use client";
 import { bindFundPassword, editFundPassword } from "@/api";
+import { validateFormData } from "@/app/(dashboard)/personal/security/validate";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -17,7 +18,6 @@ import { useTransitionRouter } from "next-view-transitions";
 import Form from "next/form";
 import { useRef, useTransition } from "react";
 import { toast } from "sonner";
-import { validateFormData } from "./validate";
 
 export function MoneyModal({
   open,

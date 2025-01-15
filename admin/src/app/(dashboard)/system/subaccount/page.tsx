@@ -113,7 +113,6 @@ async function SubaccountTableWrapper({
                     <div className="flex justify-center">
                       <EditButton data={item} />
                       <LoginLogButton id={item.id ?? ""} />
-                      {/* <DeleteButton id={item.id ?? ""} /> */}
                     </div>
                   </TableCell>
                 </TableRow>

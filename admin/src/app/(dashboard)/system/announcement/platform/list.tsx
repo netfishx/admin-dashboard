@@ -79,7 +79,7 @@ export async function TableHeaderWrapper() {
   );
 }
 
-export async function TableBodyWrapper({
+async function TableBodyWrapper({
   data,
 }: {
   data?: PageData<AnnouncementList>;

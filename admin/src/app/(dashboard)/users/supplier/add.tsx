@@ -1,6 +1,7 @@
 "use client";
 
 import { addSupplier } from "@/api";
+import { validateFormData } from "@/app/(dashboard)/users/supplier/validata";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -20,7 +21,6 @@ import { useTransitionRouter } from "next-view-transitions";
 import Form from "next/form";
 import { type FormEvent, useRef, useState } from "react";
 import { toast } from "sonner";
-import { validateFormData } from "./validata";
 
 export function Add() {
   const t = useTranslations("users.supplier");

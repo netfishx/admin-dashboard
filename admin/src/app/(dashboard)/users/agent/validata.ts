@@ -3,7 +3,7 @@ import { z } from "zod";
 import { zfd } from "zod-form-data";
 
 // 创建模式的表单schema
-export const createFormSchema = zfd
+const createFormSchema = zfd
   .formData({
     username: zfd.text(usernameSchema),
     nickname: zfd.text(z.string({ message: "请输入代理昵称" })),
@@ -18,8 +18,7 @@ export const createFormSchema = zfd
 // 验证函数
 export async function validateFormData(formData: FormData) {
   try {
-    const { username, nickname, password } =
-      await createFormSchema.parse(formData);
+    const { username, nickname, password } = createFormSchema.parse(formData);
     return { success: true, data: { username, nickname, password } };
   } catch (error) {
     if (error instanceof z.ZodError) {

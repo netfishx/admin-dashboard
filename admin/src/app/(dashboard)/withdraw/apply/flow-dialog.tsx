@@ -82,7 +82,7 @@ export function FlowDialog({
   );
 }
 
-export function ListHeader() {
+function ListHeader() {
   const t = useTranslations("report.orderlist");
   return (
     <TableHeader>
