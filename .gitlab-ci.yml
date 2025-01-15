@@ -1,5 +1,5 @@
 admin-build:
-  stage: admin
+  stage: build
   tags:
     - build
   only:
@@ -10,7 +10,7 @@ admin-build:
     - docker push 172.31.46.150:5555/admin-006:$CI_COMMIT_SHORT_SHA
 
 landing-build:
-  stage: landing
+  stage: build
   tags:
     - build
   only:
@@ -21,7 +21,7 @@ landing-build:
     - docker push 172.31.46.150:5555/landing-006:$CI_COMMIT_SHORT_SHA
 
 admin-deploy:
-  stage: admin
+  stage: deploy
   tags:
     - deploy
   only:
@@ -35,7 +35,7 @@ admin-deploy:
     - docker run -d -p 3333:3000 --name admin-006 --network demo --restart unless-stopped 18.163.249.24:5555/admin-006:$CI_COMMIT_SHORT_SHA
 
 landing-deploy:
-  stage: landing
+  stage: deploy
   tags:
     - deploy
   only:
