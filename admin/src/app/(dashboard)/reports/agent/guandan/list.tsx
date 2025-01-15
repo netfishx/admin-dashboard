@@ -34,10 +34,10 @@ export async function ListHeader() {
         {hasSearchPermission && (
           <TableHead className="w-60">{t("agentID")}</TableHead>
         )}
-        <TableHead className="w-60">{t("gameName")}</TableHead>
-        <TableHead className="w-60">{t("roomType")}</TableHead>
-        <TableHead className="w-60">{t("issueNumber")}</TableHead>
-        <TableHead className="w-60">{t("settledAmount")}</TableHead>
+        <TableHead className="w-40">{t("gameName")}</TableHead>
+        <TableHead className="w-40">{t("roomType")}</TableHead>
+        <TableHead className="w-20">{t("issueNumber")}</TableHead>
+        <TableHead className="w-32">{t("settledAmount")}</TableHead>
         <TableHead className="bg-muted sticky right-0 w-24 p-0">
           <div className="shadow-l flex h-full items-center justify-center px-4">
             {t("action")}
