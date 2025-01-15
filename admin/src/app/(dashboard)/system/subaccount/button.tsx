@@ -7,8 +7,6 @@ import {
   loginLogDataAtom,
   loginLogModalAtom,
   subaccountAtom,
-  subaccountDeleteAtom,
-  subaccountDeleteDialogAtom,
   subaccountDialogAtom,
   subaccountIdAtom,
 } from "@/store";
@@ -34,24 +32,6 @@ export function AddButton() {
   );
 }
 
-export function DeleteButton({ id }: { id: string }) {
-  const t = useTranslations("system.subaccount");
-  const setData = useSetAtom(subaccountDeleteAtom);
-  const setOpen = useSetAtom(subaccountDeleteDialogAtom);
-  return (
-    <Button
-      variant="ghost"
-      size="sm"
-      className="text-destructive hover:text-destructive/80 text-sm"
-      onClick={() => {
-        setData(id);
-        setOpen(true);
-      }}
-    >
-      {t("delete")}
-    </Button>
-  );
-}
 export function EditButton({ data }: { data: Subaccount }) {
   const t = useTranslations("system.subaccount");
   const setOpen = useSetAtom(subaccountDialogAtom);

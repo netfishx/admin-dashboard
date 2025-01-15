@@ -6,7 +6,7 @@ type ValidateMode = "create" | "edit";
 
 // 资金
 // 创建模式的表单schema
-export const createFormSchema = zfd
+const createFormSchema = zfd
   .formData({
     newPassword: zfd.text(moneyPasswordSchema),
     confirmPassword: zfd.text(moneyPasswordSchema),
@@ -51,19 +51,8 @@ export async function validateFormData(
   }
 }
 
-// 登录密码
-export const loginCreateFormSchema = zfd
-  .formData({
-    newPassword: zfd.text(passwordSchema),
-    confirmPassword: zfd.text(passwordSchema),
-  })
-  .refine((data) => data.newPassword === data.confirmPassword, {
-    message: "两次输入的密码不一致",
-    path: ["confirmPassword"],
-  });
-
 // 编辑模式的表单schema
-export const loginEditFormSchema = zfd
+const loginEditFormSchema = zfd
   .formData({
     oldPassword: zfd.text(),
     newPassword: zfd.text(passwordSchema),

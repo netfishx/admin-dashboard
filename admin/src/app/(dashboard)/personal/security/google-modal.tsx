@@ -202,7 +202,7 @@ export function GoogleModal({
                   <span className="text-primary text-xs">{secret}</span>
                   <Button
                     variant="ghost"
-                    className="size-4"
+                    className="size-6"
                     onClick={() => {
                       copyToClipboard(secret);
                       toast.success(t("copySuccess"));

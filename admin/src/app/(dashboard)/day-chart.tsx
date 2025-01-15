@@ -7,7 +7,6 @@ import {
 import { formatNumber } from "@/lib/utils";
 import { useTranslations } from "next-intl";
 import { Label, Legend, Pie, PieChart } from "recharts";
-export const description = "A stacked area chart";
 
 export function DayChart({
   title,

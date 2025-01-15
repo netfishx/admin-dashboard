@@ -12,7 +12,6 @@ import {
   Root,
   ScrollDownButton,
   ScrollUpButton,
-  Separator,
   Trigger,
   Value,
   Viewport,
@@ -157,19 +156,5 @@ export function SelectItem({
       </span>
       <ItemText>{children}</ItemText>
     </Item>
-  );
-}
-
-export function SelectSeparator({
-  ref,
-  className,
-  ...props
-}: ComponentProps<typeof Separator>) {
-  return (
-    <Separator
-      ref={ref}
-      className={cn("bg-muted -mx-1 my-1 h-px", className)}
-      {...props}
-    />
   );
 }

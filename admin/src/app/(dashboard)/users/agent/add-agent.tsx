@@ -1,6 +1,7 @@
 "use client";
 
 import { addAgent } from "@/api";
+import { validateFormData } from "@/app/(dashboard)/users/agent/validata";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -23,7 +24,6 @@ import Form from "next/form";
 import { useEffect, useRef, useState, useTransition } from "react";
 import type { FormEvent } from "react";
 import { toast } from "sonner";
-import { validateFormData } from "./validata";
 
 export function AddAgent() {
   const t = useTranslations("users.agents");
