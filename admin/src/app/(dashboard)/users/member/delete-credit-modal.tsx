@@ -115,6 +115,7 @@ export function DeleteCreditModal() {
                   type="number"
                   name="amount"
                   required
+                  min={0}
                   step={0.01}
                   max={Math.min(
                     Number(memberInfoData?.debtAmount ?? 0),
