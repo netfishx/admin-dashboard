@@ -127,7 +127,7 @@ export async function List({
   }
   const p = {
     ...params,
-    roomType: Number(params?.roomType),
+    roomType: Number(params?.roomType) || null,
     pageNum: Number(params?.pageNum || 1),
     pageSize: Number(params?.pageSize || 10),
     startTime: Number(params?.startTime || 0),
