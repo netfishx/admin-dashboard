@@ -30,6 +30,7 @@ export default async function Page({
       <Suspense
         fallback={
           <div className="bg-background flex-1 p-4">
+            <div className="h-6" />
             <div className="rounded-sm border">
               <Table className="table-fixed">
                 <ListHeader />

@@ -7,43 +7,53 @@ import {
   BreadcrumbList,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
-import { agentBaccaratParentAgentIdAtom } from "@/store";
-import { useAtom } from "jotai";
 import { ListRestart } from "lucide-react";
 import Link from "next/link";
 
-export function Level() {
+export function Level({
+  searchParams,
+}: { searchParams: { [key: string]: string | undefined } }) {
   const r = "/reports/agent/baccarat/ratio";
-  const [parentAgentIds, setParentAgentIds] = useAtom(
-    agentBaccaratParentAgentIdAtom,
-  );
+  const parentAgentIds = searchParams.ids ? searchParams.ids.split(",") : [];
+  console.info(parentAgentIds);
+
   return (
-    <Breadcrumb>
+    <Breadcrumb className="h-6">
       <BreadcrumbList>
-        <BreadcrumbItem>
-          <BreadcrumbLink asChild>
-            <Link href={r} onClick={() => setParentAgentIds([])}>
-              <ListRestart className="w-4 h-4" />
-            </Link>
-          </BreadcrumbLink>
-        </BreadcrumbItem>
+        {parentAgentIds.length > 0 && (
+          <BreadcrumbItem>
+            <BreadcrumbLink asChild>
+              <Link href={r}>
+                <ListRestart className="w-4 h-4" />
+              </Link>
+            </BreadcrumbLink>
+          </BreadcrumbItem>
+        )}
         {parentAgentIds.map((item, index) => (
-          <div className="inline-flex items-center" key={item.parentAgentId}>
+          <div className="inline-flex items-center" key={item}>
             <BreadcrumbSeparator />
             <BreadcrumbItem>
-              <BreadcrumbLink asChild>
-                <Link
-                  onClick={() => {
-                    setParentAgentIds(parentAgentIds.splice(0, index + 1));
-                  }}
-                  href={`${r}?${new URLSearchParams({
-                    ...item.searchParams,
-                    parentAgentId: item.parentAgentId,
-                  })}`}
-                >
-                  {item.parentAgentId}
-                </Link>
-              </BreadcrumbLink>
+              {index < parentAgentIds.length - 1 ? (
+                <BreadcrumbLink asChild>
+                  <Link
+                    href={`${r}?${new URLSearchParams({
+                      ...searchParams,
+                      parentAgentId: item,
+                      ids:
+                        searchParams.ids
+                          ?.split(",")
+                          .slice(0, index + 1)
+                          .join(",") ?? "",
+                    })}`}
+                  >
+                    {item}
+                  </Link>
+                </BreadcrumbLink>
+              ) : (
+                <BreadcrumbLink className="text-foreground">
+                  {item}
+                </BreadcrumbLink>
+              )}
             </BreadcrumbItem>
           </div>
         ))}
