@@ -2,15 +2,11 @@ import { getGuandanGames } from "@/api";
 import TableSkeleton from "@/components/table-skeleton";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Table } from "@/components/ui/table";
-import type { PokerReportRequestParams } from "@/lib/types";
 import { getSession } from "@/session";
 import { Suspense } from "react";
 import { List, ListHeader } from "./list";
 import { ListFilter } from "./list-filter";
 
-interface CommonWrapperProps {
-  searchParams: Promise<PokerReportRequestParams>;
-}
 
 async function ListFilterWrapper() {
   const session = await getSession();
@@ -21,7 +17,11 @@ async function ListFilterWrapper() {
   return <ListFilter hasSearchPermission={!!hasSearchPermission} />;
 }
 
-export default async function Page({ searchParams }: CommonWrapperProps) {
+export default async function Page({
+  searchParams,
+}: {
+  searchParams: Promise<{ [key: string]: string | undefined }>;
+}) {
   const { startTime, endTime } = await searchParams;
   const gameListResp = await getGuandanGames();
   return (
