@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@tailwindcss/vite": "next",
-    "astro": "^5.1.6",
+    "astro": "^5.1.7",
     "embla-carousel": "^8.5.2",
     "embla-carousel-autoplay": "^8.5.2",
     "tailwindcss": "next"
