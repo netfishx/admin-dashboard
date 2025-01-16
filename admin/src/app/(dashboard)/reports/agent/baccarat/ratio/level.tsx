@@ -15,7 +15,6 @@ export function Level({
 }: { searchParams: { [key: string]: string | undefined } }) {
   const r = "/reports/agent/baccarat/ratio";
   const parentAgentIds = searchParams.ids ? searchParams.ids.split(",") : [];
-  console.info(parentAgentIds);
 
   return (
     <Breadcrumb className="h-6">
