@@ -27,7 +27,7 @@ export function ListFilter({
   const [agentId, setAgentId] = useQueryState("agentId", {
     defaultValue: "",
   });
-  const [roomId, setRoomId] = useQueryState("roomId", {
+  const [roomType, setRoomType] = useQueryState("roomType", {
     defaultValue: "all",
   });
 
@@ -60,8 +60,8 @@ export function ListFilter({
         <div className="flex items-center gap-2">
           <Label className="shrink-0">{t("roomType")}</Label>
           <Select
-            value={roomId || ""}
-            onValueChange={(value) => setRoomId(value)}
+            value={roomType || ""}
+            onValueChange={(value) => setRoomType(value)}
             defaultValue="all"
           >
             <SelectTrigger className="w-28">
@@ -69,8 +69,8 @@ export function ListFilter({
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="all">{t("all")}</SelectItem>
-              <SelectItem value="1">{t("gameHall")}</SelectItem>
-              <SelectItem value="2">{t("club")}</SelectItem>
+              <SelectItem value="-1">{t("gameHall")}</SelectItem>
+              <SelectItem value="1">{t("club")}</SelectItem>
             </SelectContent>
           </Select>
         </div>
@@ -98,7 +98,6 @@ export function ListFilter({
             {isPending && <Loader2 className="animate-spin" />}
             {t("search")}
           </Button>
-          {/* <Button disabled={isPending}>{t("download")}</Button> */}
         </div>
       </div>
     </div>
