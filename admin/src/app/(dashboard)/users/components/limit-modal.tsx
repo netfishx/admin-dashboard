@@ -43,7 +43,7 @@ export function LimitModal({ userId }: { userId: string }) {
   const t = useTranslations("users.agents");
   const [isPending, startTransition] = useTransition();
   const list = useAtomValue(limitGamesAtom);
-  const [gameId, setGameId] = useState<number>();
+  const [gameId, setGameId] = useState<number | undefined>();
   const [data, setData] = useAtom(limitDataAtom);
   const [changedItems, setChangedItems] = useState<
     Record<number, Record<"minBet" | "maxBet" | "maxBetPeriod", number>>
@@ -53,7 +53,7 @@ export function LimitModal({ userId }: { userId: string }) {
   const router = useTransitionRouter();
   const [limitIsLoading, startLimitLoading] = useTransition();
 
-  function handleChange() {
+  function handleChange(gameId: number) {
     if (gameId && userId) {
       startLimitLoading(async () => {
         const { code, data, message } = await getGameOdds({ gameId, userId });
@@ -142,31 +142,37 @@ export function LimitModal({ userId }: { userId: string }) {
               <LimitSkeleton />
             ) : (
               <TableBody>
-                {/* biome-ignore lint/style/useExplicitLengthCheck: <explanation> */}
-                {data?.length ? (
+                {data && data.length > 0 ? (
                   data.map((item) => (
                     <TableRow key={`${item.oddsType}-${item.betType}`}>
                       <TableCell>{item.oddsLabel}</TableCell>
                       <TableCell>
-                        <Input
-                          defaultValue={item.minBet?.toString() ?? ""}
-                          type="number"
-                          disabled={!item.canEdit}
-                          className="w-40"
-                          required
-                          min={1}
-                          step={1}
-                          onChange={(e) =>
-                            handleLimitChange(
-                              item.betType,
-                              "minBet",
-                              Number(e.target.value),
-                            )
-                          }
-                          onBlur={(e) => {
-                            setIsValidateData(e.target.reportValidity());
-                          }}
-                        />
+                        <div className="flex flex-row items-center gap-1">
+                          <Input
+                            defaultValue={item.minBet?.toString() ?? ""}
+                            type="number"
+                            disabled={!item.canEdit}
+                            className="w-40"
+                            required
+                            min={item.minBetLimit ? item.minBetLimit : 1}
+                            step={1}
+                            onChange={(e) =>
+                              handleLimitChange(
+                                item.betType,
+                                "minBet",
+                                Number(e.target.value),
+                              )
+                            }
+                            onBlur={(e) => {
+                              setIsValidateData(e.target.reportValidity());
+                            }}
+                          />
+                          {item.minBetLimit ? (
+                            <span className="text-destructive w-20 shrink-0">
+                              ({item.minBetLimit})
+                            </span>
+                          ) : null}
+                        </div>
                       </TableCell>
                       <TableCell>
                         <div className="flex flex-row items-center gap-1">
@@ -190,9 +196,11 @@ export function LimitModal({ userId }: { userId: string }) {
                               setIsValidateData(e.target.reportValidity());
                             }}
                           />
-                          <span className="text-destructive">
-                            ({item.maxBetLimit})
-                          </span>
+                          {item.maxBetLimit ? (
+                            <span className="text-destructive w-20 shrink-0">
+                              ({item.maxBetLimit})
+                            </span>
+                          ) : null}
                         </div>
                       </TableCell>
                       <TableCell>
@@ -217,9 +225,11 @@ export function LimitModal({ userId }: { userId: string }) {
                               setIsValidateData(e.target.reportValidity());
                             }}
                           />
-                          <span className="text-destructive">
-                            ({item.maxBetPeriodLimit})
-                          </span>
+                          {item.maxBetPeriodLimit ? (
+                            <span className="text-destructive w-20 shrink-0">
+                              ({item.maxBetPeriodLimit})
+                            </span>
+                          ) : null}
                         </div>
                       </TableCell>
                     </TableRow>
@@ -265,7 +275,7 @@ function Form({
   list: GameConfig[];
   setGameId: (gameId: number) => void;
   gameId: number | undefined;
-  handleChange: () => void;
+  handleChange: (gameId: number) => void;
 }) {
   const t = useTranslations("users.agents");
   return (
@@ -275,9 +285,10 @@ function Form({
         <Select
           value={gameId?.toString() || list[0]?.gameId.toString() || ""}
           onValueChange={(value) => {
+            const newGameId = Number(value);
+            setGameId(newGameId);
             startTransition(() => {
-              setGameId(Number(value));
-              handleChange();
+              handleChange(newGameId);
             });
           }}
         >

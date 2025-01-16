@@ -137,6 +137,7 @@ export type GameOdds = {
   odds?: string; // 赔率
   betType: number; // 投注类型
   minBet?: number; // 最低投注金额
+  minBetLimit?: number | null; // 最低投注金额上限
   maxBet?: number; // 最大投注金额
   maxBetLimit?: number | null; // 最大投注金额上限
   maxBetPeriod?: number; // 每局最大投注额度
