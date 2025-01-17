@@ -12,7 +12,6 @@ import {
 } from "@/components/ui/table";
 import type {
   GameInfo,
-  PokerReportRequestParams,
   PokerReportRequestRecords,
 } from "@/lib/types";
 import { formatNumber } from "@/lib/utils";
@@ -21,6 +20,7 @@ import { nanoid } from "nanoid";
 import { getTranslations } from "next-intl/server";
 import { Suspense } from "react";
 import DetailButton from "./detail-button";
+import { ROOM_TYPE } from "@/lib/dict";
 export async function ListHeader() {
   const t = await getTranslations("report.agent");
   const session = await getSession();
@@ -63,15 +63,6 @@ async function ListBody({
     "agent_report_guandan_search",
   );
 
-  const handleRoomType = (roomType: number) => {
-    if (roomType === 1) {
-      return t("gameHall");
-    }
-    if (roomType === 2) {
-      return t("club");
-    }
-    return "";
-  };
 
   return (
     <TableBody>
@@ -82,7 +73,11 @@ async function ListBody({
             <TableCell>
               {gameList.find((i) => i.gameType === item.gameType)?.gameName}
             </TableCell>
-            <TableCell>{handleRoomType(Number(item.roomType))}</TableCell>
+            <TableCell>{t(
+                ROOM_TYPE.find(
+                  (type) => type.value === item.roomType,
+                )?.label,
+              )}</TableCell>
             <TableCell>{item.issueAmount}</TableCell>
             <TableCell>
               {formatNumber(Number(item.settledAmount) || 0)}
@@ -112,7 +107,7 @@ export async function List({
   searchParams,
   gameList,
 }: {
-  searchParams: Promise<PokerReportRequestParams>;
+  searchParams: Promise<{ [key: string]: string | undefined }>;
   gameList: GameInfo[];
 }) {
   const t = await getTranslations("report.agent");
@@ -132,6 +127,7 @@ export async function List({
   }
   const p = {
     ...params,
+    roomType: Number(params?.roomType) || null,
     pageNum: Number(params?.pageNum || 1),
     pageSize: Number(params?.pageSize || 10),
     startTime: Number(params?.startTime || 0),

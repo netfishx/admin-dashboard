@@ -326,3 +326,14 @@ export const SETTLE_RESULT = [
     label: "lose",
   },
 ];
+// 代理报表-棋牌 房间类型
+export const ROOM_TYPE = [
+  {
+    value: -1,
+    label: "gameHall",
+  },
+  {
+    value: 1,
+    label: "club",
+  },
+];

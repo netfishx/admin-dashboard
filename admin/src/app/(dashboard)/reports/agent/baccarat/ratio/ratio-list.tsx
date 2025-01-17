@@ -126,6 +126,7 @@ export async function RatioList({
   if (!(params?.startTime && params?.endTime)) {
     return (
       <div className="bg-background flex-1 p-4">
+        <div className="h-6" />
         <div className="rounded-sm border">
           <Table className="table-fixed">
             <ListHeader />
@@ -138,10 +139,10 @@ export async function RatioList({
   const { data } = await getRatioReport(p);
   return (
     <div className="bg-background flex-1 p-4">
-      <Level />
-      <div className="rounded-sm border mt-2">
+      <Level searchParams={params} />
+      <div className="rounded-sm border">
         <Table className="table-fixed">
-          <ListHeader />   
+          <ListHeader />
           <Suspense fallback={<TableSkeleton length={5} colSpan={11} />}>
             <ListBody
               list={data?.list || []}
