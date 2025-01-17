@@ -6,7 +6,7 @@
     "dev": "next dev --turbopack|pino-pretty",
     "build": "next build",
     "start": "next start",
-    "lint": "biome check --fix --unsafe ./src"
+    "lint": "biome check --fix --unsafe ."
   },
   "dependencies": {
     "@date-fns/tz": "^1.2.0",
