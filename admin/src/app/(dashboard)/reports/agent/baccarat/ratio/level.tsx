@@ -12,7 +12,9 @@ import Link from "next/link";
 
 export function Level({
   searchParams,
-}: { searchParams: { [key: string]: string | undefined } }) {
+}: {
+  searchParams: { [key: string]: string | undefined };
+}) {
   const r = "/reports/agent/baccarat/ratio";
   const parentAgentIds = searchParams.ids ? searchParams.ids.split(",") : [];
 
@@ -23,7 +25,7 @@ export function Level({
           <BreadcrumbItem>
             <BreadcrumbLink asChild>
               <Link href={r}>
-                <ListRestart className="w-4 h-4" />
+                <ListRestart className="h-4 w-4" />
               </Link>
             </BreadcrumbLink>
           </BreadcrumbItem>

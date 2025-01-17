@@ -10,17 +10,14 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import type {
-  GameInfo,
-  PokerReportRequestRecords,
-} from "@/lib/types";
+import { ROOM_TYPE } from "@/lib/dict";
+import type { GameInfo, PokerReportRequestRecords } from "@/lib/types";
 import { formatNumber } from "@/lib/utils";
 import { getSession } from "@/session";
 import { nanoid } from "nanoid";
 import { getTranslations } from "next-intl/server";
 import { Suspense } from "react";
 import DetailButton from "./detail-button";
-import { ROOM_TYPE } from "@/lib/dict";
 export async function ListHeader() {
   const t = await getTranslations("report.agent");
   const session = await getSession();
@@ -63,7 +60,6 @@ async function ListBody({
     "agent_report_guandan_search",
   );
 
-
   return (
     <TableBody>
       {list?.length > 0 ? (
@@ -73,11 +69,9 @@ async function ListBody({
             <TableCell>
               {gameList.find((i) => i.gameType === item.gameType)?.gameName}
             </TableCell>
-            <TableCell>{t(
-                ROOM_TYPE.find(
-                  (type) => type.value === item.roomType,
-                )?.label,
-              )}</TableCell>
+            <TableCell>
+              {t(ROOM_TYPE.find((type) => type.value === item.roomType)?.label)}
+            </TableCell>
             <TableCell>{item.issueAmount}</TableCell>
             <TableCell>
               {formatNumber(Number(item.settledAmount) || 0)}

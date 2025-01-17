@@ -7,7 +7,6 @@ import { Suspense } from "react";
 import { List, ListHeader } from "./list";
 import { ListFilter } from "./list-filter";
 
-
 async function ListFilterWrapper() {
   const session = await getSession();
   const permissions = session?.permissions;
@@ -28,7 +27,7 @@ export default async function Page({
     <div className="flex w-full flex-col gap-2">
       <Suspense
         fallback={
-          <div className="bg-background flex flex-col p-4 gap-2">
+          <div className="bg-background flex flex-col gap-2 p-4">
             <Skeleton />
             <Skeleton />
             <Skeleton />
