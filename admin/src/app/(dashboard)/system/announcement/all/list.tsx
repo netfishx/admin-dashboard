@@ -59,7 +59,7 @@ export async function TableHeaderWrapper() {
       <TableRow className="bg-muted">
         <TableHead className="w-48">{t("endTime")}</TableHead>
         <TableHead className="w-48">{t("type")}</TableHead>
-        <TableHead className="w-[450px]">{t("content")}</TableHead>
+        <TableHead className="w-120">{t("content")}</TableHead>
       </TableRow>
     </TableHeader>
   );
