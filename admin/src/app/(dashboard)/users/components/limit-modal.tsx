@@ -131,7 +131,7 @@ export function LimitModal({ userId }: { userId: string }) {
         <div className="max-h-[50dvh] overflow-auto rounded-sm border">
           <ScrollableTable className="relative table-fixed">
             <TableHeader>
-              <TableRow className="bg-muted sticky top-0 z-10">
+              <TableRow className="sticky top-0 z-10 bg-muted">
                 <TableHead className="w-32">{t("name")}</TableHead>
                 <TableHead>{t("min")}</TableHead>
                 <TableHead>{t("max")}</TableHead>
@@ -168,7 +168,7 @@ export function LimitModal({ userId }: { userId: string }) {
                             }}
                           />
                           {item.minBetLimit ? (
-                            <span className="text-destructive w-20 shrink-0">
+                            <span className="w-20 shrink-0 text-destructive">
                               ({item.minBetLimit})
                             </span>
                           ) : null}
@@ -197,7 +197,7 @@ export function LimitModal({ userId }: { userId: string }) {
                             }}
                           />
                           {item.maxBetLimit ? (
-                            <span className="text-destructive w-20 shrink-0">
+                            <span className="w-20 shrink-0 text-destructive">
                               ({item.maxBetLimit})
                             </span>
                           ) : null}
@@ -226,7 +226,7 @@ export function LimitModal({ userId }: { userId: string }) {
                             }}
                           />
                           {item.maxBetPeriodLimit ? (
-                            <span className="text-destructive w-20 shrink-0">
+                            <span className="w-20 shrink-0 text-destructive">
                               ({item.maxBetPeriodLimit})
                             </span>
                           ) : null}

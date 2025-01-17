@@ -11,7 +11,7 @@ export function Textarea({
   return (
     <textarea
       className={cn(
-        "border-input shadow-xs focus-visible:outline-hidden focus-visible:ring-ring flex min-h-[60px] w-full rounded-md border bg-transparent px-3 py-2 text-sm focus-visible:ring disabled:cursor-not-allowed disabled:opacity-50",
+        "flex min-h-[60px] w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-xs focus-visible:outline-hidden focus-visible:ring focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50",
         className,
       )}
       ref={ref}

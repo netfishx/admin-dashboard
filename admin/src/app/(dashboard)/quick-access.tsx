@@ -5,7 +5,7 @@ import { Link } from "next-view-transitions";
 export function QuickAccess() {
   const t = useTranslations();
   return (
-    <div className="bg-card rounded-sm p-4">
+    <div className="rounded-sm bg-card p-4">
       {/* 代理管理 会员管理 真人代理报表 棋牌代理报表 帐变记录 按期汇总报表 */}
       <div className="mb-4 text-base">{t("quickAccess")}</div>
       <div className="grid grid-cols-3 gap-4">
@@ -14,7 +14,7 @@ export function QuickAccess() {
           href="/users/agent"
           className="flex flex-col items-center justify-center gap-2"
         >
-          <div className="bg-accent flex size-9 items-center justify-center rounded-sm">
+          <div className="flex size-9 items-center justify-center rounded-sm bg-accent">
             <Users className="h-4 w-4" />
           </div>
           <p className="text-xs">{t("agentManagement")}</p>
@@ -23,7 +23,7 @@ export function QuickAccess() {
           href="/users/member"
           className="flex flex-col items-center justify-center gap-2"
         >
-          <div className="bg-accent flex size-9 items-center justify-center rounded-sm">
+          <div className="flex size-9 items-center justify-center rounded-sm bg-accent">
             <Users className="h-4 w-4" />
           </div>
           <p className="text-xs">{t("memberManagement")}</p>
@@ -32,7 +32,7 @@ export function QuickAccess() {
           href="/reports/agent/baccarat/ratio"
           className="flex flex-col items-center justify-center gap-2"
         >
-          <div className="bg-accent flex size-9 items-center justify-center rounded-sm">
+          <div className="flex size-9 items-center justify-center rounded-sm bg-accent">
             <FileText className="h-4 w-4" />
           </div>
           <p className="text-xs">{t("agentReportBaccarat")}</p>
@@ -42,7 +42,7 @@ export function QuickAccess() {
           href="/reports/agent/guandan"
           className="flex flex-col items-center justify-center gap-2"
         >
-          <div className="bg-accent flex size-9 items-center justify-center rounded-sm">
+          <div className="flex size-9 items-center justify-center rounded-sm bg-accent">
             <FileText className="h-4 w-4" />
           </div>
           <p className="text-xs">{t("agentReportGuandan")}</p>
@@ -51,7 +51,7 @@ export function QuickAccess() {
           href="/reports/change"
           className="flex flex-col items-center justify-center gap-2"
         >
-          <div className="bg-accent flex size-9 items-center justify-center rounded-sm">
+          <div className="flex size-9 items-center justify-center rounded-sm bg-accent">
             <FileText className="h-4 w-4" />
           </div>
           <p className="text-xs">{t("accountChangeRecord")}</p>
@@ -60,7 +60,7 @@ export function QuickAccess() {
           href="/reports/period"
           className="flex flex-col items-center justify-center gap-2"
         >
-          <div className="bg-accent flex size-9 items-center justify-center rounded-sm">
+          <div className="flex size-9 items-center justify-center rounded-sm bg-accent">
             <FileText className="h-4 w-4" />
           </div>
           <p className="text-xs">{t("periodReport")}</p>

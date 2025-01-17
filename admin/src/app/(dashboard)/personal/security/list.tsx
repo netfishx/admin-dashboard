@@ -35,16 +35,16 @@ export async function List() {
   return (
     <>
       <SecurityProgress value={percent} />
-      <div className="bg-background flex flex-1 flex-col gap-4 p-4">
+      <div className="flex flex-1 flex-col gap-4 bg-background p-4">
         {permissions.includes("edit_password") && (
           <div className="flex items-center justify-between">
             <div className="flex-1">
               <div className="flex items-center gap-24">
-                <span className="text-sm font-medium">
+                <span className="font-medium text-sm">
                   {t("loginPassword")}
                 </span>
-                <CheckCircle2 className="text-chart-5 h-5 w-5" />
-                <span className="text-muted-foreground mt-1 text-sm">
+                <CheckCircle2 className="h-5 w-5 text-chart-5" />
+                <span className="mt-1 text-muted-foreground text-sm">
                   {t("loginPasswordDes")}
                 </span>
               </div>
@@ -59,7 +59,7 @@ export async function List() {
           <div className="flex items-center justify-between">
             <div className="flex-1">
               <div className="flex items-center gap-24">
-                <span className="text-sm font-medium">
+                <span className="font-medium text-sm">
                   {t("googleVerification")}
                 </span>
                 <CheckCircle2
@@ -70,7 +70,7 @@ export async function List() {
                       : "text-muted-foreground",
                   )}
                 />
-                <span className="text-muted-foreground mt-1 text-sm">
+                <span className="mt-1 text-muted-foreground text-sm">
                   {t("googleVerificationDes")}
                 </span>
               </div>
@@ -89,7 +89,7 @@ export async function List() {
           <div className="flex items-center justify-between">
             <div className="flex-1">
               <div className="flex items-center gap-24">
-                <span className="text-sm font-medium">{t("fundPassword")}</span>
+                <span className="font-medium text-sm">{t("fundPassword")}</span>
                 <CheckCircle2
                   className={cn(
                     "h-5 w-5",
@@ -98,7 +98,7 @@ export async function List() {
                       : "text-muted-foreground",
                   )}
                 />
-                <span className="text-muted-foreground mt-1 text-sm">
+                <span className="mt-1 text-muted-foreground text-sm">
                   {t("fundPasswordDes")}
                 </span>
               </div>

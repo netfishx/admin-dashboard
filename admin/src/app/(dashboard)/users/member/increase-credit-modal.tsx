@@ -88,13 +88,13 @@ export function IncreaseCreditModal() {
           </DialogHeader>
           <div className="divide-y rounded-lg border indent-4">
             <div className="grid grid-cols-3">
-              <div className="bg-muted text-muted-foreground border-r py-2">
+              <div className="border-r bg-muted py-2 text-muted-foreground">
                 {t("memberUsername")}
               </div>
               <div className="py-2">{memberInfoData?.username}</div>
             </div>
             <div className="grid grid-cols-3">
-              <div className="bg-muted text-muted-foreground border-r py-2">
+              <div className="border-r bg-muted py-2 text-muted-foreground">
                 {t("usedCreditAmount")}
               </div>
               <div className="py-2">
@@ -102,7 +102,7 @@ export function IncreaseCreditModal() {
               </div>
             </div>
             <div className="grid grid-cols-3">
-              <div className="bg-muted text-muted-foreground border-r py-2">
+              <div className="border-r bg-muted py-2 text-muted-foreground">
                 {t("usedBorrowAmount")}
               </div>
               <div className="py-2">
@@ -116,7 +116,7 @@ export function IncreaseCreditModal() {
             <div className="flex flex-col gap-2 rounded-lg border p-4 text-center">
               <div className="flex flex-col gap-1">
                 <div className="flex items-center gap-4">
-                  <Label className="text-muted-foreground w-28 shrink-0 text-right">
+                  <Label className="w-28 shrink-0 text-right text-muted-foreground">
                     {t("increaseCreditAmount")}
                   </Label>
                   <Input
@@ -144,15 +144,15 @@ export function IncreaseCreditModal() {
                   />
                 </div>
                 <div className="flex items-center gap-4">
-                  <Label className="text-muted-foreground w-28 shrink-0 text-right" />
-                  <div className="text-destructive flex flex-1 flex-row text-xs">
+                  <Label className="w-28 shrink-0 text-right text-muted-foreground" />
+                  <div className="flex flex-1 flex-row text-destructive text-xs">
                     {t("availableAmount")}:
                     {formatNumber(Number(availableAmount) ?? 0)}
                   </div>
                 </div>
               </div>
               <div className="flex items-center gap-4">
-                <Label className="text-muted-foreground w-28 shrink-0 text-right">
+                <Label className="w-28 shrink-0 text-right text-muted-foreground">
                   {t("creditAmountAfter")}
                 </Label>
                 <Input
@@ -162,7 +162,7 @@ export function IncreaseCreditModal() {
                 />
               </div>
               <div className="flex items-center gap-4">
-                <Label className="text-muted-foreground w-28 shrink-0 text-right">
+                <Label className="w-28 shrink-0 text-right text-muted-foreground">
                   {t("moneyPassword")}
                 </Label>
                 <Password type="password" className="flex-1" name="secret" />

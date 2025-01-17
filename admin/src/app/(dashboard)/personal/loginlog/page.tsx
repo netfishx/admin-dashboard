@@ -22,10 +22,10 @@ export default async function Page({
 }) {
   return (
     <div className="flex w-full flex-col gap-2">
-      <div className="bg-background flex items-center justify-between p-4">
+      <div className="flex items-center justify-between bg-background p-4">
         <Form />
       </div>
-      <div className="bg-background flex-1 p-4">
+      <div className="flex-1 bg-background p-4">
         <Suspense fallback={<TableSkeleton />}>
           <TableWrapper searchParams={searchParams} />
         </Suspense>
@@ -132,14 +132,14 @@ async function StatusCell({ status }: { status: string }) {
   const t = await getTranslations("users.agents");
   if (status === "0") {
     return (
-      <span className="bg-primary/20 text-primary inline-block h-6 w-16 rounded-sm text-center leading-6">
+      <span className="inline-block h-6 w-16 rounded-sm bg-primary/20 text-center text-primary leading-6">
         {t("success")}
       </span>
     );
   }
   if (status === "1") {
     return (
-      <span className="bg-destructive/20 text-destructive inline-block h-6 w-16 rounded-sm text-center leading-6">
+      <span className="inline-block h-6 w-16 rounded-sm bg-destructive/20 text-center text-destructive leading-6">
         {t("failed")}
       </span>
     );

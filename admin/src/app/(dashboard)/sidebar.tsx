@@ -65,7 +65,7 @@ export function SideBar({
               </clipPath>
             </defs>
           </svg>
-          <h1 className={cn(["text-xl font-medium", isOpened ? "" : "hidden"])}>
+          <h1 className={cn(["font-medium text-xl", isOpened ? "" : "hidden"])}>
             {t("title")}
           </h1>
         </div>

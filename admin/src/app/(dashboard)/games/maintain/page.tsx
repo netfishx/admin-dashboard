@@ -9,7 +9,7 @@ export default function Page() {
   return (
     <div className="flex w-full flex-col gap-2">
       <MaintainForm />
-      <div className="bg-background flex-1 p-4">
+      <div className="flex-1 bg-background p-4">
         <div className="rounded-sm border">
           <Suspense
             fallback={

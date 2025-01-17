@@ -82,7 +82,7 @@ function BatchButton({
 export function MaintainForm() {
   const t = useTranslations("games.maintain");
   return (
-    <div className="bg-background flex items-center justify-end gap-2 p-4">
+    <div className="flex items-center justify-end gap-2 bg-background p-4">
       <Suspense>
         <BatchButton status={1}>{t("batchOpen")}</BatchButton>
         <BatchButton status={0}>{t("batchClose")}</BatchButton>

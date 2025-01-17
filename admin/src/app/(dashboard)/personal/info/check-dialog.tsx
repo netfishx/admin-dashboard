@@ -234,7 +234,7 @@ export function CheckDialog(props: CheckDialogProps) {
             </DialogHeader>
             <div className="mx-auto w-full max-w-xl p-4">
               <div className="flex flex-col gap-4">
-                <Label className="after:text-destructive shrink-0 after:ml-1 after:content-['*']">
+                <Label className="shrink-0 after:ml-1 after:text-destructive after:content-['*']">
                   {t("google2faCode")}
                 </Label>
                 <Input

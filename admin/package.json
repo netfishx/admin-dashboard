@@ -69,8 +69,6 @@
     "babel-plugin-react-compiler": "^19.0.0-beta-e552027-20250112",
     "pino-pretty": "^13.0.0",
     "postcss": "^8",
-    "prettier": "3.4.2",
-    "prettier-plugin-tailwindcss": "^0.6.10",
     "tailwindcss": "next",
     "typescript": "^5"
   },

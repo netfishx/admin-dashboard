@@ -11,7 +11,7 @@ export function ActionButton({ fileUrl }: { fileUrl: string }) {
       rel="noreferrer"
       className={cn(
         buttonVariants({ variant: "ghost" }),
-        "text-primary hover:text-primary/80 text-sm hover:no-underline",
+        "text-primary text-sm hover:text-primary/80 hover:no-underline",
       )}
     >
       {t("download")}

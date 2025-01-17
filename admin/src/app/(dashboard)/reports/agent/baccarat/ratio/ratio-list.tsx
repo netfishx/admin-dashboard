@@ -34,8 +34,8 @@ export async function ListHeader() {
         <TableHead className="w-36">{t("rebateExpense")}</TableHead>
         <TableHead className="w-36">{t("netRebate")}</TableHead>
         <TableHead className="w-36">{t("totalProfitLossAmount")}</TableHead>
-        <TableHead className="bg-muted sticky right-0 w-24 p-0">
-          <div className="shadow-l flex h-full items-center justify-center px-4">
+        <TableHead className="sticky right-0 w-24 bg-muted p-0">
+          <div className="flex h-full items-center justify-center px-4 shadow-l">
             {t("more")}
           </div>
         </TableHead>
@@ -87,8 +87,8 @@ async function ListBody({
             <TableCell>
               {formatNumber(Number(item.totalProfitLossAmount || 0))}
             </TableCell>
-            <TableCell className="bg-background sticky right-0 p-0">
-              <div className="shadow-l flex items-center justify-center px-4 py-2">
+            <TableCell className="sticky right-0 bg-background p-0">
+              <div className="flex items-center justify-center px-4 py-2 shadow-l">
                 <DetailButton
                   parentAgentId={item.userId}
                   searchParams={searchParams}
@@ -125,7 +125,7 @@ export async function RatioList({
   };
   if (!(params?.startTime && params?.endTime)) {
     return (
-      <div className="bg-background flex-1 p-4">
+      <div className="flex-1 bg-background p-4">
         <div className="h-6" />
         <div className="rounded-sm border">
           <Table className="table-fixed">
@@ -138,7 +138,7 @@ export async function RatioList({
   }
   const { data } = await getRatioReport(p);
   return (
-    <div className="bg-background flex-1 p-4">
+    <div className="flex-1 bg-background p-4">
       <Level searchParams={params} />
       <div className="rounded-sm border">
         <Table className="table-fixed">

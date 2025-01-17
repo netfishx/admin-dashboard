@@ -112,7 +112,7 @@ export function ListFilter({ gameList }: { gameList: GameInfo[] }) {
   const pathname = usePathname();
 
   return (
-    <div className="bg-background flex flex-col gap-2 p-4">
+    <div className="flex flex-col gap-2 bg-background p-4">
       <div className="flex items-center gap-4">
         <div className="flex items-center gap-2">
           <Select

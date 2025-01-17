@@ -29,8 +29,8 @@ function RoleTableHeader() {
         <TableHead>{t("id")}</TableHead>
         <TableHead>{t("name")}</TableHead>
         <TableHead>{t("updateTime")}</TableHead>
-        <TableHead className="bg-muted sticky right-0 p-0 text-center">
-          <div className="shadow-l flex h-full items-center justify-center px-4">
+        <TableHead className="sticky right-0 bg-muted p-0 text-center">
+          <div className="flex h-full items-center justify-center px-4 shadow-l">
             {t("action")}
           </div>
         </TableHead>
@@ -70,8 +70,8 @@ async function RoleTableWrapper({
                   <TableCell>
                     {item.updateTime && <Time time={item.updateTime} />}
                   </TableCell>
-                  <TableCell className="bg-background sticky right-0 p-0">
-                    <div className="shadow-l flex items-center justify-center px-4 py-2">
+                  <TableCell className="sticky right-0 bg-background p-0">
+                    <div className="flex items-center justify-center px-4 py-2 shadow-l">
                       <EditButton data={item} />
                       <DeleteButton id={item.id ?? ""} />
                     </div>
@@ -103,15 +103,15 @@ export default function RolePage({
 
   return (
     <div className="flex w-full flex-col gap-2">
-      <div className="bg-background flex items-center justify-between p-4">
-        <div className="text-sm font-medium">{t("list")}</div>
+      <div className="flex items-center justify-between bg-background p-4">
+        <div className="font-medium text-sm">{t("list")}</div>
         <AddButton />
         <Suspense>
           <RoleDialog permissions={permissions} />
           <RoleDelete />
         </Suspense>
       </div>
-      <div className="bg-background flex flex-1 flex-col gap-4 p-4">
+      <div className="flex flex-1 flex-col gap-4 bg-background p-4">
         <Suspense
           fallback={
             <div className="rounded-sm border">

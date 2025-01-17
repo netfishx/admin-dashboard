@@ -157,7 +157,7 @@ export function CustomPagination({
               value={pageSize.toString()}
               onValueChange={(value) => handlePageSizeChange(value)}
             >
-              <SelectTrigger className="text-muted-foreground h-7 w-28 text-sm">
+              <SelectTrigger className="h-7 w-28 text-muted-foreground text-sm">
                 <SelectValue
                   defaultValue={pageSize ?? 10}
                   placeholder={t("pageSize")}

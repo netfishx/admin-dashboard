@@ -30,14 +30,14 @@ export default async function Page({
     <div className="flex w-full flex-col gap-2">
       <Suspense
         fallback={
-          <div className="bg-background flex items-center justify-between p-4">
+          <div className="flex items-center justify-between bg-background p-4">
             <Skeleton />
           </div>
         }
       >
         <SupplierForm />
       </Suspense>
-      <div className="bg-background flex flex-1 flex-col gap-2 p-4">
+      <div className="flex flex-1 flex-col gap-2 bg-background p-4">
         <div className="flex justify-end">
           <Suspense>
             <Add />

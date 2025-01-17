@@ -27,7 +27,7 @@ export default async function Page({
       >
         <Form session={session} />
       </Suspense>
-      <div className="bg-background flex-1 gap-2 p-4">
+      <div className="flex-1 gap-2 bg-background p-4">
         <div className="flex justify-end pb-2">
           <AddAgent />
         </div>
@@ -99,8 +99,8 @@ async function TableHeaderWrapper() {
         <TableHead className="w-32">{t("username")}</TableHead>
         <TableHead className="w-32">{t("nickname")}</TableHead>
         <TableHead className="w-24 text-center">{t("status")}</TableHead>
-        <TableHead className="w-100 bg-muted sticky right-0 p-0 text-center">
-          <div className="shadow-l flex h-full items-center justify-center px-4">
+        <TableHead className="sticky right-0 w-100 bg-muted p-0 text-center">
+          <div className="flex h-full items-center justify-center px-4 shadow-l">
             {t("action")}
           </div>
         </TableHead>

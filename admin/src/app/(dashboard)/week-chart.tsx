@@ -153,7 +153,7 @@ export function WeekChart({
           </ChartContainer>
         ) : (
           <div className="h-60">
-            <div className="text-muted-foreground flex h-full items-center justify-center">
+            <div className="flex h-full items-center justify-center text-muted-foreground">
               {t("noData")}
             </div>
           </div>

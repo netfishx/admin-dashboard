@@ -1,7 +1,7 @@
 {
   "$schema": "https://biomejs.dev/schemas/1.9.4/schema.json",
   "files": {
-    "ignore": ["src/**/*.css", "landing/**"]
+    "ignore": ["src/**/*.css"]
   },
   "organizeImports": {
     "enabled": true
@@ -40,6 +40,9 @@
       },
       "security": {
         "noDangerouslySetInnerHtml": "off"
+      },
+      "nursery":{
+        "useSortedClasses": "error"
       }
     }
   },

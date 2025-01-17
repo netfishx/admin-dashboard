@@ -89,14 +89,14 @@ export function TransferMoneyModal() {
             <input type="hidden" name="id" value={data?.id} />
             <div className="flex w-full flex-col gap-4 px-4">
               <div className="flex items-center gap-4">
-                <Label className="text-muted-foreground w-20 shrink-0 text-right">
+                <Label className="w-20 shrink-0 text-right text-muted-foreground">
                   {t("username")}
                 </Label>
                 <span>{data?.username}</span>
               </div>
               <div className="flex flex-col gap-1">
                 <div className="flex items-center gap-4">
-                  <Label className="text-muted-foreground w-20 shrink-0 text-right">
+                  <Label className="w-20 shrink-0 text-right text-muted-foreground">
                     {t("amount")}
                   </Label>
                   <Input
@@ -112,14 +112,14 @@ export function TransferMoneyModal() {
                   />
                 </div>
                 <div className="flex items-center gap-4">
-                  <Label className="text-muted-foreground w-20 shrink-0 text-right" />
-                  <div className="text-destructive flex flex-1 flex-row text-xs">
+                  <Label className="w-20 shrink-0 text-right text-muted-foreground" />
+                  <div className="flex flex-1 flex-row text-destructive text-xs">
                     {t("availableAmount")}:{formatNumber(availableAmount)}
                   </div>
                 </div>
               </div>
               <div className="flex items-center gap-4">
-                <Label className="text-muted-foreground w-20 shrink-0 text-right">
+                <Label className="w-20 shrink-0 text-right text-muted-foreground">
                   {t("moneyPassword")}
                 </Label>
                 <Password

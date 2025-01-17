@@ -43,8 +43,8 @@ export async function ListHeader() {
         <TableHead className="w-48">{t("gameStartTime")}</TableHead>
         <TableHead className="w-48">{t("settlementFinishTime")}</TableHead>
 
-        <TableHead className="bg-muted sticky right-0 w-24 p-0 text-center">
-          <div className="shadow-l flex h-full items-center justify-center px-4">
+        <TableHead className="sticky right-0 w-24 bg-muted p-0 text-center">
+          <div className="flex h-full items-center justify-center px-4 shadow-l">
             {t("action")}
           </div>
         </TableHead>
@@ -101,8 +101,8 @@ async function ListBody({ list }: { list: GameRecordRequestRecords[] }) {
             <TableCell>
               <Time time={item.gameEndTime} />
             </TableCell>
-            <TableCell className="bg-background sticky right-0 p-0">
-              <div className="shadow-l flex h-[65px] items-center justify-center px-4 py-2">
+            <TableCell className="sticky right-0 bg-background p-0">
+              <div className="flex h-[65px] items-center justify-center px-4 py-2 shadow-l">
                 <DetailButton item={item} />
               </div>
             </TableCell>
@@ -127,7 +127,7 @@ export async function List({
   const params = await searchParams;
   if (!((params?.startTime && params?.endTime) || params?.issueNumber)) {
     return (
-      <div className="bg-background flex-1 p-4">
+      <div className="flex-1 bg-background p-4">
         <div className="rounded-sm border">
           <Table className="table-fixed">
             <ListHeader />
@@ -146,7 +146,7 @@ export async function List({
   };
   const { data } = await getGuandanReportList(p);
   return (
-    <div className="bg-background flex-1 p-4">
+    <div className="flex-1 bg-background p-4">
       <div className="relative rounded-sm border">
         <Table className="table-fixed">
           <ListHeader />

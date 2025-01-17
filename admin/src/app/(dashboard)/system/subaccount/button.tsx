@@ -40,7 +40,7 @@ export function EditButton({ data }: { data: Subaccount }) {
     <Button
       variant="ghost"
       size="sm"
-      className="text-primary hover:text-primary/80 text-sm"
+      className="text-primary text-sm hover:text-primary/80"
       onClick={() => {
         setData(data);
         setOpen(true);
@@ -62,7 +62,7 @@ export function LoginLogButton({ id }: { id: string }) {
       variant="ghost"
       size="sm"
       disabled={isPending}
-      className="text-primary hover:text-primary/80 text-sm"
+      className="text-primary text-sm hover:text-primary/80"
       onClick={() => {
         startGetLoginLog(async () => {
           setId(id);

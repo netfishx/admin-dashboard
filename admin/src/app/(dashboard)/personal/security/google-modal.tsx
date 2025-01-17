@@ -103,7 +103,7 @@ export function GoogleModal({
             <div className="flex justify-between gap-8">
               <div className="space-y-4">
                 <div className="flex items-center gap-2">
-                  <div className="bg-primary text-background flex h-8 w-8 items-center justify-center rounded-full">
+                  <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary text-background">
                     1
                   </div>
                   <span className="text-sm">{t("step1Title")}</span>
@@ -119,14 +119,14 @@ export function GoogleModal({
                     <div className="flex gap-2">
                       <Button
                         variant="outline"
-                        className="bg-primary text-background gap-2"
+                        className="gap-2 bg-primary text-background"
                       >
                         <Apple className="size-4" />
                         App Store
                       </Button>
                       <Button
                         variant="outline"
-                        className="bg-accent-foreground text-background gap-2"
+                        className="gap-2 bg-accent-foreground text-background"
                       >
                         <GooglePlay className="size-4" />
                         Google Play
@@ -146,7 +146,7 @@ export function GoogleModal({
                       className="h-20 w-20"
                     />
                   </span>
-                  <p className="text-muted-foreground mt-2 text-xs">
+                  <p className="mt-2 text-muted-foreground text-xs">
                     {t("iosQRCode")}
                   </p>
                 </div>
@@ -159,7 +159,7 @@ export function GoogleModal({
                       className="h-20 w-20"
                     />
                   </span>
-                  <p className="text-muted-foreground mt-2 text-xs">
+                  <p className="mt-2 text-muted-foreground text-xs">
                     {t("androidQRCode")}
                   </p>
                 </div>
@@ -170,16 +170,16 @@ export function GoogleModal({
           {isEdit ? null : (
             <div className="space-y-4">
               <div className="flex items-center gap-2">
-                <div className="bg-primary text-background flex h-8 w-8 items-center justify-center rounded-full">
+                <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary text-background">
                   2
                 </div>
                 <span className="text-sm">{t("step2Title")}</span>
               </div>
 
-              <div className="bg-muted/50 rounded-lg p-4">
+              <div className="rounded-lg bg-muted/50 p-4">
                 <div className="flex items-center gap-2">
                   <div className="h-4 w-4 rounded-full">
-                    <InfoFilled className="text-chart-4 size-4" />
+                    <InfoFilled className="size-4 text-chart-4" />
                   </div>
                   <p className="text-chart-4 text-xs">{t("step2Warning")}</p>
                 </div>
@@ -218,14 +218,14 @@ export function GoogleModal({
           <div className="space-y-4">
             {isEdit ? null : (
               <div className="flex items-center gap-2">
-                <div className="bg-primary text-background flex h-8 w-8 items-center justify-center rounded-full">
+                <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary text-background">
                   3
                 </div>
                 <span className="text-sm">{t("step3Title")}</span>
               </div>
             )}
             <div className="flex items-center justify-center gap-4 text-center">
-              <Label className="before:text-destructive flex gap-1 text-xs before:mr-1 before:content-['*']">
+              <Label className="flex gap-1 text-xs before:mr-1 before:text-destructive before:content-['*']">
                 <span className="text-muted-foreground">
                   {t("googleCodeLabel")}
                 </span>

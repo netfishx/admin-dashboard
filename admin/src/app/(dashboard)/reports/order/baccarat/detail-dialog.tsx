@@ -66,7 +66,7 @@ export function Detaildialog(props: {
         <DialogHeader>
           <DialogTitle>{t("detail")}</DialogTitle>
         </DialogHeader>
-        <div className="bg-muted text-muted-foreground rounded-sm p-2 text-center font-medium">
+        <div className="rounded-sm bg-muted p-2 text-center font-medium text-muted-foreground">
           {t("shareDetail")}
         </div>
         <ScrollArea className="w-[718px]">

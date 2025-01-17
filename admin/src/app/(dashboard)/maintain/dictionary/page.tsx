@@ -25,7 +25,7 @@ export default async function Page({
   return (
     <div className="flex w-full flex-col gap-2">
       <Form />
-      <div className="bg-background flex flex-1 flex-col gap-4 p-4">
+      <div className="flex flex-1 flex-col gap-4 bg-background p-4">
         <div className="flex justify-end">
           <Add />
         </div>

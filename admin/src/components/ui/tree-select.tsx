@@ -36,7 +36,7 @@ function TreeNode({
                 e.preventDefault();
                 setIsOpen(!isOpen);
               }}
-              className="focus:outline-hidden mr-1"
+              className="mr-1 focus:outline-hidden"
               aria-label={isOpen ? "Collapse" : "Expand"}
             >
               {isOpen ? (

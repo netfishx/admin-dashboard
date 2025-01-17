@@ -36,11 +36,11 @@ export function RatioModal() {
           <DialogDescription />
         </DialogHeader>
         <div className="flex flex-col gap-2">
-          <span className="text-sm font-medium">{t("baccarat")}</span>
+          <span className="font-medium text-sm">{t("baccarat")}</span>
           <div className="max-h-[50dvh] overflow-auto rounded-sm border">
             <ScrollableTable className="relative">
               <TableHeader>
-                <TableRow className="bg-muted sticky top-0">
+                <TableRow className="sticky top-0 bg-muted">
                   <TableHead>{t("name")}</TableHead>
                   <TableHead>{t("ratio")}</TableHead>
                 </TableRow>

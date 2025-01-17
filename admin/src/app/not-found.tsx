@@ -3,7 +3,7 @@ import { Link } from "next-view-transitions";
 export default function NotFound() {
   return (
     <div className="flex w-full flex-col gap-2 p-2">
-      <h2 className="scroll-m-20 pb-2 text-3xl font-semibold tracking-tight first:mt-0">
+      <h2 className="scroll-m-20 pb-2 font-semibold text-3xl tracking-tight first:mt-0">
         Not Found
       </h2>
       <p className="leading-7">Could not find requested resource</p>

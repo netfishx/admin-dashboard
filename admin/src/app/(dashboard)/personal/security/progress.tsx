@@ -6,8 +6,8 @@ export function SecurityProgress({ value }: { value?: number }) {
   const t = useTranslations("personal.security");
 
   return (
-    <div className="bg-background flex flex-col gap-2 p-4">
-      <span className="text-sm font-medium">{t("progress")}</span>
+    <div className="flex flex-col gap-2 bg-background p-4">
+      <span className="font-medium text-sm">{t("progress")}</span>
       <div className="flex items-center gap-2">
         {value ? (
           <>

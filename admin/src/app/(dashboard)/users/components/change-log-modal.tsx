@@ -74,7 +74,7 @@ export function ChangeLogModal({
         <div className="max-h-[50dvh] overflow-auto rounded-sm border">
           <ScrollableTable className="relative">
             <TableHeader>
-              <TableRow className="bg-muted sticky top-0">
+              <TableRow className="sticky top-0 bg-muted">
                 <TableHead>{t("operateTime")}</TableHead>
                 <TableHead>{t("operater")}</TableHead>
                 <TableHead>{t("username")}</TableHead>

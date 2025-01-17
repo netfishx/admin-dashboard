@@ -27,7 +27,7 @@ export default async function Page({
     <div className="flex w-full flex-col gap-2">
       <Suspense
         fallback={
-          <div className="bg-background flex flex-col gap-2 p-4">
+          <div className="flex flex-col gap-2 bg-background p-4">
             <Skeleton />
             <Skeleton />
             <Skeleton />
@@ -38,7 +38,7 @@ export default async function Page({
       </Suspense>
       <Suspense
         fallback={
-          <div className="bg-background flex-1 p-2">
+          <div className="flex-1 bg-background p-2">
             <div className="h-6" />
             <div className="relative rounded-sm border">
               <Table className="table-fixed">

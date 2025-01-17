@@ -16,7 +16,7 @@ export function Announcement({
 
   return (
     <>
-      <div className="bg-background relative flex-1 rounded-sm p-4">
+      <div className="relative flex-1 rounded-sm bg-background p-4">
         <div className="mb-4 flex justify-between">
           <div>{t("announcement")}</div>
           <button
@@ -35,22 +35,22 @@ export function Announcement({
               return (
                 <div
                   key={item.id}
-                  className="text-muted-foreground overflow-hidden text-ellipsis whitespace-nowrap"
+                  className="overflow-hidden text-ellipsis whitespace-nowrap text-muted-foreground"
                 >
                   {!permissions?.includes("admin_stat") && (
                     <>
                       {item.type === 1 && (
-                        <span className="bg-primary/10 text-primary mr-2 inline-block rounded-sm px-2 py-1">
+                        <span className="mr-2 inline-block rounded-sm bg-primary/10 px-2 py-1 text-primary">
                           {t("platform")}
                         </span>
                       )}
                       {item.type === 3 && (
-                        <span className="bg-orange/10 text-orange mr-2 inline-block rounded-sm px-2 py-1">
+                        <span className="mr-2 inline-block rounded-sm bg-orange/10 px-2 py-1 text-orange">
                           {t("agent")}
                         </span>
                       )}
                       {(item.type === 6 || item.type === 7) && (
-                        <span className="bg-green/10 text-green mr-2 inline-block rounded-sm px-2 py-1">
+                        <span className="mr-2 inline-block rounded-sm bg-green/10 px-2 py-1 text-green">
                           {t("systemLabel")}
                         </span>
                       )}
@@ -62,7 +62,7 @@ export function Announcement({
             })
           ) : (
             <div className="h-20 lg:h-48 xl:h-72">
-              <div className="text-muted-foreground flex h-full items-center justify-center">
+              <div className="flex h-full items-center justify-center text-muted-foreground">
                 {t("noData")}
               </div>
             </div>

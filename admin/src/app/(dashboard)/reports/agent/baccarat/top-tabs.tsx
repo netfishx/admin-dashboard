@@ -19,7 +19,7 @@ export default function TopTabs() {
                 : "inactive"
             }
             href="/reports/agent/baccarat/ratio"
-            className="focus-visible:outline-hidden focus-visible:ring-ring data-[state=active]:bg-background data-[state=active]:text-foreground inline-flex items-center justify-center whitespace-nowrap rounded-md px-3 py-1 text-sm font-medium transition-all focus-visible:ring data-[state=active]:pointer-events-none data-[state=active]:shadow-sm"
+            className="inline-flex items-center justify-center whitespace-nowrap rounded-md px-3 py-1 font-medium text-sm transition-all focus-visible:outline-hidden focus-visible:ring focus-visible:ring-ring data-[state=active]:pointer-events-none data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
           >
             {t("ratioblock")}
           </Link>
@@ -31,7 +31,7 @@ export default function TopTabs() {
                 : "inactive"
             }
             href="/reports/agent/baccarat/member"
-            className="focus-visible:outline-hidden focus-visible:ring-ring data-[state=active]:bg-background data-[state=active]:text-foreground inline-flex items-center justify-center whitespace-nowrap rounded-md px-3 py-1 text-sm font-medium transition-all focus-visible:ring data-[state=active]:pointer-events-none data-[state=active]:shadow-sm"
+            className="inline-flex items-center justify-center whitespace-nowrap rounded-md px-3 py-1 font-medium text-sm transition-all focus-visible:outline-hidden focus-visible:ring focus-visible:ring-ring data-[state=active]:pointer-events-none data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
           >
             {t("memberBetting")}
           </Link>

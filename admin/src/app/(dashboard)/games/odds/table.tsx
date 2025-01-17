@@ -150,7 +150,7 @@ export function OddsTable({
                   }}
                 />
                 {item.minBetLimit ? (
-                  <span className="text-destructive w-20 shrink-0">
+                  <span className="w-20 shrink-0 text-destructive">
                     ({item.minBetLimit})
                   </span>
                 ) : null}
@@ -188,7 +188,7 @@ export function OddsTable({
                   }}
                 />
                 {item.maxBetLimit ? (
-                  <span className="text-destructive w-20 shrink-0">
+                  <span className="w-20 shrink-0 text-destructive">
                     ({item.maxBetLimit})
                   </span>
                 ) : null}
@@ -226,7 +226,7 @@ export function OddsTable({
                   }}
                 />
                 {item.maxBetPeriodLimit ? (
-                  <span className="text-destructive w-20 shrink-0">
+                  <span className="w-20 shrink-0 text-destructive">
                     ({item.maxBetPeriodLimit})
                   </span>
                 ) : null}

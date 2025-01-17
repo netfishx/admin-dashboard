@@ -37,7 +37,7 @@ function RemoveButton({ data }: { data: OreFeeList }) {
           disabled={isPending}
           variant="ghost"
           size="sm"
-          className="text-primary hover:text-primary/80 px-2 text-sm"
+          className="px-2 text-primary text-sm hover:text-primary/80"
         >
           {isPending && <Loader2 className="animate-spin" />}
           {t("remove")}
