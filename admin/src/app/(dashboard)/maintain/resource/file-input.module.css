@@ -8,6 +8,7 @@
   cursor: pointer;
   appearance: none;
   vertical-align: middle;
+  /* biome-ignore lint/correctness/noUnknownProperty: <explanation> */
   webkit-user-select: none;
   user-select: none;
   height: 2rem;
@@ -28,6 +29,7 @@
     height: 100%;
     cursor: pointer;
     padding-inline: 1rem;
+    /* biome-ignore lint/correctness/noUnknownProperty: <explanation> */
     webkit-user-select: none;
     user-select: none;
     color: var(--color-base-content);
