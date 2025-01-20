@@ -9,8 +9,8 @@ FROM base AS deps
 
 RUN --mount=type=bind,source=package.json,target=package.json \
     --mount=type=bind,source=bun.lockb,target=bun.lockb \
-    --mount=type=bind,source=patches/jotai@2.11.0.patch,target=patches/jotai@2.11.0.patch \
-    --mount=type=bind,source=patches/next@15.2.0-canary.16.patch,target=patches/next@15.2.0-canary.16.patch \
+    --mount=type=bind,source=patches/jotai@2.11.1.patch,target=patches/jotai@2.11.1.patch \
+    --mount=type=bind,source=patches/next@15.2.0-canary.18.patch,target=patches/next@15.2.0-canary.18.patch \
     --mount=type=cache,target=/root/.bun \
     bun install --frozen-lockfile
 
