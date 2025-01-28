@@ -60,7 +60,7 @@ const Item = ({
       <Image src={icon} alt="Icon" className="size-14" />
       <div className="pl-3">
         <div className="pb-2 text-xs">{name}</div>
-        <div className="text-xl font-bold">{value}</div>
+        <div className="text-xl font-bold cursor-pointer">{value}</div>
       </div>
     </div>
   );

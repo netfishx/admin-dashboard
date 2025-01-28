@@ -62,6 +62,7 @@ export function AddModal({
   const editModalTitle = useAtomValue(editModalTitleAtom);
   const data = useAtomValue(contentModalDataAtom);
   const [type, setType] = useState(0);
+  const [selectedValue, setSelectedValue] = useState("zh-CN");
   useEffect(() => {
     setType(data?.type ?? 0);
   }, [data]);
@@ -203,7 +204,15 @@ export function AddModal({
               <Label className="text-muted-foreground before:text-destructive w-24 shrink-0 text-right before:mr-1 before:content-['*']">
                 {t("language")}
               </Label>
-              <ToggleGroup type="single" defaultValue="zh-CN">
+              <ToggleGroup
+                type="single"
+                value={selectedValue}
+                onValueChange={(value) => {
+                  if (value && value !== selectedValue ) {
+                    setSelectedValue(value); // 防止取消选中，只有当点击的是不同的值时才会更新
+                  }
+                }}
+              >
                 <ToggleGroupItem value="zh-CN">{t("chinese")}</ToggleGroupItem>
                 {/* <ToggleGroupItem value="en-US">{t("english")}</ToggleGroupItem> */}
               </ToggleGroup>
