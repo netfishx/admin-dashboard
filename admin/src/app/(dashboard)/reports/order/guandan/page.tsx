@@ -5,7 +5,6 @@ import { Table } from "@/components/ui/table";
 import type { GameInfo, GameRecordRequestParams } from "@/lib/types";
 import { getSession } from "@/session";
 import { Suspense } from "react";
-import { BombDetailDialog } from "./bomb-detail-dialog";
 import { List, ListHeader } from "./list";
 import { ListFilter } from "./list-filter";
 import { OrderDetailDialog } from "./order-detail-dialog";
@@ -57,7 +56,6 @@ export default async function Page({ searchParams }: CommonWrapperProps) {
         <List searchParams={searchParams} />
       </Suspense>
       <OrderDetailDialog />
-      <BombDetailDialog />
     </div>
   );
 }
