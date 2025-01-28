@@ -1,7 +1,7 @@
 "use client";
 import { Time } from "@/components/time";
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import {
   ScrollableTable,
   TableBody,
@@ -36,9 +36,12 @@ export function FlowDialog({
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent className="w-400 max-w-4/5">
+        <DialogHeader>
         <DialogTitle className="flex justify-between">
           <span>{t("flow")}</span>
         </DialogTitle>
+        <DialogDescription />
+      </DialogHeader>
         <div className="bg-background flex-1 overflow-auto p-4">
           {flowData?.list && flowData?.list?.length > 0 && (
             <div className="mb-4 flex justify-end">
