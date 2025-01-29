@@ -28,6 +28,7 @@ import {
   contentModalDataAtom,
   editModalTitleAtom,
 } from "@/store";
+import { formatDate } from "date-fns";
 import { useAtom, useAtomValue } from "jotai";
 import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
@@ -75,12 +76,19 @@ export function AddModal({
     ) {
       return { valid: false, message: t("allRequired") };
     }
-    // 时间校验 （新增时）
-    if (
-      (!data && (startTime > endTime || startTime < Date.now())) ||
-      (data && startTime > endTime && startTime > Date.now())
-    ) {
-      return { valid: false, message: t("timeError") };
+    // 时间校验
+    if (startTime > endTime) {
+      return {
+        valid: false,
+        message: `${t("timeError")}`,
+      };
+    }
+    // 编辑时已经开始的公告不用校验时间，还没开始的需要校验
+    if ((!data && startTime < Date.now()) || (data && data.startTime > Date.now() && startTime < Date.now())) {
+      return {
+        valid: false,
+          message: `${t("timeCreateError")} ${formatDate(Date.now(), "yyyy-MM-dd HH:mm:ss")}`,
+        };
     }
     // 如果是会员公告类型
     if ([2, 4].includes(type)) {

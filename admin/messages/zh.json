@@ -872,7 +872,8 @@
       "selectDateRange": "请选择日期范围",
       "all": "请选择",
       "allRequired": "请填写所有必填项",
-      "timeError": "请选择正确的时间范围",
+      "timeError": "开始时间必须小于结束时间",
+      "timeCreateError": "开始时间必须大于",
       "platform": "平台",
       "agent": "代理"
     },
