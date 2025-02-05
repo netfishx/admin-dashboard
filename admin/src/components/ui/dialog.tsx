@@ -22,13 +22,11 @@ export {
 };
 
 export function DialogOverlay({
-  ref,
   className,
   ...props
 }: ComponentProps<typeof Overlay>) {
   return (
     <Overlay
-      ref={ref}
       className={cn(
         "data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 fixed inset-0 z-50 bg-black/80 data-[state=closed]:animate-out data-[state=open]:animate-in",
         className,
@@ -39,7 +37,6 @@ export function DialogOverlay({
 }
 
 export function DialogContent({
-  ref,
   className,
   children,
   ...props
@@ -48,7 +45,6 @@ export function DialogContent({
     <Portal>
       <DialogOverlay />
       <Content
-        ref={ref}
         className={cn(
           "data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 fixed top-[50%] left-[50%] z-50 grid max-h-[90dvh] w-full max-w-lg translate-x-[-50%] translate-y-[-50%] gap-4 border bg-background p-6 shadow-lg duration-200 data-[state=closed]:animate-out data-[state=open]:animate-in sm:rounded-lg",
           className,
@@ -99,13 +95,11 @@ export function DialogFooter({
 }
 
 export function DialogTitle({
-  ref,
   className,
   ...props
 }: ComponentProps<typeof Title>) {
   return (
     <Title
-      ref={ref}
       className={cn(
         "font-semibold text-lg leading-none tracking-tight",
         className,
@@ -116,13 +110,11 @@ export function DialogTitle({
 }
 
 export function DialogDescription({
-  ref,
   className,
   ...props
 }: ComponentProps<typeof Description>) {
   return (
     <Description
-      ref={ref}
       className={cn("text-muted-foreground text-sm", className)}
       {...props}
     />

@@ -24,7 +24,6 @@ export {
 
 export function AlertDialogOverlay({
   className,
-  ref,
   ...props
 }: ComponentProps<typeof Overlay>) {
   return (
@@ -34,21 +33,18 @@ export function AlertDialogOverlay({
         className,
       )}
       {...props}
-      ref={ref}
     />
   );
 }
 
 export function AlertDialogContent({
   className,
-  ref,
   ...props
 }: ComponentProps<typeof Content>) {
   return (
     <Portal>
       <Overlay />
       <Content
-        ref={ref}
         className={cn(
           "data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 fixed top-[50%] left-[50%] z-50 grid w-full max-w-lg translate-x-[-50%] translate-y-[-50%] gap-4 border bg-background p-6 shadow-lg duration-200 data-[state=closed]:animate-out data-[state=open]:animate-in sm:rounded-lg",
           className,
@@ -87,26 +83,19 @@ export const AlertDialogFooter = ({
 
 export function AlertDialogTitle({
   className,
-  ref,
   ...props
 }: ComponentProps<typeof Title>) {
   return (
-    <Title
-      ref={ref}
-      className={cn("font-semibold text-lg", className)}
-      {...props}
-    />
+    <Title className={cn("font-semibold text-lg", className)} {...props} />
   );
 }
 
 export function AlertDialogDescription({
   className,
-  ref,
   ...props
 }: ComponentProps<typeof Description>) {
   return (
     <Description
-      ref={ref}
       className={cn("text-muted-foreground text-sm", className)}
       {...props}
     />
@@ -115,22 +104,17 @@ export function AlertDialogDescription({
 
 export function AlertDialogAction({
   className,
-  ref,
   ...props
 }: ComponentProps<typeof Action>) {
-  return (
-    <Action ref={ref} className={cn(buttonVariants(), className)} {...props} />
-  );
+  return <Action className={cn(buttonVariants(), className)} {...props} />;
 }
 
 export function AlertDialogCancel({
   className,
-  ref,
   ...props
 }: ComponentProps<typeof Cancel>) {
   return (
     <Cancel
-      ref={ref}
       className={cn(
         buttonVariants({ variant: "outline" }),
         "mt-2 sm:mt-0",

@@ -11,19 +11,16 @@ import {
   type ComponentType,
   type InputHTMLAttributes,
   type KeyboardEventHandler,
-  type RefObject,
   type SVGProps,
   useState,
 } from "react";
 
 export function Password({
-  ref,
   Icon,
   className,
   type,
   ...props
 }: InputHTMLAttributes<HTMLInputElement> & {
-  ref?: RefObject<HTMLInputElement>;
   Icon?: ComponentType<SVGProps<SVGSVGElement>>;
 }) {
   const [showPassword, setShowPassword] = useState(false);
@@ -54,7 +51,6 @@ export function Password({
         type={type === "password" && showPassword ? "text" : type}
         className={inputClasses}
         onKeyDown={handleKeyPress}
-        ref={ref}
         autoComplete="password"
         {...props}
       />

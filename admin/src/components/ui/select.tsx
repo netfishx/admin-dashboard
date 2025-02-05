@@ -24,14 +24,12 @@ import type { ComponentProps } from "react";
 export { Root as Select, Group as SelectGroup, Value as SelectValue };
 
 export function SelectTrigger({
-  ref,
   className,
   children,
   ...props
 }: ComponentProps<typeof Trigger>) {
   return (
     <Trigger
-      ref={ref}
       className={cn(
         "flex h-9 w-full items-center justify-between whitespace-nowrap rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-xs ring-offset-background focus:outline-hidden focus:ring focus:ring-ring disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1",
         className,
@@ -47,13 +45,11 @@ export function SelectTrigger({
 }
 
 export function SelectScrollUpButton({
-  ref,
   className,
   ...props
 }: ComponentProps<typeof ScrollUpButton>) {
   return (
     <ScrollUpButton
-      ref={ref}
       className={cn(
         "flex cursor-default items-center justify-center py-1",
         className,
@@ -66,13 +62,11 @@ export function SelectScrollUpButton({
 }
 
 export function SelectScrollDownButton({
-  ref,
   className,
   ...props
 }: ComponentProps<typeof ScrollDownButton>) {
   return (
     <ScrollDownButton
-      ref={ref}
       className={cn(
         "flex cursor-default items-center justify-center py-1",
         className,
@@ -85,7 +79,6 @@ export function SelectScrollDownButton({
 }
 
 export function SelectContent({
-  ref,
   className,
   children,
   position = "popper",
@@ -94,7 +87,6 @@ export function SelectContent({
   return (
     <Portal>
       <Content
-        ref={ref}
         className={cn(
           "data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 relative z-50 max-h-96 min-w-[8rem] overflow-hidden rounded-md border bg-popover text-popover-foreground shadow-md data-[state=closed]:animate-out data-[state=open]:animate-in",
           position === "popper" &&
@@ -121,13 +113,11 @@ export function SelectContent({
 }
 
 export function SelectLabel({
-  ref,
   className,
   ...props
 }: ComponentProps<typeof Label>) {
   return (
     <Label
-      ref={ref}
       className={cn("px-2 py-1.5 font-semibold text-sm", className)}
       {...props}
     />
@@ -135,14 +125,12 @@ export function SelectLabel({
 }
 
 export function SelectItem({
-  ref,
   className,
   children,
   ...props
 }: ComponentProps<typeof Item>) {
   return (
     <Item
-      ref={ref}
       className={cn(
         "relative flex w-full cursor-default select-none items-center rounded-sm py-1.5 pr-8 pl-2 text-sm outline-hidden focus:bg-accent focus:text-accent-foreground data-disabled:pointer-events-none data-disabled:opacity-50",
         className,

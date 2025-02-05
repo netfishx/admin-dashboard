@@ -18,7 +18,6 @@ const PopoverTrigger = Trigger;
 const PopoverAnchor = Anchor;
 
 export function PopoverContent({
-  ref,
   className,
   align = "center",
   sideOffset = 4,
@@ -27,7 +26,6 @@ export function PopoverContent({
   return (
     <Portal>
       <Content
-        ref={ref}
         align={align}
         sideOffset={sideOffset}
         className={cn(

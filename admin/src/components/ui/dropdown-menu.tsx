@@ -28,14 +28,12 @@ const DropdownMenuSub = Sub;
 const DropdownMenuRadioGroup = RadioGroup;
 
 export function DropdownMenuSubTrigger({
-  ref,
   className,
   children,
   ...props
 }: ComponentProps<typeof SubTrigger>) {
   return (
     <SubTrigger
-      ref={ref}
       className={cn(
         "flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-hidden focus:bg-accent data-[state=open]:bg-accent",
         className,
@@ -49,7 +47,6 @@ export function DropdownMenuSubTrigger({
 }
 
 export function DropdownMenuContent({
-  ref,
   className,
   sideOffset = 4,
   ...props
@@ -57,7 +54,6 @@ export function DropdownMenuContent({
   return (
     <Portal>
       <Content
-        ref={ref}
         sideOffset={sideOffset}
         className={cn(
           "z-50 min-w-[8rem] overflow-hidden rounded-md border bg-popover p-1 text-popover-foreground shadow-md",
@@ -71,13 +67,11 @@ export function DropdownMenuContent({
 }
 
 export function DropdownMenuItem({
-  ref,
   className,
   ...props
 }: ComponentProps<typeof Item>) {
   return (
     <Item
-      ref={ref}
       className={cn(
         "relative flex cursor-default select-none items-center gap-2 rounded-sm px-2 py-1.5 text-sm outline-hidden transition-colors focus:bg-accent focus:text-accent-foreground data-disabled:pointer-events-none data-disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
         className,
