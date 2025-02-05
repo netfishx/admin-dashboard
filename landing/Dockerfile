@@ -7,14 +7,14 @@ FROM base AS deps
 
 
 RUN --mount=type=bind,source=package.json,target=package.json \
-    --mount=type=bind,source=bun.lockb,target=bun.lockb \
+    --mount=type=bind,source=bun.lock,target=bun.lock \
     --mount=type=cache,target=/root/.bun \
     bun install --frozen-lockfile
 
 FROM base AS prod
 
 RUN --mount=type=bind,source=package.json,target=package.json \
-    --mount=type=bind,source=bun.lockb,target=bun.lockb \
+    --mount=type=bind,source=bun.lock,target=bun.lock \
     --mount=type=cache,target=/root/.bun \
     bun install --production --frozen-lockfile
 
