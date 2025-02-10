@@ -29,7 +29,7 @@ export function AnnouncementDialog({
       open={open && isFirstLogin === "true"}
       onOpenChange={handleOpenChange}
     >
-      <DialogContent className="min-w-lg max-w-4/5 w-fit">
+      <DialogContent className="w-fit min-w-lg max-w-4/5">
         <DialogHeader>
           <DialogTitle>{t("announcement")}</DialogTitle>
         </DialogHeader>
@@ -41,17 +41,17 @@ export function AnnouncementDialog({
                 className="overflow-hidden text-ellipsis whitespace-nowrap"
               >
                 {item.type === 1 && (
-                  <span className="bg-primary/10 text-primary mr-2 inline-block rounded-sm px-2 py-1">
+                  <span className="mr-2 inline-block rounded-sm bg-primary/10 px-2 py-1 text-primary">
                     {t("platform")}
                   </span>
                 )}
                 {item.type === 3 && (
-                  <span className="bg-orange/10 text-orange mr-2 inline-block rounded-sm px-2 py-1">
+                  <span className="mr-2 inline-block rounded-sm bg-orange/10 px-2 py-1 text-orange">
                     {t("agent")}
                   </span>
                 )}
                 {(item.type === 6 || item.type === 7) && (
-                  <span className="bg-green/10 text-green mr-2 inline-block rounded-sm px-2 py-1">
+                  <span className="mr-2 inline-block rounded-sm bg-green/10 px-2 py-1 text-green">
                     {t("systemLabel")}
                   </span>
                 )}

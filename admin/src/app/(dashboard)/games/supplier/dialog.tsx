@@ -153,7 +153,7 @@ export function SupplierDialog({
             </div>
             <div className="flex items-center gap-2">
               <Label className="w-20 text-end">{t("supplierName")}</Label>
-              <span className="shadow-xs bg-muted flex h-9 flex-1 items-center rounded-md border px-3 text-sm opacity-50">
+              <span className="flex h-9 flex-1 items-center rounded-md border bg-muted px-3 text-sm opacity-50 shadow-xs">
                 {supplierName || data?.userName}
               </span>
             </div>
@@ -184,7 +184,7 @@ export function SupplierDialog({
                   defaultValue={data?.distributionPercent}
                   name="distributionPercent"
                 />
-                <span className="text-muted-foreground absolute right-3 top-1/2 -translate-y-1/2">
+                <span className="-translate-y-1/2 absolute top-1/2 right-3 text-muted-foreground">
                   %
                 </span>
               </div>

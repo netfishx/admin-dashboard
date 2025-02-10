@@ -53,7 +53,7 @@ function MoneyDialog({
 
           <DialogDescription />
         </DialogHeader>
-        <div className="text-muted-foreground flex flex-col gap-4 text-sm">
+        <div className="flex flex-col gap-4 text-muted-foreground text-sm">
           <p className="flex items-center gap-2">
             <span>{t("applyWithdrawMoney")}</span>
             <span>{formatNumber(Number(data.withdrawMoney))}</span>

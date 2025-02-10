@@ -28,11 +28,11 @@ export default async function ResourcePage({
   const t = await getTranslations("maintain.resource");
   return (
     <div className="flex w-full flex-col gap-2">
-      <div className="bg-background flex items-center justify-between p-4">
-        <div className="text-sm font-medium">{t("title")}</div>
+      <div className="flex items-center justify-between bg-background p-4">
+        <div className="font-medium text-sm">{t("title")}</div>
         <Add />
       </div>
-      <div className="bg-background flex flex-1 flex-col gap-2 p-4">
+      <div className="flex flex-1 flex-col gap-2 bg-background p-4">
         <Suspense
           fallback={
             <div className="rounded-sm border">
@@ -126,7 +126,7 @@ async function TableBodyWrapper({
                 {item.status === 1 ? t("enable") : t("disable")}
               </span>
             </TableCell>
-            <TableCell className="bg-background sticky right-0 w-40 text-center">
+            <TableCell className="sticky right-0 w-40 bg-background text-center">
               <Actions data={item} />
             </TableCell>
           </TableRow>
@@ -154,7 +154,7 @@ async function TableHeaderWrapper() {
         <TableHead>{t("sort")}</TableHead>
         <TableHead>{t("updateTime")}</TableHead>
         <TableHead className="text-center">{t("status")}</TableHead>
-        <TableHead className="bg-muted sticky right-0 text-center">
+        <TableHead className="sticky right-0 bg-muted text-center">
           {t("action")}
         </TableHead>
       </TableRow>

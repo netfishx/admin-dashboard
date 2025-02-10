@@ -17,7 +17,7 @@ export function FlyOrderForm() {
   const router = useTransitionRouter();
   return (
     <>
-      <span className="text-sm font-medium">{t("title")}</span>
+      <span className="font-medium text-sm">{t("title")}</span>
       <span>
         <Button
           disabled={isPending}

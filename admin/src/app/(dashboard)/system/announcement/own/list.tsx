@@ -31,7 +31,7 @@ export async function List({
   });
 
   return (
-    <div className="bg-background flex h-full flex-col gap-2 p-2">
+    <div className="flex h-full flex-col gap-2 bg-background p-2">
       <div className="rounded-sm border">
         <Table className="table-fixed">
           <TableHeaderWrapper />
@@ -60,10 +60,10 @@ export async function TableHeaderWrapper() {
         <TableHead className="w-48">{t("startTime")}</TableHead>
         <TableHead className="w-48">{t("endTime")}</TableHead>
         <TableHead className="w-48">{t("createTime")}</TableHead>
-        <TableHead className="w-[450px]">{t("content")}</TableHead>
-        <TableHead className="w-48 text-center">{t("status")}</TableHead>
-        <TableHead className="w-48">{t("type")}</TableHead>
-        <TableHead className="bg-muted sticky right-0 w-24 text-center ">
+        <TableHead className="w-120">{t("content")}</TableHead>
+        <TableHead className="w-24 text-center">{t("status")}</TableHead>
+        <TableHead className="w-32">{t("type")}</TableHead>
+        <TableHead className="sticky right-0 w-24 bg-muted text-center ">
           {t("action")}
         </TableHead>
       </TableRow>
@@ -136,7 +136,7 @@ async function TableBodyWrapper({
                 return status ? t(status.label) : item.type;
               })()}
             </TableCell>
-            <TableCell className="bg-background sticky right-0 text-center">
+            <TableCell className="sticky right-0 bg-background text-center">
               <EditBtn data={item} />
             </TableCell>
           </TableRow>

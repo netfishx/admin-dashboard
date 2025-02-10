@@ -93,7 +93,7 @@ export function SubaccountDialog({ roles }: { roles: Role[] }) {
               </div>
               <div className="flex items-center gap-2">
                 <Label className="w-20 shrink-0 text-end" />
-                <div className="text-destructive flex-1 text-xs">
+                <div className="flex-1 text-destructive text-xs">
                   {t("usernameWarning")}
                 </div>
               </div>
@@ -112,7 +112,7 @@ export function SubaccountDialog({ roles }: { roles: Role[] }) {
               </div>
               <div className="flex items-center gap-2">
                 <Label className="w-20 shrink-0 text-end" />
-                <div className="text-destructive flex-1 text-xs">
+                <div className="flex-1 text-destructive text-xs">
                   {t("passwordWarning")}
                 </div>
               </div>

@@ -48,7 +48,7 @@ export function FlowDialog({
           </DialogTitle>
           <DialogDescription />
         </DialogHeader>
-        <div className="bg-background flex-1 overflow-auto p-4">
+        <div className="flex-1 overflow-auto bg-background p-4">
           {flowData?.list && flowData?.list?.length > 0 && (
             <div className="mb-4 flex justify-end">
               <Button
@@ -86,7 +86,7 @@ function ListHeader() {
   const t = useTranslations("report.orderlist");
   return (
     <TableHeader>
-      <TableRow className="bg-muted sticky top-0">
+      <TableRow className="sticky top-0 bg-muted">
         <TableHead className="w-40">{t("ordernumber")}</TableHead>
         <TableHead className="w-40">{t("issuenumber")}</TableHead>
         <TableHead className="w-60">{t("memberID")}</TableHead>

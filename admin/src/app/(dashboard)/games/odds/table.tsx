@@ -120,32 +120,41 @@ export function OddsTable({
               />
             </TableCell>
             <TableCell>
-              <Input
-                value={
-                  limit[
-                    `${item.oddsType}-${item.betType}`
-                  ]?.minBet?.toString() ?? ""
-                }
-                type="number"
-                min={1}
-                disabled={!item.canEdit}
-                onChange={(e) => {
-                  setVerifyLimit(!!e.target.value && e.target.reportValidity());
-                  handleLimitChange(
-                    item.oddsType ?? 0,
-                    item.betType,
-                    item.groupId ?? 0,
-                    "minBet",
-                    Number(e.target.value),
-                  );
-                }}
-                onBlur={(e) => {
-                  const state = e.target.reportValidity();
-                  if (!state) {
-                    e.target.focus();
+              <div className="flex items-center gap-2">
+                <Input
+                  value={
+                    limit[
+                      `${item.oddsType}-${item.betType}`
+                    ]?.minBet?.toString() ?? ""
                   }
-                }}
-              />
+                  type="number"
+                  min={item.minBetLimit ? item.minBetLimit : 1}
+                  disabled={!item.canEdit}
+                  onChange={(e) => {
+                    setVerifyLimit(
+                      !!e.target.value && e.target.reportValidity(),
+                    );
+                    handleLimitChange(
+                      item.oddsType ?? 0,
+                      item.betType,
+                      item.groupId ?? 0,
+                      "minBet",
+                      Number(e.target.value),
+                    );
+                  }}
+                  onBlur={(e) => {
+                    const state = e.target.reportValidity();
+                    if (!state) {
+                      e.target.focus();
+                    }
+                  }}
+                />
+                {item.minBetLimit ? (
+                  <span className="w-20 shrink-0 text-destructive">
+                    ({item.minBetLimit})
+                  </span>
+                ) : null}
+              </div>
             </TableCell>
             <TableCell>
               <div className="flex items-center gap-2">
@@ -179,7 +188,7 @@ export function OddsTable({
                   }}
                 />
                 {item.maxBetLimit ? (
-                  <span className="text-destructive w-20 shrink-0">
+                  <span className="w-20 shrink-0 text-destructive">
                     ({item.maxBetLimit})
                   </span>
                 ) : null}
@@ -217,7 +226,7 @@ export function OddsTable({
                   }}
                 />
                 {item.maxBetPeriodLimit ? (
-                  <span className="text-destructive w-20 shrink-0">
+                  <span className="w-20 shrink-0 text-destructive">
                     ({item.maxBetPeriodLimit})
                   </span>
                 ) : null}

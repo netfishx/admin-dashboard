@@ -88,7 +88,7 @@ export function OrderDetailDialog() {
         <div className="max-h-[50dvh] overflow-auto rounded-sm border">
           <ScrollableTable className="relative table-fixed">
             <TableHeader>
-              <TableRow className="bg-muted sticky top-0">
+              <TableRow className="sticky top-0 bg-muted">
                 <TableHead className="w-20">{t("serialNumber")}</TableHead>
                 <TableHead className="w-20">{t("bombNumber")}</TableHead>
                 <TableHead className="w-48">{t("startTime")}</TableHead>

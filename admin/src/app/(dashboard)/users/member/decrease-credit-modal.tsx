@@ -89,13 +89,13 @@ export function DecreaseCreditModal() {
           </DialogHeader>
           <div className="divide-y rounded-lg border indent-4">
             <div className="grid grid-cols-3">
-              <div className="bg-muted text-muted-foreground border-r py-2">
+              <div className="border-r bg-muted py-2 text-muted-foreground">
                 {t("memberUsername")}
               </div>
               <div className="py-2">{memberInfoData?.username}</div>
             </div>
             <div className="grid grid-cols-3">
-              <div className="bg-muted text-muted-foreground border-r py-2">
+              <div className="border-r bg-muted py-2 text-muted-foreground">
                 {t("usedCreditAmount")}
               </div>
               <div className="py-2">
@@ -103,7 +103,7 @@ export function DecreaseCreditModal() {
               </div>
             </div>
             <div className="grid grid-cols-3">
-              <div className="bg-muted text-muted-foreground border-r py-2">
+              <div className="border-r bg-muted py-2 text-muted-foreground">
                 {t("usedBorrowAmount")}
               </div>
               <div className="py-2">
@@ -111,7 +111,7 @@ export function DecreaseCreditModal() {
               </div>
             </div>
             <div className="grid grid-cols-3">
-              <div className="bg-muted text-muted-foreground border-r py-2">
+              <div className="border-r bg-muted py-2 text-muted-foreground">
                 {t("recoverableAmount")}
               </div>
               <div className="py-2">
@@ -128,7 +128,7 @@ export function DecreaseCreditModal() {
             <input type="hidden" name="userId" value={memberId} />
             <div className="flex flex-col gap-2 rounded-lg border p-4 text-center">
               <div className="flex items-center gap-4">
-                <Label className="text-muted-foreground w-1/4 shrink-0 text-right">
+                <Label className="w-1/4 shrink-0 text-right text-muted-foreground">
                   {t("recoverAmount")}
                 </Label>
                 <Input
@@ -144,7 +144,7 @@ export function DecreaseCreditModal() {
                 />
               </div>
               <div className="flex items-center gap-4">
-                <Label className="text-muted-foreground w-1/4 shrink-0 text-right">
+                <Label className="w-1/4 shrink-0 text-right text-muted-foreground">
                   {t("moneyPassword")}
                 </Label>
                 <Password type="password" className="flex-1" name="secret" />

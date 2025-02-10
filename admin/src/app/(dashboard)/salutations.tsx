@@ -14,7 +14,7 @@ export async function Salutations({
 }) {
   const t = await getTranslations();
   return (
-    <div className="bg-card flex flex-col rounded-sm p-4">
+    <div className="flex flex-col rounded-sm bg-card p-4">
       <div className="flex items-center justify-around pb-2">
         <Item
           name={t("baccaratShareAmount")}
@@ -60,7 +60,7 @@ const Item = ({
       <Image src={icon} alt="Icon" className="size-14" />
       <div className="pl-3">
         <div className="pb-2 text-xs">{name}</div>
-        <div className="cursor-pointer text-xl font-bold">{value}</div>
+        <div className="cursor-pointer font-bold text-xl">{value}</div>
       </div>
     </div>
   );

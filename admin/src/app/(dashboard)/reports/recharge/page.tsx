@@ -33,7 +33,7 @@ export default async function Page({
     <div className="flex w-full flex-col gap-2">
       <Suspense
         fallback={
-          <div className="bg-background flex flex-col gap-2 p-4">
+          <div className="flex flex-col gap-2 bg-background p-4">
             <Skeleton />
             <Skeleton />
             <Skeleton />
@@ -45,7 +45,7 @@ export default async function Page({
           hasAdminPermission={hasAdminPermission}
         />
       </Suspense>
-      <div className="bg-background flex flex-1 flex-col gap-2 p-4">
+      <div className="flex flex-1 flex-col gap-2 bg-background p-4">
         <Suspense
           fallback={
             <Table className="table-fixed">
@@ -116,7 +116,7 @@ async function TableWrapper({
 
   const { data } = await getRechargeReportList(params);
   return (
-    <div className="bg-background w-full flex-1 ">
+    <div className="w-full flex-1 bg-background ">
       <div className="relative overflow-x-auto overflow-y-auto rounded-sm border">
         <Table className="table-fixed">
           <TableHeaderWrapper />

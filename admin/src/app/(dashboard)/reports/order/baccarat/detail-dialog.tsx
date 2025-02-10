@@ -62,19 +62,20 @@ export function Detaildialog(props: {
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-4xl">
+      <DialogContent className="max-w-3xl">
         <DialogHeader>
           <DialogTitle>{t("detail")}</DialogTitle>
         </DialogHeader>
-        <div className="bg-muted text-muted-foreground rounded-sm p-2 text-center font-medium">
+        <div className="rounded-sm bg-muted p-2 text-center font-medium text-muted-foreground">
           {t("shareDetail")}
         </div>
-        <ScrollArea className="w-[846px]">
-          <div className="mb-1 whitespace-nowrap text-center">
-            {data?.revenueShare.map(
-              (item) =>
-                `${item.accountId} - ${Big(item.percent * 100).toFixed(2)}%；`,
-            )}
+        <ScrollArea className="w-[718px]">
+          <div className="mb-1 flex flex-col gap-1 text-center">
+            {data?.revenueShare.map((item) => (
+              <span key={item.accountId}>
+                {item.accountId} {Big(item.percent * 100).toFixed(2)}%
+              </span>
+            ))}
           </div>
           <ScrollBar orientation="horizontal" />
         </ScrollArea>
@@ -84,7 +85,7 @@ export function Detaildialog(props: {
             <TableRow className="bg-muted">
               <TableHead className="w-12 text-center">{t("shoe")}</TableHead>
               <TableHead className="w-12 text-center">{t("play")}</TableHead>
-              <TableHead className="w-40 text-center">{t("resultp")}</TableHead>
+              <TableHead className="w-36 text-center">{t("resultp")}</TableHead>
             </TableRow>
           </TableHeader>
 

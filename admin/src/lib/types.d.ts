@@ -137,6 +137,7 @@ export type GameOdds = {
   odds?: string; // 赔率
   betType: number; // 投注类型
   minBet?: number; // 最低投注金额
+  minBetLimit?: number | null; // 最低投注金额上限
   maxBet?: number; // 最大投注金额
   maxBetLimit?: number | null; // 最大投注金额上限
   maxBetPeriod?: number; // 每局最大投注额度
@@ -488,8 +489,8 @@ export type MemberBetReportRequestRecords = {
 
 // 代理报表-棋牌-请求入参
 export type PokerReportRequestParams = {
-  agentId: string; // 代理ID
-  romeType: number; // 房间类型 (不传的时候为全部游戏)
+  agentId?: string; // 代理ID
+  romeType?: number | null; // 房间类型 (不传的时候为全部游戏)
   startTime: number; // 开奖开始时间 (必须传) - timestamp
   endTime: number; // 开奖结束时间 (必须传) - timestamp
   pageNum: number; // 页码

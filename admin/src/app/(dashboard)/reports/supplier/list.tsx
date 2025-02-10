@@ -94,7 +94,7 @@ export async function List({
   };
   if (!(params?.startTime && params?.endTime)) {
     return (
-      <div className="bg-background flex-1 p-2">
+      <div className="flex-1 bg-background p-2">
         <div className="h-6" />
         <div className="relative rounded-sm border">
           <Table className="table-fixed">
@@ -108,7 +108,7 @@ export async function List({
   const { data } = await getSupplierReportList(p);
 
   return (
-    <div className="bg-background flex-1 p-2">
+    <div className="flex-1 bg-background p-2">
       <div className="flex h-6 gap-4">
         {data?.list && data?.list?.length > 0 && (
           <>

@@ -10,12 +10,6 @@ const labelVariants = cva(
   "text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70",
 );
 
-export function Label({
-  ref,
-  className,
-  ...props
-}: ComponentProps<typeof Root>) {
-  return (
-    <Root ref={ref} className={cn(labelVariants(), className)} {...props} />
-  );
+export function Label({ className, ...props }: ComponentProps<typeof Root>) {
+  return <Root className={cn(labelVariants(), className)} {...props} />;
 }

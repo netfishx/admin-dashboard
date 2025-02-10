@@ -11,19 +11,16 @@ import {
   type ComponentType,
   type InputHTMLAttributes,
   type KeyboardEventHandler,
-  type RefObject,
   type SVGProps,
   useState,
 } from "react";
 
 export function Password({
-  ref,
   Icon,
   className,
   type,
   ...props
 }: InputHTMLAttributes<HTMLInputElement> & {
-  ref?: RefObject<HTMLInputElement>;
   Icon?: ComponentType<SVGProps<SVGSVGElement>>;
 }) {
   const [showPassword, setShowPassword] = useState(false);
@@ -54,12 +51,11 @@ export function Password({
         type={type === "password" && showPassword ? "text" : type}
         className={inputClasses}
         onKeyDown={handleKeyPress}
-        ref={ref}
         autoComplete="password"
         {...props}
       />
       {type === "password" && (
-        <div className="absolute right-0 top-1/2 flex -translate-y-1/2 items-center gap-x-1 pr-3">
+        <div className="-translate-y-1/2 absolute top-1/2 right-0 flex items-center gap-x-1 pr-3">
           {showPassword ? (
             <EyeOffIcon
               className="cursor-pointer"

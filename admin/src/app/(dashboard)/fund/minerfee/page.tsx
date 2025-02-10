@@ -11,7 +11,7 @@ export default async function Page() {
   return (
     <div className="flex h-full w-full flex-col gap-2">
       <AddBtn />
-      <div className="bg-background flex flex-1 flex-col p-4">
+      <div className="flex flex-1 flex-col bg-background p-4">
         <div className="rounded-sm border">
           <Table className="table-fixed">
             <MinerFeeTableHeader />

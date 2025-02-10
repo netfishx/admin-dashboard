@@ -52,6 +52,7 @@ const nextConfig: NextConfig = {
     serverActions: {
       bodySizeLimit: "5mb",
     },
+    useCache: true,
   },
   images: {
     dangerouslyAllowSVG: true,

@@ -74,26 +74,26 @@ export function UserInfoModal() {
         <div className="flex w-full flex-col gap-4 px-4">
           {agentData?.upUsername && (
             <div className="flex items-center gap-4">
-              <Label className="text-muted-foreground w-1/4 shrink-0 text-right">
+              <Label className="w-1/4 shrink-0 text-right text-muted-foreground">
                 {t("upUsername")}
               </Label>
               <span>{agentData.upUsername}</span>
             </div>
           )}
           <div className="flex items-center gap-4">
-            <Label className="text-muted-foreground w-1/4 shrink-0 text-right">
+            <Label className="w-1/4 shrink-0 text-right text-muted-foreground">
               {t("username")}
             </Label>
             <span>{agentData?.username}</span>
           </div>
           <div className="flex items-center gap-4">
-            <Label className="text-muted-foreground w-1/4 shrink-0 text-right">
+            <Label className="w-1/4 shrink-0 text-right text-muted-foreground">
               {t("nickname")}
             </Label>
             <span>{agentData?.nickname}</span>
           </div>
           <div className="flex items-center gap-4">
-            <Label className="text-muted-foreground w-1/4 shrink-0 text-right">
+            <Label className="w-1/4 shrink-0 text-right text-muted-foreground">
               {t("restCount")}
             </Label>
             <div>{times}</div>
@@ -102,7 +102,7 @@ export function UserInfoModal() {
             </Button>
           </div>
           <div className="flex items-center gap-4">
-            <Label className="text-muted-foreground w-1/4 shrink-0 text-right">
+            <Label className="w-1/4 shrink-0 text-right text-muted-foreground">
               {t("status")}
             </Label>
             <Form action="" onSubmit={handleSubmit} ref={ref}>

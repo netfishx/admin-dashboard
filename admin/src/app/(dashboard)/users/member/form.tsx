@@ -38,7 +38,7 @@ export default function Form({
     defaultValue: "all",
   });
   return (
-    <div className="bg-background flex items-center justify-between p-4">
+    <div className="flex items-center justify-between bg-background p-4">
       <div className="flex items-center gap-2">
         {permissions?.includes("member_search") && (
           <div className="flex items-center gap-2">

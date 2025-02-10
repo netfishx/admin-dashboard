@@ -1,7 +1,0 @@
-{
-  "plugins": ["prettier-plugin-tailwindcss"],
-  "tailwindStylesheet": "./src/app/globals.css",
-  "tailwindFunctions": ["clsx"],
-  "tailwindPreserveDuplicates": true,
-  "tailwindPreserveWhitespace": true
-}

@@ -18,7 +18,7 @@ async function CommonWrapper({
       <ListFilter gameList={res?.data ?? []} key={`${startTime}-${endTime}`} />
       <Suspense
         fallback={
-          <div className="bg-background flex-1 p-4">
+          <div className="flex-1 bg-background p-4">
             <div className="rounded-sm border">
               <Table className="table-fixed">
                 <ListHeader />
@@ -43,13 +43,13 @@ export default function Page({
     <Suspense
       fallback={
         <div className="flex w-full flex-col gap-2">
-          <div className="bg-background flex flex-col gap-2 p-4">
+          <div className="flex flex-col gap-2 bg-background p-4">
             <Skeleton />
             <Skeleton />
             <Skeleton />
             <Skeleton />
           </div>
-          <div className="bg-background flex-1 p-4">
+          <div className="flex-1 bg-background p-4">
             <div className="rounded-sm border">
               <Table className="table-fixed">
                 <ListHeader />

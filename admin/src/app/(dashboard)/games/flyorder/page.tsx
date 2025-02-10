@@ -53,10 +53,10 @@ async function TableWrapper() {
 export default function Page() {
   return (
     <div className="flex w-full flex-col gap-2">
-      <div className="bg-background flex items-center justify-between p-4">
+      <div className="flex items-center justify-between bg-background p-4">
         <FlyOrderForm />
       </div>
-      <div className="bg-background flex-1 p-4">
+      <div className="flex-1 bg-background p-4">
         <div className="rounded-sm border">
           <Suspense>
             <TableWrapper />

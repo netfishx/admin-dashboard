@@ -73,7 +73,7 @@ export async function TableHeaderWrapper() {
 
         <TableHead className="w-48">{t("userId")}</TableHead>
 
-        <TableHead className="w-[450px]">{t("content")}</TableHead>
+        <TableHead className="w-120">{t("content")}</TableHead>
       </TableRow>
     </TableHeader>
   );

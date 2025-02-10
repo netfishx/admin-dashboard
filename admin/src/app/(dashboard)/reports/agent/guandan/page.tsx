@@ -2,15 +2,10 @@ import { getGuandanGames } from "@/api";
 import TableSkeleton from "@/components/table-skeleton";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Table } from "@/components/ui/table";
-import type { PokerReportRequestParams } from "@/lib/types";
 import { getSession } from "@/session";
 import { Suspense } from "react";
 import { List, ListHeader } from "./list";
 import { ListFilter } from "./list-filter";
-
-interface CommonWrapperProps {
-  searchParams: Promise<PokerReportRequestParams>;
-}
 
 async function ListFilterWrapper() {
   const session = await getSession();
@@ -21,14 +16,20 @@ async function ListFilterWrapper() {
   return <ListFilter hasSearchPermission={!!hasSearchPermission} />;
 }
 
-export default async function Page({ searchParams }: CommonWrapperProps) {
+export default async function Page({
+  searchParams,
+}: {
+  searchParams: Promise<{ [key: string]: string | undefined }>;
+}) {
   const { startTime, endTime } = await searchParams;
   const gameListResp = await getGuandanGames();
   return (
     <div className="flex w-full flex-col gap-2">
       <Suspense
         fallback={
-          <div className="bg-background flex items-center justify-between p-4">
+          <div className="flex flex-col gap-2 bg-background p-4">
+            <Skeleton />
+            <Skeleton />
             <Skeleton />
           </div>
         }
@@ -37,7 +38,8 @@ export default async function Page({ searchParams }: CommonWrapperProps) {
       </Suspense>
       <Suspense
         fallback={
-          <div className="bg-background flex-1 p-2">
+          <div className="flex-1 bg-background p-2">
+            <div className="h-6" />
             <div className="relative rounded-sm border">
               <Table className="table-fixed">
                 <ListHeader />

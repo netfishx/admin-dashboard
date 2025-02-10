@@ -27,7 +27,7 @@ export default async function Page({
     <div className="flex w-full flex-col gap-2">
       <Suspense
         fallback={
-          <div className="bg-background flex flex-col gap-2 p-4">
+          <div className="flex flex-col gap-2 bg-background p-4">
             <Skeleton />
             <Skeleton />
           </div>
@@ -36,7 +36,7 @@ export default async function Page({
         <FormWrapper searchParams={searchParams} />
       </Suspense>
 
-      <div className="bg-background flex-1 gap-2 p-4">
+      <div className="flex-1 gap-2 bg-background p-4">
         <Suspense
           fallback={
             <Table className="table-fixed">
@@ -66,8 +66,8 @@ async function PeriodTableHeader() {
         <TableHead className="w-24">{t("pairBetAmount")}</TableHead>
         <TableHead className="w-24">{t("availableBetAmount")}</TableHead>
         <TableHead className="w-24">{t("backIncome")}</TableHead>
-        <TableHead className="bg-muted sticky right-0 w-32 p-0">
-          <div className="shadow-l flex h-full items-center justify-center px-4">
+        <TableHead className="sticky right-0 w-32 bg-muted p-0">
+          <div className="flex h-full items-center justify-center px-4 shadow-l">
             {t("action")}
           </div>
         </TableHead>
@@ -113,7 +113,7 @@ async function PeriodTable({
   const { data } = await getPeriodReport(params);
   return (
     <div className="flex w-full flex-col gap-2">
-      <div className="bg-background flex-1">
+      <div className="flex-1 bg-background">
         <div className="relative h-full rounded-sm border">
           <Table className="table-fixed">
             <PeriodTableHeader />
@@ -168,8 +168,8 @@ async function TableBodyWrapper({
               {formatNumber(Number(item.availableBetAmount))}
             </TableCell>
             <TableCell>{formatNumber(Number(item.backIncome))}</TableCell>
-            <TableCell className="bg-background sticky right-0 p-0">
-              <div className="shadow-l flex items-center justify-center px-4 py-2">
+            <TableCell className="sticky right-0 bg-background p-0">
+              <div className="flex items-center justify-center px-4 py-2 shadow-l">
                 <Actions searchParams={urlParams} data={item} />
               </div>
             </TableCell>

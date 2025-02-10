@@ -41,7 +41,7 @@ export default async function Page({
     <div className="flex w-full flex-col gap-2">
       <Suspense
         fallback={
-          <div className="bg-background flex flex-col gap-2 p-4">
+          <div className="flex flex-col gap-2 bg-background p-4">
             <Skeleton />
             <Skeleton />
           </div>
@@ -49,7 +49,7 @@ export default async function Page({
       >
         <Form key={`${startTime}-${endTime}`} />
       </Suspense>
-      <div className="bg-background flex flex-1 flex-col gap-2 p-4">
+      <div className="flex flex-1 flex-col gap-2 bg-background p-4">
         <Suspense
           fallback={
             <Table className="table-fixed rounded-sm border">
@@ -101,7 +101,7 @@ async function TableWrapper({
   });
 
   return (
-    <div className="bg-background w-full flex-1">
+    <div className="w-full flex-1 bg-background">
       <div className="relative overflow-x-auto overflow-y-auto rounded-sm border">
         <Table className="table-fixed">
           <TableHeaderWrapper />
@@ -141,8 +141,8 @@ async function TableHeaderWrapper() {
         </TableHead>
         <TableHead className="w-24 text-center">{t("withdrawMode")}</TableHead>
         <TableHead className="w-24 text-center">{t("moneyStatus")}</TableHead>
-        <TableHead className="bg-muted sticky right-0 w-48 p-0 text-center">
-          <div className="shadow-l flex h-full items-center justify-center px-4">
+        <TableHead className="sticky right-0 w-48 bg-muted p-0 text-center">
+          <div className="flex h-full items-center justify-center px-4 shadow-l">
             {t("action")}
           </div>
         </TableHead>
@@ -239,8 +239,8 @@ async function TableBodyWrapper({ list }: { list: ApplyData[] }) {
                 {item.moneyStatus === null && <span>--</span>}
               </div>
             </TableCell>
-            <TableCell className="bg-background sticky right-0 p-0">
-              <div className="shadow-l flex items-center justify-center px-4 py-2">
+            <TableCell className="sticky right-0 bg-background p-0">
+              <div className="flex items-center justify-center px-4 py-2 shadow-l">
                 <Actions data={item} currentUserId={userInfo?.id ?? "0"} />
               </div>
             </TableCell>

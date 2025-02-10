@@ -89,7 +89,7 @@ export function UserInfoModal({ permissions }: { permissions: string[] }) {
             <>
               <Form action="" onSubmit={handleCheckAgent}>
                 <div className="flex items-center gap-4">
-                  <Label className="text-muted-foreground w-1/4 shrink-0 text-right">
+                  <Label className="w-1/4 shrink-0 text-right text-muted-foreground">
                     {t("agentUsername")}
                   </Label>
 
@@ -106,7 +106,7 @@ export function UserInfoModal({ permissions }: { permissions: string[] }) {
                 </div>
               </Form>
               <div className="flex items-center gap-4">
-                <Label className="text-muted-foreground w-1/4 shrink-0 text-right">
+                <Label className="w-1/4 shrink-0 text-right text-muted-foreground">
                   {t("agentNickname")}
                 </Label>
                 <Input
@@ -118,31 +118,31 @@ export function UserInfoModal({ permissions }: { permissions: string[] }) {
             </>
           ) : (
             <>
-              <div className="text-muted-foreground flex items-center gap-4">
-                <Label className="text-muted-foreground w-1/4 shrink-0 text-right">
+              <div className="flex items-center gap-4 text-muted-foreground">
+                <Label className="w-1/4 shrink-0 text-right text-muted-foreground">
                   {t("agentUsername")}
                 </Label>
                 <span>{memberInfoData?.upUsername}</span>
               </div>
-              <div className="text-muted-foreground flex items-center gap-4">
-                <Label className="text-muted-foreground w-1/4 shrink-0 text-right">
+              <div className="flex items-center gap-4 text-muted-foreground">
+                <Label className="w-1/4 shrink-0 text-right text-muted-foreground">
                   {t("agentNickname")}
                 </Label>
                 <span>{memberInfoData?.upNickname}</span>
               </div>
             </>
           )}
-          <div className="text-muted-foreground flex items-center gap-4">
+          <div className="flex items-center gap-4 text-muted-foreground">
             <Label className="w-1/4 shrink-0 text-right">{t("memberId")}</Label>
             <span>{memberInfoData?.username}</span>
           </div>
-          <div className="text-muted-foreground flex items-center gap-4">
+          <div className="flex items-center gap-4 text-muted-foreground">
             <Label className="w-1/4 shrink-0 text-right">
               {t("memberUsername")}
             </Label>
             <span>{memberInfoData?.nickname}</span>
           </div>
-          <div className="text-muted-foreground flex items-center gap-4">
+          <div className="flex items-center gap-4 text-muted-foreground">
             <Label className="w-1/4 shrink-0 text-right">
               {t("createTime")}
             </Label>
@@ -153,7 +153,7 @@ export function UserInfoModal({ permissions }: { permissions: string[] }) {
             </span>
           </div>
           <div className="flex items-center gap-4">
-            <Label className="text-muted-foreground w-1/4 shrink-0 text-right">
+            <Label className="w-1/4 shrink-0 text-right text-muted-foreground">
               {t("status")}
             </Label>
             <Form action="" onSubmit={handleUpdateStatus} ref={ref}>

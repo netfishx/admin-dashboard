@@ -22,15 +22,13 @@ export {
 };
 
 export function DialogOverlay({
-  ref,
   className,
   ...props
 }: ComponentProps<typeof Overlay>) {
   return (
     <Overlay
-      ref={ref}
       className={cn(
-        "data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 fixed inset-0 z-50 bg-black/80",
+        "data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 fixed inset-0 z-50 bg-black/80 data-[state=closed]:animate-out data-[state=open]:animate-in",
         className,
       )}
       {...props}
@@ -39,7 +37,6 @@ export function DialogOverlay({
 }
 
 export function DialogContent({
-  ref,
   className,
   children,
   ...props
@@ -48,9 +45,8 @@ export function DialogContent({
     <Portal>
       <DialogOverlay />
       <Content
-        ref={ref}
         className={cn(
-          "bg-background data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 fixed left-[50%] top-[50%] z-50 grid max-h-[90dvh] w-full max-w-lg translate-x-[-50%] translate-y-[-50%] gap-4 border p-6 shadow-lg duration-200 sm:rounded-lg",
+          "data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 fixed top-[50%] left-[50%] z-50 grid max-h-[90dvh] w-full max-w-lg translate-x-[-50%] translate-y-[-50%] gap-4 border bg-background p-6 shadow-lg duration-200 data-[state=closed]:animate-out data-[state=open]:animate-in sm:rounded-lg",
           className,
         )}
         onInteractOutside={(e) => {
@@ -59,7 +55,7 @@ export function DialogContent({
         {...props}
       >
         {children}
-        <Close className="focus:outline-hidden focus:ring-ring data-[state=open]:bg-accent data-[state=open]:text-muted-foreground absolute right-4 top-4 rounded-sm opacity-70 transition-opacity hover:opacity-100 focus:ring disabled:pointer-events-none">
+        <Close className="absolute top-4 right-4 rounded-sm opacity-70 transition-opacity hover:opacity-100 focus:outline-hidden focus:ring focus:ring-ring disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground">
           <X className="h-4 w-4" />
           <span className="sr-only">Close</span>
         </Close>
@@ -99,15 +95,13 @@ export function DialogFooter({
 }
 
 export function DialogTitle({
-  ref,
   className,
   ...props
 }: ComponentProps<typeof Title>) {
   return (
     <Title
-      ref={ref}
       className={cn(
-        "text-lg font-semibold leading-none tracking-tight",
+        "font-semibold text-lg leading-none tracking-tight",
         className,
       )}
       {...props}
@@ -116,13 +110,11 @@ export function DialogTitle({
 }
 
 export function DialogDescription({
-  ref,
   className,
   ...props
 }: ComponentProps<typeof Description>) {
   return (
     <Description
-      ref={ref}
       className={cn("text-muted-foreground text-sm", className)}
       {...props}
     />

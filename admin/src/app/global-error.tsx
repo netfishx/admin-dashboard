@@ -13,7 +13,7 @@ export default function GlobalError({
   return (
     <html lang="en">
       <body className="flex flex-col gap-4 p-4">
-        <h2 className="text-2xl font-medium">系统维护，请稍后再试！</h2>
+        <h2 className="font-medium text-2xl">系统维护，请稍后再试！</h2>
         <Button
           type="button"
           className="w-fit text-base"

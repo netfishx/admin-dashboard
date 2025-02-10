@@ -1,7 +1,7 @@
 "use client";
 import { editDefaultGameConfig } from "@/api";
 import { EditNumber } from "@/components/edit-number";
-import { Button, type ButtonProps } from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import {
   Select,
@@ -16,14 +16,21 @@ import { useAtom } from "jotai";
 import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useTransitionRouter } from "next-view-transitions";
-import { type ReactNode, useState, useTransition } from "react";
+import {
+  type ComponentProps,
+  type ReactNode,
+  useState,
+  useTransition,
+} from "react";
 import { toast } from "sonner";
 
 function RebateButton({
   children,
   onClick,
   ...props
-}: { children: ReactNode; onClick: () => void } & ButtonProps) {
+}: { children: ReactNode; onClick: () => void } & ComponentProps<
+  typeof Button
+>) {
   const [isPending, startTransition] = useTransition();
   return (
     <Button

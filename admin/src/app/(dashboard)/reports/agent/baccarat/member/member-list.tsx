@@ -39,8 +39,8 @@ export async function ListHeader() {
         <TableHead className="w-32">{t("rebateExpense")}</TableHead>
         <TableHead className="w-32">{t("netRebate")}</TableHead>
         <TableHead className="w-32">{t("totalProfitLossAmount")}</TableHead>
-        <TableHead className="bg-muted sticky right-0 w-24 p-0">
-          <div className="shadow-l flex h-full items-center justify-center px-4">
+        <TableHead className="sticky right-0 w-24 bg-muted p-0">
+          <div className="flex h-full items-center justify-center px-4 shadow-l">
             {t("action")}
           </div>
         </TableHead>
@@ -96,8 +96,8 @@ async function ListBody({
             <TableCell>
               {formatNumber(Number(item.totalProfitLossAmount || 0))}
             </TableCell>
-            <TableCell className="bg-background sticky right-0 p-0">
-              <div className="shadow-l flex items-center justify-center px-4 py-2">
+            <TableCell className="sticky right-0 bg-background p-0">
+              <div className="flex items-center justify-center px-4 py-2 shadow-l">
                 <DetailButton item={item} />
               </div>
             </TableCell>
@@ -132,7 +132,7 @@ export async function MemberList({
 
   if (!(params?.startTime && params?.endTime)) {
     return (
-      <div className="bg-background flex-1 p-4">
+      <div className="flex-1 bg-background p-4">
         <div className="rounded-sm border">
           <Table className="table-fixed">
             <ListHeader />
@@ -146,7 +146,7 @@ export async function MemberList({
   const { data } = await getMemberBetReport(p);
 
   return (
-    <div className="bg-background flex-1 p-4">
+    <div className="flex-1 bg-background p-4">
       <div className="rounded-sm border">
         <Table className="table-fixed">
           <ListHeader />

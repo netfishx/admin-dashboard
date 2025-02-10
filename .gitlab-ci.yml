@@ -1,4 +1,4 @@
-build:
+admin-build:
   stage: build
   tags:
     - build
@@ -20,12 +20,14 @@ landing-build:
     - docker build -t 172.31.46.150:5555/landing-006:$CI_COMMIT_SHORT_SHA .
     - docker push 172.31.46.150:5555/landing-006:$CI_COMMIT_SHORT_SHA
 
-deploy:
+admin-deploy:
   stage: deploy
   tags:
     - deploy
   only:
     - test
+  needs:
+    - admin-build
   script:
     - docker pull 18.163.249.24:5555/admin-006:$CI_COMMIT_SHORT_SHA
     - docker stop admin-006 || true
@@ -38,6 +40,8 @@ landing-deploy:
     - deploy
   only:
     - test
+  needs:
+    - landing-build
   script:
     - docker pull 18.163.249.24:5555/landing-006:$CI_COMMIT_SHORT_SHA
     - docker stop landing-006 || true

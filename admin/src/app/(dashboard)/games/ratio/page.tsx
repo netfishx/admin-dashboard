@@ -69,7 +69,7 @@ async function TableWrapper() {
 
 export default function Page() {
   return (
-    <div className="bg-background flex w-full flex-1 flex-col p-4">
+    <div className="flex w-full flex-1 flex-col bg-background p-4">
       <div className="rounded-sm border">
         <Suspense>
           <TableWrapper />

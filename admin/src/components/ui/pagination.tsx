@@ -1,8 +1,8 @@
-import { type ButtonProps, buttonVariants } from "@/components/ui/button";
+import { type Button, buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { ChevronLeft, ChevronRight, MoreHorizontal } from "lucide-react";
 import { Link } from "next-view-transitions";
-import type { ComponentProps, HTMLAttributes, RefObject } from "react";
+import type { ComponentProps, HTMLAttributes } from "react";
 
 export function Pagination({
   className,
@@ -18,15 +18,11 @@ export function Pagination({
 }
 
 export function PaginationContent({
-  ref,
   className,
   ...props
-}: HTMLAttributes<HTMLUListElement> & {
-  ref?: RefObject<HTMLUListElement>;
-}) {
+}: HTMLAttributes<HTMLUListElement>) {
   return (
     <ul
-      ref={ref}
       className={cn("flex flex-row items-center gap-1", className)}
       {...props}
     />
@@ -34,13 +30,10 @@ export function PaginationContent({
 }
 
 export function PaginationItem({
-  ref,
   className,
   ...props
-}: HTMLAttributes<HTMLLIElement> & {
-  ref?: RefObject<HTMLLIElement>;
-}) {
-  return <li ref={ref} className={cn("", className)} {...props} />;
+}: HTMLAttributes<HTMLLIElement>) {
+  return <li className={cn("", className)} {...props} />;
 }
 
 export function PaginationLink({
@@ -50,7 +43,7 @@ export function PaginationLink({
   ...props
 }: ComponentProps<typeof Link> & {
   isActive?: boolean;
-} & Pick<ButtonProps, "size">) {
+} & Pick<ComponentProps<typeof Button>, "size">) {
   return (
     <Link
       className={cn(

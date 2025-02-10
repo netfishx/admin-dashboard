@@ -1,10 +1,23 @@
 {
   "$schema": "https://biomejs.dev/schemas/1.9.4/schema.json",
+  "vcs": {
+    "enabled": true,
+    "clientKind": "git",
+    "useIgnoreFile": true
+  },
   "files": {
-    "ignore": ["src/**/*.css", "landing/**"]
+    "ignore": ["src/app/(dashboard)/personal/security/progress.module.css"]
   },
   "organizeImports": {
     "enabled": true
+  },
+  "css": {
+    "linter": {
+      "enabled": true
+    },
+    "formatter": {
+      "enabled": true
+    }
   },
   "linter": {
     "enabled": true,
@@ -40,6 +53,9 @@
       },
       "security": {
         "noDangerouslySetInnerHtml": "off"
+      },
+      "nursery": {
+        "useSortedClasses": "error"
       }
     }
   },

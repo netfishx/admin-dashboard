@@ -44,7 +44,7 @@ export function Form({ session }: { session: Promise<SessionData | null> }) {
     setLoading(isReset || isPending);
   }, [isReset, isPending, setLoading]);
   return (
-    <div className="bg-background flex items-center justify-between p-4">
+    <div className="flex items-center justify-between bg-background p-4">
       <div className="flex items-center gap-2">
         {permissions?.includes("agent_search") && (
           <div className="flex items-center gap-2">

@@ -29,7 +29,7 @@ export default async function Page({
     <div className="flex w-full flex-col gap-2">
       <Suspense
         fallback={
-          <div className="bg-background flex flex-col gap-2 p-4">
+          <div className="flex flex-col gap-2 bg-background p-4">
             <Skeleton />
             <Skeleton />
             <Skeleton />
@@ -38,7 +38,7 @@ export default async function Page({
       >
         <Form key={`${startTime}-${endTime}`} />
       </Suspense>
-      <div className="bg-background flex-1 p-4">
+      <div className="flex-1 bg-background p-4">
         <Suspense
           fallback={
             <Table className="table-fixed">
@@ -81,7 +81,7 @@ async function TableWrapper({
   // temp dict
   // 稽核状态
   return (
-    <div className="bg-background w-full flex-1">
+    <div className="w-full flex-1 bg-background">
       <div className="relative overflow-x-auto overflow-y-auto rounded-sm border">
         <Table className="table-fixed">
           <TableHeaderWrapper />
@@ -118,8 +118,8 @@ async function TableHeaderWrapper() {
         <TableHead className="w-48">{t("availableAudit")}</TableHead>
         <TableHead className="w-48">{t("remainingAudit")}</TableHead>
         <TableHead className="w-32">{t("status")}</TableHead>
-        <TableHead className="bg-muted sticky right-0 w-48 p-0 text-center">
-          <div className="shadow-l flex h-full items-center justify-center px-4">
+        <TableHead className="sticky right-0 w-48 bg-muted p-0 text-center">
+          <div className="flex h-full items-center justify-center px-4 shadow-l">
             {translations("action")}
           </div>
         </TableHead>
@@ -163,8 +163,8 @@ async function TableBodyWrapper({ list }: { list: AuditList[] }) {
               })()}
             </TableCell>
 
-            <TableCell className="bg-background sticky right-0 p-0">
-              <div className="shadow-l flex items-center justify-center px-4 py-2">
+            <TableCell className="sticky right-0 bg-background p-0">
+              <div className="flex items-center justify-center px-4 py-2 shadow-l">
                 <CleanBtn data={item} />
               </div>
             </TableCell>

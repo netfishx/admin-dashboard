@@ -13,7 +13,6 @@ const ToggleGroupContext = createContext<VariantProps<typeof toggleVariants>>({
 });
 
 export function ToggleGroup({
-  ref,
   className,
   variant,
   size,
@@ -22,7 +21,6 @@ export function ToggleGroup({
 }: ComponentProps<typeof Root> & VariantProps<typeof toggleVariants>) {
   return (
     <Root
-      ref={ref}
       className={cn("flex items-center justify-center gap-1", className)}
       {...props}
     >
@@ -34,7 +32,6 @@ export function ToggleGroup({
 }
 
 export function ToggleGroupItem({
-  ref,
   className,
   children,
   variant,
@@ -45,7 +42,6 @@ export function ToggleGroupItem({
 
   return (
     <Item
-      ref={ref}
       className={cn(
         toggleVariants({
           variant: context.variant || variant,

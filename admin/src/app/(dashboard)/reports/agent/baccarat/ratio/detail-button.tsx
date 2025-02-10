@@ -1,6 +1,8 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import { useTranslations } from "next-intl";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export default function DetailButton({
   parentAgentId,
@@ -10,25 +12,25 @@ export default function DetailButton({
   searchParams: { [key: string]: string | undefined };
 }) {
   const t = useTranslations("report.orderlist");
+  const router = useRouter();
   return (
-    <div>
-      <Button
-        variant="ghost"
-        className="text-primary hover:text-primary/80 hover:no-underline"
-        asChild
-      >
-        <Link
-          href={{
-            pathname: "/reports/agent/baccarat/ratio",
-            query: {
-              ...searchParams,
+    <Button
+      variant="ghost"
+      className="text-primary hover:text-primary/80 hover:no-underline"
+      onClick={() => {
+        router.push(
+          `/reports/agent/baccarat/ratio?${new URLSearchParams({
+            ...searchParams,
+            parentAgentId,
+            ids: [
+              ...(searchParams.ids ? searchParams.ids.split(",") : []),
               parentAgentId,
-            },
-          }}
-        >
-          {t("more")}
-        </Link>
-      </Button>
-    </div>
+            ].join(","),
+          })}`,
+        );
+      }}
+    >
+      {t("more")}
+    </Button>
   );
 }

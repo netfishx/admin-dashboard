@@ -22,10 +22,10 @@ export default async function Page({
   const t = await getTranslations("report.download");
   return (
     <div className="flex w-full flex-col gap-2">
-      <div className="bg-background flex items-center p-4 text-sm font-medium">
+      <div className="flex items-center bg-background p-4 font-medium text-sm">
         {t("list")}
       </div>
-      <div className="bg-background flex-1 p-4">
+      <div className="flex-1 bg-background p-4">
         <div className="rounded-sm border">
           <Suspense
             fallback={
@@ -121,28 +121,28 @@ async function ShowStatusLable({ status }: { status: number }) {
   const t = await getTranslations("report.download");
   if (status === 0) {
     return (
-      <span className="bg-primary/20 text-primary inline-block w-20 rounded-sm p-1 text-center">
+      <span className="inline-block w-20 rounded-sm bg-primary/20 p-1 text-center text-primary">
         {t("initializing")}
       </span>
     );
   }
   if (status === 1) {
     return (
-      <span className="bg-primary/20 text-primary inline-block w-20 rounded-sm p-1 text-center">
+      <span className="inline-block w-20 rounded-sm bg-primary/20 p-1 text-center text-primary">
         {t("exporting")}
       </span>
     );
   }
   if (status === 2) {
     return (
-      <span className="bg-green/20 text-green inline-block w-20 rounded-sm p-1 text-center">
+      <span className="inline-block w-20 rounded-sm bg-green/20 p-1 text-center text-green">
         {t("exported")}
       </span>
     );
   }
   if (status === 99) {
     return (
-      <span className="bg-destructive/20 text-destructive inline-block w-20 rounded-sm p-1 text-center">
+      <span className="inline-block w-20 rounded-sm bg-destructive/20 p-1 text-center text-destructive">
         {t("failed")}
       </span>
     );

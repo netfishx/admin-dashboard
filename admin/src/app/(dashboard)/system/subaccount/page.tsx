@@ -34,7 +34,7 @@ function SubaccountTableHeader() {
         <TableHead className="w-36">{t("lastLoginIp")}</TableHead>
         <TableHead className="w-48">{t("lastLoginTime")}</TableHead>
         <TableHead className="w-24 text-center">{t("status")}</TableHead>
-        <TableHead className="w-70 bg-muted sticky right-0 text-center">
+        <TableHead className="sticky right-0 w-70 bg-muted text-center">
           {t("action")}
         </TableHead>
       </TableRow>
@@ -109,7 +109,7 @@ async function SubaccountTableWrapper({
                         : translations("disable")}
                     </span>
                   </TableCell>
-                  <TableCell className="bg-background sticky right-0 text-center">
+                  <TableCell className="sticky right-0 bg-background text-center">
                     <div className="flex justify-center">
                       <EditButton data={item} />
                       <LoginLogButton id={item.id ?? ""} />
@@ -140,11 +140,11 @@ export default function SubaccountPage({
   const t = useTranslations("system.subaccount");
   return (
     <div className="flex w-full flex-col gap-2">
-      <div className="bg-background flex items-center justify-between p-4">
-        <div className="text-sm font-medium">{t("list")}</div>
+      <div className="flex items-center justify-between bg-background p-4">
+        <div className="font-medium text-sm">{t("list")}</div>
         <AddButton />
       </div>
-      <div className="bg-background flex flex-1 flex-col gap-4 p-4">
+      <div className="flex flex-1 flex-col gap-4 bg-background p-4">
         <Suspense
           fallback={
             <div className="rounded-sm border">

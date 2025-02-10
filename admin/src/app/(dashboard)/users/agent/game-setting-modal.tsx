@@ -94,11 +94,11 @@ export function GameSettingModal() {
           <DialogDescription />
         </DialogHeader>
         <div className="flex flex-col gap-2">
-          <span className="text-md font-medium">{t("baccarat")}</span>
+          <span className="font-medium text-md">{t("baccarat")}</span>
           <div className="max-h-[50dvh] overflow-auto rounded-sm border">
             <ScrollableTable className="relative">
               <TableHeader>
-                <TableRow className="bg-muted sticky top-0">
+                <TableRow className="sticky top-0 bg-muted">
                   <TableHead>{t("name")}</TableHead>
                   <TableHead>{t("switch")}</TableHead>
                   <TableHead>{t("ratio")}</TableHead>
@@ -163,7 +163,7 @@ export function GameSettingModal() {
           </div>
         </div>
         <div className="flex flex-col gap-2">
-          <span className="text-md font-medium">{t("guandan")}</span>
+          <span className="font-medium text-md">{t("guandan")}</span>
           <div className="rounded-sm border">
             <Table>
               <TableHeader>

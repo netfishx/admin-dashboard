@@ -9,22 +9,15 @@ import {
 } from "@radix-ui/react-scroll-area";
 
 import { cn } from "@/lib/utils";
-import type { ComponentProps, RefObject } from "react";
+import type { ComponentProps } from "react";
 
 export function ScrollArea({
-  ref,
   className,
   children,
   ...props
-}: ComponentProps<typeof Root> & {
-  ref?: RefObject<HTMLDivElement>;
-}) {
+}: ComponentProps<typeof Root>) {
   return (
-    <Root
-      ref={ref}
-      className={cn("relative overflow-hidden", className)}
-      {...props}
-    >
+    <Root className={cn("relative overflow-hidden", className)} {...props}>
       <Viewport className="h-full w-full rounded-[inherit]">
         {children}
       </Viewport>
@@ -35,16 +28,12 @@ export function ScrollArea({
 }
 
 export function ScrollBar({
-  ref,
   className,
   orientation = "vertical",
   ...props
-}: ComponentProps<typeof ScrollAreaScrollbar> & {
-  ref?: RefObject<HTMLDivElement>;
-}) {
+}: ComponentProps<typeof ScrollAreaScrollbar>) {
   return (
     <ScrollAreaScrollbar
-      ref={ref}
       orientation={orientation}
       className={cn(
         "flex touch-none select-none transition-colors",
@@ -56,7 +45,7 @@ export function ScrollBar({
       )}
       {...props}
     >
-      <ScrollAreaThumb className="bg-border relative flex-1 rounded-full" />
+      <ScrollAreaThumb className="relative flex-1 rounded-full bg-border" />
     </ScrollAreaScrollbar>
   );
 }

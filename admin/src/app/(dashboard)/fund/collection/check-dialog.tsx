@@ -54,7 +54,7 @@ export function CheckDialog(props: Dialogprops) {
               <DialogTitle>{t("checkStep1Title")}</DialogTitle>
             </DialogHeader>
             <div className="items-center gap-2">
-              <Label className="before:text-destructive block shrink-0 py-2 before:mr-1 before:content-['*']">
+              <Label className="block shrink-0 py-2 before:mr-1 before:text-destructive before:content-['*']">
                 {t("passwordCheckTips")}
               </Label>
               <Password
@@ -84,13 +84,13 @@ export function CheckDialog(props: Dialogprops) {
               <DialogTitle>{t("checkStep2Title")}</DialogTitle>
             </DialogHeader>
             <div className="mx-auto w-full max-w-xl p-4">
-              <div className="text-card-foreground rounded-xl  border shadow-sm">
+              <div className="rounded-xl border text-card-foreground shadow-sm">
                 {/* Header row */}
-                <div className="divide-muted flex divide-x">
-                  <div className="bg-muted flex w-24 items-center justify-center px-4 py-2.5 text-sm">
+                <div className="flex divide-x divide-muted">
+                  <div className="flex w-24 items-center justify-center bg-muted px-4 py-2.5 text-sm">
                     {t("secretInfo")}
                   </div>
-                  <div className="bg-card flex flex-1 items-center justify-between px-4 py-2.5">
+                  <div className="flex flex-1 items-center justify-between bg-card px-4 py-2.5">
                     <span className="break-all font-mono text-sm">
                       {item?.privateKey}
                     </span>
@@ -100,7 +100,7 @@ export function CheckDialog(props: Dialogprops) {
 
                 {/* Warning message */}
                 <div className="border-muted border-t px-4 py-2">
-                  <div className="text-destructive flex items-center gap-1.5 text-sm">
+                  <div className="flex items-center gap-1.5 text-destructive text-sm">
                     <AlertTriangle className="h-4 w-4" />
                     <span>{t("secretWarning")}</span>
                   </div>

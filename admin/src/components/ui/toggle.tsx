@@ -29,7 +29,6 @@ const toggleVariants = cva(
 );
 
 export function Toggle({
-  ref,
   className,
   variant,
   size,
@@ -37,7 +36,6 @@ export function Toggle({
 }: ComponentProps<typeof Root> & VariantProps<typeof toggleVariants>) {
   return (
     <Root
-      ref={ref}
       className={cn(toggleVariants({ variant, size, className }))}
       {...props}
     />

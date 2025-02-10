@@ -12,13 +12,12 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import type { GameInfo } from "@/lib/types";
-import { makeDownload } from "@/lib/utils";
 import { memberListBaccaratAgentIdAtom } from "@/store";
 import { useAtom } from "jotai";
 import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useTransitionRouter } from "next-view-transitions";
-import { useSearchParams } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import { parseAsInteger, useQueryState, useQueryStates } from "nuqs";
 import { useTransition } from "react";
 import { toast } from "sonner";
@@ -68,9 +67,10 @@ export function ListFilter({
       toast.error(t("selectDate"));
     }
   };
+  const pathname = usePathname();
 
   return (
-    <div className="bg-background flex flex-col gap-2 px-4 py-2">
+    <div className="flex flex-col gap-2 bg-background px-4 py-2">
       {/* First row */}
       <div className="flex items-center gap-4">
         <div className="flex items-center gap-2">
@@ -97,20 +97,11 @@ export function ListFilter({
           <Label>{t("openTime")}</Label>
           <DateRangeFilter enableTimeSelect={false} />
         </div>
-        <div className="flex items-center gap-4">
-          <Label className="shrink-0">{t("memberId")}</Label>
-          <Input
-            className="w-52"
-            value={memberId ?? ""}
-            onChange={(e) => setMemberId(e.target.value)}
-            placeholder={t("placeholderinput")}
-          />
-        </div>
       </div>
 
       {/* Second row */}
       <div className="flex items-center gap-4">
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-2">
           <Label className="shrink-0">{t("memberType")}</Label>
           <Select
             value={memberType ?? ""}
@@ -128,7 +119,7 @@ export function ListFilter({
           </Select>
         </div>
         {hasSearchPermission && (
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2">
             <Label className="shrink-0">{t("agentId")}</Label>
             <Input
               value={parentAgentId ?? ""}
@@ -138,14 +129,21 @@ export function ListFilter({
             />
           </div>
         )}
+        <div className="flex items-center gap-2">
+          <Label className="shrink-0">{t("memberId")}</Label>
+          <Input
+            className="w-52"
+            value={memberId ?? ""}
+            onChange={(e) => setMemberId(e.target.value)}
+            placeholder={t("placeholderinput")}
+          />
+        </div>
       </div>
 
       {/* Last row */}
       <div className="flex items-center justify-end gap-4">
         <div className="flex items-center gap-2">
-          <ReportDownloadBtn
-            handleDownload={() => makeDownload(searchParams, 100004)}
-          />
+          <ReportDownloadBtn searchParams={searchParams} pathname={pathname} />
           <Button variant="outline" onClick={handleReset}>
             {t("reset")}
           </Button>

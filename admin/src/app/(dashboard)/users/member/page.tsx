@@ -41,7 +41,7 @@ export default function Page({
       >
         <FormWrapper />
       </Suspense>
-      <div className="bg-background flex-1 gap-2 p-4">
+      <div className="flex-1 gap-2 bg-background p-4">
         <Suspense
           fallback={
             <div className="rounded-sm border">
@@ -120,11 +120,11 @@ async function TableHeaderWrapper() {
         <TableHead className="w-24 text-center">{t("status")}</TableHead>
         <TableHead
           className={cn(
-            "w-160 bg-muted sticky right-0 p-0 text-center",
+            "sticky right-0 w-160 bg-muted p-0 text-center",
             permissions?.includes("edit_credit") ? "w-160" : "w-100",
           )}
         >
-          <div className="shadow-l flex h-full items-center justify-center px-4">
+          <div className="flex h-full items-center justify-center px-4 shadow-l">
             {t("action")}
           </div>
         </TableHead>
@@ -170,8 +170,8 @@ async function TableBodyWrapper({
                 {t(`statusLabel.${item.status}`)}
               </span>
             </TableCell>
-            <TableCell className="bg-background sticky right-0 p-0">
-              <div className="shadow-l flex items-center justify-center px-4 py-2">
+            <TableCell className="sticky right-0 bg-background p-0">
+              <div className="flex items-center justify-center px-4 py-2 shadow-l">
                 <Actions data={item} permissions={permissions} />
               </div>
             </TableCell>
