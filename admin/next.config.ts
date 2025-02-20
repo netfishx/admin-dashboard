@@ -42,7 +42,7 @@ const nextConfig: NextConfig = {
         : false,
   },
   devIndicators: {
-    buildActivityPosition: "bottom-right",
+    position: "bottom-right",
   },
   experimental: {
     ppr: true,

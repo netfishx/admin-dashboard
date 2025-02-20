@@ -1,186 +1,84 @@
 "use client";
 
-import "react-day-picker/style.css";
-
-import { Button, buttonVariants } from "@/components/ui/button";
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import type { ComponentProps } from "react";
-import {
-  DayPicker,
-  labelNext,
-  labelPrevious,
-  useDayPicker,
-} from "react-day-picker";
+import { DayPicker } from "react-day-picker";
+
 import { zhCN } from "react-day-picker/locale";
 
-export function Calendar({
+function Calendar({
   className,
   classNames,
   showOutsideDays = true,
-  numberOfMonths,
+  components: userComponents,
   ...props
 }: ComponentProps<typeof DayPicker>) {
+  const defaultClassNames = {
+    month_grid: "mx-auto",
+    months: "relative flex flex-col sm:flex-row gap-4",
+    month: "w-full",
+    month_caption:
+      "relative mx-10 mb-1 flex h-9 items-center justify-center z-20",
+    caption_label: "text-sm font-medium",
+    nav: "absolute top-0 flex w-full justify-between z-10",
+    button_previous: cn(
+      buttonVariants({ variant: "ghost" }),
+      "size-9 text-muted-foreground/80 hover:text-foreground p-0",
+    ),
+    button_next: cn(
+      buttonVariants({ variant: "ghost" }),
+      "size-9 text-muted-foreground/80 hover:text-foreground p-0",
+    ),
+    weekday: "size-9 p-0 text-xs font-medium text-muted-foreground/80",
+    day_button:
+      "relative flex size-9 items-center justify-center whitespace-nowrap rounded-lg p-0 text-foreground outline-offset-2 group-[[data-selected]:not(.range-middle)]:[transition-property:color,background-color,border-radius,box-shadow] group-[[data-selected]:not(.range-middle)]:duration-150 focus:outline-none group-data-[disabled]:pointer-events-none focus-visible:z-10 hover:bg-accent group-data-[selected]:bg-primary hover:text-foreground group-data-[selected]:text-primary-foreground group-data-[disabled]:text-foreground/30 group-data-[disabled]:line-through group-data-[outside]:text-foreground/30 group-data-[outside]:group-data-[selected]:text-primary-foreground focus-visible:outline focus-visible:outline-2 focus-visible:outline-ring/70 group-[.range-start:not(.range-end)]:rounded-e-none group-[.range-end:not(.range-start)]:rounded-s-none group-[.range-middle]:rounded-none group-data-[selected]:group-[.range-middle]:bg-accent group-data-[selected]:group-[.range-middle]:text-foreground",
+    day: "group size-9 px-0 text-sm",
+    range_start: "range-start",
+    range_end: "range-end",
+    range_middle: "range-middle",
+    today:
+      "*:after:pointer-events-none *:after:absolute *:after:bottom-1 *:after:start-1/2 *:after:z-10 *:after:size-[3px] *:after:-translate-x-1/2 *:after:rounded-full *:after:bg-primary [&[data-selected]:not(.range-middle)>*]:after:bg-background [&[data-disabled]>*]:after:bg-foreground/30 *:after:transition-colors",
+    outside:
+      "text-muted-foreground data-selected:bg-accent/50 data-selected:text-muted-foreground",
+    hidden: "invisible",
+    week_number: "size-9 p-0 text-xs font-medium text-muted-foreground/80",
+  };
+
+  const defaultComponents = {
+    Chevron: (props: ComponentProps<typeof ChevronLeft>) => {
+      if (props.orientation === "left") {
+        return (
+          <ChevronLeft
+            size={16}
+            strokeWidth={2}
+            {...props}
+            aria-hidden="true"
+          />
+        );
+      }
+      return (
+        <ChevronRight size={16} strokeWidth={2} {...props} aria-hidden="true" />
+      );
+    },
+  };
+
+  const mergedComponents = {
+    ...defaultComponents,
+    ...userComponents,
+  };
+
   return (
     <DayPicker
       locale={zhCN}
       showOutsideDays={showOutsideDays}
-      className={cn("py-2", className)}
-      classNames={{
-        months: "relative flex flex-col gap-y-4 sm:flex-row sm:gap-y-0",
-        month_caption: "relative mx-10 flex h-7 items-center justify-center",
-        weekdays: "flex flex-row",
-        weekday: "w-9 text-sm font-normal text-muted-foreground",
-        month: "w-full gap-y-4 overflow-x-hidden",
-        caption: "relative flex items-center justify-center pt-1",
-        caption_label: "truncate text-sm font-medium",
-        button_next: cn(
-          buttonVariants({
-            variant: "outline",
-            className:
-              "absolute right-0 h-7 w-7 bg-transparent p-0 opacity-50 hover:opacity-100",
-          }),
-        ),
-        button_previous: cn(
-          buttonVariants({
-            variant: "outline",
-            className:
-              "absolute left-0 h-7 w-7 bg-transparent p-0 opacity-50 hover:opacity-100",
-          }),
-        ),
-        nav: "flex items-start",
-        month_grid: "my-2 mx-auto",
-        week: "mt-2 flex w-full",
-        day: "flex h-9 w-9 flex-1 items-center justify-center rounded-md p-0 text-sm [&:has(button)]:hover:bg-accent! [&:has(button)]:hover:text-accent-foreground [&:has(button)]:hover:aria-selected:bg-primary! [&:has(button)]:hover:aria-selected:text-primary-foreground",
-        day_button: cn(
-          buttonVariants({ variant: "ghost" }),
-          "h-9 w-9 p-0 font-normal transition-none hover:bg-transparent hover:text-inherit aria-selected:opacity-100",
-        ),
-        range_start: "day-range-start rounded-s-md",
-        range_end: "day-range-end rounded-e-md",
-        selected:
-          "bg-primary text-primary-foreground hover:bg-primary! hover:text-primary-foreground focus:bg-primary focus:text-primary-foreground",
-        today: "bg-accent text-accent-foreground",
-        outside:
-          "day-outside text-muted-foreground opacity-50 aria-selected:bg-accent/50 aria-selected:text-muted-foreground aria-selected:opacity-30",
-        disabled: "text-muted-foreground opacity-50",
-        range_middle:
-          "rounded-none aria-selected:bg-accent aria-selected:text-accent-foreground hover:aria-selected:bg-accent! hover:aria-selected:text-accent-foreground",
-        hidden: "invisible hidden",
-        chevron: "inline-block fill-muted-foreground",
-        ...classNames,
-      }}
-      components={{
-        Dropdown: (props) => {
-          const { options, className, disabled } = props;
-          // biome-ignore lint/correctness/useHookAtTopLevel: <explanation>
-          const { goToMonth, months } = useDayPicker();
-          const currentShown = months[0].date;
-
-          const currentSelection =
-            className === "rdp-years_dropdown"
-              ? currentShown.getFullYear().toString()
-              : currentShown.getMonth().toString();
-
-          const updateDayPickerState = (value: string) => {
-            const newDate = new Date(currentShown);
-            if (className === "rdp-years_dropdown") {
-              newDate.setFullYear(Number.parseInt(value));
-            } else if (className === "rdp-months_dropdown") {
-              newDate.setMonth(Number.parseInt(value));
-            }
-            goToMonth(newDate);
-          };
-
-          return (
-            <Select
-              value={currentSelection}
-              onValueChange={updateDayPickerState}
-              disabled={disabled}
-            >
-              <SelectTrigger className="w-full border-0 px-2 py-1 ring-0 focus:ring-0">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectGroup>
-                  {options?.map((option) => (
-                    <SelectItem
-                      key={option.value}
-                      value={option.value.toString()}
-                    >
-                      {option.label}
-                    </SelectItem>
-                  ))}
-                </SelectGroup>
-              </SelectContent>
-            </Select>
-          );
-        },
-        YearsDropdown: (props) => {
-          // biome-ignore lint/correctness/useHookAtTopLevel: <explanation>
-          const { components } = useDayPicker();
-          // sort years in descending order
-          const sortedOptions = props.options?.sort(
-            (a, b) => b.value - a.value,
-          );
-          return <components.Dropdown {...props} options={sortedOptions} />;
-        },
-        PreviousMonthButton: ({ className, ...props }) => {
-          // biome-ignore lint/correctness/useHookAtTopLevel: <explanation>
-          const previousMonth = useDayPicker().previousMonth;
-          return (
-            <Button
-              variant="outline"
-              className={cn(
-                buttonVariants({ variant: "outline" }),
-                "absolute left-0 ml-2 h-7 w-7 bg-transparent p-0 opacity-50 hover:opacity-100",
-                className,
-              )}
-              type="button"
-              tabIndex={previousMonth ? -1 : undefined}
-              disabled={!previousMonth}
-              aria-label={labelPrevious(previousMonth)}
-              onClick={(e) => {
-                props.onClick?.(e);
-              }}
-            >
-              <ChevronLeftIcon className="h-4 w-4" />
-            </Button>
-          );
-        },
-        NextMonthButton: ({ className, children, ...props }) => {
-          // biome-ignore lint/correctness/useHookAtTopLevel: <explanation>
-          const nextMonth = useDayPicker().nextMonth;
-          return (
-            <Button
-              variant="outline"
-              className={cn(
-                buttonVariants({ variant: "outline" }),
-                "absolute right-0 mr-2 h-7 w-7 bg-transparent p-0 opacity-50 hover:opacity-100",
-                className,
-              )}
-              type="button"
-              tabIndex={nextMonth ? -1 : undefined}
-              disabled={!nextMonth}
-              aria-label={labelNext(nextMonth)}
-              onClick={(e) => {
-                props.onClick?.(e);
-              }}
-            >
-              <ChevronRightIcon className="h-4 w-4" />
-            </Button>
-          );
-        },
-      }}
+      className={cn("w-full", className)}
+      classNames={defaultClassNames}
+      components={mergedComponents}
       {...props}
     />
   );
 }
+
+export { Calendar };
