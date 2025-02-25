@@ -44,21 +44,11 @@
 }
 
 @layer base {
-  *,
-  ::after,
-  ::before,
-  ::backdrop,
-  ::file-selector-button {
-    @apply border-border;
+  * {
+    @apply border-border outline-ring/50;
   }
-
-  button,
-  [role="button"] {
-    cursor: pointer;
-  }
-
-  :disabled {
-    cursor: default;
+  body {
+    @apply bg-background text-foreground;
   }
 }
 
