@@ -100,10 +100,7 @@ export function DialogTitle({
 }: ComponentProps<typeof Title>) {
   return (
     <Title
-      className={cn(
-        "font-semibold text-lg leading-none tracking-tight",
-        className,
-      )}
+      className={cn("font-semibold text-lg leading-none", className)}
       {...props}
     />
   );

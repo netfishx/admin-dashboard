@@ -26,7 +26,7 @@ export function TabsTrigger({
   return (
     <Trigger
       className={cn(
-        "inline-flex items-center justify-center whitespace-nowrap rounded-md px-3 py-1 font-medium text-sm transition-all focus-visible:outline-hidden focus-visible:ring focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm",
+        "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md px-2 py-1 font-medium text-sm transition-[color,box-shadow] focus-visible:border-ring focus-visible:outline-1 focus-visible:outline-ring focus-visible:ring-3 focus-visible:ring-ring/50 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm [&_svg:not([class*='size-'])]:size-4 [&_svg]:pointer-events-none [&_svg]:shrink-0",
         className,
       )}
       {...props}
@@ -39,13 +39,7 @@ export function TabsContent({
   ...props
 }: ComponentProps<typeof Content>) {
   return (
-    <Content
-      className={cn(
-        "mt-2 focus-visible:outline-hidden focus-visible:ring focus-visible:ring-ring",
-        className,
-      )}
-      {...props}
-    />
+    <Content className={cn("flex-1 outline-none", className)} {...props} />
   );
 }
 
