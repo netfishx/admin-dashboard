@@ -21,3 +21,7 @@ export function formatNumber(
     roundingMode: "floor",
   }).format(num);
 }
+
+export function uniq<T>(arr: readonly T[]): T[] {
+  return Array.from(new Set(arr));
+}

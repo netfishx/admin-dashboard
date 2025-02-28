@@ -3,13 +3,14 @@
 import { Input } from "@/components/ui/input";
 import { TableBody, TableCell, TableRow } from "@/components/ui/table";
 import type { GameOdds } from "@/lib/types";
+import { uniq } from "@/lib/utils";
 import {
   changedOddsLimitAtom,
   limitAtom,
   oddsAtom,
   verifyLimitAtom,
 } from "@/store";
-import { uniq } from "es-toolkit";
+
 import { useAtom, useSetAtom } from "jotai";
 import { useTranslations } from "next-intl";
 import { useLayoutEffect } from "react";
